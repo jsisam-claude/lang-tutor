@@ -224,6 +224,9 @@ p50 ≤3 s (streaming ASR + Tensor TPU path — the SLO tightens from P1's 4 s).
 - **School-textbook alignment mode**: the parent picks the school's English
   series; Tuki aligns weekly topics via bundled mapping tables — fully offline,
   and a strong Israel-market differentiator.
+- **Voice-flow upgrades for all tiers** (detailed in the Advanced-track section):
+  hands-free VAD endpointing, barge-in via echo cancellation, backchannel
+  latency masking → perceived gap ~1–1.5 s.
 
 **Exit criteria**: 10-turn coherent roleplay conversations rated ≥4/5 by parents
 in pilot; pronunciation scores correlate with human teacher ratings (r ≥ 0.7 on a
@@ -267,6 +270,10 @@ retention +20% and vocabulary growth/week +25% vs the P3 cohort
   on-device (in-RAM comparison against the incumbent; audio never persisted)
   before any swap; delta-friendly pack layout so refreshes patch small instead
   of re-shipping gigabytes.
+- **Advanced Pack** (on-demand, 16 GB devices, ~4.5 GB): E4B/8B-class
+  conversation model, verbatim learner ASR, speech-aware GEC, topic packs for
+  grounded discussion, prosody scoring, audio feedback cards — the full
+  voice-accuracy stack for B2-bound learners (see the Advanced-track section).
 
 **Exit criteria**: measurable learning gains in a term-length pilot (pre/post
 vocabulary + reading fluency); story generator passes 100% of safety/vocab
@@ -312,6 +319,68 @@ second L1 shipped; crash-free ≥99.8%; model update shipped through the pipelin
 end-to-end.
 
 ---
+
+## Advanced track: voice conversation & language accuracy
+
+How the same on-device stack stretches to serve advanced (B2-bound) learners —
+specifically for *spoken* conversation and *correct* language use. Ships as an
+**on-demand Advanced Pack (~4.5 GB, 16 GB devices)**; the flow improvements land
+in P3 for every tier, the accuracy stack in P4.
+
+### Making voice feel like conversation (P3, all tiers)
+
+- **Hands-free endpointing** replaces push-to-talk for older learners: open mic
+  during the activity, Silero VAD + a tiny "utterance semantically complete?"
+  classifier on the streaming transcript — saves ~500 ms of silence-timeout per
+  turn.
+- **Barge-in**: the learner can interrupt Tuki. Feasible offline because the TTS
+  signal is known — acoustic echo cancellation subtracts it, VAD detects learner
+  onset, playback pauses.
+- **Latency masking**: a rule layer emits a natural backchannel ("Mm, right…")
+  within ~300 ms while the LLM decodes behind it; streaming ASR runs *during*
+  speech (final transcript ~200 ms after they stop) and prefill starts on
+  stabilized partials. Real reply latency stays 2–4 s; **perceived** gap drops
+  to ~1–1.5 s.
+- **Long-form speech**: 30–60 s monologues ("describe your weekend") need
+  streaming transducers, not 30 s-chunk batch models — another reason the P3
+  streaming-ASR upgrade is the pivot.
+
+### Correct use of language, by voice (P4, Advanced Pack)
+
+- **The trap: standard ASR silently fixes learner errors.** A strong language
+  model prior transcribes "he go to school" as "he *goes* to school" —
+  destroying the evidence a grammar coach needs. Countermeasures: a
+  **verbatim-tuned learner-speech ASR** (error-faithful transcripts;
+  transducer architectures are also less LM-dominant than Whisper-style
+  decoders), plus…
+- **Acoustic morphology verification**: the forced-alignment/GOP model doubles
+  as a grammar witness — did the /z/ of "goes" or the /d/ of "played" actually
+  occur in the audio? Dropped inflections are precisely the Hebrew-speaker
+  error class, and this catches them even when ASR autocorrects.
+- **Speech-aware GEC specialist** (~200 MB): grammatical-error correction on the
+  verified transcript, trained on spoken norms (fragments are fine in speech;
+  article overuse, present-perfect avoidance, and calques are not).
+- **Prosody & fluency scoring** via DSP + alignment (no large models): word and
+  sentence stress (Hebrew final-stress transfer), intonation contours, speech
+  rate, pause distribution, filled-pause counts.
+- **Correction policy tuned for voice**: at most one natural recast per turn
+  mid-conversation (fluency first); the full accuracy debrief arrives as a
+  **post-session card with audio** — the learner's own clip played against the
+  reference voice, per error. Self-hearing is the strongest correction signal,
+  and it never leaves the device.
+- **Accuracy drills that barely need the LLM**: shadowing (speak along, scored
+  on phones + timing), read-aloud with live word highlighting, minimal-pair
+  production tests.
+- Plus the general advanced levers (see P4): role-fine-tuned conversation model,
+  grounded discussion over bundled topic packs (on-device RAG), rolling
+  conversation summaries for long-session coherence, E4B/8B-class model tier.
+
+**Honest ceiling**: even with all of this, a free-roaming, culturally fluent C1
+companion is beyond 2026 on-device models. *Structured* B2 practice — grounded
+discussion, debates, precision feedback, natural-speed listening — is reachable,
+and it is most of what an advanced learner pays a tutor for. The model tier
+rides the fastest-improving curve in the stack; the Advanced Pack is designed to
+swap models without touching the app.
 
 ## Stage gates, audience expansion, and rough sizing
 
