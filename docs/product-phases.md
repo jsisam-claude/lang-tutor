@@ -25,12 +25,54 @@ long-e (ship/sheep), /æ/, final-devoicing, SVO word-order habits, false friends
 
 ---
 
+## The learning-science spine (what every feature hangs on)
+
+- **Comprehensible input + TPR at L0**: listen–point–do before speak; songs and
+  chants; no pressure to produce until the child volunteers.
+- **Systematic synthetic phonics** at L1–L2, sequenced against Israeli MoE
+  English expectations — plus **Hebrew-script contrast lessons** unique to this
+  audience: left-to-right reading-habit training, mirror-letter confusion
+  (b/d, p/q), and "English writes its vowels" orientation work.
+- **Retrieval practice + FSRS-scheduled spaced repetition** — one scheduler,
+  many item types (words, phonemes, sight words, grammar patterns), so weak
+  pronunciation phonemes and lapsed vocab compete fairly for session time.
+- **Recast-only correction** (repeat it correctly, never "wrong!"), one question
+  per tutor turn, interleaved review/new content.
+- **Session ritual** (P1 onward): warm-up review → new input → production
+  moment ("say it to Tuki") → reward. Predictable structure is the retention
+  engine for young kids; features slot *into* the ritual, not around it.
+- **Motivation by age band, one economy, three skins**: 4–6 care-loop (feed and
+  decorate Tuki), 7–9 collections/streaks/story worlds, 10–13 progress stats
+  and self-set goals. No dark patterns: streak freezes are free, no loss
+  framing for children.
+- **Learner event log from day one**: append-only on-device record of every
+  exposure/attempt/outcome with a versioned schema. Adaptivity is simple in
+  P1, but the *history* accumulates immediately — you cannot retrofit data you
+  never stored.
+
+## Cross-cutting workstreams (run inside every phase)
+
+| Workstream | How it grows |
+|---|---|
+| **Content ops** | Authoring scripts + schema migrations; native-speaker EN and HE studio audio; MoE-alignment QA checklist. Unit counts: P1 ~10 → P2 ~40 → P3 ~90 → P4 ~150 → P5 250+ (full band coverage). |
+| **Tutor eval & QA** | Recorded child-utterance replay corpus (ages, accents, noise) as an ASR regression suite; tutor-reply rubric evals; on-device latency/battery/thermal macrobenchmarks; safety red-team suite grown every release (a release artifact, per Play GenAI-for-kids policy). |
+| **Trust & accessibility** | P1: parent gate + **airplane-mode onboarding trick** ("turn on airplane mode now — Tuki keeps working"). P2: dyslexia-aware fonts, large type, TalkBack on core flows. P4: "what Tuki remembers" transparency screen + local parent digests. P5: full accessibility audit. |
+| **Degradation ladder** | Full speech loop → scripted-TTS mode (templates, no LLM) → text-only; switched by thermal state, RAM pressure, and model-file integrity checks. Skeleton in P1, hardened every phase — also the answer to "what does a demo do on a hot phone". |
+| **Measurement without telemetry** | All metrics computed on-device; pilot data leaves the device only via explicit parent-mediated export (QR/file share). No ambient analytics, ever — the zero-collection claim stays literally true. |
+
+---
+
 ## Phase 1 — "Talking MVP" 🎙️
 
 **Goal**: prove the core magic — a child speaks English to the phone and it
 answers, with zero network — inside a real (small) curriculum.
 **Levels unlocked**: L0 complete + L1 partial. **Target devices**: Pixel 9+ gate
 (12 GB RAM minimum, runtime-checked).
+**Audience honestly served**: ~4–8 (the L0–L1 band). The 9–13 experience only
+becomes real in P3+ — pilots and marketing should say so.
+**Stage gate — *do kids actually talk to it, and come back?*** Targets: ≥60% of
+prompted turns attempted by voice; D7 return ≥35% in a ~20-family pilot; zero
+safety-filter escapes.
 
 ### Features
 
@@ -75,6 +117,20 @@ answers, with zero network — inside a real (small) curriculum.
   tired" break screen (doubles as thermal guard).
 - **P1 gate task**: self-run Hebrew eval — Gemma 4 E2B vs Phi-4-mini on
   tutor-domain Hebrew prompts, scored by native speakers, before locking the model.
+  **Pre-decided contingency**: if both fail the bar, all *dynamic* Hebrew
+  generation is cut (templates + human audio only) — the product still ships.
+
+**Habit & resilience (added on deeper review)**
+- **Session ritual v1**: every day has the same shape — warm-up review → new
+  input → speak-to-Tuki moment → reward — with a Tuki care-loop (feed/decorate)
+  as the 4–6 reward skin.
+- **Degradation ladder v0**: thermal/RAM/model-integrity checks drop the app to
+  scripted-TTS or text-only mode instead of failing.
+- **Learner event log v1**: versioned, append-only record of every
+  exposure/attempt/outcome — the substrate all later adaptivity feeds on.
+- **Scope honesty**: ~10 units is 2–3 weeks of daily content. P1 is a
+  pilot/beta, not a public launch; P2's SRS arcade modes are what stretch
+  authored content between drops.
 
 **Exit criteria**: voice turn ≤4 s p50 on Pixel 10 / ≤6 s on Pixel 9; task-success
 ≥90% on constrained activities in a 10-child pilot; zero safety-filter escapes in
@@ -86,6 +142,9 @@ red-team suite v1; 20-min session without thermal throttle on Pixel 9.
 
 **Goal**: teach reading and writing properly — the text tutor becomes central.
 **Levels unlocked**: L1 complete + L2.
+**Stage gate — *does it measurably teach reading?*** Targets: CVC decoding
+accuracy 60%→85% over a 6-week pilot; ≥50% of sessions completed without parent
+help for ages 6+.
 
 ### Features
 
@@ -111,6 +170,17 @@ red-team suite v1; 20-min session without thermal throttle on Pixel 9.
   dyslexia-friendly font (bundled), audio-first mode.
 - Handwriting/typed writing feedback v1: word-order and spelling recasts for
   1–2-sentence answers.
+- **Lightweight multi-child profiles** (2–3, fast local switch) — pulled forward
+  from P5: Israeli siblings share devices; full family features stay in P5.
+- **Tap-to-talk with VAD auto-stop** as an age/accessibility option —
+  hold-to-talk is motorically hard at 4–6 (the VAD model is already bundled).
+- **SRS arcade mini-games**: procedurally recombined review that stays fresh
+  between authored content drops (the answer to the P1 content cliff).
+- **ASR-data spike (pulled forward from P3)**: child-speech data licensing +
+  first fine-tune experiment now, so P3's conversation work isn't blocked on
+  data acquisition — the two riskiest tech items no longer land together.
+- **Content authoring tooling v1**: scripts + validators for the unit schema
+  (the content-ops workstream's first real tooling).
 
 **Exit criteria**: a non-reading 6-year-old can progress L1→L2 start without a
 parent reading instructions aloud; SRS retention metrics live; readers' audio sync
@@ -123,6 +193,10 @@ frame-accurate on Pixel 9.
 **Goal**: free(er) conversation that stays safe, plus per-phoneme pronunciation
 feedback — the features no offline competitor has.
 **Levels unlocked**: L2 solidified + L3.
+**Stage gate — *can free conversation stay safe and fun for 10+ turns?***
+Targets: median free-talk length ≥10 child turns; zero red-team escapes and
+<0.1% pilot-flagged replies; off-script kid-ASR WER ≤12%; voice-turn latency
+p50 ≤3 s (streaming ASR + Tensor TPU path — the SLO tightens from P1's 4 s).
 
 ### Features
 
@@ -147,6 +221,9 @@ feedback — the features no offline competitor has.
 - **Safety v2** (Play GenAI-for-kids grade): small on-device input/output safety
   classifier alongside blocklists; topic fence telemetry (local); red-team suite
   v2 as a release artifact; AI-disclosure copy for parents; refined report flow.
+- **School-textbook alignment mode**: the parent picks the school's English
+  series; Tuki aligns weekly topics via bundled mapping tables — fully offline,
+  and a strong Israel-market differentiator.
 
 **Exit criteria**: 10-turn coherent roleplay conversations rated ≥4/5 by parents
 in pilot; pronunciation scores correlate with human teacher ratings (r ≥ 0.7 on a
@@ -158,6 +235,9 @@ validation set); kid-ASR WER ≤ ~12% on off-script pilot speech.
 
 **Goal**: from "app with an LLM" to "tutor that knows this child".
 **Levels unlocked**: L3 solidified + L4.
+**Stage gate — *does personalization beat the P3 baseline?*** Targets: D30
+retention +20% and vocabulary growth/week +25% vs the P3 cohort
+(parent-exported pilot data); latency SLO tightens to p50 ≤2.5 s on Pixel 10+.
 
 ### Features
 
@@ -181,6 +261,12 @@ validation set); kid-ASR WER ≤ ~12% on off-script pilot speech.
   devices — better generation quality where RAM allows; runtime model picker.
 - Thermal/battery adaptive scheduler: decode-rate throttling and TTS pre-render
   when device is warm.
+- **"What Tuki remembers" screen**: parent-visible learner memory with per-item
+  delete — transparency that doubles as data-minimization evidence.
+- **Model lifecycle discipline**: candidate ASR/LLM models shadow-evaluated
+  on-device (in-RAM comparison against the incumbent; audio never persisted)
+  before any swap; delta-friendly pack layout so refreshes patch small instead
+  of re-shipping gigabytes.
 
 **Exit criteria**: measurable learning gains in a term-length pilot (pre/post
 vocabulary + reading fluency); story generator passes 100% of safety/vocab
@@ -191,6 +277,9 @@ validation on 10k generations; parent-report comprehension in user tests.
 ## Phase 5 — "Scale & School" 🏫
 
 **Goal**: from one child on one Pixel to families, classrooms, and new markets.
+**Stage gate — *does it scale beyond the family device?*** Targets: classroom
+pilots in ≥2 schools with teacher-adoption commitment; a second L1 shipped at
+<15% incremental content cost (proving the L1-parametric architecture).
 **Levels**: all levels mature + content depth (full L0–L4 coverage of Israeli MoE
 band expectations).
 
@@ -223,6 +312,20 @@ second L1 shipped; crash-free ≥99.8%; model update shipped through the pipelin
 end-to-end.
 
 ---
+
+## Stage gates, audience expansion, and rough sizing
+
+| Phase | Kill/pivot question | Audience actually served | Rough effort (planning-grade estimate) |
+|---|---|---|---|
+| P1 | Do kids talk to it — and return? | ~4–8 | ~4–5 months, ~5 people (2 Android, 1 ML, 1 content, 1 design) |
+| P2 | Does it measurably teach reading? | 4–10 | +3–4 months |
+| P3 | Is free conversation safe + fun for 10+ turns? | 4–12 | +4–5 months (ML-heavy) |
+| P4 | Does personalization beat P3? | 4–13 | +4 months |
+| P5 | Does it scale beyond the family device? | 4–13 + classrooms | ongoing |
+
+Effort figures are estimates, not commitments. The audience column is the
+honest expansion track: each phase should be piloted and marketed to the band
+it actually serves, not the 4–13 end-state.
 
 ## Phase → payload evolution
 
