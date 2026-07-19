@@ -14,6 +14,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,11 +34,9 @@ fun HomeScreen(
     val units by produceState<List<UnitSummary>>(initialValue = emptyList(), container) {
         value = container.content.listUnits()
     }
-    val profile by container.profile.profile.let { flow ->
-        produceState(initialValue = org.sisam.langtutor.profile.LearnerProfile.EMPTY, flow) {
-            flow.collect { value = it }
-        }
-    }
+    val profile by container.profile.profile.collectAsState(
+        initial = org.sisam.langtutor.profile.LearnerProfile.EMPTY,
+    )
 
     Column(
         modifier = Modifier
