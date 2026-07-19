@@ -1,0 +1,21 @@
+# Gradle / build
+.gradle/
+build/
+**/build/
+local.properties
+.kotlin/
+
+# IDE
+.idea/
+*.iml
+captures/
+.DS_Store
+
+# Model weights are NEVER committed (delivered via Play Asset Delivery)
+*.litertlm
+*.task
+*.onnx
+*.gguf
+*.tflite
+asset-packs/*/src/main/assets/models/*
+!asset-packs/*/src/main/assets/models/.gitkeep
