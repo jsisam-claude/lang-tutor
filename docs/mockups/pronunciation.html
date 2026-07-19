@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Tuki — משוב הגייה (Mockup)</title>
+<style>
+  :root{--bg:#FFF6EC;--ink:#2B2140;--ink2:#6E6486;--coral:#FF6B57;--teal:#19B8A6;--sun:#FFC145;--lav2:#6C5CE7;--card:#fff;--good:#22C55E;--warn:#F59E0B;--bad:#EF4444;--shadow:0 10px 30px rgba(43,33,64,.14)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{min-height:100vh;background:linear-gradient(160deg,#FFF6EC,#FFF0F5);font-family:'Rubik','Noto Sans Hebrew','Noto Sans',system-ui,sans-serif;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px 16px 40px}
+  .en{direction:ltr;unicode-bidi:isolate}
+  header{text-align:center}
+  header .k{color:var(--coral);font-weight:700;font-size:15px}
+  header h1{font-size:28px;font-weight:800;margin-top:2px}
+  header p{color:var(--ink2);font-size:15.5px;margin-top:4px;max-width:620px}
+  .phone{width:340px;height:712px;background:#171223;border-radius:46px;padding:13px;box-shadow:0 26px 60px rgba(23,18,35,.35);position:relative;flex:none}
+  .phone:after{content:"";position:absolute;top:24px;left:50%;transform:translateX(-50%);width:92px;height:10px;border-radius:10px;background:#000;opacity:.85}
+  .screen{width:100%;height:100%;border-radius:35px;background:var(--bg);overflow:hidden;display:flex;flex-direction:column}
+  .statusbar{height:38px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;color:var(--ink2)}
+  .top{display:flex;align-items:center;padding:2px 16px}
+  .close{font-size:20px;color:var(--ink2)}
+  .dots{flex:1;display:flex;gap:8px;justify-content:center}
+  .dots i{width:10px;height:10px;border-radius:50%;background:#E8DCCB}
+  .dots i.on{background:var(--coral)}
+  .pron{margin:14px 20px 0;background:var(--card);border-radius:26px;box-shadow:var(--shadow);padding:24px 16px;text-align:center}
+  .bigword{font-size:48px;font-weight:800;direction:ltr}
+  .heb{font-size:18px;color:var(--ink2);margin-top:2px}
+  .phons{display:flex;gap:9px;justify-content:center;margin-top:16px;direction:ltr}
+  .ph{border-radius:16px;padding:11px 15px;font-size:22px;font-weight:800;color:#fff}
+  .ph small{display:block;font-size:10.5px;font-weight:700;opacity:.9;margin-top:2px}
+  .ph.g{background:var(--good)}.ph.a{background:var(--warn)}.ph.r{background:var(--bad);animation:shake 2.4s ease-in-out infinite}
+  @keyframes shake{0%,92%,100%{transform:none}94%{transform:rotate(-3deg)}97%{transform:rotate(3deg)}}
+  .ringwrap{position:relative;width:150px;height:150px;margin:18px auto 0}
+  .ringwrap svg{transform:rotate(-90deg)}
+  .val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800}
+  .val b{font-size:40px}
+  .val span{font-size:13px;color:var(--ink2);font-weight:600}
+  .tip{margin:16px 20px 0;background:#FFF3D6;border-radius:18px;padding:14px 16px;font-size:15.5px;font-weight:600;line-height:1.55;text-align:right}
+  .mouth{margin:12px 20px 0;background:#F4EFFF;border-radius:18px;padding:12px 16px;font-size:14px;color:var(--lav2);font-weight:700;display:flex;align-items:center;gap:10px}
+  .pbtns{display:flex;gap:11px;justify-content:center;margin:16px 0 0}
+  .b{background:var(--card);border-radius:999px;box-shadow:var(--shadow);padding:11px 17px;font-size:14.5px;font-weight:700}
+  .b.main{background:var(--coral);color:#fff}
+  .notes{max-width:680px;color:var(--ink2);font-size:14px;line-height:1.6;background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:14px 20px}
+  .notes b{color:var(--ink)}
+</style>
+</head>
+<body>
+  <header>
+    <div class="k">Mockup 4/5 · משוב הגייה</div>
+    <h1>ציון לכל צליל — כולו במכשיר</h1>
+    <p>הצלילים שקשים לדוברי עברית מקבלים טיפול מיוחד: th, w/v, ההבדל בין ship ל-sheep. הכול מחושב מקומית.</p>
+  </header>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:47</span><span class="en">📵 🔋</span></div>
+    <div class="top"><span class="close">✕</span><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div><span style="width:20px"></span></div>
+    <div class="pron">
+      <div class="bigword">birthday</div>
+      <div class="heb">יום הולדת</div>
+      <div class="phons">
+        <span class="ph g">b<small>מעולה</small></span>
+        <span class="ph g">ɜː<small>מעולה</small></span>
+        <span class="ph r">θ<small>נתרגל</small></span>
+        <span class="ph g">d<small>מעולה</small></span>
+        <span class="ph a">eɪ<small>כמעט</small></span>
+      </div>
+      <div class="ringwrap">
+        <svg width="150" height="150" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#F0E7DA" stroke-width="11"/>
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#19B8A6" stroke-width="11" stroke-linecap="round" stroke-dasharray="339" stroke-dashoffset="75"/>
+        </svg>
+        <div class="val"><b>78</b><span>ציון הגייה</span></div>
+      </div>
+    </div>
+    <div class="tip">💡 בשביל <b class="en">th</b> — שימי את קצה הלשון בין השיניים ונשפי אוויר: <b class="en">thhh</b> 🌬️</div>
+    <div class="mouth">👄 סרטון פה קצר: איך יוצרים את הצליל <span class="en">θ</span></div>
+    <div class="pbtns"><span class="b">🔊 האזיני</span><span class="b">🐢 לאט</span><span class="b main">🎙️ נסי שוב</span></div>
+  </div></div>
+  <div class="notes">
+    <b>מאחורי הקלעים:</b> יישור כפוי (<span class="en">forced alignment</span>) של האודיו מול המשפט הצפוי,
+    ואז ציון <span class="en">GOP (Goodness of Pronunciation)</span> לכל פונמה עם מודל CTC קטן (~20MB) —
+    אין שום SDK ענן מעורב. הצלילים החלשים נכנסים לתור חזרה מרווחת (SRS) ותוקי משלב אותם בשיעורים הבאים.
+  </div>
+</body>
+</html>

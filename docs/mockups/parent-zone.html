@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Tuki — אזור הורים (Mockup)</title>
+<style>
+  :root{--bg:#FFF6EC;--ink:#2B2140;--ink2:#6E6486;--coral:#FF6B57;--teal:#19B8A6;--teal2:#0E9384;--sun:#FFC145;--lav:#8E7CF6;--lav2:#6C5CE7;--card:#fff;--shadow:0 10px 30px rgba(43,33,64,.14)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{min-height:100vh;background:linear-gradient(160deg,#FFF6EC,#EFEAFF);font-family:'Rubik','Noto Sans Hebrew','Noto Sans',system-ui,sans-serif;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px 16px 40px}
+  .en{direction:ltr;unicode-bidi:isolate}
+  header{text-align:center}
+  header .k{color:var(--coral);font-weight:700;font-size:15px}
+  header h1{font-size:28px;font-weight:800;margin-top:2px}
+  header p{color:var(--ink2);font-size:15.5px;margin-top:4px;max-width:620px}
+  .row{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
+  .phone{width:340px;height:712px;background:#171223;border-radius:46px;padding:13px;box-shadow:0 26px 60px rgba(23,18,35,.35);position:relative;flex:none}
+  .phone:after{content:"";position:absolute;top:24px;left:50%;transform:translateX(-50%);width:92px;height:10px;border-radius:10px;background:#000;opacity:.85}
+  .screen{width:100%;height:100%;border-radius:35px;background:var(--bg);overflow:hidden;display:flex;flex-direction:column}
+  .statusbar{height:38px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;color:var(--ink2)}
+  .ttl{font-size:19px;font-weight:800;padding:6px 20px 2px}
+  .gatephone .gate{margin:70px 24px 0;background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:26px 20px;text-align:center}
+  .gate .lock{font-size:44px}
+  .gate .q{font-size:21px;font-weight:800;margin-top:10px}
+  .gate .d{font-size:13.5px;color:var(--ink2);margin-top:6px}
+  .keys{display:flex;gap:10px;justify-content:center;margin-top:18px;direction:ltr}
+  .keys i{width:56px;height:56px;border-radius:16px;background:#F2EADF;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:21px;font-style:normal}
+  .keys i.hit{background:var(--teal);color:#fff;box-shadow:0 8px 16px rgba(25,184,166,.4)}
+  .gatenote{margin:16px 24px 0;text-align:center;font-size:13px;color:var(--ink2)}
+  .statrow{display:flex;gap:10px;margin:8px 18px 0}
+  .stat{flex:1;background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:14px 8px;text-align:center}
+  .stat b{font-size:27px;color:var(--coral)}
+  .stat span{display:block;font-size:12px;color:var(--ink2);margin-top:3px}
+  .card{margin:12px 18px 0;background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:14px 16px}
+  .card .h{font-size:14.5px;font-weight:800;margin-bottom:8px}
+  .bars{display:flex;gap:10px;align-items:flex-end;height:88px;direction:ltr}
+  .bars i{flex:1;background:linear-gradient(180deg,var(--lav) 0%,var(--lav2) 100%);border-radius:8px 8px 0 0}
+  .barlabs{display:flex;gap:10px;direction:ltr;margin-top:5px}
+  .barlabs span{flex:1;text-align:center;font-size:10.5px;color:var(--ink2)}
+  .sound-row{display:flex;gap:8px;flex-wrap:wrap}
+  .sound{background:#FFE8E5;color:#C2402F;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:800;direction:ltr}
+  .sound.ok{background:#E2F7F3;color:var(--teal2)}
+  .storage{margin:12px 18px 0;background:#E2F7F3;border-radius:16px;padding:12px 15px;font-size:13.5px;font-weight:700;color:var(--teal2);display:flex;gap:9px;align-items:center}
+  .setrow{margin:10px 18px 0;display:flex;align-items:center;gap:10px;background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:12px 15px;font-size:14px;font-weight:700}
+  .setrow .sw{margin-inline-start:auto;width:46px;height:26px;border-radius:999px;background:var(--teal);position:relative}
+  .setrow .sw:after{content:"";position:absolute;top:3px;inset-inline-start:23px;width:20px;height:20px;border-radius:50%;background:#fff}
+  .navbar{margin-top:auto;flex:none;display:flex;justify-content:space-around;padding:11px 8px 13px;background:var(--card);border-top:1px solid #F0E7DA}
+  .navbar div{font-size:12.5px;color:var(--ink2);text-align:center;line-height:1.3}
+  .navbar div b{display:block;font-size:22px}
+  .navbar .on{color:var(--coral);font-weight:800}
+  .notes{max-width:720px;color:var(--ink2);font-size:14px;line-height:1.6;background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:14px 20px}
+  .notes b{color:var(--ink)}
+</style>
+</head>
+<body>
+  <header>
+    <div class="k">Mockup 5/5 · אזור הורים</div>
+    <h1>שער הורים, דו"ח התקדמות, ושליטה מלאה</h1>
+    <p>שני מסכים: שער הכניסה (חידת כפל — עוצר ילדים צעירים) ולוח ההורים עצמו.</p>
+  </header>
+  <div class="row">
+    <div class="phone gatephone"><div class="screen">
+      <div class="statusbar"><span>9:50</span><span class="en">📵 🔋</span></div>
+      <div class="gate">
+        <div class="lock">🔒</div>
+        <div class="q">כמה זה 7 × 6?</div>
+        <div class="d">כדי להיכנס לאזור ההורים, פתרו את התרגיל</div>
+        <div class="keys"><i>28</i><i class="hit">42</i><i>36</i><i>48</i></div>
+      </div>
+      <div class="gatenote">שער ההורים נדרש גם לפי מדיניות Google Play Families —<br>קניות, הגדרות ומחיקת נתונים מאחוריו בלבד</div>
+    </div></div>
+    <div class="phone"><div class="screen">
+      <div class="statusbar"><span>9:50</span><span class="en">📵 🔋</span></div>
+      <div class="ttl">👨‍👩‍👧 אזור הורים · נועה</div>
+      <div class="statrow">
+        <div class="stat"><b>42</b><span>מילים חדשות</span></div>
+        <div class="stat"><b>96</b><span>דקות השבוע</span></div>
+        <div class="stat"><b>78%</b><span>דיוק הגייה</span></div>
+      </div>
+      <div class="card">
+        <div class="h">דקות תרגול השבוע</div>
+        <div class="bars"><i style="height:34%"></i><i style="height:55%"></i><i style="height:42%"></i><i style="height:70%"></i><i style="height:52%"></i><i style="height:88%"></i><i style="height:64%"></i></div>
+        <div class="barlabs"><span>א</span><span>ב</span><span>ג</span><span>ד</span><span>ה</span><span>ו</span><span>ש</span></div>
+      </div>
+      <div class="card">
+        <div class="h">צלילים שנתרגל</div>
+        <div class="sound-row"><span class="sound">θ (th)</span><span class="sound">w</span><span class="sound ok">✓ ʃ (sh)</span><span class="sound ok">✓ r</span></div>
+      </div>
+      <div class="storage">💾 הכול במכשיר: 3.6GB · אפס העברת נתונים ✓</div>
+      <div class="setrow">⏰ מגבלה יומית: 20 דקות<span class="sw"></span></div>
+      <div class="navbar"><div><b>🏠</b>בית</div><div><b>📚</b>שיעורים</div><div><b>💬</b>שיחה</div><div class="on"><b>👨‍👩‍👧</b>הורים</div></div>
+    </div></div>
+  </div>
+  <div class="notes">
+    <b>הערות:</b> הדו"ח נוצר כולו במכשיר — אין דשבורד ענן ואין חשבון. ההורה יכול לייצא PDF ידנית אם רוצה לשתף מורה.
+    מגבלת הזמן נאכפת באפליקציה; מחיקת פרופיל = מחיקה אמיתית (הקבצים המקומיים). זה הבסיס לעמידה נוחה ב-COPPA
+    ובחוק הגנת הפרטיות הישראלי (תיקון 13): פשוט אין נתונים שיוצאים.
+  </div>
+</body>
+</html>

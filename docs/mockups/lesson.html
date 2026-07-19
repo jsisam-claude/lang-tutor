@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Tuki — שיעור מדובר (Mockup)</title>
+<style>
+  :root{--bg:#FFF6EC;--ink:#2B2140;--ink2:#6E6486;--coral:#FF6B57;--teal:#19B8A6;--sun:#FFC145;--lav2:#6C5CE7;--card:#fff;--shadow:0 10px 30px rgba(43,33,64,.14)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{min-height:100vh;background:linear-gradient(160deg,#FFF6EC,#FFEDE0);font-family:'Rubik','Noto Sans Hebrew','Noto Sans',system-ui,sans-serif;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px 16px 40px}
+  .en{direction:ltr;unicode-bidi:isolate}
+  header{text-align:center}
+  header .k{color:var(--coral);font-weight:700;font-size:15px}
+  header h1{font-size:28px;font-weight:800;margin-top:2px}
+  header p{color:var(--ink2);font-size:15.5px;margin-top:4px;max-width:600px}
+  .phone{width:340px;height:712px;background:#171223;border-radius:46px;padding:13px;box-shadow:0 26px 60px rgba(23,18,35,.35);position:relative;flex:none}
+  .phone:after{content:"";position:absolute;top:24px;left:50%;transform:translateX(-50%);width:92px;height:10px;border-radius:10px;background:#000;opacity:.85}
+  .screen{width:100%;height:100%;border-radius:35px;background:var(--bg);overflow:hidden;display:flex;flex-direction:column}
+  .statusbar{height:38px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;color:var(--ink2)}
+  .top{display:flex;align-items:center;padding:2px 16px}
+  .close{font-size:20px;color:var(--ink2)}
+  .dots{flex:1;display:flex;gap:8px;justify-content:center}
+  .dots i{width:10px;height:10px;border-radius:50%;background:#E8DCCB}
+  .dots i.on{background:var(--coral)}
+  .vocab{margin:14px 20px 0;background:var(--card);border-radius:28px;box-shadow:var(--shadow);padding:26px 16px 22px;text-align:center}
+  .ball{width:150px;height:150px;border-radius:50%;margin:0 auto 14px;background:radial-gradient(circle at 33% 30%,#FF9A8B,#F5482E 68%);box-shadow:inset -14px -16px 30px rgba(0,0,0,.18),0 12px 22px rgba(245,72,46,.3)}
+  .word{font-size:56px;font-weight:800;direction:ltr;letter-spacing:.01em}
+  .heb{font-size:24px;color:var(--ink2);margin-top:4px}
+  .spk{display:inline-flex;gap:12px;margin-top:12px}
+  .spk span{width:46px;height:46px;border-radius:50%;background:#F4EFFF;display:inline-flex;align-items:center;justify-content:center;font-size:21px}
+  .tutorbar{margin:14px 18px 0;background:#F4EFFF;border:2px solid #E4D9FF;border-radius:20px;padding:13px 15px;display:flex;gap:11px;align-items:center}
+  .pf{font-size:34px;flex:none}
+  .say{font-size:17px;font-weight:600;line-height:1.45}
+  .target{direction:ltr;unicode-bidi:isolate;color:var(--lav2);font-weight:800}
+  .micwrap{margin-top:auto;padding:0 0 22px;text-align:center}
+  .mic{width:104px;height:104px;border-radius:50%;background:var(--coral);color:#fff;font-size:46px;border:none;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 12px 26px rgba(255,107,87,.45);position:relative;animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{50%{transform:scale(1.05)}}
+  .mic:before{content:"";position:absolute;inset:-9px;border-radius:50%;border:3px solid var(--coral);animation:ring 1.6s ease-out infinite}
+  @keyframes ring{from{opacity:.8;transform:scale(1)}to{opacity:0;transform:scale(1.45)}}
+  .miclab{font-size:15.5px;font-weight:800;color:var(--ink2);margin-top:12px}
+  .skip{font-size:13px;color:var(--ink2);margin-top:8px;text-decoration:underline}
+  .notes{max-width:660px;color:var(--ink2);font-size:14px;line-height:1.6;background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:14px 20px}
+  .notes b{color:var(--ink)}
+</style>
+</head>
+<body>
+  <header>
+    <div class="k">Mockup 2/5 · שיעור מדובר</div>
+    <h1>כרטיס מילה + כפתור דיבור אחד גדול</h1>
+    <p>הילד רואה, שומע, ואז מדבר. הזיהוי מוטה מראש לאוצר המילים של השיעור — כך הדיוק גבוה גם עם קולות ילדים.</p>
+  </header>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:42</span><span class="en">📵 🔋</span></div>
+    <div class="top"><span class="close">✕</span><div class="dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div><span style="width:20px"></span></div>
+    <div class="vocab">
+      <div class="ball"></div>
+      <div class="word">ball</div>
+      <div class="heb">כדור</div>
+      <div class="spk"><span>🔊</span><span>🐢</span></div>
+    </div>
+    <div class="tutorbar"><span class="pf">🦜</span><div class="say">עכשיו תגידי:<br><span class="target">"I see a red ball!"</span></div></div>
+    <div class="micwrap">
+      <button class="mic">🎙️</button>
+      <div class="miclab">מחזיקים ומדברים</div>
+      <div class="skip">אפשר גם להקליד ⌨️</div>
+    </div>
+  </div></div>
+  <div class="notes">
+    <b>מאחורי הקלעים:</b> לחיצה ארוכה מקליטה; שחרור שולח ל-ASR מקומי (<span class="en">Whisper-small / Moonshine</span>)
+    עם רשימת מילות-יעד (<span class="en">hotword biasing</span>). ביטחון נמוך ⇒ תוקי מבקש לנסות שוב, בלי להפעיל את המודל הגדול.
+    כפתור 🐢 משמיע את המשפט לאט. <b>אין מצב "טעית"</b> — רק עידוד וניסיון חוזר.
+  </div>
+</body>
+</html>

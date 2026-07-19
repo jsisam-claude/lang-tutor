@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Tuki — מצב שיחה (Mockup)</title>
+<style>
+  :root{--bg:#FFF6EC;--ink:#2B2140;--ink2:#6E6486;--coral:#FF6B57;--teal:#19B8A6;--sun:#FFC145;--lav2:#6C5CE7;--card:#fff;--shadow:0 10px 30px rgba(43,33,64,.14)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{min-height:100vh;background:linear-gradient(160deg,#FFF6EC,#E8FBF7);font-family:'Rubik','Noto Sans Hebrew','Noto Sans',system-ui,sans-serif;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px 16px 40px}
+  .en{direction:ltr;unicode-bidi:isolate}
+  header{text-align:center}
+  header .k{color:var(--coral);font-weight:700;font-size:15px}
+  header h1{font-size:28px;font-weight:800;margin-top:2px}
+  header p{color:var(--ink2);font-size:15.5px;margin-top:4px;max-width:620px}
+  .phone{width:340px;height:712px;background:#171223;border-radius:46px;padding:13px;box-shadow:0 26px 60px rgba(23,18,35,.35);position:relative;flex:none}
+  .phone:after{content:"";position:absolute;top:24px;left:50%;transform:translateX(-50%);width:92px;height:10px;border-radius:10px;background:#000;opacity:.85}
+  .screen{width:100%;height:100%;border-radius:35px;background:var(--bg);overflow:hidden;display:flex;flex-direction:column}
+  .statusbar{height:38px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;color:var(--ink2)}
+  .appbar{flex:none;display:flex;align-items:center;gap:11px;padding:8px 18px}
+  .face{width:46px;height:46px;border-radius:50%;background:var(--sun);display:flex;align-items:center;justify-content:center;font-size:26px}
+  .hi{font-size:18px;font-weight:800}
+  .hi small{display:block;font-size:12px;color:var(--teal);font-weight:700}
+  .scene-tag{margin-inline-start:auto;font-size:12.5px;font-weight:700;background:#F4EFFF;color:var(--lav2);border-radius:999px;padding:5px 11px}
+  .chat{flex:1;display:flex;flex-direction:column;gap:11px;padding:10px 16px;overflow:hidden}
+  .bub{max-width:84%;border-radius:20px;padding:12px 15px;font-size:15.5px;line-height:1.5;box-shadow:var(--shadow)}
+  .bub.tutor{background:var(--card);align-self:flex-start;direction:ltr;text-align:left;border-bottom-left-radius:6px}
+  .bub.kid{background:var(--teal);color:#fff;align-self:flex-end;direction:ltr;text-align:left;border-bottom-right-radius:6px}
+  .who{font-size:11.5px;font-weight:700;color:var(--lav2);margin-bottom:3px;direction:rtl;text-align:right}
+  .bub.kid .who{color:#D9FFF8;text-align:left;direction:ltr}
+  .fix{border-bottom:3px solid var(--sun);font-weight:800}
+  .speaking{display:inline-flex;gap:3px;align-items:center;margin-left:7px;vertical-align:middle}
+  .speaking i{width:4px;height:13px;background:var(--coral);border-radius:2px;animation:wv .55s ease-in-out infinite alternate}
+  .speaking i:nth-child(2){animation-delay:.12s}.speaking i:nth-child(3){animation-delay:.24s}
+  @keyframes wv{from{height:5px}to{height:15px}}
+  .hint{align-self:center;background:#FFF3D6;border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700;color:#B45309}
+  .inputrow{flex:none;display:flex;gap:9px;padding:9px 14px 15px;align-items:center}
+  .field{flex:1;background:var(--card);border:2px solid #EADFCE;border-radius:999px;padding:12px 17px;font-size:14.5px;color:var(--ink2);direction:ltr}
+  .kmic{width:50px;height:50px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:23px;flex:none;box-shadow:0 8px 16px rgba(255,107,87,.4)}
+  .notes{max-width:680px;color:var(--ink2);font-size:14px;line-height:1.6;background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:14px 20px}
+  .notes b{color:var(--ink)}
+</style>
+</head>
+<body>
+  <header>
+    <div class="k">Mockup 3/5 · מצב שיחה</div>
+    <h1>ערוץ כפול: מדברים או מקלידים, באותה שיחה</h1>
+    <p>שיחה חופשית-מודרכת בתוך תרחישים ("בחנות", "יום הולדת") עם תיקון עדין בשיטת recast — כמו מורה אנושי.</p>
+  </header>
+  <div class="phone"><div class="screen">
+    <div class="statusbar"><span>9:45</span><span class="en">📵 🔋</span></div>
+    <div class="appbar">
+      <div class="face">🦜</div>
+      <div class="hi">שיחה עם תוקי<small>מדבר... <span class="speaking"><i></i><i></i><i></i></span></small></div>
+      <div class="scene-tag">תרחיש: חיות מחמד 🐾</div>
+    </div>
+    <div class="chat">
+      <div class="bub tutor"><div class="who">תוקי</div>Hi Noa! What did you do today? 🌞</div>
+      <div class="bub kid"><div class="who en">🎙️ spoken</div>I play with my dog!</div>
+      <div class="bub tutor"><div class="who">תוקי</div>Nice! You <span class="fix">played</span> with your dog! 🐶<br>What's his name?</div>
+      <div class="hint">💡 תוקי חוזר על המשפט בצורה נכונה — בלי לומר "טעות"</div>
+      <div class="bub kid"><div class="who en">⌨️ typed</div>His name is Rex.</div>
+      <div class="bub tutor"><div class="who">תוקי</div>Rex is a great name! Is Rex big or small?</div>
+    </div>
+    <div class="inputrow"><div class="field">Type in English…</div><div class="kmic">🎙️</div></div>
+  </div></div>
+  <div class="notes">
+    <b>מאחורי הקלעים:</b> המודל המקומי (<span class="en">Gemma 4 E2B</span>) רץ עם פרומפט-מערכת של "מורה לילדים":
+    משפטים קצרים, אוצר מילים ברמת הילד, שאלה אחת בכל תור, recast לתיקונים. שכבת בטיחות מסננת קלט/פלט,
+    הנושאים מוגבלים לתרחיש, וכפתור דיווח זמין תמיד (דרישות Google Play ל-GenAI לילדים). השגיאה ("play"→"played")
+    נרשמת בפרופיל הלמידה ותחזור בתרגול מאוחר יותר.
+  </div>
+</body>
+</html>
