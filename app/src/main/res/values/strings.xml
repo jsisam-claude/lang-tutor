@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Tuki — English Tutor</string>
+
+    <string name="home_greeting">Hello! 👋 Ready to learn English?</string>
+    <string name="home_xp">⭐ %1$d XP</string>
+    <string name="home_start_lesson">Start lesson</string>
+    <string name="home_start_conversation">Talk with Tuki</string>
+    <string name="home_parent_zone">Parent zone</string>
+
+    <string name="lesson_loading">Loading…</string>
+
+    <string name="conversation_title">Talking with Tuki 🦜</string>
+    <string name="conversation_hold_to_talk">Hold to talk</string>
+    <string name="conversation_type_hint">Type in English…</string>
+    <string name="conversation_send">Send</string>
+
+    <string name="speaker_tutor">Tuki</string>
+    <string name="speaker_child">You</string>
+
+    <string name="state_idle">Resting</string>
+    <string name="state_listening">Listening…</string>
+    <string name="state_transcribing">Heard you! One moment…</string>
+    <string name="state_thinking">Tuki is thinking…</string>
+    <string name="state_speaking">Tuki is speaking</string>
+    <string name="state_your_turn">Your turn!</string>
+    <string name="state_failed">Oops, let\'s try again</string>
+
+    <string name="parent_gate_title">Parents only 🔒</string>
+    <string name="parent_gate_question">To enter, solve: %1$s = ?</string>
+    <string name="parent_zone_title">Parent zone</string>
+    <string name="parent_xp">Stars earned: %1$d</string>
+    <string name="parent_daily_limit">Daily limit: %1$d minutes</string>
+    <string name="parent_offline_note">Everything stays on this device. The app has no internet permission.</string>
+    <string name="parent_language_hebrew">עברית</string>
+    <string name="parent_language_english">English</string>
+</resources>

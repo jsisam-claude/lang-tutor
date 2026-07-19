@@ -33,3 +33,9 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 // Logic modules: pure JVM, buildable without the Android SDK.
 include(":core:tutor", ":core:llm", ":core:speech", ":core:content", ":core:profile")
+
+// -Plangtutor.jvmOnly=true builds/tests only the JVM modules.
+val jvmOnly = providers.gradleProperty("langtutor.jvmOnly").orNull == "true"
+if (!jvmOnly) {
+    include(":app")
+}

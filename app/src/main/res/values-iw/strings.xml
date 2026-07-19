@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">תוקי — מורה לאנגלית</string>
+
+    <!-- BiDi note: English words inside Hebrew strings are wrapped in FSI/PDI
+         isolates (⁦…⁩) so punctuation renders correctly. -->
+    <string name="home_greeting">שלום! 👋 מוכנים ללמוד אנגלית?</string>
+    <string name="home_xp">⭐ %1$d נקודות</string>
+    <string name="home_start_lesson">מתחילים שיעור</string>
+    <string name="home_start_conversation">מדברים עם תוקי</string>
+    <string name="home_parent_zone">אזור הורים</string>
+
+    <string name="lesson_loading">טוען…</string>
+
+    <string name="conversation_title">שיחה עם תוקי 🦜</string>
+    <string name="conversation_hold_to_talk">מחזיקים ומדברים</string>
+    <string name="conversation_type_hint">כותבים באנגלית… ⁦English⁩</string>
+    <string name="conversation_send">שליחה</string>
+
+    <string name="speaker_tutor">תוקי</string>
+    <string name="speaker_child">אני</string>
+
+    <string name="state_idle">מנוחה</string>
+    <string name="state_listening">מקשיב…</string>
+    <string name="state_transcribing">שמעתי! רגע אחד…</string>
+    <string name="state_thinking">תוקי חושב…</string>
+    <string name="state_speaking">תוקי מדבר</string>
+    <string name="state_your_turn">תורך!</string>
+    <string name="state_failed">אופס, ננסה שוב</string>
+
+    <string name="parent_gate_title">להורים בלבד 🔒</string>
+    <string name="parent_gate_question">כדי להיכנס, פתרו: %1$s = ?</string>
+    <string name="parent_zone_title">אזור הורים</string>
+    <string name="parent_xp">כוכבים שנצברו: %1$d</string>
+    <string name="parent_daily_limit">מגבלה יומית: %1$d דקות</string>
+    <string name="parent_offline_note">הכול נשאר במכשיר. לאפליקציה אין הרשאת אינטרנט.</string>
+    <string name="parent_language_hebrew">עברית</string>
+    <string name="parent_language_english">English</string>
+</resources>
