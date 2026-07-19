@@ -36,8 +36,14 @@ long-e (ship/sheep), /æ/, final-devoicing, SVO word-order habits, false friends
 - **Retrieval practice + FSRS-scheduled spaced repetition** — one scheduler,
   many item types (words, phonemes, sight words, grammar patterns), so weak
   pronunciation phonemes and lapsed vocab compete fairly for session time.
-- **Recast-only correction** (repeat it correctly, never "wrong!"), one question
-  per tutor turn, interleaved review/new content.
+- **Correction repertoire matched to the learner** (evidence-updated — see the
+  Evidence Pass section): warm recasts for the youngest/lowest-proficiency;
+  **prompts and elicitation** ("Can you say that with *played*?") as the default
+  from mid-L1 up — meta-analyses show prompts outperform recasts, especially at
+  low proficiency; metalinguistic hints for the teen track. Never "wrong!". One
+  question per tutor turn. Review/new-content mixing starts **blocked**, and
+  interleaves only after partial mastery (interleaving backfires for young
+  beginners).
 - **Session ritual** (P1 onward): warm-up review → new input → production
   moment ("say it to Tuki") → reward. Predictable structure is the retention
   engine for young kids; features slot *into* the ritual, not around it.
@@ -49,6 +55,82 @@ long-e (ship/sheep), /æ/, final-devoicing, SVO word-order habits, false friends
   exposure/attempt/outcome with a versioned schema. Adaptivity is simple in
   P1, but the *history* accumulates immediately — you cannot retrofit data you
   never stored.
+
+## Evidence pass (literature review, 2026-07)
+
+A sweep of the CALL/MALL, child–voice-agent, corrective-feedback, pronunciation,
+reading-science, ITS, and small-LLM-tutoring literature (2015–2026, weighted to
+meta-analyses). What it **confirmed**, what it **changed**, and what it **added**
+— every item on-device-feasible.
+
+**Confirmed** (keep, with numbers to quote): chatbot L2 practice has a real
+medium effect, biggest for speaking (g≈0.61, 31-study meta); agents measurably
+lower speaking anxiety and raise willingness-to-communicate vs humans — the
+"safe rehearsal space" is our core value proposition, now evidence-backed;
+spaced retrieval for L2 is solid (48-experiment meta); kid-fine-tuned ASR is
+necessary, not optional (child WER 2–4× adult; tuning cuts it by half+).
+
+**Changed** (⚠️ contradictions the review surfaced):
+1. **Recast-only correction was wrong** for most of our range — prompts/
+   elicitation beat recasts outside the youngest band (Lyster & Saito 2010;
+   Ammar & Spada 2006). Now a matched repertoire, gated by the knowledge-tracing
+   readiness estimate.
+2. **Interleaving is not a free win**: it backfires for young/low-achieving
+   beginners (Hwang 2025, *Language Learning*). Block first, interleave later.
+3. **Prosody feedback must be visual** (pitch contour, vowel chart, mouth
+   diagram) — audio-only suprasegmental feedback is the weak branch of CAPT;
+   segmental (phoneme) feedback with explicit "you said /v/, target /w/"
+   messaging is where the strong evidence is. Shadowing stays, but scoped to
+   rhythm/fluency — it does not fix segmentals.
+4. **Gamification caution sharpened**: streaks drive retention but risk the
+   overjustification effect; keep rewards optional, forgiving, peripheral, and
+   celebrate effortful milestones only.
+
+**Added** (new features, ranked by evidence × feasibility):
+1. **HVPT perception mode** — the biggest under-used win in the field
+   (perception g≈0.92, 79-study meta; transfers partially to production):
+   forced-choice identification of Hebrew-hard contrasts (/w–v/, /θ/, tense–lax
+   vowels, final voicing) spoken by **many different talkers** with instant
+   feedback. Bundled multi-talker audio + tap UI — near-zero compute. → P2.
+2. **Reading-while-listening with captions** — large effects on vocabulary AND
+   listening (captioned-input metas); upgrade the P2 readers to bimodal
+   read-alongs. → P2.
+3. **Dialogic-reading agent moves** for ages 4–8 — wh-/distancing questions
+   during shared stories; an RCT showed a conversational agent replicates
+   dialogic-reading gains (Xu et al. 2022, *Child Development*). → P2.
+4. **BKT/logistic knowledge tracing on-device + a kid-friendly skill map**
+   (open learner model). Tiny KT matches deep models at our data scale (Gervet
+   2020); the LLM must never be the learner model (unstable at mastery
+   estimation). Skill meters improve self-regulation. → P3.
+5. **Pedagogically fine-tuned, tutor-move-constrained generation** (LearnLM/
+   TeachLM findings): fine-tune to a labeled move set (hint, elicit, recast,
+   prompt, praise-effort, check-understanding), optimize for **student
+   talk-time**, ask-don't-tell under uncertainty. → P4 (upgrades the existing
+   fine-tune plan).
+6. **Repair ladder with agent self-attribution** — children blame themselves
+   and hyperarticulate when agents fail (IDC 2024); Tuki owns the miss ("My
+   ears missed that!") then: confirm-what-I-heard → targeted re-ask → offer
+   choices → move on. → P1 (cheap, direct).
+7. **Morphological-awareness mini-lessons** (un-, re-, -ed, -ing, -er) —
+   d≈0.33 literacy, larger for language learners; content rules, zero compute.
+   → P2.
+8. **Productive retrieval + narrow lexical recycling**: FSRS decides *when*,
+   these decide *how* — say/produce the form (generation effect), and each
+   topic pack deliberately recycles its ~150 target words across stories,
+   tasks, and conversation. → P2/P3.
+9. **Precision-first correction discipline**: tune GEC for high precision
+   (F0.5), never "correct" a correct utterance; verifier pass + RAG grounding
+   for any factual claim (2–4B models hallucinate 4–5× frontier rates — keep
+   facts and skill state out of free generation). → P3/P4, reliability core.
+10. **TBLT info-gap task design** for topic packs (goal + information gap the
+    learner must close by speaking — negotiation-of-meaning is where
+    acquisition happens), plus **exact task repetition, spaced** for fluency.
+    → P3/Advanced track.
+
+Also noted: a **paired two-kids mode** equals solo learning outcomes while
+being socially warmer (Tai & Chen 2024) — candidate for P5 classroom work; and
+**honest anthropomorphism**: warm social cues aid engagement, but the agent
+never claims feelings or asserts ungrounded facts (kids over-trust).
 
 ## Cross-cutting workstreams (run inside every phase)
 
