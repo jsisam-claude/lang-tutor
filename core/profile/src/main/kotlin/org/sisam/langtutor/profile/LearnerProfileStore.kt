@@ -1,0 +1,76 @@
+package org.sisam.langtutor.profile
+
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.StandardCopyOption
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
+
+interface LearnerProfileStore {
+    val profile: Flow<LearnerProfile>
+    suspend fun current(): LearnerProfile
+    suspend fun update(transform: (LearnerProfile) -> LearnerProfile)
+}
+
+class InMemoryProfileStore(
+    initial: LearnerProfile = LearnerProfile.EMPTY,
+) : LearnerProfileStore {
+
+    private val state = MutableStateFlow(initial)
+    override val profile: StateFlow<LearnerProfile> = state
+
+    override suspend fun current(): LearnerProfile = state.value
+
+    override suspend fun update(transform: (LearnerProfile) -> LearnerProfile) {
+        state.value = transform(state.value)
+    }
+}
+
+/**
+ * JSON file with atomic replace (tmp + move). Plain kotlinx-serialization rather
+ * than DataStore keeps this module pure-JVM and identically testable; DataStore
+ * can replace the impl behind the same interface if IPC-safety ever demands it.
+ */
+class JsonFileProfileStore(
+    private val file: Path,
+    private val json: Json = Json { ignoreUnknownKeys = true; prettyPrint = true },
+) : LearnerProfileStore {
+
+    private val mutex = Mutex()
+    private val state = MutableStateFlow(readFromDisk())
+    override val profile: StateFlow<LearnerProfile> = state
+
+    override suspend fun current(): LearnerProfile = state.value
+
+    override suspend fun update(transform: (LearnerProfile) -> LearnerProfile) {
+        mutex.withLock {
+            val updated = transform(state.value)
+            withContext(Dispatchers.IO) { writeToDisk(updated) }
+            state.value = updated
+        }
+    }
+
+    private fun readFromDisk(): LearnerProfile {
+        if (!Files.exists(file)) return LearnerProfile.EMPTY
+        return runCatching {
+            json.decodeFromString(LearnerProfile.serializer(), Files.readString(file))
+        }.getOrDefault(LearnerProfile.EMPTY)
+    }
+
+    private fun writeToDisk(profile: LearnerProfile) {
+        file.parent?.let(Files::createDirectories)
+        val tmp = file.resolveSibling(file.fileName.toString() + ".tmp")
+        Files.writeString(tmp, json.encodeToString(LearnerProfile.serializer(), profile))
+        try {
+            Files.move(tmp, file, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING)
+        } catch (_: java.nio.file.AtomicMoveNotSupportedException) {
+            Files.move(tmp, file, StandardCopyOption.REPLACE_EXISTING)
+        }
+    }
+}

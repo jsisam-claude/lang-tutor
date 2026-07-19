@@ -31,4 +31,4 @@ rootProject.name = "lang-tutor"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 
-include(":core:llm", ":core:speech")
+include(":core:llm", ":core:speech", ":core:content", ":core:profile")

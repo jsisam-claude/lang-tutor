@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "unit-001",
+  "title": { "en": "Colors and Toys", "he": "צבעים וצעצועים" },
+  "cefrLevel": "pre-A1",
+  "ageBand": "4-6",
+  "activities": [
+    { "type": "vocab", "word": "ball", "translation": { "en": "ball", "he": "כדור" } },
+    { "type": "vocab", "word": "bear", "translation": { "en": "bear", "he": "דוב" } },
+    { "type": "vocab", "word": "red", "translation": { "en": "red", "he": "אדום" } },
+    { "type": "vocab", "word": "blue", "translation": { "en": "blue", "he": "כחול" } },
+    { "type": "repeatAfterMe", "phrase": "I see a red ball!" },
+    { "type": "repeatAfterMe", "phrase": "The bear is blue!" },
+    {
+      "type": "questionAnswer",
+      "prompt": { "en": "What color is the ball?", "he": "איזה צבע הכדור?" },
+      "expectedAnswers": ["red", "it is red", "the ball is red"]
+    }
+  ]
+}
