@@ -1,5 +1,6 @@
 plugins {
-    alias(libs.plugins.android.asset.pack)
+    // Version-less: AGP comes from the root buildscript classpath.
+    id("com.android.asset-pack")
 }
 
 assetPack {

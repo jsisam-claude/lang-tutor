@@ -1,7 +1,10 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.application)
+    // Version-less: AGP is on the root buildscript classpath (see root
+    // build.gradle.kts); a versioned request here would fail with
+    // InvalidPluginRequestException ("already on the classpath").
+    id("com.android.application")
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
