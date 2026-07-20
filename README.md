@@ -47,8 +47,7 @@ Notes:
 - Network policy (scope update 2026-07-19): the app holds INTERNET **only** for
   user-initiated enhancement-pack downloads (Parent Zone → Packs, consent dialog,
   manual update checks only). All network code is confined to `core/packs`'
-  implementation; no telemetry exists anywhere. The demo video predates this
-  change — its claims (works offline, nothing leaves the device) remain true.
+  implementation; no telemetry exists anywhere.
 - Hebrew UI uses `values-iw/` resources (Android's canonical Hebrew qualifier) with
   BCP-47 `he` in `localeConfig`; per-app language switching works from minSdk 31 via
   AppCompat.

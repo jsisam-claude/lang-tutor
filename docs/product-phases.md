@@ -463,6 +463,18 @@ in P3 for every tier, the accuracy stack in P4.
   grounded discussion over bundled topic packs (on-device RAG), rolling
   conversation summaries for long-session coherence, E4B/8B-class model tier.
 
+### Inference-time quality levers (spend latency where teens tolerate it)
+
+Advanced users in text-heavy modes accept 3–5 s — convert that headroom into
+quality: **speculative/MTP decoding** (~2× decode in LiteRT-LM) as the free
+baseline; a hidden **"plan the next tutor move" pass** (30–40 reasoning tokens)
+before the spoken reply; **best-of-two generation for written feedback** (never
+for live speech); and **task formats that shift complexity to the learner**
+(interview mode, "teach Tuki", debate-with-role-cards — asking is easier than
+answering, so a small model performs above its weight). Combined with the
+role-fine-tune (the single highest-ROI lever) and pack-tier models, this is how
+"structured B2 practice" stays honest on 2026 on-device silicon.
+
 **Honest ceiling**: even with all of this, a free-roaming, culturally fluent C1
 companion is beyond 2026 on-device models. *Structured* B2 practice — grounded
 discussion, debates, precision feedback, natural-speed listening — is reachable,

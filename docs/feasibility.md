@@ -377,7 +377,20 @@ checksums verified before activation; per-pack delete is a real removal.
 
 That's the cadence of a thoughtful human tutor, absorbed by a "Tuki is thinking"
 animation. Text-tutor mode streams at/above reading speed. TPU acceleration
-(Pixel 10) and MTP decode are upside, not dependencies.
+(Pixel 10) and MTP decode are upside, not dependencies. From P3, latency
+*masking* (instant backchannel + streaming ASR during speech + early prefill)
+drops the **perceived** gap to ~1–1.5 s without changing the real budget.
+
+### Quality by tier (what each downloaded pack changes)
+
+| Tier | Models in play | What the learner actually notices |
+|---|---|---|
+| **Base install** (~3.6 GB) | Gemma 4 E2B + small EN ASR + TTS | Full curriculum, guided speech loop, 2–4 s turns — complete product, offline forever |
+| **+ Quality pack** (E4B, 16 GB devices) | E4B replaces E2B | Noticeably richer conversation, better feedback phrasing, stronger Hebrew scaffolding candidate |
+| **+ ASR Pro** (~1 GB) | large-v3-turbo-class EN ASR | Off-script free talk: roughly half the recognition misses; unlocks confident teen conversation |
+| **+ Hebrew ASR** (~1 GB) | ivrit.ai turbo | The youngest kids can answer in Hebrew; true bilingual turns |
+| **+ Voices & HVPT** (~400 MB) | Extra TTS voices + multi-talker audio | Listening variety at natural speed; the highest-evidence pronunciation training mode |
+| **+ Advanced 8B** (experimental, ~5 GB) | 8B-class conversation model | B2-track depth — richer topical range and longer coherent discussions (Pixel 10/TPU bet) |
 
 ### Quality expectations, candidly
 
