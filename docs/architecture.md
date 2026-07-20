@@ -54,8 +54,10 @@ Key properties:
 - **Dual channel**: `onMicPressed/onMicReleased` (speech) and `onTextSubmitted`
   (text) converge on the same `DialoguePolicy` — the text tutor is not a separate
   product.
-- **No INTERNET permission**, force-removed at manifest-merge time
-  (`tools:node="remove"`), so no dependency can smuggle it back in.
+- **Network confined to one module** (scope update 2026-07-19): INTERNET exists
+  solely for user-initiated enhancement-pack downloads via `core/packs`
+  (consent dialog + manual-only update checks); no telemetry, nothing uploaded.
+  The base experience never touches the network.
 
 ## A speech turn (P1 target ≤4 s p50 to first audio)
 
@@ -103,10 +105,11 @@ flowchart TD
     SP[":core:speech — Asr/Tts/Scorer + fakes"]
     CT[":core:content — schema + sample unit"]
     PR[":core:profile — LearnerProfileStore"]
+    PK[":core:packs — PackRepository, user-approved downloads"]
     AP["asset-packs/model_pack — install-time PAD stub"]
 
     APP --> TUT
-    APP --> LLM2 & SP & CT & PR
+    APP --> LLM2 & SP & CT & PR & PK
     TUT --> LLM2 & SP & CT & PR
     APP -.bundle.-> AP
 ```

@@ -2,8 +2,10 @@
 
 **A fully on-device English tutor for Hebrew-speaking children (ages 4–13) on
 Pixel-class Android hardware.** Complete loop: *speech in → on-device LLM → speech
-out*, plus a text tutor for reading/writing — with **no network dependency at
-runtime**. Everything, including model weights, ships in the app package.
+out*, plus a text tutor for reading/writing. The base install (models included)
+**works fully offline forever**; optional quality packs (bigger models, more
+voices, more content) download **only with explicit user approval — no automatic
+update checks, nothing ever uploaded**.
 
 > **Headline feasibility verdict (July 2026): feasible today on Pixel 9/10-class
 > devices.** The full stack — Gemma 4 E2B (Apache 2.0) on LiteRT-LM, kid-tuned
@@ -42,8 +44,11 @@ Requirements: JDK 17+ (21 recommended). The Gradle wrapper is committed.
 CI (`.github/workflows/android-ci.yml`) builds both lanes on every push.
 
 Notes:
-- The app manifest **force-removes the INTERNET permission** (`tools:node="remove"`)
-  — offline isn't a promise, it's a build-time guarantee.
+- Network policy (scope update 2026-07-19): the app holds INTERNET **only** for
+  user-initiated enhancement-pack downloads (Parent Zone → Packs, consent dialog,
+  manual update checks only). All network code is confined to `core/packs`'
+  implementation; no telemetry exists anywhere. The demo video predates this
+  change — its claims (works offline, nothing leaves the device) remain true.
 - Hebrew UI uses `values-iw/` resources (Android's canonical Hebrew qualifier) with
   BCP-47 `he` in `localeConfig`; per-app language switching works from minSdk 31 via
   AppCompat.

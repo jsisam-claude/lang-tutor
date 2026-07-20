@@ -37,11 +37,14 @@ wasn't before — (1) **Gemma 4** (2026-04-02) put a genuinely capable multimoda
 (3) **Phonikud** (2025) solved the Hebrew TTS nikud problem in an on-device,
 commercially-licensable package.
 
-**The honest product claim**: installing from Google Play is itself a network
-download, so the claim is **"zero network after install — no account, no cloud, no
-ongoing data."** A literally-never-online SKU is possible via direct APK
-distribution (no Play size policy applies). The app ships with **no INTERNET
-permission**, making offline a build-time guarantee rather than a promise.
+**The honest product claim** (updated 2026-07-19 scope decision): the **base
+install is complete and works offline forever** — no account, no cloud, no data
+ever leaves the device. The app additionally offers **optional enhancement packs**
+(bigger models, more voices, more content) downloaded **only on explicit user
+approval from the Parent Zone, with manual update checks only — never automatic**.
+The INTERNET permission exists solely for these inbound, user-initiated downloads;
+all network code is confined to one module, and telemetry does not exist. Play's
+Data-safety declaration remains "collects nothing."
 
 ---
 
@@ -333,8 +336,29 @@ Google Play numbers (mid-2026):
 add-on for 16 GB devices, or the direct-APK SKU (sideload has no size policy;
 ZIP64/split APKs; genuinely never-online — also the enterprise/school channel).
 
-Model/content updates ship as app updates (Play delta-patches asset packs) — no
-runtime downloads needed, keeping the offline story intact.
+Model/content updates ship as app updates (Play delta-patches asset packs) — the
+base experience never requires a runtime download.
+
+### Scope update (2026-07-19): user-approved enhancement downloads
+
+The 4 GB per-device ceiling now bounds only the **base install**. An in-app
+**Pack Manager** (Parent Zone, behind the gate) offers optional quality packs
+via one-time, user-approved downloads — chosen over Play on-demand packs to
+allow any source (own CDN/Hugging Face) and the sideload SKU:
+
+| Pack | Payload | Req. | Why |
+|---|---|---|---|
+| LLM Quality (Gemma 4 E4B) | 3.7 GB | 16 GB RAM | Biggest conversation-quality jump |
+| English ASR Pro (large-v3-turbo int8) | ~1 GB | 12 GB | ~Halves off-script WER for teens |
+| Hebrew ASR (ivrit.ai turbo) | ~1 GB | 12 GB | Bilingual turns for L0 kids — pulled forward from P5 |
+| Voices & HVPT audio | ~400 MB | — | Listening variety + multi-talker contrast training |
+| Content packs (readers/topics) | 100–300 MB | — | Library growth without app updates |
+| Advanced 8B (experimental) | ~5 GB | 16 GB | B2-track ceiling raise, Pixel-10-TPU bet |
+
+Policy contract (enforced by design, documented in the manifest and
+`core/packs`): downloads start only from a consent dialog; the **only** update
+path is a manual "check for updates" button; downloads are inbound-only;
+checksums verified before activation; per-pack delete is a real removal.
 
 ---
 
@@ -421,7 +445,7 @@ server costs scaling per user.
 |---|---|---|---|
 | 1 | Kids' ASR accuracy off-script | High | Constrained-first design; P3 fine-tune on commercially-licensed child speech; confidence-gated retry UX; code-switch biasing |
 | 2 | LLM Hebrew quality unproven ❓ | High | P1 gate: self-run Hebrew eval (Gemma 4 E2B vs Phi-4-mini); English-first tutor voice; fixed Hebrew via humans/Phonikud |
-| 3 | Play delivery ceiling (~4 GB/device) | Medium | Budget discipline (§7); on-demand pack fallback; direct-APK SKU; E4B as add-on |
+| 3 | Play delivery ceiling (~4 GB/device) | Low (was Medium) | Ceiling now bounds only the base install; enhancement packs arrive via the user-approved in-app Pack Manager (§7 scope update) |
 | 4 | Thermal/battery on long sessions | Medium | Turn-based architecture, session caps, engine unload; matches child attention spans anyway |
 | 5 | Play GenAI-for-kids review bar | Medium | Safety layers + documented red-teaming from P1; report flow; Teacher Approved track |
 | 6 | Hebrew TTS quality perception | Medium | Pre-recorded human audio for all fixed lines; Phonikud only for dynamic text; parent-audible quality demo pre-purchase |

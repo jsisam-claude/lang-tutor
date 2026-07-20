@@ -263,6 +263,11 @@ help for ages 6+.
   data acquisition — the two riskiest tech items no longer land together.
 - **Content authoring tooling v1**: scripts + validators for the unit schema
   (the content-ops workstream's first real tooling).
+- **Pack Manager** (scope update 2026-07-19): parent-zone, consent-gated
+  downloads of enhancement packs (E4B quality LLM, ASR Pro, Hebrew ASR, voices/
+  HVPT audio, content packs) with **manual-only** update checks. Unlocks
+  top-tier models years earlier than the Play-only plan; the base install
+  stays complete and offline-forever.
 
 **Exit criteria**: a non-reading 6-year-old can progress L1→L2 start without a
 parent reading instructions aloud; SRS retention metrics live; readers' audio sync
@@ -342,8 +347,9 @@ retention +20% and vocabulary growth/week +25% vs the P3 cohort
   comprehension checks.
 - **Offline parent reports**: weekly on-device report (minutes, words, phoneme
   progress, error trends) with optional manual PDF export; nothing transmitted.
-- **E4B quality tier**: optional post-install add-on (or direct-APK SKU) for 16 GB
-  devices — better generation quality where RAM allows; runtime model picker.
+- **E4B quality tier**: downloadable from P2 via the Pack Manager (16 GB
+  devices); P4 makes it the default-when-installed with a runtime model picker,
+  and adds the experimental 8B pack for the advanced track.
 - Thermal/battery adaptive scheduler: decode-rate throttling and TTS pre-render
   when device is warm.
 - **"What Tuki remembers" screen**: parent-visible learner memory with per-item
@@ -488,5 +494,7 @@ it actually serves, not the 4–13 end-state.
 | P4 | Learner-model logic (code), story art library; optional E4B add-on | +200 MB (+3.7 GB opt.) |
 | P5 | Per-L1 packs, optional Hebrew ASR pack (~1 GB), tablet assets | modular, on-demand packs |
 
-Play's ~4 GB per-device budget holds through P3 with content discipline; P4+
-optional packs use on-demand delivery or the direct-APK channel.
+Play's ~4 GB per-device budget bounds the **base install** only (holds through
+P3 with content discipline). From P2, the user-approved **Pack Manager** carries
+everything above it — quality LLM tiers, extra ASR models, voices, and content —
+with manual-only updates (see feasibility §7 scope update).
