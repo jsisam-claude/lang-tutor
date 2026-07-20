@@ -1,0 +1,89 @@
+{
+  "catalogVersion": 1,
+  "packs": [
+    {
+      "id": "llm-quality-e4b",
+      "version": 1,
+      "nameEn": "Better Conversations (E4B)",
+      "nameHe": "שיחות טובות יותר (E4B)",
+      "descriptionEn": "A larger tutor brain (Gemma 4 E4B). Noticeably richer conversation and feedback. Recommended for 16GB devices.",
+      "descriptionHe": "מוח גדול יותר לתוקי (Gemma 4 E4B). שיחות ומשוב עשירים יותר. מומלץ למכשירי 16GB.",
+      "kind": "llm",
+      "sizeBytes": 3660000000,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "url": "https://packs.example.org/llm-quality-e4b-v1.litertlm",
+      "minRamGb": 16,
+      "experimental": false
+    },
+    {
+      "id": "asr-en-pro",
+      "version": 1,
+      "nameEn": "Sharper English Hearing",
+      "nameHe": "שמיעה חדה יותר באנגלית",
+      "descriptionEn": "A stronger English speech recognizer for free conversation — roughly halves recognition mistakes off-script.",
+      "descriptionHe": "מזהה דיבור חזק יותר לשיחה חופשית — מפחית כמחצית מטעויות הזיהוי מחוץ לתסריט.",
+      "kind": "asr",
+      "sizeBytes": 1000000000,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "url": "https://packs.example.org/asr-en-pro-v1.bin",
+      "minRamGb": 12,
+      "experimental": false
+    },
+    {
+      "id": "asr-he",
+      "version": 1,
+      "nameEn": "Hebrew Speech Understanding",
+      "nameHe": "הבנת דיבור בעברית",
+      "descriptionEn": "Lets young children answer Tuki in Hebrew during early lessons (ivrit.ai model).",
+      "descriptionHe": "מאפשר לילדים צעירים לענות לתוקי בעברית בשיעורים הראשונים (מודל ivrit.ai).",
+      "kind": "asr",
+      "sizeBytes": 1000000000,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "url": "https://packs.example.org/asr-he-v1.bin",
+      "minRamGb": 12,
+      "experimental": false
+    },
+    {
+      "id": "voices-hvpt",
+      "version": 1,
+      "nameEn": "More Voices & Listening Drills",
+      "nameHe": "עוד קולות ותרגילי האזנה",
+      "descriptionEn": "Extra English voices for listening variety plus multi-speaker sound-contrast training sets.",
+      "descriptionHe": "קולות נוספים באנגלית לגיוון בהאזנה, וסטים רב-דוברים לאימון הבחנה בין צלילים.",
+      "kind": "tts",
+      "sizeBytes": 400000000,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "url": "https://packs.example.org/voices-hvpt-v1.zip",
+      "minRamGb": 0,
+      "experimental": false
+    },
+    {
+      "id": "content-readers-1",
+      "version": 1,
+      "nameEn": "Story Library 1",
+      "nameHe": "ספריית סיפורים 1",
+      "descriptionEn": "Twenty additional read-along books with synced audio.",
+      "descriptionHe": "עשרים ספרונים נוספים עם הקראה מסונכרנת.",
+      "kind": "content",
+      "sizeBytes": 250000000,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "url": "https://packs.example.org/content-readers-1-v1.zip",
+      "minRamGb": 0,
+      "experimental": false
+    },
+    {
+      "id": "llm-advanced-8b",
+      "version": 1,
+      "nameEn": "Advanced Tutor (8B, experimental)",
+      "nameHe": "מורה מתקדם (8B, ניסיוני)",
+      "descriptionEn": "The largest tutor model for advanced conversation practice. Experimental; best on Pixel 10 with 16GB.",
+      "descriptionHe": "המודל הגדול ביותר לתרגול שיחה מתקדם. ניסיוני; מיטבי ב-Pixel 10 עם 16GB.",
+      "kind": "llm",
+      "sizeBytes": 5000000000,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "url": "https://packs.example.org/llm-advanced-8b-v1.litertlm",
+      "minRamGb": 16,
+      "experimental": true
+    }
+  ]
+}
