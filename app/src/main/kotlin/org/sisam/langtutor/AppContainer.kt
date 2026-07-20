@@ -6,6 +6,8 @@ import kotlinx.coroutines.CoroutineScope
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.llm.FakeLlmEngine
+import org.sisam.langtutor.packs.FakePackRepository
+import org.sisam.langtutor.packs.PackRepository
 import org.sisam.langtutor.profile.JsonFileProfileStore
 import org.sisam.langtutor.profile.LearnerProfileStore
 import org.sisam.langtutor.speech.FakeAsrEngine
@@ -25,6 +27,9 @@ class AppContainer(context: Context) {
 
     val profile: LearnerProfileStore =
         JsonFileProfileStore(File(context.filesDir, "profile.json").toPath())
+
+    // User-approved enhancement downloads; fake here, real downloader later.
+    val packs: PackRepository = FakePackRepository()
 
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator = TutorOrchestrator(
         llm = FakeLlmEngine(),

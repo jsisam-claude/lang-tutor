@@ -33,4 +33,19 @@
     <string name="parent_offline_note">Everything stays on this device. The app has no internet permission.</string>
     <string name="parent_language_hebrew">עברית</string>
     <string name="parent_language_english">English</string>
+
+    <string name="packs_title">Enhancement packs</string>
+    <string name="packs_policy_note">Downloads happen only when you approve them. Nothing is ever uploaded, and there are no automatic update checks.</string>
+    <string name="packs_download">Download</string>
+    <string name="packs_delete">Remove</string>
+    <string name="packs_installed">Installed ✓</string>
+    <string name="packs_verifying">Verifying…</string>
+    <string name="packs_failed">Download failed</string>
+    <string name="packs_check_updates">Check for updates</string>
+    <string name="packs_updates_none">Everything is up to date</string>
+    <string name="packs_updates_found">%1$d update(s) available — download from the list above</string>
+    <string name="packs_consent_title">Download this pack?</string>
+    <string name="packs_consent_body">%1$s (%2$s) will be downloaded once, over your current connection. You can remove it anytime.</string>
+    <string name="packs_consent_confirm">Download</string>
+    <string name="packs_consent_cancel">Not now</string>
 </resources>

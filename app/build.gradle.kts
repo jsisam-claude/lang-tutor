@@ -61,6 +61,7 @@ kotlin {
 
 dependencies {
     implementation(projects.core.tutor)
+    implementation(projects.core.packs)
     implementation(projects.core.llm)
     implementation(projects.core.speech)
     implementation(projects.core.content)

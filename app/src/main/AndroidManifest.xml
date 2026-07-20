@@ -2,9 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Enforced-offline guarantee: strip INTERNET even if a future library's
-         manifest tries to merge it in. -->
-    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+    <!-- Network policy (scope decision 2026-07-19): INTERNET is used ONLY for
+         user-initiated enhancement-pack downloads (Parent Zone → Packs, behind
+         a consent dialog). No telemetry, no automatic update checks, nothing
+         is ever uploaded. All network code lives in :core:packs'
+         implementation — no other module may touch the network.
+         See docs/feasibility.md §7. -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 

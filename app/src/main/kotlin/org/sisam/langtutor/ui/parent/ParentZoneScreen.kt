@@ -90,6 +90,8 @@ private fun ParentDashboard(container: AppContainer) {
                 Text(stringResource(R.string.parent_language_english))
             }
         }
+
+        PacksSection(container)
     }
 }
 
