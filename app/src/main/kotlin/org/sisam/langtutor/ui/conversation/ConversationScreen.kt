@@ -18,7 +18,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -73,6 +76,14 @@ fun ConversationScreen(container: AppContainer) {
     val state by viewModel.state.collectAsState()
     val transcript by viewModel.transcript.collectAsState()
     var draft by remember { mutableStateOf("") }
+
+    // The platform ASR shim needs the mic; ask once when the screen opens.
+    val micPermission = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { }
+    LaunchedEffect(Unit) {
+        micPermission.launch(android.Manifest.permission.RECORD_AUDIO)
+    }
 
     Column(
         modifier = Modifier

@@ -5,23 +5,28 @@ import java.io.File
 import kotlinx.coroutines.CoroutineScope
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
+import org.sisam.langtutor.engine.PlatformAsrEngine
+import org.sisam.langtutor.engine.PlatformTtsEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.packs.FakePackRepository
 import org.sisam.langtutor.packs.PackRepository
 import org.sisam.langtutor.profile.JsonFileProfileStore
 import org.sisam.langtutor.profile.LearnerProfileStore
-import org.sisam.langtutor.speech.FakeAsrEngine
 import org.sisam.langtutor.speech.FakePronunciationScorer
-import org.sisam.langtutor.speech.FakeTtsEngine
 import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
 import org.sisam.langtutor.tutor.TutorOrchestrator
 
 /**
- * Manual composition root. The scaffold wires FAKE engines so the whole app runs
- * with zero model weights; swapping in real engines (LiteRT-LM, sherpa-onnx,
- * Phonikud) later touches only this file.
+ * Manual composition root — the single swap point for engines.
+ *
+ * Current wiring: REAL speech via the platform dev shims (on-device
+ * SpeechRecognizer + TextToSpeech) so the voice loop works on a phone today;
+ * the LLM stays scripted until the bundled model engine (LiteRT-LM + model
+ * pack) lands here.
  */
 class AppContainer(context: Context) {
+
+    private val appContext = context.applicationContext
 
     val content: ContentRepository = ResourceContentRepository()
 
@@ -33,8 +38,8 @@ class AppContainer(context: Context) {
 
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator = TutorOrchestrator(
         llm = FakeLlmEngine(),
-        asr = FakeAsrEngine(),
-        tts = FakeTtsEngine(),
+        asr = PlatformAsrEngine(appContext),
+        tts = PlatformTtsEngine(appContext),
         scorer = FakePronunciationScorer(),
         content = content,
         profile = profile,
