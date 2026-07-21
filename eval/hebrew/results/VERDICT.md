@@ -1,5 +1,31 @@
 # Hebrew Eval — Verdict (runs 2026-07-21/22)
 
+## FINAL GRID: E4B at ship-grade int4 PASSES COMFORTABLY (4.45)
+
+| Candidate | Corr | Register | Pedagogy | Gate |
+|---|---|---|---|---|
+| **Gemma 4 E4B @ QAT q4_0** (quality pack) | **4.45** | 4.55 | 4.40 | **PASS ✓✓** |
+| Gemma 4 E2B @ Q8_0 (~4.7 GB) | 4.20 | 4.35 | 3.85 | PASS (borderline) |
+| Gemma 4 E2B @ QAT q4_0 (base install) | 3.73 | 4.03 | 3.42 | FAIL |
+| DictaLM-3.0-1.7B @ Q4_K_M | 3.38 | 3.98 | 2.42 | FAIL |
+| Phi-4-mini @ Q4_K_M | 1.62 | 2.52 | 1.68 | FAIL |
+
+Both axes matter and neither alone told the story: **size** (E4B fixed the two
+content flaws E2B got wrong at every precision — the a/an vowel rule and
+"I *have been* here since Sunday") and **precision** (Q8 rescued E2B from its
+q4_0 word-salad failures). E4B passes at the exact mobile artifact grade
+(Google QAT int4), with every category ≥4.0 except recast (4.00 — at gate).
+
+**Product decision this supports**
+- **Quality pack (16 GB devices): dynamic Hebrew ON** via E4B QAT int4 —
+  pending native-speaker audit + on-device LiteRT spot-check.
+- **Base install (E2B int4): template Hebrew** until the Q5/Q6/Hebrew-imatrix
+  experiment finds a passing quant that fits the 4 GB budget.
+- DictaLM-12B result (pending) is now Advanced-pack-academic: E4B already
+  passes at half the size with a clean Apache license.
+
+
+
 ## BREAKTHROUGH: Gemma 4 E2B at Q8_0 **PASSES the gate** — the deficit was largely quantization damage
 
 | Gemma 4 E2B | q4_0 (QAT) | **Q8_0** | Δ | Gate |
