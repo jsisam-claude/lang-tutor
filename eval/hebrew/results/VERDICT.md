@@ -1,4 +1,39 @@
-# Hebrew Eval — Verdict (run 2026-07-21)
+# Hebrew Eval — Verdict (runs 2026-07-21)
+
+## Update: third candidate — DictaLM-3.0-1.7B-Instruct (Q4_K_M) — also FAILS, differently
+
+| | Gemma 4 E2B | **DictaLM 1.7B** | Phi-4-mini | Gate |
+|---|---|---|---|---|
+| Correctness | **3.73** | 3.38 | 1.62 | ≥4.0 |
+| Register (fluency) | 4.03 | **3.98 (min 3 — never breaks)** | 2.52 | ≥3.5 |
+| Pedagogy | **3.42** | 2.42 | 1.68 | — |
+| Faithfulness | **3.38** | 2.52 | 1.75 | — |
+
+**The decisive insight: language competence and task competence are separable.**
+Dicta's Hebrew-targeted continued-pretraining worked — DictaLM's Hebrew never
+collapses into morphology soup (register floor of 3, best of all three) — but a
+1.7B brain cannot do the tutoring *job*: it validated learner errors twice,
+taught "She is more tall than you" as an acceptable form, hallucinated pack
+content, and made semantic word-swaps (bear→duck, purple→"gray",
+umbrella→"a flag named fountain"). Gemma has the opposite profile: the job
+skills, with wobblier Hebrew.
+
+Consequences:
+1. **Contingency stands** — P1 ships templated Hebrew + human audio.
+2. The Hebrew-sidecar idea (1.7B next to Gemma) is **dead for open generation**;
+   at most a narrow template-adjacent role.
+3. The adaptation plan is *strengthened*: the goal is Dicta-style Hebrew data
+   inside Gemma-scale task competence — either the planned Gemma Hebrew LoRA,
+   or **DictaLM-3.0-12B** (Dicta Hebrew on a Nemotron brain; ~6.5GB int4 =
+   Advanced-pack-sized; NVIDIA open-model license to be reviewed) — both
+   testable in this same harness. Also worth one run: Gemma 4 **E4B**.
+4. Sidenote: DictaLM's *Thinking* variant is unusable at tutor token budgets —
+   38/40 replies consumed the whole budget reasoning (in fluent Hebrew) without
+   ever answering.
+
+---
+
+# Original verdict (Gemma vs Phi)
 
 **Setup**: the exact ship-grade quantizations — Google's QAT q4_0 GGUF of
 **Gemma 4 E2B** (3.2 GB) and **Phi-4-mini-instruct Q4_K_M** (2.4 GB) — served
