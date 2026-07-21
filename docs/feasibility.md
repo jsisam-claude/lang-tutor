@@ -125,14 +125,18 @@ July 2026 Pixel-10-TPU-optimized build. **E4B** is the quality tier where RAM an
 distribution allow (see §8 — it does *not* fit Play's per-device budget alongside
 the speech stack; it becomes an optional add-on).
 
-**The Hebrew question (top-3 risk)**: no small model publishes a Hebrew benchmark.
-Gemma 4 very likely covers Hebrew (140+ languages pretrained) but unverified ❓;
-Phi-4-mini *documents* Hebrew (MIT-licensed fallback); Qwen3 has a filed quality
-complaint. **Phase 1 includes a self-run Hebrew eval** (tutor-domain prompts:
-instructions, translations, error explanations — scored by Hebrew speakers) before
-committing. Mitigation baked into the design: the tutor **speaks English by
-default**; Hebrew appears mostly as *fixed UI strings and pre-recorded audio*, with
-LLM-generated Hebrew limited to short scaffolding sentences.
+**The Hebrew question — RESOLVED by the eval (2026-07-21, see
+`eval/hebrew/results/VERDICT.md`)**: both candidates **failed the pre-registered
+gate** on ship-grade int4 quants. Phi-4-mini — the only model *documenting*
+Hebrew — produced largely broken Hebrew with cross-language leakage
+(correctness 1.62/5): disqualified. Gemma 4 E2B scored 3.73/5 (gate: ≥4.0) —
+clearly better, excellent at translation scaffolds (4.6) and bilingual turns
+(4.15), but with wrong grammar explanations and occasional broken productions.
+**Contingency adopted: P1 ships zero dynamic Hebrew** — templates +
+pre-recorded human audio only; the tutor converses in English (whose quality
+was consistently clean in the same run). Path to unlock: Hebrew-targeted LoRA
+in the P4 fine-tune, re-gated by the same harness; translate-scaffold is the
+first category likely to pass.
 
 ### Runtime
 
@@ -457,7 +461,7 @@ server costs scaling per user.
 | # | Risk | Severity | Mitigation |
 |---|---|---|---|
 | 1 | Kids' ASR accuracy off-script | High | Constrained-first design; P3 fine-tune on commercially-licensed child speech; confidence-gated retry UX; code-switch biasing |
-| 2 | LLM Hebrew quality unproven ❓ | High | P1 gate: self-run Hebrew eval (Gemma 4 E2B vs Phi-4-mini); English-first tutor voice; fixed Hebrew via humans/Phonikud |
+| 2 | LLM Hebrew quality | ~~High~~ Resolved | Eval run 2026-07-21: both models failed the gate → contingency adopted (zero dynamic Hebrew in P1; templates + human audio; English tutor voice). Re-gate after the P4 Hebrew LoRA. |
 | 3 | Play delivery ceiling (~4 GB/device) | Low (was Medium) | Ceiling now bounds only the base install; enhancement packs arrive via the user-approved in-app Pack Manager (§7 scope update) |
 | 4 | Thermal/battery on long sessions | Medium | Turn-based architecture, session caps, engine unload; matches child attention spans anyway |
 | 5 | Play GenAI-for-kids review bar | Medium | Safety layers + documented red-teaming from P1; report flow; Teacher Approved track |

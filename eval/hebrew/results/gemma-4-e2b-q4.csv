@@ -1,0 +1,77 @@
+﻿id,category,model,prompt,response,latency_s,score_correctness,score_register,score_pedagogy,score_faithful,flags,notes
+instr-01,instructions,gemma-4-e2b-q4,"אתה תוקי, תוכי חביב שמלמד ילדים אנגלית. כתוב הוראה קצרה בעברית (עד 15 מילים) לילדה בת 6 שצריכה להצביע על הכדור האדום בתמונה. אל תתרגם את המילה ball.",תסתכלי! הצבע האדום. תצבי על הball.,3.86,2,3,3,3,,"[first-pass: Claude] broken imperative 'תצבי', mixed-script 'הball'"
+instr-02,instructions,gemma-4-e2b-q4,"אתה תוקי, מורה לאנגלית לילדים. הסבר בעברית פשוטה לילד בן 5 מה עושים בתרגיל: שומעים מילה באנגלית ובוחרים את התמונה הנכונה מתוך שלוש. עד שני משפטים.","היי! בוא נראה איך זה קורה.
+
+אתה שומע מילה באנגלית, כמו ""dog"".
+אז אתה מסתכל על שלוש תמונות.
+אתה בוחר את התמונה של הכלב 🐶.
+
+זה קל! ננסה!",7.38,4,5,4,2,,[first-pass: Claude] good but 3x over length limit
+instr-03,instructions,gemma-4-e2b-q4,"כתוב בעברית הוראה חמה לילדה בת 7 לפני תרגיל הקלטה: היא צריכה להחזיק את הכפתור, לומר את המשפט ""I like apples"", ולשחרר. עד 20 מילים, בלי לתרגם את המשפט.","היי! בואי נתאמן. תני לי את הכפתור.
+
+עכשיו, תגידי: ""I like apples"".
+
+וזהו! שחררי. יופי!",5.53,3,4,2,3,,[first-pass: Claude] instruction meaning wrong: 'give me the button'
+instr-04,instructions,gemma-4-e2b-q4,"אתה תוקי. ילד בן 8 מתחיל היום פרק חדש על בעלי חיים באנגלית. כתוב משפט פתיחה אחד בעברית שמלהיב אותו, וציין באנגלית את שם הפרק: Animals.","היי חברים! היום נלמד על בעלי חיים. הפרק שלנו הוא ""Animals"".",2.92,5,5,5,5,,[first-pass: Claude]
+instr-05,instructions,gemma-4-e2b-q4,"נסח בעברית תזכורת עדינה לילדה שמדברת מהר מדי בתרגיל הגייה: להאט ולומר כל מילה בנפרד. משפט אחד, טון מעודד.","""Let's go slow! Say each word one by one. You can do it!""",2.62,3,4,4,1,english-leak,"[first-pass: Claude] Hebrew requested, replied in English"
+recast-01,recast,gemma-4-e2b-q4,"אתה תוקי, מורה לאנגלית לילדים. הילד אמר באנגלית: ""He go to school"". תקן בעדינות בשיטת recast: שבח קצר בעברית, אמור את המשפט הנכון באנגלית, ואז שאלה קצרה אחת באנגלית. אסור לומר לו שטעה.",איזה יופי! אתה יודע להגיד. הוא הולך לבית הספר. Do you go to school?,3.67,3,4,2,3,,"[first-pass: Claude] recast given in Hebrew, not English"
+recast-02,recast,gemma-4-e2b-q4,"הילדה אמרה: ""I have three cat"". הגב כתוקי: משפט עידוד בעברית + המשפט הנכון באנגלית + שאלת המשך אחת פשוטה באנגלית. בלי המילה טעות.",יש לך שלושה חתולים. You have three cats. How many cats do you see?,2.78,4,3,3,3,,"[first-pass: Claude] encouragement missing, recast correct"
+recast-03,recast,gemma-4-e2b-q4,"ילד בן 9 אמר: ""Yesterday I play football"". הגב בעברית ואנגלית בשיטת recast (עידוד, ניסוח נכון, שאלה אחת). קצר.","You mean: ""Yesterday I **played** football."" Can you say that?",2.35,4,4,3,3,,[first-pass: Claude] no Hebrew encouragement as requested
+recast-04,recast,gemma-4-e2b-q4,"הילדה אמרה: ""She is more taller than me"". תקן בעדינות כתוקי: עידוד בעברית, המשפט הנכון באנגלית, שאלה קצרה באנגלית.","תפסיקי. ""She is taller than me.""",2.01,4,1,2,2,harsh-tone,[first-pass: Claude] opens with 'תפסיקי' (stop it!) to a child
+recast-05,recast,gemma-4-e2b-q4,"ילד אמר: ""I am agree with you"". הגב בשיטת recast — עברית לעידוד, אנגלית לניסוח הנכון ולשאלת המשך. עד שלושה משפטים סך הכול.","אתה אומר שאתה מסכים! (You mean you agree!)
+אפשר לומר: ""I agree with you."" (This is a good way to say it.)
+מה אתה חושב על זה? (What do you think about that?)",6.73,3,3,3,2,,"[first-pass: Claude] cluttered parentheses, no clean recast"
+explain-01,error-explain,gemma-4-e2b-q4,"הסבר בעברית פשוטה לילד בן 10 למה באנגלית אומרים ""He goes"" ולא ""He go"". עד שלושה משפטים, בלי מונחים בלשניים.","אנחנו אומרים ""He goes"" כי זה צורה נכונה בעברית. כשמדברים באנגלית, אנחנו משנים את המילה לפי מי מדבר. עבור ""he"", אנחנו מוסיפים ""-es"". כך זה הופך ל-""goes"".",6.36,2,4,2,3,,[first-pass: Claude] states nonsense reason 'correct form in Hebrew'
+explain-02,error-explain,gemma-4-e2b-q4,"ילדה בת 11 שואלת למה אומרים ""an apple"" אבל ""a banana"". הסבר בעברית קצרה וברורה, עם שתי דוגמאות באנגלית.","זה קל! ""An apple"" (תפוח) ו-""a banana"" (בננה). זה פשוט כי כל פרי שונה.
+
+Here are two examples:
+1. I have **an apple**. (יש לי תפוח.)
+2. She likes **a banana**. (היא אוהבת בננה.)",8.11,4,4,1,3,,"[first-pass: Claude] rule WRONG: says a/an depends on fruit, not vowel sound"
+explain-03,error-explain,gemma-4-e2b-q4,"הסבר בעברית לילד דובר עברית למה ""I am here since Sunday"" לא נכון ומה אומרים במקום. פשוט, עד שלושה משפטים.","אתה יכול להגיד: ""אני כאן מאז יום ראשון."" זה נשמע טוב.
+
+במקום זאת, אפשר לומר: ""אני כאן כבר הרבה זמן, מאז יום ראשון."" זה מראה כמה אתה כאן!",6.84,3,4,1,2,,"[first-pass: Claude] validates the incorrect form, never gives correction"
+explain-04,error-explain,gemma-4-e2b-q4,"ילדה כתבה ""the car red"". הסבר בעברית, בפשטות ובחום, שבאנגלית התיאור בא לפני שם העצם, עם דוגמה אחת באנגלית.","התיאור בא לפני השם! כמו שאנחנו אומרים: ""The red car"".
+
+(It means the car is red.)",3.72,4,4,4,4,,[first-pass: Claude]
+explain-05,error-explain,gemma-4-e2b-q4,"הסבר בעברית לילד בן 12 את ההבדל בין ""I do my homework"" ל-""I am doing my homework"" — מתי משתמשים בכל אחד. עד ארבעה משפטים פשוטים.","""I do my homework"" (אני עושה שיעורי בית) – משתמשים כשמדברים על פעולה שאתה עושה כרגע או באופן כללי. ""I am doing my homework"" (אני עושה שיעורי הבית עכשיו) – משתמשים כדי להגיד מה קורה ממש ברגע זה. אפשר להשתמש בשניהם!",9.7,4,4,3,4,,"[first-pass: Claude] slightly muddled boundary, then 'both fine'"
+praise-01,praise-next,gemma-4-e2b-q4,אתה תוקי. הילדה סיימה עכשיו לקרוא בקול משפט שלם באנגלית בפעם הראשונה. כתוב לה שבח קצר ולבבי בעברית (משפט אחד) ואז שאלה קלה אחת באנגלית שממשיכה את השיחה על הסיפור.,איזה כיף! את קוראת כל כך יפה! What is your favorite animal?,2.91,5,5,5,5,,[first-pass: Claude]
+praise-02,praise-next,gemma-4-e2b-q4,"הילד ענה נכון על שלוש שאלות ברצף. שבח אותו בעברית בלי הגזמה (משפט אחד), והצע באנגלית את האתגר הבא: לספר משפט על החיה האהובה עליו.","כל הכבוד! עשית את זה ממש טוב.
+
+Now, tell me one sentence about your favorite animal.",3.1,5,5,5,5,,[first-pass: Claude]
+praise-03,praise-next,gemma-4-e2b-q4,"ילדה בת 5 הצליחה סוף סוף לומר את הצליל th אחרי הרבה ניסיונות. כתוב תגובה נלהבת וקצרה בעברית, מותאמת לגיל 5.",וואו! יופי! את עשית את זה! 🎉 תהיי גאונה!,2.81,4,4,4,4,,[first-pass: Claude] 'תהיי גאונה' slightly odd
+praise-04,praise-next,gemma-4-e2b-q4,הילד התאמץ אבל לא הצליח בתרגיל. כתוב בעברית משפט אחד שמשבח את המאמץ (לא את התוצאה) ומזמין אותו לנסות שוב מחר. חם ולא מאכזב.,"אתה עשית את זה ממש טוב! בוא ננסה שוב מחר, אוכל להיות כאן איתך.",3.49,4,4,2,3,,[first-pass: Claude] praises result not effort; child actually failed
+praise-05,praise-next,gemma-4-e2b-q4,סיום שיעור: הילדה למדה היום 4 מילים חדשות באנגלית על צבעים. כתוב סיכום קצר ושמח בעברית (עד שני משפטים) שמזכיר מילה אחת באנגלית שהיא למדה: purple.,"היום למדנו ארבע מילים חדשות! קודם, למדנו שצבע יפה הוא **purple**. כל הכבוד לכולכם!",4.5,3,4,3,3,,"[first-pass: Claude] clunky phrasing, plural address to one child"
+parent-01,parent,gemma-4-e2b-q4,"כתוב להורים, בעברית תקנית וחמה, שתי שורות לדוח השבועי: הילד תרגל 96 דקות השבוע, למד 12 מילים חדשות, והצליל th עדיין דורש תרגול.","היי להורים,
+
+השבוע הילד תרגל 96 דקות. למד 12 מילים חדשות. הצליל th עדיין דורש תרגול קצת. 😊",5.75,3,4,4,4,,[first-pass: Claude] 'דורש תרגול קצת' word order broken
+parent-02,parent,gemma-4-e2b-q4,"נסח בעברית הודעה קצרה להורים שמסבירה שהאפליקציה עובדת לגמרי בלי אינטרנט ושום הקלטה לא נשלחת החוצה. עד שלושה משפטים, בלי שפה שיווקית מוגזמת.","האפליקציה עובדת בלי אינטרנט. אפשר להשתמש בה גם כשאין חיבור לרשת.
+חשוב לזכור שכל הקלטות לא נשלחות החוצה בדרך זו.
+אנחנו ממשיכים לעבוד על שיפור האפליקציה.",7.95,3,4,3,3,,[first-pass: Claude] 'בדרך זו' awkward; unrequested marketing line
+parent-03,parent,gemma-4-e2b-q4,"כתוב בעברית טקסט קצר למסך אישור הורדה של חבילת שדרוג בשם ""שיחות טובות יותר"" בגודל 3.7GB: מה היא נותנת ושאפשר להסיר בכל רגע. עד שלושה משפטים.","ברוך הבא ל""שיחות טובות יותר""! חבילת השדרוג הזו מוסיפה לך הרבה תוכן חדש ומצחיק. תמיד אפשר להסיר דברים שאתה לא רוצה, בכל רגע!",6.41,4,3,2,2,,[first-pass: Claude] describes wrong pack content; addresses child not parent
+parent-04,parent,gemma-4-e2b-q4,"נסח בעברית עצה קצרה להורים: איך לעודד ילד ביישן לדבר אנגלית עם תוקי — בלי לחץ, חמש דקות ביום. עד שלושה משפטים.","תוקי אומר: ""כל יום, נשאר חמש דקות. נשמח לשחק ולדבר! זה כיף!""",3.89,3,3,2,2,,[first-pass: Claude] gives a Tuki quote instead of parent advice
+parent-05,parent,gemma-4-e2b-q4,"כתוב בעברית שורה אחת עניינית להורה: הילדה עברה היום לרמה 2 (""קוראים ומספרים"") אחרי שסיימה את כל יחידות רמה 1.","הילדה סיימה היום את רמה 1 ועברה לרמה 2 (""קוראים ומספרים"").",3.27,5,5,5,5,,[first-pass: Claude]
+translate-01,translate-scaffold,gemma-4-e2b-q4,"תרגם לעברית פשוטה שמתאימה לילד בן 6 את המשפט: ""The little bear can't find his way home.""",הדוב הקטן לא מוצא את הדרך הביתה.,2.21,5,5,5,5,,[first-pass: Claude]
+translate-02,translate-scaffold,gemma-4-e2b-q4,"הילד לא הבין את השאלה ""What is your favorite season?"". תרגם את השאלה לעברית פשוטה, ואז חזור עליה באנגלית.","איזו עונה היא הכי אהובה עליך?
+
+What is your favorite season?",2.68,5,5,5,5,,[first-pass: Claude]
+translate-03,translate-scaffold,gemma-4-e2b-q4,"פשט את המשפט האנגלי ""Put the toys back where they belong"" לגרסה קלה יותר באנגלית לילד מתחיל, ואז תן רמז בעברית (לא תרגום מלא).","Put toys away.
+
+(מצא את המקום הנכון.)",1.98,4,4,4,4,,[first-pass: Claude]
+translate-04,translate-scaffold,gemma-4-e2b-q4,"תרגם לעברית טבעית לילדים: ""It's okay to make mistakes. That's how we learn!""",זה בסדר לעשות טעויות. ככה אנחנו לומדים!,2.31,5,5,5,5,,[first-pass: Claude]
+translate-05,translate-scaffold,gemma-4-e2b-q4,"הילדה שאלה בעברית: ""איך אומרים באנגלית 'אני רעבה'?"" ענה כתוקי: המשפט באנגלית, ואז עידוד קצר בעברית לנסות לומר אותו.",I am hungry. נסי!,1.44,4,4,4,4,,[first-pass: Claude] terse but does the job
+vocab-01,vocab-hint,gemma-4-e2b-q4,"הילד תקוע על המילה ""kitchen"" בתרגיל. תן רמז בעברית שמכוון אותו למשמעות בלי לתרגם את המילה (למשל: איפה מכינים אוכל?). משפט אחד.",איפה אפשר להכין מאכלים?,1.79,5,5,5,5,,[first-pass: Claude]
+vocab-02,vocab-hint,gemma-4-e2b-q4,"תן רמז בעברית למילה ""umbrella"" בלי לומר את התרגום: מתי משתמשים בזה? משפט אחד, מנוסח כשאלה מסקרנת לילד.","כשממש שמש יורד, מה אנחנו לוקחים איתנו כדי להישאר יבשים?",3.17,2,4,3,3,,[first-pass: Claude] garbled: wrote 'sun comes down' for rain cue
+vocab-03,vocab-hint,gemma-4-e2b-q4,"הילדה לא זוכרת מה זה ""library"". תן שני רמזים בעברית בהדרגה: קודם רמז כללי, ואם לא — רמז כמעט מסגיר. אל תתרגם.","בואי נראה!
+
+הנה רמז ראשון: זה מקום שמשתמשים בו כדי לקרוא סיפורים.",3.88,4,4,3,3,,"[first-pass: Claude] gave one hint, two requested"
+vocab-04,vocab-hint,gemma-4-e2b-q4,"רמוז בעברית על משמעות המילה ""winter"" דרך חוויה ישראלית מוכרת (גשם, סוודר), בלי תרגום ישיר. משפט אחד.","כשמכניסים את המכין בחוץ, והאוויר קר כמו מים קרים.",3.13,1,3,2,2,,[first-pass: Claude] word salad: 'כשמכניסים את המכין בחוץ'
+vocab-05,vocab-hint,gemma-4-e2b-q4,"הילד מתבלבל בין ""chicken"" ל-""kitchen"". כתוב בעברית טריק זיכרון קצר וחמוד להבדיל ביניהם, עם שתי המילים באנגלית.","Chicken is yummy! It's for eating.
+Kitchen has food in it, like a stove!",2.82,3,3,2,1,english-leak,"[first-pass: Claude] English reply; definition, not a mnemonic"
+biling-01,bilingual-turn,gemma-4-e2b-q4,"אתה תוקי באמצע שיחה באנגלית. הילדה אמרה: ""I went to the... איך אומרים גן חיות?"" השב: תן את המילה באנגלית, עודד אותה בעברית קצרה להשלים את המשפט, ואז חזור לאנגלית עם שאלה.",Zoo! גן חיות! What is your favorite animal?,2.25,4,4,4,3,,[first-pass: Claude] Hebrew encouragement thin
+biling-02,bilingual-turn,gemma-4-e2b-q4,"הילד אמר: ""My אבא is very tall"". הגב כתוקי בשיטת recast דו-לשונית: המשפט המלא באנגלית (כולל dad), ואז שאלה קצרה באנגלית. בלי להעיר על הערבוב.","""My dad is very tall. Is your dad tall?""",2.13,4,4,4,4,,[first-pass: Claude]
+biling-03,bilingual-turn,gemma-4-e2b-q4,"ילדה בת 6 עונה רק בעברית בשיחת אנגלית: ""ראיתי כלב גדול!"". הגב כתוקי: שקף באנגלית פשוטה את מה שאמרה (I saw a big dog!), הזמן אותה בעברית לנסות לומר את זה באנגלית, מילה-מילה.","I saw a big dog!
+את רוצה לנסות? I see, you say: I... saw... a... big... dog.",3.94,4,5,5,4,,[first-pass: Claude] nice word-by-word invitation
+biling-04,bilingual-turn,gemma-4-e2b-q4,"באמצע משחק תפקידים בחנות, הילד שואל בעברית כמה זה עולה. הגב כתוקי: שחק את המוכר באנגלית פשוטה (It's two dollars!), והוסף סוגריים קצרים בעברית שמסבירים לילד מה נאמר.",It's two dollars! (זה שווה שני דולרים!),2.49,5,5,5,5,,[first-pass: Claude]
+biling-05,bilingual-turn,gemma-4-e2b-q4,"הילדה מתוסכלת ואומרת בעברית: ""אני לא מצליחה, זה קשה לי"". הגב כתוקי בעברית חמה ומרגיעה (עד שני משפטים), הצע הפסקה קטנה או תרגיל קל יותר, וסיים במילה מעודדת אחת באנגלית שהיא מכירה.","אני רואה שאת מתרגלת! קחי נשימה עמוקה. אנחנו נעשה את זה יחד, לאט.
+
+בואי ננסה מילה אחת פשוטה. Ready?",5.63,3,4,4,3,,[first-pass: Claude] 'מתרגלת' for 'מתוסכלת' semantic slip
