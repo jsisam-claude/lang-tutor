@@ -26,6 +26,8 @@ data class LearnerProfile(
     val level: String = "L0",
     val xp: Int = 0,
     val unitProgress: Map<String, UnitProgress> = emptyMap(),
+    /** BKT mastery estimates per skill id — the input to adaptivity and the parent skill map. */
+    val skills: Map<String, SkillState> = emptyMap(),
     val parentSettings: ParentSettings = ParentSettings(),
 ) {
     companion object {
