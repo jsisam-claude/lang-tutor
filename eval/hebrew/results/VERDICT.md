@@ -1,4 +1,34 @@
-# Hebrew Eval — Verdict (runs 2026-07-21)
+# Hebrew Eval — Verdict (runs 2026-07-21/22)
+
+## BREAKTHROUGH: Gemma 4 E2B at Q8_0 **PASSES the gate** — the deficit was largely quantization damage
+
+| Gemma 4 E2B | q4_0 (QAT) | **Q8_0** | Δ | Gate |
+|---|---|---|---|---|
+| Correctness | 3.73 | **4.20** | **+0.47** | ≥4.0 ✓ |
+| Register | 4.03 | 4.35 | +0.32 | ≥3.5 ✓ |
+| Pedagogy | 3.42 | 3.85 | +0.43 | — |
+| Red flags | 3 | **0** | | none ✓ |
+
+Same model, same prompts, same scorer — only the quantization differs. Q8
+*eliminated* the q4_0 catastrophes: the english-leaks, the "give me the button"
+misinstruction, the word-salad productions, the harsh tone. **Aggressive 4-bit
+quantization disproportionately damages Hebrew**; the capability was in the
+model all along.
+
+**Product implications**
+- Q8 (~4.7 GB) is too big for the base install next to the speech stack — but
+  the quality curve between q4_0 (3.73) and Q8 (4.20) almost certainly crosses
+  the 4.0 gate around **Q5/Q6 (~3.4–4 GB)** or with a **Hebrew-calibrated
+  imatrix Q4**: both are one-command re-tests in this harness.
+- The mobile artifact (LiteRT int4 QAT) sits at an unknown point on this curve
+  — the on-device spot-check just became the decisive next measurement.
+- Two content flaws survive at all quants and need the RAG/curated-explanations
+  fix regardless: the a/an rule comes out wrong, and "I am here since Sunday"
+  gets validated instead of corrected.
+- **Caution**: 4.20 is a borderline pass on first-pass scores (±0.2 plausible);
+  the native-speaker audit now matters doubly.
+
+
 
 ## Update: third candidate — DictaLM-3.0-1.7B-Instruct (Q4_K_M) — also FAILS, differently
 
