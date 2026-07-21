@@ -14,6 +14,8 @@ import org.sisam.langtutor.llm.LlmModelSpec
 import org.sisam.langtutor.llm.LlmRequest
 import org.sisam.langtutor.llm.Role
 import org.sisam.langtutor.profile.LearnerProfileStore
+import org.sisam.langtutor.safety.BlocklistSafetyFilter
+import org.sisam.langtutor.safety.SafetyFilter
 import org.sisam.langtutor.speech.AsrEngine
 import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.speech.RecognitionHint
@@ -38,6 +40,7 @@ class TutorOrchestrator(
     private val profile: LearnerProfileStore,
     private val policy: DialoguePolicy,
     private val scope: CoroutineScope,
+    private val safety: SafetyFilter = BlocklistSafetyFilter(),
 ) {
 
     private val _state = MutableStateFlow<TutorTurnState>(TutorTurnState.Idle)
@@ -112,6 +115,10 @@ class TutorOrchestrator(
                             is LlmEvent.Done -> reply = event.fullText
                         }
                     }
+                    // Output filter: a blocked reply is replaced, never shown.
+                    if (!safety.check(reply).allowed) {
+                        reply = SAFE_FALLBACK_REPLY
+                    }
                     _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
                     speak(reply)
                     profile.update { it.copy(xp = it.xp + XP_PER_TURN) }
@@ -155,6 +162,7 @@ class TutorOrchestrator(
 
     companion object {
         const val XP_PER_TURN = 5
+        const val SAFE_FALLBACK_REPLY = "Let's get back to our lesson! Can you say the word again?"
 
         // P1 safety posture: register, brevity, and topic bounds live in the
         // system prompt; an output filter runs downstream (docs/architecture.md).

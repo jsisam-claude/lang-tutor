@@ -31,7 +31,7 @@ rootProject.name = "lang-tutor"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 // Logic modules: pure JVM, buildable without the Android SDK.
-include(":core:tutor", ":core:llm", ":core:speech", ":core:content", ":core:profile", ":core:packs")
+include(":core:tutor", ":core:llm", ":core:speech", ":core:content", ":core:profile", ":core:packs", ":core:safety")
 
 // -Plangtutor.jvmOnly=true builds/tests only the JVM modules — used in sandboxed
 // environments (and a cheap CI lane) where Android SDK / dl.google.com are

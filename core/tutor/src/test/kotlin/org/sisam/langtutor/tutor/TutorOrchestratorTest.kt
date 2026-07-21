@@ -21,8 +21,8 @@ import org.sisam.langtutor.speech.RecognitionHint
 @OptIn(ExperimentalCoroutinesApi::class)
 class TutorOrchestratorTest {
 
-    private class Fixture(scope: TestScope) {
-        val llm = FakeLlmEngine()
+    private class Fixture(scope: TestScope, llmScript: List<String>? = null) {
+        val llm = if (llmScript != null) FakeLlmEngine(llmScript) else FakeLlmEngine()
         val asr = FakeAsrEngine()
         val tts = FakeTtsEngine()
         val profile = InMemoryProfileStore()
@@ -84,6 +84,20 @@ class TutorOrchestratorTest {
         assertEquals(1, fixture.tts.spoken.size)
         assertTrue(fixture.tts.spoken.single().text.contains("again"))
         assertTrue(fixture.orchestrator.state.value is TutorTurnState.AwaitingChild)
+    }
+
+    @Test
+    fun `unsafe LLM reply is replaced by the safe fallback`() = runTest {
+        val fixture = Fixture(this, llmScript = listOf("Let's play with the gun outside!"))
+
+        fixture.orchestrator.startSession("unit-001", TutorMode.TEXT)
+        fixture.orchestrator.onTextSubmitted("What should we play?")
+        advanceUntilIdle()
+
+        val tutorLine = fixture.orchestrator.transcript.value.last()
+        assertEquals(Speaker.TUTOR, tutorLine.speaker)
+        assertEquals(TutorOrchestrator.SAFE_FALLBACK_REPLY, tutorLine.text)
+        assertEquals(TutorOrchestrator.SAFE_FALLBACK_REPLY, fixture.tts.spoken.single().text)
     }
 
     @Test

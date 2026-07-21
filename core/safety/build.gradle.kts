@@ -16,12 +16,5 @@ kotlin {
 }
 
 dependencies {
-    api(projects.core.llm)
-    api(projects.core.speech)
-    api(projects.core.content)
-    api(projects.core.profile)
-    api(projects.core.safety)
-    implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.junit4)
-    testImplementation(libs.kotlinx.coroutines.test)
 }
