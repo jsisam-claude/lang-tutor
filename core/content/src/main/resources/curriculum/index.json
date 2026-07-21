@@ -3,5 +3,20 @@
     "id": "unit-001",
     "title": { "en": "Colors and Toys", "he": "צבעים וצעצועים" },
     "cefrLevel": "pre-A1"
+  },
+  {
+    "id": "unit-002",
+    "title": { "en": "Animal Friends", "he": "חברים מעולם החי" },
+    "cefrLevel": "pre-A1"
+  },
+  {
+    "id": "unit-003",
+    "title": { "en": "Yummy Food", "he": "אוכל טעים" },
+    "cefrLevel": "pre-A1"
+  },
+  {
+    "id": "unit-004",
+    "title": { "en": "Counting Fun", "he": "כיף לספור" },
+    "cefrLevel": "pre-A1"
   }
 ]

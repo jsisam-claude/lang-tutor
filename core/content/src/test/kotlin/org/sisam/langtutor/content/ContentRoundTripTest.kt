@@ -10,11 +10,16 @@ class ContentRoundTripTest {
     private val repository = ResourceContentRepository()
 
     @Test
-    fun `index lists the sample unit`() = runTest {
+    fun `index lists all units and each loads`() = runTest {
         val units = repository.listUnits()
-        assertEquals(1, units.size)
+        assertEquals(4, units.size)
         assertEquals("unit-001", units.first().id)
         assertEquals("צבעים וצעצועים", units.first().title.he)
+        units.forEach { summary ->
+            val unit = repository.loadUnit(summary.id)
+            assertEquals(summary.id, unit.id)
+            assertTrue(unit.activities.isNotEmpty())
+        }
     }
 
     @Test

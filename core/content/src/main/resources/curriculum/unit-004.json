@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "unit-004",
+  "title": { "en": "Counting Fun", "he": "כיף לספור" },
+  "cefrLevel": "pre-A1",
+  "ageBand": "4-6",
+  "activities": [
+    { "type": "vocab", "word": "one", "translation": { "en": "one", "he": "אחת" } },
+    { "type": "vocab", "word": "two", "translation": { "en": "two", "he": "שתיים" } },
+    { "type": "vocab", "word": "three", "translation": { "en": "three", "he": "שלוש" } },
+    { "type": "vocab", "word": "four", "translation": { "en": "four", "he": "ארבע" } },
+    { "type": "repeatAfterMe", "phrase": "One, two, three, four!" },
+    { "type": "repeatAfterMe", "phrase": "I have two hands." },
+    {
+      "type": "questionAnswer",
+      "prompt": { "en": "How many eyes do you have?", "he": "כמה עיניים יש לך?" },
+      "expectedAnswers": ["two", "I have two eyes", "two eyes"]
+    }
+  ]
+}
