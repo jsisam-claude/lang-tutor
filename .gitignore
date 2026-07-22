@@ -19,3 +19,7 @@ captures/
 *.tflite
 asset-packs/*/src/main/assets/models/*
 !asset-packs/*/src/main/assets/models/.gitkeep
+
+# Python
+__pycache__/
+*.pyc

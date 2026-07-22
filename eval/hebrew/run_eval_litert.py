@@ -59,24 +59,34 @@ def generate(engine, prompt: str, max_tokens: int) -> str:
 
 
 def _extract_text(resp) -> str:
+    """Pull the assistant text out of a LiteRT-LM send_message() response.
+
+    The binding returns {"role": "assistant", "content": [{"type": "text",
+    "text": "..."}], ...} (content is a LIST of typed parts). Handle that
+    first; fall back defensively for other shapes / versions.
+    """
     if resp is None:
         return ""
     if isinstance(resp, str):
         return resp.strip()
     if isinstance(resp, dict):
-        for key in ("text", "content", "output", "message"):
-            if key in resp and isinstance(resp[key], str):
+        content = resp.get("content")
+        parts = []
+        if isinstance(content, list):
+            for part in content:
+                if isinstance(part, dict):
+                    if part.get("type") in (None, "text") and isinstance(part.get("text"), str):
+                        parts.append(part["text"])
+                elif isinstance(part, str):
+                    parts.append(part)
+        elif isinstance(content, str):
+            parts.append(content)
+        if parts:
+            return "".join(parts).strip()
+        # fallbacks for alternative shapes
+        for key in ("text", "output", "message"):
+            if isinstance(resp.get(key), str) and resp[key].strip():
                 return resp[key].strip()
-        # channel maps: {"channels": {"final": "..."}} or {"final": "..."}
-        for key in ("channels", "channel"):
-            if isinstance(resp.get(key), dict):
-                merged = " ".join(str(v) for v in resp[key].values() if v)
-                if merged.strip():
-                    return merged.strip()
-        # last resort: any string value
-        strings = [v for v in resp.values() if isinstance(v, str) and v.strip()]
-        if strings:
-            return max(strings, key=len).strip()
     return str(resp).strip()
 
 

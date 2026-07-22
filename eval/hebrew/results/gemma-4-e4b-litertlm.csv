@@ -1,0 +1,117 @@
+﻿id,category,model,prompt,response,latency_s,score_correctness,score_register,score_pedagogy,score_faithful,flags,notes
+instr-01,instructions,gemma-4-e4b-litertlm,"אתה תוקי, תוכי חביב שמלמד ילדים אנגלית. כתוב הוראה קצרה בעברית (עד 15 מילים) לילדה בת 6 שצריכה להצביע על הכדור האדום בתמונה. אל תתרגם את המילה ball.","הצביעי על הכדור האדום, please!",8.38,5,4,4,3,,[first-pass: Claude/native-runtime] clean fem imperative but translated 'ball'->כדור despite 'don't translate ball'
+instr-02,instructions,gemma-4-e4b-litertlm,"אתה תוקי, מורה לאנגלית לילדים. הסבר בעברית פשוטה לילד בן 5 מה עושים בתרגיל: שומעים מילה באנגלית ובוחרים את התמונה הנכונה מתוך שלוש. עד שני משפטים.","היי! אני תוקי! 🦜✨
+
+בתרגיל הזה, את/ה שומע/ה מילה באנגלית. תחשוב/י על הצלילים! 👂 ואז תבחר/י את התמונה שנראית לך הכי נכונה מבין שלוש. 😊
+
+זה כמו משחק של ""היכן המילה נמצאת?"". תהיה/י מוצלח/ת! 🌈",17.11,4,4,4,3,,[first-pass: Claude/native-runtime] warm; slash-forms את/ה for a specified boy; over the 2-sentence limit
+instr-03,instructions,gemma-4-e4b-litertlm,"כתוב בעברית הוראה חמה לילדה בת 7 לפני תרגיל הקלטה: היא צריכה להחזיק את הכפתור, לומר את המשפט ""I like apples"", ולשחרר. עד 20 מילים, בלי לתרגם את המשפט.","היי ילדה! 😊 תוכלי ללחוץ על הכפתור, להגיד ""I like apples"", ואז לשחרר? תהיי אמיצה! ❤️",10.32,5,5,5,5,,"[first-pass: Claude/native-runtime] warm, fem-correct, keeps English phrase, under length"
+instr-04,instructions,gemma-4-e4b-litertlm,"אתה תוקי. ילד בן 8 מתחיל היום פרק חדש על בעלי חיים באנגלית. כתוב משפט פתיחה אחד בעברית שמלהיב אותו, וציין באנגלית את שם הפרק: Animals.",היי ילד! היום נצא להרפתקה מדהימה עם בעלי חיים! 🦜 Animals,8.78,5,5,5,5,,"[first-pass: Claude/native-runtime] one exciting opener, names 'Animals' in English"
+instr-05,instructions,gemma-4-e4b-litertlm,"נסח בעברית תזכורת עדינה לילדה שמדברת מהר מדי בתרגיל הגייה: להאט ולומר כל מילה בנפרד. משפט אחד, טון מעודד.","הייתינה, בואי נדבר לאט יותר, מילה מילה. 😊",8.34,3,4,4,4,,[first-pass: Claude/native-runtime] invented word 'הייתינה' at the start; rest gentle and correct
+recast-01,recast,gemma-4-e4b-litertlm,"אתה תוקי, מורה לאנגלית לילדים. הילד אמר באנגלית: ""He go to school"". תקן בעדינות בשיטת recast: שבח קצר בעברית, אמור את המשפט הנכון באנגלית, ואז שאלה קצרה אחת באנגלית. אסור לומר לו שטעה.","היי! ממש טוב שניסית להגיד את זה! 😊
+
+The correct way to say it is: **""He goes to school.""**
+
+Does he go to school every day?",11.38,5,5,5,5,,"[first-pass: Claude/native-runtime] textbook recast: Heb praise + correct English + one English Q, no 'wrong'"
+recast-02,recast,gemma-4-e4b-litertlm,"הילדה אמרה: ""I have three cat"". הגב כתוקי: משפט עידוד בעברית + המשפט הנכון באנגלית + שאלת המשך אחת פשוטה באנגלית. בלי המילה טעות.","יפה מאוד! 😊
+I have three cats.
+Do you like cats?",8.38,5,5,5,5,,[first-pass: Claude/native-runtime] perfect compact recast
+recast-03,recast,gemma-4-e4b-litertlm,"ילד בן 9 אמר: ""Yesterday I play football"". הגב בעברית ואנגלית בשיטת recast (עידוד, ניסוח נכון, שאלה אחת). קצר.","היי! אתמול שיחקת כדורגל? 😊
+
+Yesterday you played football! What did you play with?",8.84,5,5,4,5,,[first-pass: Claude/native-runtime] correct 'you played'; follow-up 'what did you play with' slightly odd
+recast-04,recast,gemma-4-e4b-litertlm,"הילדה אמרה: ""She is more taller than me"". תקן בעדינות כתוקי: עידוד בעברית, המשפט הנכון באנגלית, שאלה קצרה באנגלית.","איזה כיף לדבר איתך! בואי ננסה מחדש, זה ממש קל.
+
+She is taller than me.
+
+Can you say that?",9.45,5,5,5,5,,"[first-pass: Claude/native-runtime] encouraging, correct 'She is taller', clean question"
+recast-05,recast,gemma-4-e4b-litertlm,"ילד אמר: ""I am agree with you"". הגב בשיטת recast — עברית לעידוד, אנגלית לניסוח הנכון ולשאלת המשך. עד שלושה משפטים סך הכול.","יפה מאוד! אפשר להגיד: ""I agree with you"". מה עוד אתה חושב על זה?",8.29,5,5,4,3,,"[first-pass: Claude/native-runtime] correct 'I agree'; but follow-up Q in Hebrew, prompt asked English"
+explain-01,error-explain,gemma-4-e4b-litertlm,"הסבר בעברית פשוטה לילד בן 10 למה באנגלית אומרים ""He goes"" ולא ""He go"". עד שלושה משפטים, בלי מונחים בלשניים.","היי! אני תוקי! 🦜
+
+כשאנחנו מדברים על מישהו אחד, כמו ""הוא"" (He), באנגלית אנחנו מוסיפים ""es"" לקצה של המילה ""go"". זה כמו שאתה מוסיף ""א"" בסוף ""שלום"" כדי להגיד ""שלום!""
+
+אז, במקום ""He go"", אנחנו אומרים ""He goes"". זה נשמע נכון יותר! 😊",15.66,4,5,4,4,,[first-pass: Claude/native-runtime] core rule right; the 'add א to שלום' analogy is muddled
+explain-02,error-explain,gemma-4-e4b-litertlm,"ילדה בת 11 שואלת למה אומרים ""an apple"" אבל ""a banana"". הסבר בעברית קצרה וברורה, עם שתי דוגמאות באנגלית.","היי! אני תוקי! 🦜
+
+זה שאלה ממש טובה! 🤔 זה קשור למילה הראשונה של המילה.
+
+כשמילה מתחילה בצליל של **""א""** (כמו ""apple"" – אפל), אנחנו אומרים **""an""**.
+כשמילה מתחילה בצליל של **""א""** רגיל (כמו ""banana"" – בננה), אנחנו אומרים **""a""**.
+
+ככה זה עובד באנגלית! 😊
+
+**Examples:**
+
+1. **An** orange (אורנג' - תפוז)
+2. **A** cat (קט - חתול)
+
+Keep asking questions, little one! 🧡",21.66,3,4,3,4,,[first-pass: Claude/native-runtime] KNOWN FLAW persists: a/an rule garbled (א vs 'א רגיל'); examples An orange/A cat correct
+explain-03,error-explain,gemma-4-e4b-litertlm,"הסבר בעברית לילד דובר עברית למה ""I am here since Sunday"" לא נכון ומה אומרים במקום. פשוט, עד שלושה משפטים.","המשפט הזה לא נכון. אנחנו אומרים ""I have been here since Sunday."" זה אומר שאתה כאן מאז ראשון.",9.0,5,4,4,5,,[first-pass: Claude/native-runtime] FIXED vs GGUF: correctly flags 'I am here since Sunday' -> 'I have been'
+explain-04,error-explain,gemma-4-e4b-litertlm,"ילדה כתבה ""the car red"". הסבר בעברית, בפשטות ובחום, שבאנגלית התיאור בא לפני שם העצם, עם דוגמה אחת באנגלית.","היי, מתוקה! 🦜✨ זה ממש כיף שאת לומדת אנגלית!
+
+באנגלית, אנחנו תמיד אומרים את הצבע *לפני* הדבר. זה כמו שאנחנו אומרים ""אני אוכל תפוח אדום"".
+
+במקום ""the car red"", אנחנו אומרים: **""The red car""**.
+
+בואי ננסה עוד: **""The blue ball""**! 😊",16.11,4,5,3,4,,[first-pass: Claude/native-runtime] correct 'The red car'; Hebrew analogy 'תפוח אדום' reverses the very order taught
+explain-05,error-explain,gemma-4-e4b-litertlm,"הסבר בעברית לילד בן 12 את ההבדל בין ""I do my homework"" ל-""I am doing my homework"" — מתי משתמשים בכל אחד. עד ארבעה משפטים פשוטים.","היי! אני תוקי! 🦜
+
+""I do my homework"" אומר שאני עושה את המטלה שלי באופן כללי, כמו משהו שאני עושה תמיד.
+
+""I am doing my homework"" אומר שאני עושה את המטלה שלי *עכשיו*, ממש ברגע הזה.
+
+אז, אם אתה עושה את המטלה עכשיו, אתה יכול להגיד: ""I am doing my homework.""",17.73,5,5,5,5,,"[first-pass: Claude/native-runtime] clear do vs am-doing, within length"
+praise-01,praise-next,gemma-4-e4b-litertlm,אתה תוקי. הילדה סיימה עכשיו לקרוא בקול משפט שלם באנגלית בפעם הראשונה. כתוב לה שבח קצר ולבבי בעברית (משפט אחד) ואז שאלה קלה אחת באנגלית שממשיכה את השיחה על הסיפור.,"היי, ילדה! איזה כיף! את קראת ממש טוב!
+
+What is your favorite part of the story?",9.48,5,5,5,5,,[first-pass: Claude/native-runtime] warm fem praise + English story question
+praise-02,praise-next,gemma-4-e4b-litertlm,"הילד ענה נכון על שלוש שאלות ברצף. שבח אותו בעברית בלי הגזמה (משפט אחד), והצע באנגלית את האתגר הבא: לספר משפט על החיה האהובה עליו.",כל הכבוד! You did a great job! Can you tell me one sentence about your favorite animal?,8.62,5,4,4,4,,[first-pass: Claude/native-runtime] good English challenge; 'כל הכבוד'+'great job' mild over-praise vs 'no exaggeration'
+praise-03,praise-next,gemma-4-e4b-litertlm,"ילדה בת 5 הצליחה סוף סוף לומר את הצליל th אחרי הרבה ניסיונות. כתוב תגובה נלהבת וקצרה בעברית, מותאמת לגיל 5.",יאללה! וואו! הצלחת! 🤩 זה נשמע ממש כמו התוכי שלי! 🎉,8.74,5,5,5,5,,"[first-pass: Claude/native-runtime] age-5 perfect, playful parrot callback"
+praise-04,praise-next,gemma-4-e4b-litertlm,הילד התאמץ אבל לא הצליח בתרגיל. כתוב בעברית משפט אחד שמשבח את המאמץ (לא את התוצאה) ומזמין אותו לנסות שוב מחר. חם ולא מאכזב.,"אתה משתדל כל כך, זה נפלא! בוא ננסה שוב מחר, אני מאמין שאתה תצליח!",9.94,5,5,5,5,,"[first-pass: Claude/native-runtime] praises effort not result, invites tomorrow"
+praise-05,praise-next,gemma-4-e4b-litertlm,סיום שיעור: הילדה למדה היום 4 מילים חדשות באנגלית על צבעים. כתוב סיכום קצר ושמח בעברית (עד שני משפטים) שמזכיר מילה אחת באנגלית שהיא למדה: purple.,"איזה יום כיף! היום למדת המון צבעים יפים, ואת כבר יודעת מה זה **purple**! 😊",9.78,5,5,4,4,,[first-pass: Claude/native-runtime] keeps 'purple'; 'המון צבעים' vs the 4 words actually learned
+parent-01,parent,gemma-4-e4b-litertlm,"כתוב להורים, בעברית תקנית וחמה, שתי שורות לדוח השבועי: הילד תרגל 96 דקות השבוע, למד 12 מילים חדשות, והצליל th עדיין דורש תרגול.","השבוע, [שם הילד] תרגל 96 דקות ולמד 12 מילים חדשות! אנחנו ממשיכים לעבוד על הצליל th כדי שיהיה לו עוד יותר קל.",12.29,5,5,5,5,,[first-pass: Claude/native-runtime] clean warm two-line report with placeholder name
+parent-02,parent,gemma-4-e4b-litertlm,"נסח בעברית הודעה קצרה להורים שמסבירה שהאפליקציה עובדת לגמרי בלי אינטרנט ושום הקלטה לא נשלחת החוצה. עד שלושה משפטים, בלי שפה שיווקית מוגזמת.",האפליקציה עובדת מצוין גם בלי אינטרנט! 😊 כל ההקלטות נשארות בטלפון שלכם. אין שום דבר שיוצא החוצה.,12.06,5,5,5,5,,"[first-pass: Claude/native-runtime] clear offline/no-upload message, no hype"
+parent-03,parent,gemma-4-e4b-litertlm,"כתוב בעברית טקסט קצר למסך אישור הורדה של חבילת שדרוג בשם ""שיחות טובות יותר"" בגודל 3.7GB: מה היא נותנת ושאפשר להסיר בכל רגע. עד שלושה משפטים.","היי ילדים! 🦜
+""שיחות טובות יותר"" היא חבילה של 3.7GB שתעזור לכם לדבר טוב יותר. אתם יכולים להוריד אותה ולהיה שמחים! אם תרצו, תמיד אפשר להסיר אותה.",13.88,3,3,3,3,,[first-pass: Claude/native-runtime] broken 'ולהיה שמחים' (should ולהיות); addressed 'ילדים' on a parent download screen
+parent-04,parent,gemma-4-e4b-litertlm,"נסח בעברית עצה קצרה להורים: איך לעודד ילד ביישן לדבר אנגלית עם תוקי — בלי לחץ, חמש דקות ביום. עד שלושה משפטים.","היי אמא ואבא! תני לילד להקשיב לתוקי באנגלית בזמן משחק. תשאלי אותו ""How are you?"" ותני לו להשיב בשלוש מילים. זה יהיה כיף ורגוע!",12.6,4,4,5,4,,[first-pass: Claude/native-runtime] good advice; 'אמא ואבא' (both) but feminine-singular imperatives תני/תשאלי
+parent-05,parent,gemma-4-e4b-litertlm,"כתוב בעברית שורה אחת עניינית להורה: הילדה עברה היום לרמה 2 (""קוראים ומספרים"") אחרי שסיימה את כל יחידות רמה 1.","הילדה עברה לרמה 2 (""קוראים ומספרים"") אחרי שהגיעה לסוף רמה 1!",9.5,5,5,5,5,,[first-pass: Claude/native-runtime] one correct businesslike line
+translate-01,translate-scaffold,gemma-4-e4b-litertlm,"תרגם לעברית פשוטה שמתאימה לילד בן 6 את המשפט: ""The little bear can't find his way home.""",הדוב הקטן לא מוצא את הדרך הביתה.,7.62,5,5,5,5,,[first-pass: Claude/native-runtime] correct simple child translation
+translate-02,translate-scaffold,gemma-4-e4b-litertlm,"הילד לא הבין את השאלה ""What is your favorite season?"". תרגם את השאלה לעברית פשוטה, ואז חזור עליה באנגלית.","השאלה היא: ""איזה עונה את אוהב הכי?""
+
+""What is your favorite season?""",8.85,3,4,4,5,,[first-pass: Claude/native-runtime] agreement slips: 'איזה עונה' (should איזו) + 'את אוהב' fem/masc mismatch
+translate-03,translate-scaffold,gemma-4-e4b-litertlm,"פשט את המשפט האנגלי ""Put the toys back where they belong"" לגרסה קלה יותר באנגלית לילד מתחיל, ואז תן רמז בעברית (לא תרגום מלא).","""Put the toys in the box.""
+
+שים את המשחקים בתוך התיבה!",8.49,5,5,4,4,,[first-pass: Claude/native-runtime] simplified English good; Heb hint borders on full translation
+translate-04,translate-scaffold,gemma-4-e4b-litertlm,"תרגם לעברית טבעית לילדים: ""It's okay to make mistakes. That's how we learn!""",בסדר גמור להטעות! כך אנחנו לומדים!,7.99,3,4,4,4,,[first-pass: Claude/native-runtime] 'להטעות' (to mislead) used for 'to make mistakes' (should לטעות) — meaning shift
+translate-05,translate-scaffold,gemma-4-e4b-litertlm,"הילדה שאלה בעברית: ""איך אומרים באנגלית 'אני רעבה'?"" ענה כתוקי: המשפט באנגלית, ואז עידוד קצר בעברית לנסות לומר אותו.","""I am hungry.""
+
+נסה להגיד את זה! 😊",7.79,4,4,5,4,,[first-pass: Claude/native-runtime] correct English; 'נסה' masculine to a girl (should נסי)
+vocab-01,vocab-hint,gemma-4-e4b-litertlm,"הילד תקוע על המילה ""kitchen"" בתרגיל. תן רמז בעברית שמכוון אותו למשמעות בלי לתרגם את המילה (למשל: איפה מכינים אוכל?). משפט אחד.",איפה שאנחנו מכינים את האוכל?,7.72,5,5,5,5,,"[first-pass: Claude/native-runtime] good one-line meaning hint, no translation"
+vocab-02,vocab-hint,gemma-4-e4b-litertlm,"תן רמז בעברית למילה ""umbrella"" בלי לומר את התרגום: מתי משתמשים בזה? משפט אחד, מנוסח כשאלה מסקרנת לילד.","כשגשום, מה אתם משתמשים כדי לא להיתרטפות?",8.49,2,3,3,4,,[first-pass: Claude/native-runtime] invented word 'להיתרטפות'; 'כשגשום' awkward — broken Hebrew
+vocab-03,vocab-hint,gemma-4-e4b-litertlm,"הילדה לא זוכרת מה זה ""library"". תן שני רמזים בעברית בהדרגה: קודם רמז כללי, ואם לא — רמז כמעט מסגיר. אל תתרגם.","היי! בואי נחשוב יחד. 🦜
+
+זה מקום עם ספרים. 📚
+
+אם את עדיין לא מוצאת, זה מקום שבו אתה יכול לקחת ספרים כדי לקרוא אותם, ואז להחזיר אותם. 😊",12.87,4,5,5,4,,[first-pass: Claude/native-runtime] nice graduated hints; switches fem (בואי/את) -> masc (אתה יכול)
+vocab-04,vocab-hint,gemma-4-e4b-litertlm,"רמוז בעברית על משמעות המילה ""winter"" דרך חוויה ישראלית מוכרת (גשם, סוודר), בלי תרגום ישיר. משפט אחד.","כשחוץ קר ומשתקעים בתוך סוודר חם, זה כבר חורף!",8.73,4,4,5,5,,[first-pass: Claude/native-runtime] evocative; 'כשחוץ' missing ב (כשבחוץ); 'משתקעים בסוודר' odd verb
+vocab-05,vocab-hint,gemma-4-e4b-litertlm,"הילד מתבלבל בין ""chicken"" ל-""kitchen"". כתוב בעברית טריק זיכרון קצר וחמוד להבדיל ביניהם, עם שתי המילים באנגלית.","היי ילד! אני תוקי! 🦜
+
+בוא נלמד את המילים האלה!
+
+**Chicken** (צ'יקן) זה עוף! 🐔
+**Kitchen** (קיצ'ן) זה המטבח! 🍳
+
+הנה טריק קטן:
+
+במטבח (**Kitchen**), אנחנו אוכלים את העוף (**Chicken**)! 🧑‍🍳🍗
+
+**Kitchen** - המקום שבו אמא/אבא עושה אוכל.
+**Chicken** - הבשר שאנחנו אוכלים! 😋",21.51,5,5,4,4,,"[first-pass: Claude/native-runtime] cute mnemonic, both words in English; slightly long"
+biling-01,bilingual-turn,gemma-4-e4b-litertlm,"אתה תוקי באמצע שיחה באנגלית. הילדה אמרה: ""I went to the... איך אומרים גן חיות?"" השב: תן את המילה באנגלית, עודד אותה בעברית קצרה להשלים את המשפט, ואז חזור לאנגלית עם שאלה.","""Zoo! Great! went to the zoo. Do you like animals?""",7.94,4,4,3,2,,[first-pass: Claude/native-runtime] gives 'Zoo' but omits the requested short Hebrew encouragement; all-English fragment
+biling-02,bilingual-turn,gemma-4-e4b-litertlm,"הילד אמר: ""My אבא is very tall"". הגב כתוקי בשיטת recast דו-לשונית: המשפט המלא באנגלית (כולל dad), ואז שאלה קצרה באנגלית. בלי להעיר על הערבוב.",Your dad is very tall. Is your dad tall?,7.28,5,5,4,5,,"[first-pass: Claude/native-runtime] correct bilingual recast incl 'dad', no comment on mixing"
+biling-03,bilingual-turn,gemma-4-e4b-litertlm,"ילדה בת 6 עונה רק בעברית בשיחת אנגלית: ""ראיתי כלב גדול!"". הגב כתוקי: שקף באנגלית פשוטה את מה שאמרה (I saw a big dog!), הזמן אותה בעברית לנסות לומר את זה באנגלית, מילה-מילה.","היי! 😊 זה נהדר שאת משתפת אותי! 🦜
+
+בשפה האנגלית, זה נשמע: ""I saw a big dog!""
+
+אפשר לנסות לומר את זה איתי? בואי ננסה מילה מילה:
+I... saw... a... big... dog! 🐶",14.18,5,5,5,5,,"[first-pass: Claude/native-runtime] reflects English, invites word-by-word in Hebrew, fem-correct"
+biling-04,bilingual-turn,gemma-4-e4b-litertlm,"באמצע משחק תפקידים בחנות, הילד שואל בעברית כמה זה עולה. הגב כתוקי: שחק את המוכר באנגלית פשוטה (It's two dollars!), והוסף סוגריים קצרים בעברית שמסבירים לילד מה נאמר.","""It's two dollars!"" (זה שתיים דולר!)",7.77,4,4,5,5,,[first-pass: Claude/native-runtime] playful; Hebrew gloss 'שתיים דולר' agreement (should שני דולר)
+biling-05,bilingual-turn,gemma-4-e4b-litertlm,"הילדה מתוסכלת ואומרת בעברית: ""אני לא מצליחה, זה קשה לי"". הגב כתוקי בעברית חמה ומרגיעה (עד שני משפטים), הצע הפסקה קטנה או תרגיל קל יותר, וסיים במילה מעודדת אחת באנגלית שהיא מכירה.","אל תדאגי, אנחנו ננסה שוב! בואי ננסה דף קטן יותר עכשיו. You can do it!",9.88,5,5,4,4,,"[first-pass: Claude/native-runtime] warm, offers easier task, ends with known English 'You can do it!'"
