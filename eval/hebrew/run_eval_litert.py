@@ -41,11 +41,11 @@ def build_engine(model_path: str, threads: int):
     )
 
 
-def generate(engine, prompt: str, max_tokens: int) -> str:
+def generate(engine, prompt: str, max_tokens: int, system_prompt: str = SYSTEM_PROMPT) -> str:
     # A fresh conversation per prompt = no cross-prompt state leakage,
     # matching the stateless single-shot calls of the HTTP runner.
     conv = engine.create_conversation(
-        system_message=SYSTEM_PROMPT,
+        system_message=system_prompt,
         sampler_config=L.SamplerConfig(temperature=0.7, top_k=64, top_p=0.95, seed=42),
         max_output_tokens=max_tokens,
     )
@@ -98,7 +98,13 @@ def main() -> int:
     parser.add_argument("--prompts", default=str(pathlib.Path(__file__).parent / "prompts.jsonl"))
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--max-tokens", type=int, default=220)
+    parser.add_argument("--system-prompt-file", default=None,
+                        help="override the tutor system prompt (e.g. the English persona)")
     args = parser.parse_args()
+
+    system_prompt = SYSTEM_PROMPT
+    if args.system_prompt_file:
+        system_prompt = pathlib.Path(args.system_prompt_file).read_text(encoding="utf-8").strip()
 
     prompts = [json.loads(line) for line in open(args.prompts, encoding="utf-8") if line.strip()]
     out_path = pathlib.Path(args.out)
@@ -115,7 +121,7 @@ def main() -> int:
         for i, item in enumerate(prompts, 1):
             start = time.time()
             try:
-                response = generate(engine, item["prompt"], args.max_tokens)
+                response = generate(engine, item["prompt"], args.max_tokens, system_prompt)
             except Exception as exc:  # noqa: BLE001 — record and continue
                 response = f"<ERROR: {exc}>"
             latency = round(time.time() - start, 2)
