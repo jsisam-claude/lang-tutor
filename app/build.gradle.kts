@@ -77,4 +77,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.kotlinx.coroutines.android)
+
+    // Real on-device LLM: Google's LiteRT-LM runtime loads the .litertlm Gemma 4
+    // artifact and runs it on CPU/GPU/NPU. Backs LiteRtLmEngine.
+    implementation(libs.litertlm.android)
 }
