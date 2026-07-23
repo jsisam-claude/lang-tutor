@@ -86,7 +86,11 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
             conversation.sendMessageAsync(userText)
                 .takeWhile { tokens < request.maxTokens }
                 .collect { message ->
-                    val delta = message.text
+                    // Text comes out via toString() — the documented extraction
+                    // (getting_started uses `print(sendMessage(...))` and
+                    // `collect { print(it.toString()) }`). DEVICE-VERIFY: confirm
+                    // this is clean text with no role framing on real output.
+                    val delta = message.toString()
                     if (delta.isNotEmpty()) {
                         full.append(delta)
                         tokens++
