@@ -31,3 +31,16 @@ jobs:
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew test :app:assembleDebug :app:bundleDebug --stacktrace
+      # Publish the installable debug APK (+ AAB) so a green run yields a
+      # sideloadable build for on-device testing (docs/running-on-device.md).
+      # NOTE: the APK is the app only — the model is not bundled; install it in
+      # app (Parent Zone → Packs) or via adb push.
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: app-debug
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/bundle/debug/app-debug.aab
+          if-no-files-found: error
+          retention-days: 30
