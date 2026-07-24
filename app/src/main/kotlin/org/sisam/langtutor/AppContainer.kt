@@ -11,6 +11,7 @@ import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
+import org.sisam.langtutor.packs.HttpPackFetcher
 import org.sisam.langtutor.packs.PackRepository
 import org.sisam.langtutor.packs.RealPackRepository
 import org.sisam.langtutor.packs.ResourceCatalogLoader
@@ -60,7 +61,20 @@ class AppContainer(context: Context) {
     val packs: PackRepository = RealPackRepository(
         catalog = ResourceCatalogLoader.load(),
         installRoot = appContext.filesDir,
+        fetcher = HttpPackFetcher(),
+        insecureFetcher = HttpPackFetcher(insecureTls = true),
     )
+
+    /**
+     * TESTING ONLY (debug builds): disable TLS certificate verification for pack
+     * downloads — a workaround for an intercepting network / untrusted CA on the
+     * test device. The downloaded model is STILL SHA-256-verified, so a tampered
+     * file is still rejected. Triggered from PacksSection behind a BuildConfig.DEBUG
+     * gate + an explicit warning dialog; never reachable in a release build.
+     */
+    fun enableInsecureDownloads() {
+        (packs as? RealPackRepository)?.allowInsecureTls = true
+    }
 
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator = TutorOrchestrator(
         llm = createLlmEngine(),

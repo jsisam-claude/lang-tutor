@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
+import org.sisam.langtutor.BuildConfig
 import org.sisam.langtutor.R
 import org.sisam.langtutor.packs.InstallState
 import org.sisam.langtutor.packs.PackDescriptor
@@ -43,6 +44,7 @@ fun PacksSection(container: AppContainer) {
     val states by repo.installStates.collectAsState(initial = emptyMap())
     val scope = rememberCoroutineScope()
     var consentPack by remember { mutableStateOf<PackDescriptor?>(null) }
+    var sslOverridePack by remember { mutableStateOf<PackDescriptor?>(null) }
     var updatesCount by remember { mutableStateOf<Int?>(null) }
     val isHebrew = LocalConfiguration.current.locales[0].language in setOf("he", "iw")
 
@@ -100,6 +102,15 @@ fun PacksSection(container: AppContainer) {
                             Button(onClick = { scope.launch { repo.install(pack.id).collect { } } }) {
                                 Text(stringResource(R.string.packs_retry))
                             }
+                            // Debug builds only: offer a TLS-bypass retry when the
+                            // failure looks like a certificate/trust problem.
+                            val looksLikeSsl = listOf("SSL", "trust", "certif", "CertPath")
+                                .any { state.reason.contains(it, ignoreCase = true) }
+                            if (BuildConfig.DEBUG && looksLikeSsl) {
+                                TextButton(onClick = { sslOverridePack = pack }) {
+                                    Text(stringResource(R.string.packs_ignore_ssl))
+                                }
+                            }
                         }
 
                         InstallState.NotInstalled -> Button(onClick = { consentPack = pack }) {
@@ -152,6 +163,31 @@ fun PacksSection(container: AppContainer) {
             },
             dismissButton = {
                 TextButton(onClick = { consentPack = null }) {
+                    Text(stringResource(R.string.packs_consent_cancel))
+                }
+            },
+        )
+    }
+
+    // Testing-only (debug builds): confirm before disabling TLS checks, then retry.
+    sslOverridePack?.let { pack ->
+        AlertDialog(
+            onDismissRequest = { sslOverridePack = null },
+            title = { Text(stringResource(R.string.packs_ignore_ssl_title)) },
+            text = { Text(stringResource(R.string.packs_ignore_ssl_body)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        sslOverridePack = null
+                        container.enableInsecureDownloads()
+                        scope.launch { repo.install(pack.id).collect { } }
+                    },
+                ) {
+                    Text(stringResource(R.string.packs_ignore_ssl_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { sslOverridePack = null }) {
                     Text(stringResource(R.string.packs_consent_cancel))
                 }
             },

@@ -24,11 +24,10 @@ class DeviceRamTest {
         val pixel9 = modelsFor(12_000_000_000L)  // 12 GB
         val pixel10ProXl = modelsFor(16_300_000_000L) // 16 GB
 
-        // 9a: base E2B only — no 12/16 GB models.
+        // 9a: base E2B only — no 12 GB+ models.
         assertEquals(setOf("llm-base-e2b"), pixel9a)
-        // 9: base + quality E4B (not the 16 GB-only advanced pack).
+        // 9 and Pro XL: base + quality E4B.
         assertEquals(setOf("llm-base-e2b", "llm-quality-e4b"), pixel9)
-        // Pro XL: everything, including the experimental 8B.
-        assertEquals(setOf("llm-base-e2b", "llm-quality-e4b", "llm-advanced-8b"), pixel10ProXl)
+        assertEquals(setOf("llm-base-e2b", "llm-quality-e4b"), pixel10ProXl)
     }
 }

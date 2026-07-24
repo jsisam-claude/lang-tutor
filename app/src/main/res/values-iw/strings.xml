@@ -48,6 +48,10 @@
     <string name="packs_verifying">מאמת…</string>
     <string name="packs_failed">ההורדה נכשלה</string>
     <string name="packs_retry">נסה שוב</string>
+    <string name="packs_ignore_ssl">התעלם מ-SSL ונסה שוב (בדיקה)</string>
+    <string name="packs_ignore_ssl_title">להתעלם משגיאות אישור?</string>
+    <string name="packs_ignore_ssl_body">לבדיקות בלבד. פעולה זו מכבה את בדיקת אישורי ה-HTTPS להורדות — לא מאובטח, ולא בשימוש בגרסה אמיתית. המודל עדיין מאומת ב-checksum, כך שקובץ שהשתנה עדיין נדחה.</string>
+    <string name="packs_ignore_ssl_confirm">התעלם והורד</string>
     <string name="packs_check_updates">בדיקת עדכונים</string>
     <string name="packs_updates_none">הכול מעודכן</string>
     <string name="packs_updates_found">יש %1$d עדכונים זמינים — הורידו מהרשימה למעלה</string>

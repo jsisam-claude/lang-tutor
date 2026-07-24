@@ -29,6 +29,8 @@ android {
 
     buildFeatures {
         compose = true
+        // For BuildConfig.DEBUG — gates the testing-only "ignore SSL" download option.
+        buildConfig = true
     }
 
     compileOptions {

@@ -133,6 +133,26 @@ class RealPackRepositoryTest {
     }
 
     @Test
+    fun `allowInsecureTls routes the download through the insecure fetcher`() = runTest {
+        val root = tempRoot()
+        val data = ByteArray(1000) { 3 }
+        val normal = FakeFetcher(data)
+        val insecure = FakeFetcher(data)
+        val descriptor = pack("llm-i", sha256(data), data.size.toLong())
+        val repo = RealPackRepository(
+            PackCatalog(1, listOf(descriptor)), root, normal,
+            UnconfinedTestDispatcher(testScheduler), insecureFetcher = insecure,
+        )
+        repo.allowInsecureTls = true
+
+        repo.install("llm-i").toList()
+
+        assertEquals(-1L, normal.lastOffset)  // secure fetcher untouched
+        assertEquals(0L, insecure.lastOffset) // insecure fetcher used instead
+        assertTrue(File(root, "models/llm-i.bin").exists())
+    }
+
+    @Test
     fun `eligiblePacks respects the RAM gate`() {
         val root = tempRoot()
         val small = pack("small", "0".repeat(64), 10, ramGb = 0)

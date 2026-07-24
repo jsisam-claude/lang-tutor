@@ -31,7 +31,16 @@ class RealPackRepository(
     private val fetcher: PackFetcher = HttpPackFetcher(),
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val json: Json = Json { ignoreUnknownKeys = true },
+    // INSECURE (testing only): used instead of [fetcher] when [allowInsecureTls]
+    // is set. Defaults to the same fetcher, so security is unchanged unless the
+    // caller explicitly wires a trust-all fetcher AND flips the flag.
+    private val insecureFetcher: PackFetcher = fetcher,
 ) : PackRepository {
+
+    /** Testing-only: when true, downloads use [insecureFetcher] (TLS checks off).
+     *  Content is still SHA-256-verified. Set from the debug-only UI toggle. */
+    @Volatile
+    var allowInsecureTls: Boolean = false
 
     private val manifestFile = File(installRoot, MANIFEST_NAME)
     private val states = MutableStateFlow(initialStates())
@@ -47,7 +56,7 @@ class RealPackRepository(
         target.parentFile?.mkdirs()
         try {
             var have = if (part.exists()) part.length() else 0L
-            val result = fetcher.open(pack.url, have)
+            val result = (if (allowInsecureTls) insecureFetcher else fetcher).open(pack.url, have)
             val total = result.totalBytes.takeIf { it > 0 } ?: pack.sizeBytes
             val digest = MessageDigest.getInstance("SHA-256")
 

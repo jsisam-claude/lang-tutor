@@ -3,6 +3,12 @@ package org.sisam.langtutor.packs
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.security.cert.X509Certificate
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 /**
  * Opens a byte stream for a pack URL, supporting resume via an HTTP Range
@@ -39,11 +45,17 @@ class HttpPackFetcher(
     // without being dead. Too-short a value was a likely cause of spurious fails.
     private val readTimeoutMs: Int = 120_000,
     private val userAgent: String = "lang-tutor/0.1 (Android; on-device tutor)",
+    // INSECURE — testing only. When true, TLS certificate + hostname checks are
+    // disabled (works around an intercepting network / untrusted CA). Content is
+    // STILL protected by the pack's SHA-256, which is never bypassed. Gated to
+    // debug builds by the UI; must never be enabled in a release build.
+    private val insecureTls: Boolean = false,
 ) : PackFetcher {
 
     override suspend fun open(url: String, offset: Long): FetchResult {
         var current = url
         repeat(MAX_REDIRECTS) {
+            val host = URL(current).host
             val conn = (URL(current).openConnection() as HttpURLConnection).apply {
                 connectTimeout = connectTimeoutMs
                 readTimeout = readTimeoutMs
@@ -53,8 +65,20 @@ class HttpPackFetcher(
                 setRequestProperty("User-Agent", userAgent)
                 setRequestProperty("Accept", "*/*")
                 if (offset > 0) setRequestProperty("Range", "bytes=$offset-")
+                if (insecureTls && this is HttpsURLConnection) {
+                    sslSocketFactory = trustAllSocketFactory()
+                    setHostnameVerifier { _, _ -> true }
+                }
             }
-            when (val code = conn.responseCode) {
+            // The TLS handshake + connect happen here; name the host so a trust
+            // failure points at the exact server (huggingface.co vs the CDN).
+            val code = try {
+                conn.responseCode
+            } catch (e: Exception) {
+                conn.disconnect()
+                throw java.io.IOException("${e.javaClass.simpleName} connecting to $host: ${e.message}", e)
+            }
+            when (code) {
                 in 300..399 -> {
                     val location = conn.getHeaderField("Location")
                         ?: error("Redirect ($code) without Location for $current")
@@ -82,5 +106,17 @@ class HttpPackFetcher(
 
     private companion object {
         const val MAX_REDIRECTS = 5
+
+        /** INSECURE trust-all factory — testing only (see [insecureTls]). */
+        fun trustAllSocketFactory(): SSLSocketFactory {
+            val trustAll = arrayOf<TrustManager>(object : X509TrustManager {
+                override fun checkClientTrusted(chain: Array<X509Certificate>?, authType: String?) = Unit
+                override fun checkServerTrusted(chain: Array<X509Certificate>?, authType: String?) = Unit
+                override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
+            })
+            return SSLContext.getInstance("TLS").apply {
+                init(null, trustAll, java.security.SecureRandom())
+            }.socketFactory
+        }
     }
 }
