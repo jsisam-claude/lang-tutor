@@ -9,9 +9,10 @@
       "descriptionEn": "A larger tutor brain (Gemma 4 E4B). Noticeably richer conversation and feedback. Recommended for 16GB devices.",
       "descriptionHe": "מוח גדול יותר לתוקי (Gemma 4 E4B). שיחות ומשוב עשירים יותר. מומלץ למכשירי 16GB.",
       "kind": "llm",
-      "sizeBytes": 3660000000,
-      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-      "url": "https://packs.example.org/llm-quality-e4b-v1.litertlm",
+      "sizeBytes": 3659530240,
+      "sha256": "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0",
+      "url": "https://huggingface.co/litert-community/gemma-4-E4B-it-litert-lm/resolve/main/gemma-4-E4B-it.litertlm",
+      "installPath": "models/gemma-4-E4B-it.litertlm",
       "minRamGb": 16,
       "experimental": false
     },

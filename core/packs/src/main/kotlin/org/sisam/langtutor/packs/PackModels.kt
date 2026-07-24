@@ -27,10 +27,20 @@ data class PackDescriptor(
     val sizeBytes: Long,
     val sha256: String,
     val url: String,
+    /**
+     * Where the pack's file is written, relative to the install root. For an LLM
+     * pack this is the exact path the engine loads (e.g.
+     * "models/gemma-4-E4B-it.litertlm"); empty falls back to the URL's basename.
+     */
+    val installPath: String = "",
     /** Device RAM gate; 0 = no requirement. Checked before offering the pack. */
     val minRamGb: Int = 0,
     val experimental: Boolean = false,
-)
+) {
+    /** Resolved install path relative to the install root (never empty). */
+    val resolvedInstallPath: String
+        get() = installPath.ifEmpty { url.substringAfterLast('/').ifEmpty { id } }
+}
 
 @Serializable
 data class PackCatalog(

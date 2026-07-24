@@ -34,8 +34,16 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
 ## 2. Put the model on the device
-Download the exact mobile artifact (same one the Hebrew/English evals used) and
-push it to the app's external files dir — the path `AppContainer` searches:
+
+**Option A — in-app download (no adb).** Launch the app → **Parent Zone**
+(solve the gate) → **Packs** → **Better Conversations (E4B)** → consent. The real
+downloader (`RealPackRepository`) streams the model from Hugging Face straight to
+`filesDir/models/gemma-4-E4B-it.litertlm` — exactly where the engine looks — and
+verifies its SHA-256 before marking it installed. Needs network + ~3.7 GB free.
+Return to the conversation and the badge flips to **🧠 On-device Tuki**.
+
+**Option B — adb push (offline / dev).** Download the exact mobile artifact and
+push it to the app's external files dir, the other path `AppContainer` searches:
 
 ```bash
 # Quality tier (recommended, 16 GB devices) — 3.66 GB

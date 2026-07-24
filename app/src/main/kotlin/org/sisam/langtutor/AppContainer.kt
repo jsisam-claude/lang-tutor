@@ -10,8 +10,9 @@ import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
-import org.sisam.langtutor.packs.FakePackRepository
 import org.sisam.langtutor.packs.PackRepository
+import org.sisam.langtutor.packs.RealPackRepository
+import org.sisam.langtutor.packs.ResourceCatalogLoader
 import org.sisam.langtutor.profile.JsonFileProfileStore
 import org.sisam.langtutor.profile.LearnerProfileStore
 import org.sisam.langtutor.speech.FakePronunciationScorer
@@ -38,8 +39,14 @@ class AppContainer(context: Context) {
     val profile: LearnerProfileStore =
         JsonFileProfileStore(File(context.filesDir, "profile.json").toPath())
 
-    // User-approved enhancement downloads; fake here, real downloader later.
-    val packs: PackRepository = FakePackRepository()
+    // User-approved enhancement downloads, real streaming downloader. Installs
+    // into filesDir, so a downloaded model lands at the exact path the engine
+    // reads (models/gemma-4-E4B-it.litertlm) — no adb push needed. Every download
+    // is user-initiated from the Parent Zone; nothing is uploaded.
+    val packs: PackRepository = RealPackRepository(
+        catalog = ResourceCatalogLoader.load(),
+        installRoot = appContext.filesDir,
+    )
 
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator = TutorOrchestrator(
         llm = createLlmEngine(),
