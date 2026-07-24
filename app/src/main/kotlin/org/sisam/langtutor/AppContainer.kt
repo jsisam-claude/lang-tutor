@@ -1,5 +1,6 @@
 package org.sisam.langtutor
 
+import android.app.ActivityManager
 import android.content.Context
 import java.io.File
 import kotlinx.coroutines.CoroutineScope
@@ -13,6 +14,7 @@ import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.packs.PackRepository
 import org.sisam.langtutor.packs.RealPackRepository
 import org.sisam.langtutor.packs.ResourceCatalogLoader
+import org.sisam.langtutor.packs.ramTierGb
 import org.sisam.langtutor.profile.JsonFileProfileStore
 import org.sisam.langtutor.profile.LearnerProfileStore
 import org.sisam.langtutor.speech.FakePronunciationScorer
@@ -33,6 +35,18 @@ import org.sisam.langtutor.tutor.TutorOrchestrator
 class AppContainer(context: Context) {
 
     private val appContext = context.applicationContext
+
+    /**
+     * Real device RAM tier (GB), detected from ActivityManager — drives which
+     * model packs are offered: Pixel 9a (8 GB) → E2B base; Pixel 9 (12 GB) and
+     * 10 Pro XL (16 GB) → E4B quality. Replaces the old hardcoded assumption.
+     */
+    val deviceRamGb: Int = run {
+        val am = appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val info = ActivityManager.MemoryInfo()
+        am.getMemoryInfo(info)
+        ramTierGb(info.totalMem)
+    }
 
     val content: ContentRepository = ResourceContentRepository()
 

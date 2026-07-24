@@ -11,7 +11,7 @@ class PackRepositoryTest {
     @Test
     fun `bundled catalog loads with unique ids`() {
         val catalog = ResourceCatalogLoader.load()
-        assertEquals(6, catalog.packs.size)
+        assertEquals(7, catalog.packs.size)
         assertEquals(catalog.packs.size, catalog.packs.map { it.id }.toSet().size)
         assertTrue(catalog.packs.any { it.kind == PackKind.LLM })
     }
@@ -34,8 +34,13 @@ class PackRepositoryTest {
         val repo = FakePackRepository()
         val on12gb = repo.eligiblePacks(deviceRamGb = 12).map { it.id }
         assertTrue("asr-en-pro" in on12gb)
-        assertTrue("llm-quality-e4b" !in on12gb)
-        assertTrue("llm-advanced-8b" !in on12gb)
+        assertTrue("llm-base-e2b" in on12gb)      // Pixel 9 gets the base tier…
+        assertTrue("llm-quality-e4b" in on12gb)   // …and the E4B quality tier (gated at 12 GB)
+        assertTrue("llm-advanced-8b" !in on12gb)  // 8B stays 16 GB-only
+
+        val on8gb = repo.eligiblePacks(deviceRamGb = 8).map { it.id }
+        assertTrue("llm-base-e2b" in on8gb)       // Pixel 9a: base tier only
+        assertTrue("llm-quality-e4b" !in on8gb)
 
         val on16gb = repo.eligiblePacks(deviceRamGb = 16).map { it.id }
         assertEquals(repo.catalog.packs.size, on16gb.size)

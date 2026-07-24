@@ -31,8 +31,6 @@ import org.sisam.langtutor.packs.InstallState
 import org.sisam.langtutor.packs.PackDescriptor
 import androidx.compose.runtime.rememberCoroutineScope
 
-// Runtime-detected via ActivityManager in production; fixed for the scaffold.
-private const val ASSUMED_DEVICE_RAM_GB = 16
 
 /**
  * Parent-zone pack manager. Policy surface for the scope decision "downloads
@@ -58,7 +56,7 @@ fun PacksSection(container: AppContainer) {
             style = MaterialTheme.typography.bodySmall,
         )
 
-        repo.eligiblePacks(ASSUMED_DEVICE_RAM_GB).forEach { pack ->
+        repo.eligiblePacks(container.deviceRamGb).forEach { pack ->
             val state = states[pack.id] ?: InstallState.NotInstalled
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(

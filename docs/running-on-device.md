@@ -18,9 +18,14 @@ one the app runs the scripted demo engine and the Conversation screen shows
 `🎬 Demo Tuki`. With the model present it shows `🧠 On-device Tuki (Gemma 4)`.
 
 ## Prerequisites
-- Pixel 9/10 (or Pro/Pro XL), Android 16. **16 GB RAM for E4B** (quality tier),
-  12 GB is fine for E2B (base tier).
-- `adb` connected; a machine with the Android SDK to build the APK.
+- A supported Pixel, Android 15/16. The app detects RAM (`ActivityManager`) and
+  offers the model tier that fits:
+  - **Pixel 9a (8 GB)** → *Base Tutor (E2B)* — English-focused; Hebrew limited.
+  - **Pixel 9 (12 GB)** and **Pixel 10 Pro XL (16 GB)** → *Better Conversations
+    (E4B)* — full quality, strongest Hebrew. (Pro XL also sees the experimental 8B.)
+  - E4B on a 12 GB Pixel 9 is the borderline case to watch on-device (see caveats).
+- `adb` connected; a machine with the Android SDK to build the APK, or just
+  download the CI artifact (Actions run → Artifacts → `app-debug`).
 
 ## 1. Build the app
 CI already compiles `:app:assembleDebug` + `:app:bundleDebug` on every push, so
@@ -36,11 +41,13 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 ## 2. Put the model on the device
 
 **Option A — in-app download (no adb).** Launch the app → **Parent Zone**
-(solve the gate) → **Packs** → **Better Conversations (E4B)** → consent. The real
-downloader (`RealPackRepository`) streams the model from Hugging Face straight to
-`filesDir/models/gemma-4-E4B-it.litertlm` — exactly where the engine looks — and
-verifies its SHA-256 before marking it installed. Needs network + ~3.7 GB free.
-Return to the conversation and the badge flips to **🧠 On-device Tuki**.
+(solve the gate) → **Packs** → tap the model pack your device is offered
+(*Better Conversations (E4B)* on a 12/16 GB Pixel; *Base Tutor (E2B)* on the 9a)
+→ consent. The real downloader (`RealPackRepository`) streams the model from
+Hugging Face straight to `filesDir/models/…` — exactly where the engine looks —
+and verifies its SHA-256 before marking it installed. Needs network + ~2.6 GB
+(E2B) or ~3.7 GB (E4B) free. Return to the conversation and the badge flips to
+**🧠 On-device Tuki**.
 
 **Option B — adb push (offline / dev).** Download the exact mobile artifact and
 push it to the app's external files dir, the other path `AppContainer` searches:
@@ -82,6 +89,11 @@ under both the app files dir and the external files dir above.
      cumulative (one-line fix).
   3. `Backend.GPU()` binds on Tensor — if it doesn't, it silently falls back to
      CPU (slower/hotter, still works). Watch logcat for the backend actually used.
+- **Memory is tight on the smaller devices.** E2B on the 9a (8 GB) and E4B on the
+  Pixel 9 (12 GB) both run near the ceiling alongside the speech stack + OS; under
+  pressure Android may kill the model process. Unmeasured — watch for reloads/OOM
+  on those two. The 10 Pro XL (16 GB) has the most headroom. If E4B is unstable on
+  the Pixel 9, the honest fallback is to bump its RAM gate back to 16.
 - **English works; Hebrew input does not (yet).** `PlatformAsrEngine` is hardcoded
   to `en-US` and is adult-tuned (kids' speech has higher error rates). Hebrew
   *output* depends on the device having a Hebrew TTS voice installed.
