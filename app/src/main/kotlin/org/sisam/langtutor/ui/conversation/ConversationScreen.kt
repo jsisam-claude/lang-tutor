@@ -96,6 +96,14 @@ fun ConversationScreen(container: AppContainer) {
             style = MaterialTheme.typography.headlineSmall,
         )
         Text(text = stateLabel(state), style = MaterialTheme.typography.bodyMedium)
+        // Honest indicator: is the child talking to the real on-device model or
+        // the scripted demo engine? (real only when a .litertlm file is present.)
+        Text(
+            text = stringResource(
+                if (container.usingRealLlm) R.string.model_mode_real else R.string.model_mode_demo,
+            ),
+            style = MaterialTheme.typography.labelSmall,
+        )
 
         LazyColumn(
             modifier = Modifier.weight(1f),
@@ -186,6 +194,7 @@ fun ConversationScreen(container: AppContainer) {
 @Composable
 private fun stateLabel(state: TutorTurnState): String = when (state) {
     TutorTurnState.Idle -> stringResource(R.string.state_idle)
+    TutorTurnState.Preparing -> stringResource(R.string.state_preparing)
     TutorTurnState.Listening -> stringResource(R.string.state_listening)
     TutorTurnState.Transcribing -> stringResource(R.string.state_transcribing)
     is TutorTurnState.Thinking -> stringResource(R.string.state_thinking)

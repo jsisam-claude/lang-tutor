@@ -2,6 +2,11 @@ package org.sisam.langtutor.tutor
 
 sealed interface TutorTurnState {
     data object Idle : TutorTurnState
+
+    /** Session starting: loading + initialising the on-device model. Can be
+     *  slow on first load (multi-GB mmap + accelerator warm-up), so the UI
+     *  shows a waiting state and input is gated until it clears. */
+    data object Preparing : TutorTurnState
     data object Listening : TutorTurnState
     data object Transcribing : TutorTurnState
 

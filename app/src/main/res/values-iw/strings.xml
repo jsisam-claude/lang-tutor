@@ -20,12 +20,16 @@
     <string name="speaker_child">אני</string>
 
     <string name="state_idle">מנוחה</string>
+    <string name="state_preparing">מעירים את תוקי…</string>
     <string name="state_listening">מקשיב…</string>
     <string name="state_transcribing">שמעתי! רגע אחד…</string>
     <string name="state_thinking">תוקי חושב…</string>
     <string name="state_speaking">תוקי מדבר</string>
     <string name="state_your_turn">תורך!</string>
     <string name="state_failed">אופס, ננסה שוב</string>
+
+    <string name="model_mode_real">🧠 תוקי במכשיר (Gemma 4)</string>
+    <string name="model_mode_demo">🎬 תוקי הדגמה (מתוסרט — אין מודל מותקן)</string>
 
     <string name="parent_gate_title">להורים בלבד 🔒</string>
     <string name="parent_gate_question">כדי להיכנס, פתרו: %1$s = ?</string>

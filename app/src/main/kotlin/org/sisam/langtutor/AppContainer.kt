@@ -53,22 +53,45 @@ class AppContainer(context: Context) {
     )
 
     /**
-     * Real engine when the model is on device, scripted fake otherwise — the
-     * single swap point. The model file is delivered by the install-time asset
-     * pack or a user-approved download (see [packs]); until it exists the fake
-     * keeps the full tutoring loop working. E4B is the quality-tier model that
-     * passes the Hebrew gate (VERDICT.md); E2B would be the base-install file.
+     * The on-device model file if one is present (resolved once at startup),
+     * else null. Search order is quality-tier E4B then base-tier E2B, each under
+     * the app files dir AND the external files dir — the latter is the easy
+     * `adb push` target for a device bring-up (docs/running-on-device.md). In a
+     * shipping build the file arrives via the install-time asset pack or a
+     * user-approved download (see [packs]).
      */
-    private fun createLlmEngine(): LlmEngine {
-        val modelFile = QUALITY_MODEL_CANDIDATES
-            .map { File(appContext.filesDir, it) }
-            .firstOrNull { it.exists() }
-        return if (modelFile != null) LiteRtLmEngine(modelFile.absolutePath) else FakeLlmEngine()
+    val modelFile: File? = resolveModelFile()
+
+    /**
+     * True when a real `.litertlm` model is on device, so the tutor uses the real
+     * LiteRT-LM engine (Gemma 4). False means the scripted demo engine — surfaced
+     * in the UI so a tester always knows which mode they are in.
+     */
+    val usingRealLlm: Boolean get() = modelFile != null
+
+    private fun resolveModelFile(): File? {
+        val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
+        for (base in bases) {
+            for (name in MODEL_CANDIDATES) {
+                val f = File(base, name)
+                if (f.exists() && f.length() > 0L) return f
+            }
+        }
+        return null
     }
 
+    /**
+     * Real engine when the model is on device, scripted fake otherwise — the
+     * single swap point. Until the file exists the fake keeps the full tutoring
+     * loop working. E4B is the quality-tier model that passes the Hebrew gate
+     * (eval/hebrew/results/VERDICT.md); E2B is the base-install file.
+     */
+    private fun createLlmEngine(): LlmEngine =
+        modelFile?.let { LiteRtLmEngine(it.absolutePath) } ?: FakeLlmEngine()
+
     private companion object {
-        // Preference order: quality-pack E4B first, then base-install E2B.
-        val QUALITY_MODEL_CANDIDATES = listOf(
+        // Preference order: quality-tier E4B first, then base-tier E2B.
+        val MODEL_CANDIDATES = listOf(
             "models/gemma-4-E4B-it.litertlm",
             "models/gemma-4-E2B-it.litertlm",
         )

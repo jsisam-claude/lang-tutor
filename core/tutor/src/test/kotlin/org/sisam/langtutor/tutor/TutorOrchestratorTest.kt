@@ -1,6 +1,9 @@
 package org.sisam.langtutor.tutor
 
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -11,6 +14,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.llm.FakeLlmEngine
+import org.sisam.langtutor.llm.GenerationStats
+import org.sisam.langtutor.llm.LlmEngine
+import org.sisam.langtutor.llm.LlmEvent
+import org.sisam.langtutor.llm.LlmModelSpec
+import org.sisam.langtutor.llm.LlmRequest
 import org.sisam.langtutor.profile.InMemoryProfileStore
 import org.sisam.langtutor.speech.AsrResult
 import org.sisam.langtutor.speech.FakeAsrEngine
@@ -98,6 +106,50 @@ class TutorOrchestratorTest {
         assertEquals(Speaker.TUTOR, tutorLine.speaker)
         assertEquals(TutorOrchestrator.SAFE_FALLBACK_REPLY, tutorLine.text)
         assertEquals(TutorOrchestrator.SAFE_FALLBACK_REPLY, fixture.tts.spoken.single().text)
+    }
+
+    @Test
+    fun `input is gated while the model is still loading`() = runTest {
+        // A model that blocks in load() until released — mimics a slow first load.
+        val loadGate = CompletableDeferred<Unit>()
+        val gatedLlm = object : LlmEngine {
+            var generateCalls = 0
+            override suspend fun load(spec: LlmModelSpec) = loadGate.await()
+            override fun generate(request: LlmRequest): Flow<LlmEvent> = flow {
+                generateCalls++
+                emit(LlmEvent.Done("x", GenerationStats(0, 0, 0f)))
+            }
+            override suspend fun unload() = Unit
+        }
+        val asr = FakeAsrEngine()
+        val orchestrator = TutorOrchestrator(
+            llm = gatedLlm,
+            asr = asr,
+            tts = FakeTtsEngine(),
+            scorer = FakePronunciationScorer(),
+            content = ResourceContentRepository(),
+            profile = InMemoryProfileStore(),
+            policy = ScriptedDialoguePolicy(),
+            scope = this,
+        )
+        val session = launch { orchestrator.startSession("unit-001", TutorMode.SPEECH) }
+        advanceUntilIdle()
+        assertTrue(orchestrator.state.value is TutorTurnState.Preparing)
+
+        // Mic + text during load are ignored: no capture, no generation.
+        orchestrator.onMicPressed()
+        orchestrator.onTextSubmitted("hello")
+        advanceUntilIdle()
+        assertEquals(0, asr.startCalls)
+        assertEquals(0, gatedLlm.generateCalls)
+        assertTrue(orchestrator.state.value is TutorTurnState.Preparing)
+
+        // Once loaded, the session opens for input. join() waits for startSession
+        // to finish, including loadUnit's real Dispatchers.IO hop (which
+        // advanceUntilIdle would not await).
+        loadGate.complete(Unit)
+        session.join()
+        assertTrue(orchestrator.state.value is TutorTurnState.AwaitingChild)
     }
 
     @Test

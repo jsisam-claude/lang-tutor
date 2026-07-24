@@ -53,6 +53,10 @@ class TutorOrchestrator(
     private var turnActive = false
 
     suspend fun startSession(unitId: String, @Suppress("UNUSED_PARAMETER") mode: TutorMode) {
+        // Model load can be slow on first run; hold Preparing so the UI shows a
+        // waiting state and input stays gated (a turn may only start from
+        // AwaitingChild) — this prevents generate()-before-load() on the real engine.
+        _state.value = TutorTurnState.Preparing
         llm.load(LlmModelSpec(modelId = "tutor-default"))
         currentUnit = content.loadUnit(unitId)
         val firstPrompt = currentUnit?.activities
@@ -63,8 +67,9 @@ class TutorOrchestrator(
 
     fun onMicPressed() {
         if (turnActive) return
-        val current = _state.value
-        if (current !is TutorTurnState.AwaitingChild && current != TutorTurnState.Idle) return
+        // A turn may only begin when the tutor is awaiting the child — this also
+        // blocks the mic during Preparing (model still loading) and Idle (no session).
+        if (_state.value !is TutorTurnState.AwaitingChild) return
         scope.launch {
             _state.value = TutorTurnState.Listening
             asr.startCapture(lessonHint())
@@ -81,7 +86,8 @@ class TutorOrchestrator(
     }
 
     suspend fun onTextSubmitted(text: String) {
-        if (turnActive || text.isBlank()) return
+        // Block while the model is still loading (Preparing) — same reason as the mic.
+        if (turnActive || text.isBlank() || _state.value is TutorTurnState.Preparing) return
         handleChildUtterance(text.trim(), confidence = 1.0f)
     }
 
