@@ -35,7 +35,10 @@ class FetchResult(
  */
 class HttpPackFetcher(
     private val connectTimeoutMs: Int = 30_000,
-    private val readTimeoutMs: Int = 60_000,
+    // Generous per-read timeout: a multi-GB mobile download can stall briefly
+    // without being dead. Too-short a value was a likely cause of spurious fails.
+    private val readTimeoutMs: Int = 120_000,
+    private val userAgent: String = "lang-tutor/0.1 (Android; on-device tutor)",
 ) : PackFetcher {
 
     override suspend fun open(url: String, offset: Long): FetchResult {
@@ -46,6 +49,9 @@ class HttpPackFetcher(
                 readTimeout = readTimeoutMs
                 instanceFollowRedirects = false // handled manually so Range survives redirects
                 requestMethod = "GET"
+                // Some CDNs/WAFs reject the default Java/Dalvik UA or a missing Accept.
+                setRequestProperty("User-Agent", userAgent)
+                setRequestProperty("Accept", "*/*")
                 if (offset > 0) setRequestProperty("Range", "bytes=$offset-")
             }
             when (val code = conn.responseCode) {

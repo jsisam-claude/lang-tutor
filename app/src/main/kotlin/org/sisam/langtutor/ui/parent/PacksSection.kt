@@ -88,8 +88,19 @@ fun PacksSection(container: AppContainer) {
                             }
                         }
 
-                        is InstallState.Failed ->
-                            Text(stringResource(R.string.packs_failed))
+                        is InstallState.Failed -> Column(
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                        ) {
+                            // Show the real reason so a failed download is diagnosable,
+                            // and offer a retry (resumes from the .part file).
+                            Text(
+                                text = "${stringResource(R.string.packs_failed)}: ${state.reason}",
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                            Button(onClick = { scope.launch { repo.install(pack.id).collect { } } }) {
+                                Text(stringResource(R.string.packs_retry))
+                            }
+                        }
 
                         InstallState.NotInstalled -> Button(onClick = { consentPack = pack }) {
                             Text(stringResource(R.string.packs_download))

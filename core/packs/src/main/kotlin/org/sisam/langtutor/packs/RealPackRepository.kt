@@ -98,7 +98,10 @@ class RealPackRepository(
             recordInstalled(packId, pack.version)
             emit(publish(packId, InstallState.Installed(pack.version)))
         } catch (t: Throwable) {
-            emit(publish(packId, InstallState.Failed(t.message ?: "download failed")))
+            // Always include the exception type — some (UnknownHost, timeout) have
+            // null/opaque messages, and this string is what the UI shows for triage.
+            val reason = "${t.javaClass.simpleName}: ${t.message ?: "no message"}"
+            emit(publish(packId, InstallState.Failed(reason)))
         }
     }.flowOn(ioDispatcher)
 

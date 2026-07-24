@@ -45,6 +45,7 @@
     <string name="packs_installed">Installed ✓</string>
     <string name="packs_verifying">Verifying…</string>
     <string name="packs_failed">Download failed</string>
+    <string name="packs_retry">Retry</string>
     <string name="packs_check_updates">Check for updates</string>
     <string name="packs_updates_none">Everything is up to date</string>
     <string name="packs_updates_found">%1$d update(s) available — download from the list above</string>
