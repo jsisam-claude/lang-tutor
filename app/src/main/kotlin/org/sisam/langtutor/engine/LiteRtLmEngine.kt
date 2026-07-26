@@ -1,5 +1,6 @@
 package org.sisam.langtutor.engine
 
+import android.util.Log
 import com.google.ai.edge.litertlm.Backend
 import com.google.ai.edge.litertlm.Contents
 import com.google.ai.edge.litertlm.Engine
@@ -50,23 +51,29 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // GPU/NPU actually accelerates Gemma 4 on Tensor is the Pixel bench.
         var lastError: Throwable? = null
         for (backend in listOf(Backend.GPU(), Backend.CPU())) {
+            val started = System.nanoTime()
             val candidate = try {
                 Engine(EngineConfig(modelPath = modelPath, backend = backend))
             } catch (t: Throwable) {
+                Log.w(TAG, "engine create failed on $backend", t)
                 lastError = t
                 continue
             }
             try {
                 candidate.initialize()
                 engine = candidate
+                val ms = (System.nanoTime() - started) / 1_000_000
+                Log.i(TAG, "loaded $modelPath on backend=$backend in ${ms}ms")
                 return@withContext
             } catch (t: Throwable) {
                 // Release the half-initialized engine before falling back, or the
                 // failed attempt's native buffers leak alongside the next backend.
                 runCatching { candidate.close() }
+                Log.w(TAG, "initialize failed on $backend", t)
                 lastError = t
             }
         }
+        Log.e(TAG, "load failed on ALL backends for $modelPath", lastError)
         throw IllegalStateException("LiteRT-LM failed to load $modelPath on any backend", lastError)
     }
 
@@ -92,6 +99,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // way. DEVICE-VERIFY (docs/bench.md): calibrate against real token counts
         // before treating the bench numbers as authoritative.
         val charBudget = request.maxTokens * EST_CHARS_PER_TOKEN
+        var firstDeltaMs = -1L
         try {
             // DEVICE-VERIFY: we treat each streamed Message.text as a delta (the
             // doc's `collect { print(it) }` prints each chunk). If the runtime
@@ -105,15 +113,23 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                     // this is clean text with no role framing on real output.
                     val delta = message.toString()
                     if (delta.isNotEmpty()) {
+                        if (firstDeltaMs < 0) {
+                            firstDeltaMs = (System.nanoTime() - startNanos) / 1_000_000
+                            Log.i(TAG, "first token after ${firstDeltaMs}ms (delta len=${delta.length})")
+                        }
                         full.append(delta)
                         emit(LlmEvent.Token(delta))
                     }
                 }
+        } catch (t: Throwable) {
+            Log.e(TAG, "generate failed after ${(System.nanoTime() - startNanos) / 1_000_000}ms", t)
+            throw t
         } finally {
             conversation.close()
         }
         val seconds = (System.nanoTime() - startNanos) / 1_000_000_000.0
         val estTokens = full.length / EST_CHARS_PER_TOKEN
+        Log.i(TAG, "turn done: ${full.length} chars in ${"%.1f".format(seconds)}s (~${(estTokens / seconds.coerceAtLeast(0.001)).toInt()} est-tok/s)")
         emit(
             LlmEvent.Done(
                 fullText = full.toString(),
@@ -138,6 +154,8 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
     }
 
     companion object {
+        private const val TAG = "TukiLlm"
+
         // Matches the sampling used in the eval harness (run_eval_litert.py).
         private const val DEFAULT_TOP_K = 64
         private const val DEFAULT_TOP_P = 0.95

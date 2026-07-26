@@ -148,7 +148,12 @@ class TutorOrchestrator(
                 }
             }
         } catch (e: Exception) {
-            _state.value = TutorTurnState.Failed(e.message ?: "turn failed")
+            // println lands in logcat (System.out) — this module is pure JVM and
+            // has no android.util.Log; a silent Failed state made device
+            // debugging needlessly blind.
+            println("TutorOrchestrator: turn failed: ${e.javaClass.simpleName}: ${e.message}")
+            e.printStackTrace()
+            _state.value = TutorTurnState.Failed("${e.javaClass.simpleName}: ${e.message ?: "turn failed"}")
         } finally {
             turnActive = false
         }

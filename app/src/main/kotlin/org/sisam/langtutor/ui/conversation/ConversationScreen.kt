@@ -29,7 +29,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import android.speech.SpeechRecognizer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -110,6 +112,34 @@ fun ConversationScreen(container: AppContainer) {
             ),
             style = MaterialTheme.typography.labelSmall,
         )
+        // De-googled devices (e.g. GrapheneOS) ship NO speech recognizer service:
+        // the platform mic path can't work there until the bundled Whisper ASR
+        // lands. Say so instead of failing silently; typing still works.
+        val context = LocalContext.current
+        val speechAvailable = remember { SpeechRecognizer.isRecognitionAvailable(context) }
+        if (!speechAvailable) {
+            Text(
+                text = stringResource(R.string.speech_unavailable_banner),
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+        // The first on-device reply includes one-time warm-up and can take
+        // minutes on CPU; without this hint it reads as a hang.
+        if (state is TutorTurnState.Thinking) {
+            Text(
+                text = stringResource(R.string.thinking_first_hint),
+                style = MaterialTheme.typography.labelSmall,
+            )
+        }
+        // Debug builds: surface the actual failure reason (the kid-friendly
+        // status label hides it, which made real errors look like "nothing").
+        val failed = state
+        if (org.sisam.langtutor.BuildConfig.DEBUG && failed is TutorTurnState.Failed) {
+            Text(
+                text = "⚠ ${failed.reason}",
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
 
         LazyColumn(
             modifier = Modifier.weight(1f),

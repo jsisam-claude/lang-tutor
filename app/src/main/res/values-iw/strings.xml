@@ -31,6 +31,8 @@
     <string name="model_mode_real">🧠 תוקי במכשיר (Gemma 4)</string>
     <string name="model_mode_demo">🎬 תוקי הדגמה (מתוסרט — אין מודל מותקן)</string>
 
+    <string name="speech_unavailable_banner">🎤 קול אינו זמין במכשיר זה — אין שירות זיהוי דיבור (נפוץ באנדרואיד ללא גוגל). הקלדה עובדת; גם לקול של תוקי נדרש מנוע TTS. קול מובנה יגיע בגרסה הבאה.</string>
+    <string name="thinking_first_hint">התשובה הראשונה יכולה לקחת כמה דקות במכשיר — תוקי מתחמם, המתינו בבקשה.</string>
     <string name="parent_gate_title">להורים בלבד 🔒</string>
     <string name="parent_gate_question">כדי להיכנס, פתרו: %1$s = ?</string>
     <string name="parent_zone_title">אזור הורים</string>

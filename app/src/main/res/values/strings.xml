@@ -29,6 +29,8 @@
     <string name="model_mode_real">🧠 On-device Tuki (Gemma 4)</string>
     <string name="model_mode_demo">🎬 Demo Tuki (scripted — no model installed)</string>
 
+    <string name="speech_unavailable_banner">🎤 Voice isn\'t available on this device — no speech service installed (common on de-googled Android). Typing works; Tuki\'s spoken voice also needs a TTS engine. Bundled voice arrives in the next build.</string>
+    <string name="thinking_first_hint">First reply can take a few minutes on-device — Tuki is warming up, please wait.</string>
     <string name="parent_gate_title">Parents only 🔒</string>
     <string name="parent_gate_question">To enter, solve: %1$s = ?</string>
     <string name="parent_zone_title">Parent zone</string>
