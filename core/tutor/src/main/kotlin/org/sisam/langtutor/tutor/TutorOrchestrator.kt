@@ -164,14 +164,26 @@ class TutorOrchestrator(
         tts.speak(text, TutorLanguage.ENGLISH).collect { }
     }
 
-    private fun buildRequest(utterance: String, instruction: String) = LlmRequest(
-        systemPrompt = SYSTEM_PROMPT,
-        messages = listOf(
-            ChatMessage(Role.SYSTEM, instruction),
-            ChatMessage(Role.USER, utterance),
-        ),
-        maxTokens = 96,
-    )
+    /**
+     * Conversation memory: the request carries the last [HISTORY_TURNS]
+     * transcript entries (the current child utterance is already the newest),
+     * so Tuki remembers names, topics, and its own questions across turns —
+     * previously each turn was sent in isolation and the tutor had amnesia.
+     * Short kid turns keep this well inside the model's 4k context.
+     */
+    private fun buildRequest(@Suppress("UNUSED_PARAMETER") utterance: String, instruction: String): LlmRequest {
+        val history = _transcript.value.takeLast(HISTORY_TURNS).map { entry ->
+            ChatMessage(
+                role = if (entry.speaker == Speaker.CHILD) Role.USER else Role.ASSISTANT,
+                text = entry.text,
+            )
+        }
+        return LlmRequest(
+            systemPrompt = SYSTEM_PROMPT,
+            messages = listOf(ChatMessage(Role.SYSTEM, instruction)) + history,
+            maxTokens = 96,
+        )
+    }
 
     private fun lessonHint(): RecognitionHint {
         val unit = currentUnit ?: return RecognitionHint.None
@@ -189,6 +201,7 @@ class TutorOrchestrator(
 
     companion object {
         const val XP_PER_TURN = 5
+        const val HISTORY_TURNS = 10
         const val SAFE_FALLBACK_REPLY = "Let's get back to our lesson! Can you say the word again?"
 
         // P1 safety posture: register, brevity, and topic bounds live in the

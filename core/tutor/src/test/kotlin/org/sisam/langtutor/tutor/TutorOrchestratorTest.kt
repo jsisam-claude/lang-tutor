@@ -19,6 +19,7 @@ import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmEvent
 import org.sisam.langtutor.llm.LlmModelSpec
 import org.sisam.langtutor.llm.LlmRequest
+import org.sisam.langtutor.llm.Role
 import org.sisam.langtutor.profile.InMemoryProfileStore
 import org.sisam.langtutor.speech.AsrResult
 import org.sisam.langtutor.speech.FakeAsrEngine
@@ -150,6 +151,25 @@ class TutorOrchestratorTest {
         loadGate.complete(Unit)
         session.join()
         assertTrue(orchestrator.state.value is TutorTurnState.AwaitingChild)
+    }
+
+    @Test
+    fun `second turn carries the first turn as conversation history`() = runTest {
+        val fixture = Fixture(this)
+        fixture.orchestrator.startSession("unit-001", TutorMode.TEXT)
+        fixture.orchestrator.onTextSubmitted("My name is Noa")
+        advanceUntilIdle()
+        fixture.orchestrator.onTextSubmitted("What is my name?")
+        advanceUntilIdle()
+
+        assertEquals(2, fixture.llm.calls.size)
+        val second = fixture.llm.calls[1].messages
+        // History: first child turn + Tuki's first reply are in the request…
+        assertTrue(second.any { it.role == Role.USER && it.text == "My name is Noa" })
+        assertTrue(second.any { it.role == Role.ASSISTANT })
+        // …and the newest message is the current utterance.
+        assertEquals("What is my name?", second.last().text)
+        assertEquals(Role.USER, second.last().role)
     }
 
     @Test
