@@ -35,6 +35,8 @@ jobs:
       # devices without OpenCL (GrapheneOS). Without this step the build still
       # succeeds — the engine's smoke test just falls back to CPU.
       - run: scripts/fetch-gpu-libs.sh
+      # Tuki's Kokoro voice vectors (522KB, SHA-256-pinned) → APK assets.
+      - run: scripts/fetch-voice-assets.sh
       - run: ./gradlew test :app:assembleDebug :app:bundleDebug --stacktrace
       # Publish the installable debug APK (+ AAB) so a green run yields a
       # sideloadable build for on-device testing (docs/running-on-device.md).

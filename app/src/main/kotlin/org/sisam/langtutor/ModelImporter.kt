@@ -164,6 +164,9 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
             "whisper_medium_30s_i4.tflite" to listOf(
                 KnownRevision(664_348_672, "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63"),
             ),
+            "model_q8f16.onnx" to listOf(
+                KnownRevision(86_033_585, "04c658aec1b6008857c2ad10f8c589d4180d0ec427e7e6118ceb487e215c3cd0"),
+            ),
             "gemma-4-E4B-it.litertlm" to listOf(
                 KnownRevision(3_659_530_240, "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0"),
                 KnownRevision(3_654_467_584, "f335f2bfd1b758dc6476db16c0f41854bd6237e2658d604cbe566bcefd00a7bc"),

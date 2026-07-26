@@ -7,9 +7,9 @@
 #   sideload/pixel-10-pro-xl/ 16 GB  -> Gemma 4 E4B (quality brain)
 #
 # Each device dir gets: the model the CURRENT app loads, a generated push.sh
-# (adb commands for that device), and future-speech/ — the native Whisper ASR
-# (now WIRED: push.sh installs it and the mic uses it, no Google services) and
-# Kokoro TTS artifacts (Kokoro lands in the next build).
+# (adb commands for that device), and speech/ — the bundled Whisper ASR (Tuki's
+# ears) and the Kokoro ONNX voice (Tuki's mouth), both WIRED: push.sh installs
+# them into files/models and the app uses them with no Google services.
 #
 # Usage:
 #   scripts/download-sideload.sh                 # all three devices
@@ -51,12 +51,7 @@ sha_of() {
     gemma-4-E4B-it.litertlm) echo "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0" ;;
     whisper_large_v3_turbo_30s_i4.tflite) echo "da3c91fcd149174cbb5abd3a5583ea95982c5e401c2d68cabac89117f5ce1a4c" ;;
     whisper_medium_30s_i4.tflite) echo "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63" ;;
-    kokoro_82m_fixedlen_fp32.tflite) echo "c5a066787eeffd73c0f10d5abf54813f3baa9020bbf1b32ef25473906e411d3c" ;;
-    kokoro_predictor.tflite) echo "696847964d2537fe8d72fd71b77c1fde9ba49f33cbc0ba09fa0329680cf42241" ;;
-    kokoro_prosody.tflite) echo "60c3154a4afc4626db51d7f9382ec8b87cfe2ea7979a098c52739454fdd9fe43" ;;
-    kokoro_vocoder.tflite) echo "acf5043fea1fa4c522095e81f2f7c5892eb178fb1bd154ae34fb21cb60948dff" ;;
-    istft_Wi_f32.bin) echo "72414803f6e0acad9f459cfacb4511c6f0bc5bbf239a6db8a7b78880d06b2cad" ;;
-    istft_Wr_f32.bin) echo "89ac7e7cd20ef63055b80cbf8864ff7c1ea214069e97d5039a4f5cc3df87bf44" ;;
+    model_q8f16.onnx) echo "04c658aec1b6008857c2ad10f8c589d4180d0ec427e7e6118ceb487e215c3cd0" ;;
     *) echo "" ;;
   esac
 }
@@ -67,7 +62,9 @@ url_of() {
     gemma-4-E4B-it.litertlm) echo "$HF/gemma-4-E4B-it-litert-lm/resolve/main/gemma-4-E4B-it.litertlm" ;;
     whisper_large_v3_turbo_30s_i4.tflite) echo "$HF/whisper-large-v3-turbo/resolve/main/whisper_large_v3_turbo_30s_i4.tflite" ;;
     whisper_medium_30s_i4.tflite) echo "$HF/whisper-medium/resolve/main/whisper_medium_30s_i4.tflite" ;;
-    kokoro_*|istft_*) echo "$HF/Kokoro-82M/resolve/main/$1" ;;
+    # Kokoro voice model — single-graph ONNX build (q8f16), spoken by the app's
+    # bundled ONNX Runtime engine.
+    model_q8f16.onnx) echo "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/onnx/model_q8f16.onnx" ;;
     *) echo ""; return 1 ;;
   esac
 }
@@ -137,16 +134,15 @@ adb shell run-as "\$PKG" mkdir -p files/models
 adb shell "run-as \$PKG cp /data/local/tmp/'$2' files/models/'$2'"
 adb shell rm -f /data/local/tmp/"$2"
 adb shell run-as "\$PKG" ls -l files/models
-for W in future-speech/whisper_*_30s_i4.tflite; do
+for W in speech/whisper_*_30s_i4.tflite speech/model_q8f16.onnx; do
   [ -f "\$W" ] || continue
   WB=\$(basename "\$W")
-  echo ">> pushing bundled ASR (\$WB) — mic without Google services"
+  echo ">> pushing bundled speech model (\$WB) — works without Google services"
   adb push "\$W" /data/local/tmp/"\$WB"
   adb shell "run-as \$PKG cp /data/local/tmp/'\$WB' files/models/'\$WB'"
   adb shell rm -f /data/local/tmp/"\$WB"
 done
-echo ">> done. Open the app — badge: On-device Tuki; mic uses bundled Whisper."
-# Kokoro TTS files in future-speech/ are not pushed yet (next build).
+echo ">> done. Open the app — badge: On-device Tuki; mic = bundled Whisper, voice = bundled Kokoro."
 PUSH
   chmod +x "$1/push.sh"
 }
@@ -170,16 +166,14 @@ for dev in "${DEVICES[@]}"; do
   echo "== $dev -> $devdir"
   place "$(fetch "$model")" "$devdir"
   if [ "$WITH_SPEECH" = 1 ]; then
-    for f in "$(whisper_for "$dev")" kokoro_82m_fixedlen_fp32.tflite \
-             kokoro_predictor.tflite kokoro_prosody.tflite kokoro_vocoder.tflite \
-             istft_Wi_f32.bin istft_Wr_f32.bin; do
-      place "$(fetch "$f")" "$devdir/future-speech"
+    for f in "$(whisper_for "$dev")" model_q8f16.onnx; do
+      place "$(fetch "$f")" "$devdir/speech"
     done
-    cat > "$devdir/future-speech/README.txt" <<'NOTE'
-Staged for the NEXT build (not read by the current APK):
-- whisper_*.tflite  — native on-device ASR (litert-community, 2026-07-23+)
-- kokoro_* + istft_* — native on-device TTS voice
-Keep alongside the model; the speech-engine sprint wires them in.
+    cat > "$devdir/speech/README.txt" <<'NOTE'
+Bundled speech models, pushed into files/models by push.sh:
+- whisper_*.tflite  — Tuki's ears: on-device ASR, no Google services
+- model_q8f16.onnx  — Tuki's voice: Kokoro TTS (ONNX q8f16, 24 kHz)
+Both are read by the current APK as soon as they are in place.
 NOTE
   fi
   if [ -f "$CACHE/apk/app-debug.apk" ]; then place "$CACHE/apk/app-debug.apk" "$devdir"; fi

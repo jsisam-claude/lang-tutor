@@ -130,6 +130,18 @@ The mic now uses OUR bundled Whisper ASR whenever a whisper tflite is present in
 transcription loads the model (~10-30 s once); each utterance then takes several
 seconds on CPU. Logcat tag `TukiAsr` shows mel/encode/decode timings.
 
+## Tuki's voice (bundled Kokoro TTS)
+Tuki speaks with OUR bundled Kokoro voice whenever `models/model_q8f16.onnx`
+(86 MB) is on device — no Google services, no system voices (GrapheneOS has
+neither, so previously replies were silent there). Install it like the LLM:
+Parent Zone → Packs → "Tuki's Voice (Kokoro)", or import/share the file, or
+`push.sh` (re-run `scripts/download-sideload.sh` first to fetch it). The voice
+style itself (af_heart) ships inside the APK. Logcat tag `TukiTts` shows
+session load time and per-sentence synth ms vs seconds of audio — that ratio
+(RTF) on your Pixel is bench data worth sending. Names outside the dictionary
+(Noa, Yael…) use approximate letter-to-sound rules — report any that sound
+wrong.
+
 ## Known limits in this build (expected, not bugs)
 - English speech only (bundled Whisper decodes with the English token set);
   Tuki's spoken voice still needs the Kokoro build (text replies meanwhile).

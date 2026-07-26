@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
+import org.sisam.langtutor.engine.KokoroTtsEngine
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
@@ -112,10 +113,43 @@ class AppContainer private constructor(context: Context) {
 
     val hasBundledAsr: Boolean get() = bundledAsrFile != null
 
+    /** Bundled Kokoro voice model if present — our own TTS, no system voices. */
+    val bundledTtsFile: File?
+        get() {
+            val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
+            for (base in bases) for (name in TTS_CANDIDATES) {
+                val f = File(base, name)
+                if (f.exists() && f.length() > 0L) return f
+            }
+            return null
+        }
+
+    val hasBundledTts: Boolean get() = bundledTtsFile != null
+
+    /**
+     * ONE Kokoro engine app-wide, keyed by model path: the ORT session holds the
+     * 86 MB graph and is stateless per call, so recreating it per conversation
+     * screen would leak native sessions on every visit.
+     */
+    @Volatile private var kokoroEngine: KokoroTtsEngine? = null
+    @Volatile private var kokoroPath: String? = null
+
+    private fun bundledTtsEngine(): KokoroTtsEngine? {
+        val file = bundledTtsFile ?: return null
+        kokoroEngine?.takeIf { kokoroPath == file.absolutePath }?.let { return it }
+        synchronized(this) {
+            kokoroEngine?.takeIf { kokoroPath == file.absolutePath }?.let { return it }
+            return KokoroTtsEngine(appContext, file).also {
+                kokoroEngine = it
+                kokoroPath = file.absolutePath
+            }
+        }
+    }
+
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator = TutorOrchestrator(
         llm = createLlmEngine(),
         asr = bundledAsrFile?.let { WhisperAsrEngine(it) } ?: PlatformAsrEngine(appContext),
-        tts = PlatformTtsEngine(appContext),
+        tts = bundledTtsEngine() ?: PlatformTtsEngine(appContext),
         scorer = FakePronunciationScorer(),
         content = content,
         profile = profile,
@@ -172,6 +206,12 @@ class AppContainer private constructor(context: Context) {
         private val ASR_CANDIDATES = listOf(
             "models/whisper_large_v3_turbo_30s_i4.tflite",
             "models/whisper_medium_30s_i4.tflite",
+        )
+
+        // Bundled Kokoro voice (single q8f16 ONNX build; the HF file name is kept
+        // so downloads, imports and the catalog all agree on one name).
+        private val TTS_CANDIDATES = listOf(
+            "models/model_q8f16.onnx",
         )
 
         // Process-wide singleton: pack-download state and appScope must survive

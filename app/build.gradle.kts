@@ -85,4 +85,6 @@ dependencies {
     implementation(libs.litertlm.android)
     // LiteRT interpreter for the bundled speech models (Whisper ASR).
     implementation(libs.litert)
+    // ONNX Runtime for the bundled Kokoro voice (single-graph TTS). MIT.
+    implementation(libs.onnxruntime.android)
 }
