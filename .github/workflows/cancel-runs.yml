@@ -1,0 +1,29 @@
+# Manual janitor: cancel specific workflow runs by id. Exists because runs
+# started BEFORE the android-ci concurrency group was introduced are not part
+# of any group, so newer pushes can never auto-cancel them — and a stale run
+# can otherwise grind for hours of runner quota.
+name: cancel-runs
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_ids:
+        description: Space-separated workflow run ids to cancel
+        required: true
+        type: string
+
+permissions:
+  actions: write
+
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for id in ${{ inputs.run_ids }}; do
+            echo "cancelling run $id"
+            gh api -X POST "repos/${{ github.repository }}/actions/runs/$id/cancel" || true
+          done
