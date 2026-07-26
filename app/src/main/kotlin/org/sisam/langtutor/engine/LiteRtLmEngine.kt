@@ -2,6 +2,7 @@ package org.sisam.langtutor.engine
 
 import android.util.Log
 import com.google.ai.edge.litertlm.Backend
+import java.io.File
 import com.google.ai.edge.litertlm.Contents
 import com.google.ai.edge.litertlm.Engine
 import com.google.ai.edge.litertlm.EngineConfig
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.withContext
+import org.sisam.langtutor.BuildConfig
 import org.sisam.langtutor.llm.ChatMessage
 import org.sisam.langtutor.llm.GenerationStats
 import org.sisam.langtutor.llm.LlmEngine
@@ -49,14 +51,30 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // (e.g. no Tensor TPU / GPU on the device). The failure surfaces at
         // initialize(), so we try backends in order. DEVICE-VERIFY: which of
         // GPU/NPU actually accelerates Gemma 4 on Tensor is the Pixel bench.
+        //
+        // Devices where GPU generation is proven broken (GrapheneOS: WebGPU
+        // sampler needs an OpenCL/.so Google doesn't ship) get a hint file so
+        // session start skips the doomed multi-second GPU attempt. The hint is
+        // keyed to this build's versionCode: an app update (which may bundle
+        // the missing sampler library) retries GPU once and re-decides.
+        val hintFile = File("$modelPath$CPU_HINT_SUFFIX")
+        val skipGpu = runCatching {
+            hintFile.isFile && hintFile.readText().trim() == BuildConfig.VERSION_CODE.toString()
+        }.getOrDefault(false)
+        if (skipGpu) Log.i(TAG, "cpu hint present for this build — skipping the GPU attempt")
+
         var lastError: Throwable? = null
-        for (backend in listOf(Backend.GPU(), Backend.CPU())) {
+        var gpuFailed = false
+        val backends = if (skipGpu) listOf("cpu" to Backend.CPU())
+        else listOf("gpu" to Backend.GPU(), "cpu" to Backend.CPU())
+        for ((label, backend) in backends) {
             val started = System.nanoTime()
             val candidate = try {
                 Engine(EngineConfig(modelPath = modelPath, backend = backend))
             } catch (t: Throwable) {
                 Log.w(TAG, "engine create failed on $backend", t)
                 lastError = t
+                if (label == "gpu") gpuFailed = true
                 continue
             }
             try {
@@ -70,6 +88,14 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                 engine = candidate
                 val ms = (System.nanoTime() - started) / 1_000_000
                 Log.i(TAG, "loaded $modelPath on backend=$backend in ${ms}ms (smoke ok)")
+                runCatching {
+                    when {
+                        // CPU only works after GPU just failed: remember, skip next time.
+                        label == "cpu" && gpuFailed -> hintFile.writeText(BuildConfig.VERSION_CODE.toString())
+                        // GPU works: clear any stale hint from an older build.
+                        label == "gpu" && hintFile.exists() -> hintFile.delete()
+                    }
+                }
                 return@withContext
             } catch (t: Throwable) {
                 // Release the half-initialized engine before falling back, or the
@@ -77,6 +103,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                 runCatching { candidate.close() }
                 Log.w(TAG, "initialize failed on $backend", t)
                 lastError = t
+                if (label == "gpu") gpuFailed = true
             }
         }
         Log.e(TAG, "load failed on ALL backends for $modelPath", lastError)
@@ -189,5 +216,9 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
 
         // Rough tokens≈chars/4 heuristic for budgets and stats (see generate()).
         private const val EST_CHARS_PER_TOKEN = 4
+
+        // Marker next to the model file: "GPU generation broken on this device
+        // for this app build — go straight to CPU". See load().
+        private const val CPU_HINT_SUFFIX = ".cpu-hint"
     }
 }
