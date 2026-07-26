@@ -7,10 +7,14 @@ class DeviceRamTest {
 
     @Test
     fun `totalMem maps to the marketing RAM tier`() {
-        // Typical reported totalMem (a bit under physical) for each tier.
-        assertEquals(8, ramTierGb(8_260_000_000L))   // Pixel 9a class (~7.7 GiB)
-        assertEquals(12, ramTierGb(12_000_000_000L)) // Pixel 9 (~11.2 GiB)
-        assertEquals(16, ramTierGb(16_300_000_000L)) // Pixel 9 Pro (~15.2 GiB)
+        // Devices report totalMem well below physical (kernel/GPU reserves).
+        // LOW values are the realistic ones — they must still hit the right tier.
+        assertEquals(8, ramTierGb(7_400_000_000L))   // Pixel 9a reporting low
+        assertEquals(8, ramTierGb(8_260_000_000L))   // Pixel 9a reporting high
+        assertEquals(12, ramTierGb(11_100_000_000L)) // Pixel 9 reporting low
+        assertEquals(12, ramTierGb(12_000_000_000L))
+        assertEquals(16, ramTierGb(15_100_000_000L)) // Pixel 10 Pro XL reporting low
+        assertEquals(16, ramTierGb(16_300_000_000L))
         assertEquals(6, ramTierGb(6_100_000_000L))
     }
 
@@ -20,9 +24,10 @@ class DeviceRamTest {
         fun modelsFor(bytes: Long) =
             repo.eligiblePacks(ramTierGb(bytes)).filter { it.kind == PackKind.LLM }.map { it.id }.toSet()
 
-        val pixel9a = modelsFor(8_260_000_000L)  // 8 GB
-        val pixel9 = modelsFor(12_000_000_000L)  // 12 GB
-        val pixel10ProXl = modelsFor(16_300_000_000L) // 16 GB
+        // Use the LOW realistic totalMem readings — the case naive rounding broke.
+        val pixel9a = modelsFor(7_400_000_000L)       // 8 GB device
+        val pixel9 = modelsFor(11_100_000_000L)       // 12 GB device
+        val pixel10ProXl = modelsFor(15_100_000_000L) // 16 GB device
 
         // 9a: base E2B only — no 12 GB+ models.
         assertEquals(setOf("llm-base-e2b"), pixel9a)

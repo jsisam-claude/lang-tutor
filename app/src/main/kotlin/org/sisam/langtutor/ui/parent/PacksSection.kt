@@ -99,7 +99,7 @@ fun PacksSection(container: AppContainer) {
                                 text = "${stringResource(R.string.packs_failed)}: ${state.reason}",
                                 style = MaterialTheme.typography.bodySmall,
                             )
-                            Button(onClick = { scope.launch { repo.install(pack.id).collect { } } }) {
+                            Button(onClick = { container.appScope.launch { repo.install(pack.id).collect { } } }) {
                                 Text(stringResource(R.string.packs_retry))
                             }
                             // Debug builds only: offer a TLS-bypass retry when the
@@ -155,7 +155,7 @@ fun PacksSection(container: AppContainer) {
                 TextButton(
                     onClick = {
                         consentPack = null
-                        scope.launch { repo.install(pack.id).collect { } }
+                        container.appScope.launch { repo.install(pack.id).collect { } }
                     },
                 ) {
                     Text(stringResource(R.string.packs_consent_confirm))
@@ -180,7 +180,7 @@ fun PacksSection(container: AppContainer) {
                     onClick = {
                         sslOverridePack = null
                         container.enableInsecureDownloads()
-                        scope.launch { repo.install(pack.id).collect { } }
+                        container.appScope.launch { repo.install(pack.id).collect { } }
                     },
                 ) {
                     Text(stringResource(R.string.packs_ignore_ssl_confirm))

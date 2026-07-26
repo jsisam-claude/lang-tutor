@@ -97,7 +97,9 @@ class HttpPackFetcher(
                 }
                 else -> {
                     conn.disconnect()
-                    error("HTTP $code for $current")
+                    // Host only — the full URL may carry signed query params
+                    // (CDN signatures) that must not surface in user-visible text.
+                    error("HTTP $code from $host")
                 }
             }
         }

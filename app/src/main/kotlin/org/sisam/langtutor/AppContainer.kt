@@ -4,6 +4,8 @@ import android.app.ActivityManager
 import android.content.Context
 import java.io.File
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.engine.LiteRtLmEngine
@@ -33,9 +35,16 @@ import org.sisam.langtutor.tutor.TutorOrchestrator
  * on an emulator/CI without weights, and lights up real generation on a Pixel
  * once the model lands, with no code change.
  */
-class AppContainer(context: Context) {
+class AppContainer private constructor(context: Context) {
 
     private val appContext = context.applicationContext
+
+    /**
+     * App-lifetime scope for work that must outlive any one screen — most
+     * importantly multi-GB pack downloads, which previously died when the user
+     * navigated away from the Parent Zone mid-download.
+     */
+    val appScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     /**
      * Real device RAM tier (GB), detected from ActivityManager — drives which
@@ -73,6 +82,9 @@ class AppContainer(context: Context) {
      * gate + an explicit warning dialog; never reachable in a release build.
      */
     fun enableInsecureDownloads() {
+        // Hard release guard: even if a code path ever reached here in a release
+        // build, the bypass stays off.
+        if (!BuildConfig.DEBUG) return
         (packs as? RealPackRepository)?.allowInsecureTls = true
     }
 
@@ -88,14 +100,15 @@ class AppContainer(context: Context) {
     )
 
     /**
-     * The on-device model file if one is present (resolved once at startup),
-     * else null. Search order is quality-tier E4B then base-tier E2B, each under
-     * the app files dir AND the external files dir — the latter is the easy
-     * `adb push` target for a device bring-up (docs/running-on-device.md). In a
-     * shipping build the file arrives via the install-time asset pack or a
-     * user-approved download (see [packs]).
+     * The on-device model file if one is present, else null. Resolved FRESH on
+     * every read (it's a filesystem stat, cheap) so a model that finishes
+     * downloading — or lands via `adb push` — is picked up the next time a
+     * conversation starts, without reinstalling or restarting the app. Search
+     * order is quality-tier E4B then base-tier E2B, each under the app files dir
+     * AND the external files dir (the easy `adb push` target,
+     * docs/running-on-device.md).
      */
-    val modelFile: File? = resolveModelFile()
+    val modelFile: File? get() = resolveModelFile()
 
     /**
      * True when a real `.litertlm` model is on device, so the tutor uses the real
@@ -124,11 +137,21 @@ class AppContainer(context: Context) {
     private fun createLlmEngine(): LlmEngine =
         modelFile?.let { LiteRtLmEngine(it.absolutePath) } ?: FakeLlmEngine()
 
-    private companion object {
+    companion object {
         // Preference order: quality-tier E4B first, then base-tier E2B.
-        val MODEL_CANDIDATES = listOf(
+        private val MODEL_CANDIDATES = listOf(
             "models/gemma-4-E4B-it.litertlm",
             "models/gemma-4-E2B-it.litertlm",
         )
+
+        // Process-wide singleton: pack-download state and appScope must survive
+        // Activity recreation (rotation), which previously rebuilt everything.
+        @Volatile
+        private var instance: AppContainer? = null
+
+        fun get(context: Context): AppContainer =
+            instance ?: synchronized(this) {
+                instance ?: AppContainer(context.applicationContext).also { instance = it }
+            }
     }
 }

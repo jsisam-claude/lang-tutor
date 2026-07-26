@@ -64,6 +64,12 @@ class ConversationViewModel(container: AppContainer) : ViewModel() {
     fun onTextSubmitted(text: String) {
         viewModelScope.launch { orchestrator.onTextSubmitted(text) }
     }
+
+    override fun onCleared() {
+        // Release the multi-GB engine when the conversation screen goes away
+        // (thermal/memory budget: nothing stays loaded between sessions).
+        orchestrator.shutdown()
+    }
 }
 
 @Composable

@@ -50,12 +50,20 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // GPU/NPU actually accelerates Gemma 4 on Tensor is the Pixel bench.
         var lastError: Throwable? = null
         for (backend in listOf(Backend.GPU(), Backend.CPU())) {
+            val candidate = try {
+                Engine(EngineConfig(modelPath = modelPath, backend = backend))
+            } catch (t: Throwable) {
+                lastError = t
+                continue
+            }
             try {
-                val candidate = Engine(EngineConfig(modelPath = modelPath, backend = backend))
                 candidate.initialize()
                 engine = candidate
                 return@withContext
             } catch (t: Throwable) {
+                // Release the half-initialized engine before falling back, or the
+                // failed attempt's native buffers leak alongside the next backend.
+                runCatching { candidate.close() }
                 lastError = t
             }
         }
@@ -77,14 +85,19 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         )
         val userText = request.messages.lastOrNull()?.text.orEmpty()
         val full = StringBuilder()
-        var tokens = 0
         val startNanos = System.nanoTime()
+        // Streamed chunks are NOT tokens (a chunk may carry several). All token
+        // counts here use the ~4-chars-per-token heuristic, clearly an ESTIMATE:
+        // the cap is a character budget and tok/s in stats is estimated the same
+        // way. DEVICE-VERIFY (docs/bench.md): calibrate against real token counts
+        // before treating the bench numbers as authoritative.
+        val charBudget = request.maxTokens * EST_CHARS_PER_TOKEN
         try {
             // DEVICE-VERIFY: we treat each streamed Message.text as a delta (the
             // doc's `collect { print(it) }` prints each chunk). If the runtime
             // turns out to emit cumulative text, switch to delta = text.removePrefix(full).
             conversation.sendMessageAsync(userText)
-                .takeWhile { tokens < request.maxTokens }
+                .takeWhile { full.length < charBudget }
                 .collect { message ->
                     // Text comes out via toString() — the documented extraction
                     // (getting_started uses `print(sendMessage(...))` and
@@ -93,7 +106,6 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                     val delta = message.toString()
                     if (delta.isNotEmpty()) {
                         full.append(delta)
-                        tokens++
                         emit(LlmEvent.Token(delta))
                     }
                 }
@@ -101,13 +113,14 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
             conversation.close()
         }
         val seconds = (System.nanoTime() - startNanos) / 1_000_000_000.0
+        val estTokens = full.length / EST_CHARS_PER_TOKEN
         emit(
             LlmEvent.Done(
                 fullText = full.toString(),
                 stats = GenerationStats(
-                    promptTokens = request.systemPrompt.length / 4,
-                    completionTokens = tokens,
-                    decodeTokensPerSecond = if (seconds > 0) (tokens / seconds).toFloat() else 0f,
+                    promptTokens = request.systemPrompt.length / EST_CHARS_PER_TOKEN,
+                    completionTokens = estTokens,
+                    decodeTokensPerSecond = if (seconds > 0) (estTokens / seconds).toFloat() else 0f,
                 ),
             ),
         )
@@ -128,5 +141,8 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // Matches the sampling used in the eval harness (run_eval_litert.py).
         private const val DEFAULT_TOP_K = 64
         private const val DEFAULT_TOP_P = 0.95
+
+        // Rough tokens≈chars/4 heuristic for budgets and stats (see generate()).
+        private const val EST_CHARS_PER_TOKEN = 4
     }
 }

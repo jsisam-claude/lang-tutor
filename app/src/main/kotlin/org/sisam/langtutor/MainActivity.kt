@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val container = AppContainer(applicationContext)
+        val container = AppContainer.get(applicationContext)
         setContent {
             val appContainer = remember { container }
             LangTutorTheme {

@@ -1,6 +1,7 @@
 package org.sisam.langtutor.tutor
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -67,9 +68,11 @@ class TutorOrchestrator(
 
     fun onMicPressed() {
         if (turnActive) return
-        // A turn may only begin when the tutor is awaiting the child — this also
-        // blocks the mic during Preparing (model still loading) and Idle (no session).
-        if (_state.value !is TutorTurnState.AwaitingChild) return
+        // A turn may begin when the tutor awaits the child, or after a failed
+        // turn (so Failed isn't a dead end — the child can just try again).
+        // Still blocked: Preparing (model loading) and Idle (no session).
+        val current = _state.value
+        if (current !is TutorTurnState.AwaitingChild && current !is TutorTurnState.Failed) return
         scope.launch {
             _state.value = TutorTurnState.Listening
             asr.startCapture(lessonHint())
@@ -95,6 +98,19 @@ class TutorOrchestrator(
         llm.unload()
         currentUnit = null
         _state.value = TutorTurnState.Idle
+    }
+
+    /**
+     * Non-suspend release for ViewModel.onCleared(): by the time onCleared runs
+     * the owning [scope] is already cancelled, so the multi-GB engine unload
+     * happens on an independent one-shot scope. Without this the model was
+     * NEVER unloaded — engines accumulated across screen exits (worst on 8 GB
+     * devices) and the documented load/unload thermal budget was fiction.
+     */
+    fun shutdown() {
+        currentUnit = null
+        _state.value = TutorTurnState.Idle
+        CoroutineScope(Dispatchers.Default).launch { llm.unload() }
     }
 
     private suspend fun handleChildUtterance(utterance: String, confidence: Float) {

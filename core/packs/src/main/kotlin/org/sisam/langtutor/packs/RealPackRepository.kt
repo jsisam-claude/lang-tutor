@@ -46,16 +46,29 @@ class RealPackRepository(
     private val states = MutableStateFlow(initialStates())
     override val installStates: StateFlow<Map<String, InstallState>> = states
 
+    // Packs currently downloading — a second install() for the same pack (e.g. a
+    // double-tap) returns immediately instead of racing two writers on one .part.
+    private val inFlight = java.util.concurrent.ConcurrentHashMap.newKeySet<String>()
+
     override fun eligiblePacks(deviceRamGb: Int): List<PackDescriptor> =
         catalog.packs.filter { it.minRamGb <= deviceRamGb }
 
     override fun install(packId: String): Flow<InstallState> = flow {
         val pack = requireNotNull(catalog.packs.find { it.id == packId }) { "Unknown pack: $packId" }
+        if (!inFlight.add(packId)) return@flow // already downloading; UI tracks installStates
         val target = File(installRoot, pack.resolvedInstallPath)
         val part = File(target.parentFile ?: installRoot, target.name + PART_SUFFIX)
         target.parentFile?.mkdirs()
         try {
             var have = if (part.exists()) part.length() else 0L
+            // Fail fast with a clear reason instead of dying mid-download when
+            // the disk fills (remaining bytes + 5% slack for the rename window).
+            val needed = ((pack.sizeBytes - have) * 1.05).toLong()
+            if (installRoot.usableSpace in 1 until needed) {
+                emit(publish(packId, InstallState.Failed(
+                    "Not enough storage: need ~${needed / 1_000_000} MB free")))
+                return@flow
+            }
             val result = (if (allowInsecureTls) insecureFetcher else fetcher).open(pack.url, have)
             val total = result.totalBytes.takeIf { it > 0 } ?: pack.sizeBytes
             val digest = MessageDigest.getInstance("SHA-256")
@@ -111,6 +124,8 @@ class RealPackRepository(
             // null/opaque messages, and this string is what the UI shows for triage.
             val reason = "${t.javaClass.simpleName}: ${t.message ?: "no message"}"
             emit(publish(packId, InstallState.Failed(reason)))
+        } finally {
+            inFlight.remove(packId)
         }
     }.flowOn(ioDispatcher)
 

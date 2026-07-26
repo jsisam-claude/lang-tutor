@@ -34,7 +34,7 @@
     <string name="parent_zone_title">Parent zone</string>
     <string name="parent_xp">Stars earned: %1$d</string>
     <string name="parent_daily_limit">Daily limit: %1$d minutes</string>
-    <string name="parent_offline_note">Everything stays on this device. The app has no internet permission.</string>
+    <string name="parent_offline_note">Everything stays on this device. The network is used only for downloads you approve — nothing is ever sent out.</string>
     <string name="parent_language_hebrew">עברית</string>
     <string name="parent_language_english">English</string>
 
