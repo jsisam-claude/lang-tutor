@@ -44,7 +44,10 @@ for entry in "${LIBS[@]}"; do
     continue
   fi
   echo "fetching      $name"
-  curl -fsSL --retry 3 -o "$out.tmp" "$BASE/$name"
+  # --retry-all-errors: plain --retry does NOT cover curl's HTTP/2
+  # PROTOCOL_ERROR (exit 92), which GitHub's LFS media CDN throws
+  # intermittently on larger files (killed a CI run once).
+  curl -fsSL --retry 4 --retry-all-errors -o "$out.tmp" "$BASE/$name"
   got="$(sha256sum "$out.tmp" | awk '{print $1}')"
   if [[ "$got" != "$want" ]]; then
     rm -f "$out.tmp"

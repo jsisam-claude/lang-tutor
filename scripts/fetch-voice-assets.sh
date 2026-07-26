@@ -23,7 +23,9 @@ if [[ -f "$out" ]] && echo "$SHA  $out" | sha256sum -c --status 2>/dev/null; the
   echo "OK (cached)   $NAME"
   exit 0
 fi
-curl -fsSL --retry 3 -o "$out.tmp" "$URL"
+# --retry-all-errors: covers curl's HTTP/2 PROTOCOL_ERROR (exit 92), which
+# plain --retry does not — see the same note in fetch-gpu-libs.sh.
+curl -fsSL --retry 4 --retry-all-errors -o "$out.tmp" "$URL"
 got="$(sha256sum "$out.tmp" | awk '{print $1}')"
 if [[ "$got" != "$SHA" ]]; then
   rm -f "$out.tmp"
