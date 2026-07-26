@@ -52,6 +52,7 @@
     <string name="packs_ignore_ssl_confirm">Ignore &amp; download</string>
     <string name="packs_import">Import model file (USB / Downloads)…</string>
     <string name="packs_import_done">Model %1$s imported ✓ — open the conversation</string>
+    <string name="packs_import_anyway">Import anyway (testing — skips verification)</string>
     <string name="import_receiving">Importing model — see Parent Zone → Packs for progress</string>
     <string name="packs_check_updates">Check for updates</string>
     <string name="packs_updates_none">Everything is up to date</string>

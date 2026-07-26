@@ -19,7 +19,9 @@ sealed interface ImportState {
     data class Copying(val percent: Int) : ImportState
     data object Verifying : ImportState
     data class Done(val fileName: String) : ImportState
-    data class Failed(val reason: String) : ImportState
+
+    /** [canForce]: debug builds may re-import skipping verification. */
+    data class Failed(val reason: String, val canForce: Boolean = false) : ImportState
 }
 
 /**
@@ -37,13 +39,30 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
     private val _state = MutableStateFlow<ImportState>(ImportState.Idle)
     val state: StateFlow<ImportState> = _state
 
+    /** Set when verification rejected a file, so a debug build can force it. */
+    private var lastRejectedUri: Uri? = null
+
     fun import(uri: Uri) {
         val current = _state.value
         if (current is ImportState.Copying || current == ImportState.Verifying) return
-        scope.launch(Dispatchers.IO) { runImport(uri) }
+        scope.launch(Dispatchers.IO) { runImport(uri, verify = true) }
     }
 
-    private fun runImport(uri: Uri) {
+    /**
+     * TESTING ONLY (debug builds): re-import the last rejected file WITHOUT
+     * size/hash verification. For genuinely different artifacts (e.g. a future
+     * HF revision not yet in [KNOWN_REVISIONS]). Filename validation still
+     * applies; release builds ignore this entirely.
+     */
+    fun importUnverified() {
+        if (!BuildConfig.DEBUG) return
+        val uri = lastRejectedUri ?: return
+        val current = _state.value
+        if (current is ImportState.Copying || current == ImportState.Verifying) return
+        scope.launch(Dispatchers.IO) { runImport(uri, verify = false) }
+    }
+
+    private fun runImport(uri: Uri, verify: Boolean) {
         try {
             val (name, size) = queryNameAndSize(uri)
             // Only files the engine actually loads are accepted; the catalog is
@@ -88,26 +107,33 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
                     }
                 }
             }
-            // The catalog knows the exact byte size; a short copy means the SOURCE
-            // on the phone is truncated (MTP transfers do this silently) — name it
-            // so the user re-copies the file instead of chasing corruption.
-            if (copied != pack.sizeBytes) {
-                tmp.delete()
-                _state.value = ImportState.Failed(
-                    "Incomplete file: got ${copied / 1_000_000} of ${pack.sizeBytes / 1_000_000} MB — " +
-                        "the copy on the phone is truncated; re-copy it (check its size in Files first)",
-                )
-                return
-            }
             _state.value = ImportState.Verifying
             val got = digest.digest().joinToString("") { "%02x".format(it) }
-            if (!pack.sha256.equals(got, ignoreCase = true)) {
-                tmp.delete()
-                _state.value = ImportState.Failed(
-                    "Checksum mismatch (got ${got.take(12)}…, expected ${pack.sha256.take(12)}…) — re-download the file",
-                )
-                return
+            if (verify) {
+                // Accept ANY genuine published revision of this file — HF replaced
+                // both models on 2026-05-04, so files downloaded earlier are valid
+                // older revisions, not corruption. Verified against the revision
+                // list pinned from HF's LFS metadata.
+                val revisions = KNOWN_REVISIONS[name].orEmpty()
+                val matched = revisions.any { it.size == copied && it.sha256.equals(got, ignoreCase = true) }
+                if (!matched) {
+                    tmp.delete()
+                    lastRejectedUri = uri
+                    val sizeKnown = revisions.any { it.size == copied }
+                    _state.value = ImportState.Failed(
+                        if (!sizeKnown) {
+                            "Incomplete or unknown file: ${copied / 1_000_000} MB (known revisions: " +
+                                revisions.joinToString("/") { "${it.size / 1_000_000}" } +
+                                " MB) — re-copy or re-download"
+                        } else {
+                            "Checksum mismatch (got ${got.take(12)}…) — file damaged in transfer; re-copy it"
+                        },
+                        canForce = true,
+                    )
+                    return
+                }
             }
+            lastRejectedUri = null
             target.delete()
             if (!tmp.renameTo(target)) {
                 tmp.copyTo(target, overwrite = true)
@@ -117,6 +143,26 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
         } catch (t: Throwable) {
             _state.value = ImportState.Failed("${t.javaClass.simpleName}: ${t.message ?: "import failed"}")
         }
+    }
+
+    private data class KnownRevision(val size: Long, val sha256: String)
+
+    private companion object {
+        /**
+         * Every published revision of each model file, pinned from HF's LFS
+         * metadata (litert-community). First entry = current (what the evals
+         * ran on); second = the pre-2026-05-04 original, still genuine.
+         */
+        val KNOWN_REVISIONS: Map<String, List<KnownRevision>> = mapOf(
+            "gemma-4-E2B-it.litertlm" to listOf(
+                KnownRevision(2_588_147_712, "181938105e0eefd105961417e8da75903eacda102c4fce9ce90f50b97139a63c"),
+                KnownRevision(2_583_085_056, "ab7838cdfc8f77e54d8ca45eadceb20452d9f01e4bfade03e5dce27911b27e42"),
+            ),
+            "gemma-4-E4B-it.litertlm" to listOf(
+                KnownRevision(3_659_530_240, "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0"),
+                KnownRevision(3_654_467_584, "f335f2bfd1b758dc6476db16c0f41854bd6237e2658d604cbe566bcefd00a7bc"),
+            ),
+        )
     }
 
     private fun queryNameAndSize(uri: Uri): Pair<String, Long> {

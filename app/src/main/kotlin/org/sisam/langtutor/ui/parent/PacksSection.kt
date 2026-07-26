@@ -150,10 +150,20 @@ fun PacksSection(container: AppContainer) {
             is ImportState.Done ->
                 Text(stringResource(R.string.packs_import_done, st.fileName))
 
-            is ImportState.Failed -> Text(
-                text = "${stringResource(R.string.packs_failed)}: ${st.reason}",
-                style = MaterialTheme.typography.bodySmall,
-            )
+            is ImportState.Failed -> Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(
+                    text = "${stringResource(R.string.packs_failed)}: ${st.reason}",
+                    style = MaterialTheme.typography.bodySmall,
+                )
+                // Debug builds only: accept a file that failed verification (e.g.
+                // an HF revision newer than our pin list). Checks are skipped —
+                // testing only, never present in release.
+                if (BuildConfig.DEBUG && st.canForce) {
+                    TextButton(onClick = { container.modelImporter.importUnverified() }) {
+                        Text(stringResource(R.string.packs_import_anyway))
+                    }
+                }
+            }
 
             ImportState.Idle -> Unit
         }
