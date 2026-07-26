@@ -58,21 +58,36 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // keyed to this build's versionCode: an app update (which may bundle
         // the missing sampler library) retries GPU once and re-decides.
         val hintFile = File("$modelPath$CPU_HINT_SUFFIX")
-        val skipGpu = runCatching {
+        val attemptMarker = File("$modelPath$GPU_ATTEMPT_SUFFIX")
+        val hintSkip = runCatching {
             hintFile.isFile && hintFile.readText().trim() == BuildConfig.VERSION_CODE.toString()
         }.getOrDefault(false)
-        if (skipGpu) Log.i(TAG, "cpu hint present for this build — skipping the GPU attempt")
+        // Crash-loop guard: a leftover attempt marker means the last GPU attempt
+        // never completed — a NATIVE crash (e.g. inside the GPU driver or a
+        // bundled sampler lib) killed the process where Kotlin catches nothing.
+        // Pin CPU for this build so one bad driver can't crash every launch.
+        val crashSkip = attemptMarker.exists()
+        if (crashSkip) {
+            Log.w(TAG, "previous GPU attempt crashed the process — pinning CPU for this build")
+            runCatching { hintFile.writeText(BuildConfig.VERSION_CODE.toString()) }
+            runCatching { attemptMarker.delete() }
+        } else if (hintSkip) {
+            Log.i(TAG, "cpu hint present for this build — skipping the GPU attempt")
+        }
+        val skipGpu = hintSkip || crashSkip
 
         var lastError: Throwable? = null
         var gpuFailed = false
         val backends = if (skipGpu) listOf("cpu" to Backend.CPU())
         else listOf("gpu" to Backend.GPU(), "cpu" to Backend.CPU())
         for ((label, backend) in backends) {
+            if (label == "gpu") runCatching { attemptMarker.createNewFile() }
             val started = System.nanoTime()
             val candidate = try {
                 Engine(EngineConfig(modelPath = modelPath, backend = backend))
             } catch (t: Throwable) {
                 Log.w(TAG, "engine create failed on $backend", t)
+                runCatching { attemptMarker.delete() }
                 lastError = t
                 if (label == "gpu") gpuFailed = true
                 continue
@@ -88,6 +103,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                 engine = candidate
                 val ms = (System.nanoTime() - started) / 1_000_000
                 Log.i(TAG, "loaded $modelPath on backend=$backend in ${ms}ms (smoke ok)")
+                runCatching { attemptMarker.delete() }
                 runCatching {
                     when {
                         // CPU only works after GPU just failed: remember, skip next time.
@@ -101,6 +117,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                 // Release the half-initialized engine before falling back, or the
                 // failed attempt's native buffers leak alongside the next backend.
                 runCatching { candidate.close() }
+                runCatching { attemptMarker.delete() }
                 Log.w(TAG, "initialize failed on $backend", t)
                 lastError = t
                 if (label == "gpu") gpuFailed = true
@@ -220,5 +237,9 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // Marker next to the model file: "GPU generation broken on this device
         // for this app build — go straight to CPU". See load().
         private const val CPU_HINT_SUFFIX = ".cpu-hint"
+
+        // Present only WHILE a GPU attempt is in flight; surviving a process
+        // death, it marks the attempt as having crashed natively. See load().
+        private const val GPU_ATTEMPT_SUFFIX = ".gpu-attempting"
     }
 }
