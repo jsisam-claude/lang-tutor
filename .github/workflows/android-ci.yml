@@ -30,6 +30,11 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
+      # Google's prebuilt WebGPU sampler/accelerator/dawn (LiteRT-LM v0.14.0,
+      # SHA-256-pinned in the script) → app jniLibs, so GPU generation works on
+      # devices without OpenCL (GrapheneOS). Without this step the build still
+      # succeeds — the engine's smoke test just falls back to CPU.
+      - run: scripts/fetch-gpu-libs.sh
       - run: ./gradlew test :app:assembleDebug :app:bundleDebug --stacktrace
       # Publish the installable debug APK (+ AAB) so a green run yields a
       # sideloadable build for on-device testing (docs/running-on-device.md).

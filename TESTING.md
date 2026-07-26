@@ -108,6 +108,21 @@ adb logcat -v time | grep -iE "litert|accelerator|xnnpack|langtutor|tflite" | te
 | First reply never arrives / app killed | Memory pressure (most likely 9a with E2B, 9 with E4B). Note it — this decides the RAM gates |
 | No speech recognized | `adb shell pm grant org.sisam.langtutor android.permission.RECORD_AUDIO`; device needs on-device recognition or the Google app |
 
+## GPU generation (bundled WebGPU sampler)
+CI builds now pack Google's prebuilt WebGPU sampler libraries
+(`libLiteRtTopKWebGpuSampler.so` + shared Dawn, LiteRT-LM v0.14.0,
+SHA-256-pinned by `scripts/fetch-gpu-libs.sh`) into the APK — the exact
+libraries whose absence forced CPU decode on GrapheneOS. What to look for in
+logcat (`TukiLlm` tag) on first session start:
+- `loaded … backend=GPU … (smoke ok)` → GPU decode works; note tok/s vs CPU.
+- `initialize failed on GPU` then `backend=CPU` → sampler still unusable; the
+  engine remembers (`.cpu-hint` next to the model) and skips the GPU attempt on
+  later launches, so only the FIRST session after an install/update pays it.
+- App dies during "Waking Tuki up…" → native crash in the GPU attempt. Relaunch:
+  the crash-loop guard pins CPU for this build (`previous GPU attempt crashed`
+  in logcat) and the app works as before. Please send the crash line
+  (`adb logcat -b crash -d`).
+
 ## Mic on GrapheneOS (bundled Whisper)
 The mic now uses OUR bundled Whisper ASR whenever a whisper tflite is present in
 `files/models` — no Google services needed. `push.sh` installs it automatically
