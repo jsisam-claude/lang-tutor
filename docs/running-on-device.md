@@ -50,16 +50,20 @@ and verifies its SHA-256 before marking it installed. Needs network + ~2.6 GB
 **🧠 On-device Tuki**.
 
 **Option B — adb push (offline / dev).** Download the exact mobile artifact and
-push it to the app's external files dir, the other path `AppContainer` searches:
+place it in the app's INTERNAL files dir. (Android 13+ scoped storage blocks
+`adb push` into `/sdcard/Android/data/...`, so stage via `/data/local/tmp` and
+`run-as` — this works because the build is debuggable, and internal files is
+the first path `AppContainer` searches):
 
 ```bash
-# Quality tier (recommended, 16 GB devices) — 3.66 GB
+# Quality tier (12/16 GB devices) — 3.66 GB
 huggingface-cli download litert-community/gemma-4-E4B-it-litert-lm \
     gemma-4-E4B-it.litertlm --local-dir .
 
-adb shell mkdir -p /sdcard/Android/data/org.sisam.langtutor/files/models
-adb push gemma-4-E4B-it.litertlm \
-    /sdcard/Android/data/org.sisam.langtutor/files/models/
+adb push gemma-4-E4B-it.litertlm /data/local/tmp/
+adb shell run-as org.sisam.langtutor mkdir -p files/models
+adb shell "run-as org.sisam.langtutor cp /data/local/tmp/gemma-4-E4B-it.litertlm files/models/"
+adb shell rm -f /data/local/tmp/gemma-4-E4B-it.litertlm
 ```
 
 For the base tier instead, use `litert-community/gemma-4-E2B-it-litert-lm`

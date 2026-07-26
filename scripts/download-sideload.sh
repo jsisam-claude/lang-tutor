@@ -118,15 +118,25 @@ write_push_sh() { # write_push_sh <devdir> <model>
   cat > "$1/push.sh" <<PUSH
 #!/usr/bin/env bash
 # Push this device's dependencies to the phone (and install the APK if present).
+#
+# Modern Android (13+) blocks adb push into /sdcard/Android/data (scoped
+# storage), so the reliable route for this debug build is: push to
+# /data/local/tmp, then run-as-copy into the app's INTERNAL files dir —
+# which is also the first place the app looks for the model.
 set -euo pipefail
 cd "\$(dirname "\$0")"
+PKG=org.sisam.langtutor
 adb get-state >/dev/null # fails fast if no device
 if ls app-debug.apk >/dev/null 2>&1; then
   echo ">> installing APK"; adb install -r app-debug.apk
 fi
-echo ">> pushing model ($2) — this is the file the app loads"
-adb shell mkdir -p /sdcard/Android/data/org.sisam.langtutor/files/models
-adb push "$2" /sdcard/Android/data/org.sisam.langtutor/files/models/
+echo ">> pushing model ($2) via /data/local/tmp (staging)"
+adb push "$2" /data/local/tmp/"$2"
+echo ">> moving into the app's internal files dir (run-as, debug builds only)"
+adb shell run-as "\$PKG" mkdir -p files/models
+adb shell "run-as \$PKG cp /data/local/tmp/'$2' files/models/'$2'"
+adb shell rm -f /data/local/tmp/"$2"
+adb shell run-as "\$PKG" ls -l files/models
 echo ">> done. Open the app — the badge should read: On-device Tuki (Gemma 4)"
 # future-speech/ is deliberately NOT pushed: the current APK does not read
 # those files yet (Whisper ASR + Kokoro TTS land in the next build).

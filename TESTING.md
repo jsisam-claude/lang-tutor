@@ -64,9 +64,15 @@ curl -L -o gemma-4-E4B-it.litertlm \
 
 sha256sum gemma-4-*.litertlm   # verify before pushing
 
-adb shell mkdir -p /sdcard/Android/data/org.sisam.langtutor/files/models
-adb push gemma-4-E2B-it.litertlm /sdcard/Android/data/org.sisam.langtutor/files/models/
-# (or push the E4B file — same folder; filenames must match exactly)
+# Android 13+ blocks adb push into /sdcard/Android/data (scoped storage), so
+# stage via /data/local/tmp and run-as-copy into the app's internal files dir
+# (the first place the app looks). Works because this is a debug build.
+adb push gemma-4-E2B-it.litertlm /data/local/tmp/
+adb shell run-as org.sisam.langtutor mkdir -p files/models
+adb shell "run-as org.sisam.langtutor cp /data/local/tmp/gemma-4-E2B-it.litertlm files/models/"
+adb shell rm -f /data/local/tmp/gemma-4-E2B-it.litertlm
+adb shell run-as org.sisam.langtutor ls -l files/models   # confirm it landed
+# (or the E4B file — same steps; filenames must match exactly)
 ```
 
 ## 3. Run the test
@@ -93,7 +99,8 @@ adb logcat -v time | grep -iE "litert|accelerator|xnnpack|langtutor|tflite" | te
 
 | Symptom | Likely cause / action |
 |---|---|
-| Badge stuck on **🎬 Demo Tuki** | Wrong path/filename. Check: `adb shell ls /sdcard/Android/data/org.sisam.langtutor/files/models/` and `adb shell run-as org.sisam.langtutor ls files/models` |
+| Badge stuck on **🎬 Demo Tuki** | Wrong path/filename. Check: `adb shell run-as org.sisam.langtutor ls -l files/models` (must show the exact `.litertlm` name, non-zero size) |
+| `adb push` to `/sdcard/Android/data/...` denied | Expected on Android 13+ (scoped storage) — use the `/data/local/tmp` + `run-as` steps above |
 | Download fails `SSLHandshakeException` | Network intercepts TLS (VPN/ad-blocker/WiFi filter). Use the debug **Ignore SSL** button, try mobile data, or use Option B |
 | Download fails `Not enough storage` | Free up space; E4B needs ~3.9 GB headroom during install |
 | No packs offered in Parent Zone | RAM detection issue — report device model + `adb shell cat /proc/meminfo \| head -1` |
