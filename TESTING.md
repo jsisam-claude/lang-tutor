@@ -3,6 +3,26 @@
 Everything needed to run today's test, copy-paste ready. Full background:
 [docs/running-on-device.md](docs/running-on-device.md).
 
+## 0. One-command option: per-device sideload dirs
+
+[`scripts/download-sideload.sh`](scripts/download-sideload.sh) downloads every
+dependency, SHA-256-verified, into one directory per device — then each dir's
+`push.sh` does the adb work:
+
+```bash
+scripts/download-sideload.sh            # sideload/pixel-9a, /pixel-9, /pixel-10-pro-xl
+scripts/download-sideload.sh pixel-9a   # just one device
+scripts/download-sideload.sh --apk      # also grab the latest CI APK (needs `gh` logged in)
+
+cd sideload/pixel-9a && ./push.sh       # installs APK (if fetched) + pushes the model
+```
+
+Each dir contains the device's brain (9a → E2B 2.6 GB; 9 / 10 Pro XL → E4B
+3.7 GB) plus `future-speech/` — the new native Whisper-ASR + Kokoro-TTS
+artifacts (litert-community, published this week) staged for the next build
+(the current APK doesn't read them yet; `push.sh` skips them). Manual steps
+below if you prefer doing it by hand.
+
 ## 1. Get the APK
 
 Latest green build on this branch (sign in to GitHub to download artifacts):

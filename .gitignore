@@ -23,3 +23,6 @@ asset-packs/*/src/main/assets/models/*
 # Python
 __pycache__/
 *.pyc
+
+# sideload script output (multi-GB model downloads)
+sideload/
