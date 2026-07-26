@@ -8,10 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
+import org.sisam.langtutor.engine.HebrewTtsEngine
 import org.sisam.langtutor.engine.KokoroTtsEngine
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
+import org.sisam.langtutor.engine.TtsRouter
 import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
@@ -127,6 +129,25 @@ class AppContainer private constructor(context: Context) {
     val hasBundledTts: Boolean get() = bundledTtsFile != null
 
     /**
+     * Bundled Hebrew voice — needs BOTH Phonikud files (nikud model + Piper
+     * voice); with only one installed the router keeps English-only behavior.
+     */
+    private val hebrewTtsFiles: Pair<File, File>?
+        get() {
+            val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
+            for (base in bases) {
+                val nikud = File(base, TTS_HE_NIKUD_PATH)
+                val voice = File(base, TTS_HE_VOICE_PATH)
+                if (nikud.exists() && nikud.length() > 0L && voice.exists() && voice.length() > 0L) {
+                    return nikud to voice
+                }
+            }
+            return null
+        }
+
+    val hasHebrewTts: Boolean get() = hebrewTtsFiles != null
+
+    /**
      * ONE Kokoro engine app-wide, keyed by model path: the ORT session holds the
      * 86 MB graph and is stateless per call, so recreating it per conversation
      * screen would leak native sessions on every visit.
@@ -154,10 +175,30 @@ class AppContainer private constructor(context: Context) {
         runCatching { appContext.assets.open(KokoroTtsEngine.VOICE_ASSET).close() }.isSuccess
     }
 
+    /** One Hebrew engine app-wide, same reasoning as [kokoroEngine]. */
+    @Volatile private var hebrewEngine: HebrewTtsEngine? = null
+    @Volatile private var hebrewPath: String? = null
+
+    private fun hebrewTtsEngine(): HebrewTtsEngine? {
+        val (nikud, voice) = hebrewTtsFiles ?: return null
+        val key = nikud.absolutePath + "|" + voice.absolutePath
+        hebrewEngine?.takeIf { hebrewPath == key }?.let { return it }
+        synchronized(this) {
+            hebrewEngine?.takeIf { hebrewPath == key }?.let { return it }
+            return HebrewTtsEngine(nikud, voice).also {
+                hebrewEngine = it
+                hebrewPath = key
+            }
+        }
+    }
+
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator = TutorOrchestrator(
         llm = createLlmEngine(),
         asr = bundledAsrFile?.let { WhisperAsrEngine(it) } ?: PlatformAsrEngine(appContext),
-        tts = bundledTtsEngine() ?: PlatformTtsEngine(appContext),
+        tts = TtsRouter(
+            english = bundledTtsEngine() ?: PlatformTtsEngine(appContext),
+            hebrew = hebrewTtsEngine(),
+        ),
         scorer = FakePronunciationScorer(),
         content = content,
         profile = profile,
@@ -221,6 +262,10 @@ class AppContainer private constructor(context: Context) {
         private val TTS_CANDIDATES = listOf(
             "models/model_q8f16.onnx",
         )
+
+        // Bundled Hebrew voice (Phonikud stack), HF file names kept as above.
+        private const val TTS_HE_NIKUD_PATH = "models/phonikud-1.0.int8.onnx"
+        private const val TTS_HE_VOICE_PATH = "models/model.onnx"
 
         // Process-wide singleton: pack-download state and appScope must survive
         // Activity recreation (rotation), which previously rebuilt everything.

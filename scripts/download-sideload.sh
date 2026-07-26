@@ -52,6 +52,8 @@ sha_of() {
     whisper_large_v3_turbo_30s_i4.tflite) echo "da3c91fcd149174cbb5abd3a5583ea95982c5e401c2d68cabac89117f5ce1a4c" ;;
     whisper_medium_30s_i4.tflite) echo "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63" ;;
     model_q8f16.onnx) echo "04c658aec1b6008857c2ad10f8c589d4180d0ec427e7e6118ceb487e215c3cd0" ;;
+    model.onnx) echo "dfe0a8f33002654fa560c4cdb796d934b6aa84b3bfb16779646a5b0f1bd9d968" ;;
+    phonikud-1.0.int8.onnx) echo "113afb58d3140502aa1e7691cdc6b240b56cf97e5852fc870e1a7fb5a400dd62" ;;
     *) echo "" ;;
   esac
 }
@@ -65,6 +67,9 @@ url_of() {
     # Kokoro voice model — single-graph ONNX build (q8f16), spoken by the app's
     # bundled ONNX Runtime engine.
     model_q8f16.onnx) echo "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/onnx/model_q8f16.onnx" ;;
+    # Hebrew voice (Phonikud stack): Piper VITS voice + nikud model.
+    model.onnx) echo "https://huggingface.co/Phonikud/phonikud-tts-checkpoints/resolve/main/model.onnx" ;;
+    phonikud-1.0.int8.onnx) echo "https://huggingface.co/Phonikud/phonikud-onnx/resolve/main/phonikud-1.0.int8.onnx" ;;
     *) echo ""; return 1 ;;
   esac
 }
@@ -134,7 +139,7 @@ adb shell run-as "\$PKG" mkdir -p files/models
 adb shell "run-as \$PKG cp /data/local/tmp/'$2' files/models/'$2'"
 adb shell rm -f /data/local/tmp/"$2"
 adb shell run-as "\$PKG" ls -l files/models
-for W in speech/whisper_*_30s_i4.tflite speech/model_q8f16.onnx; do
+for W in speech/whisper_*_30s_i4.tflite speech/model_q8f16.onnx speech/model.onnx speech/phonikud-1.0.int8.onnx; do
   [ -f "\$W" ] || continue
   WB=\$(basename "\$W")
   echo ">> pushing bundled speech model (\$WB) — works without Google services"
@@ -142,7 +147,7 @@ for W in speech/whisper_*_30s_i4.tflite speech/model_q8f16.onnx; do
   adb shell "run-as \$PKG cp /data/local/tmp/'\$WB' files/models/'\$WB'"
   adb shell rm -f /data/local/tmp/"\$WB"
 done
-echo ">> done. Open the app — badge: On-device Tuki; mic = bundled Whisper, voice = bundled Kokoro."
+echo ">> done. Open the app — badge: On-device Tuki; mic = bundled Whisper; voices = Kokoro (EN) + Phonikud (HE)."
 PUSH
   chmod +x "$1/push.sh"
 }
@@ -166,14 +171,16 @@ for dev in "${DEVICES[@]}"; do
   echo "== $dev -> $devdir"
   place "$(fetch "$model")" "$devdir"
   if [ "$WITH_SPEECH" = 1 ]; then
-    for f in "$(whisper_for "$dev")" model_q8f16.onnx; do
+    for f in "$(whisper_for "$dev")" model_q8f16.onnx model.onnx phonikud-1.0.int8.onnx; do
       place "$(fetch "$f")" "$devdir/speech"
     done
     cat > "$devdir/speech/README.txt" <<'NOTE'
 Bundled speech models, pushed into files/models by push.sh:
-- whisper_*.tflite  — Tuki's ears: on-device ASR, no Google services
-- model_q8f16.onnx  — Tuki's voice: Kokoro TTS (ONNX q8f16, 24 kHz)
-Both are read by the current APK as soon as they are in place.
+- whisper_*.tflite         — Tuki's ears: on-device ASR, no Google services
+- model_q8f16.onnx         — Tuki's English voice: Kokoro TTS (24 kHz)
+- model.onnx               — Tuki's Hebrew voice: Piper VITS (22.05 kHz)
+- phonikud-1.0.int8.onnx   — Hebrew nikud model (vowel points for the voice)
+All are read by the current APK as soon as they are in place.
 NOTE
   fi
   if [ -f "$CACHE/apk/app-debug.apk" ]; then place "$CACHE/apk/app-debug.apk" "$devdir"; fi

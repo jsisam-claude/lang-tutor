@@ -11,7 +11,7 @@ class PackRepositoryTest {
     @Test
     fun `bundled catalog loads with unique ids`() {
         val catalog = ResourceCatalogLoader.load()
-        assertEquals(5, catalog.packs.size)
+        assertEquals(7, catalog.packs.size)
         assertEquals(catalog.packs.size, catalog.packs.map { it.id }.toSet().size)
         assertTrue(catalog.packs.any { it.kind == PackKind.LLM })
     }

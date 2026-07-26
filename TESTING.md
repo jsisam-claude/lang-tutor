@@ -142,6 +142,19 @@ session load time and per-sentence synth ms vs seconds of audio — that ratio
 (Noa, Yael…) use approximate letter-to-sound rules — report any that sound
 wrong.
 
+## Tuki speaks Hebrew (bundled Phonikud TTS)
+Hebrew speech works when BOTH Hebrew packs are installed (Parent Zone →
+"Hebrew for Tuki" parts 1+2, or `push.sh`, which installs them): the nikud
+model (~308 MB) adds vowel points on-device, a rules engine (golden-tested
+against the reference) turns them into phonemes, and a Piper voice speaks at
+22.05 kHz. Any tutor line containing Hebrew letters routes to the Hebrew
+voice automatically; English lines keep using Kokoro. Logcat tag `TukiTtsHe`
+shows session-load and per-sentence synth times (measured RTF ≈ 0.09 on a
+single container CPU thread — realtime with headroom). Type a Hebrew sentence
+in the chat to hear it. Known limits: digits in Hebrew text are not spoken
+(no number expander yet), and mixed Hebrew-English sentences go entirely to
+the Hebrew voice.
+
 ## Known limits in this build (expected, not bugs)
 - English speech only (bundled Whisper decodes with the English token set);
   Tuki's spoken voice still needs the Kokoro build (text replies meanwhile).

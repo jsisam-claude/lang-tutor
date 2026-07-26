@@ -4,9 +4,6 @@ import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 import android.content.Context
-import android.media.AudioAttributes
-import android.media.AudioFormat
-import android.media.AudioTrack
 import android.util.Log
 import java.io.File
 import java.nio.ByteBuffer
@@ -18,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.sisam.langtutor.speech.KokoroPhonemizer
+import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
 import org.sisam.langtutor.speech.TtsEvent
 import org.sisam.langtutor.speech.TutorLanguage
@@ -31,7 +29,9 @@ import org.sisam.langtutor.speech.TutorLanguage
  * and the 86 MB model installs like the LLM (Parent Zone pack / import).
  *
  * [AppContainer] holds ONE instance app-wide: the ORT session mmaps the model
- * once and is reused across sessions (it is stateless per call).
+ * once and is reused across sessions (it is stateless per call). Playback and
+ * sentence chunking are shared with the Hebrew voice ([PcmPlayer],
+ * [SentenceChunker]).
  *
  * DEVICE-VERIFY (docs/bench.md): per-sentence synth RTF on Tensor CPU — logcat
  * tag [TAG] prints ms per chunk vs seconds of audio.
@@ -40,6 +40,7 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
 
     private val appContext = context.applicationContext
     private val phonemizer by lazy { KokoroPhonemizer.load() }
+    private val player = PcmPlayer(SAMPLE_RATE)
 
     /** 510 rows × 256 floats; row (tokens+2-1) conditions the voice, upstream convention. */
     private val voice: FloatArray by lazy {
@@ -64,33 +65,26 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         }
     }
 
-    @Volatile private var interrupted = false
-    @Volatile private var track: AudioTrack? = null
-
-    /** Cumulative frames written to [track] since creation — playbackHeadPosition
-     *  counts from track start, so per-chunk drain must compare against this. */
-    private var framesWritten = 0
-
     override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> = flow {
-        interrupted = false
+        player.interrupted = false
         emit(TtsEvent.Started)
         // Kokoro is an English voice; Hebrew letters phonemize to nothing and the
         // chunk is skipped, so a stray Hebrew line degrades to silence, not a crash.
-        for (chunk in sentenceChunks(text)) {
-            if (interrupted) break
+        for (chunk in SentenceChunker.split(text)) {
+            if (player.interrupted) break
             val ids = phonemizer.phonemize(chunk.text)
             if (ids.isEmpty()) continue
             emit(TtsEvent.RangeSpoken(chunk.start, chunk.end))
             val audio = synthesize(ids, speed)
-            if (audio.isNotEmpty() && !interrupted) play(audio)
+            if (audio.isNotEmpty() && !player.interrupted) player.play(audio)
         }
-        releaseTrack()
+        player.release()
         emit(TtsEvent.Completed)
     }.flowOn(Dispatchers.IO)
 
     override suspend fun stop() {
-        interrupted = true
-        releaseTrack()
+        player.interrupted = true
+        player.release()
     }
 
     private fun synthesize(ids: IntArray, speed: Float): FloatArray {
@@ -121,78 +115,11 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         }
     }
 
-    private fun play(audio: FloatArray) {
-        val t = track ?: AudioTrack.Builder()
-            .setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                    .build(),
-            )
-            .setAudioFormat(
-                AudioFormat.Builder()
-                    .setEncoding(AudioFormat.ENCODING_PCM_FLOAT)
-                    .setSampleRate(SAMPLE_RATE)
-                    .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
-                    .build(),
-            )
-            .setBufferSizeInBytes(SAMPLE_RATE * Float.SIZE_BYTES) // 1 s of headroom
-            .setTransferMode(AudioTrack.MODE_STREAM)
-            .build()
-            .also {
-                track = it
-                framesWritten = 0
-            }
-        if (t.playState != AudioTrack.PLAYSTATE_PLAYING) t.play()
-        var offset = 0
-        while (offset < audio.size && !interrupted) {
-            val n = t.write(audio, offset, audio.size - offset, AudioTrack.WRITE_BLOCKING)
-            if (n <= 0) break
-            offset += n
-        }
-        framesWritten += offset // mono: one sample == one frame
-        // Drain so Completed means "finished sounding", not "finished writing" —
-        // the orchestrator opens the mic right after and must not hear Tuki.
-        val deadline = System.currentTimeMillis() + (audio.size * 1000L / SAMPLE_RATE) + DRAIN_GRACE_MS
-        while (!interrupted && t.playbackHeadPosition < framesWritten && System.currentTimeMillis() < deadline) {
-            Thread.sleep(20)
-        }
-    }
-
-    private fun releaseTrack() {
-        track?.let { t ->
-            runCatching { t.pause() }
-            runCatching { t.flush() }
-            runCatching { t.release() }
-        }
-        track = null
-    }
-
-    /** Split on sentence enders (keeping them) so long replies stream out sentence by sentence. */
-    private fun sentenceChunks(text: String): List<Chunk> {
-        val chunks = mutableListOf<Chunk>()
-        var start = 0
-        for (i in text.indices) {
-            if (text[i] in SENTENCE_ENDERS && (i == text.length - 1 || text[i + 1].isWhitespace())) {
-                val piece = text.substring(start, i + 1).trim()
-                if (piece.isNotEmpty()) chunks.add(Chunk(piece, start, i + 1))
-                start = i + 1
-            }
-        }
-        val tail = text.substring(start).trim()
-        if (tail.isNotEmpty()) chunks.add(Chunk(tail, start, text.length))
-        return chunks
-    }
-
-    private data class Chunk(val text: String, val start: Int, val end: Int)
-
     companion object {
         private const val TAG = "TukiTts"
         private const val SAMPLE_RATE = 24_000
         private const val STYLE_DIM = 256
         private const val THREADS = 4
-        private const val DRAIN_GRACE_MS = 700L
-        private val SENTENCE_ENDERS = ".!?".toSet()
 
         /** af_heart from onnx-community/Kokoro-82M-v1.0-ONNX, pinned by the fetch script. */
         const val VOICE_ASSET = "kokoro/af_heart.bin"

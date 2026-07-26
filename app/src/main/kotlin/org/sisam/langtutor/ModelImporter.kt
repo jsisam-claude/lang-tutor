@@ -167,6 +167,12 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
             "model_q8f16.onnx" to listOf(
                 KnownRevision(86_033_585, "04c658aec1b6008857c2ad10f8c589d4180d0ec427e7e6118ceb487e215c3cd0"),
             ),
+            "model.onnx" to listOf(
+                KnownRevision(63_511_038, "dfe0a8f33002654fa560c4cdb796d934b6aa84b3bfb16779646a5b0f1bd9d968"),
+            ),
+            "phonikud-1.0.int8.onnx" to listOf(
+                KnownRevision(307_844_158, "113afb58d3140502aa1e7691cdc6b240b56cf97e5852fc870e1a7fb5a400dd62"),
+            ),
             "gemma-4-E4B-it.litertlm" to listOf(
                 KnownRevision(3_659_530_240, "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0"),
                 KnownRevision(3_654_467_584, "f335f2bfd1b758dc6476db16c0f41854bd6237e2658d604cbe566bcefd00a7bc"),
