@@ -61,9 +61,15 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
             }
             try {
                 candidate.initialize()
+                // initialize() succeeding does NOT prove the backend can generate:
+                // on GrapheneOS the WebGPU executor initializes fine but the top-K
+                // sampler needs OpenCL (absent there) and errors only on the first
+                // generation. Smoke-test one tiny turn before accepting the
+                // backend — doubles as kernel warm-up on healthy devices.
+                smokeTest(candidate)
                 engine = candidate
                 val ms = (System.nanoTime() - started) / 1_000_000
-                Log.i(TAG, "loaded $modelPath on backend=$backend in ${ms}ms")
+                Log.i(TAG, "loaded $modelPath on backend=$backend in ${ms}ms (smoke ok)")
                 return@withContext
             } catch (t: Throwable) {
                 // Release the half-initialized engine before falling back, or the
@@ -145,6 +151,24 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
     override suspend fun unload() = withContext(Dispatchers.Default) {
         engine?.close()
         engine = null
+    }
+
+    /** One minimal end-to-end generation; throws if the backend cannot sample. */
+    private fun smokeTest(candidate: Engine) {
+        val conversation = candidate.createConversation(
+            com.google.ai.edge.litertlm.ConversationConfig(
+                systemInstruction = Contents.of("Reply with one short word."),
+                initialMessages = emptyList(),
+                samplerConfig = SamplerConfig(topK = 1, topP = 1.0, temperature = 0.0),
+            ),
+        )
+        try {
+            val reply = conversation.sendMessage("Hi").toString()
+            check(reply.isNotBlank()) { "backend produced an empty smoke reply" }
+            Log.i(TAG, "smoke reply ok (${reply.length} chars)")
+        } finally {
+            conversation.close()
+        }
     }
 
     private fun ChatMessage.toLiteRt(): Message? = when (role) {
