@@ -67,6 +67,10 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
     @Volatile private var interrupted = false
     @Volatile private var track: AudioTrack? = null
 
+    /** Cumulative frames written to [track] since creation — playbackHeadPosition
+     *  counts from track start, so per-chunk drain must compare against this. */
+    private var framesWritten = 0
+
     override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> = flow {
         interrupted = false
         emit(TtsEvent.Started)
@@ -135,18 +139,22 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
             .setBufferSizeInBytes(SAMPLE_RATE * Float.SIZE_BYTES) // 1 s of headroom
             .setTransferMode(AudioTrack.MODE_STREAM)
             .build()
-            .also { track = it }
+            .also {
+                track = it
+                framesWritten = 0
+            }
         if (t.playState != AudioTrack.PLAYSTATE_PLAYING) t.play()
-        var written = 0
-        while (written < audio.size && !interrupted) {
-            val n = t.write(audio, written, audio.size - written, AudioTrack.WRITE_BLOCKING)
+        var offset = 0
+        while (offset < audio.size && !interrupted) {
+            val n = t.write(audio, offset, audio.size - offset, AudioTrack.WRITE_BLOCKING)
             if (n <= 0) break
-            written += n
+            offset += n
         }
+        framesWritten += offset // mono: one sample == one frame
         // Drain so Completed means "finished sounding", not "finished writing" —
         // the orchestrator opens the mic right after and must not hear Tuki.
         val deadline = System.currentTimeMillis() + (audio.size * 1000L / SAMPLE_RATE) + DRAIN_GRACE_MS
-        while (!interrupted && t.playbackHeadPosition < written && System.currentTimeMillis() < deadline) {
+        while (!interrupted && t.playbackHeadPosition < framesWritten && System.currentTimeMillis() < deadline) {
             Thread.sleep(20)
         }
     }
