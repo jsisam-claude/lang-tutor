@@ -17,6 +17,7 @@ kotlin {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.jtransforms)
     testImplementation(libs.junit4)
     testImplementation(libs.kotlinx.coroutines.test)
 }

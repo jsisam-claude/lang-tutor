@@ -27,6 +27,8 @@ kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationJson" }
 junit4 = { group = "junit", name = "junit", version.ref = "junit" }
+# Pure-JVM FFT (mixed-radix, handles Whisper's 400-pt transform) for the audio frontend.
+jtransforms = { group = "com.github.wendykierp", name = "JTransforms", version = "3.1" }
 # Google's on-device LLM runtime (LiteRT-LM) — the real Gemma 4 engine.
 # Android AAR pulls native .so; resolved from Google Maven in CI (not in the
 # in-container jvmOnly build, which excludes :app).
