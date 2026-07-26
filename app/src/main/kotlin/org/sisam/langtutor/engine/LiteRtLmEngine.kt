@@ -153,13 +153,16 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         engine = null
     }
 
-    /** One minimal end-to-end generation; throws if the backend cannot sample. */
+    /** One minimal end-to-end generation; throws if the backend cannot sample.
+     *  MUST use the production sampler settings: greedy (topK=1) can bypass the
+     *  top-K sampler whose OpenCL dependency is exactly what breaks on
+     *  GrapheneOS — a greedy smoke could pass on a backend real turns fail on. */
     private fun smokeTest(candidate: Engine) {
         val conversation = candidate.createConversation(
             com.google.ai.edge.litertlm.ConversationConfig(
                 systemInstruction = Contents.of("Reply with one short word."),
                 initialMessages = emptyList(),
-                samplerConfig = SamplerConfig(topK = 1, topP = 1.0, temperature = 0.0),
+                samplerConfig = SamplerConfig(topK = DEFAULT_TOP_K, topP = DEFAULT_TOP_P, temperature = 0.7),
             ),
         )
         try {
