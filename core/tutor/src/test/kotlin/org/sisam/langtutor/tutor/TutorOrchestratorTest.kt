@@ -173,6 +173,50 @@ class TutorOrchestratorTest {
     }
 
     @Test
+    fun `mic press during Speaking hushes the voice instead of being ignored`() = runTest {
+        // A TTS whose speak() blocks until released — holds the orchestrator
+        // in the Speaking state so the barge-in path is actually reachable.
+        val speakGate = CompletableDeferred<Unit>()
+        val gatedTts = object : org.sisam.langtutor.speech.TtsEngine {
+            var stopCalls = 0
+            override fun speak(
+                text: String,
+                language: org.sisam.langtutor.speech.TutorLanguage,
+                speed: Float,
+            ): Flow<org.sisam.langtutor.speech.TtsEvent> = flow {
+                emit(org.sisam.langtutor.speech.TtsEvent.Started)
+                speakGate.await()
+                emit(org.sisam.langtutor.speech.TtsEvent.Completed)
+            }
+            override suspend fun stop() {
+                stopCalls++
+                speakGate.complete(Unit)
+            }
+        }
+        val orchestrator = TutorOrchestrator(
+            llm = FakeLlmEngine(),
+            asr = FakeAsrEngine(),
+            tts = gatedTts,
+            scorer = FakePronunciationScorer(),
+            content = ResourceContentRepository(),
+            profile = InMemoryProfileStore(),
+            policy = ScriptedDialoguePolicy(),
+            scope = this,
+        )
+        orchestrator.startSession("unit-001", TutorMode.TEXT)
+        val turn = launch { orchestrator.onTextSubmitted("The ball is red") }
+        advanceUntilIdle()
+        assertTrue(orchestrator.state.value is TutorTurnState.Speaking)
+
+        orchestrator.onMicPressed() // barge-in: hush, don't ignore
+        advanceUntilIdle()
+        turn.join()
+
+        assertEquals(1, gatedTts.stopCalls)
+        assertTrue(orchestrator.state.value is TutorTurnState.AwaitingChild)
+    }
+
+    @Test
     fun `text channel bypasses ASR and runs the same policy`() = runTest {
         val fixture = Fixture(this)
 

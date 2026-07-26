@@ -67,6 +67,14 @@ class TutorOrchestrator(
     }
 
     fun onMicPressed() {
+        // Barge-in: tapping the mic while Tuki is talking hushes the voice —
+        // a child should never have to wait out a long reply. The interrupted
+        // speak() completes immediately, the turn ends in AwaitingChild, and
+        // the next press starts listening as usual.
+        if (_state.value is TutorTurnState.Speaking) {
+            scope.launch { tts.stop() }
+            return
+        }
         if (turnActive) return
         // A turn may begin when the tutor awaits the child, or after a failed
         // turn (so Failed isn't a dead end — the child can just try again).

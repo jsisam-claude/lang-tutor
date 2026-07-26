@@ -47,6 +47,15 @@ class KokoroPhonemizerTest {
     }
 
     @Test
+    fun `hyphenated compounds are spoken as their parts`() {
+        // "well-done" is not in CMU as a whole; it must sound like the two
+        // words joined (no space token between the parts).
+        val well = phonemizer.phonemize("well")
+        val done = phonemizer.phonemize("done")
+        assertArrayEquals(well + done, phonemizer.phonemize("well-done"))
+    }
+
+    @Test
     fun `normalizer speaks numbers currency and percent`() {
         assertEquals("I have forty two cats", KokoroTextNormalizer.normalize("I have 42 cats"))
         assertEquals(

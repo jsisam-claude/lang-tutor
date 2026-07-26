@@ -6,6 +6,7 @@ import java.io.File
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.engine.HebrewTtsEngine
@@ -179,6 +180,26 @@ class AppContainer private constructor(context: Context) {
     @Volatile private var hebrewEngine: HebrewTtsEngine? = null
     @Volatile private var hebrewPath: String? = null
 
+    /**
+     * One Whisper engine app-wide too: each instance lazily holds a LiteRT
+     * Interpreter with ~0.7 GB of weights and nothing ever closed it — a new
+     * engine per conversation screen leaked an interpreter per visit.
+     */
+    @Volatile private var whisperEngine: WhisperAsrEngine? = null
+    @Volatile private var whisperPath: String? = null
+
+    private fun bundledAsrEngine(): WhisperAsrEngine? {
+        val file = bundledAsrFile ?: return null
+        whisperEngine?.takeIf { whisperPath == file.absolutePath }?.let { return it }
+        synchronized(this) {
+            whisperEngine?.takeIf { whisperPath == file.absolutePath }?.let { return it }
+            return WhisperAsrEngine(file).also {
+                whisperEngine = it
+                whisperPath = file.absolutePath
+            }
+        }
+    }
+
     private fun hebrewTtsEngine(): HebrewTtsEngine? {
         val (nikud, voice) = hebrewTtsFiles ?: return null
         val key = nikud.absolutePath + "|" + voice.absolutePath
@@ -192,19 +213,29 @@ class AppContainer private constructor(context: Context) {
         }
     }
 
-    fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator = TutorOrchestrator(
-        llm = createLlmEngine(),
-        asr = bundledAsrFile?.let { WhisperAsrEngine(it) } ?: PlatformAsrEngine(appContext),
-        tts = TtsRouter(
-            english = bundledTtsEngine() ?: PlatformTtsEngine(appContext),
-            hebrew = hebrewTtsEngine(),
-        ),
-        scorer = FakePronunciationScorer(),
-        content = content,
-        profile = profile,
-        policy = ScriptedDialoguePolicy(),
-        scope = scope,
-    )
+    fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator {
+        val kokoro = bundledTtsEngine()
+        val hebrew = hebrewTtsEngine()
+        // Warm the voice sessions off the critical path — otherwise the FIRST
+        // spoken reply pays the ONNX session load on top of LLM generation.
+        appScope.launch(Dispatchers.IO) {
+            runCatching { kokoro?.warmUp() }
+            runCatching { hebrew?.warmUp() }
+        }
+        return TutorOrchestrator(
+            llm = createLlmEngine(),
+            asr = bundledAsrEngine() ?: PlatformAsrEngine(appContext),
+            tts = TtsRouter(
+                english = kokoro ?: PlatformTtsEngine(appContext),
+                hebrew = hebrew,
+            ),
+            scorer = FakePronunciationScorer(),
+            content = content,
+            profile = profile,
+            policy = ScriptedDialoguePolicy(),
+            scope = scope,
+        )
+    }
 
     /**
      * The on-device model file if one is present, else null. Resolved FRESH on

@@ -73,9 +73,18 @@ class HebrewTtsEngine(
         player.release()
     }
 
+    /** Force the lazy pieces now (background call) so first speak is instant. */
+    fun warmUp() {
+        nikudSession
+        voiceSession
+        tokenizer
+    }
+
     private fun synthesize(text: String, speed: Float): FloatArray {
         val started = System.nanoTime()
-        val pointed = addNikud(NikudRestorer.removeNikud(text))
+        // The nikud model's context is 2046 tokens; sentence chunks are far
+        // shorter, but a pathological unbroken line must not crash the turn.
+        val pointed = addNikud(NikudRestorer.removeNikud(text).take(NIKUD_MAX_CHARS))
         val phonemes = PhonikudPhonemizer.phonemize(pointed)
         if (phonemes.isBlank()) return FloatArray(0)
         val ids = PiperPhonemes.toIds(phonemes)
@@ -160,6 +169,7 @@ class HebrewTtsEngine(
         private const val TAG = "TukiTtsHe"
         private const val SAMPLE_RATE = 22_050
         private const val THREADS = 4
+        private const val NIKUD_MAX_CHARS = 2000
 
         // Piper inference defaults of the bundled voice (model.config.json).
         private const val NOISE_SCALE = 0.667f

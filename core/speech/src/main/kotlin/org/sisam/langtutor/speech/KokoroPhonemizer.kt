@@ -41,7 +41,12 @@ class KokoroPhonemizer private constructor(
             }
             if (previousWasWord && spaceId != null) out.add(spaceId)
             previousWasWord = true
-            val arpabet = cmu[token.lowercase()] ?: RuleG2p.toArpabet(token)
+            // Hyphenated compounds miss the dictionary as a whole ("well-done")
+            // — phonemize the parts and speak them joined, keeping any direct
+            // dictionary hit (CMU does carry some hyphenated entries).
+            val arpabet = cmu[token.lowercase()]
+                ?: token.split('-').filter { it.isNotEmpty() }
+                    .joinToString(" ") { part -> cmu[part.lowercase()] ?: RuleG2p.toArpabet(part) }
             appendArpabet(arpabet, out)
         }
         return out.toIntArray()

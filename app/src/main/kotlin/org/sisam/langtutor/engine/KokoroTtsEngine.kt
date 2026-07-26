@@ -87,6 +87,13 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         player.release()
     }
 
+    /** Force the lazy pieces now (background call) so first speak is instant. */
+    fun warmUp() {
+        session
+        voice
+        phonemizer
+    }
+
     private fun synthesize(ids: IntArray, speed: Float): FloatArray {
         val started = System.nanoTime()
         val tokens = LongArray(ids.size + 2) // BOS=0 … EOS=0 (StyleTTS2 convention)
