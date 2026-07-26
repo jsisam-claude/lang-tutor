@@ -49,14 +49,14 @@ sha_of() {
   case "$1" in
     gemma-4-E2B-it.litertlm) echo "181938105e0eefd105961417e8da75903eacda102c4fce9ce90f50b97139a63c" ;;
     gemma-4-E4B-it.litertlm) echo "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0" ;;
-    whisper_large_v3_turbo_30s_i4.tflite) echo "__SHA_WHISPER_TURBO__" ;;
-    whisper_medium_30s_i4.tflite) echo "__SHA_WHISPER_MEDIUM__" ;;
-    kokoro_82m_fixedlen_fp32.tflite) echo "__SHA_KOKORO_MAIN__" ;;
-    kokoro_predictor.tflite) echo "__SHA_KOKORO_PRED__" ;;
-    kokoro_prosody.tflite) echo "__SHA_KOKORO_PROS__" ;;
-    kokoro_vocoder.tflite) echo "__SHA_KOKORO_VOC__" ;;
-    istft_Wi_f32.bin) echo "__SHA_ISTFT_WI__" ;;
-    istft_Wr_f32.bin) echo "__SHA_ISTFT_WR__" ;;
+    whisper_large_v3_turbo_30s_i4.tflite) echo "da3c91fcd149174cbb5abd3a5583ea95982c5e401c2d68cabac89117f5ce1a4c" ;;
+    whisper_medium_30s_i4.tflite) echo "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63" ;;
+    kokoro_82m_fixedlen_fp32.tflite) echo "c5a066787eeffd73c0f10d5abf54813f3baa9020bbf1b32ef25473906e411d3c" ;;
+    kokoro_predictor.tflite) echo "696847964d2537fe8d72fd71b77c1fde9ba49f33cbc0ba09fa0329680cf42241" ;;
+    kokoro_prosody.tflite) echo "60c3154a4afc4626db51d7f9382ec8b87cfe2ea7979a098c52739454fdd9fe43" ;;
+    kokoro_vocoder.tflite) echo "acf5043fea1fa4c522095e81f2f7c5892eb178fb1bd154ae34fb21cb60948dff" ;;
+    istft_Wi_f32.bin) echo "72414803f6e0acad9f459cfacb4511c6f0bc5bbf239a6db8a7b78880d06b2cad" ;;
+    istft_Wr_f32.bin) echo "89ac7e7cd20ef63055b80cbf8864ff7c1ea214069e97d5039a4f5cc3df87bf44" ;;
     *) echo "" ;;
   esac
 }
