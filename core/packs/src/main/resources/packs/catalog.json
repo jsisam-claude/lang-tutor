@@ -30,6 +30,36 @@
       "installPath": "models/gemma-4-E2B-it.litertlm",
       "minRamGb": 8,
       "experimental": false
+    },
+    {
+      "id": "asr-en-turbo",
+      "version": 1,
+      "nameEn": "Better Hearing (Whisper Turbo)",
+      "nameHe": "שמיעה טובה יותר (Whisper Turbo)",
+      "descriptionEn": "Our bundled speech recognizer — the mic works with no Google services. For Pixel 9 / 10 Pro XL.",
+      "descriptionHe": "מזהה הדיבור המובנה שלנו — המיקרופון עובד ללא שירותי גוגל. ל-Pixel 9 / 10 Pro XL.",
+      "kind": "asr",
+      "sizeBytes": 755273648,
+      "sha256": "da3c91fcd149174cbb5abd3a5583ea95982c5e401c2d68cabac89117f5ce1a4c",
+      "url": "https://huggingface.co/litert-community/whisper-large-v3-turbo/resolve/main/whisper_large_v3_turbo_30s_i4.tflite",
+      "installPath": "models/whisper_large_v3_turbo_30s_i4.tflite",
+      "minRamGb": 12,
+      "experimental": false
+    },
+    {
+      "id": "asr-en-medium",
+      "version": 1,
+      "nameEn": "Hearing (Whisper Medium)",
+      "nameHe": "שמיעה (Whisper Medium)",
+      "descriptionEn": "Our bundled speech recognizer for 8GB devices (Pixel 9a) — the mic works with no Google services.",
+      "descriptionHe": "מזהה הדיבור המובנה שלנו למכשירי 8GB ‏(Pixel 9a) — המיקרופון עובד ללא שירותי גוגל.",
+      "kind": "asr",
+      "sizeBytes": 664348672,
+      "sha256": "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63",
+      "url": "https://huggingface.co/litert-community/whisper-medium/resolve/main/whisper_medium_30s_i4.tflite",
+      "installPath": "models/whisper_medium_30s_i4.tflite",
+      "minRamGb": 8,
+      "experimental": false
     }
   ]
 }

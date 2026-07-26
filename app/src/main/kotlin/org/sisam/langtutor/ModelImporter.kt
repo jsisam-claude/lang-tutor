@@ -67,13 +67,13 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
             val (name, size) = queryNameAndSize(uri)
             // Only files the engine actually loads are accepted; the catalog is
             // the single source of truth for names, sizes, and hashes.
-            val pack = ResourceCatalogLoader.load().packs.firstOrNull {
+            val packs = ResourceCatalogLoader.load().packs
+            val pack = packs.firstOrNull {
                 it.resolvedInstallPath.substringAfterLast('/') == name
             }
             if (pack == null) {
-                _state.value = ImportState.Failed(
-                    "Unsupported file '$name' — expected gemma-4-E4B-it.litertlm or gemma-4-E2B-it.litertlm",
-                )
+                val known = packs.joinToString(", ") { it.resolvedInstallPath.substringAfterLast('/') }
+                _state.value = ImportState.Failed("Unsupported file '$name' — expected one of: $known")
                 return
             }
             val target = File(appContext.filesDir, pack.resolvedInstallPath)
@@ -157,6 +157,12 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
             "gemma-4-E2B-it.litertlm" to listOf(
                 KnownRevision(2_588_147_712, "181938105e0eefd105961417e8da75903eacda102c4fce9ce90f50b97139a63c"),
                 KnownRevision(2_583_085_056, "ab7838cdfc8f77e54d8ca45eadceb20452d9f01e4bfade03e5dce27911b27e42"),
+            ),
+            "whisper_large_v3_turbo_30s_i4.tflite" to listOf(
+                KnownRevision(755_273_648, "da3c91fcd149174cbb5abd3a5583ea95982c5e401c2d68cabac89117f5ce1a4c"),
+            ),
+            "whisper_medium_30s_i4.tflite" to listOf(
+                KnownRevision(664_348_672, "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63"),
             ),
             "gemma-4-E4B-it.litertlm" to listOf(
                 KnownRevision(3_659_530_240, "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0"),
