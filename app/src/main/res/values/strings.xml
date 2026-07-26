@@ -50,6 +50,9 @@
     <string name="packs_ignore_ssl_title">Ignore certificate errors?</string>
     <string name="packs_ignore_ssl_body">For testing only. This turns OFF HTTPS certificate checks for downloads — insecure, and never used in a real release. The model is still checksum-verified, so a tampered file is still rejected.</string>
     <string name="packs_ignore_ssl_confirm">Ignore &amp; download</string>
+    <string name="packs_import">Import model file (USB / Downloads)…</string>
+    <string name="packs_import_done">Model %1$s imported ✓ — open the conversation</string>
+    <string name="import_receiving">Importing model — see Parent Zone → Packs for progress</string>
     <string name="packs_check_updates">Check for updates</string>
     <string name="packs_updates_none">Everything is up to date</string>
     <string name="packs_updates_found">%1$d update(s) available — download from the list above</string>

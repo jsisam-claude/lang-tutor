@@ -27,6 +27,15 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- Share-to-import: share a .litertlm from any Files/Drive app to
+                 Tuki and it is copied into files/models (SHA-256-verified) —
+                 no storage permission needed, the URI grant rides the intent.
+                 mimeType is */* because .litertlm has no registered MIME type. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
         </activity>
 
         <!-- Persists the per-app locale chosen in the Parent Zone (minSdk 31

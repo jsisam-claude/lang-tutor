@@ -75,6 +75,12 @@ class AppContainer private constructor(context: Context) {
     )
 
     /**
+     * No-adb, no-network model sideload: copies a file the user picked with the
+     * system file picker into files/models (SHA-256-verified). See [ModelImporter].
+     */
+    val modelImporter = ModelImporter(appContext, appScope)
+
+    /**
      * TESTING ONLY (debug builds): disable TLS certificate verification for pack
      * downloads — a workaround for an intercepting network / untrusted CA on the
      * test device. The downloaded model is STILL SHA-256-verified, so a tampered

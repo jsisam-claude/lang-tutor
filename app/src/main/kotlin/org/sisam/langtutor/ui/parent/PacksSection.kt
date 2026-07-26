@@ -24,9 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.BuildConfig
+import org.sisam.langtutor.ImportState
 import org.sisam.langtutor.R
 import org.sisam.langtutor.packs.InstallState
 import org.sisam.langtutor.packs.PackDescriptor
@@ -119,6 +122,40 @@ fun PacksSection(container: AppContainer) {
                     }
                 }
             }
+        }
+
+        // No-adb, no-network sideload: pick the .litertlm from anywhere on the
+        // phone (USB-C drive, Downloads, a cloud app) — SAF needs no permission —
+        // and it's copied into files/models with the same SHA-256 verification
+        // as the downloader. Sharing a file TO the app does the same (MainActivity).
+        val importState by container.modelImporter.state.collectAsState()
+        val importPicker = rememberLauncherForActivityResult(
+            ActivityResultContracts.OpenDocument(),
+        ) { uri -> uri?.let { container.modelImporter.import(it) } }
+        OutlinedButton(onClick = { importPicker.launch(arrayOf("*/*")) }) {
+            Text(stringResource(R.string.packs_import))
+        }
+        when (val st = importState) {
+            is ImportState.Copying ->
+                if (st.percent >= 0) {
+                    LinearProgressIndicator(
+                        progress = { st.percent / 100f },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                } else {
+                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                }
+
+            ImportState.Verifying -> Text(stringResource(R.string.packs_verifying))
+            is ImportState.Done ->
+                Text(stringResource(R.string.packs_import_done, st.fileName))
+
+            is ImportState.Failed -> Text(
+                text = "${stringResource(R.string.packs_failed)}: ${st.reason}",
+                style = MaterialTheme.typography.bodySmall,
+            )
+
+            ImportState.Idle -> Unit
         }
 
         OutlinedButton(
