@@ -7,9 +7,9 @@
 #   sideload/pixel-10-pro-xl/ 16 GB  -> Gemma 4 E4B (quality brain)
 #
 # Each device dir gets: the model the CURRENT app loads, a generated push.sh
-# (adb commands for that device), and future-speech/ — the brand-new native
-# Whisper ASR + Kokoro TTS artifacts (litert-community, published 2026-07-2x)
-# staged for the next build. The current APK does NOT read future-speech yet.
+# (adb commands for that device), and future-speech/ — the native Whisper ASR
+# (now WIRED: push.sh installs it and the mic uses it, no Google services) and
+# Kokoro TTS artifacts (Kokoro lands in the next build).
 #
 # Usage:
 #   scripts/download-sideload.sh                 # all three devices
@@ -137,9 +137,16 @@ adb shell run-as "\$PKG" mkdir -p files/models
 adb shell "run-as \$PKG cp /data/local/tmp/'$2' files/models/'$2'"
 adb shell rm -f /data/local/tmp/"$2"
 adb shell run-as "\$PKG" ls -l files/models
-echo ">> done. Open the app — the badge should read: On-device Tuki (Gemma 4)"
-# future-speech/ is deliberately NOT pushed: the current APK does not read
-# those files yet (Whisper ASR + Kokoro TTS land in the next build).
+for W in future-speech/whisper_*_30s_i4.tflite; do
+  [ -f "\$W" ] || continue
+  WB=\$(basename "\$W")
+  echo ">> pushing bundled ASR (\$WB) — mic without Google services"
+  adb push "\$W" /data/local/tmp/"\$WB"
+  adb shell "run-as \$PKG cp /data/local/tmp/'\$WB' files/models/'\$WB'"
+  adb shell rm -f /data/local/tmp/"\$WB"
+done
+echo ">> done. Open the app — badge: On-device Tuki; mic uses bundled Whisper."
+# Kokoro TTS files in future-speech/ are not pushed yet (next build).
 PUSH
   chmod +x "$1/push.sh"
 }

@@ -11,6 +11,7 @@ import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
+import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.packs.HttpPackFetcher
@@ -94,9 +95,26 @@ class AppContainer private constructor(context: Context) {
         (packs as? RealPackRepository)?.allowInsecureTls = true
     }
 
+    /**
+     * Bundled Whisper model if present (pushed/downloaded next to the LLM) —
+     * our own ASR with no Google services, which is what makes the mic work on
+     * de-googled devices. Resolved fresh like [modelFile].
+     */
+    val bundledAsrFile: File?
+        get() {
+            val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
+            for (base in bases) for (name in ASR_CANDIDATES) {
+                val f = File(base, name)
+                if (f.exists() && f.length() > 0L) return f
+            }
+            return null
+        }
+
+    val hasBundledAsr: Boolean get() = bundledAsrFile != null
+
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator = TutorOrchestrator(
         llm = createLlmEngine(),
-        asr = PlatformAsrEngine(appContext),
+        asr = bundledAsrFile?.let { WhisperAsrEngine(it) } ?: PlatformAsrEngine(appContext),
         tts = PlatformTtsEngine(appContext),
         scorer = FakePronunciationScorer(),
         content = content,
@@ -148,6 +166,12 @@ class AppContainer private constructor(context: Context) {
         private val MODEL_CANDIDATES = listOf(
             "models/gemma-4-E4B-it.litertlm",
             "models/gemma-4-E2B-it.litertlm",
+        )
+
+        // Bundled Whisper ASR variants (turbo for 12/16 GB, medium for 8 GB).
+        private val ASR_CANDIDATES = listOf(
+            "models/whisper_large_v3_turbo_30s_i4.tflite",
+            "models/whisper_medium_30s_i4.tflite",
         )
 
         // Process-wide singleton: pack-download state and appScope must survive

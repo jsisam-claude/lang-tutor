@@ -83,4 +83,6 @@ dependencies {
     // Real on-device LLM: Google's LiteRT-LM runtime loads the .litertlm Gemma 4
     // artifact and runs it on CPU/GPU/NPU. Backs LiteRtLmEngine.
     implementation(libs.litertlm.android)
+    // LiteRT interpreter for the bundled speech models (Whisper ASR).
+    implementation(libs.litert)
 }

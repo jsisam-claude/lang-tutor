@@ -116,7 +116,11 @@ fun ConversationScreen(container: AppContainer) {
         // the platform mic path can't work there until the bundled Whisper ASR
         // lands. Say so instead of failing silently; typing still works.
         val context = LocalContext.current
-        val speechAvailable = remember { SpeechRecognizer.isRecognitionAvailable(context) }
+        val speechAvailable = remember {
+            // Bundled Whisper counts as speech: the banner is only for devices
+            // with NO recognition path at all.
+            container.hasBundledAsr || SpeechRecognizer.isRecognitionAvailable(context)
+        }
         if (!speechAvailable) {
             Text(
                 text = stringResource(R.string.speech_unavailable_banner),

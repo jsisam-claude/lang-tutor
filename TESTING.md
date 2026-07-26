@@ -108,8 +108,15 @@ adb logcat -v time | grep -iE "litert|accelerator|xnnpack|langtutor|tflite" | te
 | First reply never arrives / app killed | Memory pressure (most likely 9a with E2B, 9 with E4B). Note it — this decides the RAM gates |
 | No speech recognized | `adb shell pm grant org.sisam.langtutor android.permission.RECORD_AUDIO`; device needs on-device recognition or the Google app |
 
+## Mic on GrapheneOS (bundled Whisper)
+The mic now uses OUR bundled Whisper ASR whenever a whisper tflite is present in
+`files/models` — no Google services needed. `push.sh` installs it automatically
+(9a: whisper-medium ~0.7 GB; 9/Pro XL: whisper-turbo ~0.8 GB). First
+transcription loads the model (~10-30 s once); each utterance then takes several
+seconds on CPU. Logcat tag `TukiAsr` shows mel/encode/decode timings.
+
 ## Known limits in this build (expected, not bugs)
-- English conversation only — Hebrew *speech input* isn't wired (ASR is en-US);
-  Hebrew TTS depends on device voices.
+- English speech only (bundled Whisper decodes with the English token set);
+  Tuki's spoken voice still needs the Kokoro build (text replies meanwhile).
 - Pronunciation scoring is a stub.
 - Debug-signed test build — not Play-ready, not safety-certified for children yet.
