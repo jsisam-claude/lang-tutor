@@ -103,12 +103,21 @@ class RealPackRepository(
                 }
             }
 
+            // A dropped connection can end the stream with a clean EOF; that is an
+            // INCOMPLETE download, not a corrupt one — keep the .part so Retry
+            // resumes from here instead of restarting a multi-GB pull.
+            if (total > 0 && have < total) {
+                emit(publish(packId, InstallState.Failed(
+                    "Incomplete: ${have / 1_000_000} of ${total / 1_000_000} MB — Retry resumes")))
+                return@flow
+            }
             emit(publish(packId, InstallState.Verifying))
             val actual = digest.digest().toHex()
             val expected = pack.sha256.lowercase()
             if (expected.isChecksum() && actual != expected) {
-                part.delete()
-                emit(publish(packId, InstallState.Failed("Checksum mismatch")))
+                part.delete() // full-size but wrong bytes: truly corrupt, restart clean
+                emit(publish(packId, InstallState.Failed(
+                    "Checksum mismatch (got ${actual.take(12)}…, expected ${expected.take(12)}…)")))
                 return@flow
             }
 

@@ -101,6 +101,7 @@ adb logcat -v time | grep -iE "litert|accelerator|xnnpack|langtutor|tflite" | te
 |---|---|
 | Badge stuck on **🎬 Demo Tuki** | Wrong path/filename. Check: `adb shell run-as org.sisam.langtutor ls -l files/models` (must show the exact `.litertlm` name, non-zero size) |
 | `adb push` to `/sdcard/Android/data/...` denied | Expected on Android 13+ (scoped storage) — use the `/data/local/tmp` + `run-as` steps above |
+| Import/download says checksum mismatch or incomplete | The copy is truncated (MTP drag-and-drop does this silently) or the download dropped. Verify on the computer: `sha256sum` must match TESTING.md's pin and E2B must be exactly 2,588,147,712 bytes; re-copy via cable and check the size in Files before importing |
 | Download fails `SSLHandshakeException` | Network intercepts TLS (VPN/ad-blocker/WiFi filter). Use the debug **Ignore SSL** button, try mobile data, or use Option B |
 | Download fails `Not enough storage` | Free up space; E4B needs ~3.9 GB headroom during install |
 | No packs offered in Parent Zone | RAM detection issue — report device model + `adb shell cat /proc/meminfo \| head -1` |

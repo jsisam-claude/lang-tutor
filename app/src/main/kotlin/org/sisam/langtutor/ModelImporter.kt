@@ -88,11 +88,24 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
                     }
                 }
             }
+            // The catalog knows the exact byte size; a short copy means the SOURCE
+            // on the phone is truncated (MTP transfers do this silently) — name it
+            // so the user re-copies the file instead of chasing corruption.
+            if (copied != pack.sizeBytes) {
+                tmp.delete()
+                _state.value = ImportState.Failed(
+                    "Incomplete file: got ${copied / 1_000_000} of ${pack.sizeBytes / 1_000_000} MB — " +
+                        "the copy on the phone is truncated; re-copy it (check its size in Files first)",
+                )
+                return
+            }
             _state.value = ImportState.Verifying
             val got = digest.digest().joinToString("") { "%02x".format(it) }
             if (!pack.sha256.equals(got, ignoreCase = true)) {
                 tmp.delete()
-                _state.value = ImportState.Failed("Checksum mismatch — the file looks corrupted; re-download it")
+                _state.value = ImportState.Failed(
+                    "Checksum mismatch (got ${got.take(12)}…, expected ${pack.sha256.take(12)}…) — re-download the file",
+                )
                 return
             }
             target.delete()
