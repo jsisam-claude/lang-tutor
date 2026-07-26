@@ -216,11 +216,13 @@ class AppContainer private constructor(context: Context) {
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator {
         val kokoro = bundledTtsEngine()
         val hebrew = hebrewTtsEngine()
-        // Warm the voice sessions off the critical path — otherwise the FIRST
-        // spoken reply pays the ONNX session load on top of LLM generation.
+        // Warm the ENGLISH voice off the critical path — otherwise the first
+        // spoken reply pays ONNX session load on top of LLM generation. The
+        // Hebrew stack (~0.45 GB) stays lazy on purpose: it may go unused all
+        // session, and on 8 GB devices eager-loading it next to the LLM is
+        // RAM pressure for nothing; the first Hebrew line pays ~a second once.
         appScope.launch(Dispatchers.IO) {
             runCatching { kokoro?.warmUp() }
-            runCatching { hebrew?.warmUp() }
         }
         return TutorOrchestrator(
             llm = createLlmEngine(),
