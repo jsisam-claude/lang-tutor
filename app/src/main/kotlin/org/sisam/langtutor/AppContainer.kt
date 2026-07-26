@@ -136,6 +136,10 @@ class AppContainer private constructor(context: Context) {
 
     private fun bundledTtsEngine(): KokoroTtsEngine? {
         val file = bundledTtsFile ?: return null
+        // A build made without scripts/fetch-voice-assets.sh has no voice asset;
+        // honor the documented fallback (platform TTS) instead of crashing the
+        // first spoken turn with a missing-asset exception.
+        if (!hasVoiceAsset) return null
         kokoroEngine?.takeIf { kokoroPath == file.absolutePath }?.let { return it }
         synchronized(this) {
             kokoroEngine?.takeIf { kokoroPath == file.absolutePath }?.let { return it }
@@ -144,6 +148,10 @@ class AppContainer private constructor(context: Context) {
                 kokoroPath = file.absolutePath
             }
         }
+    }
+
+    private val hasVoiceAsset: Boolean by lazy {
+        runCatching { appContext.assets.open(KokoroTtsEngine.VOICE_ASSET).close() }.isSuccess
     }
 
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator = TutorOrchestrator(
