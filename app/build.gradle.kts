@@ -44,6 +44,16 @@ android {
         noCompress += setOf("litertlm", "task", "onnx", "gguf", "tflite", "bin")
     }
 
+    packaging {
+        jniLibs {
+            // The fetched GPU sampler libs (scripts/fetch-gpu-libs.sh) are
+            // Google's already-stripped release builds. Skipping the strip task
+            // also means AGP never auto-downloads an NDK just to re-strip them.
+            keepDebugSymbols += "**/libLiteRt*.so"
+            keepDebugSymbols += "**/libwebgpu_dawn.so"
+        }
+    }
+
     bundle {
         language {
             // Offline app: both he+en resources must always be on-device;

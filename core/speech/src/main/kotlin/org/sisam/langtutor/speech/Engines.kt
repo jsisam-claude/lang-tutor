@@ -14,7 +14,8 @@ interface AsrEngine {
 }
 
 /**
- * Text-to-speech. Production: Piper/Kokoro for [TutorLanguage.ENGLISH],
+ * Text-to-speech. [TutorLanguage.ENGLISH] is REAL today: the bundled Kokoro
+ * voice (KokoroTtsEngine in :app, fed by [KokoroPhonemizer]). Planned:
  * Phonikud + Piper-class voice for [TutorLanguage.HEBREW]; fixed Hebrew
  * instruction lines ship as pre-recorded human audio and bypass TTS entirely.
  * [speed] < 1.0 is the child-friendly slow-clear mode.

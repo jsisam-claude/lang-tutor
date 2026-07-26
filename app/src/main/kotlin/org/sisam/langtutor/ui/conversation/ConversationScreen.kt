@@ -112,9 +112,9 @@ fun ConversationScreen(container: AppContainer) {
             ),
             style = MaterialTheme.typography.labelSmall,
         )
-        // De-googled devices (e.g. GrapheneOS) ship NO speech recognizer service:
-        // the platform mic path can't work there until the bundled Whisper ASR
-        // lands. Say so instead of failing silently; typing still works.
+        // De-googled devices (e.g. GrapheneOS) ship NO speech recognizer service;
+        // without the bundled Whisper model installed the platform mic path can't
+        // work there. Say so instead of failing silently; typing still works.
         val context = LocalContext.current
         val speechAvailable = remember {
             // Bundled Whisper counts as speech: the banner is only for devices
