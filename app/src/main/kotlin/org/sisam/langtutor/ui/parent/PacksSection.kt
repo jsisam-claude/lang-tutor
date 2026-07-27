@@ -124,6 +124,22 @@ fun PacksSection(container: AppContainer) {
             }
         }
 
+        // One tap for a fresh device: sequentially download every eligible pack
+        // that isn't installed yet (same consent framing — this IS the consent).
+        val pending = repo.eligiblePacks(container.deviceRamGb)
+            .filter { (states[it.id] ?: InstallState.NotInstalled) !is InstallState.Installed }
+        if (pending.size > 1) {
+            OutlinedButton(onClick = {
+                container.appScope.launch {
+                    for (p in pending) {
+                        runCatching { repo.install(p.id).collect { } }
+                    }
+                }
+            }) {
+                Text(stringResource(R.string.packs_download_all, pending.size))
+            }
+        }
+
         // No-adb, no-network sideload: pick the .litertlm from anywhere on the
         // phone (USB-C drive, Downloads, a cloud app) — SAF needs no permission —
         // and it's copied into files/models with the same SHA-256 verification
@@ -132,11 +148,25 @@ fun PacksSection(container: AppContainer) {
         val importPicker = rememberLauncherForActivityResult(
             ActivityResultContracts.OpenDocument(),
         ) { uri -> uri?.let { container.modelImporter.import(it) } }
-        OutlinedButton(onClick = { importPicker.launch(arrayOf("*/*")) }) {
-            Text(stringResource(R.string.packs_import))
+        // Folder import: point at a directory holding ALL the model files (a
+        // USB drive with the sideload payload) and everything known is imported
+        // in one pass, already-installed files skipped.
+        val folderPicker = rememberLauncherForActivityResult(
+            ActivityResultContracts.OpenDocumentTree(),
+        ) { uri -> uri?.let { container.modelImporter.importTree(it) } }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = { importPicker.launch(arrayOf("*/*")) }) {
+                Text(stringResource(R.string.packs_import))
+            }
+            OutlinedButton(onClick = { folderPicker.launch(null) }) {
+                Text(stringResource(R.string.packs_import_folder))
+            }
         }
         when (val st = importState) {
-            is ImportState.Copying ->
+            is ImportState.Copying -> Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                if (st.label.isNotEmpty()) {
+                    Text(st.label, style = MaterialTheme.typography.bodySmall)
+                }
                 if (st.percent >= 0) {
                     LinearProgressIndicator(
                         progress = { st.percent / 100f },
@@ -145,8 +175,12 @@ fun PacksSection(container: AppContainer) {
                 } else {
                     LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                 }
+            }
 
-            ImportState.Verifying -> Text(stringResource(R.string.packs_verifying))
+            is ImportState.Verifying -> Text(
+                listOf(st.label, stringResource(R.string.packs_verifying))
+                    .filter { it.isNotEmpty() }.joinToString(" — "),
+            )
             is ImportState.Done ->
                 Text(stringResource(R.string.packs_import_done, st.fileName))
 

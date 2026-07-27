@@ -15,9 +15,12 @@ import org.sisam.langtutor.packs.ResourceCatalogLoader
 sealed interface ImportState {
     data object Idle : ImportState
 
-    /** [percent] is -1 while the source size is unknown (indeterminate). */
-    data class Copying(val percent: Int) : ImportState
-    data object Verifying : ImportState
+    /**
+     * [percent] is -1 while the source size is unknown (indeterminate).
+     * [label] names the current file during a folder import ("2/4 model.onnx").
+     */
+    data class Copying(val percent: Int, val label: String = "") : ImportState
+    data class Verifying(val label: String = "") : ImportState
     data class Done(val fileName: String) : ImportState
 
     /** [canForce]: debug builds may re-import skipping verification. */
@@ -43,9 +46,119 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
     private var lastRejectedUri: Uri? = null
 
     fun import(uri: Uri) {
-        val current = _state.value
-        if (current is ImportState.Copying || current == ImportState.Verifying) return
+        if (busy()) return
         scope.launch(Dispatchers.IO) { runImport(uri, verify = true) }
+    }
+
+    /**
+     * Folder import: point at ONE directory (e.g. a USB drive with the whole
+     * sideload payload) and every catalog-known model file in it — top level
+     * or one subdirectory down, matching the sideload layout with its speech/
+     * folder — is imported in sequence with the same verification as single
+     * imports. Files already installed at the right size are skipped, so
+     * re-running after adding one new file only copies that file. Smallest
+     * files go first: quick wins land before the multi-GB LLM copy starts.
+     */
+    fun importTree(treeUri: Uri) {
+        if (busy()) return
+        scope.launch(Dispatchers.IO) { runTreeImport(treeUri) }
+    }
+
+    private fun busy(): Boolean {
+        val current = _state.value
+        return current is ImportState.Copying || current is ImportState.Verifying
+    }
+
+    private fun runTreeImport(treeUri: Uri) {
+        try {
+            val known = ResourceCatalogLoader.load().packs
+                .associateBy { it.resolvedInstallPath.substringAfterLast('/') }
+            val found = listTreeFiles(treeUri)
+                .filter { it.name in known }
+                .sortedBy { known.getValue(it.name).sizeBytes }
+            if (found.isEmpty()) {
+                _state.value = ImportState.Failed(
+                    "No known model files in that folder — expected any of: " +
+                        known.keys.joinToString(", "),
+                )
+                return
+            }
+            var imported = 0
+            var skipped = 0
+            val failures = mutableListOf<String>()
+            for ((index, entry) in found.withIndex()) {
+                val label = "${index + 1}/${found.size} ${entry.name}"
+                val pack = known.getValue(entry.name)
+                val target = File(appContext.filesDir, pack.resolvedInstallPath)
+                if (target.exists() && target.length() == pack.sizeBytes) {
+                    skipped++
+                    continue
+                }
+                runImport(entry.uri, verify = true, label = label)
+                when (val result = _state.value) {
+                    is ImportState.Done -> imported++
+                    is ImportState.Failed -> failures.add("${entry.name}: ${result.reason}")
+                    else -> failures.add("${entry.name}: interrupted")
+                }
+            }
+            _state.value = if (failures.isEmpty()) {
+                val skippedNote = if (skipped > 0) " ($skipped already installed)" else ""
+                ImportState.Done("$imported file(s)$skippedNote")
+            } else {
+                ImportState.Failed(
+                    "${failures.size} of ${found.size} failed — " + failures.joinToString("; "),
+                )
+            }
+        } catch (t: Throwable) {
+            _state.value = ImportState.Failed("${t.javaClass.simpleName}: ${t.message ?: "folder import failed"}")
+        }
+    }
+
+    private data class TreeEntry(val name: String, val uri: Uri)
+
+    /** Files of the picked tree: top level plus ONE subdirectory level. */
+    private fun listTreeFiles(treeUri: Uri): List<TreeEntry> {
+        val root = android.provider.DocumentsContract.getTreeDocumentId(treeUri)
+        val out = mutableListOf<TreeEntry>()
+        val subdirs = mutableListOf<String>()
+        listChildren(treeUri, root, out, subdirs)
+        for (dir in subdirs) listChildren(treeUri, dir, out, mutableListOf())
+        return out
+    }
+
+    private fun listChildren(
+        treeUri: Uri,
+        parentDocId: String,
+        files: MutableList<TreeEntry>,
+        dirs: MutableList<String>,
+    ) {
+        val childrenUri = android.provider.DocumentsContract
+            .buildChildDocumentsUriUsingTree(treeUri, parentDocId)
+        appContext.contentResolver.query(
+            childrenUri,
+            arrayOf(
+                android.provider.DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                android.provider.DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                android.provider.DocumentsContract.Document.COLUMN_MIME_TYPE,
+            ),
+            null, null, null,
+        )?.use { c ->
+            while (c.moveToNext()) {
+                val docId = c.getString(0) ?: continue
+                val name = c.getString(1) ?: continue
+                val mime = c.getString(2) ?: ""
+                if (mime == android.provider.DocumentsContract.Document.MIME_TYPE_DIR) {
+                    dirs.add(docId)
+                } else {
+                    files.add(
+                        TreeEntry(
+                            name,
+                            android.provider.DocumentsContract.buildDocumentUriUsingTree(treeUri, docId),
+                        ),
+                    )
+                }
+            }
+        }
     }
 
     /**
@@ -57,12 +170,11 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
     fun importUnverified() {
         if (!BuildConfig.DEBUG) return
         val uri = lastRejectedUri ?: return
-        val current = _state.value
-        if (current is ImportState.Copying || current == ImportState.Verifying) return
+        if (busy()) return
         scope.launch(Dispatchers.IO) { runImport(uri, verify = false) }
     }
 
-    private fun runImport(uri: Uri, verify: Boolean) {
+    private fun runImport(uri: Uri, verify: Boolean, label: String = "") {
         try {
             val (name, size) = queryNameAndSize(uri)
             // Only files the engine actually loads are accepted; the catalog is
@@ -102,12 +214,12 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
                         val pct = if (size > 0) ((copied * 100) / size).toInt() else -1
                         if (pct != lastPct) {
                             lastPct = pct
-                            _state.value = ImportState.Copying(pct)
+                            _state.value = ImportState.Copying(pct, label)
                         }
                     }
                 }
             }
-            _state.value = ImportState.Verifying
+            _state.value = ImportState.Verifying(label)
             val got = digest.digest().joinToString("") { "%02x".format(it) }
             if (verify) {
                 // Accept ANY genuine published revision of this file — HF replaced

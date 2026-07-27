@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "unit-010",
+  "title": {
+    "en": "I Can Do It!",
+    "he": "אני יכול!"
+  },
+  "cefrLevel": "pre-A1",
+  "ageBand": "5-8",
+  "activities": [
+    {
+      "type": "vocab",
+      "word": "run",
+      "translation": {
+        "en": "run",
+        "he": "לרוץ"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "jump",
+      "translation": {
+        "en": "jump",
+        "he": "לקפוץ"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "sing",
+      "translation": {
+        "en": "sing",
+        "he": "לשיר"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "dance",
+      "translation": {
+        "en": "dance",
+        "he": "לרקוד"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "swim",
+      "translation": {
+        "en": "swim",
+        "he": "לשחות"
+      }
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "I can jump high!"
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "Let's sing together."
+    },
+    {
+      "type": "questionAnswer",
+      "prompt": {
+        "en": "What can you do?",
+        "he": "מה אתה יודע לעשות?"
+      },
+      "expectedAnswers": [
+        "I can run",
+        "I can jump",
+        "I can sing",
+        "run",
+        "jump",
+        "sing",
+        "dance",
+        "swim"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "id": "unit-006",
+  "title": {
+    "en": "My Body",
+    "he": "הגוף שלי"
+  },
+  "cefrLevel": "pre-A1",
+  "ageBand": "4-6",
+  "activities": [
+    {
+      "type": "vocab",
+      "word": "head",
+      "translation": {
+        "en": "head",
+        "he": "ראש"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "eyes",
+      "translation": {
+        "en": "eyes",
+        "he": "עיניים"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "nose",
+      "translation": {
+        "en": "nose",
+        "he": "אף"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "mouth",
+      "translation": {
+        "en": "mouth",
+        "he": "פה"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "hands",
+      "translation": {
+        "en": "hands",
+        "he": "ידיים"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "feet",
+      "translation": {
+        "en": "feet",
+        "he": "רגליים"
+      }
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "Touch your nose!"
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "I clap my hands."
+    },
+    {
+      "type": "questionAnswer",
+      "prompt": {
+        "en": "What do you see with?",
+        "he": "עם מה רואים?"
+      },
+      "expectedAnswers": [
+        "eyes",
+        "my eyes",
+        "with my eyes"
+      ]
+    }
+  ]
+}

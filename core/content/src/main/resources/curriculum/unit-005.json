@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "id": "unit-005",
+  "title": {
+    "en": "My Family",
+    "he": "המשפחה שלי"
+  },
+  "cefrLevel": "pre-A1",
+  "ageBand": "4-6",
+  "activities": [
+    {
+      "type": "vocab",
+      "word": "mom",
+      "translation": {
+        "en": "mom",
+        "he": "אמא"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "dad",
+      "translation": {
+        "en": "dad",
+        "he": "אבא"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "sister",
+      "translation": {
+        "en": "sister",
+        "he": "אחות"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "brother",
+      "translation": {
+        "en": "brother",
+        "he": "אח"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "grandma",
+      "translation": {
+        "en": "grandma",
+        "he": "סבתא"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "grandpa",
+      "translation": {
+        "en": "grandpa",
+        "he": "סבא"
+      }
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "I love my mom!"
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "This is my brother."
+    },
+    {
+      "type": "questionAnswer",
+      "prompt": {
+        "en": "Who cooks with you at home?",
+        "he": "מי מבשל איתך בבית?"
+      },
+      "expectedAnswers": [
+        "mom",
+        "dad",
+        "my mom",
+        "my dad",
+        "grandma"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "id": "unit-008",
+  "title": {
+    "en": "School Time",
+    "he": "זמן בית ספר"
+  },
+  "cefrLevel": "pre-A1",
+  "ageBand": "5-8",
+  "activities": [
+    {
+      "type": "vocab",
+      "word": "book",
+      "translation": {
+        "en": "book",
+        "he": "ספר"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "pencil",
+      "translation": {
+        "en": "pencil",
+        "he": "עיפרון"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "bag",
+      "translation": {
+        "en": "bag",
+        "he": "תיק"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "teacher",
+      "translation": {
+        "en": "teacher",
+        "he": "מורה"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "friend",
+      "translation": {
+        "en": "friend",
+        "he": "חבר"
+      }
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "My book is in my bag."
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "I draw with a pencil."
+    },
+    {
+      "type": "questionAnswer",
+      "prompt": {
+        "en": "What is in your bag?",
+        "he": "מה יש בתיק שלך?"
+      },
+      "expectedAnswers": [
+        "a book",
+        "my book",
+        "a pencil",
+        "book",
+        "pencil"
+      ]
+    }
+  ]
+}

@@ -72,6 +72,22 @@ class PhonikudPhonemizerTest {
     }
 
     @Test
+    fun `hebrew number words match the reference for EVERY value 0-999`() {
+        var cases = 0
+        resource("phonikud/number-goldens.tsv").useLines { lines ->
+            for (line in lines) {
+                if (line.isBlank()) continue
+                val (n, bare, pointed) = line.split('\t', limit = 3)
+                assertEquals("bare for $n", bare, HebrewNumbers.bareWords(n.toInt()))
+                assertEquals("pointed for $n", pointed, HebrewNumbers.toPointedWords(n.toInt()))
+                cases++
+            }
+        }
+        assertEquals(1000, cases)
+        assertEquals(null, HebrewNumbers.toPointedWords(1000))
+    }
+
+    @Test
     fun `removeNikud strips points and phonikud marks`() {
         assertEquals("שלום", NikudRestorer.removeNikud("שָׁל֫וֹם"))
         assertEquals("ביחד", NikudRestorer.removeNikud("בְּֽיַחַד"))

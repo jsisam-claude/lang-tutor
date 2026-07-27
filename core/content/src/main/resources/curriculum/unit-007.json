@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "unit-007",
+  "title": {
+    "en": "Getting Dressed",
+    "he": "מתלבשים"
+  },
+  "cefrLevel": "pre-A1",
+  "ageBand": "5-8",
+  "activities": [
+    {
+      "type": "vocab",
+      "word": "shirt",
+      "translation": {
+        "en": "shirt",
+        "he": "חולצה"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "pants",
+      "translation": {
+        "en": "pants",
+        "he": "מכנסיים"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "shoes",
+      "translation": {
+        "en": "shoes",
+        "he": "נעליים"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "hat",
+      "translation": {
+        "en": "hat",
+        "he": "כובע"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "socks",
+      "translation": {
+        "en": "socks",
+        "he": "גרביים"
+      }
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "I put on my shoes."
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "My hat is big!"
+    },
+    {
+      "type": "questionAnswer",
+      "prompt": {
+        "en": "What do you wear on your feet?",
+        "he": "מה נועלים על הרגליים?"
+      },
+      "expectedAnswers": [
+        "shoes",
+        "socks",
+        "shoes and socks"
+      ]
+    }
+  ]
+}

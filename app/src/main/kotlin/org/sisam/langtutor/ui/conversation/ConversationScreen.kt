@@ -47,7 +47,7 @@ import org.sisam.langtutor.tutor.TutorMode
 import org.sisam.langtutor.tutor.TutorTurnState
 import org.sisam.langtutor.ui.common.EnglishContent
 
-class ConversationViewModel(container: AppContainer) : ViewModel() {
+class ConversationViewModel(container: AppContainer, unitId: String) : ViewModel() {
 
     private val orchestrator = container.createOrchestrator(viewModelScope)
 
@@ -56,7 +56,7 @@ class ConversationViewModel(container: AppContainer) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            orchestrator.startSession(unitId = "unit-001", mode = TutorMode.SPEECH)
+            orchestrator.startSession(unitId = unitId, mode = TutorMode.SPEECH)
         }
     }
 
@@ -75,10 +75,11 @@ class ConversationViewModel(container: AppContainer) : ViewModel() {
 }
 
 @Composable
-fun ConversationScreen(container: AppContainer) {
+fun ConversationScreen(container: AppContainer, unitId: String) {
     val viewModel: ConversationViewModel = viewModel(
+        key = unitId,
         factory = viewModelFactory {
-            initializer { ConversationViewModel(container) }
+            initializer { ConversationViewModel(container, unitId) }
         },
     )
     val state by viewModel.state.collectAsState()

@@ -45,6 +45,7 @@
     <string name="packs_title">חבילות שדרוג</string>
     <string name="packs_policy_note">הורדות מתבצעות רק באישורכם. שום מידע לא נשלח החוצה, ואין בדיקות עדכון אוטומטיות.</string>
     <string name="packs_download">הורדה</string>
+    <string name="packs_download_all">הורדת הכול למכשיר הזה (%1$d)</string>
     <string name="packs_delete">הסרה</string>
     <string name="packs_installed">מותקן ✓</string>
     <string name="packs_verifying">מאמת…</string>
@@ -55,6 +56,7 @@
     <string name="packs_ignore_ssl_body">לבדיקות בלבד. פעולה זו מכבה את בדיקת אישורי ה-HTTPS להורדות — לא מאובטח, ולא בשימוש בגרסה אמיתית. המודל עדיין מאומת ב-checksum, כך שקובץ שהשתנה עדיין נדחה.</string>
     <string name="packs_ignore_ssl_confirm">התעלם והורד</string>
     <string name="packs_import">ייבוא קובץ מודל (USB / הורדות)…</string>
+    <string name="packs_import_folder">ייבוא תיקייה (כל המודלים)…</string>
     <string name="packs_import_done">המודל %1$s יובא ✓ — פתחו את השיחה</string>
     <string name="packs_import_anyway">ייבא בכל זאת (בדיקה — מדלג על אימות)</string>
     <string name="import_receiving">מייבא מודל — ההתקדמות באזור ההורים ← חבילות</string>

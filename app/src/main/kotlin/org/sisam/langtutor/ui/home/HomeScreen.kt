@@ -27,8 +27,8 @@ import org.sisam.langtutor.content.UnitSummary
 @Composable
 fun HomeScreen(
     container: AppContainer,
-    onOpenLesson: () -> Unit,
-    onOpenConversation: () -> Unit,
+    onOpenLesson: (String) -> Unit,
+    onOpenConversation: (String) -> Unit,
     onOpenParent: () -> Unit,
 ) {
     val units by produceState<List<UnitSummary>>(initialValue = emptyList(), container) {
@@ -63,10 +63,10 @@ fun HomeScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Button(onClick = onOpenLesson) {
+                        Button(onClick = { onOpenLesson(unit.id) }) {
                             Text(stringResource(R.string.home_start_lesson))
                         }
-                        OutlinedButton(onClick = onOpenConversation) {
+                        OutlinedButton(onClick = { onOpenConversation(unit.id) }) {
                             Text(stringResource(R.string.home_start_conversation))
                         }
                     }

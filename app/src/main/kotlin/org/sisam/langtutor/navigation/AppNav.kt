@@ -1,9 +1,11 @@
 package org.sisam.langtutor.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.ui.conversation.ConversationScreen
 import org.sisam.langtutor.ui.home.HomeScreen
@@ -12,9 +14,17 @@ import org.sisam.langtutor.ui.parent.ParentZoneScreen
 
 object Routes {
     const val HOME = "home"
-    const val LESSON = "lesson"
-    const val CONVERSATION = "conversation"
     const val PARENT = "parent"
+
+    // Unit-scoped destinations: the tapped unit travels in the route so every
+    // screen teaches THAT unit (previously all roads led to unit-001).
+    const val LESSON = "lesson/{unitId}"
+    const val CONVERSATION = "conversation/{unitId}"
+
+    fun lesson(unitId: String) = "lesson/$unitId"
+    fun conversation(unitId: String) = "conversation/$unitId"
+
+    const val DEFAULT_UNIT = "unit-001"
 }
 
 @Composable
@@ -24,13 +34,23 @@ fun AppNav(container: AppContainer) {
         composable(Routes.HOME) {
             HomeScreen(
                 container = container,
-                onOpenLesson = { navController.navigate(Routes.LESSON) },
-                onOpenConversation = { navController.navigate(Routes.CONVERSATION) },
+                onOpenLesson = { unitId -> navController.navigate(Routes.lesson(unitId)) },
+                onOpenConversation = { unitId -> navController.navigate(Routes.conversation(unitId)) },
                 onOpenParent = { navController.navigate(Routes.PARENT) },
             )
         }
-        composable(Routes.LESSON) { LessonScreen(container) }
-        composable(Routes.CONVERSATION) { ConversationScreen(container) }
+        composable(
+            Routes.LESSON,
+            arguments = listOf(navArgument("unitId") { type = NavType.StringType }),
+        ) { entry ->
+            LessonScreen(container, entry.arguments?.getString("unitId") ?: Routes.DEFAULT_UNIT)
+        }
+        composable(
+            Routes.CONVERSATION,
+            arguments = listOf(navArgument("unitId") { type = NavType.StringType }),
+        ) { entry ->
+            ConversationScreen(container, entry.arguments?.getString("unitId") ?: Routes.DEFAULT_UNIT)
+        }
         composable(Routes.PARENT) { ParentZoneScreen(container) }
     }
 }

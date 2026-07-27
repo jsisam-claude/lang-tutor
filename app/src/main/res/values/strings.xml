@@ -43,6 +43,7 @@
     <string name="packs_title">Enhancement packs</string>
     <string name="packs_policy_note">Downloads happen only when you approve them. Nothing is ever uploaded, and there are no automatic update checks.</string>
     <string name="packs_download">Download</string>
+    <string name="packs_download_all">Download all for this device (%1$d)</string>
     <string name="packs_delete">Remove</string>
     <string name="packs_installed">Installed ✓</string>
     <string name="packs_verifying">Verifying…</string>
@@ -53,6 +54,7 @@
     <string name="packs_ignore_ssl_body">For testing only. This turns OFF HTTPS certificate checks for downloads — insecure, and never used in a real release. The model is still checksum-verified, so a tampered file is still rejected.</string>
     <string name="packs_ignore_ssl_confirm">Ignore &amp; download</string>
     <string name="packs_import">Import model file (USB / Downloads)…</string>
+    <string name="packs_import_folder">Import folder (all models)…</string>
     <string name="packs_import_done">Model %1$s imported ✓ — open the conversation</string>
     <string name="packs_import_anyway">Import anyway (testing — skips verification)</string>
     <string name="import_receiving">Importing model — see Parent Zone → Packs for progress</string>

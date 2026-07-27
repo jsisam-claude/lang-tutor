@@ -1,22 +1,82 @@
 [
   {
     "id": "unit-001",
-    "title": { "en": "Colors and Toys", "he": "צבעים וצעצועים" },
+    "title": {
+      "en": "Colors and Toys",
+      "he": "צבעים וצעצועים"
+    },
     "cefrLevel": "pre-A1"
   },
   {
     "id": "unit-002",
-    "title": { "en": "Animal Friends", "he": "חברים מעולם החי" },
+    "title": {
+      "en": "Animal Friends",
+      "he": "חברים מעולם החי"
+    },
     "cefrLevel": "pre-A1"
   },
   {
     "id": "unit-003",
-    "title": { "en": "Yummy Food", "he": "אוכל טעים" },
+    "title": {
+      "en": "Yummy Food",
+      "he": "אוכל טעים"
+    },
     "cefrLevel": "pre-A1"
   },
   {
     "id": "unit-004",
-    "title": { "en": "Counting Fun", "he": "כיף לספור" },
+    "title": {
+      "en": "Counting Fun",
+      "he": "כיף לספור"
+    },
+    "cefrLevel": "pre-A1"
+  },
+  {
+    "id": "unit-005",
+    "title": {
+      "en": "My Family",
+      "he": "המשפחה שלי"
+    },
+    "cefrLevel": "pre-A1"
+  },
+  {
+    "id": "unit-006",
+    "title": {
+      "en": "My Body",
+      "he": "הגוף שלי"
+    },
+    "cefrLevel": "pre-A1"
+  },
+  {
+    "id": "unit-007",
+    "title": {
+      "en": "Getting Dressed",
+      "he": "מתלבשים"
+    },
+    "cefrLevel": "pre-A1"
+  },
+  {
+    "id": "unit-008",
+    "title": {
+      "en": "School Time",
+      "he": "זמן בית ספר"
+    },
+    "cefrLevel": "pre-A1"
+  },
+  {
+    "id": "unit-009",
+    "title": {
+      "en": "How Do You Feel?",
+      "he": "איך אתה מרגיש?"
+    },
+    "cefrLevel": "pre-A1"
+  },
+  {
+    "id": "unit-010",
+    "title": {
+      "en": "I Can Do It!",
+      "he": "אני יכול!"
+    },
     "cefrLevel": "pre-A1"
   }
 ]

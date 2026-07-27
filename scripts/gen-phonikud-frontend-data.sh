@@ -44,4 +44,22 @@ print(f"phoneme-map.tsv: {len(id_map)} entries; "
       f"sr={cfg['audio']['sample_rate']} inference={cfg['inference']}")
 PY
 
+# number-names.tsv — bare Hebrew number word → pointed form, from the phonikud
+# source tree (MIT). Requires a phonikud checkout; skipped when absent so the
+# other pins can still be refreshed alone.
+PHONIKUD_SRC="${PHONIKUD_SRC:-}"
+if [[ -n "$PHONIKUD_SRC" && -d "$PHONIKUD_SRC/phonikud/expander" ]]; then
+  python3 - "$DEST/number-names.tsv" "$PHONIKUD_SRC" <<'PY'
+import sys
+sys.path.insert(0, sys.argv[2])
+from phonikud.expander.number_names import NUMBER_NAMES
+with open(sys.argv[1], "w", encoding="utf-8") as f:
+    for bare, pointed in NUMBER_NAMES.items():
+        f.write(f"{bare}\t{pointed}\n")
+print(f"number-names.tsv: {len(NUMBER_NAMES)} entries")
+PY
+else
+  echo "PHONIKUD_SRC not set — skipping number-names.tsv refresh"
+fi
+
 wc -l "$DEST/tokenizer-vocab.tsv" "$DEST/phoneme-map.tsv"

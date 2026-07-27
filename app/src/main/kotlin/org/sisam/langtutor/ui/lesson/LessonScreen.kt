@@ -22,9 +22,9 @@ import org.sisam.langtutor.content.CurriculumUnit
 import org.sisam.langtutor.ui.common.EnglishContent
 
 @Composable
-fun LessonScreen(container: AppContainer) {
-    val unit by produceState<CurriculumUnit?>(initialValue = null, container) {
-        value = container.content.loadUnit("unit-001")
+fun LessonScreen(container: AppContainer, unitId: String) {
+    val unit by produceState<CurriculumUnit?>(initialValue = null, container, unitId) {
+        value = container.content.loadUnit(unitId)
     }
 
     Column(

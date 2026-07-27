@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "unit-009",
+  "title": {
+    "en": "How Do You Feel?",
+    "he": "איך אתה מרגיש?"
+  },
+  "cefrLevel": "pre-A1",
+  "ageBand": "5-8",
+  "activities": [
+    {
+      "type": "vocab",
+      "word": "happy",
+      "translation": {
+        "en": "happy",
+        "he": "שמח"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "sad",
+      "translation": {
+        "en": "sad",
+        "he": "עצוב"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "tired",
+      "translation": {
+        "en": "tired",
+        "he": "עייף"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "hungry",
+      "translation": {
+        "en": "hungry",
+        "he": "רעב"
+      }
+    },
+    {
+      "type": "vocab",
+      "word": "scared",
+      "translation": {
+        "en": "scared",
+        "he": "מפוחד"
+      }
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "I am happy today!"
+    },
+    {
+      "type": "repeatAfterMe",
+      "phrase": "The bear is hungry."
+    },
+    {
+      "type": "questionAnswer",
+      "prompt": {
+        "en": "How do you feel today?",
+        "he": "איך אתה מרגיש היום?"
+      },
+      "expectedAnswers": [
+        "happy",
+        "sad",
+        "tired",
+        "hungry",
+        "I am happy",
+        "good"
+      ]
+    }
+  ]
+}

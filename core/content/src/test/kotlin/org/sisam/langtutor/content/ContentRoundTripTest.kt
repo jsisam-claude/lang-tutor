@@ -12,7 +12,7 @@ class ContentRoundTripTest {
     @Test
     fun `index lists all units and each loads`() = runTest {
         val units = repository.listUnits()
-        assertEquals(4, units.size)
+        assertEquals(10, units.size)
         assertEquals("unit-001", units.first().id)
         assertEquals("צבעים וצעצועים", units.first().title.he)
         units.forEach { summary ->

@@ -31,7 +31,14 @@ object PhonikudPhonemizer {
 
     fun phonemize(text: String): String {
         val additional = mutableSetOf<Char>()
-        var t = normalize(text)
+        // Digits become pointed Hebrew number words BEFORE anything else, so
+        // "3 כדורים" is spoken; out-of-range numbers stay digits and are
+        // dropped by postClean exactly as before. (Our own integration rule —
+        // the reference's expander also rewrites dates/times, not ported.)
+        var t = INTEGER.replace(text) { m ->
+            HebrewNumbers.toPointedWords(m.value.toIntOrNull() ?: -1) ?: m.value
+        }
+        t = normalize(t)
 
         // Hebrew runs → phonemes (skipping "[word]" hyper-phoneme heads).
         t = L.HE_PATTERN.replace(t) { m ->
@@ -72,6 +79,7 @@ object PhonikudPhonemizer {
     }
 
     private val LETTERS_PATTERN = Regex("(\\p{L})([\\p{M}'|]*)")
+    private val INTEGER = Regex("\\d+")
 
     internal fun getLetters(word: String): MutableList<Letter> =
         LETTERS_PATTERN.findAll(word)
