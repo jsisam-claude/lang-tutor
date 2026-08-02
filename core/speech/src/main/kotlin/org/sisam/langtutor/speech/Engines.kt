@@ -11,6 +11,20 @@ interface AsrEngine {
 
     /** Stops the mic and returns the final result for the captured utterance. */
     suspend fun stopCapture(): AsrResult
+
+    /**
+     * True when the engine can decide by itself that the child finished
+     * speaking (bundled VAD). Push-to-talk engines leave this false and the UI
+     * keeps its hold-to-talk button.
+     */
+    val supportsHandsFree: Boolean get() = false
+
+    /**
+     * Hands-free turn-taking: suspends until end-of-speech is detected, so a
+     * young child never has to hold a button. Only meaningful between
+     * [startCapture] and [stopCapture], and only when [supportsHandsFree].
+     */
+    suspend fun awaitEndpoint() = Unit
 }
 
 /**

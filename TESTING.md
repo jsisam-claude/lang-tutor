@@ -155,6 +155,34 @@ in the chat to hear it. Known limits: digits in Hebrew text are not spoken
 (no number expander yet), and mixed Hebrew-English sentences go entirely to
 the Hebrew voice.
 
+## Hands-free mic (bundled Silero VAD)
+The mic model ships INSIDE the APK (639 KB), so when a Whisper model is
+installed the conversation screen shows a **Hands-free** switch. On: tap the
+mic once and just talk — the detector ends the turn after ~0.7 s of quiet (a
+kid-friendly pause; short blips like a door slam are ignored, and a silent room
+gives the turn back after 10 s). Off: the button stays hold-to-talk. The mic
+button turns red while listening. Logcat tag `TukiAsr` prints
+`endpoint: SILENCE frames a..b` when the VAD closes a turn; `TukiVad` shows the
+model load. Measured in-container: 0.45 ms per 32 ms frame (~70× realtime) and
+64 ms onset accuracy, so it should be free next to the ASR — worth confirming
+on the 9a.
+
+## Pronunciation coach (per-sound scoring)
+Install **Parent Zone → Packs → "Pronunciation Coach"** (318 MB). After a
+SPOKEN attempt at a lesson phrase, the screen shows each expected sound in
+green / amber / red plus a star count. Typed turns and free conversation are
+never scored. Logcat tag `TukiGop` prints the per-sound numbers
+(`ɹ=-7.4` style: 0 means the model fully agreed, very negative means it heard
+something else).
+
+What to try: say the lesson phrase correctly, then deliberately mispronounce
+one sound the way a Hebrew-speaking child would — "wed" for "red", "sink" for
+"think", "wery" for "very". In container testing those substitutions scored
+−4.9 to −7.4 while correct sounds scored 0.00. **Please report the numbers you
+get**: the thresholds were calibrated on synthesized speech, and real children
+in real rooms are the calibration that matters. Vowel-quality errors (æ vs ɛ)
+did not separate in testing — treat vowel marks as advisory for now.
+
 ## Known limits in this build (expected, not bugs)
 - English speech only (bundled Whisper decodes with the English token set);
   Tuki's spoken voice still needs the Kokoro build (text replies meanwhile).

@@ -20,4 +20,7 @@ dependencies {
     implementation(libs.jtransforms)
     testImplementation(libs.junit4)
     testImplementation(libs.kotlinx.coroutines.test)
+    // Golden fixtures for the VAD gate and the GOP scorer are JSON dumps of
+    // real model output; parsed only in tests.
+    testImplementation(libs.kotlinx.serialization.json)
 }

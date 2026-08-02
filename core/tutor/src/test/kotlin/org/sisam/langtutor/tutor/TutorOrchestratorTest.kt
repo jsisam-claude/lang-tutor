@@ -217,6 +217,93 @@ class TutorOrchestratorTest {
     }
 
     @Test
+    fun `hands-free turn ends on the endpoint without a button release`() = runTest {
+        // An ASR that reports hands-free support and only "hears" the end of the
+        // utterance when the test releases the gate — like the real VAD does.
+        val endpoint = CompletableDeferred<Unit>()
+        val handsFreeAsr = object : org.sisam.langtutor.speech.AsrEngine {
+            var startCalls = 0
+            var stopCalls = 0
+            override val supportsHandsFree = true
+            override suspend fun startCapture(hint: RecognitionHint) { startCalls++ }
+            override suspend fun awaitEndpoint() = endpoint.await()
+            override suspend fun stopCapture(): AsrResult {
+                stopCalls++
+                return AsrResult("I see a red ball", 0.9f)
+            }
+        }
+        val orchestrator = TutorOrchestrator(
+            llm = FakeLlmEngine(),
+            asr = handsFreeAsr,
+            tts = FakeTtsEngine(),
+            scorer = FakePronunciationScorer(),
+            content = ResourceContentRepository(),
+            profile = InMemoryProfileStore(),
+            policy = ScriptedDialoguePolicy(),
+            scope = this,
+        )
+        orchestrator.startSession("unit-001", TutorMode.SPEECH)
+        orchestrator.handsFree = true
+
+        orchestrator.onMicPressed()
+        advanceUntilIdle()
+        assertTrue(orchestrator.state.value is TutorTurnState.Listening)
+        // A stray release must NOT cut the child off while hands-free.
+        orchestrator.onMicReleased()
+        advanceUntilIdle()
+        assertEquals(0, handsFreeAsr.stopCalls)
+        assertTrue(orchestrator.state.value is TutorTurnState.Listening)
+
+        endpoint.complete(Unit) // the VAD decides the child finished
+        advanceUntilIdle()
+        assertEquals(1, handsFreeAsr.stopCalls)
+        assertEquals("I see a red ball", orchestrator.transcript.value.first().text)
+        assertTrue(orchestrator.state.value is TutorTurnState.AwaitingChild)
+    }
+
+    @Test
+    fun `hands-free cannot be enabled on a push-to-talk engine`() = runTest {
+        val fixture = Fixture(this) // FakeAsrEngine: no VAD
+        assertTrue(!fixture.orchestrator.handsFreeAvailable)
+        fixture.orchestrator.handsFree = true
+        assertTrue("must not pretend to support hands-free", !fixture.orchestrator.handsFree)
+    }
+
+    @Test
+    fun `a spoken lesson attempt gets per-sound feedback`() = runTest {
+        val fixture = Fixture(this)
+        // The fake ASR returns audio for the turn, so the scorer can run.
+        fixture.asr.enqueue(
+            AsrResult(
+                transcript = "I see a red ball",
+                confidence = 0.9f,
+                audio = org.sisam.langtutor.speech.AudioClip(ShortArray(16_000)),
+            ),
+        )
+        fixture.orchestrator.startSession("unit-001", TutorMode.SPEECH)
+        fixture.orchestrator.onMicPressed()
+        advanceUntilIdle()
+        fixture.orchestrator.onMicReleased()
+        advanceUntilIdle()
+
+        val score = fixture.orchestrator.pronunciation.value
+        assertTrue("expected per-sound feedback", score != null && score.phonemes.isNotEmpty())
+        // …and it is cleared when the next turn starts, never shown stale.
+        fixture.orchestrator.onMicPressed()
+        advanceUntilIdle()
+        assertEquals(null, fixture.orchestrator.pronunciation.value)
+    }
+
+    @Test
+    fun `typed turns are never scored for pronunciation`() = runTest {
+        val fixture = Fixture(this)
+        fixture.orchestrator.startSession("unit-001", TutorMode.TEXT)
+        fixture.orchestrator.onTextSubmitted("I see a red ball")
+        advanceUntilIdle()
+        assertEquals(null, fixture.orchestrator.pronunciation.value)
+    }
+
+    @Test
     fun `text channel bypasses ASR and runs the same policy`() = runTest {
         val fixture = Fixture(this)
 

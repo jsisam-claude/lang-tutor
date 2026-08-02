@@ -18,6 +18,8 @@ import org.sisam.langtutor.profile.LearnerProfileStore
 import org.sisam.langtutor.safety.BlocklistSafetyFilter
 import org.sisam.langtutor.safety.SafetyFilter
 import org.sisam.langtutor.speech.AsrEngine
+import org.sisam.langtutor.speech.AudioClip
+import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.speech.RecognitionHint
 import org.sisam.langtutor.speech.TtsEngine
@@ -36,7 +38,7 @@ class TutorOrchestrator(
     private val llm: LlmEngine,
     private val asr: AsrEngine,
     private val tts: TtsEngine,
-    @Suppress("unused") private val scorer: PronunciationScorer,
+    private val scorer: PronunciationScorer,
     private val content: ContentRepository,
     private val profile: LearnerProfileStore,
     private val policy: DialoguePolicy,
@@ -52,6 +54,27 @@ class TutorOrchestrator(
 
     private var currentUnit: CurriculumUnit? = null
     private var turnActive = false
+
+    private val _pronunciation = MutableStateFlow<PronunciationScore?>(null)
+
+    /**
+     * Per-sound feedback for the last spoken attempt at a lesson phrase, or
+     * null when the turn wasn't a scorable attempt. Cleared when a new turn
+     * starts so the UI never shows stale marks.
+     */
+    val pronunciation: StateFlow<PronunciationScore?> = _pronunciation
+
+    /**
+     * Hands-free listening: the mic opens and the bundled VAD decides when the
+     * child stopped talking. Off by default — only offered when the ASR engine
+     * actually supports it ([AsrEngine.supportsHandsFree]).
+     */
+    var handsFree: Boolean = false
+        set(value) {
+            field = value && asr.supportsHandsFree
+        }
+
+    val handsFreeAvailable: Boolean get() = asr.supportsHandsFree
 
     suspend fun startSession(unitId: String, @Suppress("UNUSED_PARAMETER") mode: TutorMode) {
         // Model load can be slow on first run; hold Preparing so the UI shows a
@@ -82,18 +105,32 @@ class TutorOrchestrator(
         val current = _state.value
         if (current !is TutorTurnState.AwaitingChild && current !is TutorTurnState.Failed) return
         scope.launch {
+            _pronunciation.value = null
             _state.value = TutorTurnState.Listening
             asr.startCapture(lessonHint())
+            if (handsFree) {
+                // The engine's VAD ends the turn on its own — the child just
+                // talks and stops. A cancelled/superseded turn is covered by
+                // the state check inside finishListening().
+                asr.awaitEndpoint()
+                finishListening()
+            }
         }
     }
 
     fun onMicReleased() {
+        // In hands-free mode the endpoint detector owns the end of the turn;
+        // a stray release must not cut the child off mid-word.
+        if (handsFree) return
         if (_state.value != TutorTurnState.Listening) return
-        scope.launch {
-            _state.value = TutorTurnState.Transcribing
-            val result = asr.stopCapture()
-            handleChildUtterance(result.transcript, result.confidence)
-        }
+        scope.launch { finishListening() }
+    }
+
+    private suspend fun finishListening() {
+        if (_state.value != TutorTurnState.Listening) return
+        _state.value = TutorTurnState.Transcribing
+        val result = asr.stopCapture()
+        handleChildUtterance(result.transcript, result.confidence, result.audio)
     }
 
     suspend fun onTextSubmitted(text: String) {
@@ -121,10 +158,15 @@ class TutorOrchestrator(
         CoroutineScope(Dispatchers.Default).launch { llm.unload() }
     }
 
-    private suspend fun handleChildUtterance(utterance: String, confidence: Float) {
+    private suspend fun handleChildUtterance(
+        utterance: String,
+        confidence: Float,
+        audio: AudioClip? = null,
+    ) {
         turnActive = true
         try {
             _transcript.value += TranscriptEntry(Speaker.CHILD, utterance, confidence)
+            scorePronunciation(audio)
 
             when (val move = policy.nextMove(TurnContext(utterance, confidence, currentUnit))) {
                 is TutorMove.AskRepeat -> {
@@ -165,6 +207,22 @@ class TutorOrchestrator(
         } finally {
             turnActive = false
         }
+    }
+
+    /**
+     * Score the attempt when the lesson asked the child to say a SPECIFIC
+     * phrase — that's the only case with a known correct pronunciation to
+     * compare against. Free conversation is never marked. Failures here must
+     * never break the turn: feedback is a bonus, the conversation is the point.
+     */
+    private suspend fun scorePronunciation(audio: AudioClip?) {
+        val clip = audio ?: return
+        val target = currentUnit?.activities
+            ?.filterIsInstance<Activity.RepeatAfterMe>()
+            ?.firstOrNull()?.phrase ?: return
+        runCatching { scorer.score(clip, target, TutorLanguage.ENGLISH) }
+            .onSuccess { if (it.phonemes.isNotEmpty()) _pronunciation.value = it }
+            .onFailure { println("TutorOrchestrator: pronunciation scoring failed: ${it.message}") }
     }
 
     private suspend fun speak(text: String) {

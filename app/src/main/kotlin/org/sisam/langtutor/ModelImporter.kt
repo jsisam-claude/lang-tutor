@@ -282,6 +282,9 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
             "model.onnx" to listOf(
                 KnownRevision(63_511_038, "dfe0a8f33002654fa560c4cdb796d934b6aa84b3bfb16779646a5b0f1bd9d968"),
             ),
+            "wav2vec2-phoneme-int8.onnx" to listOf(
+                KnownRevision(317_712_780, "74174710e34035bbb7f611601d016c32fc575de7a6f53b1078107dc10a84e7ae"),
+            ),
             "phonikud-1.0.int8.onnx" to listOf(
                 KnownRevision(307_844_158, "113afb58d3140502aa1e7691cdc6b240b56cf97e5852fc870e1a7fb5a400dd62"),
             ),

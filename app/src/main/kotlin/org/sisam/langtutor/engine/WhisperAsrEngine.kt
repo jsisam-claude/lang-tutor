@@ -6,11 +6,14 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.util.Log
 import java.io.File
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.sisam.langtutor.speech.AsrEngine
 import org.sisam.langtutor.speech.AsrResult
+import org.sisam.langtutor.speech.AudioClip
 import org.sisam.langtutor.speech.RecognitionHint
+import org.sisam.langtutor.speech.VadGate
 import org.sisam.langtutor.speech.WhisperFrontend
 import org.sisam.langtutor.speech.WhisperGreedyDecoder
 import org.sisam.langtutor.speech.WhisperTokenizer
@@ -28,49 +31,95 @@ import org.tensorflow.lite.Interpreter
  * future). If transcripts come out as garbage, the export may expect a
  * multiplicative 1/0 mask — one-line flip below.
  */
-class WhisperAsrEngine(private val modelFile: File) : AsrEngine {
+class WhisperAsrEngine(
+    private val modelFile: File,
+    /** When present, the engine can end the turn by itself (hands-free). */
+    private val vad: SileroVad? = null,
+) : AsrEngine {
 
     private var interpreter: Interpreter? = null
     private var recorder: AudioRecord? = null
     private var captureThread: Thread? = null
     private val chunks = ArrayList<ShortArray>()
     @Volatile private var capturing = false
+    @Volatile private var endpoint: CompletableDeferred<Unit>? = null
+
+    override val supportsHandsFree: Boolean get() = vad != null
 
     @SuppressLint("MissingPermission") // RECORD_AUDIO requested by ConversationScreen
     override suspend fun startCapture(hint: RecognitionHint) {
         stopRecorderQuietly()
         chunks.clear()
+        val gate = vad?.let { VadGate() }
+        vad?.reset()
+        val signal = CompletableDeferred<Unit>()
+        endpoint = signal
         val minBuf = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL, ENCODING)
-        val rec = AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL, ENCODING, minBuf * 4)
+        // Read in whole VAD frames so the detector never sees a partial window.
+        val readSize = maxOf(minBuf, SileroVad.FRAME * 4) / SileroVad.FRAME * SileroVad.FRAME
+        val rec = AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL, ENCODING, readSize * 4)
         recorder = rec
         capturing = true
         rec.startRecording()
         captureThread = Thread {
-            val buf = ShortArray(minBuf)
+            val buf = ShortArray(readSize)
+            val frame = FloatArray(SileroVad.FRAME)
             var total = 0
             while (capturing && total < MAX_SAMPLES) {
                 val n = rec.read(buf, 0, buf.size)
-                if (n > 0) {
-                    chunks.add(buf.copyOf(n))
-                    total += n
+                if (n <= 0) continue
+                chunks.add(buf.copyOf(n))
+                total += n
+                if (gate == null || vad == null || signal.isCompleted) continue
+                var off = 0
+                while (off + SileroVad.FRAME <= n) {
+                    for (i in 0 until SileroVad.FRAME) frame[i] = buf[off + i] / 32768f
+                    off += SileroVad.FRAME
+                    val event = runCatching { gate.accept(vad.probability(frame)) }
+                        .onFailure { Log.w(TAG, "vad frame failed", it) }
+                        .getOrNull() ?: continue
+                    if (event is VadGate.Event.SpeechEnd) {
+                        Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
+                        signal.complete(Unit)
+                        break
+                    }
                 }
             }
+            // Capture ended without the gate firing (button release / max length).
+            signal.complete(Unit)
         }.also { it.start() }
+    }
+
+    /** Hands-free: resumes when the bundled VAD says the child stopped talking. */
+    override suspend fun awaitEndpoint() {
+        endpoint?.await()
     }
 
     override suspend fun stopCapture(): AsrResult = withContext(Dispatchers.Default) {
         capturing = false
         captureThread?.join(2000)
         stopRecorderQuietly()
+        endpoint?.complete(Unit)
+        endpoint = null
         val total = chunks.sumOf { it.size }
         if (total < SAMPLE_RATE / 4) return@withContext AsrResult("", 0f) // <0.25 s: nothing said
         val pcm = FloatArray(total)
+        val pcm16 = ShortArray(total)
         var i = 0
-        for (c in chunks) for (s in c) pcm[i++] = s / 32768f
+        for (c in chunks) for (s in c) {
+            pcm16[i] = s
+            pcm[i++] = s / 32768f
+        }
         chunks.clear()
         try {
             val text = transcribe(pcm)
-            AsrResult(text.trim(), if (text.isBlank()) 0f else CONFIDENCE)
+            AsrResult(
+                transcript = text.trim(),
+                confidence = if (text.isBlank()) 0f else CONFIDENCE,
+                // Retained for this turn so pronunciation scoring can run on the
+                // very audio that was transcribed.
+                audio = AudioClip(pcm16, SAMPLE_RATE),
+            )
         } catch (t: Throwable) {
             Log.e(TAG, "transcription failed", t)
             AsrResult("", 0f)

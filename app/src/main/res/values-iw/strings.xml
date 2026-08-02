@@ -13,6 +13,10 @@
 
     <string name="conversation_title">שיחה עם תוקי 🦜</string>
     <string name="conversation_hold_to_talk">מחזיקים ומדברים</string>
+    <string name="conversation_hands_free">ללא ידיים</string>
+    <string name="conversation_tap_and_talk">הקישו פעם אחת ופשוט דברו</string>
+    <string name="pronunciation_title">איך יצאו הצלילים שלך</string>
+    <string name="pronunciation_stars">%1$d מתוך 5 כוכבים</string>
     <string name="conversation_type_hint">כותבים באנגלית… ⁦English⁩</string>
     <string name="conversation_send">שליחה</string>
 

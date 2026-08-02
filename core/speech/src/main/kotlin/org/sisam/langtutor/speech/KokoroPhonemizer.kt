@@ -30,16 +30,28 @@ class KokoroPhonemizer private constructor(
 
     /** Token IDs WITHOUT the surrounding BOS/EOS zeros (the engine adds them). */
     fun phonemize(text: String): IntArray {
-        val out = ArrayList<Int>(text.length * 2)
-        val spaceId = vocab[" "]
+        val ipa = phonemizeToIpa(text)
+        val out = ArrayList<Int>(ipa.length)
+        for (c in ipa) vocab[c.toString()]?.let { out.add(it) }
+        return out.toIntArray()
+    }
+
+    /**
+     * The same pronunciation as [phonemize] but as misaki IPA text. Used by
+     * pronunciation scoring, which needs the expected SOUNDS (not the voice
+     * model's token ids) so the lesson and the scorer agree on what a word is
+     * made of.
+     */
+    fun phonemizeToIpa(text: String): String {
+        val sb = StringBuilder(text.length * 2)
         var previousWasWord = false
         for (token in tokenize(KokoroTextNormalizer.normalize(text))) {
             if (token.length == 1 && token[0] in PUNCTUATION) {
-                vocab[token]?.let { out.add(it) }
+                sb.append(token)
                 previousWasWord = false
                 continue
             }
-            if (previousWasWord && spaceId != null) out.add(spaceId)
+            if (previousWasWord) sb.append(' ')
             previousWasWord = true
             // Hyphenated compounds miss the dictionary as a whole ("well-done")
             // — phonemize the parts and speak them joined, keeping any direct
@@ -47,9 +59,9 @@ class KokoroPhonemizer private constructor(
             val arpabet = cmu[token.lowercase()]
                 ?: token.split('-').filter { it.isNotEmpty() }
                     .joinToString(" ") { part -> cmu[part.lowercase()] ?: RuleG2p.toArpabet(part) }
-            appendArpabet(arpabet, out)
+            appendArpabet(arpabet, sb)
         }
-        return out.toIntArray()
+        return sb.toString()
     }
 
     /** Words (letters/apostrophes/hyphens) and known punctuation, in order. */
@@ -71,7 +83,7 @@ class KokoroPhonemizer private constructor(
         return tokens
     }
 
-    private fun appendArpabet(arpabet: String, out: MutableList<Int>) {
+    private fun appendArpabet(arpabet: String, out: StringBuilder) {
         for (symbol in arpabet.split(' ')) {
             if (symbol.isEmpty()) continue
             val stress = symbol.last().digitToIntOrNull() ?: -1
@@ -83,10 +95,10 @@ class KokoroPhonemizer private constructor(
                 else -> ARPABET_TO_IPA[base] ?: continue
             }
             when (stress) {
-                1 -> vocab["ˈ"]?.let { out.add(it) }
-                2 -> vocab["ˌ"]?.let { out.add(it) }
+                1 -> out.append('ˈ')
+                2 -> out.append('ˌ')
             }
-            for (c in ipa) vocab[c.toString()]?.let { out.add(it) }
+            out.append(ipa)
         }
     }
 

@@ -33,3 +33,6 @@ app/src/main/jniLibs/
 
 # Tuki's voice asset fetched by scripts/fetch-voice-assets.sh (pinned SHA-256)
 app/src/main/assets/kokoro/
+
+# Hands-free VAD asset fetched by scripts/fetch-vad-asset.sh (pinned SHA-256)
+app/src/main/assets/vad/

@@ -46,6 +46,8 @@ jobs:
       - run: scripts/fetch-gpu-libs.sh
       # Tuki's Kokoro voice vectors (522KB, SHA-256-pinned) → APK assets.
       - run: scripts/fetch-voice-assets.sh
+      # Hands-free listening model (639KB, SHA-256-pinned) → APK assets.
+      - run: scripts/fetch-vad-asset.sh
       - run: ./gradlew test :app:assembleDebug :app:bundleDebug --stacktrace
       # Publish the installable debug APK (+ AAB) so a green run yields a
       # sideloadable build for on-device testing (docs/running-on-device.md).

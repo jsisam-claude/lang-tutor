@@ -11,6 +11,10 @@
 
     <string name="conversation_title">Talking with Tuki 🦜</string>
     <string name="conversation_hold_to_talk">Hold to talk</string>
+    <string name="conversation_hands_free">Hands-free</string>
+    <string name="conversation_tap_and_talk">Tap once, then just talk</string>
+    <string name="pronunciation_title">How your sounds came out</string>
+    <string name="pronunciation_stars">%1$d of 5 stars</string>
     <string name="conversation_type_hint">Type in English…</string>
     <string name="conversation_send">Send</string>
 

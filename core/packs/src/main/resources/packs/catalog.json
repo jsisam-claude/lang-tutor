@@ -105,6 +105,21 @@
       "installPath": "models/whisper_medium_30s_i4.tflite",
       "minRamGb": 8,
       "experimental": false
+    },
+    {
+      "id": "gop-en-coach",
+      "version": 1,
+      "nameEn": "Pronunciation Coach",
+      "nameHe": "מאמן הגייה",
+      "descriptionEn": "Tuki listens to each sound and shows what to fix — green, amber or red per sound. Works fully offline.",
+      "descriptionHe": "תוקי מקשיב לכל צליל ומראה מה לתקן — ירוק, כתום או אדום לכל צליל. עובד לגמרי לא מקוון.",
+      "kind": "asr",
+      "sizeBytes": 317712780,
+      "sha256": "74174710e34035bbb7f611601d016c32fc575de7a6f53b1078107dc10a84e7ae",
+      "url": "https://huggingface.co/onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX/resolve/main/onnx/model_int8.onnx",
+      "installPath": "models/wav2vec2-phoneme-int8.onnx",
+      "minRamGb": 8,
+      "experimental": false
     }
   ]
 }

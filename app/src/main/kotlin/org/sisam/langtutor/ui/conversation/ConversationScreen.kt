@@ -17,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,6 +34,7 @@ import android.speech.SpeechRecognizer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -42,6 +44,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
+import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.tutor.Speaker
 import org.sisam.langtutor.tutor.TutorMode
 import org.sisam.langtutor.tutor.TutorTurnState
@@ -53,6 +56,10 @@ class ConversationViewModel(container: AppContainer, unitId: String) : ViewModel
 
     val state = orchestrator.state
     val transcript = orchestrator.transcript
+    val pronunciation = orchestrator.pronunciation
+
+    val handsFreeAvailable = orchestrator.handsFreeAvailable
+    fun setHandsFree(enabled: Boolean) { orchestrator.handsFree = enabled }
 
     init {
         viewModelScope.launch {
@@ -84,7 +91,9 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
     )
     val state by viewModel.state.collectAsState()
     val transcript by viewModel.transcript.collectAsState()
+    val pronunciation by viewModel.pronunciation.collectAsState()
     var draft by remember { mutableStateOf("") }
+    var handsFree by remember { mutableStateOf(false) }
 
     // The platform ASR shim needs the mic; ask once when the screen opens.
     val micPermission = rememberLauncherForActivityResult(
@@ -181,18 +190,50 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             }
         }
 
-        // Push-to-talk: press starts capture, release finishes the turn.
+        // Per-sound feedback for the last spoken attempt, when the pronunciation
+        // coach is installed and the lesson had a phrase to compare against.
+        pronunciation?.let { score -> PronunciationFeedback(score) }
+
+        // Hands-free: with the bundled VAD the child taps once and just talks;
+        // without it (or when switched off) the button stays hold-to-talk.
+        if (viewModel.handsFreeAvailable) {
+            Row(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.conversation_hands_free),
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                Switch(
+                    checked = handsFree,
+                    onCheckedChange = {
+                        handsFree = it
+                        viewModel.setHandsFree(it)
+                    },
+                )
+            }
+        }
         Box(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .size(88.dp)
-                .background(MaterialTheme.colorScheme.primary, CircleShape)
-                .pointerInput(Unit) {
+                .background(
+                    if (state is TutorTurnState.Listening) {
+                        MaterialTheme.colorScheme.error
+                    } else {
+                        MaterialTheme.colorScheme.primary
+                    },
+                    CircleShape,
+                )
+                .pointerInput(handsFree) {
                     detectTapGestures(
                         onPress = {
                             viewModel.onMicPressed()
                             tryAwaitRelease()
-                            viewModel.onMicReleased()
+                            // Hands-free ignores the release; the VAD ends the turn.
+                            if (!handsFree) viewModel.onMicReleased()
                         },
                     )
                 },
@@ -201,7 +242,9 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             Text(text = "🎙️", style = MaterialTheme.typography.headlineMedium)
         }
         Text(
-            text = stringResource(R.string.conversation_hold_to_talk),
+            text = stringResource(
+                if (handsFree) R.string.conversation_tap_and_talk else R.string.conversation_hold_to_talk,
+            ),
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
@@ -243,3 +286,47 @@ private fun stateLabel(state: TutorTurnState): String = when (state) {
     is TutorTurnState.AwaitingChild -> stringResource(R.string.state_your_turn)
     is TutorTurnState.Failed -> stringResource(R.string.state_failed)
 }
+
+/**
+ * Per-sound result of the last attempt: each expected sound coloured by how
+ * confidently the model heard it. Deliberately wordless — a 5-year-old reads
+ * colours, not scores (docs/mockups/pronunciation.html).
+ */
+@Composable
+private fun PronunciationFeedback(score: PronunciationScore) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.pronunciation_title),
+                style = MaterialTheme.typography.labelMedium,
+            )
+            EnglishContent {
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    score.phonemes.take(MAX_SHOWN).forEach { p ->
+                        Text(
+                            text = p.symbol,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = when {
+                                p.score >= 0.8f -> Color(0xFF2E7D32) // green: said well
+                                p.score >= 0.4f -> Color(0xFFEF6C00) // amber: nearly
+                                else -> Color(0xFFC62828) // red: try again
+                            },
+                        )
+                    }
+                }
+            }
+            Text(
+                text = stringResource(
+                    R.string.pronunciation_stars,
+                    (score.overall * 5).toInt().coerceIn(1, 5),
+                ),
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+    }
+}
+
+private const val MAX_SHOWN = 24

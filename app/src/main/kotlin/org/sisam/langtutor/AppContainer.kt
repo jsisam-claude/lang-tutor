@@ -14,7 +14,9 @@ import org.sisam.langtutor.engine.KokoroTtsEngine
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
+import org.sisam.langtutor.engine.SileroVad
 import org.sisam.langtutor.engine.TtsRouter
+import org.sisam.langtutor.engine.Wav2Vec2GopEngine
 import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
@@ -26,6 +28,7 @@ import org.sisam.langtutor.packs.ramTierGb
 import org.sisam.langtutor.profile.JsonFileProfileStore
 import org.sisam.langtutor.profile.LearnerProfileStore
 import org.sisam.langtutor.speech.FakePronunciationScorer
+import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
 import org.sisam.langtutor.tutor.TutorOrchestrator
 
@@ -193,9 +196,54 @@ class AppContainer private constructor(context: Context) {
         whisperEngine?.takeIf { whisperPath == file.absolutePath }?.let { return it }
         synchronized(this) {
             whisperEngine?.takeIf { whisperPath == file.absolutePath }?.let { return it }
-            return WhisperAsrEngine(file).also {
+            return WhisperAsrEngine(file, vad = sileroVad()).also {
                 whisperEngine = it
                 whisperPath = file.absolutePath
+            }
+        }
+    }
+
+    /**
+     * Hands-free detector — ships inside the APK (639 KB), so it is available
+     * whenever the build packed it; nothing to download.
+     */
+    @Volatile private var vadEngine: SileroVad? = null
+
+    private fun sileroVad(): SileroVad? {
+        if (!SileroVad.isAvailable(appContext)) return null
+        vadEngine?.let { return it }
+        synchronized(this) {
+            vadEngine?.let { return it }
+            return SileroVad(appContext).also { vadEngine = it }
+        }
+    }
+
+    val hasHandsFreeMic: Boolean get() = SileroVad.isAvailable(appContext) && bundledAsrFile != null
+
+    /** Bundled pronunciation-coach model if installed (a downloadable pack). */
+    val pronunciationModelFile: File?
+        get() {
+            val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
+            for (base in bases) {
+                val f = File(base, GOP_MODEL_PATH)
+                if (f.exists() && f.length() > 0L) return f
+            }
+            return null
+        }
+
+    val hasPronunciationCoach: Boolean get() = pronunciationModelFile != null
+
+    @Volatile private var gopEngine: Wav2Vec2GopEngine? = null
+    @Volatile private var gopPath: String? = null
+
+    private fun pronunciationScorer(): PronunciationScorer {
+        val file = pronunciationModelFile ?: return FakePronunciationScorer()
+        gopEngine?.takeIf { gopPath == file.absolutePath }?.let { return it }
+        synchronized(this) {
+            gopEngine?.takeIf { gopPath == file.absolutePath }?.let { return it }
+            return Wav2Vec2GopEngine(file).also {
+                gopEngine = it
+                gopPath = file.absolutePath
             }
         }
     }
@@ -223,6 +271,9 @@ class AppContainer private constructor(context: Context) {
         // RAM pressure for nothing; the first Hebrew line pays ~a second once.
         appScope.launch(Dispatchers.IO) {
             runCatching { kokoro?.warmUp() }
+            // 639 KB — warming it costs nothing and keeps the first hands-free
+            // turn from stalling on session creation.
+            runCatching { sileroVad()?.warmUp() }
         }
         return TutorOrchestrator(
             llm = createLlmEngine(),
@@ -231,7 +282,7 @@ class AppContainer private constructor(context: Context) {
                 english = kokoro ?: PlatformTtsEngine(appContext),
                 hebrew = hebrew,
             ),
-            scorer = FakePronunciationScorer(),
+            scorer = pronunciationScorer(),
             content = content,
             profile = profile,
             policy = ScriptedDialoguePolicy(),
@@ -299,6 +350,9 @@ class AppContainer private constructor(context: Context) {
         // Bundled Hebrew voice (Phonikud stack), HF file names kept as above.
         private const val TTS_HE_NIKUD_PATH = "models/phonikud-1.0.int8.onnx"
         private const val TTS_HE_VOICE_PATH = "models/model.onnx"
+
+        // Pronunciation coach (wav2vec2 IPA phoneme CTC, int8).
+        private const val GOP_MODEL_PATH = "models/wav2vec2-phoneme-int8.onnx"
 
         // Process-wide singleton: pack-download state and appScope must survive
         // Activity recreation (rotation), which previously rebuilt everything.
