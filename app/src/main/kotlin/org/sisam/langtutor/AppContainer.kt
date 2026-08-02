@@ -335,8 +335,13 @@ class AppContainer private constructor(context: Context) {
             "models/gemma-4-E2B-it.litertlm",
         )
 
-        // Bundled Whisper ASR variants (turbo for 12/16 GB, medium for 8 GB).
+        // Bundled ASR, best first. The short-window ACFT export transcribes the
+        // one-sentence answers children actually give ~12x faster than the 30 s
+        // medium export at the same accuracy, in less than half the file size
+        // (docs/asr-model-eval.md); the 30 s exports stay recognized so a
+        // device that already has one keeps working after an app update.
         private val ASR_CANDIDATES = listOf(
+            "models/acft_whisper_small.en_10s.tflite",
             "models/whisper_large_v3_turbo_30s_i4.tflite",
             "models/whisper_medium_30s_i4.tflite",
         )

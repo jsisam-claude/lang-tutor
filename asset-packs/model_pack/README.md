@@ -9,19 +9,22 @@ Expected layout (see docs/architecture.md and docs/feasibility.md §7 for the
 ```
 src/main/assets/models/
 ├── gemma-4-E2B-it.litertlm            # LLM, ~2.59 GB (Gemma 4 E2B, Apache 2.0)
-├── whisper_medium_30s_i4.tflite       # English ASR, ~664 MB (bundled Whisper; WIRED)
-├── model_q8f16.onnx                   # English TTS, ~86 MB (Kokoro q8f16; WIRED)
-├── tts-he-phonikud.int8.onnx          # Hebrew diacritization+G2P, ~30 MB (CC-BY-4.0)
-├── tts-he-voice.onnx                  # Hebrew Piper-class voice, ~40 MB
-├── gop-phoneme-ctc.onnx               # Pronunciation scorer, ~20 MB (P3)
-└── vad-silero.onnx                    # Voice activity detection, ~2 MB
+├── acft_whisper_small.en_10s.tflite   # English ASR, ~286 MB (docs/asr-model-eval.md)
+├── model_q8f16.onnx                   # English TTS, ~86 MB (Kokoro q8f16)
+├── model.onnx                         # Hebrew voice, ~64 MB (Piper/VITS, Phonikud)
+├── phonikud-1.0.int8.onnx             # Hebrew nikud + G2P, ~308 MB (CC-BY-4.0)
+└── wav2vec2-phoneme-int8.onnx         # Pronunciation scorer, ~318 MB (CTC-GOP)
 ```
 
-The first three exist today and are what the app's engines load from
-`files/models` (installed via Parent Zone packs / import / sideload — see
-TESTING.md); the exact names and SHA-256 pins live in
-`core/packs/src/main/resources/packs/catalog.json`. The rest are planned
-(docs/product-phases.md).
+All six are WIRED: the app's engines load them from `files/models` today
+(installed via Parent Zone packs / import / sideload — see TESTING.md), and the
+exact names and SHA-256 pins live in
+`core/packs/src/main/resources/packs/catalog.json`. Voice activity detection is
+not listed because that model (639 KB) ships inside the APK itself.
+
+Note the total: ~3.65 GB with the E2B brain, against a ~4 GB per-device Play
+budget. The E4B quality tier does not fit alongside the speech stack, which is
+why it stays an on-demand pack.
 
 Notes:
 - Asset packs only materialize in **app bundles** (`:app:bundleDebug` /

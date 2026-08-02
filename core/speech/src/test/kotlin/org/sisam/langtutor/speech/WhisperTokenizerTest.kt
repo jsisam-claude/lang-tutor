@@ -1,5 +1,6 @@
 package org.sisam.langtutor.speech
 
+import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -37,5 +38,42 @@ class WhisperTokenizerTest {
         }
         val ids = decoder.transcribe()
         assertEquals(listOf(100, 200), ids.toList())
+    }
+
+    // ---- English-only (.en) layout, used by the short-window ACFT exports ----
+
+    @Test
+    fun `english layout decodes real ACFT model output`() {
+        // These ids came out of the actual acft_whisper_small.en_10s graph for
+        // our own voice saying "I see a red ball" (docs/asr-model-eval.md).
+        val en = WhisperTokenizer.of(WhisperLayout.ENGLISH)
+        assertEquals(" I see a red ball.", en.decode(intArrayOf(314, 766, 257, 2266, 2613, 13)))
+    }
+
+    @Test
+    fun `layout is chosen from the model's own vocab size`() {
+        assertEquals(WhisperLayout.ENGLISH, WhisperLayout.forVocabSize(51_864))
+        assertEquals(WhisperLayout.MULTILINGUAL, WhisperLayout.forVocabSize(51_865))
+        // The two layouts disagree on every special id — that's the whole point.
+        assertEquals(50_256, WhisperLayout.ENGLISH.eot)
+        assertEquals(50_257, WhisperLayout.MULTILINGUAL.eot)
+        assertArrayEquals(intArrayOf(50_257, 50_362), WhisperLayout.ENGLISH.prompt)
+    }
+
+    @Test
+    fun `greedy loop uses the prompt and EOT of its layout`() {
+        val layout = WhisperLayout.ENGLISH
+        var step = 0
+        val script = intArrayOf(314, 766, layout.eot)
+        val ids = WhisperGreedyDecoder(layout = layout) { tokens, count ->
+            if (step == 0) {
+                // The English prompt is two tokens, not the multilingual four.
+                assertEquals(layout.prompt[0], tokens[0])
+                assertEquals(layout.prompt[1], tokens[1])
+                assertEquals(layout.prompt.size, count)
+            }
+            FloatArray(layout.vocabSize).also { it[script[step++]] = 10f }
+        }.transcribe()
+        assertArrayEquals(intArrayOf(314, 766), ids)
     }
 }

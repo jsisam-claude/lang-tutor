@@ -18,10 +18,11 @@ cd sideload/pixel-9a && ./push.sh       # installs APK (if fetched) + pushes the
 ```
 
 Each dir contains the device's brain (9a → E2B 2.6 GB; 9 / 10 Pro XL → E4B
-3.7 GB) plus `future-speech/` — the new native Whisper-ASR + Kokoro-TTS
-artifacts (litert-community, published this week) staged for the next build
-(the current APK doesn't read them yet; `push.sh` skips them). Manual steps
-below if you prefer doing it by hand.
+3.7 GB) plus `speech/` — everything Tuki needs to hear and speak: the Whisper
+ASR (286 MB), the Kokoro English voice (86 MB), the Hebrew voice + nikud model
+(371 MB) and the pronunciation coach (318 MB). All of them are WIRED: `push.sh`
+installs them into `files/models` and the current APK reads them, with no
+Google services involved. Manual steps below if you prefer doing it by hand.
 
 ## 1. Get the APK
 
@@ -124,11 +125,33 @@ logcat (`TukiLlm` tag) on first session start:
   (`adb logcat -b crash -d`).
 
 ## Mic on GrapheneOS (bundled Whisper)
-The mic now uses OUR bundled Whisper ASR whenever a whisper tflite is present in
-`files/models` — no Google services needed. `push.sh` installs it automatically
-(9a: whisper-medium ~0.7 GB; 9/Pro XL: whisper-turbo ~0.8 GB). First
-transcription loads the model (~10-30 s once); each utterance then takes several
-seconds on CPU. Logcat tag `TukiAsr` shows mel/encode/decode timings.
+The mic uses OUR bundled Whisper ASR whenever a whisper tflite is present in
+`files/models` — no Google services needed. `push.sh` installs it automatically:
+**every device now gets the same 286 MB short-window model**
+(`acft_whisper_small.en_10s.tflite`), which replaced the 664 MB 30-second
+export. It measured ~12× faster at the same accuracy on child-length phrases —
+sub-second instead of several seconds per utterance — because it encodes a
+10-second window instead of padding a two-second answer out to 30. Full A/B:
+[docs/asr-model-eval.md](docs/asr-model-eval.md).
+
+First transcription loads the model (~10–30 s once); Logcat tag `TukiAsr` prints
+the graph it detected (`graph: window 10s mel[1,80,1000] … layout ENGLISH`) and
+then mel/encode/decode timings per utterance. **Please send those timings** —
+the speed claim above comes from a container CPU, not from a Tensor.
+
+If you already pushed a 30-second model, it still works: the engine reads window
+size, encoder shape and token layout from the model's own signatures, so both
+generations run unchanged. Delete the old file to reclaim the 664 MB.
+
+Two things worth watching, both from the eval:
+- **Same phrase, different transcript on a retry.** These graphs are
+  dynamic-range quantized and the thread count changes the arithmetic order;
+  in-container, transcripts got worse when threads matched the core count.
+  Thread count is now 4 (was 6). If you see wobble between identical attempts,
+  say so — that number should drop, not rise.
+- **Foreign characters mid-sentence** (`I see a red 군`). That is the 30-second
+  padding drift; the 10 s model should not do it at all. If it does, that is a
+  new finding worth reporting.
 
 ## Tuki's voice (bundled Kokoro TTS)
 Tuki speaks with OUR bundled Kokoro voice whenever `models/model_q8f16.onnx`
@@ -184,7 +207,14 @@ in real rooms are the calibration that matters. Vowel-quality errors (æ vs ɛ)
 did not separate in testing — treat vowel marks as advisory for now.
 
 ## Known limits in this build (expected, not bugs)
-- English speech only (bundled Whisper decodes with the English token set);
-  Tuki's spoken voice still needs the Kokoro build (text replies meanwhile).
-- Pronunciation scoring is a stub.
+- **English speech recognition only.** The bundled model is an English-only
+  export, so a Hebrew answer into the mic will come back as English-looking
+  nonsense. Hebrew works for typing and for Tuki's voice, not for listening.
+- Utterances longer than ~10 seconds are truncated to the model's window; that
+  is the right trade for one-sentence answers, but a child telling a long story
+  will lose the tail.
+- Names outside the voice's dictionary use letter-to-sound rules, and digits
+  inside Hebrew text are not spoken yet.
+- Pronunciation thresholds were calibrated on synthesized speech (see the
+  section above) — the numbers you report are what recalibrates them.
 - Debug-signed test build — not Play-ready, not safety-certified for children yet.

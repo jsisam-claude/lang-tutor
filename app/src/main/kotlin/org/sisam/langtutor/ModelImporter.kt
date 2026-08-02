@@ -273,6 +273,9 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
             "whisper_large_v3_turbo_30s_i4.tflite" to listOf(
                 KnownRevision(755_273_648, "da3c91fcd149174cbb5abd3a5583ea95982c5e401c2d68cabac89117f5ce1a4c"),
             ),
+            "acft_whisper_small.en_10s.tflite" to listOf(
+                KnownRevision(286_276_128, "58edc288e8aad1da2a3df0545edadf5f1c6119ff70682e37031119ad89130daf"),
+            ),
             "whisper_medium_30s_i4.tflite" to listOf(
                 KnownRevision(664_348_672, "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63"),
             ),

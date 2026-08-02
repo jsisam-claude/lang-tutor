@@ -51,6 +51,7 @@ sha_of() {
     gemma-4-E4B-it.litertlm) echo "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0" ;;
     whisper_large_v3_turbo_30s_i4.tflite) echo "da3c91fcd149174cbb5abd3a5583ea95982c5e401c2d68cabac89117f5ce1a4c" ;;
     whisper_medium_30s_i4.tflite) echo "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63" ;;
+    acft_whisper_small.en_10s.tflite) echo "58edc288e8aad1da2a3df0545edadf5f1c6119ff70682e37031119ad89130daf" ;;
     model_q8f16.onnx) echo "04c658aec1b6008857c2ad10f8c589d4180d0ec427e7e6118ceb487e215c3cd0" ;;
     model.onnx) echo "dfe0a8f33002654fa560c4cdb796d934b6aa84b3bfb16779646a5b0f1bd9d968" ;;
     phonikud-1.0.int8.onnx) echo "113afb58d3140502aa1e7691cdc6b240b56cf97e5852fc870e1a7fb5a400dd62" ;;
@@ -65,6 +66,8 @@ url_of() {
     gemma-4-E4B-it.litertlm) echo "$HF/gemma-4-E4B-it-litert-lm/resolve/main/gemma-4-E4B-it.litertlm" ;;
     whisper_large_v3_turbo_30s_i4.tflite) echo "$HF/whisper-large-v3-turbo/resolve/main/whisper_large_v3_turbo_30s_i4.tflite" ;;
     whisper_medium_30s_i4.tflite) echo "$HF/whisper-medium/resolve/main/whisper_medium_30s_i4.tflite" ;;
+    # Short-window ACFT export — the recommended ASR (see docs/asr-model-eval.md).
+    acft_whisper_small.en_10s.tflite) echo "$HF/whisper-acft/resolve/main/small.en/acft_whisper_small.en_10s_drq.tflite" ;;
     # Kokoro voice model — single-graph ONNX build (q8f16), spoken by the app's
     # bundled ONNX Runtime engine.
     model_q8f16.onnx) echo "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/onnx/model_q8f16.onnx" ;;
@@ -112,10 +115,9 @@ model_for() { # brain the CURRENT app loads per device
   esac
 }
 
-whisper_for() { # staged ASR per device (lighter model for the 8 GB 9a)
+whisper_for() { # the recommended ASR — same short-window model on every device
   case "$1" in
-    pixel-9a) echo "whisper_medium_30s_i4.tflite" ;;
-    *) echo "whisper_large_v3_turbo_30s_i4.tflite" ;;
+    *) echo "acft_whisper_small.en_10s.tflite" ;;
   esac
 }
 
@@ -142,7 +144,7 @@ adb shell run-as "\$PKG" mkdir -p files/models
 adb shell "run-as \$PKG cp /data/local/tmp/'$2' files/models/'$2'"
 adb shell rm -f /data/local/tmp/"$2"
 adb shell run-as "\$PKG" ls -l files/models
-for W in speech/whisper_*_30s_i4.tflite speech/model_q8f16.onnx speech/model.onnx speech/phonikud-1.0.int8.onnx speech/wav2vec2-phoneme-int8.onnx; do
+for W in speech/whisper_*.tflite speech/acft_whisper_*.tflite speech/model_q8f16.onnx speech/model.onnx speech/phonikud-1.0.int8.onnx speech/wav2vec2-phoneme-int8.onnx; do
   [ -f "\$W" ] || continue
   WB=\$(basename "\$W")
   echo ">> pushing bundled speech model (\$WB) — works without Google services"
@@ -179,7 +181,7 @@ for dev in "${DEVICES[@]}"; do
     done
     cat > "$devdir/speech/README.txt" <<'NOTE'
 Bundled speech models, pushed into files/models by push.sh:
-- whisper_*.tflite         — Tuki's ears: on-device ASR, no Google services
+- acft_whisper_*.tflite    — Tuki's ears: short-window ASR, no Google services
 - model_q8f16.onnx         — Tuki's English voice: Kokoro TTS (24 kHz)
 - model.onnx               — Tuki's Hebrew voice: Piper VITS (22.05 kHz)
 - phonikud-1.0.int8.onnx   — Hebrew nikud model (vowel points for the voice)

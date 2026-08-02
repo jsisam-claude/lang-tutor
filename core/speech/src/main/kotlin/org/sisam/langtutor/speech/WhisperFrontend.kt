@@ -28,7 +28,6 @@ object WhisperFrontend {
     const val HOP = 160
     const val N_MELS = 80
     const val N_FRAMES = 3000
-    private const val N_SAMPLES = SAMPLE_RATE * 30
     private const val N_FREQS = N_FFT / 2 + 1 // 201
     private const val FMAX = 8000.0
 
@@ -39,23 +38,31 @@ object WhisperFrontend {
     /** [N_MELS][N_FREQS] slaney-scale, slaney-normalized triangular filters. */
     private val melFilters: Array<FloatArray> = buildMelFilters()
 
-    /** @param pcm 16 kHz mono in [-1, 1]; longer than 30 s is truncated. */
-    fun logMel(pcm: FloatArray): Array<FloatArray> {
-        // 1) pad/truncate to exactly 30 s, then reflect-pad n_fft/2 both ends.
-        val padded = FloatArray(N_SAMPLES + N_FFT) // N_FFT/2 margin each side
-        val n = min(pcm.size, N_SAMPLES)
+    /**
+     * @param pcm 16 kHz mono in [-1, 1]; audio longer than the window is truncated.
+     * @param frames the export's window length in mel frames — 3000 (30 s) for the
+     *   classic graphs, 1000/500 for the short-window ACFT exports. The engine
+     *   reads it from the encode signature instead of assuming 30 s, because
+     *   padding a 2-second child utterance out to 30 s is exactly what sends
+     *   stock Whisper into hallucination loops.
+     */
+    fun logMel(pcm: FloatArray, frames: Int = N_FRAMES): Array<FloatArray> {
+        // 1) pad/truncate to exactly the window, then reflect-pad n_fft/2 both ends.
+        val samples = frames * HOP
+        val padded = FloatArray(samples + N_FFT) // N_FFT/2 margin each side
+        val n = min(pcm.size, samples)
         System.arraycopy(pcm, 0, padded, N_FFT / 2, n)
         for (i in 0 until N_FFT / 2) {
             padded[N_FFT / 2 - 1 - i] = padded[N_FFT / 2 + 1 + i] // left reflect
-            padded[N_FFT / 2 + N_SAMPLES + i] = padded[N_FFT / 2 + N_SAMPLES - 2 - i]
+            padded[N_FFT / 2 + samples + i] = padded[N_FFT / 2 + samples - 2 - i]
         }
 
         // 2) centered STFT -> mel power, frame by frame.
         val fft = FloatFFT_1D(N_FFT.toLong())
         val frame = FloatArray(N_FFT)
         val power = FloatArray(N_FREQS)
-        val mel = Array(N_MELS) { FloatArray(N_FRAMES) }
-        for (t in 0 until N_FRAMES) {
+        val mel = Array(N_MELS) { FloatArray(frames) }
+        for (t in 0 until frames) {
             val start = t * HOP
             for (i in 0 until N_FFT) frame[i] = padded[start + i] * hann[i]
             fft.realForward(frame)
@@ -77,13 +84,13 @@ object WhisperFrontend {
 
         // 3) log10 with floor, then Whisper's global-max normalization.
         var globalMax = Float.NEGATIVE_INFINITY
-        for (m in 0 until N_MELS) for (t in 0 until N_FRAMES) {
+        for (m in 0 until N_MELS) for (t in 0 until frames) {
             val v = log10(max(mel[m][t], 1e-10f).toDouble()).toFloat()
             mel[m][t] = v
             if (v > globalMax) globalMax = v
         }
         val floor = globalMax - 8.0f
-        for (m in 0 until N_MELS) for (t in 0 until N_FRAMES) {
+        for (m in 0 until N_MELS) for (t in 0 until frames) {
             mel[m][t] = (max(mel[m][t], floor) + 4.0f) / 4.0f
         }
         return mel

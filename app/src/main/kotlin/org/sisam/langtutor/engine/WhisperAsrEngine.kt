@@ -15,17 +15,26 @@ import org.sisam.langtutor.speech.AudioClip
 import org.sisam.langtutor.speech.RecognitionHint
 import org.sisam.langtutor.speech.VadGate
 import org.sisam.langtutor.speech.WhisperFrontend
+import org.sisam.langtutor.speech.WhisperLayout
 import org.sisam.langtutor.speech.WhisperGreedyDecoder
 import org.sisam.langtutor.speech.WhisperTokenizer
 import org.tensorflow.lite.Interpreter
 
 /**
  * BUNDLED on-device ASR — our own stack, no Google services, no network:
- * push-to-talk PCM -> WhisperFrontend (golden-tested log-mel) -> the two-
- * signature Whisper tflite (litert-community int4 export) via the LiteRT
- * interpreter -> greedy decode loop -> bundled tokenizer. This is what makes
- * the mic work on de-googled devices (GrapheneOS), where no platform speech
- * service exists.
+ * PCM -> WhisperFrontend (golden-tested log-mel) -> the two-signature Whisper
+ * tflite via the LiteRT interpreter -> greedy decode loop -> bundled tokenizer.
+ * This is what makes the mic work on de-googled devices (GrapheneOS), where no
+ * platform speech service exists.
+ *
+ * The graph's geometry (window length, encoder shape, token layout) is read
+ * from the loaded model's own signatures rather than assumed, so both the
+ * classic 30 s exports and the short-window ACFT exports work on one code
+ * path. The short window is what the app installs: a 10 s export encodes 1000
+ * mel frames instead of 3000, which measured ~12x faster than the 30 s medium
+ * export at the same accuracy on child-length phrases, and it cannot drift into
+ * 28 seconds of padding the way a 30 s window occasionally does
+ * (docs/asr-model-eval.md).
  *
  * DEVICE-VERIFY: the decode mask is assumed additive-causal (0 past, -1e9
  * future). If transcripts come out as garbage, the export may expect a
@@ -130,34 +139,70 @@ class WhisperAsrEngine(
         }
     }
 
+    /** Geometry + token layout read from the loaded export, not assumed. */
+    private data class Graph(
+        val melFrames: Int,   // 3000 (30 s) or 1000/500 for short-window ACFT
+        val encFrames: Int,
+        val encDim: Int,
+        val maxTokens: Int,
+        val layout: WhisperLayout,
+    )
+
+    private var graph: Graph? = null
+
+    private fun describe(itp: Interpreter): Graph {
+        val enc = itp.getInputTensorFromSignature("args_0", "encode").shape()   // [1,80,frames]
+        val decAudio = itp.getInputTensorFromSignature("args_0", "decode").shape() // [1,encF,dim]
+        val decTokens = itp.getInputTensorFromSignature("args_1", "decode").shape() // [1,maxTok]
+        val decOut = itp.getOutputTensorFromSignature("output_0", "decode").shape() // [1,maxTok,vocab]
+        return Graph(
+            melFrames = enc[2],
+            encFrames = decAudio[1],
+            encDim = decAudio[2],
+            maxTokens = decTokens[1],
+            layout = WhisperLayout.forVocabSize(decOut[2]),
+        ).also {
+            Log.i(
+                TAG,
+                "graph: window ${it.melFrames * WhisperFrontend.HOP / SAMPLE_RATE}s " +
+                    "mel[1,80,${it.melFrames}] enc[1,${it.encFrames},${it.encDim}] " +
+                    "maxTok=${it.maxTokens} layout=${it.layout}",
+            )
+        }
+    }
+
     private fun transcribe(pcm: FloatArray): String {
         val itp = interpreter ?: Interpreter(
             modelFile,
             Interpreter.Options().apply { setNumThreads(THREADS) },
         ).also {
             interpreter = it
+            graph = describe(it)
             Log.i(TAG, "loaded ${modelFile.name}")
         }
+        val g = graph ?: describe(itp).also { graph = it }
 
         var t0 = System.nanoTime()
-        val mel = WhisperFrontend.logMel(pcm)
-        val melIn = arrayOf(mel) // [1,80,3000]
+        val mel = WhisperFrontend.logMel(pcm, g.melFrames)
+        val melIn = arrayOf(mel) // [1,80,frames]
         val melMs = (System.nanoTime() - t0) / 1_000_000
 
         t0 = System.nanoTime()
-        val encOut = Array(1) { Array(ENC_FRAMES) { FloatArray(ENC_DIM) } }
+        val encOut = Array(1) { Array(g.encFrames) { FloatArray(g.encDim) } }
         itp.runSignature(mapOf("args_0" to melIn), mapOf("output_0" to encOut), "encode")
         val encMs = (System.nanoTime() - t0) / 1_000_000
 
         // Static additive causal mask; rows past the current count are never read.
-        val mask = Array(1) { Array(1) { Array(MAX_TOK) { r -> FloatArray(MAX_TOK) { c -> if (c <= r) 0f else NEG_INF } } } }
-        val tokenBuf = Array(1) { IntArray(MAX_TOK) }
-        val logitsOut = Array(1) { Array(MAX_TOK) { FloatArray(WhisperTokenizer.VOCAB_SIZE) } }
+        val mask = Array(1) {
+            Array(1) { Array(g.maxTokens) { r -> FloatArray(g.maxTokens) { c -> if (c <= r) 0f else NEG_INF } } }
+        }
+        val tokenBuf = Array(1) { IntArray(g.maxTokens) }
+        val logitsOut = Array(1) { Array(g.maxTokens) { FloatArray(g.layout.vocabSize) } }
 
         t0 = System.nanoTime()
         var steps = 0
-        val ids = WhisperGreedyDecoder { tokens, count ->
-            System.arraycopy(tokens, 0, tokenBuf[0], 0, MAX_TOK)
+        val ids = WhisperGreedyDecoder(maxTokens = g.maxTokens, layout = g.layout) { tokens, count ->
+            System.arraycopy(tokens, 0, tokenBuf[0], 0, g.maxTokens)
             itp.runSignature(
                 mapOf("args_0" to encOut, "args_1" to tokenBuf, "args_2" to mask),
                 mapOf("output_0" to logitsOut),
@@ -168,7 +213,7 @@ class WhisperAsrEngine(
         }.transcribe()
         val decMs = (System.nanoTime() - t0) / 1_000_000
 
-        val text = WhisperTokenizer.decode(ids)
+        val text = WhisperTokenizer.of(g.layout).decode(ids)
         Log.i(TAG, "mel=${melMs}ms encode=${encMs}ms decode=${decMs}ms/${steps}steps -> ${ids.size} tokens")
         return text
     }
@@ -187,11 +232,16 @@ class WhisperAsrEngine(
         const val CHANNEL = AudioFormat.CHANNEL_IN_MONO
         const val ENCODING = AudioFormat.ENCODING_PCM_16BIT
         const val MAX_SAMPLES = SAMPLE_RATE * 30
-        const val ENC_FRAMES = 1500
-        const val ENC_DIM = 1024
-        const val MAX_TOK = WhisperGreedyDecoder.MAX_TOKENS
         const val NEG_INF = -1e9f
         const val CONFIDENCE = 0.85f
-        const val THREADS = 6
+
+        // Half the cores, not all of them. These graphs are dynamic-range
+        // quantized: XNNPACK splits the reductions by thread count, so the
+        // thread count changes the summation order and — on a marginal frame —
+        // the winning token. Measured in-container, transcripts of identical
+        // audio got measurably worse once the threads matched the core count
+        // (docs/asr-model-eval.md). The short-window model has the latency
+        // headroom to be conservative here. DEVICE-VERIFY on the 9a.
+        const val THREADS = 4
     }
 }
