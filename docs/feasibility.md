@@ -21,7 +21,7 @@ concrete, licensable, on-device implementation path on Pixel 9/10-class hardware
 | Capability | Verdict | The path | The catch |
 |---|---|---|---|
 | On-device LLM tutor | ✅ Solid | Gemma 4 E2B (Apache 2.0, 2.58 GB) on LiteRT-LM | Hebrew output quality unbenchmarked ❓ |
-| English ASR (lessons) | ✅ Solid | Whisper-small / Moonshine + vocab biasing | — |
+| English ASR (lessons) | ✅ Solid — **shipping** | Whisper small.en, 10 s ACFT export (286 MB) | Use a short-window export: a 30 s window is ~12× slower on a one-sentence answer ([eval](asr-model-eval.md)) |
 | English ASR (free talk, kids) | 🟡 Workable | Kid-fine-tuned Whisper | ~22 pp child WER penalty stock; main kids corpus is non-commercial |
 | English TTS | ✅ Solid | Piper (63 MB) or Kokoro-82M (<80 MB int8) | No purpose-built child voice; use slow-clear mode |
 | Hebrew TTS | 🟡 Workable | Phonikud + phonikud-tts (CC-BY-4.0) + pre-recorded human audio | Quality below big-cloud TTS; nikud handled by Phonikud |
@@ -327,7 +327,7 @@ Google Play numbers (mid-2026):
 | Component | Pick | Size |
 |---|---|---|
 | LLM | Gemma 4 E2B int4 `.litertlm` | 2.58 GB |
-| English ASR | Whisper-small q5 (or Moonshine base, 62 MB) | 250 MB |
+| English ASR | Whisper small.en, 10 s ACFT export ✅ *shipping* | 286 MB |
 | English TTS | Kokoro-82M int8 (or Piper medium, 63 MB) | 80 MB |
 | Hebrew TTS | Phonikud int8 + Piper-class Hebrew voice | ~60–100 MB |
 | Pronunciation | phoneme-CTC scorer | ~20 MB |
@@ -373,7 +373,7 @@ checksums verified before activation; per-pack delete is a real removal.
 | Stage | Budget | Basis |
 |---|---|---|
 | Child speaks (push-to-talk) | 2–4 s utterance | — |
-| ASR on utterance | **0.5–2 s** | Moonshine/Whisper-small class on flagship CPU ⚠️ |
+| ASR on utterance | **0.5–2 s** | Whisper small.en @10 s window; measured RTF ≈ 0.3 on a container CPU, so ~0.5 s for a 1.7 s answer ([eval](asr-model-eval.md)) — Tensor still unmeasured ⚠️ |
 | LLM first token | **~1–3 s** | short cached system prompt, prefill fast |
 | LLM decode (30–60 token reply) | 2–5 s streamed | 10–25 tok/s CPU ⚠️ |
 | TTS first audio | **+0.5–1 s** | sentence-streamed Piper/Kokoro (faster than real-time) |
