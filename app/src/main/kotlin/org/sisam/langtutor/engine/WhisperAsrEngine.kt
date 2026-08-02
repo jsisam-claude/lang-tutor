@@ -50,8 +50,12 @@ class WhisperAsrEngine(
     override suspend fun startCapture(hint: RecognitionHint) {
         stopRecorderQuietly()
         chunks.clear()
-        val gate = vad?.let { VadGate() }
-        vad?.reset()
+        // Local val: a class property can't be smart-cast inside the capture
+        // lambda, and the inner loop must call the detector without a null check
+        // on every frame.
+        val detector = vad
+        val gate = detector?.let { VadGate() }
+        detector?.reset()
         val signal = CompletableDeferred<Unit>()
         endpoint = signal
         val minBuf = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL, ENCODING)
@@ -70,12 +74,12 @@ class WhisperAsrEngine(
                 if (n <= 0) continue
                 chunks.add(buf.copyOf(n))
                 total += n
-                if (gate == null || vad == null || signal.isCompleted) continue
+                if (gate == null || detector == null || signal.isCompleted) continue
                 var off = 0
                 while (off + SileroVad.FRAME <= n) {
                     for (i in 0 until SileroVad.FRAME) frame[i] = buf[off + i] / 32768f
                     off += SileroVad.FRAME
-                    val event = runCatching { gate.accept(vad.probability(frame)) }
+                    val event = runCatching { gate.accept(detector.probability(frame)) }
                         .onFailure { Log.w(TAG, "vad frame failed", it) }
                         .getOrNull() ?: continue
                     if (event is VadGate.Event.SpeechEnd) {
