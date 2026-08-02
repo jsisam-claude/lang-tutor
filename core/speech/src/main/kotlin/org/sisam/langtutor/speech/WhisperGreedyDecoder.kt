@@ -6,9 +6,10 @@ package org.sisam.langtutor.speech
  * decoder over the whole token prefix and we read logits at the last position.
  *
  * [stepLogits] runs the decoder: given the token buffer and how many entries
- * are valid, return the vocab logits (size 51_865) for position `count - 1`.
- * Pure JVM so the loop is unit-testable without a device; the Android engine
- * supplies a tflite-backed lambda.
+ * are valid, return the vocab logits for position `count - 1` — one float per
+ * id in [layout]'s vocabulary, which differs between the multilingual and `.en`
+ * exports. Pure JVM so the loop is unit-testable without a device; the Android
+ * engine supplies a tflite-backed lambda.
  */
 class WhisperGreedyDecoder(
     private val maxTokens: Int = MAX_TOKENS,
@@ -48,7 +49,8 @@ class WhisperGreedyDecoder(
     }
 
     companion object {
-        /** Multilingual prompt length; kept for callers that still assume it. */
+        /** Multilingual prompt length. Prefer `layout.prompt.size` — the `.en`
+         *  exports have a 2-token prompt. Kept for the decoder's own tests. */
         const val PREFIX = 4
         const val MAX_TOKENS = 128 // the export's decoder length
     }
