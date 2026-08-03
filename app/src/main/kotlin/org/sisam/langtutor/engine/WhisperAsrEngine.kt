@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.sisam.langtutor.speech.AsrEngine
 import org.sisam.langtutor.speech.AsrResult
+import org.sisam.langtutor.speech.AudioChunker
 import org.sisam.langtutor.speech.AudioClip
 import org.sisam.langtutor.speech.RecognitionHint
 import org.sisam.langtutor.speech.VadGate
@@ -182,40 +183,47 @@ class WhisperAsrEngine(
         }
         val g = graph ?: describe(itp).also { graph = it }
 
-        var t0 = System.nanoTime()
-        val mel = WhisperFrontend.logMel(pcm, g.melFrames)
-        val melIn = arrayOf(mel) // [1,80,frames]
-        val melMs = (System.nanoTime() - t0) / 1_000_000
+        // The frontend truncates to the export's window, so anything past it
+        // would be silently dropped — split first and transcribe each piece.
+        val pieces = AudioChunker.split(pcm, g.melFrames * WhisperFrontend.HOP)
+        if (pieces.size > 1) Log.i(TAG, "utterance split into ${pieces.size} windows")
 
-        t0 = System.nanoTime()
-        val encOut = Array(1) { Array(g.encFrames) { FloatArray(g.encDim) } }
-        itp.runSignature(mapOf("args_0" to melIn), mapOf("output_0" to encOut), "encode")
-        val encMs = (System.nanoTime() - t0) / 1_000_000
-
-        // Static additive causal mask; rows past the current count are never read.
+        // Reused across pieces: the mask is static and the buffers are shaped by
+        // the graph, not by the audio.
         val mask = Array(1) {
             Array(1) { Array(g.maxTokens) { r -> FloatArray(g.maxTokens) { c -> if (c <= r) 0f else NEG_INF } } }
         }
         val tokenBuf = Array(1) { IntArray(g.maxTokens) }
         val logitsOut = Array(1) { Array(g.maxTokens) { FloatArray(g.layout.vocabSize) } }
+        val encOut = Array(1) { Array(g.encFrames) { FloatArray(g.encDim) } }
+        val tokenizer = WhisperTokenizer.of(g.layout)
 
-        t0 = System.nanoTime()
-        var steps = 0
-        val ids = WhisperGreedyDecoder(maxTokens = g.maxTokens, layout = g.layout) { tokens, count ->
-            System.arraycopy(tokens, 0, tokenBuf[0], 0, g.maxTokens)
-            itp.runSignature(
-                mapOf("args_0" to encOut, "args_1" to tokenBuf, "args_2" to mask),
-                mapOf("output_0" to logitsOut),
-                "decode",
-            )
-            steps++
-            logitsOut[0][count - 1]
-        }.transcribe()
-        val decMs = (System.nanoTime() - t0) / 1_000_000
+        return pieces.joinToString(" ") { piece ->
+            var t0 = System.nanoTime()
+            val melIn = arrayOf(WhisperFrontend.logMel(piece, g.melFrames)) // [1,80,frames]
+            val melMs = (System.nanoTime() - t0) / 1_000_000
 
-        val text = WhisperTokenizer.of(g.layout).decode(ids)
-        Log.i(TAG, "mel=${melMs}ms encode=${encMs}ms decode=${decMs}ms/${steps}steps -> ${ids.size} tokens")
-        return text
+            t0 = System.nanoTime()
+            itp.runSignature(mapOf("args_0" to melIn), mapOf("output_0" to encOut), "encode")
+            val encMs = (System.nanoTime() - t0) / 1_000_000
+
+            t0 = System.nanoTime()
+            var steps = 0
+            val ids = WhisperGreedyDecoder(maxTokens = g.maxTokens, layout = g.layout) { tokens, count ->
+                System.arraycopy(tokens, 0, tokenBuf[0], 0, g.maxTokens)
+                itp.runSignature(
+                    mapOf("args_0" to encOut, "args_1" to tokenBuf, "args_2" to mask),
+                    mapOf("output_0" to logitsOut),
+                    "decode",
+                )
+                steps++
+                logitsOut[0][count - 1]
+            }.transcribe()
+            val decMs = (System.nanoTime() - t0) / 1_000_000
+
+            Log.i(TAG, "mel=${melMs}ms encode=${encMs}ms decode=${decMs}ms/${steps}steps -> ${ids.size} tokens")
+            tokenizer.decode(ids).trim()
+        }.trim()
     }
 
     private fun stopRecorderQuietly() {
@@ -231,6 +239,8 @@ class WhisperAsrEngine(
         const val SAMPLE_RATE = WhisperFrontend.SAMPLE_RATE
         const val CHANNEL = AudioFormat.CHANNEL_IN_MONO
         const val ENCODING = AudioFormat.ENCODING_PCM_16BIT
+        // Hard ceiling on one turn. Independent of the model's window: audio
+        // longer than the window is split by AudioChunker, not thrown away.
         const val MAX_SAMPLES = SAMPLE_RATE * 30
         const val NEG_INF = -1e9f
         const val CONFIDENCE = 0.85f

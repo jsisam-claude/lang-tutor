@@ -210,9 +210,10 @@ did not separate in testing — treat vowel marks as advisory for now.
 - **English speech recognition only.** The bundled model is an English-only
   export, so a Hebrew answer into the mic will come back as English-looking
   nonsense. Hebrew works for typing and for Tuki's voice, not for listening.
-- Utterances longer than ~10 seconds are truncated to the model's window; that
-  is the right trade for one-sentence answers, but a child telling a long story
-  will lose the tail.
+- A turn is capped at 30 seconds. Past the model's 10-second window the audio is
+  split at the quietest gap and transcribed piece by piece (`utterance split
+  into N windows` in logcat), so long answers survive — but each piece is
+  decoded independently, so a sentence spanning a cut can read oddly.
 - Names outside the voice's dictionary use letter-to-sound rules, and digits
   inside Hebrew text are not spoken yet.
 - Pronunciation thresholds were calibrated on synthesized speech (see the
