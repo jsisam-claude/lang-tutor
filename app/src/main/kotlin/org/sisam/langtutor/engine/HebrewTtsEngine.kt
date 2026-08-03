@@ -42,24 +42,29 @@ class HebrewTtsEngine(
     private val nikudSession: OrtSession by lazy { createSession(nikudModel, "nikud") }
     private val voiceSession: OrtSession by lazy { createSession(voiceModel, "voice") }
 
-    private fun createSession(model: File, label: String): OrtSession {
-        val started = System.nanoTime()
-        val opts = OrtSession.SessionOptions().apply {
-            setIntraOpNumThreads(THREADS)
-            // Same conservative level as the Kokoro engine (see its note).
-            setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
+    // The nikud model alone is ~308 MB, so the first Hebrew line waits on a
+    // real load — reported by name rather than left as silence.
+    private fun createSession(model: File, label: String): OrtSession =
+        EngineStatus.step(EngineStatus.Kind.HEBREW_LOAD, "$label (${model.name})") {
+            val started = System.nanoTime()
+            val opts = OrtSession.SessionOptions().apply {
+                setIntraOpNumThreads(THREADS)
+                // Same conservative level as the Kokoro engine (see its note).
+                setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
+            }
+            OrtEnvironment.getEnvironment().createSession(model.absolutePath, opts).also {
+                Log.i(TAG, "$label session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
+            }
         }
-        return OrtEnvironment.getEnvironment().createSession(model.absolutePath, opts).also {
-            Log.i(TAG, "$label session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
-        }
-    }
 
     override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> = flow {
         player.interrupted = false
         emit(TtsEvent.Started)
         for (chunk in SentenceChunker.split(text)) {
             if (player.interrupted) break
-            val audio = synthesize(chunk.text, speed)
+            val audio = EngineStatus.step(EngineStatus.Kind.HEBREW_RUN, "${chunk.text.length} chars") {
+                synthesize(chunk.text, speed)
+            }
             if (audio.isEmpty()) continue
             emit(TtsEvent.RangeSpoken(chunk.start, chunk.end))
             if (!player.interrupted) player.play(audio)

@@ -53,15 +53,19 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
     }
 
     private val session: OrtSession by lazy {
-        val started = System.nanoTime()
-        val opts = OrtSession.SessionOptions().apply {
-            setIntraOpNumThreads(THREADS)
-            // BASIC, not ALL: ORT's extended optimizer crashed on this graph in
-            // testing (desktop 1.28); basic fusions are enough for realtime.
-            setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
-        }
-        OrtEnvironment.getEnvironment().createSession(modelFile.absolutePath, opts).also {
-            Log.i(TAG, "kokoro session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
+        // step(), not begin()/end(): a session that fails to create must still
+        // clear the status, or the UI spins on a step that is already over.
+        EngineStatus.step(EngineStatus.Kind.TTS_LOAD, modelFile.name) {
+            val started = System.nanoTime()
+            val opts = OrtSession.SessionOptions().apply {
+                setIntraOpNumThreads(THREADS)
+                // BASIC, not ALL: ORT's extended optimizer crashed on this graph in
+                // testing (desktop 1.28); basic fusions are enough for realtime.
+                setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
+            }
+            OrtEnvironment.getEnvironment().createSession(modelFile.absolutePath, opts).also {
+                Log.i(TAG, "kokoro session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
+            }
         }
     }
 
@@ -75,7 +79,9 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
             val ids = phonemizer.phonemize(chunk.text)
             if (ids.isEmpty()) continue
             emit(TtsEvent.RangeSpoken(chunk.start, chunk.end))
-            val audio = synthesize(ids, speed)
+            val audio = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes") {
+                synthesize(ids, speed)
+            }
             if (audio.isNotEmpty() && !player.interrupted) player.play(audio)
         }
         player.release()

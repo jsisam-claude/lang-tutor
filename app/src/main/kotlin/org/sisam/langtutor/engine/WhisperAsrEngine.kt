@@ -173,13 +173,19 @@ class WhisperAsrEngine(
     }
 
     private fun transcribe(pcm: FloatArray): String {
-        val itp = interpreter ?: Interpreter(
-            modelFile,
-            Interpreter.Options().apply { setNumThreads(THREADS) },
-        ).also {
-            interpreter = it
-            graph = describe(it)
-            Log.i(TAG, "loaded ${modelFile.name}")
+        // First call pays the model load (hundreds of MB) inside the turn, so
+        // it is reported separately from the transcription around it.
+        val itp = interpreter ?: EngineStatus.step(
+            EngineStatus.Kind.ASR_LOAD,
+            modelFile.name,
+        ) {
+            Interpreter(
+                modelFile,
+                Interpreter.Options().apply { setNumThreads(THREADS) },
+            ).also {
+                interpreter = it
+                graph = describe(it)
+            }
         }
         val g = graph ?: describe(itp).also { graph = it }
 
@@ -198,32 +204,49 @@ class WhisperAsrEngine(
         val encOut = Array(1) { Array(g.encFrames) { FloatArray(g.encDim) } }
         val tokenizer = WhisperTokenizer.of(g.layout)
 
-        return pieces.joinToString(" ") { piece ->
-            var t0 = System.nanoTime()
-            val melIn = arrayOf(WhisperFrontend.logMel(piece, g.melFrames)) // [1,80,frames]
-            val melMs = (System.nanoTime() - t0) / 1_000_000
+        return pieces.mapIndexed { index, piece ->
+            EngineStatus.step(
+                EngineStatus.Kind.ASR_RUN,
+                if (pieces.size > 1) "window ${index + 1}/${pieces.size}" else "",
+            ) { transcribeWindow(itp, g, piece, mask, tokenBuf, logitsOut, encOut, tokenizer) }
+        }.joinToString(" ").trim()
+    }
 
-            t0 = System.nanoTime()
-            itp.runSignature(mapOf("args_0" to melIn), mapOf("output_0" to encOut), "encode")
-            val encMs = (System.nanoTime() - t0) / 1_000_000
+    @Suppress("LongParameterList") // one window's worth of reused graph buffers
+    private fun transcribeWindow(
+        itp: Interpreter,
+        g: Graph,
+        piece: FloatArray,
+        mask: Array<Array<Array<FloatArray>>>,
+        tokenBuf: Array<IntArray>,
+        logitsOut: Array<Array<FloatArray>>,
+        encOut: Array<Array<FloatArray>>,
+        tokenizer: WhisperTokenizer,
+    ): String {
+        var t0 = System.nanoTime()
+        val melIn = arrayOf(WhisperFrontend.logMel(piece, g.melFrames)) // [1,80,frames]
+        val melMs = (System.nanoTime() - t0) / 1_000_000
 
-            t0 = System.nanoTime()
-            var steps = 0
-            val ids = WhisperGreedyDecoder(maxTokens = g.maxTokens, layout = g.layout) { tokens, count ->
-                System.arraycopy(tokens, 0, tokenBuf[0], 0, g.maxTokens)
-                itp.runSignature(
-                    mapOf("args_0" to encOut, "args_1" to tokenBuf, "args_2" to mask),
-                    mapOf("output_0" to logitsOut),
-                    "decode",
-                )
-                steps++
-                logitsOut[0][count - 1]
-            }.transcribe()
-            val decMs = (System.nanoTime() - t0) / 1_000_000
+        t0 = System.nanoTime()
+        itp.runSignature(mapOf("args_0" to melIn), mapOf("output_0" to encOut), "encode")
+        val encMs = (System.nanoTime() - t0) / 1_000_000
 
-            Log.i(TAG, "mel=${melMs}ms encode=${encMs}ms decode=${decMs}ms/${steps}steps -> ${ids.size} tokens")
-            tokenizer.decode(ids).trim()
-        }.trim()
+        t0 = System.nanoTime()
+        var steps = 0
+        val ids = WhisperGreedyDecoder(maxTokens = g.maxTokens, layout = g.layout) { tokens, count ->
+            System.arraycopy(tokens, 0, tokenBuf[0], 0, g.maxTokens)
+            itp.runSignature(
+                mapOf("args_0" to encOut, "args_1" to tokenBuf, "args_2" to mask),
+                mapOf("output_0" to logitsOut),
+                "decode",
+            )
+            steps++
+            logitsOut[0][count - 1]
+        }.transcribe()
+        val decMs = (System.nanoTime() - t0) / 1_000_000
+
+        Log.i(TAG, "mel=${melMs}ms encode=${encMs}ms decode=${decMs}ms/${steps}steps -> ${ids.size} tokens")
+        return tokenizer.decode(ids).trim()
     }
 
     private fun stopRecorderQuietly() {

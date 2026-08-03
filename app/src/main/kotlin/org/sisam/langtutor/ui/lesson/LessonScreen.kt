@@ -19,6 +19,7 @@ import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.Activity
 import org.sisam.langtutor.content.CurriculumUnit
+import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.EnglishContent
 
 @Composable
@@ -37,6 +38,9 @@ fun LessonScreen(container: AppContainer, unitId: String) {
             text = unit?.title?.he ?: stringResource(R.string.lesson_loading),
             style = MaterialTheme.typography.headlineSmall,
         )
+        // Lessons wait on the same lazy engines the conversation does (mic,
+        // voice, pronunciation coach) — say which one is loading.
+        EngineStatusLine()
 
         unit?.activities?.filterIsInstance<Activity.Vocab>()?.forEach { vocab ->
             Card(modifier = Modifier.fillMaxWidth()) {

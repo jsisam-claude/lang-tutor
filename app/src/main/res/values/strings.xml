@@ -33,6 +33,21 @@
     <string name="model_mode_real">🧠 On-device Tuki (Gemma 4)</string>
     <string name="model_mode_demo">🎬 Demo Tuki (scripted — no model installed)</string>
 
+    <!-- Live status while an engine is busy; loads can take tens of seconds and
+         silence reads as a hang. Kept short and reassuring for a child. -->
+    <string name="step_llm_load">Waking Tuki up…</string>
+    <string name="step_llm_generate">Tuki is thinking…</string>
+    <string name="step_asr_load">Getting Tuki\'s ears ready…</string>
+    <string name="step_asr_run">Listening to what you said…</string>
+    <string name="step_tts_load">Finding Tuki\'s voice…</string>
+    <string name="step_tts_run">Tuki is getting ready to talk…</string>
+    <string name="step_hebrew_load">Getting Tuki\'s Hebrew ready…</string>
+    <string name="step_hebrew_run">Tuki is getting ready to talk…</string>
+    <string name="step_coach_load">Waking up the pronunciation coach…</string>
+    <string name="step_coach_run">Listening to each sound…</string>
+    <string name="step_vad_load">Setting up the microphone…</string>
+    <string name="seconds_suffix">s</string>
+
     <string name="speech_unavailable_banner">🎤 Voice isn\'t available on this device — no speech service installed (common on de-googled Android). Typing works; Tuki\'s spoken voice also needs a TTS engine. Bundled voice arrives in the next build.</string>
     <string name="thinking_first_hint">First reply can take a few minutes on-device — Tuki is warming up, please wait.</string>
     <string name="parent_gate_title">Parents only 🔒</string>

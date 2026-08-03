@@ -109,6 +109,35 @@ adb logcat -v time | grep -iE "litert|accelerator|xnnpack|langtutor|tflite" | te
 | First reply never arrives / app killed | Memory pressure (most likely 9a with E2B, 9 with E4B). Note it — this decides the RAM gates |
 | No speech recognized | `adb shell pm grant org.sisam.langtutor android.permission.RECORD_AUDIO`; device needs on-device recognition or the Google app |
 
+## Seeing what the app is doing (new)
+Every model here loads lazily and some are hundreds of megabytes, so the first
+mic press or first Hebrew line used to sit silent for tens of seconds. The
+screens now show the step in progress — "Getting Tuki's ears ready…", "Waking
+Tuki up…" — with a seconds counter once it passes 2 s, and debug builds print
+the technical detail under it (`ASR_LOAD · acft_whisper_small.en_10s.tflite`).
+
+The same steps go to logcat under tag **`TukiStep`**, entry and exit with
+elapsed milliseconds:
+
+```bash
+adb logcat -v time -s TukiStep:I TukiLlm:I TukiAsr:I TukiTts:I TukiTtsHe:I TukiVad:I TukiGop:I
+```
+```
+▶ LLM_LOAD gemma-4-E2B-it.litertlm on gpu
+✖ LLM_LOAD gemma-4-E2B-it.litertlm on gpu failed after 4210ms: …
+▶ LLM_LOAD gemma-4-E2B-it.litertlm on cpu
+✔ LLM_LOAD gemma-4-E2B-it.litertlm on cpu in 38104ms
+▶ ASR_LOAD acft_whisper_small.en_10s.tflite
+✔ ASR_LOAD acft_whisper_small.en_10s.tflite in 9820ms
+▶ ASR_RUN
+✔ ASR_RUN in 612ms
+```
+
+**This is the bench data.** One `TukiStep` capture from a real session answers
+most of the open questions at once: which backend won and what the failed
+attempt cost, first-load times per model, and per-turn ASR/TTS latency. If you
+send back one file from the device test, send this one.
+
 ## GPU generation (bundled WebGPU sampler)
 CI builds now pack Google's prebuilt WebGPU sampler libraries
 (`libLiteRtTopKWebGpuSampler.so` + shared Dawn, LiteRT-LM v0.14.0,

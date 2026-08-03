@@ -83,9 +83,17 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         for ((label, backend) in backends) {
             if (label == "gpu") runCatching { attemptMarker.createNewFile() }
             val started = System.nanoTime()
+            // Multi-GB mmap plus accelerator warm-up, and a failed backend is
+            // paid before the fallback: report each attempt by name so a long
+            // wait is legible as "trying GPU" rather than a hang.
+            EngineStatus.begin(
+                EngineStatus.Kind.LLM_LOAD,
+                "${File(modelPath).name} on $label",
+            )
             val candidate = try {
                 Engine(EngineConfig(modelPath = modelPath, backend = backend))
             } catch (t: Throwable) {
+                EngineStatus.end(t)
                 Log.w(TAG, "engine create failed on $backend", t)
                 runCatching { attemptMarker.delete() }
                 lastError = t
@@ -102,6 +110,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                 smokeTest(candidate)
                 engine = candidate
                 val ms = (System.nanoTime() - started) / 1_000_000
+                EngineStatus.end(null)
                 Log.i(TAG, "loaded $modelPath on backend=$backend in ${ms}ms (smoke ok)")
                 runCatching { attemptMarker.delete() }
                 runCatching {
@@ -118,6 +127,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                 // failed attempt's native buffers leak alongside the next backend.
                 runCatching { candidate.close() }
                 runCatching { attemptMarker.delete() }
+                EngineStatus.end(t)
                 Log.w(TAG, "initialize failed on $backend", t)
                 lastError = t
                 if (label == "gpu") gpuFailed = true
@@ -150,6 +160,11 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // before treating the bench numbers as authoritative.
         val charBudget = request.maxTokens * EST_CHARS_PER_TOKEN
         var firstDeltaMs = -1L
+        // Reported only until the first token lands: after that the streaming
+        // reply is its own progress indicator, and two spinners would compete.
+        // Prefill is the genuinely silent part.
+        EngineStatus.begin(EngineStatus.Kind.LLM_GENERATE, "prefill")
+        var waitingForFirstToken = true
         try {
             // DEVICE-VERIFY: we treat each streamed Message.text as a delta (the
             // doc's `collect { print(it) }` prints each chunk). If the runtime
@@ -166,6 +181,10 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                         if (firstDeltaMs < 0) {
                             firstDeltaMs = (System.nanoTime() - startNanos) / 1_000_000
                             Log.i(TAG, "first token after ${firstDeltaMs}ms (delta len=${delta.length})")
+                            if (waitingForFirstToken) {
+                                waitingForFirstToken = false
+                                EngineStatus.end(null)
+                            }
                         }
                         full.append(delta)
                         emit(LlmEvent.Token(delta))
@@ -175,6 +194,8 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
             Log.e(TAG, "generate failed after ${(System.nanoTime() - startNanos) / 1_000_000}ms", t)
             throw t
         } finally {
+            // A reply that produced nothing at all still has to close its step.
+            if (waitingForFirstToken) EngineStatus.end(null)
             conversation.close()
         }
         val seconds = (System.nanoTime() - startNanos) / 1_000_000_000.0

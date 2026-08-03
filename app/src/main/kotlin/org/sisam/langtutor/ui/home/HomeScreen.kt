@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.UnitSummary
+import org.sisam.langtutor.ui.common.EngineStatusLine
 
 @Composable
 fun HomeScreen(
@@ -52,6 +53,9 @@ fun HomeScreen(
             text = stringResource(R.string.home_xp, profile.xp),
             style = MaterialTheme.typography.bodyLarge,
         )
+        // The container warms the voice and the mic detector in the background
+        // right after launch; this is where that work becomes visible.
+        EngineStatusLine()
 
         units.forEach { unit ->
             Card(modifier = Modifier.fillMaxWidth()) {

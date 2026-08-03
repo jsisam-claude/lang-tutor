@@ -48,6 +48,7 @@ import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.tutor.Speaker
 import org.sisam.langtutor.tutor.TutorMode
 import org.sisam.langtutor.tutor.TutorTurnState
+import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.EnglishContent
 
 class ConversationViewModel(container: AppContainer, unitId: String) : ViewModel() {
@@ -137,6 +138,10 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                 style = MaterialTheme.typography.bodySmall,
             )
         }
+        // What the engines are doing right now, with a seconds counter once a
+        // step runs long. This is the difference between a lazy 300 MB load and
+        // an apparent freeze.
+        EngineStatusLine()
         // The first on-device reply includes one-time warm-up and can take
         // minutes on CPU; without this hint it reads as a hang.
         if (state is TutorTurnState.Thinking) {

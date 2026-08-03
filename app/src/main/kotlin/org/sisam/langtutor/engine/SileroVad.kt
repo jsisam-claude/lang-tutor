@@ -25,14 +25,16 @@ class SileroVad(context: Context) : AutoCloseable {
     private var state = FloatArray(STATE_SIZE)
 
     private val session: OrtSession by lazy {
-        val started = System.nanoTime()
-        val bytes = appContext.assets.open(ASSET).use { it.readBytes() }
-        val opts = OrtSession.SessionOptions().apply {
-            setIntraOpNumThreads(1) // tiny model; one thread avoids pool churn
-            setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
-        }
-        OrtEnvironment.getEnvironment().createSession(bytes, opts).also {
-            Log.i(TAG, "vad loaded (${bytes.size / 1024}KB) in ${(System.nanoTime() - started) / 1_000_000}ms")
+        EngineStatus.step(EngineStatus.Kind.VAD_LOAD, ASSET) {
+            val started = System.nanoTime()
+            val bytes = appContext.assets.open(ASSET).use { it.readBytes() }
+            val opts = OrtSession.SessionOptions().apply {
+                setIntraOpNumThreads(1) // tiny model; one thread avoids pool churn
+                setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
+            }
+            OrtEnvironment.getEnvironment().createSession(bytes, opts).also {
+                Log.i(TAG, "vad loaded (${bytes.size / 1024}KB) in ${(System.nanoTime() - started) / 1_000_000}ms")
+            }
         }
     }
 

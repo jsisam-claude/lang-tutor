@@ -38,13 +38,15 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
     private val phonemizer by lazy { KokoroPhonemizer.load() }
 
     private val session: OrtSession by lazy {
-        val started = System.nanoTime()
-        val opts = OrtSession.SessionOptions().apply {
-            setIntraOpNumThreads(THREADS)
-            setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
-        }
-        OrtEnvironment.getEnvironment().createSession(modelFile.absolutePath, opts).also {
-            Log.i(TAG, "gop session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
+        EngineStatus.step(EngineStatus.Kind.COACH_LOAD, modelFile.name) {
+            val started = System.nanoTime()
+            val opts = OrtSession.SessionOptions().apply {
+                setIntraOpNumThreads(THREADS)
+                setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
+            }
+            OrtEnvironment.getEnvironment().createSession(modelFile.absolutePath, opts).also {
+                Log.i(TAG, "gop session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
+            }
         }
     }
 
@@ -63,9 +65,11 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
         if (expected.isEmpty() || audio.samples.size < MIN_SAMPLES) return@withContext EMPTY
 
         val started = System.nanoTime()
-        val logProbs = runCatching { posteriors(audio) }
-            .onFailure { Log.e(TAG, "scoring failed", it) }
-            .getOrNull() ?: return@withContext EMPTY
+        val logProbs = EngineStatus.step(EngineStatus.Kind.COACH_RUN, "${audio.durationMs}ms audio") {
+            runCatching { posteriors(audio) }
+                .onFailure { Log.e(TAG, "scoring failed", it) }
+                .getOrNull()
+        } ?: return@withContext EMPTY
 
         val scored = GopScorer.score(
             logProbs = logProbs,
