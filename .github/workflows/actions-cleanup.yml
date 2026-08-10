@@ -36,7 +36,10 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const keep = Math.max(parseInt('${{ inputs.keep }}', 10) || 1, 0);
+            // NaN-check, not `|| 1`: zero is falsy, and keep=0 ("delete them
+            // all") must not silently become keep=1.
+            const keepRaw = parseInt('${{ inputs.keep }}', 10);
+            const keep = Math.max(Number.isNaN(keepRaw) ? 1 : keepRaw, 0);
             const cacheDays = parseInt('${{ inputs.prune_caches_days }}', 10) || 0;
             const dryRun = ${{ inputs.dry_run }};
             const mb = b => (b / 1e6).toFixed(1) + ' MB';
