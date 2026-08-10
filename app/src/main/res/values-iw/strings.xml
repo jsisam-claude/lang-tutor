@@ -33,6 +33,7 @@
     <string name="state_failed">אופס, ננסה שוב</string>
 
     <string name="model_mode_real">🧠 תוקי במכשיר (Gemma 4)</string>
+    <string name="model_mode_real_tier">🧠 תוקי במכשיר (Gemma 4 · %1$s)</string>
     <string name="model_mode_demo">🎬 תוקי הדגמה (מתוסרט — אין מודל מותקן)</string>
 
     <string name="step_llm_load">מעירים את תוקי…</string>

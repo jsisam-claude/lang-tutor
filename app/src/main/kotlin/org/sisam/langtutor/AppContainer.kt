@@ -1,7 +1,10 @@
 package org.sisam.langtutor
 
 import android.app.ActivityManager
+import android.content.ComponentCallbacks2
 import android.content.Context
+import android.content.res.Configuration
+import android.util.Log
 import java.io.File
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +23,7 @@ import org.sisam.langtutor.engine.Wav2Vec2GopEngine
 import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
+import org.sisam.langtutor.llm.LlmTierPolicy
 import org.sisam.langtutor.packs.HttpPackFetcher
 import org.sisam.langtutor.packs.PackRepository
 import org.sisam.langtutor.packs.RealPackRepository
@@ -64,6 +68,45 @@ class AppContainer private constructor(context: Context) {
         val info = ActivityManager.MemoryInfo()
         am.getMemoryInfo(info)
         ramTierGb(info.totalMem)
+    }
+
+    init {
+        // React to memory pressure by dropping idle engine sessions — the
+        // difference between "the coach reloads in a couple of seconds" and
+        // "Android killed the app mid-conversation". Matters most on the 12 GB
+        // Pixel 9 running the E4B brain, where the speech stack's ~0.7-1 GB of
+        // anonymous memory is exactly the margin the LLM needs.
+        appContext.registerComponentCallbacks(object : ComponentCallbacks2 {
+            override fun onTrimMemory(level: Int) = trimEngines(level)
+            override fun onConfigurationChanged(newConfig: Configuration) = Unit
+            override fun onLowMemory() = trimEngines(ComponentCallbacks2.TRIM_MEMORY_COMPLETE)
+        })
+    }
+
+    /**
+     * Free what can be cheaply rebuilt. Light pressure drops the per-feature
+     * engines (coach ~320 MB, Hebrew ~450 MB — a 1-3 s reload on next use,
+     * reported by the status line). Real pressure also drops the ASR
+     * interpreter and the English voice. The LLM is deliberately NOT dropped
+     * here: its reload is ~40 s, its weights are mmapped (the kernel can
+     * already evict them page by page), and killing the conversation to
+     * maybe-save the process is a worse trade than letting Android decide.
+     * (The TRIM_MEMORY_RUNNING_* constants are deprecated in API 34 but still
+     * delivered; this stays correct on every OS we target.)
+     */
+    private fun trimEngines(level: Int) {
+        if (level < ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW) return
+        val deep = level == ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL ||
+            level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE
+        appScope.launch {
+            runCatching { gopEngine?.release() }
+            runCatching { hebrewEngine?.release() }
+            if (deep) {
+                runCatching { whisperEngine?.release() }
+                runCatching { kokoroEngine?.release() }
+            }
+            Log.i(MEM_TAG, "trim level=$level -> released coach+hebrew" + if (deep) "+asr+voice" else "")
+        }
     }
 
     val content: ContentRepository = ResourceContentRepository()
@@ -320,13 +363,46 @@ class AppContainer private constructor(context: Context) {
     }
 
     /**
-     * Real engine when the model is on device, scripted fake otherwise — the
-     * single swap point. Until the file exists the fake keeps the full tutoring
-     * loop working. E4B is the quality-tier model that passes the Hebrew gate
-     * (eval/hebrew/results/VERDICT.md); E2B is the base-install file.
+     * Which tier the CURRENT session actually loaded ("E4B"/"E2B"), for the
+     * badge — so a tester sees at a glance when the memory policy fell back.
      */
-    private fun createLlmEngine(): LlmEngine =
-        modelFile?.let { LiteRtLmEngine(it.absolutePath) } ?: FakeLlmEngine()
+    @Volatile
+    var modelTierLabel: String? = null
+        private set
+
+    /**
+     * Real engine when a model is on device, scripted fake otherwise — the
+     * single swap point. When BOTH tiers are installed (a Pixel 9 with the
+     * E4B pack on top of the E2B base), [LlmTierPolicy] picks per session from
+     * how much memory the device has free RIGHT NOW: E4B on a fresh device,
+     * E2B after a day of apps — because on a 12 GB device the alternative to
+     * falling back is the session dying mid-reply. The pick and its reason go
+     * to logcat (`model_pick:`), and the badge shows the tier.
+     */
+    private fun createLlmEngine(): LlmEngine {
+        val installed = LinkedHashMap<String, File>() // preference order kept
+        val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
+        for (name in MODEL_CANDIDATES) {
+            for (base in bases) {
+                val f = File(base, name)
+                if (f.exists() && f.length() > 0L) {
+                    installed.putIfAbsent(name, f)
+                    break
+                }
+            }
+        }
+        if (installed.isEmpty()) {
+            modelTierLabel = null
+            return FakeLlmEngine()
+        }
+        val am = appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val info = ActivityManager.MemoryInfo()
+        am.getMemoryInfo(info)
+        val choice = checkNotNull(LlmTierPolicy.choose(installed.keys.toList(), info.availMem / 1e9f))
+        modelTierLabel = choice.tierLabel
+        Log.i("TukiLlm", "model_pick: ${choice.reason}${if (choice.tight) " [TIGHT]" else ""}")
+        return LiteRtLmEngine(installed.getValue(choice.path).absolutePath)
+    }
 
     companion object {
         // Preference order: quality-tier E4B first, then base-tier E2B.
@@ -358,6 +434,8 @@ class AppContainer private constructor(context: Context) {
 
         // Pronunciation coach (wav2vec2 IPA phoneme CTC, int8).
         private const val GOP_MODEL_PATH = "models/wav2vec2-phoneme-int8.onnx"
+
+        private const val MEM_TAG = "TukiMem"
 
         // Process-wide singleton: pack-download state and appScope must survive
         // Activity recreation (rotation), which previously rebuilt everything.

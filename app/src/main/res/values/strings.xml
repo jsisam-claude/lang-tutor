@@ -31,6 +31,7 @@
     <string name="state_failed">Oops, let\'s try again</string>
 
     <string name="model_mode_real">🧠 On-device Tuki (Gemma 4)</string>
+    <string name="model_mode_real_tier">🧠 On-device Tuki (Gemma 4 · %1$s)</string>
     <string name="model_mode_demo">🎬 Demo Tuki (scripted — no model installed)</string>
 
     <!-- Live status while an engine is busy; loads can take tens of seconds and

@@ -118,9 +118,15 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
         // Honest indicator: is the child talking to the real on-device model or
         // the scripted demo engine? (real only when a .litertlm file is present.)
         Text(
-            text = stringResource(
-                if (container.usingRealLlm) R.string.model_mode_real else R.string.model_mode_demo,
-            ),
+            text = when {
+                !container.usingRealLlm -> stringResource(R.string.model_mode_demo)
+                // Which tier this session's memory policy actually loaded —
+                // on a busy 12 GB device this is how a tester spots the
+                // E4B→E2B fallback without pulling logcat.
+                container.modelTierLabel != null ->
+                    stringResource(R.string.model_mode_real_tier, container.modelTierLabel!!)
+                else -> stringResource(R.string.model_mode_real)
+            },
             style = MaterialTheme.typography.labelSmall,
         )
         // De-googled devices (e.g. GrapheneOS) ship NO speech recognizer service;

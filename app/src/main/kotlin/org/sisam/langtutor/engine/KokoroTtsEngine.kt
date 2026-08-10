@@ -52,7 +52,24 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         }
     }
 
-    private val session: OrtSession by lazy {
+    // Nullable + accessor rather than `by lazy`, so trimMemory() can close the
+    // session and the next line of speech quietly reloads it.
+    @Volatile private var session: OrtSession? = null
+
+    private fun session(): OrtSession = session ?: synchronized(this) {
+        session ?: createSession().also { session = it }
+    }
+
+    /** Frees the ORT session under memory pressure; next use reloads lazily. */
+    fun release() = synchronized(this) {
+        session?.let {
+            runCatching { it.close() }
+            session = null
+            Log.i(TAG, "session released (memory pressure)")
+        }
+    }
+
+    private fun createSession(): OrtSession =
         // step(), not begin()/end(): a session that fails to create must still
         // clear the status, or the UI spins on a step that is already over.
         EngineStatus.step(EngineStatus.Kind.TTS_LOAD, modelFile.name) {
@@ -67,7 +84,6 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
                 Log.i(TAG, "kokoro session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
             }
         }
-    }
 
     override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> = flow {
         player.interrupted = false
@@ -95,11 +111,14 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
 
     /** Force the lazy pieces now (background call) so first speak is instant. */
     fun warmUp() {
-        session
+        session()
         voice
         phonemizer
     }
 
+    // @Synchronized so release() waits for the in-flight chunk instead of
+    // closing the session underneath it.
+    @Synchronized
     private fun synthesize(ids: IntArray, speed: Float): FloatArray {
         val started = System.nanoTime()
         val tokens = LongArray(ids.size + 2) // BOS=0 … EOS=0 (StyleTTS2 convention)
@@ -115,7 +134,7 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
             "speed" to OnnxTensor.createTensor(env, FloatBuffer.wrap(floatArrayOf(speed)), longArrayOf(1)),
         )
         try {
-            session.run(inputs).use { results ->
+            session().run(inputs).use { results ->
                 val buf = (results[0] as OnnxTensor).floatBuffer
                 val audio = FloatArray(buf.remaining())
                 buf.get(audio)

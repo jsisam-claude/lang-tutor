@@ -172,6 +172,22 @@ class WhisperAsrEngine(
         }
     }
 
+    /**
+     * Frees the interpreter (and its mapped weights) under memory pressure; the
+     * next utterance reloads it, visibly, via the ASR_LOAD step.
+     */
+    @Synchronized
+    fun release() {
+        interpreter?.let {
+            runCatching { it.close() }
+            interpreter = null
+            graph = null
+            Log.i(TAG, "interpreter released (memory pressure)")
+        }
+    }
+
+    // @Synchronized so release() waits for an in-flight transcription.
+    @Synchronized
     private fun transcribe(pcm: FloatArray): String {
         // First call pays the model load (hundreds of MB) inside the turn, so
         // it is reported separately from the transcription around it.

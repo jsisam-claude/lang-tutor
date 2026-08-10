@@ -39,8 +39,29 @@ class HebrewTtsEngine(
     private val tokenizer by lazy { DictaTokenizer.load() }
     private val player = PcmPlayer(SAMPLE_RATE)
 
-    private val nikudSession: OrtSession by lazy { createSession(nikudModel, "nikud") }
-    private val voiceSession: OrtSession by lazy { createSession(voiceModel, "voice") }
+    // Nullable + accessors rather than `by lazy`, so trimMemory() can free the
+    // ~0.45 GB Hebrew stack and the next Hebrew line quietly reloads it.
+    @Volatile private var nikudSession: OrtSession? = null
+    @Volatile private var voiceSession: OrtSession? = null
+
+    private fun nikudSession(): OrtSession = nikudSession ?: synchronized(this) {
+        nikudSession ?: createSession(nikudModel, "nikud").also { nikudSession = it }
+    }
+
+    private fun voiceSession(): OrtSession = voiceSession ?: synchronized(this) {
+        voiceSession ?: createSession(voiceModel, "voice").also { voiceSession = it }
+    }
+
+    /** Frees both ORT sessions under memory pressure; next use reloads lazily. */
+    fun release() = synchronized(this) {
+        if (nikudSession != null || voiceSession != null) {
+            runCatching { nikudSession?.close() }
+            runCatching { voiceSession?.close() }
+            nikudSession = null
+            voiceSession = null
+            Log.i(TAG, "sessions released (memory pressure)")
+        }
+    }
 
     // The nikud model alone is ~308 MB, so the first Hebrew line waits on a
     // real load — reported by name rather than left as silence.
@@ -80,11 +101,13 @@ class HebrewTtsEngine(
 
     /** Force the lazy pieces now (background call) so first speak is instant. */
     fun warmUp() {
-        nikudSession
-        voiceSession
+        nikudSession()
+        voiceSession()
         tokenizer
     }
 
+    // @Synchronized so release() waits for the in-flight sentence.
+    @Synchronized
     private fun synthesize(text: String, speed: Float): FloatArray {
         val started = System.nanoTime()
         // The nikud model's context is 2046 tokens; sentence chunks are far
@@ -108,7 +131,7 @@ class HebrewTtsEngine(
             ),
         )
         try {
-            voiceSession.run(inputs).use { results ->
+            voiceSession().run(inputs).use { results ->
                 val buf = (results[0] as OnnxTensor).floatBuffer
                 val audio = FloatArray(buf.remaining())
                 buf.get(audio)
@@ -139,7 +162,7 @@ class HebrewTtsEngine(
             "token_type_ids" to OnnxTensor.createTensor(env, LongBuffer.wrap(zeros), shape),
         )
         try {
-            nikudSession.run(inputs).use { results ->
+            nikudSession().run(inputs).use { results ->
                 // Outputs: nikud_logits [1,T,29], shin_logits [1,T,2], additional_logits [1,T,3]
                 @Suppress("UNCHECKED_CAST")
                 val nikud = (results.get("nikud_logits").get() as OnnxTensor).value as Array<Array<FloatArray>>

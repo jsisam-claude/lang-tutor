@@ -141,6 +141,34 @@ most of the open questions at once: which backend won and what the failed
 attempt cost, first-load times per model, and per-turn ASR/TTS latency. If you
 send back one file from the device test, send this one.
 
+## Pixel 9 (12 GB) — what this tier tests (new)
+The Pixel 9 gets the E4B quality brain, and it is the device with the least
+room for it: E4B's working set plus the speech stack fits a fresh boot but not
+always a phone that has been running apps all day. Two behaviors are new and
+worth exercising **on the 9 specifically**:
+
+1. **Memory-aware model pick.** With BOTH models installed (install the E2B
+   pack alongside E4B), each session picks by how much memory is free right
+   now. The badge shows the result — `Gemma 4 · E4B` or `· E2B` — and logcat
+   tag `TukiLlm` prints the reason:
+   `model_pick: picked E2B: 3.6 GB available is under the 4.5 GB bar for E4B`.
+   To force the fallback: open a heavy game + a dozen Chrome tabs, then start a
+   conversation. To force E4B: reboot, open Tuki first. The 4.5 / 3.0 GB bars
+   are container-era estimates — **if the 9 runs E4B happily below the bar, or
+   dies above it, send that logcat line; it recalibrates the bars.**
+2. **Engines release under pressure.** Logcat tag `TukiMem` prints
+   `trim level=N -> released ...` when Android signals pressure; the released
+   engine reloads visibly (status line + `TukiStep`) on next use. The failure
+   this prevents: app killed mid-conversation after using the pronunciation
+   coach and Hebrew voice in the same session. If the app still gets killed,
+   capture `adb shell dumpsys meminfo org.sisam.langtutor` right before — that
+   plus `TukiMem` decides whether the LLM itself must join the trim list.
+
+Also Pixel-9-relevant: ASR threads are set to 4 (half the cores) — on the
+Tensor G4's 4×A520+3×A720+1×X4 layout, watch `TukiAsr` for transcript wobble
+between identical attempts (docs/asr-model-eval.md explains why fewer can be
+more accurate).
+
 ## GPU generation (bundled WebGPU sampler)
 CI builds now pack Google's prebuilt WebGPU sampler libraries
 (`libLiteRtTopKWebGpuSampler.so` + shared Dawn, LiteRT-LM v0.14.0,

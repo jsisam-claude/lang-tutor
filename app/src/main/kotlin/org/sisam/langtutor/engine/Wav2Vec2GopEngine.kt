@@ -37,7 +37,24 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
 
     private val phonemizer by lazy { KokoroPhonemizer.load() }
 
-    private val session: OrtSession by lazy {
+    // Nullable + accessor rather than `by lazy`, so trimMemory() can free the
+    // ~320 MB coach and the next scored attempt quietly reloads it.
+    @Volatile private var session: OrtSession? = null
+
+    private fun session(): OrtSession = session ?: synchronized(this) {
+        session ?: createSession().also { session = it }
+    }
+
+    /** Frees the ORT session under memory pressure; next use reloads lazily. */
+    fun release() = synchronized(this) {
+        session?.let {
+            runCatching { it.close() }
+            session = null
+            Log.i(TAG, "session released (memory pressure)")
+        }
+    }
+
+    private fun createSession(): OrtSession =
         EngineStatus.step(EngineStatus.Kind.COACH_LOAD, modelFile.name) {
             val started = System.nanoTime()
             val opts = OrtSession.SessionOptions().apply {
@@ -48,7 +65,6 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
                 Log.i(TAG, "gop session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
             }
         }
-    }
 
     override suspend fun score(
         audio: AudioClip,
@@ -90,6 +106,8 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
     }
 
     /** Log-softmax posteriors [frames][vocab] for the recording. */
+    // @Synchronized so release() waits for the in-flight scoring pass.
+    @Synchronized
     private fun posteriors(audio: AudioClip): Array<FloatArray> {
         val n = audio.samples.size
         // Wav2Vec2FeatureExtractor: raw 16 kHz float, zero-mean unit-variance.
@@ -108,7 +126,7 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
         val env = OrtEnvironment.getEnvironment()
         val input = OnnxTensor.createTensor(env, FloatBuffer.wrap(x), longArrayOf(1, n.toLong()))
         try {
-            session.run(mapOf("input_values" to input)).use { results ->
+            session().run(mapOf("input_values" to input)).use { results ->
                 @Suppress("UNCHECKED_CAST")
                 val logits = (results[0] as OnnxTensor).value as Array<Array<FloatArray>>
                 return GopScorer.logSoftmax(logits[0])
@@ -126,7 +144,7 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
     }
 
     fun warmUp() {
-        session
+        session()
         phonemizer
     }
 
