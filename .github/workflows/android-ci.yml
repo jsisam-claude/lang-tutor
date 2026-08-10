@@ -10,6 +10,11 @@ concurrency:
   group: android-ci-${{ github.ref }}
   cancel-in-progress: true
 
+# Least privilege by default; the android job re-widens to actions:write so
+# its prune step can delete superseded artifacts.
+permissions:
+  contents: read
+
 jobs:
   # Cheap lane: pure-JVM modules + unit tests. Mirrors the sandboxed
   # `-Plangtutor.jvmOnly=true` build documented in the README.
@@ -29,6 +34,9 @@ jobs:
   android:
     runs-on: ubuntu-latest
     needs: jvm
+    permissions:
+      contents: read
+      actions: write # the artifact-prune step below
     # Normal green time is ~6-8 min; a hang must fail fast, not burn 6 h of
     # runner quota (observed once after adding a new AAR dependency).
     timeout-minutes: 30
@@ -49,18 +57,38 @@ jobs:
       # Hands-free listening model (639KB, SHA-256-pinned) → APK assets.
       - run: scripts/fetch-vad-asset.sh
       - run: ./gradlew test :app:assembleDebug :app:bundleDebug --stacktrace
-      # Publish the installable debug APK (+ AAB) so a green run yields a
-      # sideloadable build for on-device testing (docs/running-on-device.md).
+      # Publish the installable debug APK so a green run yields a sideloadable
+      # build for on-device testing (docs/running-on-device.md).
       # NOTE: the APK is the app only — the model is not bundled; install it in
       # app (Parent Zone → Packs) or via adb push.
+      # The AAB is deliberately NOT uploaded: bundleDebug above still exercises
+      # the asset-pack module, but nothing consumes the .aab (push.sh and
+      # TESTING.md install the APK) and it doubled the artifact — measured
+      # 187 MB with both against a 500 MB private-repo storage quota.
       - uses: actions/upload-artifact@v4
         if: success()
         with:
           name: app-debug
-          path: |
-            app/build/outputs/apk/debug/app-debug.apk
-            app/build/outputs/bundle/debug/app-debug.aab
+          path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-          # Short retention: each run's ~58MB APK+AAB adds up fast against the
-          # free-tier storage quota; testers always grab the newest run anyway.
+          # The APK is already zip-compressed; recompressing buys ~nothing and
+          # costs upload minutes.
+          compression-level: 0
+          # Backstop only — the prune step below keeps peak storage at about
+          # one artifact; retention covers a quiet week with no pushes.
           retention-days: 5
+      # A green build supersedes every older APK: delete them instead of
+      # letting up to 5 days of ~100 MB artifacts stack up against the quota.
+      - name: Prune superseded artifacts
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const artifacts = await github.paginate(
+              github.rest.actions.listArtifactsForRepo, { owner, repo, per_page: 100 });
+            for (const a of artifacts) {
+              if (a.name !== 'app-debug' || a.expired || a.workflow_run?.id === context.runId) continue;
+              core.info(`deleting superseded ${a.name} #${a.id} from run ${a.workflow_run?.id} (${(a.size_in_bytes / 1e6).toFixed(0)} MB)`);
+              await github.rest.actions.deleteArtifact({ owner, repo, artifact_id: a.id });
+            }

@@ -29,10 +29,13 @@ Google services involved. Manual steps below if you prefer doing it by hand.
 Latest green build on this branch (sign in to GitHub to download artifacts):
 
 - **Runs:** <https://github.com/jsisam-claude/lang-tutor/actions?query=branch%3Aclaude%2Fon-device-language-tutor-m6lj1z>
-- Open the **top green run** → scroll to **Artifacts** → download **app-debug** (~58 MB zip).
+- Open the **top green run** → scroll to **Artifacts** → download **app-debug** (~100 MB zip).
+- Artifacts expire after 5 days and each green build deletes its predecessors,
+  so only the newest green run has one. If the branch has been quiet and the
+  artifact is gone, re-run the latest workflow run (or push) to mint a fresh APK.
 
 ```bash
-unzip app-debug.zip           # -> app-debug.apk (+ app-debug.aab)
+unzip app-debug.zip           # -> app-debug.apk
 adb install -r app-debug.apk  # -r upgrades in place
 # if behavior looks stale, clean install:
 #   adb uninstall org.sisam.langtutor && adb install app-debug.apk

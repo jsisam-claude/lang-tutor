@@ -1,0 +1,79 @@
+name: actions-cleanup
+
+# On-demand tidy-up of what Actions stores for this repo, in two pools:
+#   - build artifacts — these bill against the private-repo storage quota
+#     (500 MB on the free tier); android-ci already self-prunes after every
+#     green upload, so this mostly exists to CHECK the numbers on demand and
+#     to clean up without waiting for the next push;
+#   - gradle caches — free, separate 10 GB LRU pool; pruned only for order.
+#
+# Prints a full inventory either way. Run it from the Actions tab
+# ("actions-cleanup" → Run workflow) or let a session dispatch it; dry_run
+# reports without deleting anything.
+on:
+  workflow_dispatch:
+    inputs:
+      keep:
+        description: Newest artifacts per name to keep
+        default: '1'
+      prune_caches_days:
+        description: Delete caches not restored in this many days (0 keeps all)
+        default: '7'
+      dry_run:
+        description: Report only, delete nothing
+        type: boolean
+        default: false
+
+permissions:
+  actions: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const keep = Math.max(parseInt('${{ inputs.keep }}', 10) || 1, 0);
+            const cacheDays = parseInt('${{ inputs.prune_caches_days }}', 10) || 0;
+            const dryRun = ${{ inputs.dry_run }};
+            const mb = b => (b / 1e6).toFixed(1) + ' MB';
+
+            // ---- artifacts: the pool that costs storage quota ----
+            const artifacts = await github.paginate(
+              github.rest.actions.listArtifactsForRepo, { owner, repo, per_page: 100 });
+            const live = artifacts
+              .filter(a => !a.expired)
+              .sort((x, y) => y.created_at.localeCompare(x.created_at));
+            core.info(`artifacts: ${artifacts.length} listed, ${live.length} live, ` +
+              `${mb(live.reduce((s, a) => s + a.size_in_bytes, 0))} against the storage quota`);
+            for (const a of live) {
+              core.info(`  ${a.name} #${a.id}  ${mb(a.size_in_bytes)}  created ${a.created_at}  expires ${a.expires_at}`);
+            }
+            const byName = {};
+            for (const a of live) (byName[a.name] ??= []).push(a);
+            let freed = 0;
+            for (const [name, list] of Object.entries(byName)) {
+              for (const a of list.slice(keep)) {
+                core.info(`${dryRun ? 'would delete' : 'deleting'} ${name} #${a.id} (${mb(a.size_in_bytes)})`);
+                freed += a.size_in_bytes;
+                if (!dryRun) await github.rest.actions.deleteArtifact({ owner, repo, artifact_id: a.id });
+              }
+            }
+            core.info(`artifact bytes ${dryRun ? 'reclaimable' : 'freed'}: ${mb(freed)}`);
+
+            // ---- caches: free and LRU-capped; stale entries just add noise ----
+            const caches = await github.paginate(
+              github.rest.actions.getActionsCacheList, { owner, repo, per_page: 100 });
+            core.info(`caches: ${caches.length} entries, ` +
+              `${mb(caches.reduce((s, c) => s + c.size_in_bytes, 0))} of the 10 GB pool`);
+            const cutoff = Date.now() - cacheDays * 86_400_000;
+            for (const c of caches) {
+              const stale = cacheDays > 0 && new Date(c.last_accessed_at).getTime() < cutoff;
+              core.info(`  ${stale ? 'STALE ' : ''}${mb(c.size_in_bytes)}  last used ${c.last_accessed_at}  ${c.key.slice(0, 90)}`);
+              if (stale && !dryRun) {
+                await github.rest.actions.deleteActionsCacheById({ owner, repo, cache_id: c.id });
+              }
+            }
