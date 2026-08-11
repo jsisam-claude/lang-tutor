@@ -108,10 +108,13 @@ place() { # place <cached> <destdir>
   ln -f "$1" "$2/$(basename "$1")" 2>/dev/null || cp -f "$1" "$2/$(basename "$1")"
 }
 
-model_for() { # brain the CURRENT app loads per device
+models_for() { # brains the CURRENT app loads per device (space-separated)
   case "$1" in
     pixel-9a) echo "gemma-4-E2B-it.litertlm" ;;
-    pixel-9|pixel-10-pro-xl) echo "gemma-4-E4B-it.litertlm" ;;
+    # The 12 GB Pixel 9 gets BOTH: the app picks E4B or E2B per session from
+    # free memory (TESTING.md "Pixel 9"), so the fallback must be installed.
+    pixel-9) echo "gemma-4-E4B-it.litertlm gemma-4-E2B-it.litertlm" ;;
+    pixel-10-pro-xl) echo "gemma-4-E4B-it.litertlm" ;;
   esac
 }
 
@@ -121,8 +124,10 @@ whisper_for() { # the recommended ASR — same short-window model on every devic
   esac
 }
 
-write_push_sh() { # write_push_sh <devdir> <model>
-  cat > "$1/push.sh" <<PUSH
+write_push_sh() { # write_push_sh <devdir> <models...>
+  local devdir="$1"; shift
+  local models="$*"
+  cat > "$devdir/push.sh" <<PUSH
 #!/usr/bin/env bash
 # Push this device's dependencies to the phone (and install the APK if present).
 #
@@ -137,12 +142,13 @@ adb get-state >/dev/null # fails fast if no device
 if ls app-debug.apk >/dev/null 2>&1; then
   echo ">> installing APK"; adb install -r app-debug.apk
 fi
-echo ">> pushing model ($2) via /data/local/tmp (staging)"
-adb push "$2" /data/local/tmp/"$2"
-echo ">> moving into the app's internal files dir (run-as, debug builds only)"
 adb shell run-as "\$PKG" mkdir -p files/models
-adb shell "run-as \$PKG cp /data/local/tmp/'$2' files/models/'$2'"
-adb shell rm -f /data/local/tmp/"$2"
+for M in $models; do
+  echo ">> pushing brain (\$M) via /data/local/tmp (staging)"
+  adb push "\$M" /data/local/tmp/"\$M"
+  adb shell "run-as \$PKG cp /data/local/tmp/'\$M' files/models/'\$M'"
+  adb shell rm -f /data/local/tmp/"\$M"
+done
 adb shell run-as "\$PKG" ls -l files/models
 for W in speech/whisper_*.tflite speech/acft_whisper_*.tflite speech/model_q8f16.onnx speech/model.onnx speech/phonikud-1.0.int8.onnx speech/wav2vec2-phoneme-int8.onnx; do
   [ -f "\$W" ] || continue
@@ -172,9 +178,11 @@ fetch_apk() { # latest green CI artifact via gh (optional)
 
 for dev in "${DEVICES[@]}"; do
   devdir="$OUT/$dev"
-  model=$(model_for "$dev")
+  models=$(models_for "$dev")
   echo "== $dev -> $devdir"
-  place "$(fetch "$model")" "$devdir"
+  for m in $models; do
+    place "$(fetch "$m")" "$devdir"
+  done
   if [ "$WITH_SPEECH" = 1 ]; then
     for f in "$(whisper_for "$dev")" model_q8f16.onnx model.onnx phonikud-1.0.int8.onnx wav2vec2-phoneme-int8.onnx; do
       place "$(fetch "$f")" "$devdir/speech"
@@ -190,7 +198,8 @@ All are read by the current APK as soon as they are in place.
 NOTE
   fi
   if [ -f "$CACHE/apk/app-debug.apk" ]; then place "$CACHE/apk/app-debug.apk" "$devdir"; fi
-  write_push_sh "$devdir" "$model"
+  # shellcheck disable=SC2086 # word-splitting the model list is intended
+  write_push_sh "$devdir" $models
 done
 
 echo

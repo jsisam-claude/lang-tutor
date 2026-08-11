@@ -17,8 +17,9 @@ scripts/download-sideload.sh --apk      # also grab the latest CI APK (needs `gh
 cd sideload/pixel-9a && ./push.sh       # installs APK (if fetched) + pushes the model
 ```
 
-Each dir contains the device's brain (9a → E2B 2.6 GB; 9 / 10 Pro XL → E4B
-3.7 GB) plus `speech/` — everything Tuki needs to hear and speak: the Whisper
+Each dir contains the device's brain(s) — 9a → E2B 2.6 GB; **9 → E4B *and*
+E2B** (the app picks per session by free memory, see the Pixel 9 section);
+10 Pro XL → E4B — plus `speech/` — everything Tuki needs to hear and speak: the Whisper
 ASR (286 MB), the Kokoro English voice (86 MB), the Hebrew voice + nikud model
 (371 MB) and the pronunciation coach (318 MB). All of them are WIRED: `push.sh`
 installs them into `files/models` and the current APK reads them, with no
@@ -163,6 +164,16 @@ worth exercising **on the 9 specifically**:
    coach and Hebrew voice in the same session. If the app still gets killed,
    capture `adb shell dumpsys meminfo org.sisam.langtutor` right before — that
    plus `TukiMem` decides whether the LLM itself must join the trim list.
+
+3. **Per-turn prefill reuse.** Turn 1 logs `convo rebuild: prefilling N
+   messages`; every later turn in the same lesson should log
+   `convo reuse: prefilling 1 message instead of N` — that reuse is what keeps
+   Tuki's thinking time flat as the conversation grows instead of climbing
+   every turn. If rebuilds appear mid-session, send the `TukiLlm` lines around
+   them. (This change also fixes a real bug: the lesson guidance the policy
+   writes — "the child is practicing X, praise and recast" — was silently
+   dropped before it ever reached the model. Replies should now feel more
+   lesson-aware; that difference is worth noting too.)
 
 Also Pixel-9-relevant: ASR threads are set to 4 (half the cores) — on the
 Tensor G4's 4×A520+3×A720+1×X4 layout, watch `TukiAsr` for transcript wobble

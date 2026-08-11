@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.withContext
 import org.sisam.langtutor.BuildConfig
 import org.sisam.langtutor.llm.ChatMessage
+import org.sisam.langtutor.llm.ConvoReuse
+import org.sisam.langtutor.llm.ConvoState
 import org.sisam.langtutor.llm.GenerationStats
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmEvent
@@ -137,19 +139,87 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         throw IllegalStateException("LiteRT-LM failed to load $modelPath on any backend", lastError)
     }
 
-    override fun generate(request: LlmRequest): Flow<LlmEvent> = flow {
-        val active = engine ?: error("generate() called before load()")
-        val conversation = active.createConversation(
+    // --- conversation reuse (the Pixel 9 latency lever) -----------------------
+    // One live runtime Conversation per session, so turn N prefills ONE new
+    // message instead of the system prompt + the whole history window. The
+    // reuse decision lives in core/llm (ConvoReuse, unit-tested); this class
+    // just tracks state and acts on the verdict. AppContainer creates one
+    // engine per orchestrator, so the cache is naturally session-scoped.
+    private var convo: com.google.ai.edge.litertlm.Conversation? = null
+    private var convoState: ConvoState? = null
+
+    @Synchronized
+    private fun closeConvo() {
+        runCatching { convo?.close() }
+        convo = null
+        convoState = null
+    }
+
+    /** Reuse the live conversation for a continuation, else rebuild. */
+    @Synchronized
+    private fun acquireConversation(
+        active: Engine,
+        request: LlmRequest,
+        systemText: String,
+        prior: List<ChatMessage>,
+    ): com.google.ai.edge.litertlm.Conversation {
+        val existing = convo
+        if (existing != null &&
+            ConvoReuse.canReuse(convoState, systemText, request.temperature, prior.size)
+        ) {
+            Log.i(TAG, "convo reuse: prefilling 1 message instead of ${prior.size + 1}")
+            return existing
+        }
+        closeConvo()
+        val estTokens = (systemText.length + prior.sumOf { it.text.length }) / EST_CHARS_PER_TOKEN
+        Log.i(TAG, "convo rebuild: prefilling ${prior.size} messages (~$estTokens est tokens)")
+        return active.createConversation(
             com.google.ai.edge.litertlm.ConversationConfig(
-                systemInstruction = Contents.of(request.systemPrompt),
-                initialMessages = request.messages.dropLast(1).mapNotNull { it.toLiteRt() },
+                systemInstruction = Contents.of(systemText),
+                initialMessages = prior.mapNotNull { it.toLiteRt() },
                 samplerConfig = SamplerConfig(
                     topK = DEFAULT_TOP_K,
                     topP = DEFAULT_TOP_P,
                     temperature = request.temperature.toDouble(),
                 ),
             ),
-        )
+        ).also {
+            convo = it
+            convoState = ConvoState(systemText, request.temperature, prior.size, estTokens, dirty = false)
+        }
+    }
+
+    /** Called from the turn's finally: keep a clean conversation, drop a dirty one. */
+    @Synchronized
+    private fun onTurnFinished(
+        conversation: com.google.ai.edge.litertlm.Conversation,
+        clean: Boolean,
+        addedChars: Int,
+        priorCount: Int,
+    ) {
+        if (convo !== conversation) return // unload() or a rebuild got here first
+        if (clean) {
+            convoState = convoState?.copy(
+                priorCount = priorCount,
+                estTokens = (convoState?.estTokens ?: 0) + addedChars / EST_CHARS_PER_TOKEN,
+            )
+        } else {
+            closeConvo()
+        }
+    }
+
+    override fun generate(request: LlmRequest): Flow<LlmEvent> = flow {
+        val active = engine ?: error("generate() called before load()")
+        // Leading SYSTEM messages carry the policy's per-turn lesson guidance
+        // ("the child is practicing X — praise, recast, one question"). They
+        // used to be dropped entirely — toLiteRt maps SYSTEM to null — so the
+        // model never saw the lesson. They belong in the system text.
+        val prior = request.messages.dropLast(1)
+        val systemText = (listOf(request.systemPrompt) +
+            prior.filter { it.role == Role.SYSTEM }.map { it.text })
+            .filter { it.isNotBlank() }
+            .joinToString("\n\n")
+        val conversation = acquireConversation(active, request, systemText, prior)
         val userText = request.messages.lastOrNull()?.text.orEmpty()
         val full = StringBuilder()
         val startNanos = System.nanoTime()
@@ -165,6 +235,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // Prefill is the genuinely silent part.
         EngineStatus.begin(EngineStatus.Kind.LLM_GENERATE, "prefill")
         var waitingForFirstToken = true
+        var failed = false
         try {
             // DEVICE-VERIFY: we treat each streamed Message.text as a delta (the
             // doc's `collect { print(it) }` prints each chunk). If the runtime
@@ -191,12 +262,24 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                     }
                 }
         } catch (t: Throwable) {
+            failed = true
             Log.e(TAG, "generate failed after ${(System.nanoTime() - startNanos) / 1_000_000}ms", t)
             throw t
         } finally {
             // A reply that produced nothing at all still has to close its step.
             if (waitingForFirstToken) EngineStatus.end(null)
-            conversation.close()
+            // Keep the conversation ONLY after a clean, uncut stream: after an
+            // exception, a cancellation, or a charBudget cut its internal
+            // history is unknowable (and a cancelled generation may still hold
+            // the runtime), so it is closed and the next turn rebuilds from the
+            // request — which is exactly the pre-reuse behavior. DEVICE-VERIFY:
+            // flow cancellation is assumed to stop the underlying generation.
+            onTurnFinished(
+                conversation,
+                clean = !failed && full.length < charBudget,
+                addedChars = userText.length + full.length,
+                priorCount = prior.size,
+            )
         }
         val seconds = (System.nanoTime() - startNanos) / 1_000_000_000.0
         val estTokens = full.length / EST_CHARS_PER_TOKEN
@@ -214,6 +297,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
     }.flowOn(Dispatchers.Default)
 
     override suspend fun unload() = withContext(Dispatchers.Default) {
+        closeConvo()
         engine?.close()
         engine = null
     }
