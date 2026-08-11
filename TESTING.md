@@ -27,20 +27,23 @@ Google services involved. Manual steps below if you prefer doing it by hand.
 
 ## 1. Get the APK
 
-Latest green build on this branch (sign in to GitHub to download artifacts):
+**One stable link** — every green build replaces the APK on the rolling
+pre-release (check the release notes for the commit + build time):
 
-- **Runs:** <https://github.com/jsisam-claude/lang-tutor/actions?query=branch%3Aclaude%2Fon-device-language-tutor-m6lj1z>
-- Open the **top green run** → scroll to **Artifacts** → download **app-debug** (~100 MB zip).
-- Artifacts expire after 5 days and each green build deletes its predecessors,
-  so only the newest green run has one. If the branch has been quiet and the
-  artifact is gone, re-run the latest workflow run (or push) to mint a fresh APK.
+- <https://github.com/jsisam-claude/lang-tutor/releases/tag/debug-latest>
 
 ```bash
-unzip app-debug.zip           # -> app-debug.apk
+# browser: download app-debug.apk from the link above, or with gh:
+gh release download debug-latest -R jsisam-claude/lang-tutor -p app-debug.apk --clobber
 adb install -r app-debug.apk  # -r upgrades in place
 # if behavior looks stale, clean install:
 #   adb uninstall org.sisam.langtutor && adb install app-debug.apk
 ```
+
+(The per-run **app-debug** artifact still exists when Actions storage quota
+allows, under the top green run at
+<https://github.com/jsisam-claude/lang-tutor/actions?query=branch%3Aclaude%2Fon-device-language-tutor-m6lj1z> —
+but the release link above is the reliable path.)
 
 ## 2. Get the model onto the device (choose ONE)
 

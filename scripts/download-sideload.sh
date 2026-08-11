@@ -163,12 +163,21 @@ PUSH
   chmod +x "$1/push.sh"
 }
 
-fetch_apk() { # latest green CI artifact via gh (optional)
+fetch_apk() { # newest green APK via gh (optional)
   command -v gh >/dev/null || { echo "!! --apk needs the GitHub CLI (gh) logged in; skipping"; return 0; }
+  mkdir -p "$CACHE/apk"
+  # Primary: the rolling debug-latest release — CI replaces its APK on every
+  # green build, and release assets are immune to the Actions storage quota.
+  if gh release download debug-latest -R "$REPO_SLUG" -p app-debug.apk \
+       --clobber --dir "$CACHE/apk" 2>/dev/null; then
+    echo ">> fetched APK from the debug-latest release"
+    return 0
+  fi
+  # Fallback: the per-run artifact (exists only while quota allows).
   local run
   run=$(gh run list -R "$REPO_SLUG" --branch "$BRANCH" --workflow android-ci \
         --status success --limit 1 --json databaseId -q '.[0].databaseId') || true
-  [ -z "${run:-}" ] && { echo "!! no green run found; skipping APK"; return 0; }
+  [ -z "${run:-}" ] && { echo "!! no release and no green run found; skipping APK"; return 0; }
   echo ">> fetching APK artifact from run $run"
   gh run download "$run" -R "$REPO_SLUG" -n app-debug --dir "$CACHE/apk"
 }
