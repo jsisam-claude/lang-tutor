@@ -81,11 +81,14 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
         if (expected.isEmpty() || audio.samples.size < MIN_SAMPLES) return@withContext EMPTY
 
         val started = System.nanoTime()
-        val logProbs = EngineStatus.step(EngineStatus.Kind.COACH_RUN, "${audio.durationMs}ms audio") {
-            runCatching { posteriors(audio) }
-                .onFailure { Log.e(TAG, "scoring failed", it) }
-                .getOrNull()
-        } ?: return@withContext EMPTY
+        // runCatching OUTSIDE step(), so a failed pass is reported as a failed
+        // step instead of logging a cheerful checkmark over an exception.
+        val logProbs = runCatching {
+            EngineStatus.step(EngineStatus.Kind.COACH_RUN, "${audio.durationMs}ms audio") {
+                posteriors(audio)
+            }
+        }.onFailure { Log.e(TAG, "scoring failed", it) }.getOrNull()
+            ?: return@withContext EMPTY
 
         val scored = GopScorer.score(
             logProbs = logProbs,

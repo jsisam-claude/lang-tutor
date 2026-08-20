@@ -44,4 +44,19 @@ interface LlmEngine {
     suspend fun load(spec: LlmModelSpec)
     fun generate(request: LlmRequest): Flow<LlmEvent>
     suspend fun unload()
+
+    /**
+     * Drop any cached conversation context, so the next [generate] rebuilds it
+     * from the request alone.
+     *
+     * An engine may keep a live conversation across turns to avoid re-prefilling
+     * the history (a large latency win on CPU-decode phones). That cache holds
+     * what the MODEL produced, which is not always what the child was shown: a
+     * reply the safety filter rejects is swapped downstream, but the rejected
+     * text is still sitting in the cache conditioning every later turn. The
+     * caller must be able to say "forget that".
+     *
+     * Default: no-op, for engines that hold no context.
+     */
+    fun invalidateContext() = Unit
 }

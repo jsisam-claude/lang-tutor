@@ -190,6 +190,12 @@ class TutorOrchestrator(
                     // Output filter: a blocked reply is replaced, never shown.
                     if (!safety.check(reply).allowed) {
                         reply = SAFE_FALLBACK_REPLY
+                        // The engine may cache the conversation across turns, and
+                        // that cache holds the text the MODEL generated — the
+                        // rejected one. Swapping it here only fixes what the child
+                        // sees; without this the blocked reply keeps conditioning
+                        // every later turn of the session.
+                        llm.invalidateContext()
                     }
                     _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
                     speak(reply)

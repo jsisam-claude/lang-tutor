@@ -3,7 +3,7 @@
 # one directory per device type:
 #
 #   sideload/pixel-9a/         8 GB  -> Gemma 4 E2B (base brain)
-#   sideload/pixel-9/         12 GB  -> Gemma 4 E4B (quality brain)
+#   sideload/pixel-9/         12 GB  -> Gemma 4 E4B + E2B (per-session pick)
 #   sideload/pixel-10-pro-xl/ 16 GB  -> Gemma 4 E4B (quality brain)
 #
 # Each device dir gets: the model the CURRENT app loads, a generated push.sh
@@ -160,7 +160,7 @@ for W in speech/whisper_*.tflite speech/acft_whisper_*.tflite speech/model_q8f16
 done
 echo ">> done. Open the app — badge: On-device Tuki; mic = bundled Whisper; voices = Kokoro (EN) + Phonikud (HE)."
 PUSH
-  chmod +x "$1/push.sh"
+  chmod +x "$devdir/push.sh"
 }
 
 fetch_apk() { # newest green APK via gh (optional)

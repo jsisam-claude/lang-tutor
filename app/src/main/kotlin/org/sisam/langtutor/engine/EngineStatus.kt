@@ -48,20 +48,28 @@ object EngineStatus {
         val startedAtMillis: Long,
     )
 
-    private val stack = ArrayDeque<Step>()
+    // Keyed by a unique handle, NOT a stack. Steps overlap across threads —
+    // the container warms Kokoro and the VAD on Dispatchers.IO while the LLM
+    // loads on Dispatchers.Default — and a LIFO stack pops whichever step
+    // happened to finish first, so durations and labels got attributed to the
+    // wrong engine. TESTING.md sells these lines as bench data, so they have to
+    // be right. LinkedHashMap keeps insertion order, so "current" is the most
+    // recently started step still running.
+    private val running = LinkedHashMap<Long, Step>()
+    private val nextId = java.util.concurrent.atomic.AtomicLong(1)
     private val _current = MutableStateFlow<Step?>(null)
 
-    /** The innermost running step, or null when nothing slow is in flight. */
+    /** The most recently started step still running, or null when idle. */
     val current: StateFlow<Step?> = _current.asStateFlow()
 
     /**
      * Run [block] as a reported step. Logs entry and exit with elapsed ms, and
-     * publishes it for the UI while it runs. Nesting-safe and exception-safe:
-     * the previous step is restored even when [block] throws, and the throw
-     * propagates untouched.
+     * publishes it for the UI while it runs. Safe across threads and nesting:
+     * the handle identifies THIS step, so a concurrent step finishing first
+     * cannot close it. Exception-safe; the throw propagates untouched.
      */
     inline fun <T> step(kind: Kind, detail: String = "", block: () -> T): T {
-        begin(kind, detail)
+        val handle = begin(kind, detail)
         var failure: Throwable? = null
         try {
             return block()
@@ -69,25 +77,29 @@ object EngineStatus {
             failure = t
             throw t
         } finally {
-            end(failure)
+            end(handle, failure)
         }
     }
 
+    /** @return a handle that MUST be passed to [end]. */
     @PublishedApi
-    internal fun begin(kind: Kind, detail: String) {
+    internal fun begin(kind: Kind, detail: String): Long {
+        val id = nextId.getAndIncrement()
         val step = Step(kind, detail, System.currentTimeMillis())
-        synchronized(stack) {
-            stack.addLast(step)
+        synchronized(running) {
+            running[id] = step
             _current.value = step
         }
         Log.i(TAG, "▶ $kind${if (detail.isEmpty()) "" else " $detail"}")
+        return id
     }
 
     @PublishedApi
-    internal fun end(failure: Throwable?) {
-        val finished = synchronized(stack) {
-            val done = stack.removeLastOrNull()
-            _current.value = stack.lastOrNull()
+    internal fun end(handle: Long, failure: Throwable?) {
+        val finished = synchronized(running) {
+            val done = running.remove(handle)
+            // Re-publish the newest still-running step (null when nothing is).
+            _current.value = running.values.lastOrNull()
             done
         } ?: return
         val ms = System.currentTimeMillis() - finished.startedAtMillis

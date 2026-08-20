@@ -88,14 +88,14 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
             // Multi-GB mmap plus accelerator warm-up, and a failed backend is
             // paid before the fallback: report each attempt by name so a long
             // wait is legible as "trying GPU" rather than a hang.
-            EngineStatus.begin(
+            val loadStep = EngineStatus.begin(
                 EngineStatus.Kind.LLM_LOAD,
                 "${File(modelPath).name} on $label",
             )
             val candidate = try {
                 Engine(EngineConfig(modelPath = modelPath, backend = backend))
             } catch (t: Throwable) {
-                EngineStatus.end(t)
+                EngineStatus.end(loadStep, t)
                 Log.w(TAG, "engine create failed on $backend", t)
                 runCatching { attemptMarker.delete() }
                 lastError = t
@@ -112,7 +112,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                 smokeTest(candidate)
                 engine = candidate
                 val ms = (System.nanoTime() - started) / 1_000_000
-                EngineStatus.end(null)
+                EngineStatus.end(loadStep, null)
                 Log.i(TAG, "loaded $modelPath on backend=$backend in ${ms}ms (smoke ok)")
                 runCatching { attemptMarker.delete() }
                 runCatching {
@@ -129,7 +129,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                 // failed attempt's native buffers leak alongside the next backend.
                 runCatching { candidate.close() }
                 runCatching { attemptMarker.delete() }
-                EngineStatus.end(t)
+                EngineStatus.end(loadStep, t)
                 Log.w(TAG, "initialize failed on $backend", t)
                 lastError = t
                 if (label == "gpu") gpuFailed = true
@@ -164,8 +164,9 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         prior: List<ChatMessage>,
     ): com.google.ai.edge.litertlm.Conversation {
         val existing = convo
+        val priorTexts = prior.map { it.text }
         if (existing != null &&
-            ConvoReuse.canReuse(convoState, systemText, request.temperature, prior.size)
+            ConvoReuse.canReuse(convoState, systemText, request.temperature, priorTexts)
         ) {
             Log.i(TAG, "convo reuse: prefilling 1 message instead of ${prior.size + 1}")
             return existing
@@ -185,7 +186,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
             ),
         ).also {
             convo = it
-            convoState = ConvoState(systemText, request.temperature, prior.size, estTokens, dirty = false)
+            convoState = ConvoState(systemText, request.temperature, priorTexts, estTokens, dirty = false)
         }
     }
 
@@ -194,15 +195,19 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
     private fun onTurnFinished(
         conversation: com.google.ai.edge.litertlm.Conversation,
         clean: Boolean,
-        addedChars: Int,
-        priorCount: Int,
+        userText: String,
+        replyText: String,
     ) {
         if (convo !== conversation) return // unload() or a rebuild got here first
         if (clean) {
-            convoState = convoState?.copy(
-                priorCount = priorCount,
-                estTokens = (convoState?.estTokens ?: 0) + addedChars / EST_CHARS_PER_TOKEN,
-            )
+            // Record what the conversation actually processed this turn, so the
+            // next call can prove its window is a continuation of THIS history.
+            convoState = convoState?.let {
+                it.copy(
+                    seen = it.seen + userText + replyText,
+                    estTokens = it.estTokens + (userText.length + replyText.length) / EST_CHARS_PER_TOKEN,
+                )
+            }
         } else {
             closeConvo()
         }
@@ -233,7 +238,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // Reported only until the first token lands: after that the streaming
         // reply is its own progress indicator, and two spinners would compete.
         // Prefill is the genuinely silent part.
-        EngineStatus.begin(EngineStatus.Kind.LLM_GENERATE, "prefill")
+        val genStep = EngineStatus.begin(EngineStatus.Kind.LLM_GENERATE, "prefill")
         var waitingForFirstToken = true
         var failed = false
         try {
@@ -254,7 +259,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                             Log.i(TAG, "first token after ${firstDeltaMs}ms (delta len=${delta.length})")
                             if (waitingForFirstToken) {
                                 waitingForFirstToken = false
-                                EngineStatus.end(null)
+                                EngineStatus.end(genStep, null)
                             }
                         }
                         full.append(delta)
@@ -267,7 +272,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
             throw t
         } finally {
             // A reply that produced nothing at all still has to close its step.
-            if (waitingForFirstToken) EngineStatus.end(null)
+            if (waitingForFirstToken) EngineStatus.end(genStep, null)
             // Keep the conversation ONLY after a clean, uncut stream: after an
             // exception, a cancellation, or a charBudget cut its internal
             // history is unknowable (and a cancelled generation may still hold
@@ -277,8 +282,8 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
             onTurnFinished(
                 conversation,
                 clean = !failed && full.length < charBudget,
-                addedChars = userText.length + full.length,
-                priorCount = prior.size,
+                userText = userText,
+                replyText = full.toString(),
             )
         }
         val seconds = (System.nanoTime() - startNanos) / 1_000_000_000.0
@@ -295,6 +300,8 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
             ),
         )
     }.flowOn(Dispatchers.Default)
+
+    override fun invalidateContext() = closeConvo()
 
     override suspend fun unload() = withContext(Dispatchers.Default) {
         closeConvo()

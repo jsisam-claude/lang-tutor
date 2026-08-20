@@ -147,6 +147,10 @@ class WhisperAsrEngine(
         val encDim: Int,
         val maxTokens: Int,
         val layout: WhisperLayout,
+        /** The decode signature's OWN output width. May differ from
+         *  layout.vocabSize when forVocabSize() fell back to MULTILINGUAL for an
+         *  export we do not recognise — size the buffer from the graph, always. */
+        val vocabSize: Int,
     )
 
     private var graph: Graph? = null
@@ -162,13 +166,21 @@ class WhisperAsrEngine(
             encDim = decAudio[2],
             maxTokens = decTokens[1],
             layout = WhisperLayout.forVocabSize(decOut[2]),
+            vocabSize = decOut[2],
         ).also {
             Log.i(
                 TAG,
                 "graph: window ${it.melFrames * WhisperFrontend.HOP / SAMPLE_RATE}s " +
                     "mel[1,80,${it.melFrames}] enc[1,${it.encFrames},${it.encDim}] " +
-                    "maxTok=${it.maxTokens} layout=${it.layout}",
+                    "maxTok=${it.maxTokens} vocab=${it.vocabSize} layout=${it.layout}",
             )
+            if (it.vocabSize != it.layout.vocabSize) {
+                Log.w(
+                    TAG,
+                    "UNRECOGNISED export: vocab ${it.vocabSize} matches no known layout; " +
+                        "decoding with ${it.layout} special-token ids — transcripts may be garbage",
+                )
+            }
         }
     }
 
@@ -216,7 +228,7 @@ class WhisperAsrEngine(
             Array(1) { Array(g.maxTokens) { r -> FloatArray(g.maxTokens) { c -> if (c <= r) 0f else NEG_INF } } }
         }
         val tokenBuf = Array(1) { IntArray(g.maxTokens) }
-        val logitsOut = Array(1) { Array(g.maxTokens) { FloatArray(g.layout.vocabSize) } }
+        val logitsOut = Array(1) { Array(g.maxTokens) { FloatArray(g.vocabSize) } }
         val encOut = Array(1) { Array(g.encFrames) { FloatArray(g.encDim) } }
         val tokenizer = WhisperTokenizer.of(g.layout)
 
