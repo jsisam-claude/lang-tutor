@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: '25'
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew -Plangtutor.jvmOnly=true build --stacktrace
 
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: '25'
       - uses: gradle/actions/setup-gradle@v4
       # Google's prebuilt WebGPU sampler/accelerator/dawn (LiteRT-LM v0.14.0,
       # SHA-256-pinned in the script) → app jniLibs, so GPU generation works on

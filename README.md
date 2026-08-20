@@ -35,12 +35,16 @@ Two lanes, because the full Android build needs Google's Maven/SDK servers:
 # Logic modules + unit tests (pure JVM — runs anywhere, no Android SDK):
 ./gradlew -Plangtutor.jvmOnly=true build
 
-# Full app (requires Android SDK + access to dl.google.com; also runs in CI):
+# Full app (requires the Android SDK; also runs in CI):
 ./gradlew :app:assembleDebug        # debug APK
 ./gradlew :app:bundleDebug          # AAB — exercises the model asset-pack
 ```
 
-Requirements: JDK 17+ (21 recommended). The Gradle wrapper is committed.
+Requirements: **JDK 25** (Debian trixie: `openjdk-25-jdk`; also builds on 21). Gradle 9.5.1
+via the committed wrapper — JDK 25 needs Gradle 9.x, because the Kotlin the Gradle
+distribution embeds to compile our `.kts` files could not parse a "25.x" version string
+until Kotlin 2.2 (Gradle 8.14.3 embeds 2.0.21 and fails). Gradle 9.6+ is NOT usable yet:
+AGP 8.13 relies on a Gradle internal API removed there, so 9.5.1 is the ceiling until AGP 9.
 CI (`.github/workflows/android-ci.yml`) builds both lanes on every push.
 
 Notes:
