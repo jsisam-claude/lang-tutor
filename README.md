@@ -35,7 +35,7 @@ Two lanes, because the full Android build needs Google's Maven/SDK servers:
 # Logic modules + unit tests (pure JVM — runs anywhere, no Android SDK):
 ./gradlew -Plangtutor.jvmOnly=true build
 
-# Full app (requires the Android SDK; also runs in CI):
+# Full app (needs the Android SDK — see docs/building-on-debian.md; also runs in CI):
 ./gradlew :app:assembleDebug        # debug APK
 ./gradlew :app:bundleDebug          # AAB — exercises the model asset-pack
 ```

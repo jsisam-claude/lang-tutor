@@ -76,13 +76,22 @@ hands-free listening, and the APK comes out ~24 MB smaller.
 
 ### A note on cmdline-tools versions
 
-Verified 2026-08-20 against **cmdline-tools rev 23.0.0** (`16111833`, 181,052,239 B),
-which is what the manifest currently serves. That build ships a *different*
-sdkmanager — it reports `1.0.15985488 (Android CLI)` where the older `13114758`
-reported `19.0` — so the commands above were re-run against it end to end:
-`--licenses`, `--install` of all three packages, and a full `:app:assembleDebug`
-all succeeded unchanged. Older build numbers still resolve on dl.google.com, so
-an out-of-date link is stale rather than broken.
+The build number in the filename rotates, and several are live at once. Each of
+these was installed and used for a full `:app:assembleDebug` on JDK 25 on
+2026-08-20 — all three produced a working APK with the commands above unchanged:
+
+| cmdline-tools | zip size | `sdkmanager --version` | build |
+|---|---|---|---|
+| `13114758` | 164,760,899 B | `19.0` | ✅ |
+| `15859902` | 181,833,628 B | `22.0` | ✅ |
+| `16111833` (rev 23.0.0, current) | 181,052,239 B | `1.0.15985488 (Android CLI)` | ✅ |
+
+Worth noting that rev 23.0.0 ships a visibly different sdkmanager — a changed CLI
+could have broken the documented flags, so `--licenses` and `--install` were
+re-tested against it rather than assumed. They behave identically.
+
+Older build numbers still resolve on dl.google.com, so an out-of-date link is
+stale rather than broken — but the `CT=` lookup above avoids the question.
 
 ## Why Gradle 9.5.1 (do not "upgrade" past it yet)
 
