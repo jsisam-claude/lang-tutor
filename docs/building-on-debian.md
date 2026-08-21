@@ -48,7 +48,14 @@ export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
 # ^ add both lines to ~/.bashrc; Gradle locates the SDK via ANDROID_HOME
 
 mkdir -p "$ANDROID_HOME/cmdline-tools" && cd /tmp
-curl -fLO https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
+
+# Do NOT hardcode the build number: Google rotates it (13114758, 15859902 and
+# 16111833 are all live right now) and any literal you paste is stale within
+# weeks. Ask the SDK repository manifest for the current one instead:
+CT=$(curl -sS https://dl.google.com/android/repository/repository2-3.xml \
+     | grep -oE 'commandlinetools-linux-[0-9]+_latest\.zip' | sort -t- -k3 -n | tail -1)
+curl -fLO "https://dl.google.com/android/repository/$CT"
+
 unzip -q commandlinetools-linux-*.zip
 mv cmdline-tools "$ANDROID_HOME/cmdline-tools/latest"   # the /latest layout is mandatory
 yes | sdkmanager --licenses > /dev/null
@@ -66,6 +73,16 @@ scripts/fetch-gpu-libs.sh && scripts/fetch-voice-assets.sh && scripts/fetch-vad-
 
 Skipping the fetch scripts still builds; you lose GPU decode, Tuki's voice and
 hands-free listening, and the APK comes out ~24 MB smaller.
+
+### A note on cmdline-tools versions
+
+Verified 2026-08-20 against **cmdline-tools rev 23.0.0** (`16111833`, 181,052,239 B),
+which is what the manifest currently serves. That build ships a *different*
+sdkmanager — it reports `1.0.15985488 (Android CLI)` where the older `13114758`
+reported `19.0` — so the commands above were re-run against it end to end:
+`--licenses`, `--install` of all three packages, and a full `:app:assembleDebug`
+all succeeded unchanged. Older build numbers still resolve on dl.google.com, so
+an out-of-date link is stale rather than broken.
 
 ## Why Gradle 9.5.1 (do not "upgrade" past it yet)
 
