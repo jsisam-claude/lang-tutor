@@ -93,6 +93,79 @@ re-tested against it rather than assumed. They behave identically.
 Older build numbers still resolve on dl.google.com, so an out-of-date link is
 stale rather than broken — but the `CT=` lookup above avoids the question.
 
+## Stage 4 — a release APK signed with YOUR certificate
+
+Debug builds sign themselves with a throwaway debug key. A release build needs
+your own certificate — the keystore you already have. Two equivalent ways;
+both were tested end-to-end on this exact setup (JDK 25, build-tools 36.0.0).
+
+**Never commit the keystore or its passwords.** `.gitignore` already blocks
+`keystore.properties`, `*.jks` and `*.keystore`; keep the keystore outside the
+repo anyway.
+
+### Option A — Gradle signs during the build (recommended)
+
+Create `keystore.properties` in the **project root** (template:
+`keystore.properties.example`):
+
+```properties
+storeFile=/home/you/keys/my-release.jks   # your keystore, absolute path
+storePassword=...
+keyAlias=...                              # keytool -list -keystore ... shows aliases
+keyPassword=...                           # often the same as storePassword
+```
+
+```bash
+./gradlew :app:assembleRelease
+# -> app/build/outputs/apk/release/app-release.apk   (signed + aligned)
+```
+
+The build script only creates the signing config when `keystore.properties`
+exists, so its absence never breaks anyone else's build — they just get
+`app-release-unsigned.apk` instead.
+
+### Option B — sign an unsigned APK by hand
+
+Without `keystore.properties`, `assembleRelease` produces
+`app-release-unsigned.apk`; align it, then sign it (this order — apksigner's
+hash covers the final byte layout, so zipalign must run first):
+
+```bash
+BT=$ANDROID_HOME/build-tools/36.0.0
+cd app/build/outputs/apk/release
+$BT/zipalign -P 16 -f 4 app-release-unsigned.apk app-release-aligned.apk
+$BT/apksigner sign --ks /home/you/keys/my-release.jks --ks-key-alias YOUR_ALIAS \
+    --out app-release.apk app-release-aligned.apk
+# prompts for the passwords; --ks-pass pass:... only if scripting
+```
+
+(`-P 16` = 16 KB page alignment for uncompressed .so files — required for
+Android 15+ / 16 KB-page devices, and what Gradle itself does in Option A.)
+
+### Check the signature (either option)
+
+```bash
+$BT/apksigner verify --print-certs app-release.apk
+# Signer #1 certificate DN / SHA-256 should be YOUR certificate
+```
+
+### Installing over the debug build fails — expected
+
+The debug APK from CI and your release APK carry different signatures, and
+Android refuses signature changes on update:
+`INSTALL_FAILED_UPDATE_INCOMPATIBLE`. Uninstall first
+(`adb uninstall org.sisam.langtutor` — this deletes the installed models;
+they'll re-download/re-push), then `adb install app-release.apk`. Same story
+in reverse when going back to a CI debug APK.
+
+### If your certificate lives in another format
+
+- PKCS#12 (`.p12`/`.pfx`, e.g. exported from a previous tool): works as-is —
+  both Gradle and apksigner auto-detect it; just point `storeFile` at it.
+- Raw key + cert PEM pair: skip keystores entirely with
+  `apksigner sign --key key.pk8 --cert cert.pem ...`, or import into a
+  keystore once with `keytool -importkeystore`.
+
 ## Why Gradle 9.5.1 (do not "upgrade" past it yet)
 
 The wrapper pins **9.5.1**, and both neighbours are broken for us — measured, not assumed:

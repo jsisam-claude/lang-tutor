@@ -104,6 +104,28 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         emit(TtsEvent.Completed)
     }.flowOn(Dispatchers.IO)
 
+    /**
+     * Streaming path: each incoming chunk is already a sentence (the
+     * orchestrator runs SentenceChunker on the LLM token stream), so synthesis
+     * starts on the FIRST sentence while later ones are still being generated.
+     * Playback order is preserved because collection is sequential.
+     */
+    override fun speakStream(chunks: Flow<String>, language: TutorLanguage, speed: Float): Flow<TtsEvent> = flow {
+        player.interrupted = false
+        emit(TtsEvent.Started)
+        chunks.collect { sentence ->
+            if (player.interrupted) return@collect
+            val ids = phonemizer.phonemize(sentence)
+            if (ids.isEmpty()) return@collect
+            val audio = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes (stream)") {
+                synthesize(ids, speed)
+            }
+            if (audio.isNotEmpty() && !player.interrupted) player.play(audio)
+        }
+        player.release()
+        emit(TtsEvent.Completed)
+    }.flowOn(Dispatchers.IO)
+
     override suspend fun stop() {
         player.interrupted = true
         player.release()

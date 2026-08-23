@@ -11,12 +11,11 @@ src/main/assets/models/
 ├── gemma-4-E2B-it.litertlm            # LLM, ~2.59 GB (Gemma 4 E2B, Apache 2.0)
 ├── acft_whisper_small.en_10s.tflite   # English ASR, ~286 MB (docs/asr-model-eval.md)
 ├── model_q8f16.onnx                   # English TTS, ~86 MB (Kokoro q8f16)
-├── model.onnx                         # Hebrew voice, ~64 MB (Piper/VITS, Phonikud)
-├── phonikud-1.0.int8.onnx             # Hebrew nikud + G2P, ~308 MB (CC-BY-4.0)
+├── phonikud-1.0.int8.onnx             # Hebrew nikud + G2P, ~308 MB (MIT) — currently unused: the Hebrew VOICE it fed was CC-BY-NC and removed
 └── wav2vec2-phoneme-int8.onnx         # Pronunciation scorer, ~318 MB (CTC-GOP)
 ```
 
-All six are WIRED: the app's engines load them from `files/models` today
+All remaining models are WIRED: the app's engines load them from `files/models` today
 (installed via Parent Zone packs / import / sideload — see TESTING.md), and the
 exact names and SHA-256 pins live in
 `core/packs/src/main/resources/packs/catalog.json`. Voice activity detection is

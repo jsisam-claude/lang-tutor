@@ -53,7 +53,9 @@ sha_of() {
     whisper_medium_30s_i4.tflite) echo "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63" ;;
     acft_whisper_small.en_10s.tflite) echo "58edc288e8aad1da2a3df0545edadf5f1c6119ff70682e37031119ad89130daf" ;;
     model_q8f16.onnx) echo "04c658aec1b6008857c2ad10f8c589d4180d0ec427e7e6118ceb487e215c3cd0" ;;
-    model.onnx) echo "dfe0a8f33002654fa560c4cdb796d934b6aa84b3bfb16779646a5b0f1bd9d968" ;;
+    # Hebrew nikud model (MIT) — pin kept for private testing, but NOT fetched by
+    # default: the Piper Hebrew VOICE it fed turned out to be CC-BY-NC with an
+    # academic-only rider (docs/feasibility.md) and was removed from the app.
     phonikud-1.0.int8.onnx) echo "113afb58d3140502aa1e7691cdc6b240b56cf97e5852fc870e1a7fb5a400dd62" ;;
     wav2vec2-phoneme-int8.onnx) echo "74174710e34035bbb7f611601d016c32fc575de7a6f53b1078107dc10a84e7ae" ;;
     *) echo "" ;;
@@ -71,8 +73,7 @@ url_of() {
     # Kokoro voice model — single-graph ONNX build (q8f16), spoken by the app's
     # bundled ONNX Runtime engine.
     model_q8f16.onnx) echo "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/onnx/model_q8f16.onnx" ;;
-    # Hebrew voice (Phonikud stack): Piper VITS voice + nikud model.
-    model.onnx) echo "https://huggingface.co/Phonikud/phonikud-tts-checkpoints/resolve/main/model.onnx" ;;
+    # Hebrew nikud model (see the license note in sha_of above).
     phonikud-1.0.int8.onnx) echo "https://huggingface.co/Phonikud/phonikud-onnx/resolve/main/phonikud-1.0.int8.onnx" ;;
     # Pronunciation coach: IPA phoneme CTC model behind the GOP scorer.
     wav2vec2-phoneme-int8.onnx) echo "https://huggingface.co/onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX/resolve/main/onnx/model_int8.onnx" ;;
@@ -150,7 +151,7 @@ for M in $models; do
   adb shell rm -f /data/local/tmp/"\$M"
 done
 adb shell run-as "\$PKG" ls -l files/models
-for W in speech/whisper_*.tflite speech/acft_whisper_*.tflite speech/model_q8f16.onnx speech/model.onnx speech/phonikud-1.0.int8.onnx speech/wav2vec2-phoneme-int8.onnx; do
+for W in speech/whisper_*.tflite speech/acft_whisper_*.tflite speech/model_q8f16.onnx speech/wav2vec2-phoneme-int8.onnx; do
   [ -f "\$W" ] || continue
   WB=\$(basename "\$W")
   echo ">> pushing bundled speech model (\$WB) — works without Google services"
@@ -158,7 +159,7 @@ for W in speech/whisper_*.tflite speech/acft_whisper_*.tflite speech/model_q8f16
   adb shell "run-as \$PKG cp /data/local/tmp/'\$WB' files/models/'\$WB'"
   adb shell rm -f /data/local/tmp/"\$WB"
 done
-echo ">> done. Open the app — badge: On-device Tuki; mic = bundled Whisper; voices = Kokoro (EN) + Phonikud (HE)."
+echo ">> done. Open the app — badge: On-device Tuki; mic = bundled Whisper; voice = Kokoro (EN)."
 PUSH
   chmod +x "$devdir/push.sh"
 }
@@ -193,16 +194,15 @@ for dev in "${DEVICES[@]}"; do
     place "$(fetch "$m")" "$devdir"
   done
   if [ "$WITH_SPEECH" = 1 ]; then
-    for f in "$(whisper_for "$dev")" model_q8f16.onnx model.onnx phonikud-1.0.int8.onnx wav2vec2-phoneme-int8.onnx; do
+    for f in "$(whisper_for "$dev")" model_q8f16.onnx wav2vec2-phoneme-int8.onnx; do
       place "$(fetch "$f")" "$devdir/speech"
     done
     cat > "$devdir/speech/README.txt" <<'NOTE'
 Bundled speech models, pushed into files/models by push.sh:
 - acft_whisper_*.tflite    — Tuki's ears: short-window ASR, no Google services
 - model_q8f16.onnx         — Tuki's English voice: Kokoro TTS (24 kHz)
-- model.onnx               — Tuki's Hebrew voice: Piper VITS (22.05 kHz)
-- phonikud-1.0.int8.onnx   — Hebrew nikud model (vowel points for the voice)
 - wav2vec2-phoneme-int8.onnx — pronunciation coach (per-sound scoring)
+(The Hebrew voice was removed: its license is CC-BY-NC + academic-only.)
 All are read by the current APK as soon as they are in place.
 NOTE
   fi

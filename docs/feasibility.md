@@ -24,7 +24,7 @@ concrete, licensable, on-device implementation path on Pixel 9/10-class hardware
 | English ASR (lessons) | ✅ Solid — **shipping** | Whisper small.en, 10 s ACFT export (286 MB) | Use a short-window export: a 30 s window is ~12× slower on a one-sentence answer ([eval](asr-model-eval.md)) |
 | English ASR (free talk, kids) | 🟡 Workable | Kid-fine-tuned Whisper | ~22 pp child WER penalty stock; main kids corpus is non-commercial |
 | English TTS | ✅ Solid | Piper (63 MB) or Kokoro-82M (<80 MB int8) | No purpose-built child voice; use slow-clear mode |
-| Hebrew TTS | 🟡 Workable | Phonikud + phonikud-tts (CC-BY-4.0) + pre-recorded human audio | Quality below big-cloud TTS; nikud handled by Phonikud |
+| Hebrew TTS | 🔴 Blocked on licensing | Phonikud nikud model (MIT) is fine; the Piper Hebrew VOICE is CC-BY-NC + academic-only and was REMOVED. Pre-recorded human audio for fixed lines; licensed voice wanted | The phonikud-tts checkpoints' HF cardData.license is null and the README says "non commercial (cc-nc)" — machine screening missed it |
 | Hebrew ASR | 🔴 Defer | ivrit.ai Whisper turbo (809 M) | Heavy; no small/streaming Hebrew model exists — design around it |
 | Pronunciation scoring | 🟡 Build | CTC-GOP with ~20 MB phoneme model | No offline SDK exists anywhere — in-house work |
 | Ship-it-all packaging | ✅ Fits | Play Asset Delivery, ~3.4–3.9 GB total | Play's ~4 GB per-device ceiling; E4B tier doesn't fit |

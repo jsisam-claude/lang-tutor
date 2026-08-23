@@ -8,7 +8,7 @@ more of the load? Ears decide, not specs. (~30 minutes.)
 
 Follow the current instructions at
 <https://github.com/thewh1teagle/phonikud-tts> (models on Hugging Face,
-CC-BY-4.0). Synthesize every line in `lines.txt` — one WAV per line — with the
+CC-BY-NC + academic-only rider — NOT usable commercially; eval-only). Synthesize every line in `lines.txt` — one WAV per line — with the
 highest-quality available voice (Piper-High / SASPEECH variants).
 
 ## The listening protocol

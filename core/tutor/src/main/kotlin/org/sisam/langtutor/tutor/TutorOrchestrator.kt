@@ -1,6 +1,8 @@
 package org.sisam.langtutor.tutor
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,6 +24,7 @@ import org.sisam.langtutor.speech.AudioClip
 import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.speech.RecognitionHint
+import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
 import org.sisam.langtutor.speech.TutorLanguage
 
@@ -166,7 +169,7 @@ class TutorOrchestrator(
         turnActive = true
         try {
             _transcript.value += TranscriptEntry(Speaker.CHILD, utterance, confidence)
-            scorePronunciation(audio)
+            scorePronunciation(audio, utterance)
 
             when (val move = policy.nextMove(TurnContext(utterance, confidence, currentUnit))) {
                 is TutorMove.AskRepeat -> {
@@ -176,29 +179,7 @@ class TutorOrchestrator(
 
                 is TutorMove.RespondViaLlm -> {
                     _state.value = TutorTurnState.Thinking("")
-                    var reply = ""
-                    llm.generate(buildRequest(utterance, move.instruction)).collect { event ->
-                        when (event) {
-                            is LlmEvent.Token -> {
-                                reply += event.text
-                                _state.value = TutorTurnState.Thinking(reply)
-                            }
-
-                            is LlmEvent.Done -> reply = event.fullText
-                        }
-                    }
-                    // Output filter: a blocked reply is replaced, never shown.
-                    if (!safety.check(reply).allowed) {
-                        reply = SAFE_FALLBACK_REPLY
-                        // The engine may cache the conversation across turns, and
-                        // that cache holds the text the MODEL generated — the
-                        // rejected one. Swapping it here only fixes what the child
-                        // sees; without this the blocked reply keeps conditioning
-                        // every later turn of the session.
-                        llm.invalidateContext()
-                    }
-                    _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
-                    speak(reply)
+                    respondStreaming(buildRequest(utterance, move.instruction))
                     profile.update { it.copy(xp = it.xp + XP_PER_TURN) }
                     _state.value = TutorTurnState.AwaitingChild(null)
                 }
@@ -215,17 +196,108 @@ class TutorOrchestrator(
         }
     }
 
+    /** Thrown to stop LLM collection the moment a sentence fails the filter. */
+    private class ReplyBlocked : kotlinx.coroutines.CancellationException("reply blocked")
+
+    /**
+     * Streamed reply: Tuki starts SPEAKING at the first sentence boundary while
+     * the model is still decoding the rest. On a CPU-decode phone the old
+     * collect-everything-then-speak path put the model's whole decode time
+     * (many seconds for a 96-token reply) between the child finishing and any
+     * audio; streaming removes all of it except the first sentence's decode.
+     *
+     * Safety moves WITH the audio: each sentence passes the filter BEFORE it is
+     * queued for synthesis, because a filter that runs after the reply was
+     * already heard protects nobody. A blocked sentence stops generation (the
+     * flow is cancelled, which also marks the engine's cached conversation
+     * dirty), cuts any audio mid-word, swaps in the scripted fallback and drops
+     * the poisoned context. The whole-reply check still runs at the end for the
+     * cross-sentence rules (length cap); by then the audio was per-sentence
+     * clean, so that late check only ever corrects the transcript.
+     */
+    private suspend fun respondStreaming(request: LlmRequest) {
+        var reply = ""
+        var blocked = false
+        var sentUpTo = 0
+        val sentences = Channel<String>(Channel.UNLIMITED)
+        val speaking = scope.launch {
+            tts.speakStream(sentences.consumeAsFlow(), TutorLanguage.ENGLISH).collect { }
+        }
+
+        suspend fun flushCompleteSentences(finalFlush: Boolean) {
+            for (c in SentenceChunker.split(reply)) {
+                if (c.start < sentUpTo) continue
+                val endsWithEnder = c.text.lastOrNull() in ENDERS
+                if (!endsWithEnder && !finalFlush) break // partial tail — wait for more tokens
+                if (!safety.check(c.text).allowed) {
+                    blocked = true
+                    break
+                }
+                sentences.send(c.text)
+                sentUpTo = c.end
+            }
+        }
+
+        try {
+            try {
+                llm.generate(request).collect { event ->
+                    when (event) {
+                        is LlmEvent.Token -> {
+                            reply += event.text
+                            _state.value = TutorTurnState.Thinking(reply)
+                            flushCompleteSentences(finalFlush = false)
+                            if (blocked) throw ReplyBlocked()
+                        }
+                        // The engine builds fullText from the same deltas, so
+                        // this is a no-op in practice; kept for engines that
+                        // only report the final text.
+                        is LlmEvent.Done -> reply = event.fullText
+                    }
+                }
+                if (!blocked) flushCompleteSentences(finalFlush = true)
+            } catch (_: ReplyBlocked) {
+                // generation cancelled mid-reply; handled below
+            }
+
+            // Cross-sentence rules (length cap, phrases spanning boundaries).
+            if (!blocked && !safety.check(reply).allowed) blocked = true
+
+            if (blocked) {
+                sentences.close()
+                speaking.cancel()
+                runCatching { tts.stop() } // cut audio mid-word if any played
+                // The engine's cached conversation holds what the MODEL said —
+                // the rejected text — and must not condition later turns.
+                llm.invalidateContext()
+                reply = SAFE_FALLBACK_REPLY
+                _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
+                speak(reply)
+            } else {
+                sentences.close()
+                _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
+                _state.value = TutorTurnState.Speaking(reply)
+                speaking.join()
+            }
+        } catch (e: Exception) {
+            sentences.close()
+            speaking.cancel()
+            runCatching { tts.stop() }
+            throw e
+        }
+    }
+
     /**
      * Score the attempt when the lesson asked the child to say a SPECIFIC
      * phrase — that's the only case with a known correct pronunciation to
      * compare against. Free conversation is never marked. Failures here must
      * never break the turn: feedback is a bonus, the conversation is the point.
      */
-    private suspend fun scorePronunciation(audio: AudioClip?) {
+    private suspend fun scorePronunciation(audio: AudioClip?, utterance: String) {
         val clip = audio ?: return
-        val target = currentUnit?.activities
-            ?.filterIsInstance<Activity.RepeatAfterMe>()
-            ?.firstOrNull()?.phrase ?: return
+        // Score against the lesson phrase the child ACTUALLY attempted (best
+        // transcript match, TargetPicker) — not the unit's first phrase, which
+        // marked children red for sounds they never said.
+        val target = TargetPicker.pick(utterance, currentUnit) ?: return
         runCatching { scorer.score(clip, target, TutorLanguage.ENGLISH) }
             .onSuccess { if (it.phonemes.isNotEmpty()) _pronunciation.value = it }
             .onFailure { println("TutorOrchestrator: pronunciation scoring failed: ${it.message}") }
@@ -275,6 +347,10 @@ class TutorOrchestrator(
         const val XP_PER_TURN = 5
         const val HISTORY_TURNS = 10
         const val SAFE_FALLBACK_REPLY = "Let's get back to our lesson! Can you say the word again?"
+
+        /** Mirrors [SentenceChunker]'s enders: a chunk ending in one is complete
+         *  and may be spoken; anything else is a partial tail still decoding. */
+        private val ENDERS = setOf('.', '!', '?')
 
         // P1 safety posture: register, brevity, and topic bounds live in the
         // system prompt; an output filter runs downstream (docs/architecture.md).

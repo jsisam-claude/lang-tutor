@@ -23,7 +23,7 @@ flowchart LR
     subgraph ENGINES["Engine interfaces (fakes in repo → real impls in prod)"]
         ASR[AsrEngine<br/><i>Whisper/Moonshine + hotwords</i>]
         LLM[LlmEngine<br/><i>Gemma 4 E2B · LiteRT-LM</i>]
-        TTS[TtsEngine<br/><i>Piper/Kokoro EN · Phonikud HE</i>]
+        TTS[TtsEngine<br/><i>Kokoro EN · (HE blocked on licensing)</i>]
         GOP[PronunciationScorer<br/><i>CTC-GOP, P3</i>]
     end
 
@@ -129,9 +129,9 @@ APK/AAB
 │       ├── gemma4-e2b.litertlm        2.58 GB   (LLM)
 │       ├── asr-en-small.q5.bin        250 MB    (Whisper-class)
 │       ├── tts-en-kokoro.int8.onnx    80 MB
-│       ├── tts-he-phonikud.int8.onnx  ~30 MB    (nikud+G2P)
-│       ├── tts-he-voice.onnx          ~40 MB    (Piper-class Hebrew)
-│       ├── gop-phoneme-ctc.onnx       ~20 MB    (P3)
+│       ├── gop-phoneme-ctc.onnx       ~20 MB    (P3)  # Hebrew TTS dropped:
+│       │                                # no commercially-licensed voice yet
+│       │                                # (docs/feasibility.md §Hebrew TTS)
 │       └── vad-silero.onnx            ~2 MB
 └── content packs: units, art, pre-recorded he/en audio (300–500 MB)
 ```

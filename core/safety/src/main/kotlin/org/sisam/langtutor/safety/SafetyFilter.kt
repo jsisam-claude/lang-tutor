@@ -22,8 +22,13 @@ class BlocklistSafetyFilter(
     private val maxChars: Int = MAX_REPLY_CHARS,
 ) : SafetyFilter {
 
+    // (?U) makes \b and \w Unicode-aware. Without it, Java's word boundary
+    // only knows [A-Za-z0-9_], so a HEBREW term compiled into the pattern can
+    // never match at all — the tutor speaks Hebrew by design, and its only
+    // output guard was silently English-only. Verified: "אתה טיפש" sailed
+    // through the old pattern.
     private val blockedRegex = Regex(
-        blockedTerms.joinToString("|", prefix = "\\b(", postfix = ")\\b") { Regex.escape(it) },
+        blockedTerms.joinToString("|", prefix = "(?U)\\b(", postfix = ")\\b") { Regex.escape(it) },
         RegexOption.IGNORE_CASE,
     )
 
@@ -48,6 +53,15 @@ class BlocklistSafetyFilter(
             "stupid", "idiot", "dumb", "hate you", "shut up", "ugly",
             "your address", "phone number", "password", "credit card",
             "secret from your parents",
+            // Hebrew — the tutor emits Hebrew scaffolding by design, so the
+            // guard must speak it too. Word-boundary matched under (?U).
+            // "מת" (dead) is deliberately ABSENT: it collides with everyday
+            // slang ("מת על זה" = loves it) and would over-block praise.
+            "להרוג", "יהרוג", "הרג", "רצח", "מוות", "אקדח", "רובה", "סכין",
+            "דם", "פצצה", "מלחמה", "סמים", "אלכוהול", "סיגריה", "עירום",
+            "טיפש", "טיפשה", "מטומטם", "דביל", "אידיוט", "מכוער", "מכוערת",
+            "שונא אותך", "שונאת אותך", "שתוק", "שתקי",
+            "סוד מההורים", "כתובת שלך", "סיסמה",
         )
 
         private val URL_REGEX = Regex("https?://|www\\.", RegexOption.IGNORE_CASE)

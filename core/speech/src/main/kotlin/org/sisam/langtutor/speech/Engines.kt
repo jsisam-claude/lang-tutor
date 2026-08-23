@@ -1,6 +1,8 @@
 package org.sisam.langtutor.speech
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 
 /**
  * Push-to-talk speech recognition. Production: whisper.cpp/Moonshine or
@@ -36,6 +38,28 @@ interface AsrEngine {
  */
 interface TtsEngine {
     fun speak(text: String, language: TutorLanguage, speed: Float = 1.0f): Flow<TtsEvent>
+
+    /**
+     * Speak sentence-sized [chunks] AS THEY ARRIVE — the streaming half of the
+     * voice loop. The orchestrator feeds this from the LLM token stream, so the
+     * first sentence is audible while the rest of the reply is still decoding;
+     * on a CPU-decode phone that removes most of the dead air between the child
+     * finishing and Tuki starting (a 96-token reply at phone-CPU rates is many
+     * seconds of silence otherwise).
+     *
+     * Default: collect everything, then [speak] once — correct for engines with
+     * no incremental path (platform TTS, fakes), and exactly the pre-streaming
+     * behaviour. Engines that can start early override it.
+     */
+    fun speakStream(chunks: Flow<String>, language: TutorLanguage, speed: Float = 1.0f): Flow<TtsEvent> = flow {
+        val all = StringBuilder()
+        chunks.collect { chunk ->
+            if (all.isNotEmpty()) all.append(' ')
+            all.append(chunk.trim())
+        }
+        if (all.isNotEmpty()) emitAll(speak(all.toString(), language, speed))
+    }
+
     suspend fun stop()
 }
 

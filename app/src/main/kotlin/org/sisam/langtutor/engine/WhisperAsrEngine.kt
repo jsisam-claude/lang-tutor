@@ -129,7 +129,9 @@ class WhisperAsrEngine(
             val text = transcribe(pcm)
             AsrResult(
                 transcript = text.trim(),
-                confidence = if (text.isBlank()) 0f else CONFIDENCE,
+                // REAL decoder confidence — the hardcoded 0.85 made the
+                // policy's "please say that again" branch unreachable.
+                confidence = if (text.isBlank()) 0f else lastConfidence,
                 // Retained for this turn so pronunciation scoring can run on the
                 // very audio that was transcribed.
                 audio = AudioClip(pcm16, SAMPLE_RATE),
@@ -232,13 +234,22 @@ class WhisperAsrEngine(
         val encOut = Array(1) { Array(g.encFrames) { FloatArray(g.encDim) } }
         val tokenizer = WhisperTokenizer.of(g.layout)
 
-        return pieces.mapIndexed { index, piece ->
+        val windows = pieces.mapIndexed { index, piece ->
             EngineStatus.step(
                 EngineStatus.Kind.ASR_RUN,
                 if (pieces.size > 1) "window ${index + 1}/${pieces.size}" else "",
             ) { transcribeWindow(itp, g, piece, mask, tokenBuf, logitsOut, encOut, tokenizer) }
-        }.joinToString(" ").trim()
+        }
+        // Token-weighted mean: a long clean window should not be dragged to 0.5
+        // by a two-token tail, and an empty window contributes nothing.
+        val tokens = windows.sumOf { it.tokens }
+        lastConfidence = if (tokens == 0) 0f
+        else (windows.sumOf { (it.avgProb * it.tokens).toDouble() } / tokens).toFloat()
+        return windows.joinToString(" ") { it.text }.trim()
     }
+
+    /** Decoder-reported confidence of the LAST [transcribe] call. */
+    @Volatile private var lastConfidence = 0f
 
     @Suppress("LongParameterList") // one window's worth of reused graph buffers
     private fun transcribeWindow(
@@ -250,7 +261,7 @@ class WhisperAsrEngine(
         logitsOut: Array<Array<FloatArray>>,
         encOut: Array<Array<FloatArray>>,
         tokenizer: WhisperTokenizer,
-    ): String {
+    ): Window {
         var t0 = System.nanoTime()
         val melIn = arrayOf(WhisperFrontend.logMel(piece, g.melFrames)) // [1,80,frames]
         val melMs = (System.nanoTime() - t0) / 1_000_000
@@ -261,7 +272,7 @@ class WhisperAsrEngine(
 
         t0 = System.nanoTime()
         var steps = 0
-        val ids = WhisperGreedyDecoder(maxTokens = g.maxTokens, layout = g.layout) { tokens, count ->
+        val decoded = WhisperGreedyDecoder(maxTokens = g.maxTokens, layout = g.layout) { tokens, count ->
             System.arraycopy(tokens, 0, tokenBuf[0], 0, g.maxTokens)
             itp.runSignature(
                 mapOf("args_0" to encOut, "args_1" to tokenBuf, "args_2" to mask),
@@ -273,9 +284,16 @@ class WhisperAsrEngine(
         }.transcribe()
         val decMs = (System.nanoTime() - t0) / 1_000_000
 
-        Log.i(TAG, "mel=${melMs}ms encode=${encMs}ms decode=${decMs}ms/${steps}steps -> ${ids.size} tokens")
-        return tokenizer.decode(ids).trim()
+        Log.i(
+            TAG,
+            "mel=${melMs}ms encode=${encMs}ms decode=${decMs}ms/${steps}steps " +
+                "-> ${decoded.ids.size} tokens, conf=${"%.2f".format(decoded.avgProb)}",
+        )
+        return Window(tokenizer.decode(decoded.ids).trim(), decoded.avgProb, decoded.ids.size)
     }
+
+    /** One window's transcript plus the decoder's belief in it. */
+    private data class Window(val text: String, val avgProb: Float, val tokens: Int)
 
     private fun stopRecorderQuietly() {
         runCatching {
@@ -294,7 +312,6 @@ class WhisperAsrEngine(
         // longer than the window is split by AudioChunker, not thrown away.
         const val MAX_SAMPLES = SAMPLE_RATE * 30
         const val NEG_INF = -1e9f
-        const val CONFIDENCE = 0.85f
 
         // Half the cores, not all of them. These graphs are dynamic-range
         // quantized: XNNPACK splits the reductions by thread count, so the

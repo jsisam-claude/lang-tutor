@@ -20,8 +20,9 @@ cd sideload/pixel-9a && ./push.sh       # installs APK (if fetched) + pushes the
 Each dir contains the device's brain(s) — 9a → E2B 2.6 GB; **9 → E4B *and*
 E2B** (the app picks per session by free memory, see the Pixel 9 section);
 10 Pro XL → E4B — plus `speech/` — everything Tuki needs to hear and speak: the Whisper
-ASR (286 MB), the Kokoro English voice (86 MB), the Hebrew voice + nikud model
-(371 MB) and the pronunciation coach (318 MB). All of them are WIRED: `push.sh`
+ASR (286 MB), the Kokoro English voice (86 MB) and the pronunciation coach
+(318 MB). (The Hebrew voice is no longer fetched — see the Hebrew section
+below for why.) All of them are WIRED: `push.sh`
 installs them into `files/models` and the current APK reads them, with no
 Google services involved. Manual steps below if you prefer doing it by hand.
 
@@ -164,7 +165,7 @@ worth exercising **on the 9 specifically**:
    `trim level=N -> released ...` when Android signals pressure; the released
    engine reloads visibly (status line + `TukiStep`) on next use. The failure
    this prevents: app killed mid-conversation after using the pronunciation
-   coach and Hebrew voice in the same session. If the app still gets killed,
+   coach and the voice in the same session. If the app still gets killed,
    capture `adb shell dumpsys meminfo org.sisam.langtutor` right before — that
    plus `TukiMem` decides whether the LLM itself must join the trim list.
 
@@ -235,22 +236,48 @@ Parent Zone → Packs → "Tuki's Voice (Kokoro)", or import/share the file, or
 `push.sh` (re-run `scripts/download-sideload.sh` first to fetch it). The voice
 style itself (af_heart) ships inside the APK. Logcat tag `TukiTts` shows
 session load time and per-sentence synth ms vs seconds of audio — that ratio
-(RTF) on your Pixel is bench data worth sending. Names outside the dictionary
+(RTF) on your Pixel is bench data worth sending.
+
+**New: Tuki starts talking at the first sentence.** Replies used to wait for
+the model to finish the WHOLE answer before any audio; now the first finished
+sentence goes to the voice while the rest is still being written (watch the
+reply text keep growing on screen after speech starts). Worth timing on
+device: the gap from the child finishing to Tuki's first word is the number
+that this change shrinks — please report it before/after if you have an older
+APK around. Names outside the dictionary
 (Noa, Yael…) use approximate letter-to-sound rules — report any that sound
 wrong.
 
-## Tuki speaks Hebrew (bundled Phonikud TTS)
-Hebrew speech works when BOTH Hebrew packs are installed (Parent Zone →
-"Hebrew for Tuki" parts 1+2, or `push.sh`, which installs them): the nikud
-model (~308 MB) adds vowel points on-device, a rules engine (golden-tested
-against the reference) turns them into phonemes, and a Piper voice speaks at
-22.05 kHz. Any tutor line containing Hebrew letters routes to the Hebrew
-voice automatically; English lines keep using Kokoro. Logcat tag `TukiTtsHe`
-shows session-load and per-sentence synth times (measured RTF ≈ 0.09 on a
-single container CPU thread — realtime with headroom). Type a Hebrew sentence
-in the chat to hear it. Known limits: digits in Hebrew text are not spoken
-(no number expander yet), and mixed Hebrew-English sentences go entirely to
-the Hebrew voice.
+## Tuki speaks Hebrew — currently OFF (licensing)
+The Hebrew voice packs were **removed from this build**: the Phonikud voice
+checkpoint's upstream license is CC-BY-NC with an "academic research and
+educational use" rider — not usable in an app we intend to distribute
+(docs/feasibility.md has the full story). The engine code is still in the
+app; only the weights are gone.
+
+What that means in testing:
+- Lines that MIX Hebrew and English speak the **English words only** —
+  Hebrew runs are stripped before Kokoro sees them, so "Great! כל הכבוד!"
+  says "Great!" instead of going silent.
+- Lines that are **entirely Hebrew** are skipped with a `TukiTts` warning
+  (`no Hebrew voice installed — skipping an all-Hebrew line`), never a hang.
+- The on-screen text still shows the full line including the Hebrew, so
+  nothing is lost for a reading child or parent.
+
+For development only, the voice can be re-enabled by privately pushing BOTH
+files to `files/models/` (`phonikud-1.0.int8.onnx` + the Piper voice as
+`model.onnx`); the router then sends any line containing Hebrew letters to
+that voice (logcat tag `TukiTtsHe`, measured RTF ≈ 0.09). Do NOT ship a
+build with those files — the license does not allow it.
+
+## When Tuki asks you to repeat (new)
+The listener now reports how SURE it was about what it heard (it used to
+claim a fixed high confidence, so the "please say it again" branch never
+fired). Mumble or whisper into the mic and Tuki should ask you to repeat
+instead of answering nonsense; logcat `TukiAsr` prints the per-window
+confidence. If it asks-to-repeat on clearly spoken phrases, or answers
+confidently on garbage, send those confidence lines — the 0.5 threshold was
+set in the container and real recordings calibrate it.
 
 ## Hands-free mic (bundled Silero VAD)
 The mic model ships INSIDE the APK (639 KB), so when a Whisper model is
@@ -283,13 +310,15 @@ did not separate in testing — treat vowel marks as advisory for now.
 ## Known limits in this build (expected, not bugs)
 - **English speech recognition only.** The bundled model is an English-only
   export, so a Hebrew answer into the mic will come back as English-looking
-  nonsense. Hebrew works for typing and for Tuki's voice, not for listening.
+  nonsense. Hebrew works for typing (and on-screen text), not for listening.
 - A turn is capped at 30 seconds. Past the model's 10-second window the audio is
   split at the quietest gap and transcribed piece by piece (`utterance split
   into N windows` in logcat), so long answers survive — but each piece is
   decoded independently, so a sentence spanning a cut can read oddly.
-- Names outside the voice's dictionary use letter-to-sound rules, and digits
-  inside Hebrew text are not spoken yet.
+- Names outside the voice's dictionary use letter-to-sound rules.
+- **Tuki does not speak Hebrew aloud in this build** — see the Hebrew section
+  above (licensing). Hebrew text still displays; all-Hebrew lines are skipped
+  silently, mixed lines speak their English words.
 - Pronunciation thresholds were calibrated on synthesized speech (see the
   section above) — the numbers you report are what recalibrates them.
 - Debug-signed test build — not Play-ready, not safety-certified for children yet.

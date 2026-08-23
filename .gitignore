@@ -36,3 +36,8 @@ app/src/main/assets/kokoro/
 
 # Hands-free VAD asset fetched by scripts/fetch-vad-asset.sh (pinned SHA-256)
 app/src/main/assets/vad/
+
+# Release signing — the developer's own certificate NEVER enters the repo
+keystore.properties
+*.jks
+*.keystore

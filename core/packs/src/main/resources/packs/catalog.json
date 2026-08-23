@@ -62,36 +62,6 @@
       "experimental": false
     },
     {
-      "id": "tts-he-voice",
-      "version": 1,
-      "nameEn": "Hebrew for Tuki — voice (part 1 of 2)",
-      "nameHe": "עברית לתוקי — קול (חלק 1 מ-2)",
-      "descriptionEn": "Tuki speaks Hebrew! Part 1: the Hebrew voice. Install BOTH parts; Hebrew speech turns on when part 2 is also installed.",
-      "descriptionHe": "תוקי מדבר עברית! חלק 1: הקול העברי. יש להתקין את שני החלקים; הדיבור בעברית נדלק כשגם חלק 2 מותקן.",
-      "kind": "tts",
-      "sizeBytes": 63511038,
-      "sha256": "dfe0a8f33002654fa560c4cdb796d934b6aa84b3bfb16779646a5b0f1bd9d968",
-      "url": "https://huggingface.co/Phonikud/phonikud-tts-checkpoints/resolve/main/model.onnx",
-      "installPath": "models/model.onnx",
-      "minRamGb": 8,
-      "experimental": false
-    },
-    {
-      "id": "tts-he-nikud",
-      "version": 1,
-      "nameEn": "Hebrew for Tuki — nikud brain (part 2 of 2)",
-      "nameHe": "עברית לתוקי — מוח ניקוד (חלק 2 מ-2)",
-      "descriptionEn": "Part 2: adds vowel points to Hebrew text so the voice reads it correctly. Install BOTH parts.",
-      "descriptionHe": "חלק 2: מוסיף ניקוד לטקסט עברי כדי שהקול יקרא נכון. יש להתקין את שני החלקים.",
-      "kind": "tts",
-      "sizeBytes": 307844158,
-      "sha256": "113afb58d3140502aa1e7691cdc6b240b56cf97e5852fc870e1a7fb5a400dd62",
-      "url": "https://huggingface.co/Phonikud/phonikud-onnx/resolve/main/phonikud-1.0.int8.onnx",
-      "installPath": "models/phonikud-1.0.int8.onnx",
-      "minRamGb": 8,
-      "experimental": false
-    },
-    {
       "id": "gop-en-coach",
       "version": 1,
       "nameEn": "Pronunciation Coach",

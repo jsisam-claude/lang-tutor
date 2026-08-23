@@ -38,12 +38,22 @@ class SileroVad(context: Context) : AutoCloseable {
         }
     }
 
+    // v6 contract: 64 samples of the PREVIOUS frame are prepended to each 512-
+    // sample frame (input [1,576]) — the official OnnxWrapper does exactly this.
+    // Feeding a bare 512 frame is not an error; it just returns ~0.0 on real
+    // speech, which is how the contract difference was first found.
+    private val context = FloatArray(CONTEXT)
+    private val window = FloatArray(CONTEXT + FRAME)
+
     /** Speech probability for one [VadGate.Config.windowSamples]-sample frame. */
     fun probability(frame: FloatArray): Float {
-        require(frame.size == FRAME) { "silero v5 needs exactly $FRAME samples, got ${frame.size}" }
+        require(frame.size == FRAME) { "silero needs exactly $FRAME samples, got ${frame.size}" }
+        System.arraycopy(context, 0, window, 0, CONTEXT)
+        System.arraycopy(frame, 0, window, CONTEXT, FRAME)
+        System.arraycopy(frame, FRAME - CONTEXT, context, 0, CONTEXT)
         val env = OrtEnvironment.getEnvironment()
         val inputs = mapOf(
-            "input" to OnnxTensor.createTensor(env, FloatBuffer.wrap(frame), longArrayOf(1, FRAME.toLong())),
+            "input" to OnnxTensor.createTensor(env, FloatBuffer.wrap(window), longArrayOf(1, (CONTEXT + FRAME).toLong())),
             "state" to OnnxTensor.createTensor(env, FloatBuffer.wrap(state), longArrayOf(2, 1, 128)),
             "sr" to OnnxTensor.createTensor(env, LongBuffer.wrap(longArrayOf(SAMPLE_RATE.toLong())), longArrayOf()),
         )
@@ -65,6 +75,7 @@ class SileroVad(context: Context) : AutoCloseable {
     /** Clears the recurrent state — MUST be called before every utterance. */
     fun reset() {
         state = FloatArray(STATE_SIZE)
+        context.fill(0f)
     }
 
     /** Loads the session up front so the first turn doesn't pay for it. */
@@ -81,6 +92,8 @@ class SileroVad(context: Context) : AutoCloseable {
         private const val TAG = "TukiVad"
         const val ASSET = "vad/silero_vad.onnx"
         const val FRAME = 512
+        /** v6: samples of prior audio prepended to each frame (see probability). */
+        private const val CONTEXT = 64
         const val SAMPLE_RATE = 16_000
         private const val STATE_SIZE = 2 * 1 * 128
 

@@ -36,7 +36,7 @@ class WhisperTokenizerTest {
             assertEquals(WhisperGreedyDecoder.PREFIX + step, count)
             FloatArray(WhisperTokenizer.VOCAB_SIZE + 1).also { it[script[step++]] = 10f }
         }
-        val ids = decoder.transcribe()
+        val ids = decoder.transcribe().ids
         assertEquals(listOf(100, 200), ids.toList())
     }
 
@@ -73,7 +73,7 @@ class WhisperTokenizerTest {
                 assertEquals(layout.prompt.size, count)
             }
             FloatArray(layout.vocabSize).also { it[script[step++]] = 10f }
-        }.transcribe()
+        }.transcribe().ids
         assertArrayEquals(intArrayOf(314, 766), ids)
     }
 }

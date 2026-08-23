@@ -9,11 +9,13 @@ update checks, nothing ever uploaded**.
 
 > **Headline feasibility verdict (July 2026): feasible today on Pixel 9/10-class
 > devices.** The full stack — Gemma 4 E2B (Apache 2.0) on LiteRT-LM, kid-tuned
-> Whisper-class ASR, Piper/Kokoro English TTS, Phonikud Hebrew TTS, and in-house
-> pronunciation scoring — fits in **~3.4–3.9 GB**, inside Google Play's ~4 GB
+> Whisper-class ASR, Kokoro English TTS, and in-house pronunciation scoring —
+> fits in **~3.4–3.9 GB**, inside Google Play's ~4 GB
 > per-device delivery budget, and answers a voice turn in **~2–4 seconds**.
-> The four named risks: children's-voice ASR accuracy, unbenchmarked Hebrew LLM
-> output, thermal limits on session length, and Play's GenAI-for-kids policy bar.
+> The named risks: children's-voice ASR accuracy, unbenchmarked Hebrew LLM
+> output, thermal limits on session length, Play's GenAI-for-kids policy bar,
+> and a licensing gap on Hebrew TTS (the only permissive-enough voice found so
+> far is CC-BY-NC — Tuki currently speaks English only; Hebrew shows as text).
 > Details, sources, and mitigations: [docs/feasibility.md](docs/feasibility.md).
 
 ## What's in this repo

@@ -1,5 +1,7 @@
 package org.sisam.langtutor.speech
 
+import kotlin.math.exp
+
 /**
  * Greedy decode loop for the two-signature Whisper tflite exports
  * (litert-community): the graph holds no KV cache, so every step re-runs the
@@ -18,20 +20,39 @@ class WhisperGreedyDecoder(
     private val stepLogits: (tokens: IntArray, count: Int) -> FloatArray,
 ) {
 
-    /** @return content token ids (specials stripped), ready for the tokenizer. */
-    fun transcribe(): IntArray {
+    /**
+     * Content token ids plus the decode's own belief in them.
+     *
+     * [avgProb] is the mean softmax probability of each chosen token over the
+     * distribution the loop actually samples from (content tokens + EOT).
+     * This is what makes the orchestrator's "low confidence → ask the child to
+     * repeat" path REAL: the engine used to hardcode 0.85, above the 0.5
+     * policy threshold, so the repair branch was dead code. Whisper's greedy
+     * token probability is a known-imperfect confidence signal, but garbage
+     * decodes (repetition loops, wrong-script tokens) do sit visibly lower
+     * than clean ones. DEVICE-VERIFY: calibrate the policy threshold against
+     * real child recordings once the Pixel bench runs.
+     */
+    data class Decoded(val ids: IntArray, val avgProb: Float)
+
+    fun transcribe(): Decoded {
         val tokens = IntArray(maxTokens)
         val prompt = layout.prompt
         prompt.copyInto(tokens)
         var count = prompt.size
+        var probSum = 0.0
+        var probN = 0
         while (count < maxTokens) {
             val logits = stepLogits(tokens, count)
             val next = argmaxContent(logits)
+            probSum += chosenProb(logits, next)
+            probN++
             if (next == layout.eot) break
             tokens[count] = next
             count++
         }
-        return tokens.copyOfRange(prompt.size, count)
+        val avg = if (probN == 0) 0f else (probSum / probN).toFloat()
+        return Decoded(tokens.copyOfRange(prompt.size, count), avg)
     }
 
     /** Argmax over content tokens + EOT; other specials/timestamps are banned
@@ -46,6 +67,15 @@ class WhisperGreedyDecoder(
             }
         }
         return best
+    }
+
+    /** Softmax probability of [chosen] over the allowed range [0, eot]. */
+    private fun chosenProb(logits: FloatArray, chosen: Int): Double {
+        var max = logits[layout.eot]
+        for (i in 0 until layout.eot) if (logits[i] > max) max = logits[i]
+        var sum = 0.0
+        for (i in 0..layout.eot) sum += exp((logits[i] - max).toDouble())
+        return exp((logits[chosen] - max).toDouble()) / sum
     }
 
     companion object {

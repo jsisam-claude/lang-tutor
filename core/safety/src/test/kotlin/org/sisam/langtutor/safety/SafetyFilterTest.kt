@@ -36,4 +36,38 @@ class SafetyFilterTest {
         assertEquals("too-long", filter.check("word ".repeat(120)).reason)
         assertFalse(filter.check("   ").allowed)
     }
+
+    @Test
+    fun `hebrew insults and violence are blocked`() {
+        val f = BlocklistSafetyFilter()
+        listOf(
+            "אתה טיפש",                     // "you are stupid"
+            "יש לו אקדח",                   // "he has a gun"
+            "אני שונא אותך",                // "I hate you"
+            "זה סוד מההורים שלך",           // "it's a secret from your parents"
+        ).forEach { line ->
+            assertFalse("should block: $line", f.check(line).allowed)
+        }
+    }
+
+    @Test
+    fun `everyday hebrew praise passes`() {
+        val f = BlocklistSafetyFilter()
+        listOf(
+            "כל הכבוד! אמרת את זה מצוין",   // "well done! you said it great"
+            "אני מת על זה",                 // slang: "I love it" — must NOT block
+            "בוא ננסה שוב יחד",             // "let's try again together"
+        ).forEach { line ->
+            assertTrue("should allow: $line", f.check(line).allowed)
+        }
+    }
+
+    @Test
+    fun `hebrew word boundaries do not block substrings`() {
+        val f = BlocklistSafetyFilter()
+        // "הרגשה" (feeling) contains "הרג" (killing) as a prefix — the (?U)
+        // word boundary must keep it allowed.
+        assertTrue(f.check("איזו הרגשה טובה!").allowed)
+    }
+
 }
