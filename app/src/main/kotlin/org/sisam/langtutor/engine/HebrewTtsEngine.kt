@@ -29,7 +29,9 @@ import org.sisam.langtutor.speech.TutorLanguage
  * Pixel speaks Hebrew comfortably in realtime.
  *
  * [AppContainer] wires this behind [TtsRouter]; it only exists when BOTH
- * model files are installed (Parent-Zone packs "Hebrew for Tuki 1+2 of 2").
+ * model files are installed. There is NO pack for them any more: the voice
+ * checkpoint's CC-BY-NC license blocks distribution (docs/feasibility.md), so
+ * this engine only activates in development, via privately pushed files.
  */
 class HebrewTtsEngine(
     private val nikudModel: File,

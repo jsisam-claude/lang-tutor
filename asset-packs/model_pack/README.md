@@ -19,7 +19,7 @@ All remaining models are WIRED: the app's engines load them from `files/models` 
 (installed via Parent Zone packs / import / sideload — see TESTING.md), and the
 exact names and SHA-256 pins live in
 `core/packs/src/main/resources/packs/catalog.json`. Voice activity detection is
-not listed because that model (639 KB) ships inside the APK itself.
+not listed because that model (2.3 MB) ships inside the APK itself.
 
 Note the total: ~3.65 GB with the E2B brain, against a ~4 GB per-device Play
 budget. The E4B quality tier does not fit alongside the speech stack, which is

@@ -219,22 +219,40 @@ class TutorOrchestrator(
         var reply = ""
         var blocked = false
         var sentUpTo = 0
+        var audioStarted = false
         val sentences = Channel<String>(Channel.UNLIMITED)
+        // A bare launch would hand a TTS failure to the scope's (absent)
+        // exception handler and kill the process; catching it here and
+        // rethrowing after join() routes it into handleChildUtterance's
+        // catch → Failed state, exactly like the pre-streaming speak() did.
+        var ttsError: Exception? = null
         val speaking = scope.launch {
-            tts.speakStream(sentences.consumeAsFlow(), TutorLanguage.ENGLISH).collect { }
+            try {
+                tts.speakStream(sentences.consumeAsFlow(), TutorLanguage.ENGLISH).collect { }
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                ttsError = e
+            }
         }
 
         suspend fun flushCompleteSentences(finalFlush: Boolean) {
             for (c in SentenceChunker.split(reply)) {
                 if (c.start < sentUpTo) continue
-                val endsWithEnder = c.text.lastOrNull() in ENDERS
-                if (!endsWithEnder && !finalFlush) break // partial tail — wait for more tokens
+                // Only a chunk with text AFTER it is stable: the chunker also
+                // marks an ender at the very end of the buffer as a boundary,
+                // but the next token can dissolve it ("You have 3" + "." +
+                // "5 apples!"), and a dissolved boundary shifts offsets so the
+                // merged sentence would be skipped forever. The buffer's tail
+                // chunk therefore waits for more tokens (or the final flush).
+                if (c.end >= reply.length && !finalFlush) break
                 if (!safety.check(c.text).allowed) {
                     blocked = true
                     break
                 }
                 sentences.send(c.text)
                 sentUpTo = c.end
+                audioStarted = true
             }
         }
 
@@ -244,14 +262,26 @@ class TutorOrchestrator(
                     when (event) {
                         is LlmEvent.Token -> {
                             reply += event.text
-                            _state.value = TutorTurnState.Thinking(reply)
                             flushCompleteSentences(finalFlush = false)
                             if (blocked) throw ReplyBlocked()
+                            // Once audio is rolling the child-visible truth is
+                            // "Tuki is talking", and the barge-in branch in
+                            // onMicPressed keys on Speaking — staying in
+                            // Thinking made the mic tap dead for the whole
+                            // decode while sentences were audibly playing.
+                            _state.value = if (audioStarted) {
+                                TutorTurnState.Speaking(reply)
+                            } else {
+                                TutorTurnState.Thinking(reply)
+                            }
                         }
-                        // The engine builds fullText from the same deltas, so
-                        // this is a no-op in practice; kept for engines that
-                        // only report the final text.
-                        is LlmEvent.Done -> reply = event.fullText
+                        // Engines are expected to build fullText from the same
+                        // deltas; adopt it only when it PRESERVES what was
+                        // already sent to the voice — an engine that trims or
+                        // rewrites would shift chunk offsets under sentUpTo and
+                        // re-speak or skip text at the final flush.
+                        is LlmEvent.Done ->
+                            if (event.fullText.startsWith(reply.take(sentUpTo))) reply = event.fullText
                     }
                 }
                 if (!blocked) flushCompleteSentences(finalFlush = true)
@@ -265,7 +295,13 @@ class TutorOrchestrator(
             if (blocked) {
                 sentences.close()
                 speaking.cancel()
-                runCatching { tts.stop() } // cut audio mid-word if any played
+                // stop() flips the player's interrupted flag so a synthesis
+                // already in flight discards its audio; join() then waits it
+                // out. Without the join, speak(fallback) resets that flag and
+                // the stale sentence of the REJECTED reply plays over the
+                // fallback (shared player, non-cancellable synth call).
+                runCatching { tts.stop() }
+                runCatching { speaking.join() }
                 // The engine's cached conversation holds what the MODEL said —
                 // the rejected text — and must not condition later turns.
                 llm.invalidateContext()
@@ -277,11 +313,13 @@ class TutorOrchestrator(
                 _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
                 _state.value = TutorTurnState.Speaking(reply)
                 speaking.join()
+                ttsError?.let { throw it }
             }
         } catch (e: Exception) {
             sentences.close()
             speaking.cancel()
             runCatching { tts.stop() }
+            runCatching { speaking.join() }
             throw e
         }
     }
@@ -348,9 +386,6 @@ class TutorOrchestrator(
         const val HISTORY_TURNS = 10
         const val SAFE_FALLBACK_REPLY = "Let's get back to our lesson! Can you say the word again?"
 
-        /** Mirrors [SentenceChunker]'s enders: a chunk ending in one is complete
-         *  and may be spoken; anything else is a partial tail still decoding. */
-        private val ENDERS = setOf('.', '!', '?')
 
         // P1 safety posture: register, brevity, and topic bounds live in the
         // system prompt; an output filter runs downstream (docs/architecture.md).

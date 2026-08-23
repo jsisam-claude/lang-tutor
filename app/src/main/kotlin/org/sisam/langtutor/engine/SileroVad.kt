@@ -10,13 +10,13 @@ import java.nio.LongBuffer
 import org.sisam.langtutor.speech.VadGate
 
 /**
- * Bundled voice-activity detector — Silero VAD v5 (MIT), 639 KB int8 ONNX,
+ * Bundled voice-activity detector — Silero VAD v6.2.1 (MIT), 2.3 MB ONNX,
  * small enough to ship INSIDE the APK (assets), so hands-free listening needs
  * no download and works on a de-googled phone out of the box.
  *
  * Stateful and strictly sequential: the model carries an LSTM state across the
  * fixed 512-sample (32 ms) frames of one utterance, so [reset] must be called
- * before each turn. Measured in-container at 0.45 ms/frame — ~70× realtime,
+ * before each turn. Measured in-container at 0.21 ms/frame — ~150× realtime,
  * i.e. free next to the ASR.
  */
 class SileroVad(context: Context) : AutoCloseable {

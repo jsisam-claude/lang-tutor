@@ -317,4 +317,135 @@ class TutorOrchestratorTest {
         assertTrue(fixture.orchestrator.state.value is TutorTurnState.AwaitingChild)
         assertEquals(TutorOrchestrator.XP_PER_TURN, fixture.profile.current().xp)
     }
+
+    @Test
+    fun `tts failure during a streamed reply fails the turn instead of crashing`() = runTest {
+        // The streaming path collects TTS in a separate launch; an engine
+        // failure there must land in the turn's Failed state, not escape to
+        // the scope (which on Android has no handler and kills the process).
+        val explodingTts = object : org.sisam.langtutor.speech.TtsEngine {
+            override fun speak(
+                text: String,
+                language: org.sisam.langtutor.speech.TutorLanguage,
+                speed: Float,
+            ): Flow<org.sisam.langtutor.speech.TtsEvent> = flow {
+                emit(org.sisam.langtutor.speech.TtsEvent.Started)
+                emit(org.sisam.langtutor.speech.TtsEvent.Completed)
+            }
+            override fun speakStream(
+                chunks: Flow<String>,
+                language: org.sisam.langtutor.speech.TutorLanguage,
+                speed: Float,
+            ): Flow<org.sisam.langtutor.speech.TtsEvent> = flow {
+                chunks.collect { throw IllegalStateException("audio device lost") }
+            }
+            override suspend fun stop() = Unit
+        }
+        val orchestrator = TutorOrchestrator(
+            llm = FakeLlmEngine(),
+            asr = FakeAsrEngine(),
+            tts = explodingTts,
+            scorer = FakePronunciationScorer(),
+            content = ResourceContentRepository(),
+            profile = InMemoryProfileStore(),
+            policy = ScriptedDialoguePolicy(),
+            scope = this,
+        )
+        orchestrator.startSession("unit-001", TutorMode.TEXT)
+        orchestrator.onTextSubmitted("The ball is red")
+        advanceUntilIdle()
+
+        assertTrue(orchestrator.state.value is TutorTurnState.Failed)
+    }
+
+    @Test
+    fun `mic press while a streamed reply is playing hushes the voice mid-decode`() = runTest {
+        // Audio starts at the first sentence while the model is still
+        // decoding; the state must read Speaking there so barge-in works —
+        // staying in Thinking made the mic tap dead for the whole decode.
+        val decodeGate = CompletableDeferred<Unit>()
+        val slowLlm = object : LlmEngine {
+            override suspend fun load(spec: LlmModelSpec) = Unit
+            override fun generate(request: LlmRequest): Flow<LlmEvent> = flow {
+                emit(LlmEvent.Token("Here is a ball. "))
+                decodeGate.await()
+                emit(LlmEvent.Token("Kick it!"))
+                emit(LlmEvent.Done("Here is a ball. Kick it!", GenerationStats(0, 2, 0f)))
+            }
+            override suspend fun unload() = Unit
+        }
+        val countingTts = object : org.sisam.langtutor.speech.TtsEngine {
+            var stopCalls = 0
+            override fun speak(
+                text: String,
+                language: org.sisam.langtutor.speech.TutorLanguage,
+                speed: Float,
+            ): Flow<org.sisam.langtutor.speech.TtsEvent> = flow {
+                emit(org.sisam.langtutor.speech.TtsEvent.Started)
+                emit(org.sisam.langtutor.speech.TtsEvent.Completed)
+            }
+            override suspend fun stop() {
+                stopCalls++
+            }
+        }
+        val asr = FakeAsrEngine()
+        val orchestrator = TutorOrchestrator(
+            llm = slowLlm,
+            asr = asr,
+            tts = countingTts,
+            scorer = FakePronunciationScorer(),
+            content = ResourceContentRepository(),
+            profile = InMemoryProfileStore(),
+            policy = ScriptedDialoguePolicy(),
+            scope = this,
+        )
+        orchestrator.startSession("unit-001", TutorMode.TEXT)
+        val turn = launch { orchestrator.onTextSubmitted("The ball is red") }
+        advanceUntilIdle() // first sentence flushed to TTS, decode now gated
+
+        assertTrue(orchestrator.state.value is TutorTurnState.Speaking)
+        orchestrator.onMicPressed() // barge-in mid-decode: hush, don't ignore
+        advanceUntilIdle()
+        assertEquals(1, countingTts.stopCalls)
+        assertEquals(0, asr.startCalls) // hushed, did not start listening
+
+        decodeGate.complete(Unit)
+        advanceUntilIdle()
+        turn.join()
+        assertTrue(orchestrator.state.value is TutorTurnState.AwaitingChild)
+    }
+
+    @Test
+    fun `an ender that lands mid-number does not lose the rest of the reply`() = runTest {
+        // "You have 3" + "." looks sentence-final until "5 apples!" arrives
+        // and dissolves the boundary; the dissolved chunk's shifted offsets
+        // used to make the flush skip the rest of the reply forever.
+        val decimalLlm = object : LlmEngine {
+            override suspend fun load(spec: LlmModelSpec) = Unit
+            override fun generate(request: LlmRequest): Flow<LlmEvent> = flow {
+                emit(LlmEvent.Token("You have 3"))
+                emit(LlmEvent.Token("."))
+                emit(LlmEvent.Token("5 apples!"))
+                emit(LlmEvent.Done("You have 3.5 apples!", GenerationStats(0, 3, 0f)))
+            }
+            override suspend fun unload() = Unit
+        }
+        val tts = FakeTtsEngine()
+        val orchestrator = TutorOrchestrator(
+            llm = decimalLlm,
+            asr = FakeAsrEngine(),
+            tts = tts,
+            scorer = FakePronunciationScorer(),
+            content = ResourceContentRepository(),
+            profile = InMemoryProfileStore(),
+            policy = ScriptedDialoguePolicy(),
+            scope = this,
+        )
+        orchestrator.startSession("unit-001", TutorMode.TEXT)
+        orchestrator.onTextSubmitted("The ball is red")
+        advanceUntilIdle()
+
+        assertEquals("You have 3.5 apples!", tts.spoken.single().text)
+        assertEquals("You have 3.5 apples!", orchestrator.transcript.value.last().text)
+    }
 }

@@ -280,16 +280,15 @@ confidently on garbage, send those confidence lines — the 0.5 threshold was
 set in the container and real recordings calibrate it.
 
 ## Hands-free mic (bundled Silero VAD)
-The mic model ships INSIDE the APK (639 KB), so when a Whisper model is
+The mic model ships INSIDE the APK (2.3 MB), so when a Whisper model is
 installed the conversation screen shows a **Hands-free** switch. On: tap the
 mic once and just talk — the detector ends the turn after ~0.7 s of quiet (a
 kid-friendly pause; short blips like a door slam are ignored, and a silent room
 gives the turn back after 10 s). Off: the button stays hold-to-talk. The mic
 button turns red while listening. Logcat tag `TukiAsr` prints
 `endpoint: SILENCE frames a..b` when the VAD closes a turn; `TukiVad` shows the
-model load. Measured in-container: 0.45 ms per 32 ms frame (~70× realtime) and
-64 ms onset accuracy, so it should be free next to the ASR — worth confirming
-on the 9a.
+model load. Measured in-container: 0.21 ms per 32 ms frame (~150× realtime),
+so it should be free next to the ASR — worth confirming on the 9a.
 
 ## Pronunciation coach (per-sound scoring)
 Install **Parent Zone → Packs → "Pronunciation Coach"** (318 MB). After a

@@ -36,10 +36,14 @@ android {
     signingConfigs {
         if (keystoreProps.isNotEmpty()) {
             create("release") {
-                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
-                storePassword = keystoreProps.getProperty("storePassword")
-                keyAlias = keystoreProps.getProperty("keyAlias")
-                keyPassword = keystoreProps.getProperty("keyPassword")
+                // Fail with the missing KEY'S NAME, not a bare NPE from deep
+                // inside AGP, when the file is half filled in.
+                fun prop(name: String) = keystoreProps.getProperty(name)
+                    ?: error("keystore.properties is missing '$name' (see keystore.properties.example)")
+                storeFile = rootProject.file(prop("storeFile"))
+                storePassword = prop("storePassword")
+                keyAlias = prop("keyAlias")
+                keyPassword = prop("keyPassword")
             }
         }
     }

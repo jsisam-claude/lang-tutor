@@ -27,6 +27,10 @@ class BlocklistSafetyFilter(
     // never match at all — the tutor speaks Hebrew by design, and its only
     // output guard was silently English-only. Verified: "אתה טיפש" sailed
     // through the old pattern.
+    // Known limit: Hebrew clitic prefixes (ו/ה/ב/ל/מ/ש) attach with no space,
+    // so an inflected "והטיפש" is one \w-word and \b won't find טיפש inside
+    // it. Dropping \b would fix that but re-introduce substring false
+    // positives ("הרגשה" ⊃ הרג); word-boundary matching is the safer trade.
     private val blockedRegex = Regex(
         blockedTerms.joinToString("|", prefix = "(?U)\\b(", postfix = ")\\b") { Regex.escape(it) },
         RegexOption.IGNORE_CASE,

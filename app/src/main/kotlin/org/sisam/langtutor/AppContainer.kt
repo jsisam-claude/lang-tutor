@@ -247,7 +247,7 @@ class AppContainer private constructor(context: Context) {
     }
 
     /**
-     * Hands-free detector — ships inside the APK (639 KB), so it is available
+     * Hands-free detector — ships inside the APK (2.3 MB), so it is available
      * whenever the build packed it; nothing to download.
      */
     @Volatile private var vadEngine: SileroVad? = null
@@ -314,7 +314,7 @@ class AppContainer private constructor(context: Context) {
         // RAM pressure for nothing; the first Hebrew line pays ~a second once.
         appScope.launch(Dispatchers.IO) {
             runCatching { kokoro?.warmUp() }
-            // 639 KB — warming it costs nothing and keeps the first hands-free
+            // 2.3 MB — warming it costs nothing and keeps the first hands-free
             // turn from stalling on session creation.
             runCatching { sileroVad()?.warmUp() }
         }
