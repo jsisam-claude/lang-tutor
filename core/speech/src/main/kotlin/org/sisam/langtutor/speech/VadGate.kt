@@ -20,7 +20,9 @@ class VadGate(private val config: Config = Config()) {
 
     data class Config(
         val sampleRate: Int = 16_000,
-        /** Silero v5 works on fixed 512-sample frames at 16 kHz (32 ms). */
+        /** Silero works on fixed 512-sample frames at 16 kHz (32 ms); the
+         *  bundled v6 export also wants 64 context samples prepended — see
+         *  SileroVad. */
         val windowSamples: Int = 512,
         /** Open the gate at/above this probability. */
         val startThreshold: Float = 0.5f,

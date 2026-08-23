@@ -36,17 +36,36 @@ class BlocklistSafetyFilter(
         RegexOption.IGNORE_CASE,
     )
 
-    override fun check(text: String): SafetyVerdict = when {
-        text.isBlank() -> SafetyVerdict(false, "empty")
-        text.length > maxChars -> SafetyVerdict(false, "too-long")
-        blockedRegex.containsMatchIn(text) -> SafetyVerdict(false, "blocked-term")
-        URL_REGEX.containsMatchIn(text) -> SafetyVerdict(false, "contains-url")
-        META_AI_REGEX.containsMatchIn(text) -> SafetyVerdict(false, "meta-ai-talk")
-        else -> SafetyVerdict(true)
+    override fun check(text: String): SafetyVerdict {
+        // Niqqud/cantillation (U+0591–U+05C7) are combining WORD characters
+        // under (?U): a mark right after a term kills the trailing \b ("אתה
+        // טיפשׁ" passed on the shin dot alone) and a mark inside breaks the
+        // literal match ("דָם" vs "דם"). Pointed text is the normal children's
+        // register — the app's own Hebrew pipeline exists to ADD niqqud — so
+        // strip the marks before matching.
+        val bare = text.replace(HEBREW_MARKS, "")
+        return when {
+            text.isBlank() -> SafetyVerdict(false, "empty")
+            text.length > maxChars -> SafetyVerdict(false, REASON_TOO_LONG)
+            blockedRegex.containsMatchIn(bare) -> SafetyVerdict(false, "blocked-term")
+            URL_REGEX.containsMatchIn(text) -> SafetyVerdict(false, "contains-url")
+            META_AI_REGEX.containsMatchIn(text) -> SafetyVerdict(false, "meta-ai-talk")
+            else -> SafetyVerdict(true)
+        }
     }
 
     companion object {
         const val MAX_REPLY_CHARS = 400
+
+        /**
+         * [SafetyVerdict.reason] for a reply rejected ONLY for length. The
+         * orchestrator treats this differently from a content block: a clean
+         * but endless reply is cut at a sentence boundary and keeps its audio,
+         * instead of being replaced by the safety fallback.
+         */
+        const val REASON_TOO_LONG = "too-long"
+
+        private val HEBREW_MARKS = Regex("[\u0591-\u05C7]")
 
         // Child-tutor output should never need any of these. Word-boundary
         // matched, so "skill" does not trip on "kill".
@@ -63,7 +82,11 @@ class BlocklistSafetyFilter(
             // slang ("מת על זה" = loves it) and would over-block praise.
             "להרוג", "יהרוג", "הרג", "רצח", "מוות", "אקדח", "רובה", "סכין",
             "דם", "פצצה", "מלחמה", "סמים", "אלכוהול", "סיגריה", "עירום",
-            "טיפש", "טיפשה", "מטומטם", "דביל", "אידיוט", "מכוער", "מכוערת",
+            // Both full (ktiv male) and defective (ktiv haser) spellings:
+            // pointed text usually drops the yod (טִפֵּשׁ → טפש after marks
+            // are stripped), so the unpointed form alone would miss it.
+            "טיפש", "טיפשה", "טפש", "טפשה",
+            "מטומטם", "דביל", "אידיוט", "מכוער", "מכוערת",
             "שונא אותך", "שונאת אותך", "שתוק", "שתקי",
             "סוד מההורים", "כתובת שלך", "סיסמה",
         )

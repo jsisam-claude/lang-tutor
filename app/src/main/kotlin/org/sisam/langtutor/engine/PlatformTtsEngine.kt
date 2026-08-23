@@ -59,6 +59,16 @@ class PlatformTtsEngine(context: Context) : TtsEngine {
                     trySend(TtsEvent.Completed)
                     close()
                 }
+
+                // Android delivers onStop — NOT onDone — for an utterance cut
+                // by TextToSpeech.stop(). Without this override a barge-in
+                // stranded the flow's collector forever: the streaming
+                // orchestrator joins on that collector, so one hushed reply
+                // left the whole turn (and every turn after it) stuck.
+                override fun onStop(utteranceId: String?, interrupted: Boolean) {
+                    trySend(TtsEvent.Completed)
+                    close()
+                }
             })
 
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "tuki-${text.hashCode()}")

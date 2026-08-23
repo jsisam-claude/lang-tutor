@@ -11,19 +11,21 @@ src/main/assets/models/
 ├── gemma-4-E2B-it.litertlm            # LLM, ~2.59 GB (Gemma 4 E2B, Apache 2.0)
 ├── acft_whisper_small.en_10s.tflite   # English ASR, ~286 MB (docs/asr-model-eval.md)
 ├── model_q8f16.onnx                   # English TTS, ~86 MB (Kokoro q8f16)
-├── phonikud-1.0.int8.onnx             # Hebrew nikud + G2P, ~308 MB (MIT) — currently unused: the Hebrew VOICE it fed was CC-BY-NC and removed
+├── phonikud-1.0.int8.onnx             # Hebrew nikud + G2P, ~308 MB (MIT) — NOT SHIPPED: the Hebrew VOICE it fed was CC-BY-NC and removed; its pin lives only in ModelImporter/download-sideload.sh (dev use), not in the pack catalog
 └── wav2vec2-phoneme-int8.onnx         # Pronunciation scorer, ~318 MB (CTC-GOP)
 ```
 
-All remaining models are WIRED: the app's engines load them from `files/models` today
-(installed via Parent Zone packs / import / sideload — see TESTING.md), and the
-exact names and SHA-256 pins live in
-`core/packs/src/main/resources/packs/catalog.json`. Voice activity detection is
-not listed because that model (2.3 MB) ships inside the APK itself.
+The four SHIPPING models are WIRED: the app's engines load them from
+`files/models` today (installed via Parent Zone packs / import / sideload —
+see TESTING.md), and their exact names and SHA-256 pins live in
+`core/packs/src/main/resources/packs/catalog.json` (5 packs: two LLM tiers +
+ASR + TTS + coach). Voice activity detection is not listed because that model
+(2.3 MB) ships inside the APK itself.
 
-Note the total: ~3.65 GB with the E2B brain, against a ~4 GB per-device Play
-budget. The E4B quality tier does not fit alongside the speech stack, which is
-why it stays an on-demand pack.
+Note the total: ~3.28 GB shipping with the E2B brain (2.59 GB + 286 + 86 +
+318 MB) against a ~4 GB per-device Play budget — ~3.59 GB if the unshipped
+phonikud model is sideloaded for development. The E4B quality tier does not
+fit alongside the speech stack, which is why it stays an on-demand pack.
 
 Notes:
 - Asset packs only materialize in **app bundles** (`:app:bundleDebug` /

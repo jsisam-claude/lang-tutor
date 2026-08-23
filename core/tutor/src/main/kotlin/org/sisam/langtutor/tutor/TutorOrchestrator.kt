@@ -26,6 +26,7 @@ import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.speech.RecognitionHint
 import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
+import org.sisam.langtutor.speech.TtsEvent
 import org.sisam.langtutor.speech.TutorLanguage
 
 /**
@@ -98,6 +99,10 @@ class TutorOrchestrator(
         // speak() completes immediately, the turn ends in AwaitingChild, and
         // the next press starts listening as usual.
         if (_state.value is TutorTurnState.Speaking) {
+            // For a streamed reply, hushing alone left the mic dead for the
+            // rest of the decode (every later tap landed right back here);
+            // the flag makes the token loop end the turn at the next event.
+            bargeRequested = true
             scope.launch { tts.stop() }
             return
         }
@@ -168,16 +173,25 @@ class TutorOrchestrator(
     ) {
         turnActive = true
         try {
-            _transcript.value += TranscriptEntry(Speaker.CHILD, utterance, confidence)
-            scorePronunciation(audio, utterance)
+            // A silent turn (blank decode) must not leave an empty child bubble
+            // in the transcript — it would also ship to the LLM as an empty
+            // USER message in every later request's history.
+            if (utterance.isNotBlank()) {
+                _transcript.value += TranscriptEntry(Speaker.CHILD, utterance, confidence)
+            }
 
             when (val move = policy.nextMove(TurnContext(utterance, confidence, currentUnit))) {
                 is TutorMove.AskRepeat -> {
+                    // The policy just refused to trust this transcript (low
+                    // confidence / blank) — scoring pronunciation against a
+                    // phrase matched from an UNTRUSTED transcript painted red
+                    // marks for sounds the child may never have said.
                     speak(move.prompt)
                     _state.value = TutorTurnState.AwaitingChild(move.prompt)
                 }
 
                 is TutorMove.RespondViaLlm -> {
+                    scorePronunciation(audio, utterance)
                     _state.value = TutorTurnState.Thinking("")
                     respondStreaming(buildRequest(utterance, move.instruction))
                     profile.update { it.copy(xp = it.xp + XP_PER_TURN) }
@@ -196,8 +210,24 @@ class TutorOrchestrator(
         }
     }
 
-    /** Thrown to stop LLM collection the moment a sentence fails the filter. */
-    private class ReplyBlocked : kotlinx.coroutines.CancellationException("reply blocked")
+    /** Set by a mic tap during [TutorTurnState.Speaking]; the streaming token
+     *  loop converts it into a prompt end of turn instead of decoding on. */
+    @Volatile private var bargeRequested = false
+
+    /** Why a streamed reply stopped before its natural end. */
+    private enum class StopReason {
+        /** A sentence (or the whole reply) failed the safety filter. */
+        BLOCKED,
+
+        /** The child tapped the mic — hush and give the turn back NOW. */
+        BARGED,
+
+        /** Clean but endless: cut at a sentence boundary, keep the audio. */
+        TRUNCATED,
+    }
+
+    /** Thrown to stop LLM collection the moment the reply must end early. */
+    private class StopStreaming : kotlinx.coroutines.CancellationException("stream stopped early")
 
     /**
      * Streamed reply: Tuki starts SPEAKING at the first sentence boundary while
@@ -208,18 +238,19 @@ class TutorOrchestrator(
      *
      * Safety moves WITH the audio: each sentence passes the filter BEFORE it is
      * queued for synthesis, because a filter that runs after the reply was
-     * already heard protects nobody. A blocked sentence stops generation (the
-     * flow is cancelled, which also marks the engine's cached conversation
-     * dirty), cuts any audio mid-word, swaps in the scripted fallback and drops
-     * the poisoned context. The whole-reply check still runs at the end for the
-     * cross-sentence rules (length cap); by then the audio was per-sentence
-     * clean, so that late check only ever corrects the transcript.
+     * already heard protects nobody. A blocked sentence stops generation, cuts
+     * any audio mid-word, swaps in the scripted fallback and drops the
+     * poisoned engine context. A reply that merely runs past the length cap is
+     * NOT a safety event: it is cut at a sentence boundary, the audio already
+     * playing finishes, and the transcript records exactly what was heard.
      */
     private suspend fun respondStreaming(request: LlmRequest) {
+        bargeRequested = false
         var reply = ""
-        var blocked = false
+        var stop: StopReason? = null
         var sentUpTo = 0
-        var audioStarted = false
+        var sentAny = false
+        var ttsStarted = false
         val sentences = Channel<String>(Channel.UNLIMITED)
         // A bare launch would hand a TTS failure to the scope's (absent)
         // exception handler and kill the process; catching it here and
@@ -228,7 +259,22 @@ class TutorOrchestrator(
         var ttsError: Exception? = null
         val speaking = scope.launch {
             try {
-                tts.speakStream(sentences.consumeAsFlow(), TutorLanguage.ENGLISH).collect { }
+                tts.speakStream(sentences.consumeAsFlow(), TutorLanguage.ENGLISH).collect { event ->
+                    // Real audio signal: engines with no incremental path (the
+                    // interface-default speakStream, i.e. platform TTS) emit
+                    // Started only when playback actually begins — after the
+                    // decode — so "Speaking" is never shown over silence.
+                    if (event is TtsEvent.Started) {
+                        ttsStarted = true
+                        // Promote immediately instead of waiting for the next
+                        // token: audio is audible NOW, and barge-in keys on
+                        // the Speaking state.
+                        val current = _state.value
+                        if (sentAny && current is TutorTurnState.Thinking) {
+                            _state.value = TutorTurnState.Speaking(current.partialReply)
+                        }
+                    }
+                }
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -246,13 +292,24 @@ class TutorOrchestrator(
                 // merged sentence would be skipped forever. The buffer's tail
                 // chunk therefore waits for more tokens (or the final flush).
                 if (c.end >= reply.length && !finalFlush) break
-                if (!safety.check(c.text).allowed) {
-                    blocked = true
+                val verdict = safety.check(c.text)
+                if (!verdict.allowed) {
+                    stop = if (verdict.reason == BlocklistSafetyFilter.REASON_TOO_LONG) {
+                        StopReason.TRUNCATED
+                    } else {
+                        StopReason.BLOCKED
+                    }
                     break
                 }
                 sentences.send(c.text)
                 sentUpTo = c.end
-                audioStarted = true
+                sentAny = true
+                if (sentUpTo >= BlocklistSafetyFilter.MAX_REPLY_CHARS) {
+                    // Spoken enough — a child should never sit through a
+                    // monologue. Later sentences are dropped, this one plays.
+                    stop = StopReason.TRUNCATED
+                    break
+                }
             }
         }
 
@@ -262,14 +319,18 @@ class TutorOrchestrator(
                     when (event) {
                         is LlmEvent.Token -> {
                             reply += event.text
+                            if (bargeRequested) {
+                                stop = StopReason.BARGED
+                                throw StopStreaming()
+                            }
                             flushCompleteSentences(finalFlush = false)
-                            if (blocked) throw ReplyBlocked()
+                            if (stop != null) throw StopStreaming()
                             // Once audio is rolling the child-visible truth is
                             // "Tuki is talking", and the barge-in branch in
                             // onMicPressed keys on Speaking — staying in
                             // Thinking made the mic tap dead for the whole
                             // decode while sentences were audibly playing.
-                            _state.value = if (audioStarted) {
+                            _state.value = if (sentAny && ttsStarted) {
                                 TutorTurnState.Speaking(reply)
                             } else {
                                 TutorTurnState.Thinking(reply)
@@ -284,36 +345,81 @@ class TutorOrchestrator(
                             if (event.fullText.startsWith(reply.take(sentUpTo))) reply = event.fullText
                     }
                 }
-                if (!blocked) flushCompleteSentences(finalFlush = true)
-            } catch (_: ReplyBlocked) {
+                if (stop == null && bargeRequested) stop = StopReason.BARGED
+                if (stop == null) flushCompleteSentences(finalFlush = true)
+            } catch (_: StopStreaming) {
                 // generation cancelled mid-reply; handled below
             }
 
-            // Cross-sentence rules (length cap, phrases spanning boundaries).
-            if (!blocked && !safety.check(reply).allowed) blocked = true
+            // Belt-and-braces: every spoken character already passed the
+            // per-sentence gate, and a multi-word blocklist term cannot
+            // straddle a sentence boundary (terms join words with literal
+            // spaces; sentences are split on ender+space). The one rule with
+            // genuinely whole-reply scope — the length cap — is enforced at a
+            // sentence boundary by the flush loop above. So a content failure
+            // HERE means a filter or chunker bug: the audio has played, but
+            // the transcript and the engine context still get cleaned up.
+            if (stop == null) {
+                val whole = safety.check(reply)
+                if (!whole.allowed && whole.reason != BlocklistSafetyFilter.REASON_TOO_LONG) {
+                    stop = StopReason.BLOCKED
+                }
+            }
+            // A truncation before ANYTHING was spoken (a single endless
+            // sentence) must still say something — take the fallback path.
+            if (stop == StopReason.TRUNCATED && sentUpTo == 0) stop = StopReason.BLOCKED
 
-            if (blocked) {
-                sentences.close()
-                speaking.cancel()
-                // stop() flips the player's interrupted flag so a synthesis
-                // already in flight discards its audio; join() then waits it
-                // out. Without the join, speak(fallback) resets that flag and
-                // the stale sentence of the REJECTED reply plays over the
-                // fallback (shared player, non-cancellable synth call).
-                runCatching { tts.stop() }
-                runCatching { speaking.join() }
-                // The engine's cached conversation holds what the MODEL said —
-                // the rejected text — and must not condition later turns.
-                llm.invalidateContext()
-                reply = SAFE_FALLBACK_REPLY
-                _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
-                speak(reply)
-            } else {
-                sentences.close()
-                _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
-                _state.value = TutorTurnState.Speaking(reply)
-                speaking.join()
-                ttsError?.let { throw it }
+            when (stop) {
+                StopReason.BLOCKED -> {
+                    sentences.close()
+                    speaking.cancel()
+                    // stop() flips the player's interrupted flag so a synthesis
+                    // already in flight discards its audio; join() then waits
+                    // it out. Without the join, speak(fallback) resets that
+                    // flag and the stale sentence of the REJECTED reply plays
+                    // over the fallback (shared player, non-cancellable synth).
+                    runCatching { tts.stop() }
+                    runCatching { speaking.join() }
+                    // The engine's cached conversation holds what the MODEL
+                    // said — the rejected text — and must not condition later
+                    // turns.
+                    llm.invalidateContext()
+                    reply = SAFE_FALLBACK_REPLY
+                    _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
+                    speak(reply)
+                }
+
+                StopReason.BARGED -> {
+                    sentences.close()
+                    speaking.cancel()
+                    runCatching { tts.stop() }
+                    runCatching { speaking.join() }
+                    // The cache holds the model's fuller reply; the child heard
+                    // a prefix. Drop it so later turns build on the transcript.
+                    llm.invalidateContext()
+                    val heard = reply.take(sentUpTo).trim()
+                    if (heard.isNotEmpty()) {
+                        _transcript.value += TranscriptEntry(Speaker.TUTOR, heard)
+                    }
+                }
+
+                StopReason.TRUNCATED -> {
+                    sentences.close()
+                    llm.invalidateContext()
+                    val spokenText = reply.take(sentUpTo).trim()
+                    _transcript.value += TranscriptEntry(Speaker.TUTOR, spokenText)
+                    _state.value = TutorTurnState.Speaking(spokenText)
+                    speaking.join()
+                    ttsError?.let { throw it }
+                }
+
+                null -> {
+                    sentences.close()
+                    _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
+                    _state.value = TutorTurnState.Speaking(reply)
+                    speaking.join()
+                    ttsError?.let { throw it }
+                }
             }
         } catch (e: Exception) {
             sentences.close()

@@ -14,7 +14,10 @@ import org.junit.Test
 
 class VadGateTest {
 
-    /** Real Silero probabilities for a clip of silence → speech → silence. */
+    /** Real probabilities from the PINNED Silero model for a clip of
+     *  silence → speech → silence. Regenerate with
+     *  scripts/generate-vad-golden.py whenever the bundled model changes —
+     *  the fixture's `model` field says what produced it. */
     private class Golden(val probs: FloatArray, val truthStart: Int, val truthEnd: Int)
 
     private fun golden(): Golden {

@@ -186,8 +186,10 @@ safety-filter escapes.
 
 **Hebrew-first UX**
 - Full RTL Hebrew UI; **pre-recorded human Hebrew audio** for every fixed
-  instruction (critical for pre-readers); Phonikud Hebrew TTS bundled for dynamic
-  Hebrew lines; per-app language toggle (he/en) in Parent Zone.
+  instruction (critical for pre-readers); dynamic Hebrew lines are on-screen
+  text only — the planned Phonikud voice was dropped over its CC-BY-NC
+  license (docs/feasibility.md §6); per-app language toggle (he/en) in
+  Parent Zone.
 
 **Foundation & trust**
 - **No INTERNET permission** (manifest-enforced). All models via install-time

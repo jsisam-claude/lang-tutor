@@ -359,22 +359,25 @@ class TutorOrchestratorTest {
     }
 
     @Test
-    fun `mic press while a streamed reply is playing hushes the voice mid-decode`() = runTest {
-        // Audio starts at the first sentence while the model is still
-        // decoding; the state must read Speaking there so barge-in works —
-        // staying in Thinking made the mic tap dead for the whole decode.
+    fun `mic press while a streamed reply is playing ends the turn promptly`() = runTest {
+        // A streaming-capable TTS (like Kokoro): audio begins at the first
+        // flushed sentence, mid-decode. The barge-in tap must hush AND end the
+        // turn at the next token — not leave the mic dead until the full
+        // decode finishes, and not let the dismissed reply keep playing.
         val decodeGate = CompletableDeferred<Unit>()
         val slowLlm = object : LlmEngine {
             override suspend fun load(spec: LlmModelSpec) = Unit
             override fun generate(request: LlmRequest): Flow<LlmEvent> = flow {
                 emit(LlmEvent.Token("Here is a ball. "))
                 decodeGate.await()
-                emit(LlmEvent.Token("Kick it!"))
-                emit(LlmEvent.Done("Here is a ball. Kick it!", GenerationStats(0, 2, 0f)))
+                emit(LlmEvent.Token("Kick it far! "))
+                emit(LlmEvent.Token("Then bring it back!"))
+                emit(LlmEvent.Done("Here is a ball. Kick it far! Then bring it back!", GenerationStats(0, 3, 0f)))
             }
             override suspend fun unload() = Unit
         }
-        val countingTts = object : org.sisam.langtutor.speech.TtsEngine {
+        val streamingTts = object : org.sisam.langtutor.speech.TtsEngine {
+            val streamed = mutableListOf<String>()
             var stopCalls = 0
             override fun speak(
                 text: String,
@@ -382,6 +385,15 @@ class TutorOrchestratorTest {
                 speed: Float,
             ): Flow<org.sisam.langtutor.speech.TtsEvent> = flow {
                 emit(org.sisam.langtutor.speech.TtsEvent.Started)
+                emit(org.sisam.langtutor.speech.TtsEvent.Completed)
+            }
+            override fun speakStream(
+                chunks: Flow<String>,
+                language: org.sisam.langtutor.speech.TutorLanguage,
+                speed: Float,
+            ): Flow<org.sisam.langtutor.speech.TtsEvent> = flow {
+                emit(org.sisam.langtutor.speech.TtsEvent.Started)
+                chunks.collect { streamed += it }
                 emit(org.sisam.langtutor.speech.TtsEvent.Completed)
             }
             override suspend fun stop() {
@@ -392,7 +404,7 @@ class TutorOrchestratorTest {
         val orchestrator = TutorOrchestrator(
             llm = slowLlm,
             asr = asr,
-            tts = countingTts,
+            tts = streamingTts,
             scorer = FakePronunciationScorer(),
             content = ResourceContentRepository(),
             profile = InMemoryProfileStore(),
@@ -404,14 +416,59 @@ class TutorOrchestratorTest {
         advanceUntilIdle() // first sentence flushed to TTS, decode now gated
 
         assertTrue(orchestrator.state.value is TutorTurnState.Speaking)
-        orchestrator.onMicPressed() // barge-in mid-decode: hush, don't ignore
+        orchestrator.onMicPressed() // barge-in mid-decode
         advanceUntilIdle()
-        assertEquals(1, countingTts.stopCalls)
-        assertEquals(0, asr.startCalls) // hushed, did not start listening
+        assertEquals(1, streamingTts.stopCalls)
+        assertEquals(0, asr.startCalls) // the tap hushed; it did not listen
 
         decodeGate.complete(Unit)
         advanceUntilIdle()
         turn.join()
+        // The turn ended at the next token: nothing after the barge was
+        // spoken, and the transcript records only what the child heard.
+        assertEquals(listOf("Here is a ball."), streamingTts.streamed)
+        assertEquals("Here is a ball.", orchestrator.transcript.value.last().text)
+        assertTrue(orchestrator.state.value is TutorTurnState.AwaitingChild)
+    }
+
+    @Test
+    fun `a clean reply over the length cap is cut at a sentence boundary`() = runTest {
+        // Every sentence is safe; only the TOTAL trips the cap. The child must
+        // keep the audio already playing (no fallback non-sequitur, no cut
+        // mid-word) and the transcript must match what was actually heard.
+        val sentence = { i: Int -> "This is the very long and very happy sentence number $i " +
+            "about a kind and friendly little parrot called Tuki who truly loves " +
+            "to teach children fun new English words all day and all night long. " }
+        val fullReply = (1..4).joinToString("") { sentence(it) }.trim()
+        val longLlm = object : LlmEngine {
+            override suspend fun load(spec: LlmModelSpec) = Unit
+            override fun generate(request: LlmRequest): Flow<LlmEvent> = flow {
+                for (i in 1..4) emit(LlmEvent.Token(sentence(i)))
+                emit(LlmEvent.Done(fullReply, GenerationStats(0, 4, 0f)))
+            }
+            override suspend fun unload() = Unit
+        }
+        val tts = FakeTtsEngine()
+        val orchestrator = TutorOrchestrator(
+            llm = longLlm,
+            asr = FakeAsrEngine(),
+            tts = tts,
+            scorer = FakePronunciationScorer(),
+            content = ResourceContentRepository(),
+            profile = InMemoryProfileStore(),
+            policy = ScriptedDialoguePolicy(),
+            scope = this,
+        )
+        orchestrator.startSession("unit-001", TutorMode.TEXT)
+        orchestrator.onTextSubmitted("The ball is red")
+        advanceUntilIdle()
+
+        val spoken = tts.spoken.single().text
+        assertTrue(spoken.contains("number 1"))
+        assertTrue(spoken.contains("number 3"))
+        assertTrue(!spoken.contains("number 4")) // dropped at the cap
+        assertTrue(!spoken.contains(TutorOrchestrator.SAFE_FALLBACK_REPLY))
+        assertEquals(spoken, orchestrator.transcript.value.last().text)
         assertTrue(orchestrator.state.value is TutorTurnState.AwaitingChild)
     }
 

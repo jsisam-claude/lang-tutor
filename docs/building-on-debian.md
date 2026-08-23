@@ -109,10 +109,15 @@ Create `keystore.properties` in the **project root** (template:
 `keystore.properties.example`):
 
 ```properties
-storeFile=/home/you/keys/my-release.jks   # your keystore, absolute path
+# Comments must sit on their OWN line: java.util.Properties treats an
+# inline '#' as part of the value, silently corrupting the path/alias.
+# Your keystore, absolute path:
+storeFile=/home/you/keys/my-release.jks
 storePassword=...
-keyAlias=...                              # keytool -list -keystore ... shows aliases
-keyPassword=...                           # often the same as storePassword
+# keytool -list -keystore <file> shows the aliases:
+keyAlias=...
+# Often the same as storePassword:
+keyPassword=...
 ```
 
 ```bash

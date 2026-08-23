@@ -61,4 +61,26 @@ class TargetPickerTest {
     fun `punctuation and case do not matter`() {
         assertEquals("I see a red ball.", TargetPicker.pick("I SEE, a red BALL!", colors))
     }
+
+    @Test
+    fun `mentioning a vocab word mid-story is not an attempt at it`() {
+        // "dog" is 100% covered, but the sentence is a story about the dog —
+        // scoring the whole clip against one word painted baseless marks.
+        val pets = unit(Activity.Vocab("dog", LocalizedText(en = "dog", he = "כלב")))
+        assertNull(TargetPicker.pick("my dog likes to play outside", pets))
+    }
+
+    @Test
+    fun `stopword-only overlap never scores`() {
+        // {the, is} covers half of "The bear is blue." without the child
+        // attempting anything from the lesson.
+        assertNull(TargetPicker.pick("the sky is high", colors))
+    }
+
+    @Test
+    fun `saying just the vocab word still scores`() {
+        val pets = unit(Activity.Vocab("dog", LocalizedText(en = "dog", he = "כלב")))
+        assertEquals("dog", TargetPicker.pick("dog", pets))
+        assertEquals("dog", TargetPicker.pick("the dog", pets))
+    }
 }

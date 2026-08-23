@@ -279,7 +279,7 @@ No open-source purpose-built child voice exists — use a bright/clear voice +
 `length_scale` slow-down (both engines support it), and pre-render fixed phrases.
 ([Piper](https://github.com/rhasspy/piper); [Kokoro/sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx/discussions/3383); [KittenTTS](https://github.com/KittenML/KittenTTS)).
 
-### Hebrew — the gap that now has a path
+### Hebrew — the gap that REOPENED on licensing
 
 Hebrew text is written **without vowels (nikud)**; TTS must restore them first.
 This killed most options:
@@ -289,13 +289,20 @@ This killed most options:
 - Robo-Shaul/SASPEECH: dataset non-commercial; HebTTS (2024): great quality, too
   big/autoregressive for phones.
 
-**The viable stack — Phonikud** ([arXiv 2506.12311](https://arxiv.org/abs/2506.12311), 2025-06;
-[repo](https://github.com/thewh1teagle/phonikud)): a lightweight Hebrew
-G2P that does **diacritization + phonemization in one int8 ONNX model**
-(**CC-BY-4.0** — commercial use with attribution), paired with
+**The stack that ALMOST worked — Phonikud** ([arXiv 2506.12311](https://arxiv.org/abs/2506.12311),
+2025-06; [repo](https://github.com/thewh1teagle/phonikud)): a lightweight
+Hebrew G2P doing **diacritization + phonemization in one int8 ONNX model**
+(that model is genuinely **MIT**), paired with
 [phonikud-tts](https://github.com/thewh1teagle/phonikud-tts) Piper/VITS Hebrew
-voices (20–32 M params, trained on SASPEECH + ILSpeech). This is "Piper for
-Hebrew," fully offline, bundle-friendly.
+voices. Technically excellent — validated end-to-end in-container at RTF ≈
+0.09 — but **the VOICE checkpoints are CC-BY-NC with an "academic research
+and educational use" rider** (the HF `cardData.license` field is null, which
+an earlier screen misread as permissive; the LICENSE file in the checkpoint
+repo is explicit). Non-commercial weights cannot ship in this app, so the
+voice packs were REMOVED and Tuki currently speaks English only; Hebrew
+scaffolding appears as on-screen text. The engine code stays in the repo
+awaiting a commercially licensed voice (train-our-own on ILSpeech-class data,
+or a future permissive release).
 
 **Belt and suspenders**: all *fixed* Hebrew instruction lines ship as
 **pre-recorded human audio** (best quality a child will hear, zero model risk);
@@ -329,7 +336,7 @@ Google Play numbers (mid-2026):
 | LLM | Gemma 4 E2B int4 `.litertlm` | 2.58 GB |
 | English ASR | Whisper small.en, 10 s ACFT export ✅ *shipping* | 286 MB |
 | English TTS | Kokoro-82M int8 (or Piper medium, 63 MB) | 80 MB |
-| Hebrew TTS | Phonikud int8 + Piper-class Hebrew voice | ~60–100 MB |
+| ~~Hebrew TTS~~ | ~~Phonikud + Hebrew voice~~ — REMOVED, voice is CC-BY-NC (see §6) | 0 MB |
 | Pronunciation | phoneme-CTC scorer | ~20 MB |
 | VAD | Silero | ~2 MB |
 | Content | units, pre-recorded Hebrew audio, art | 300–500 MB |
@@ -465,7 +472,7 @@ server costs scaling per user.
 | 3 | Play delivery ceiling (~4 GB/device) | Low (was Medium) | Ceiling now bounds only the base install; enhancement packs arrive via the user-approved in-app Pack Manager (§7 scope update) |
 | 4 | Thermal/battery on long sessions | Medium | Turn-based architecture, session caps, engine unload; matches child attention spans anyway |
 | 5 | Play GenAI-for-kids review bar | Medium | Safety layers + documented red-teaming from P1; report flow; Teacher Approved track |
-| 6 | Hebrew TTS quality perception | Medium | Pre-recorded human audio for all fixed lines; Phonikud only for dynamic text; parent-audible quality demo pre-purchase |
+| 6 | Hebrew TTS licensing (no commercially usable voice) | High | Voice packs removed (CC-BY-NC); pre-recorded human audio covers all FIXED Hebrew lines; dynamic Hebrew is text-only until a licensed voice exists (train-our-own or future permissive release) |
 | 7 | Pixel TPU SDK immaturity (AOT-only Beta) | Low | CPU baseline is sufficient (§8); TPU is upside |
 | 8 | Kids corpus licensing (MyST non-commercial) | Medium | License negotiation or alternative corpora + augmentation; never train on users' audio |
 

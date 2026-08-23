@@ -70,4 +70,20 @@ class SafetyFilterTest {
         assertTrue(f.check("איזו הרגשה טובה!").allowed)
     }
 
+    @Test
+    fun `niqqud and cantillation marks do not defeat the blocklist`() {
+        val filter = BlocklistSafetyFilter()
+        // Shin dot after the final letter used to kill the trailing word
+        // boundary; marks inside the word used to break the literal match.
+        assertFalse(filter.check("\u05d0\u05ea\u05d4 \u05d8\u05d9\u05e4\u05e9\u05c1").allowed) // אתה טיפשׁ
+        assertFalse(filter.check("\u05d3\u05b8\u05dd").allowed) // דָם (pointed "blood")
+        // Pointed text drops the yod (ktiv haser) — the variant must block too.
+        assertFalse(filter.check("\u05d0\u05ea\u05d4 \u05d8\u05b4\u05e4\u05b5\u05bc\u05e9\u05c1").allowed) // אתה טִפֵּשׁ
+    }
+
+    @Test
+    fun `pointed everyday hebrew still passes`() {
+        val filter = BlocklistSafetyFilter()
+        assertTrue(filter.check("\u05db\u05b8\u05bc\u05dc \u05d4\u05b7\u05db\u05b8\u05bc\u05d1\u05d5\u05b9\u05d3").allowed) // כָּל הַכָּבוֹד
+    }
 }
