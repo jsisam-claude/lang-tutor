@@ -2,7 +2,9 @@
 
 Verified end to end on 2026-08-20: fresh `git clone`, unprivileged user (uid 1001),
 SDK inside `$HOME`, cold Gradle cache, **JDK 25** — both build lanes green and the
-resulting APK byte-identical in size to the one CI publishes (242,694,197 B).
+resulting APK byte-identical in size to the one CI published that day
+(242,694,197 B). The tree has grown since: today's debug APK is 245,163,390 B
+(the VAD model went from 639 KB to the 2.3 MB v6 export), release 237,432,707 B.
 
 Only ONE step needs `sudo`: installing the JDK. Everything else lives in `$HOME`.
 
@@ -68,7 +70,7 @@ sdkmanager --install "platform-tools" "platforms;android-36" "build-tools;36.0.0
 cd ~/lang-tutor
 scripts/fetch-gpu-libs.sh && scripts/fetch-voice-assets.sh && scripts/fetch-vad-asset.sh
 ./gradlew :app:assembleDebug
-# -> app/build/outputs/apk/debug/app-debug.apk  (~243 MB)
+# -> app/build/outputs/apk/debug/app-debug.apk  (~245 MB)
 ```
 
 Skipping the fetch scripts still builds; you lose GPU decode, Tuki's voice and
