@@ -159,6 +159,43 @@ $BT/apksigner verify --print-certs app-release.apk
 # Signer #1 certificate DN / SHA-256 should be YOUR certificate
 ```
 
+### If a CA on the phone intercepts TLS, the RELEASE build has no escape hatch
+
+Worth knowing before you switch to release builds, especially if the CA on your
+phone is there because a VPN/proxy/filter is intercepting TLS.
+
+The app touches the network in exactly one place — pack downloads from
+`huggingface.co` (`core/packs/.../PackFetcher.kt`). Everything else (ASR, TTS,
+the LLM, curriculum) is on-device, so interception can only ever break downloads,
+with `Failed: IOException: SSLHandshakeException ... Trust anchor for
+certification path not found`.
+
+Two facts combine badly:
+
+- The app declares **no** `network_security_config.xml` (there is none in the
+  repo) and `targetSdk` is 36, so it gets the platform default: **system CAs
+  only**. A CA you installed through Settings is a *user* CA and is invisible to
+  the app — including in a debuggable build, which does not trust user CAs
+  without an explicit `<debug-overrides>` block.
+- The "Ignore SSL & retry (testing)" button that works around this is gated on
+  `BuildConfig.DEBUG` (`AppContainer.kt` hard-returns when it is false). Your
+  signed release APK is precisely the build that does not have it.
+
+**The fix needs no code:** use the offline path. `scripts/download-sideload.sh`
+fetches and SHA-256-verifies every model on your workstation — where your
+proxy's CA is already trusted — and emits a per-device `push.sh`. On-device,
+Parent Zone also imports single files or a whole folder from a USB-C drive or
+Downloads, with the same SHA-256 verification. Since downloads are the only
+network use, sideloading makes the CA question moot for a release build.
+
+If you would rather have in-app downloads work through the proxy on a *debug*
+build, add `app/src/main/res/xml/network_security_config.xml` with a
+`<debug-overrides><trust-anchors><certificates src="user"/></trust-anchors></debug-overrides>`
+block and reference it from `<application android:networkSecurityConfig=...>`.
+Debug-overrides are ignored when `android:debuggable` is false, so the shipped
+app stays system-only. Do **not** put `<certificates src="user"/>` in the
+base-config — that would weaken the release build for every user.
+
 ### Installing over the debug build fails — expected
 
 The debug APK from CI and your release APK carry different signatures, and
@@ -184,20 +221,36 @@ signer (the leaf), and the issuing CA's bytes are not present in the APK at all.
 So having the issuing CA installed on the phone grants nothing: no easier
 install, no extra permission, no bypass of "install unknown apps".
 
-**The trap is renewal.** Android compares the *certificate*, not the key. Re-issuing
-from the same CA with the same private key yields an identical public key but a
-different certificate — and therefore, to Android, a different signer. Google's
-guidance is that an app signing key be valid **at least 25 years**, because once
-the validity period lapses "users will no longer be able to seamlessly upgrade".
-A typical CA cert is 1–3 years. When it renews, every install must be uninstalled
-and reinstalled — on this app that means re-downloading multi-GB models.
+**The trap is renewal — not expiry.** These are different things and it matters
+which one you guard against.
 
-Nothing warns you either: apksigner signs happily with an already-expired
-certificate (`minSdk 31` turns off v1/JAR signing, so validity dates are never
-checked at sign or install time). It breaks silently, later, at update time.
+*Renewal definitely breaks updates.* Android compares the leaf certificate's DER
+bytes. Re-issuing from the same CA with the same private key yields an identical
+public key but a different certificate, so to Android it is a different signer,
+and the next update fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE`. Recovering
+means uninstalling — which wipes `filesDir`, i.e. the profile and the multi-GB
+models under `files/models`.
 
-**Recommendation:** sign the APK with a long-lived self-signed key and keep the
-CA-issued certificate for what CAs are for (TLS).
+*Expiry, by contrast, appears to be harmless here.* apksigner signs and verifies
+with an already-expired certificate without warning (measured: a cert valid only
+through 2021 produced a "Verifies" APK), and AOSP's v2/v3 verifiers contain no
+validity check. Google's app-signing page nonetheless states that once a key's
+validity lapses "users will no longer be able to seamlessly upgrade" — that
+guidance, and the 25-year rule, are written for Play upload requirements, which
+do not apply to a sideloaded app. We could not test install-on-device from the
+build container, so do not lean on this: the safe posture below costs nothing
+and makes the question moot.
+
+**Recommendation, in order of preference:**
+1. Sign with a long-lived self-signed key (below) and keep the CA-issued
+   certificate for what CAs are for — TLS. Simplest, no ongoing obligation.
+2. Or have the CA issue this one leaf with a 25+ year `notAfter`.
+3. Or keep using the CA-issued cert you have **and never renew it**, expired or
+   not. What you must never do is put this app's signing key on an annual
+   renewal cadence.
+
+Whichever you pick, back up the exact keystore. You cannot ask a CA to reproduce
+a byte-identical certificate, so losing it is as bad as renewing.
 
 ```bash
 keytool -genkeypair -v -keystore ~/keys/tuki-release.jks \
