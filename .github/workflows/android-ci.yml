@@ -1,5 +1,9 @@
 name: android-ci
 
+# Both events, but each job runs at most ONCE per commit: a same-repo branch
+# PR would otherwise build twice (once for the push, once for the PR). The
+# `if:` on each job keeps push runs for our own branches and pull_request runs
+# only for FORKS, whose commits never produce a push event here.
 on:
   push:
   pull_request:
@@ -10,8 +14,8 @@ concurrency:
   group: android-ci-${{ github.ref }}
   cancel-in-progress: true
 
-# Least privilege by default; the android job re-widens to actions:write so
-# its prune step can delete superseded artifacts.
+# Least privilege by default; the android job re-widens to contents:write so
+# it can publish the rolling debug-latest release.
 permissions:
   contents: read
 
@@ -20,6 +24,9 @@ jobs:
   # `-Plangtutor.jvmOnly=true` build documented in the README.
   jvm:
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'push' ||
+      github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -34,9 +41,11 @@ jobs:
   android:
     runs-on: ubuntu-latest
     needs: jvm
+    if: >-
+      github.event_name == 'push' ||
+      github.event.pull_request.head.repo.full_name != github.repository
     permissions:
       contents: write # the rolling debug-latest release below
-      actions: write # the artifact-prune step below
     # Normal green time is ~6-8 min; a hang must fail fast, not burn 6 h of
     # runner quota (observed once after adding a new AAR dependency).
     timeout-minutes: 30
@@ -54,18 +63,17 @@ jobs:
       - run: scripts/fetch-gpu-libs.sh
       # Tuki's Kokoro voice vectors (522KB, SHA-256-pinned) → APK assets.
       - run: scripts/fetch-voice-assets.sh
-      # Hands-free listening model (639KB, SHA-256-pinned) → APK assets.
+      # Hands-free listening model (2.3MB, SHA-256-pinned) → APK assets.
       - run: scripts/fetch-vad-asset.sh
       - run: ./gradlew test :app:assembleDebug :app:bundleDebug --stacktrace
       # Publish the installable debug APK so a green run yields a sideloadable
       # build for on-device testing (docs/running-on-device.md).
       # NOTE: the APK is the app only — the model is not bundled; install it in
       # app (Parent Zone → Packs) or via adb push.
-      # The AAB is deliberately NOT uploaded: bundleDebug above still exercises
-      # the asset-pack module, but nothing consumes the .aab (push.sh and
-      # TESTING.md install the APK) and it doubled the artifact — measured
-      # 187 MB with both against a 500 MB private-repo storage quota.
-      # PRIMARY delivery: a rolling pre-release whose single asset is always
+      # The AAB is deliberately NOT published: bundleDebug above still
+      # exercises the asset-pack module, but nothing consumes the .aab
+      # (push.sh and TESTING.md install the APK).
+      # DELIVERY: a rolling pre-release whose single asset is always
       # the newest green APK. Release assets do not count against the Actions
       # artifact storage quota — which blocked artifact uploads for weeks'
       # worth of a billing month once the quota was exceeded — and the release
@@ -85,35 +93,8 @@ jobs:
               --title "Latest debug APK" --notes "$NOTES" --target "${{ github.sha }}"
           gh release upload debug-latest "$APK" --clobber
           gh release edit debug-latest --notes "$NOTES"
-      # Best-effort secondary: the classic run artifact. continue-on-error
-      # because the Actions storage quota is monthly GB-hours — once spent, no
-      # deletion unblocks it until the cycle resets, and a verified-green build
-      # must not read as a failure over a billing condition.
-      - uses: actions/upload-artifact@v4
-        if: success()
-        continue-on-error: true
-        with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
-          # The APK is already zip-compressed; recompressing buys ~nothing and
-          # costs upload minutes.
-          compression-level: 0
-          # Backstop only — the prune step below keeps peak storage at about
-          # one artifact; retention covers a quiet week with no pushes.
-          retention-days: 5
-      # A green build supersedes every older APK: delete them instead of
-      # letting up to 5 days of ~100 MB artifacts stack up against the quota.
-      - name: Prune superseded artifacts
-        if: success()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { owner, repo } = context.repo;
-            const artifacts = await github.paginate(
-              github.rest.actions.listArtifactsForRepo, { owner, repo, per_page: 100 });
-            for (const a of artifacts) {
-              if (a.name !== 'app-debug' || a.expired || a.workflow_run?.id === context.runId) continue;
-              core.info(`deleting superseded ${a.name} #${a.id} from run ${a.workflow_run?.id} (${(a.size_in_bytes / 1e6).toFixed(0)} MB)`);
-              await github.rest.actions.deleteArtifact({ owner, repo, artifact_id: a.id });
-            }
+      # NOTE: no upload-artifact step. The release above IS the delivery
+      # path — a public, stable URL that TESTING.md links directly, needing no
+      # login and no expiry — so a duplicate ~245 MB run artifact only cost
+      # upload time. (While the repo was private it also billed against the
+      # Actions storage quota.) Re-add one if the release path ever fails.
