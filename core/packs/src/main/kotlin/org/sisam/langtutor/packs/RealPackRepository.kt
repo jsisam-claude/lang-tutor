@@ -114,7 +114,17 @@ class RealPackRepository(
             emit(publish(packId, InstallState.Verifying))
             val actual = digest.digest().toHex()
             val expected = pack.sha256.lowercase()
-            if (expected.isChecksum() && actual != expected) {
+            if (!expected.isChecksum()) {
+                // Fail CLOSED. Skipping the compare on an unusable hash would
+                // write multi-GB of unverified network bytes into files/models
+                // — the one thing the pinned catalog exists to prevent. A pack
+                // we cannot verify is a catalog bug, not an install option.
+                part.delete()
+                emit(publish(packId, InstallState.Failed(
+                    "Catalog entry has no usable sha256 — refusing to install unverified bytes")))
+                return@flow
+            }
+            if (actual != expected) {
                 part.delete() // full-size but wrong bytes: truly corrupt, restart clean
                 emit(publish(packId, InstallState.Failed(
                     "Checksum mismatch (got ${actual.take(12)}…, expected ${expected.take(12)}…)")))
@@ -178,7 +188,8 @@ class RealPackRepository(
         manifestFile.writeText(json.encodeToString(map))
     }
 
-    private companion object {
+    // internal, not private: the module's own tests pin the checksum rule.
+    internal companion object {
         const val MANIFEST_NAME = "packs-installed.json"
         const val PART_SUFFIX = ".part"
         const val BUFFER_BYTES = 1 shl 16
@@ -188,8 +199,13 @@ class RealPackRepository(
 
         fun ByteArray.toHex(): String = joinToString("") { "%02x".format(it) }
 
-        /** Placeholder catalog hashes are all-zero; treat those as "unset". */
-        fun String.isChecksum(): Boolean = length == 64 && any { it != '0' }
+        /**
+         * A usable pin: 64 hex digits, not the all-zero placeholder. Anything
+         * else (blank, truncated, non-hex) is rejected by the caller rather
+         * than waved through — see the fail-closed branch in install().
+         */
+        fun String.isChecksum(): Boolean =
+            length == 64 && any { it != '0' } && all { it in "0123456789abcdef" }
 
         fun java.io.InputStream.digestInto(digest: MessageDigest) {
             val buffer = ByteArray(BUFFER_BYTES)

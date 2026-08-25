@@ -1,8 +1,11 @@
 package org.sisam.langtutor.packs
 
+import org.sisam.langtutor.packs.RealPackRepository.Companion.isChecksum
+
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -63,5 +66,17 @@ class PackRepositoryTest {
 
         assertEquals(InstallState.NotInstalled, repo.installStates.value["llm-base-e2b"])
         assertTrue(repo.checkForUpdatesManually().isEmpty())
+    }
+
+    @Test
+    fun `a usable pin is 64 lowercase hex digits and not the all-zero placeholder`() {
+        val real = "58edc288e8aad1da2a3d0b2a8980ce155fd9767304c658aec1b6008857c21234"
+        assertTrue(real.isChecksum())
+        // Rejected: the placeholder, a truncated hash, and non-hex junk. Each
+        // of these used to make install() SKIP verification instead of failing.
+        assertFalse("0".repeat(64).isChecksum())
+        assertFalse(real.take(63).isChecksum())
+        assertFalse(("z".repeat(64)).isChecksum())
+        assertFalse("".isChecksum())
     }
 }

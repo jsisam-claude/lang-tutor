@@ -159,42 +159,60 @@ $BT/apksigner verify --print-certs app-release.apk
 # Signer #1 certificate DN / SHA-256 should be YOUR certificate
 ```
 
-### If a CA on the phone intercepts TLS, the RELEASE build has no escape hatch
+### If a CA on the phone intercepts TLS
 
-Worth knowing before you switch to release builds, especially if the CA on your
-phone is there because a VPN/proxy/filter is intercepting TLS.
+Only relevant if the CA is there because a VPN/proxy/filter is intercepting TLS.
+**Which store the CA lives in decides everything**, so establish that first:
 
-The app touches the network in exactly one place — pack downloads from
-`huggingface.co` (`core/packs/.../PackFetcher.kt`). Everything else (ASR, TTS,
-the LLM, curriculum) is on-device, so interception can only ever break downloads,
-with `Failed: IOException: SSLHandshakeException ... Trust anchor for
-certification path not found`.
+| Where the CA is | What happens |
+|---|---|
+| **System store** (custom OS build, MDM-provisioned, root) | The app trusts it. Downloads **succeed** — no error, no config needed. SHA-256 still passes, because a TLS proxy re-serves identical bytes. Nothing to do. |
+| **User store** (Settings → Install a certificate) | Not trusted. Downloads fail at the handshake in every build type. |
 
-Two facts combine badly:
+The app declares no `network_security_config.xml`, so at `targetSdk 36` it gets
+the platform default — **system CAs only**. User-installed CAs have been excluded
+for `targetSdk >= 24` and still are on Android 15/16.
 
-- The app declares **no** `network_security_config.xml` (there is none in the
-  repo) and `targetSdk` is 36, so it gets the platform default: **system CAs
-  only**. A CA you installed through Settings is a *user* CA and is invisible to
-  the app — including in a debuggable build, which does not trust user CAs
-  without an explicit `<debug-overrides>` block.
-- The "Ignore SSL & retry (testing)" button that works around this is gated on
-  `BuildConfig.DEBUG` (`AppContainer.kt` hard-returns when it is false). Your
-  signed release APK is precisely the build that does not have it.
+**If yours is a user CA**, downloads fail with `Failed: IOException:
+SSLHandshakeException connecting to huggingface.co: ...` (match on the
+`SSL`/`trust`/`certif`/`CertPath` substrings, not the exact wording — Conscrypt's
+message varies by version). Three fixes, in order of preference:
 
-**The fix needs no code:** use the offline path. `scripts/download-sideload.sh`
-fetches and SHA-256-verifies every model on your workstation — where your
-proxy's CA is already trusted — and emits a per-device `push.sh`. On-device,
-Parent Zone also imports single files or a whole folder from a USB-C drive or
-Downloads, with the same SHA-256 verification. Since downloads are the only
-network use, sideloading makes the CA question moot for a release build.
+1. **Sideload** — no code change. `scripts/download-sideload.sh` fetches and
+   SHA-256-verifies every model on your workstation, where the proxy's CA is
+   already trusted, and emits a per-device `push.sh`. On-device, Parent Zone's
+   file and folder importers work in **release** builds too and run the same
+   SHA-256 check (only `importUnverified` is debug-gated).
+2. **Trust the CA properly** for a release build: add
+   `app/src/main/res/xml/network_security_config.xml` with
+   `<certificates src="user"/>` — or better, a pinned `<certificates
+   src="@raw/your_ca"/>` — inside `<base-config>`, and reference it from
+   `<application android:networkSecurityConfig=...>`. Note `<debug-overrides>`
+   would NOT work here: that block is ignored whenever `android:debuggable` is
+   false, so it never applies to a release build.
+3. **The debug "Ignore SSL & retry" button**, which swaps in a trust-all
+   fetcher. Integrity still rests on the pinned SHA-256, but it also disables
+   hostname verification, so prefer 1 or 2.
 
-If you would rather have in-app downloads work through the proxy on a *debug*
-build, add `app/src/main/res/xml/network_security_config.xml` with a
-`<debug-overrides><trust-anchors><certificates src="user"/></trust-anchors></debug-overrides>`
-block and reference it from `<application android:networkSecurityConfig=...>`.
-Debug-overrides are ignored when `android:debuggable` is false, so the shipped
-app stays system-only. Do **not** put `<certificates src="user"/>` in the
-base-config — that would weaken the release build for every user.
+**Signing your own build and keeping the debug escape hatch are not mutually
+exclusive.** `BuildConfig.DEBUG` follows the build type's `debuggable` flag, and
+a signingConfig can attach to any build type. One line gives you a debug-variant
+APK signed with *your* certificate that still has the full escape hatch:
+
+```kotlin
+buildTypes {
+    getByName("debug") { signingConfig = signingConfigs.findByName("release") }
+    release { /* … */ }
+}
+```
+
+(Do **not** instead set `release { isDebuggable = true }` — that ships a
+JDWP-attachable release build.)
+
+One caveat if downloads stay blocked: the packs are the ASR, TTS and LLM models,
+so without them the app quietly falls back to `FakeLlmEngine` and the *platform*
+ASR/TTS — and the platform recognizer may use a **cloud** service. "Everything
+else is on-device" holds only once the packs are installed.
 
 ### Installing over the debug build fails — expected
 
@@ -249,8 +267,23 @@ and makes the question moot.
    not. What you must never do is put this app's signing key on an annual
    renewal cadence.
 
-Whichever you pick, back up the exact keystore. You cannot ask a CA to reproduce
-a byte-identical certificate, so losing it is as bad as renewing.
+Whichever you pick, back up the exact keystore. `allowBackup="false"` is set in
+the manifest, so an uninstall wipes `filesDir` with no restore path.
+
+**If you do end up needing to change certificates**, it is survivable as long as
+you still hold the OLD key — v3 key rotation lets the new signer install over
+the old one and keep app data:
+
+```bash
+apksigner rotate --out lineage.bin --old-signer --ks old.jks --new-signer --ks new.jks
+apksigner sign --ks old.jks --next-signer --ks new.jks --lineage lineage.bin \
+    --rotation-min-sdk-version 28 app-release.apk
+```
+
+Pass `--rotation-min-sdk-version 28` or apksigner defaults rotation to the v3.1
+block (API 33+) and leaves API 31–32 devices behind. The lineage must be carried
+on that update and every build after it. Losing the old keystore is the one
+genuinely unrecoverable case.
 
 ```bash
 keytool -genkeypair -v -keystore ~/keys/tuki-release.jks \
