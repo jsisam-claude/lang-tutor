@@ -242,12 +242,13 @@ install, no extra permission, no bypass of "install unknown apps".
 **The trap is renewal — not expiry.** These are different things and it matters
 which one you guard against.
 
-*Renewal definitely breaks updates.* Android compares the leaf certificate's DER
-bytes. Re-issuing from the same CA with the same private key yields an identical
-public key but a different certificate, so to Android it is a different signer,
-and the next update fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE`. Recovering
-means uninstalling — which wipes `filesDir`, i.e. the profile and the multi-GB
-models under `files/models`.
+*Renewal breaks the plain update path.* Android compares the leaf certificate's
+DER bytes. Re-issuing from the same CA with the same private key yields an
+identical public key but a different certificate, so to Android it is a
+different signer and the next update fails with
+`INSTALL_FAILED_UPDATE_INCOMPATIBLE`. It is recoverable — see key rotation below
+— but only while you still hold the old private key. **The key is the thing to
+preserve, not the certificate bytes.**
 
 *Expiry, by contrast, appears to be harmless here.* apksigner signs and verifies
 with an already-expired certificate without warning (measured: a cert valid only
@@ -282,8 +283,19 @@ apksigner sign --ks old.jks --next-signer --ks new.jks --lineage lineage.bin \
 
 Pass `--rotation-min-sdk-version 28` or apksigner defaults rotation to the v3.1
 block (API 33+) and leaves API 31–32 devices behind. The lineage must be carried
-on that update and every build after it. Losing the old keystore is the one
-genuinely unrecoverable case.
+on that update and every build after it. Rotation also requires a single-signer
+app. Losing the old keystore is the one genuinely unrecoverable case.
+
+**Pre-emptive alternative — compare keys instead of certificates.** If the
+*installed* manifest declares `<key-sets>` with a `<public-key>` and an
+`<upgrade-key-set>`, the installer checks the incoming APK's **public key**
+against that set (`KeySetManagerService.checkUpgradeKeySetLocked`) instead of
+comparing certificate bytes, so a renewed certificate over the same key updates
+cleanly with no lineage. It must be declared before the first install — it
+cannot be retrofitted onto an already-installed app — which makes it worth
+considering now, while nothing is shipped. This is a real but rarely used AOSP
+path (verified against the android15/16-release sources, not exercised on a
+device here), so prove it on your Pixel before depending on it.
 
 ```bash
 keytool -genkeypair -v -keystore ~/keys/tuki-release.jks \
