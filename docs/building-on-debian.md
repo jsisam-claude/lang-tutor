@@ -1,10 +1,13 @@
 # Building on Debian (as a normal user)
 
 Verified end to end on 2026-08-20: fresh `git clone`, unprivileged user (uid 1001),
-SDK inside `$HOME`, cold Gradle cache, **JDK 25** — both build lanes green and the
-resulting APK byte-identical in size to the one CI published that day
-(242,694,197 B). The tree has grown since: today's debug APK is 245,163,390 B
-(the VAD model went from 639 KB to the 2.3 MB v6 export), release 237,432,707 B.
+SDK inside `$HOME`, cold Gradle cache, **JDK 25** — both build lanes green and a
+working APK out the other end.
+
+Sizes are approximate, not a checksum: debug lands near 245 MB and release near
+237 MB, but the exact byte count drifts a few hundred KB between environments
+(dex merging and R8 are not bit-reproducible across machines), so don't treat a
+small difference from CI's published APK as a problem.
 
 Only ONE step needs `sudo`: installing the JDK. Everything else lives in `$HOME`.
 
@@ -164,6 +167,46 @@ Android refuses signature changes on update:
 (`adb uninstall org.sisam.langtutor` — this deletes the installed models;
 they'll re-download/re-push), then `adb install app-release.apk`. Same story
 in reverse when going back to a CI debug APK.
+
+### If your signing cert was issued by a CA — read this first
+
+A certificate issued by a CA (rather than a self-signed `keytool` one) **works**:
+Gradle takes the PKCS#12 straight from `storeFile`, no conversion. But Android
+does not use it the way a CA cert is normally used, and one property of CA certs
+is a trap here.
+
+**The CA is irrelevant to Android.** APK signatures are not validated against
+any trust store — not the system CAs, not user-installed CAs. Android *pins the
+certificate*: on update it compares the new APK's certificate against the
+installed one and allows the update only if they match. Verified by signing this
+app with a CA-issued cert and inspecting the result — apksigner reports a single
+signer (the leaf), and the issuing CA's bytes are not present in the APK at all.
+So having the issuing CA installed on the phone grants nothing: no easier
+install, no extra permission, no bypass of "install unknown apps".
+
+**The trap is renewal.** Android compares the *certificate*, not the key. Re-issuing
+from the same CA with the same private key yields an identical public key but a
+different certificate — and therefore, to Android, a different signer. Google's
+guidance is that an app signing key be valid **at least 25 years**, because once
+the validity period lapses "users will no longer be able to seamlessly upgrade".
+A typical CA cert is 1–3 years. When it renews, every install must be uninstalled
+and reinstalled — on this app that means re-downloading multi-GB models.
+
+Nothing warns you either: apksigner signs happily with an already-expired
+certificate (`minSdk 31` turns off v1/JAR signing, so validity dates are never
+checked at sign or install time). It breaks silently, later, at update time.
+
+**Recommendation:** sign the APK with a long-lived self-signed key and keep the
+CA-issued certificate for what CAs are for (TLS).
+
+```bash
+keytool -genkeypair -v -keystore ~/keys/tuki-release.jks \
+  -alias tuki -keyalg RSA -keysize 4096 -validity 10000 \
+  -dname "CN=Your Name, O=Sisam, C=IL"
+# 10000 days ~ 27 years, clearing the 25-year bar.
+```
+
+Back that keystore up. Losing it has exactly the same consequence as a renewal.
 
 ### If your certificate lives in another format
 
