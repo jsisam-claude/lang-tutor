@@ -1,5 +1,7 @@
 package org.sisam.langtutor.ui.parent
 
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,6 +46,11 @@ private fun ParentGate(onUnlocked: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            // Scrollable: the content is taller than the screen (ten unit
+            // cards on Home, the pack list in Parent Zone), and an unscrolled
+            // Column silently CLIPS its tail. That hid the Parent Zone button
+            // — the only route to installing models — off the bottom edge.
+            .verticalScroll(rememberScrollState())
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -71,6 +78,11 @@ private fun ParentDashboard(container: AppContainer) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            // Scrollable: the content is taller than the screen (ten unit
+            // cards on Home, the pack list in Parent Zone), and an unscrolled
+            // Column silently CLIPS its tail. That hid the Parent Zone button
+            // — the only route to installing models — off the bottom edge.
+            .verticalScroll(rememberScrollState())
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {

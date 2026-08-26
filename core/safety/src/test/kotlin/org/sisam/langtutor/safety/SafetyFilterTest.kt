@@ -65,7 +65,7 @@ class SafetyFilterTest {
     @Test
     fun `hebrew word boundaries do not block substrings`() {
         val f = BlocklistSafetyFilter()
-        // "הרגשה" (feeling) contains "הרג" (killing) as a prefix — the (?U)
+        // "הרגשה" (feeling) contains "הרג" (killing) as a prefix — the
         // word boundary must keep it allowed.
         assertTrue(f.check("איזו הרגשה טובה!").allowed)
     }
@@ -85,5 +85,17 @@ class SafetyFilterTest {
     fun `pointed everyday hebrew still passes`() {
         val filter = BlocklistSafetyFilter()
         assertTrue(filter.check("\u05db\u05b8\u05bc\u05dc \u05d4\u05b7\u05db\u05b8\u05bc\u05d1\u05d5\u05b9\u05d3").allowed) // כָּל הַכָּבוֹד
+    }
+
+    @Test
+    fun `the blocklist pattern uses no inline flags — Android's regex is ICU and rejects them`() {
+        // Android's java.util.regex is ICU-backed: it has Unicode character
+        // classes always on and throws PatternSyntaxException on "(?U)".
+        // Desktop JVM accepts it, so a unit test is the ONLY place this can
+        // be caught before the app crashes on device. Guard the whole class
+        // of bug, not just the one flag that bit us.
+        val pattern = BlocklistSafetyFilter().patternForTest()
+        val inlineFlags = Regex("""\(\?[a-zA-Z]+[):]""").findAll(pattern).map { it.value }.toList()
+        assertTrue("pattern carries inline flags $inlineFlags: $pattern", inlineFlags.isEmpty())
     }
 }

@@ -22,23 +22,38 @@ class BlocklistSafetyFilter(
     private val maxChars: Int = MAX_REPLY_CHARS,
 ) : SafetyFilter {
 
-    // (?U) makes \b and \w Unicode-aware. Without it, Java's word boundary
-    // only knows [A-Za-z0-9_], so a HEBREW term compiled into the pattern can
-    // never match at all — the tutor speaks Hebrew by design, and its only
-    // output guard was silently English-only. Verified: "אתה טיפש" sailed
-    // through the old pattern.
+    // Unicode-aware word boundaries WITHOUT any inline flag, because the two
+    // regex engines this runs on disagree about flags:
+    //   - desktop JVM (where the unit tests run): \b is ASCII-only unless
+    //     UNICODE_CHARACTER_CLASS / "(?U)" is set, so a Hebrew term never
+    //     matches. Verified: "אתה טיפש" sailed through the unflagged pattern.
+    //   - Android (where the app runs): java.util.regex is ICU-backed. It has
+    //     Unicode character classes ALWAYS on — and it REJECTS "(?U)" with a
+    //     PatternSyntaxException, which crashed the app the moment a filter
+    //     was constructed.
+    // Explicit lookarounds over \p{L}/\p{N} are supported identically by
+    // both engines, so the boundary means the same thing everywhere and no
+    // flag is needed.
+    //
     // Known limit: Hebrew clitic prefixes (ו/ה/ב/ל/מ/ש) attach with no space,
-    // so an inflected "והטיפש" is one \w-word and \b won't find טיפש inside
-    // it. Dropping \b would fix that but re-introduce substring false
-    // positives ("הרגשה" ⊃ הרג); word-boundary matching is the safer trade.
+    // so an inflected "והטיפש" is one word and the boundary won't find טיפש
+    // inside it. Dropping the boundary would fix that but re-introduce
+    // substring false positives ("הרגשה" ⊃ הרג); this is the safer trade.
     private val blockedRegex = Regex(
-        blockedTerms.joinToString("|", prefix = "(?U)\\b(", postfix = ")\\b") { Regex.escape(it) },
+        blockedTerms.joinToString(
+            separator = "|",
+            prefix = "(?<![\\p{L}\\p{N}_])(",
+            postfix = ")(?![\\p{L}\\p{N}_])",
+        ) { Regex.escape(it) },
         RegexOption.IGNORE_CASE,
     )
 
+    /** The compiled pattern, so tests can assert engine-portability. */
+    internal fun patternForTest(): String = blockedRegex.pattern
+
     override fun check(text: String): SafetyVerdict {
         // Niqqud/cantillation (U+0591–U+05C7) are combining WORD characters
-        // under (?U): a mark right after a term kills the trailing \b ("אתה
+        // a mark right after a term kills the trailing boundary ("אתה
         // טיפשׁ" passed on the shin dot alone) and a mark inside breaks the
         // literal match ("דָם" vs "דם"). Pointed text is the normal children's
         // register — the app's own Hebrew pipeline exists to ADD niqqud — so
@@ -77,7 +92,7 @@ class BlocklistSafetyFilter(
             "your address", "phone number", "password", "credit card",
             "secret from your parents",
             // Hebrew — the tutor emits Hebrew scaffolding by design, so the
-            // guard must speak it too. Word-boundary matched under (?U).
+            // guard must speak it too. Word-boundary matched (see blockedRegex).
             // "מת" (dead) is deliberately ABSENT: it collides with everyday
             // slang ("מת על זה" = loves it) and would over-block praise.
             "להרוג", "יהרוג", "הרג", "רצח", "מוות", "אקדח", "רובה", "סכין",
