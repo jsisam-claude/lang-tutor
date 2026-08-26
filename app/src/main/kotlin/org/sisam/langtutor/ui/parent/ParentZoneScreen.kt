@@ -110,6 +110,7 @@ private fun ParentDashboard(container: AppContainer) {
             }
         }
 
+        VoiceSection(container)
         PacksSection(container)
     }
 }

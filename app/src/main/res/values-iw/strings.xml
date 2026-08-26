@@ -89,4 +89,8 @@
     <string name="packs_consent_body">%1$s (%2$s) תרד פעם אחת, בחיבור הנוכחי שלכם. אפשר להסיר בכל רגע.</string>
     <string name="packs_consent_confirm">הורדה</string>
     <string name="packs_consent_cancel">לא עכשיו</string>
+    <string name="parent_voice_title">הקול של טוקי</string>
+    <string name="parent_voice_hint">הקישו על קול כדי לשמוע אותו. הבחירה נשמרת.</string>
+    <string name="parent_voice_american">אמריקאי</string>
+    <string name="parent_voice_british">בריטי</string>
 </resources>

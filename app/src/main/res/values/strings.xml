@@ -89,4 +89,8 @@
     <string name="packs_consent_body">%1$s (%2$s) will be downloaded once, over your current connection. You can remove it anytime.</string>
     <string name="packs_consent_confirm">Download</string>
     <string name="packs_consent_cancel">Not now</string>
+    <string name="parent_voice_title">Tuki’s voice</string>
+    <string name="parent_voice_hint">Tap a voice to hear it. The choice is saved.</string>
+    <string name="parent_voice_american">American</string>
+    <string name="parent_voice_british">British</string>
 </resources>

@@ -7,6 +7,12 @@ data class ParentSettings(
     val dailyMinutesLimit: Int = 20,
     /** BCP-47 tag for the UI language ("he" default market, "en" available). */
     val uiLanguage: String = "he",
+    /**
+     * Asset file name of Tuki's voice under `kokoro/`. Null means "whatever the
+     * build defaults to", so an existing profile keeps working and a future
+     * default change reaches people who never chose explicitly.
+     */
+    val voiceId: String? = null,
 )
 
 @Serializable

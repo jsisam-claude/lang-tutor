@@ -30,6 +30,8 @@ import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.UnitSummary
 import org.sisam.langtutor.ui.common.EngineStatusLine
+import org.sisam.langtutor.ui.common.TukiParrot
+import androidx.compose.ui.Alignment
 
 @Composable
 fun HomeScreen(
@@ -119,8 +121,14 @@ fun HomeScreen(
         }
         // One-tap check of phonemizer -> synthesis -> playback, so a broken
         // voice can be diagnosed without running a whole lesson.
-        OutlinedButton(onClick = { container.testVoice() }) {
-            Text(stringResource(R.string.home_test_voice))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            TukiParrot(speaking = container.speaking.collectAsState().value, size = 56.dp)
+            OutlinedButton(onClick = { container.testVoice() }) {
+                Text(stringResource(R.string.home_test_voice))
+            }
         }
         OutlinedButton(onClick = onOpenParent) {
             Text(stringResource(R.string.home_parent_zone))

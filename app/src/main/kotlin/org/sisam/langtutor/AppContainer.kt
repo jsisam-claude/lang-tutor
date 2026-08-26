@@ -27,6 +27,7 @@ import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmModelSpec
+import org.sisam.langtutor.speech.TukiVoices
 import org.sisam.langtutor.speech.TutorLanguage
 import org.sisam.langtutor.llm.LlmTierPolicy
 import org.sisam.langtutor.packs.HttpPackFetcher
@@ -224,7 +225,52 @@ class AppContainer private constructor(context: Context) {
     }
 
     private val hasVoiceAsset: Boolean by lazy {
-        runCatching { appContext.assets.open(KokoroTtsEngine.VOICE_ASSET).close() }.isSuccess
+        runCatching {
+            appContext.assets.open("${KokoroTtsEngine.VOICE_DIR}/${TukiVoices.DEFAULT_ID}").close()
+        }.isSuccess
+    }
+
+    /**
+     * Applies the parent's chosen voice to the live engine.
+     *
+     * Switching is only loading a different 510x256 conditioning table, so it
+     * takes effect on the next sentence with no model reload — which is what
+     * makes previewing voices in the picker feel instant.
+     */
+    fun applyVoice(voiceId: String?) {
+        val voice = TukiVoices.byId(voiceId)
+        bundledTtsEngine()?.voiceAsset = voice.id
+    }
+
+    private val _speaking = MutableStateFlow(false)
+
+    /**
+     * True while a preview or voice test is actually sounding.
+     *
+     * Exposed so the picker can animate Tuki in step with the sample — the
+     * point of the picker is how a voice SOUNDS, and a child watching a parent
+     * choose should see the bird move for each one.
+     */
+    val speaking: StateFlow<Boolean> = _speaking
+
+    /** Speaks the test line in a specific voice, for previewing in the picker. */
+    fun previewVoice(voiceId: String): Job = appScope.launch(Dispatchers.IO) {
+        applyVoice(voiceId)
+        speakTestLine()
+    }
+
+    private suspend fun speakTestLine() {
+        val tts = TtsRouter(
+            english = bundledTtsEngine() ?: PlatformTtsEngine(appContext),
+            hebrew = hebrewTtsEngine(),
+        )
+        _speaking.value = true
+        try {
+            runCatching { tts.speak(VOICE_TEST_LINE, TutorLanguage.ENGLISH).collect { } }
+                .onFailure { Log.w(MEM_TAG, "voice preview failed", it) }
+        } finally {
+            _speaking.value = false
+        }
     }
 
     /** One Hebrew engine app-wide, same reasoning as [kokoroEngine]. */
@@ -366,18 +412,13 @@ class AppContainer private constructor(context: Context) {
      * waveform (peak/rms/zero-crossing) lands in logcat under TukiTts, next to
      * the reference values measured off-device.
      */
-    fun testVoice(): Job = appScope.launch(Dispatchers.IO) {
-        val tts = TtsRouter(
-            english = bundledTtsEngine() ?: PlatformTtsEngine(appContext),
-            hebrew = hebrewTtsEngine(),
-        )
-        runCatching {
-            tts.speak(VOICE_TEST_LINE, TutorLanguage.ENGLISH).collect { }
-        }.onFailure { Log.w(MEM_TAG, "voice test failed", it) }
-    }
+    fun testVoice(): Job = appScope.launch(Dispatchers.IO) { speakTestLine() }
 
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator {
         val kokoro = bundledTtsEngine()
+        // Honour the parent's choice for this session; the picker also applies
+        // it live, this covers a fresh process.
+        appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
         val hebrew = hebrewTtsEngine()
         // Warm the ENGLISH voice off the critical path — otherwise the first
         // spoken reply pays ONNX session load on top of LLM generation. The

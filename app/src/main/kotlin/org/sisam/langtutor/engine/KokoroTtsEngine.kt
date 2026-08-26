@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.flowOn
 import org.sisam.langtutor.speech.KokoroPhonemizer
 import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
+import org.sisam.langtutor.speech.TukiVoices
 import org.sisam.langtutor.speech.TtsEvent
 import org.sisam.langtutor.speech.TutorLanguage
 
@@ -44,15 +45,37 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
     private val phonemizer by lazy { KokoroPhonemizer.load() }
     private val player = PcmPlayer(SAMPLE_RATE)
 
+    /**
+     * Which conditioning table to load. Settable because switching voices is
+     * just loading a different 510x256 table — no model reload — so a parent
+     * changing it in the picker takes effect on the next sentence.
+     */
+    @Volatile
+    var voiceAsset: String = TukiVoices.DEFAULT_ID
+        set(value) {
+            if (field != value) {
+                field = value
+                synchronized(voiceLock) { loadedVoice = null }
+                Log.i(TAG, "voice switched to $value")
+            }
+        }
+
+    private val voiceLock = Any()
+    @Volatile private var loadedVoice: FloatArray? = null
+
     /** 510 rows × 256 floats; row (tokens+2-1) conditions the voice, upstream convention. */
-    private val voice: FloatArray by lazy {
-        appContext.assets.open(VOICE_ASSET).use { input ->
+    private val voice: FloatArray
+        get() = loadedVoice ?: synchronized(voiceLock) {
+            loadedVoice ?: readVoice(voiceAsset).also { loadedVoice = it }
+        }
+
+    private fun readVoice(asset: String): FloatArray =
+        appContext.assets.open("$VOICE_DIR/$asset").use { input ->
             val bytes = input.readBytes()
             val floats = FloatArray(bytes.size / 4)
             ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer().get(floats)
             floats
         }
-    }
 
     // Nullable + accessor rather than `by lazy`, so trimMemory() can close the
     // session and the next line of speech quietly reloads it.
@@ -216,7 +239,8 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         private const val STYLE_DIM = 256
         private const val THREADS = 4
 
-        /** af_heart from onnx-community/Kokoro-82M-v1.0-ONNX, pinned by the fetch script. */
-        const val VOICE_ASSET = "kokoro/af_heart.bin"
+        /** All English voices from onnx-community/Kokoro-82M-v1.0-ONNX live
+         *  here, pinned by scripts/fetch-voice-assets.sh. */
+        const val VOICE_DIR = "kokoro"
     }
 }
