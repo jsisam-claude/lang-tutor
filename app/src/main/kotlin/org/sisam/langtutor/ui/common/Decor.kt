@@ -183,13 +183,14 @@ fun Perch(modifier: Modifier = Modifier) {
         val w = size.width
         val h = size.height
         val bark = Color(0xFF8D6034)
-        drawRoundRectPath(w, h, bark)
+        drawBough(w, h, bark)
         val leaf = Color(0xFF2E9E5B)
         drawOval(leaf, Offset(w * 0.10f, h * 0.05f), Size(w * 0.22f, h * 0.45f))
         drawOval(Color(0xFF1F7A44), Offset(w * 0.72f, h * 0.0f), Size(w * 0.20f, h * 0.40f))
     }
 }
 
-private fun DrawScope.drawRoundRectPath(w: Float, h: Float, color: Color) {
+/** The bough itself: a flattened oval spanning the full width. */
+private fun DrawScope.drawBough(w: Float, h: Float, color: Color) {
     drawOval(color, Offset(0f, h * 0.42f), Size(w, h * 0.34f))
 }

@@ -167,7 +167,16 @@ private fun HomeHero(container: AppContainer, xp: Int) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+        // Transparent so the sky shows through — but the content colour must
+        // be named explicitly, because contentColorFor(Transparent) is
+        // Unspecified and would leave every Text below it without one.
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+        ),
+        // The sky gives this card its edge; a drop shadow under a transparent
+        // container just smudges the boundary.
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
         Box {
             // A still sky here, not a drifting one: this backdrop sits directly

@@ -4,10 +4,12 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -61,16 +63,22 @@ fun SplashScreen(container: AppContainer) {
         // Centre when it fits, scroll when it doesn't: at 2.0x font the title
         // and tagline alone can outgrow a short viewport, and a splash that
         // clips its own progress bar is worse than one that scrolls.
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = A11y.gutter, vertical = 24.dp),
-            contentAlignment = Alignment.Center,
-        ) {
+        //
+        // The heightIn(min) is what makes that true, and it has to sit INSIDE
+        // verticalScroll: the scroll modifier hands its content an unbounded
+        // height, so Arrangement.Center would otherwise centre within the
+        // content's own height — i.e. do nothing — and the column would pin to
+        // the top whether it fitted or not.
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            val viewport = this.maxHeight
             Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .heightIn(min = viewport)
+                    .padding(horizontal = A11y.gutter, vertical = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(2.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically),
             ) {
                 // speaking=true so the bird is alive on the very first screen —
                 // the beak/bob loop doubles as a "we're doing something" signal.
