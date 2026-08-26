@@ -229,7 +229,7 @@ Two things worth watching, both from the eval:
   new finding worth reporting.
 
 ## Tuki's voice (bundled Kokoro TTS)
-Tuki speaks with OUR bundled Kokoro voice whenever `models/model_q8f16.onnx`
+Tuki speaks with OUR bundled Kokoro voice whenever `models/model_quantized.onnx`
 (86 MB) is on device — no Google services, no system voices (GrapheneOS has
 neither, so previously replies were silent there). Install it like the LLM:
 Parent Zone → Packs → "Tuki's Voice (Kokoro)", or import/share the file, or

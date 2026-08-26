@@ -476,7 +476,7 @@ class AppContainer private constructor(context: Context) {
         // Bundled Kokoro voice (single q8f16 ONNX build; the HF file name is kept
         // so downloads, imports and the catalog all agree on one name).
         private val TTS_CANDIDATES = listOf(
-            "models/model_q8f16.onnx",
+            "models/model_quantized.onnx",
         )
 
         // Bundled Hebrew voice (Phonikud stack), HF file names kept as above.

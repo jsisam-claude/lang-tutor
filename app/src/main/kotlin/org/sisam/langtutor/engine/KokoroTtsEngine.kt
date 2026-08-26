@@ -24,7 +24,9 @@ import org.sisam.langtutor.speech.TutorLanguage
  * Bundled Kokoro-82M voice — Tuki speaks with OUR OWN on-device TTS, no Google
  * services and no system voices needed (GrapheneOS has neither). Single-graph
  * ONNX build (StyleTTS2 family): phoneme ids + style vector + speed in, 24 kHz
- * waveform out; [KokoroPhonemizer] provides the ids, the af_heart voice ships
+ * waveform out. The int8/fp32-compute export is deliberate: the smaller
+ * fp16-activation build (q8f16) returns an all-NaN waveform on ARM, though it
+ * is clean on x86 — see the non-finite guard in [synthesize]; [KokoroPhonemizer] provides the ids, the af_heart voice ships
  * in APK assets (fetched + SHA-256-pinned by scripts/fetch-voice-assets.sh),
  * and the 86 MB model installs like the LLM (Parent Zone pack / import).
  *
@@ -170,8 +172,10 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
                 var peak = 0f
                 var sumSq = 0.0
                 var crossings = 0
+                var nonFinite = 0
                 for (i in audio.indices) {
                     val v = audio[i]
+                    if (!v.isFinite()) { nonFinite++; continue }
                     if (kotlin.math.abs(v) > peak) peak = kotlin.math.abs(v)
                     sumSq += v.toDouble() * v
                     if (i > 0 && audio[i - 1] * v < 0f) crossings++
@@ -185,6 +189,20 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
                         "peak=${"%.3f".format(peak)} rms=${"%.4f".format(rms)} " +
                         "zcr=${"%.3f".format(zcr)} (ref peak~0.45 rms~0.065 zcr~0.11)",
                 )
+                // NEVER hand non-finite samples to AudioTrack: it renders
+                // them as a burst of noise at full volume, which is what a
+                // Pixel reported when the fp16-activation export (q8f16)
+                // produced an all-NaN waveform on ARM while the same file was
+                // clean on x86. Silence plus a loud log beats hurting a
+                // child's ears, and the count names the real fault.
+                if (nonFinite > 0) {
+                    Log.e(
+                        TAG,
+                        "discarding waveform: $nonFinite/${audio.size} samples are NaN/Inf — " +
+                            "the ONNX export is producing garbage on this device, not the audio path",
+                    )
+                    return FloatArray(0)
+                }
                 return audio
             }
         } finally {

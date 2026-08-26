@@ -10,7 +10,7 @@ Expected layout (see docs/architecture.md and docs/feasibility.md §7 for the
 src/main/assets/models/
 ├── gemma-4-E2B-it.litertlm            # LLM, ~2.59 GB (Gemma 4 E2B, Apache 2.0)
 ├── acft_whisper_small.en_10s.tflite   # English ASR, ~286 MB (docs/asr-model-eval.md)
-├── model_q8f16.onnx                   # English TTS, ~86 MB (Kokoro q8f16)
+├── model_quantized.onnx               # English TTS, ~92 MB (Kokoro int8, fp32 compute)
 ├── phonikud-1.0.int8.onnx             # Hebrew nikud + G2P, ~308 MB (MIT) — NOT SHIPPED: the Hebrew VOICE it fed was CC-BY-NC and removed; its pin lives only in ModelImporter/download-sideload.sh (dev use), not in the pack catalog
 └── wav2vec2-phoneme-int8.onnx         # Pronunciation scorer, ~318 MB (CTC-GOP)
 ```

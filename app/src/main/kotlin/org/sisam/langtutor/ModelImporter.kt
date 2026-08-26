@@ -279,8 +279,8 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
             "whisper_medium_30s_i4.tflite" to listOf(
                 KnownRevision(664_348_672, "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63"),
             ),
-            "model_q8f16.onnx" to listOf(
-                KnownRevision(86_033_585, "04c658aec1b6008857c2ad10f8c589d4180d0ec427e7e6118ceb487e215c3cd0"),
+            "model_quantized.onnx" to listOf(
+                KnownRevision(92_361_116, "fbae9257e1e05ffc727e951ef9b9c98418e6d79f1c9b6b13bd59f5c9028a1478"),
             ),
             "wav2vec2-phoneme-int8.onnx" to listOf(
                 KnownRevision(317_712_780, "74174710e34035bbb7f611601d016c32fc575de7a6f53b1078107dc10a84e7ae"),
