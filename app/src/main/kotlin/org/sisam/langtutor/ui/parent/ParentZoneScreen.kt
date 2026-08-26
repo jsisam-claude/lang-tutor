@@ -3,6 +3,7 @@ package org.sisam.langtutor.ui.parent
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -59,7 +60,10 @@ private fun ParentGate(onUnlocked: () -> Unit) {
             style = MaterialTheme.typography.headlineSmall,
         )
         Text(text = stringResource(R.string.parent_gate_question, CHALLENGE.question))
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
             CHALLENGE.options.forEach { option ->
                 OutlinedButton(onClick = { if (option == CHALLENGE.answer) onUnlocked() }) {
                     Text(text = option.toString())
@@ -94,7 +98,10 @@ private fun ParentDashboard(container: AppContainer) {
         Text(text = stringResource(R.string.parent_daily_limit, profile.parentSettings.dailyMinutesLimit))
         Text(text = stringResource(R.string.parent_offline_note))
 
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
             Button(onClick = { setAppLanguage("he") }) {
                 Text(stringResource(R.string.parent_language_hebrew))
             }

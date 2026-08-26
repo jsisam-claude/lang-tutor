@@ -1,6 +1,7 @@
 package org.sisam.langtutor.ui.parent
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -154,7 +155,10 @@ fun PacksSection(container: AppContainer) {
         val folderPicker = rememberLauncherForActivityResult(
             ActivityResultContracts.OpenDocumentTree(),
         ) { uri -> uri?.let { container.modelImporter.importTree(it) } }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
             OutlinedButton(onClick = { importPicker.launch(arrayOf("*/*")) }) {
                 Text(stringResource(R.string.packs_import))
             }

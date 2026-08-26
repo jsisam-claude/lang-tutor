@@ -97,8 +97,8 @@ class LiteRtLmEngine(
 
         var lastError: Throwable? = null
         var gpuFailed = false
-        val backends = if (skipGpu) listOf("cpu" to Backend.CPU())
-        else listOf("gpu" to Backend.GPU(), "cpu" to Backend.CPU())
+        val backends = if (skipGpu) listOf("cpu" to Backend.CPU(cpuThreads(), null))
+        else listOf("gpu" to Backend.GPU(), "cpu" to Backend.CPU(cpuThreads(), null))
         for ((label, backend) in backends) {
             if (label == "gpu") runCatching { attemptMarker.createNewFile() }
             val started = System.nanoTime()
@@ -130,7 +130,11 @@ class LiteRtLmEngine(
                 engine = candidate
                 val ms = (System.nanoTime() - started) / 1_000_000
                 EngineStatus.end(loadStep, null)
-                Log.i(TAG, "loaded $modelPath on backend=$backend in ${ms}ms (smoke ok)")
+                Log.i(
+                    TAG,
+                    "loaded $modelPath on backend=$backend in ${ms}ms (smoke ok); " +
+                        "cores=${Runtime.getRuntime().availableProcessors()} cpuThreads=${cpuThreads()}",
+                )
                 runCatching { attemptMarker.delete() }
                 runCatching {
                     when {
@@ -330,6 +334,21 @@ class LiteRtLmEngine(
      *  MUST use the production sampler settings: greedy (topK=1) can bypass the
      *  top-K sampler whose OpenCL dependency is exactly what breaks on
      *  GrapheneOS — a greedy smoke could pass on a backend real turns fail on. */
+    /**
+     * Threads for CPU decode. Passing nothing left LiteRT-LM on its own default
+     * (the device logged `CPU(threadCount=null, numOfThreads=null)`), which is
+     * the wrong shape for a big.LITTLE phone: Tensor G4 is 1x Cortex-X4 +
+     * 3x A720 + 4x A520, and scheduling decode onto the little cores makes them
+     * stragglers that the fast cores wait on every token. Half the core count,
+     * clamped, lands on the big cluster — 4 on a Pixel 9 — without hard-coding
+     * a topology we cannot actually query.
+     *
+     * DEVICE-VERIFY: this is a reasoned default, not a measured optimum. The
+     * decode tok/s in the bench is what should settle the number.
+     */
+    private fun cpuThreads(): Int =
+        (Runtime.getRuntime().availableProcessors() / 2).coerceIn(2, 6)
+
     private fun smokeTest(candidate: Engine) {
         val conversation = candidate.createConversation(
             com.google.ai.edge.litertlm.ConversationConfig(
