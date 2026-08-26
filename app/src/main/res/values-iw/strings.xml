@@ -9,6 +9,7 @@
     <string name="home_start_conversation">מדברים עם תוקי</string>
     <string name="home_preload">טעינת מודלים מראש</string>
     <string name="home_preload_running">…טוען</string>
+    <string name="home_preload_done">✓ המודלים נטענו</string>
     <string name="home_test_voice">בדיקת הקול של טוקי</string>
     <string name="home_parent_zone">אזור הורים</string>
 

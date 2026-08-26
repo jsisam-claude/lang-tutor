@@ -44,7 +44,19 @@ import org.sisam.langtutor.llm.Role
  * @param modelPath absolute filesystem path to the `.litertlm` file, resolved by
  *   the caller from the installed model pack / asset pack.
  */
-class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
+class LiteRtLmEngine(
+    private val modelPath: String,
+    /**
+     * Identity of THIS install, scoping the "GPU doesn't work here" hint.
+     *
+     * versionCode alone was wrong: it is hard-coded to 1 and never bumped in
+     * development, so ONE early GPU failure pinned CPU permanently — including
+     * across the very rebuilds that ADD a missing accelerator library. Keyed to
+     * the install instead, each new APK gets exactly one fresh GPU attempt, and
+     * a device that genuinely cannot do GPU still pays for it only once.
+     */
+    private val installStamp: String,
+) : LlmEngine {
 
     private var engine: Engine? = null
 
@@ -60,9 +72,10 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // keyed to this build's versionCode: an app update (which may bundle
         // the missing sampler library) retries GPU once and re-decides.
         val hintFile = File("$modelPath$CPU_HINT_SUFFIX")
+        val buildStamp = installStamp
         val attemptMarker = File("$modelPath$GPU_ATTEMPT_SUFFIX")
         val hintSkip = runCatching {
-            hintFile.isFile && hintFile.readText().trim() == BuildConfig.VERSION_CODE.toString()
+            hintFile.isFile && hintFile.readText().trim() == buildStamp
         }.getOrDefault(false)
         // Crash-loop guard: a leftover attempt marker means the last GPU attempt
         // never completed — a NATIVE crash (e.g. inside the GPU driver or a
@@ -70,11 +83,15 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
         // Pin CPU for this build so one bad driver can't crash every launch.
         val crashSkip = attemptMarker.exists()
         if (crashSkip) {
-            Log.w(TAG, "previous GPU attempt crashed the process — pinning CPU for this build")
-            runCatching { hintFile.writeText(BuildConfig.VERSION_CODE.toString()) }
+            Log.w(TAG, "previous GPU attempt crashed the process — pinning CPU for this build ($buildStamp)")
+            runCatching { hintFile.writeText(buildStamp) }
             runCatching { attemptMarker.delete() }
         } else if (hintSkip) {
-            Log.i(TAG, "cpu hint present for this build — skipping the GPU attempt")
+            Log.i(
+                TAG,
+                "cpu hint matches this install ($buildStamp) — skipping the GPU attempt; " +
+                    "reinstall to retry GPU, or delete $CPU_HINT_SUFFIX next to the model",
+            )
         }
         val skipGpu = hintSkip || crashSkip
 
@@ -118,7 +135,7 @@ class LiteRtLmEngine(private val modelPath: String) : LlmEngine {
                 runCatching {
                     when {
                         // CPU only works after GPU just failed: remember, skip next time.
-                        label == "cpu" && gpuFailed -> hintFile.writeText(BuildConfig.VERSION_CODE.toString())
+                        label == "cpu" && gpuFailed -> hintFile.writeText(buildStamp)
                         // GPU works: clear any stale hint from an older build.
                         label == "gpu" && hintFile.exists() -> hintFile.delete()
                     }

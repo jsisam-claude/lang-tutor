@@ -3,6 +3,7 @@ package org.sisam.langtutor.ui.home
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -76,7 +77,13 @@ fun HomeScreen(
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    // FlowRow, not Row: at large system font/display sizes the
+                    // two buttons no longer fit side by side and a Row clips the
+                    // second one off the card. Wrapping keeps both reachable.
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
                         Button(onClick = { onOpenLesson(unit.id) }) {
                             Text(stringResource(R.string.home_start_lesson))
                         }
@@ -92,17 +99,21 @@ fun HomeScreen(
         // Every engine is lazy, so a cold first conversation stalls once per
         // engine. This gets it over with on demand; progress shows in the
         // status line above and under the TukiStep logcat tag.
-        var preloading by rememberSaveable { mutableStateOf(false) }
+        // State lives in the container, not here: the work runs on the app
+        // scope and outlives this screen, so a rotate or a trip to Parent Zone
+        // must not strand the button reading "Preloading..." forever.
+        val preload by container.preload.collectAsState()
         OutlinedButton(
-            onClick = {
-                preloading = true
-                container.preloadAll()
-            },
-            enabled = !preloading,
+            onClick = { container.preloadAll() },
+            enabled = preload != AppContainer.PreloadState.RUNNING,
         ) {
             Text(
                 stringResource(
-                    if (preloading) R.string.home_preload_running else R.string.home_preload,
+                    when (preload) {
+                        AppContainer.PreloadState.RUNNING -> R.string.home_preload_running
+                        AppContainer.PreloadState.DONE -> R.string.home_preload_done
+                        AppContainer.PreloadState.IDLE -> R.string.home_preload
+                    },
                 ),
             )
         }

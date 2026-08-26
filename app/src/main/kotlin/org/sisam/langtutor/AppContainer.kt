@@ -10,6 +10,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
@@ -320,7 +322,26 @@ class AppContainer private constructor(context: Context) {
      * Safe to call more than once — every accessor below is memoised, so a
      * second call is a no-op that just re-reports.
      */
-    fun preloadAll(): Job = appScope.launch(Dispatchers.IO) {
+    /** Progress of [preloadAll], owned here because the work outlives any screen. */
+    enum class PreloadState { IDLE, RUNNING, DONE }
+
+    private val _preload = MutableStateFlow(PreloadState.IDLE)
+    val preload: StateFlow<PreloadState> = _preload
+
+    @Volatile private var preloadJob: Job? = null
+
+    fun preloadAll(): Job = synchronized(this) {
+        // Idempotent: a second tap joins the running job rather than starting
+        // a second multi-GB load next to the first.
+        preloadJob?.takeIf { it.isActive }?.let { return it }
+        _preload.value = PreloadState.RUNNING
+        preloadInternal().also { job ->
+            preloadJob = job
+            job.invokeOnCompletion { _preload.value = PreloadState.DONE }
+        }
+    }
+
+    private fun preloadInternal(): Job = appScope.launch(Dispatchers.IO) {
         runCatching { sileroVad()?.warmUp() }
             .onFailure { Log.w(MEM_TAG, "preload: vad failed", it) }
         runCatching { bundledTtsEngine()?.warmUp() }
@@ -430,6 +451,13 @@ class AppContainer private constructor(context: Context) {
      * falling back is the session dying mid-reply. The pick and its reason go
      * to logcat (`model_pick:`), and the badge shows the tier.
      */
+    /** versionCode + install time: changes on every reinstall, so a new APK
+     *  always re-tests the GPU path instead of inheriting an old verdict. */
+    private fun installStamp(): String = runCatching {
+        val pi = appContext.packageManager.getPackageInfo(appContext.packageName, 0)
+        "${BuildConfig.VERSION_CODE}@${pi.lastUpdateTime}"
+    }.getOrDefault(BuildConfig.VERSION_CODE.toString())
+
     private fun createLlmEngine(): LlmEngine {
         val installed = LinkedHashMap<String, File>() // preference order kept
         val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
@@ -452,7 +480,7 @@ class AppContainer private constructor(context: Context) {
         val choice = checkNotNull(LlmTierPolicy.choose(installed.keys.toList(), info.availMem / 1e9f))
         modelTierLabel = choice.tierLabel
         Log.i("TukiLlm", "model_pick: ${choice.reason}${if (choice.tight) " [TIGHT]" else ""}")
-        return LiteRtLmEngine(installed.getValue(choice.path).absolutePath)
+        return LiteRtLmEngine(installed.getValue(choice.path).absolutePath, installStamp())
     }
 
     companion object {
