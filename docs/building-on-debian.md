@@ -215,9 +215,13 @@ buildTypes {
 JDWP-attachable release build.)
 
 One caveat if downloads stay blocked: the packs are the ASR, TTS and LLM models,
-so without them the app quietly falls back to `FakeLlmEngine` and the *platform*
-ASR/TTS — and the platform recognizer may use a **cloud** service. "Everything
-else is on-device" holds only once the packs are installed.
+so without them the app falls back to `FakeLlmEngine` and the *platform*
+ASR/TTS. Where that recognizer sends audio is the device's choice, not ours: it
+may be on-device (a de-googled phone often has one — FUTO Voice Input registers
+a Whisper-backed `RecognitionService`) or it may be a cloud service, and the API
+cannot tell them apart. We request `EXTRA_PREFER_OFFLINE`, but only the bundled
+model is a guarantee. "Everything else is on-device" holds once the packs are
+installed.
 
 ### Installing over the debug build fails — expected
 
