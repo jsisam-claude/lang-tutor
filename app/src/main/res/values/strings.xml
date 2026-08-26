@@ -22,6 +22,9 @@
     <string name="pronunciation_title">How your sounds came out</string>
     <string name="pronunciation_stars">%1$d of 5 stars</string>
     <string name="conversation_type_hint">Type in English…</string>
+    <!-- Deliberately Hebrew in BOTH locales: it is the escape hatch, and a
+         learner who needs it is by definition not reading the English label. -->
+    <string name="conversation_explain_hebrew">הסבר בעברית</string>
     <string name="conversation_send">Send</string>
 
     <string name="speaker_tutor">Tuki</string>
@@ -91,6 +94,13 @@
     <string name="packs_consent_body">%1$s (%2$s) will be downloaded once, over your current connection. You can remove it anytime.</string>
     <string name="packs_consent_confirm">Download</string>
     <string name="packs_consent_cancel">Not now</string>
+    <string name="parent_track_title">Who is learning?</string>
+    <string name="parent_track_hint">This sets how Tuki talks: how long the answers are, whether mistakes get a named rule or a gentle repeat, and whether Hebrew explanations are offered.</string>
+    <string name="parent_track_hebrew_note">Hebrew explanations need the larger model (E4B) and a track that reads — they are hidden for a pre-reader, who gains nothing from Hebrew text.</string>
+    <string name="track_pre_reader">Young child (not reading yet)</string>
+    <string name="track_beginner">Beginner</string>
+    <string name="track_exam">Exam preparation</string>
+    <string name="track_improver">Already speaks, improving</string>
     <string name="parent_voice_title">Tuki’s voice</string>
     <string name="parent_voice_hint">Tap a voice to hear it. The choice is saved.</string>
     <string name="parent_voice_american">American</string>

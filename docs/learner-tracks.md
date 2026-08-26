@@ -2,8 +2,13 @@
 
 Decision record (2026-08-27): how the tutor serves audiences beyond the
 original young-child focus, what varies per audience, and the concrete next
-step for Hebrew explanations. Nothing here is built yet except where noted;
-this is the plan the code grows toward.
+step for Hebrew explanations.
+
+**Status (2026-08-26):** the track itself and the Hebrew escape hatch are
+built — `LearnerTrack` on the profile, `TrackConfig` in `core/tutor`, a picker
+in the Parent Zone, and the "הסבר בעברית" control on the conversation screen.
+Onboarding, spaced retrieval and track C's exam content are still plan only;
+each section below says which.
 
 ## The five user types collapse into four tracks
 
@@ -41,13 +46,24 @@ tracks are treated as settled.
 - **Spaced retrieval** — BKT skill states are persisted but nothing schedules
   reviews from them yet.
 
-Implementation shape: a `LearnerTrack` field on the profile, set by three
-onboarding questions (age band / goal / "can you read English?"), where each
-track is a small config bundle — prompt, budget, scaffold ratio, feedback
-mode, content filter — not a code fork. The curriculum's `ageBand` already
-half-does this; the track generalizes it. Content warning: track C needs
-exam-style material the ten pre-A1 units do not resemble — a content project,
-not a code one.
+Implementation shape — **built**: `LearnerTrack` is a field on
+`LearnerProfile`, and `TrackConfig.of(track)` in `core/tutor` is the config
+bundle: persona suffix appended to the shared system prompt, reply budget,
+whether corrections name the rule, and whether written Hebrew is any use to
+this learner. Not a code fork — one lookup at `startSession`.
+
+Two details worth keeping straight:
+
+- **The age band still floors the reply budget.** A 4–6 unit gets 48 tokens
+  even on the Exam track, because the constraint there is the material, not
+  the learner's profile. Track budgets only apply above that floor.
+- **The picker lives in the Parent Zone, not onboarding.** The three-question
+  onboarding the plan calls for (age band / goal / "can you read English?")
+  is still unbuilt; an adult changing the setting after watching one session
+  is the better first version of it anyway.
+
+Content warning, unchanged: track C needs exam-style material the ten pre-A1
+units do not resemble — a content project, not a code one.
 
 ## Hebrew explanations — the next step (greenlit, small)
 
@@ -56,20 +72,31 @@ the shipping runtime (`eval/hebrew/results/VERDICT.md`); the safety filter is
 Hebrew-aware; `TtsRouter` already degrades mixed output correctly (speaks the
 English words, shows Hebrew as text).
 
-1. **Deterministic trigger, not detection**: a "הסבר בעברית" button on the
-   conversation screen, plus auto-trigger when the learner *types* Hebrew
-   (`containsHebrew` already exists). No confusion-guessing from ASR
-   confidence.
-2. **A policy instruction, not a prompt rewrite**: the tap injects one
-   turn-instruction — "Explain your last point briefly in written Hebrew,
-   then continue in English." The `DialoguePolicy → instruction` plumbing
-   carries it unchanged.
-3. **Gate by tier**: allowed only when `modelTierLabel == E4B`. E2B *failed*
-   the Hebrew gate (4.03, meta-AI flag); shipping its Hebrew would ship what
-   the eval rejected.
+All three steps are **built** (`TutorOrchestrator`, `HebrewHelpTest`):
 
-Known limitation to design around: this delivers Hebrew as **text**, which
-serves B/C/D fully and A not at all. For pre-readers the answer remains
+1. **Deterministic trigger, not detection**: a "הסבר בעברית" button on the
+   conversation screen, plus auto-trigger when the learner *types* Hebrew.
+   No confusion-guessing from ASR confidence — the learner is the only one
+   who knows they are lost, and typing Hebrew says so plainly. The shared
+   definition of "is this Hebrew" now lives in `core/speech`'s `HebrewText`,
+   used by the voice router, the trigger, and the transcript's text
+   direction alike.
+2. **A policy instruction, not a prompt rewrite**: the tap injects one
+   turn-instruction (`HEBREW_HELP_INSTRUCTION`) through the same
+   `DialoguePolicy → instruction` plumbing every other move uses. The session
+   does not enter a "Hebrew mode"; the next turn is ordinary English. The one
+   thing the turn does get of its own is a bigger token budget — a bilingual
+   answer carries two scripts and the ordinary budget clips it mid-sentence.
+   Asking for Hebrew adds no child turn to the transcript: it is a request to
+   re-explain, not something the learner said.
+3. **Two gates, not one**: the loaded tier must be E4B — E2B *failed* the
+   Hebrew gate (4.03, meta-AI flag), and shipping its Hebrew would ship what
+   the eval rejected — **and** the track must be one written Hebrew helps.
+   The button is absent, not disabled, when either gate is shut.
+
+Known limitation, now enforced rather than merely noted: this delivers Hebrew
+as **text**, which serves B/C/D fully and A not at all — so track A is not
+offered it. For pre-readers the answer remains
 pre-recorded human Hebrew audio for the ~20 fixed instruction lines
 (docs/product-phases.md); dynamic spoken Hebrew waits on a commercially
 licensed voice (docs/feasibility.md §6).

@@ -24,6 +24,7 @@
     <string name="pronunciation_title">איך יצאו הצלילים שלך</string>
     <string name="pronunciation_stars">%1$d מתוך 5 כוכבים</string>
     <string name="conversation_type_hint">כותבים באנגלית… ⁦English⁩</string>
+    <string name="conversation_explain_hebrew">הסבר בעברית</string>
     <string name="conversation_send">שליחה</string>
 
     <string name="speaker_tutor">תוקי</string>
@@ -91,6 +92,13 @@
     <string name="packs_consent_body">%1$s (%2$s) תרד פעם אחת, בחיבור הנוכחי שלכם. אפשר להסיר בכל רגע.</string>
     <string name="packs_consent_confirm">הורדה</string>
     <string name="packs_consent_cancel">לא עכשיו</string>
+    <string name="parent_track_title">מי לומד?</string>
+    <string name="parent_track_hint">הבחירה קובעת איך תוקי מדבר: אורך התשובות, האם טעות מקבלת שם של כלל או חזרה עדינה, והאם מוצעים הסברים בעברית.</string>
+    <string name="parent_track_hebrew_note">הסברים בעברית דורשים את המודל הגדול (⁦E4B⁩) ומסלול שקורא — הם מוסתרים למי שעדיין לא קורא, שאינו מרוויח דבר מטקסט בעברית.</string>
+    <string name="track_pre_reader">ילד/ה שעדיין לא קורא/ת</string>
+    <string name="track_beginner">מתחילים</string>
+    <string name="track_exam">הכנה לבחינה</string>
+    <string name="track_improver">כבר מדבר/ת, רוצה להשתפר</string>
     <string name="parent_voice_title">הקול של טוקי</string>
     <string name="parent_voice_hint">הקישו על קול כדי לשמוע אותו. הבחירה נשמרת.</string>
     <string name="parent_voice_american">אמריקאי</string>

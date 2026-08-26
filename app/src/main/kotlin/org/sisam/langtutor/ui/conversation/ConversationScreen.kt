@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -65,6 +66,13 @@ class ConversationViewModel(container: AppContainer, unitId: String) : ViewModel
     val handsFreeAvailable = orchestrator.handsFreeAvailable
     fun setHandsFree(enabled: Boolean) { orchestrator.handsFree = enabled }
 
+    /** Gated by BOTH the loaded model tier and the learner's track. */
+    val hebrewHelpOffered = orchestrator.hebrewHelpOffered
+
+    fun onHebrewHelp() {
+        viewModelScope.launch { orchestrator.onHebrewHelpRequested() }
+    }
+
     init {
         viewModelScope.launch {
             orchestrator.startSession(unitId = unitId, mode = TutorMode.SPEECH)
@@ -96,6 +104,7 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
     val state by viewModel.state.collectAsState()
     val transcript by viewModel.transcript.collectAsState()
     val pronunciation by viewModel.pronunciation.collectAsState()
+    val hebrewHelp by viewModel.hebrewHelpOffered.collectAsState()
     var draft by remember { mutableStateOf("") }
     var handsFree by remember { mutableStateOf(false) }
 
@@ -292,6 +301,20 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
+
+        // The Hebrew escape hatch. A deliberate tap, not a guess from ASR
+        // confidence: the learner is the only one who knows they are lost.
+        // Absent entirely on the base tier and for pre-readers — see
+        // TutorOrchestrator.hebrewHelpOffered.
+        if (hebrewHelp) {
+            OutlinedButton(
+                onClick = { viewModel.onHebrewHelp() },
+                enabled = state is TutorTurnState.AwaitingChild || state is TutorTurnState.Failed,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            ) {
+                Text(stringResource(R.string.conversation_explain_hebrew))
+            }
+        }
 
         Row(
             modifier = Modifier.fillMaxWidth(),

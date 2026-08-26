@@ -512,6 +512,10 @@ class AppContainer private constructor(context: Context) {
             profile = profile,
             policy = ScriptedDialoguePolicy(),
             scope = scope,
+            // Hebrew explanations ride on the quality tier only. E2B failed the
+            // Hebrew eval gate (4.03) where E4B passed (4.45), and the pick is
+            // sticky per process, so this reads the same answer all session.
+            tierSpeaksHebrew = { modelTierLabel == HEBREW_CAPABLE_TIER },
         )
     }
 
@@ -670,6 +674,14 @@ class AppContainer private constructor(context: Context) {
         private const val GOP_MODEL_PATH = "models/wav2vec2-phoneme-int8.onnx"
 
         private const val MEM_TAG = "TukiMem"
+
+        /**
+         * The only tier trusted to explain in Hebrew. Not a preference — the
+         * eval harness scored E4B at 4.45 and E2B at 4.03 with a meta-AI flag
+         * (eval/hebrew/results/VERDICT.md), and shipping the smaller model's
+         * Hebrew would ship exactly what that eval rejected.
+         */
+        private const val HEBREW_CAPABLE_TIER = "E4B"
 
         // Process-wide singleton: pack-download state and appScope must survive
         // Activity recreation (rotation), which previously rebuilt everything.

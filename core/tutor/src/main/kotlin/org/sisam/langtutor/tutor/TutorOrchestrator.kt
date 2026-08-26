@@ -18,9 +18,11 @@ import org.sisam.langtutor.llm.LlmModelSpec
 import org.sisam.langtutor.llm.LlmRequest
 import org.sisam.langtutor.llm.Role
 import org.sisam.langtutor.profile.LearnerProfileStore
+import org.sisam.langtutor.profile.LearnerTrack
 import org.sisam.langtutor.safety.BlocklistSafetyFilter
 import org.sisam.langtutor.safety.SafetyFilter
 import org.sisam.langtutor.speech.AsrEngine
+import org.sisam.langtutor.speech.HebrewText
 import org.sisam.langtutor.speech.AudioClip
 import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.speech.PronunciationScorer
@@ -49,6 +51,14 @@ class TutorOrchestrator(
     private val policy: DialoguePolicy,
     private val scope: CoroutineScope,
     private val safety: SafetyFilter = BlocklistSafetyFilter(),
+    /**
+     * Whether the LOADED model is good enough to explain in Hebrew. Evaluated
+     * after [startSession] loads the engine, because the tier is only decided
+     * then. E2B failed the Hebrew eval gate (4.03, meta-AI flag) where E4B
+     * passed at 4.45 — shipping E2B's Hebrew would ship what the eval
+     * rejected, so the button simply does not appear on that tier.
+     */
+    private val tierSpeaksHebrew: () -> Boolean = { false },
 ) {
 
     private val _state = MutableStateFlow<TutorTurnState>(TutorTurnState.Idle)
@@ -59,6 +69,19 @@ class TutorOrchestrator(
 
     private var currentUnit: CurriculumUnit? = null
     private var turnActive = false
+
+    /** The track's config bundle for this session, read once at session start. */
+    private var track: TrackConfig = TrackConfig.of(LearnerTrack.BEGINNER)
+
+    private val _hebrewHelpOffered = MutableStateFlow(false)
+
+    /**
+     * Whether to show the "explain in Hebrew" control. Two independent gates:
+     * the loaded model must be the tier that passed the Hebrew eval, and the
+     * learner's track must be one written Hebrew actually helps — a pre-reader
+     * cannot read Hebrew either, so for them the button would be decoration.
+     */
+    val hebrewHelpOffered: StateFlow<Boolean> = _hebrewHelpOffered
 
     private val _pronunciation = MutableStateFlow<PronunciationScore?>(null)
 
@@ -86,7 +109,11 @@ class TutorOrchestrator(
         // waiting state and input stays gated (a turn may only start from
         // AwaitingChild) — this prevents generate()-before-load() on the real engine.
         _state.value = TutorTurnState.Preparing
+        track = TrackConfig.of(profile.current().track)
         llm.load(LlmModelSpec(modelId = "tutor-default"))
+        // Only meaningful AFTER the load: which tier actually came up is what
+        // decides whether Hebrew is trustworthy this session.
+        _hebrewHelpOffered.value = track.hebrewTextUseful && tierSpeaksHebrew()
         currentUnit = content.loadUnit(unitId)
         val firstPrompt = currentUnit?.activities
             ?.filterIsInstance<Activity.RepeatAfterMe>()
@@ -145,7 +172,35 @@ class TutorOrchestrator(
     suspend fun onTextSubmitted(text: String) {
         // Block while the model is still loading (Preparing) — same reason as the mic.
         if (turnActive || text.isBlank() || _state.value is TutorTurnState.Preparing) return
-        handleChildUtterance(text.trim(), confidence = 1.0f)
+        val trimmed = text.trim()
+        // A learner who TYPED Hebrew has told us plainly that English is not
+        // landing. That is a deterministic signal, unlike guessing confusion
+        // from ASR confidence, so it triggers the Hebrew explanation directly.
+        val forced = if (_hebrewHelpOffered.value && HebrewText.contains(trimmed)) {
+            TutorMove.RespondViaLlm(HEBREW_HELP_INSTRUCTION)
+        } else {
+            null
+        }
+        handleChildUtterance(trimmed, confidence = 1.0f, forcedMove = forced)
+    }
+
+    /**
+     * The learner tapped "explain in Hebrew". One turn-instruction, injected
+     * through the same [DialoguePolicy] plumbing every other move uses — not a
+     * prompt rewrite, not a second engine, not a mode the session stays in.
+     * The next turn is ordinary English again.
+     */
+    suspend fun onHebrewHelpRequested() {
+        if (turnActive || !_hebrewHelpOffered.value) return
+        val current = _state.value
+        if (current !is TutorTurnState.AwaitingChild && current !is TutorTurnState.Failed) return
+        // No new child utterance: this asks Tuki to re-explain what it just
+        // said, so the transcript must not gain a phantom empty child bubble.
+        handleChildUtterance(
+            utterance = "",
+            confidence = 1.0f,
+            forcedMove = TutorMove.RespondViaLlm(HEBREW_HELP_INSTRUCTION),
+        )
     }
 
     suspend fun endSession() {
@@ -171,6 +226,7 @@ class TutorOrchestrator(
         utterance: String,
         confidence: Float,
         audio: AudioClip? = null,
+        forcedMove: TutorMove? = null,
     ) {
         turnActive = true
         try {
@@ -181,7 +237,8 @@ class TutorOrchestrator(
                 _transcript.value += TranscriptEntry(Speaker.CHILD, utterance, confidence)
             }
 
-            when (val move = policy.nextMove(TurnContext(utterance, confidence, currentUnit))) {
+            val chosen = forcedMove ?: policy.nextMove(TurnContext(utterance, confidence, currentUnit))
+            when (val move = chosen) {
                 is TutorMove.AskRepeat -> {
                     // The policy just refused to trust this transcript (low
                     // confidence / blank) — scoring pronunciation against a
@@ -468,13 +525,19 @@ class TutorOrchestrator(
             )
         }
         return LlmRequest(
-            systemPrompt = SYSTEM_PROMPT,
+            systemPrompt = SYSTEM_PROMPT + "\n" + track.personaSuffix,
             messages = listOf(ChatMessage(Role.SYSTEM, instruction)) + history,
-            // Reply budget by age: a 4-6-year-old gets one short sentence and a
-            // question — half the tokens is half the decode time AND better
-            // pedagogy (pre-readers lose the thread in long replies). Turn time
-            // scales almost linearly with this number.
-            maxTokens = if (currentUnit?.ageBand == AgeBand.AGES_4_6) 48 else 96,
+            // Reply budget from the track, floored to the age band: a 4-6 unit
+            // gets one short sentence and a question whichever track is set —
+            // half the tokens is half the decode time AND better pedagogy
+            // (pre-readers lose the thread in long replies). Turn time scales
+            // almost linearly with this number, so a Hebrew explanation, which
+            // genuinely needs two clauses in two scripts, gets its own budget.
+            maxTokens = when {
+                instruction == HEBREW_HELP_INSTRUCTION -> HEBREW_REPLY_TOKENS
+                currentUnit?.ageBand == AgeBand.AGES_4_6 -> minOf(track.replyTokens, 48)
+                else -> track.replyTokens
+            },
         )
     }
 
@@ -496,6 +559,19 @@ class TutorOrchestrator(
         const val XP_PER_TURN = 5
         const val HISTORY_TURNS = 10
         const val SAFE_FALLBACK_REPLY = "Let's get back to our lesson! Can you say the word again?"
+
+        /**
+         * The whole Hebrew feature, in one line. Deliberately asks for Hebrew
+         * FIRST and English after, so the learner reads the thing they got
+         * stuck on before being handed more English, and deliberately says
+         * "briefly" — an unbounded bilingual answer is two monologues.
+         */
+        const val HEBREW_HELP_INSTRUCTION =
+            "The learner needs help in Hebrew. Explain your last point briefly in " +
+                "written Hebrew (two short sentences at most), then continue in English."
+
+        /** A bilingual turn carries two scripts; the ordinary budget clips it. */
+        const val HEBREW_REPLY_TOKENS = 160
 
 
         // P1 safety posture: register, brevity, and topic bounds live in the
