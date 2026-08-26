@@ -28,6 +28,7 @@ update checks, nothing ever uploaded**.
 | [docs/mockups/](docs/mockups/) | 5 interactive HTML screen mockups + [`demo.html`](docs/mockups/demo.html), the animated product walkthrough the demo video is rendered from. |
 | `app/`, `core/*` | Android scaffold (Kotlin + Compose): the phase-1 architecture with **fake engines** — the app runs a full scripted tutoring turn with zero model weights. |
 | `asset-packs/model_pack/` | Play Asset Delivery stub where model weights live in production (never committed). |
+| [scripts/](scripts/) | Tooling to fetch the large binaries that are not committed (models, native libs, voice data) and to sideload them onto a phone — all SHA-256-pinned. [`scripts/README.md`](scripts/README.md) says which to run when. |
 
 ## Building the scaffold
 

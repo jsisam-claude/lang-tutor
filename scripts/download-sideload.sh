@@ -15,7 +15,7 @@
 #   scripts/download-sideload.sh                 # all three devices
 #   scripts/download-sideload.sh pixel-9a        # one device
 #   scripts/download-sideload.sh --no-speech     # models only
-#   scripts/download-sideload.sh --apk           # also fetch the latest CI APK (needs `gh` logged in)
+#   scripts/download-sideload.sh --apk           # also fetch the newest green CI APK
 #
 # Files are fetched once into sideload/_cache/, SHA-256-verified against the
 # pinned hashes below, then hard-linked (or copied) into each device dir.
@@ -23,7 +23,6 @@ set -euo pipefail
 
 HF=https://huggingface.co/litert-community
 REPO_SLUG=jsisam-claude/lang-tutor
-BRANCH=claude/on-device-language-tutor-m6lj1z
 OUT=sideload
 WITH_SPEECH=1
 WITH_APK=0
@@ -164,23 +163,27 @@ PUSH
   chmod +x "$devdir/push.sh"
 }
 
-fetch_apk() { # newest green APK via gh (optional)
-  command -v gh >/dev/null || { echo "!! --apk needs the GitHub CLI (gh) logged in; skipping"; return 0; }
+fetch_apk() { # newest green APK from the rolling debug-latest release
   mkdir -p "$CACHE/apk"
-  # Primary: the rolling debug-latest release — CI replaces its APK on every
-  # green build, and release assets are immune to the Actions storage quota.
-  if gh release download debug-latest -R "$REPO_SLUG" -p app-debug.apk \
-       --clobber --dir "$CACHE/apk" 2>/dev/null; then
+  # CI replaces this release's asset on every green build, and the repo is
+  # public, so a plain curl works with no GitHub CLI and no login. (There is
+  # deliberately no per-run artifact to fall back to: the workflow publishes
+  # only the release — see .github/workflows/android-ci.yml.)
+  local url="https://github.com/$REPO_SLUG/releases/download/debug-latest/app-debug.apk"
+  if curl -fsSL --retry 4 --retry-all-errors -o "$CACHE/apk/app-debug.apk.tmp" "$url"; then
+    mv "$CACHE/apk/app-debug.apk.tmp" "$CACHE/apk/app-debug.apk"
     echo ">> fetched APK from the debug-latest release"
     return 0
   fi
-  # Fallback: the per-run artifact (exists only while quota allows).
-  local run
-  run=$(gh run list -R "$REPO_SLUG" --branch "$BRANCH" --workflow android-ci \
-        --status success --limit 1 --json databaseId -q '.[0].databaseId') || true
-  [ -z "${run:-}" ] && { echo "!! no release and no green run found; skipping APK"; return 0; }
-  echo ">> fetching APK artifact from run $run"
-  gh run download "$run" -R "$REPO_SLUG" -n app-debug --dir "$CACHE/apk"
+  rm -f "$CACHE/apk/app-debug.apk.tmp"
+  # Private-repo (or pre-release) case: fall back to the authenticated CLI.
+  if command -v gh >/dev/null && gh release download debug-latest -R "$REPO_SLUG" \
+       -p app-debug.apk --clobber --dir "$CACHE/apk" 2>/dev/null; then
+    echo ">> fetched APK from the debug-latest release (via gh)"
+    return 0
+  fi
+  echo "!! could not fetch the debug-latest APK; skipping (build one with :app:assembleDebug)"
+  return 0
 }
 
 # ------------------------------- main ----------------------------------------
@@ -213,4 +216,4 @@ done
 
 echo
 echo "All set. Per-device: cd $OUT/<device> && ./push.sh"
-echo "APK (if not fetched with --apk): https://github.com/$REPO_SLUG/actions?query=branch%3A${BRANCH//\//%2F} -> top green run -> Artifacts -> app-debug"
+echo "APK (if not fetched with --apk): https://github.com/$REPO_SLUG/releases/tag/debug-latest"
