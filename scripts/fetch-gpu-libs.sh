@@ -12,9 +12,25 @@
 # (commit 80f301ff), the same version as the AAR, and verify the LFS oid
 # (which IS the file's SHA-256) end to end.
 #
-# The three libs are the upstream dynamic layout: accelerator and sampler both
-# link the SHARED libwebgpu_dawn.so. All are 16KB-page-aligned arm64 builds.
-# Apache-2.0 (google-ai-edge/LiteRT-LM). ~34MB added to the APK, arm64 only —
+# WHICH of the seven upstream prebuilts we take, and why (checked against
+# liblitertlm_jni.so's own strings — those are the dlopen candidates):
+#   libLiteRtWebGpuAccelerator.so   referenced; WebGPU-only accelerator     TAKE
+#   libLiteRtGpuAccelerator.so      referenced; combined CL+WebGPU variant,
+#                                   exports the same LiteRtAcceleratorImpl   TAKE
+#   libLiteRtTopKWebGpuSampler.so   referenced; the sampler the AAR omits    TAKE
+#   libwebgpu_dawn.so               not referenced by name, but DT_NEEDED of
+#                                   both accelerators above                  TAKE
+#   libLiteRtOpenClAccelerator.so   referenced, but OpenCL is exactly what
+#   libLiteRtTopKOpenClSampler.so   GrapheneOS lacks — the reason this file
+#                                   exists. 15MB for a path our target device
+#                                   cannot take.                            SKIP
+#   libGemmaModelConstraintProvider.so  NOT referenced by the Android runtime
+#                                   at all (19MB, CLI/other builds).        SKIP
+# If a STOCK-Android device ever needs the OpenCL path, add those two here —
+# their oids come from the same tag.
+#
+# All are 16KB-page-aligned arm64 builds.
+# Apache-2.0 (google-ai-edge/LiteRT-LM). ~37MB added to the APK, arm64 only —
 # other ABIs keep today's CPU fallback.
 #
 # Usage: scripts/fetch-gpu-libs.sh   (run from anywhere; CI runs it before
@@ -29,6 +45,7 @@ BASE="https://media.githubusercontent.com/media/google-ai-edge/LiteRT-LM/$COMMIT
 
 # name|sha256 (= Git LFS oid pinned from the v0.16.1 tag's pointer files)
 LIBS=(
+  "libLiteRtGpuAccelerator.so|1287e5ae01666a605f2bc5d72453f32cf4a294ef38acabb86cd61140207e41c3"
   "libLiteRtTopKWebGpuSampler.so|c52a1cf69a92a2d2c4d3c08f5c087d1eb405f709af61c3312b215221135e18db"
   "libLiteRtWebGpuAccelerator.so|acf02905cd1d7b7d1f0f70a6d885ddbd392c0c69a99b92834da7e26d6859abcf"
   "libwebgpu_dawn.so|3b2a53de934efabce2efb5e9f703a7bd6b63a5814b2f8f0c7ed610cabf53b147"
