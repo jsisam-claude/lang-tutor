@@ -325,6 +325,91 @@ get**: the thresholds were calibrated on synthesized speech, and real children
 in real rooms are the calibration that matters. Vowel-quality errors (æ vs ɛ)
 did not separate in testing — treat vowel marks as advisory for now.
 
+## Large font / display size (new)
+The UI was re-worked for the two Android accessibility dials, so both are
+worth a pass:
+
+**Settings → Display → Display size and text** — push *Font size* and *Display
+size* each up a couple of notches (or all the way, for the honest stress test)
+and walk the app.
+
+What should happen: **ornament shrinks, controls do not.** Tuki gets smaller on
+every screen, the splash perch disappears entirely at the extreme, gutters
+narrow — and every button stays tappable and no text is cut off. Specific
+things that used to break and should not now:
+
+- Chat bubbles ran off the right edge once the display-size setting shrank the
+  screen below the old fixed 300 dp cap. They are a fraction of the real width
+  now.
+- The conversation screen's status chrome (model badge, engine status, warm-up
+  hint) was pinned above the transcript and ate the whole viewport at a large
+  font, squeezing the conversation to nothing. It scrolls with the transcript
+  now — you should see it when the conversation is empty and lose it once
+  there are a few turns. That is deliberate.
+- The splash used to clip its own progress bar. It now scrolls if it has to.
+
+Anything that clips, overlaps, or cannot be tapped is a bug — screenshot it
+with the font/display setting you used.
+
+## Hebrew explanations (new)
+Tuki can now explain in written Hebrew, on request. Two gates, both required,
+and the control is **absent rather than greyed out** when either is shut:
+
+1. The loaded model must be **E4B** — check the badge under the title reads
+   `Gemma 4 · E4B`. E2B failed the Hebrew eval (4.03 with a meta-AI flag) so it
+   is not offered there at all.
+2. The learner's track must be one that reads: **Parent Zone → Who is
+   learning?** → anything except *"Young child (not reading yet)"*.
+
+Then, in **Talking with Tuki**, a **הסבר בעברית** button appears under the mic
+prompt. Two ways to trigger it:
+
+- Tap the button — Tuki re-explains its last point in Hebrew, then carries on
+  in English. The next turn is ordinary English again; there is no "Hebrew
+  mode" to leave.
+- **Type** anything in Hebrew into the text box. That triggers the same thing
+  without the button, on the theory that a learner typing Hebrew has already
+  told you English is not landing.
+
+Expect the Hebrew to be **shown, not spoken** — the Hebrew voice is out of this
+build over licensing (see the section above), so the router speaks the English
+half and displays the whole line. Hebrew text should render right-to-left with
+its punctuation in the right place; if a line comes out backwards or with a
+stray full stop on the wrong end, that is a bug worth a screenshot.
+
+Worth reporting: whether the Hebrew is actually *correct and useful*, not just
+present. That is the thing the eval scored 4.45 on synthetic prompts and which
+only real use can confirm.
+
+## Rewards and the sticker room (new)
+Three cues, each meaning a different thing — they should never all mean "you
+did something":
+
+| You see | You hear | It fired because |
+|---|---|---|
+| Gold coins arcing up | two quick bright notes | a turn finished |
+| Spinning stars | a rising major triad | your pronunciation scored ≥ 0.8 |
+| Soft drifting flakes | a quiet fifth | pronunciation 0.5–0.8 — "nearly" |
+| *(nothing)* | *(nothing)* | below 0.5. Deliberate: the coloured phonemes already say what happened |
+
+The coins land **after** Tuki finishes speaking, and the star lands right after
+you speak, while Tuki is thinking. If a chime ever plays over Tuki's voice, or
+is loud enough to compete with it, say so — it is tuned to sit under speech
+(peak 0.34 against the voice's ~0.46) and tagged as a UI sound so the system
+ducks it, but that is theory until a real device confirms it.
+
+**The sticker room** appears for a young learner every 50 XP (ten turns). Young
+means either the track is *"Young child (not reading yet)"* **or** the open
+unit is a 4–6 unit — so units 001–006 trigger it with the default settings.
+
+Expected: the lesson is interrupted, you land in a room with eight stickers,
+tapping one takes it (a burst plays, the shelf at the bottom grows), and about
+two seconds later you are back in the **same** conversation, mid-session, with
+Tuki still loaded. If it dumps you on the home screen, or the model reloads,
+that is a bug. Backing out with the system Back gesture instead of picking
+should NOT bounce you straight back in — you get asked again at the next
+milestone.
+
 ## Known limits in this build (expected, not bugs)
 - **English speech recognition only.** The bundled model is an English-only
   export, so a Hebrew answer into the mic will come back as English-looking
@@ -339,4 +424,10 @@ did not separate in testing — treat vowel marks as advisory for now.
   silently, mixed lines speak their English words.
 - Pronunciation thresholds were calibrated on synthesized speech (see the
   section above) — the numbers you report are what recalibrates them.
+- **Hebrew explanations are text only.** The Hebrew voice is out of this build
+  over licensing, so a Hebrew explanation is displayed and its English half is
+  spoken. This is the documented degradation, not a failure of the feature.
+- The learner track is set in the Parent Zone, not by onboarding — the
+  three-question onboarding the plan calls for is not built yet, so a fresh
+  profile starts on **Beginner**.
 - Debug-signed test build — not Play-ready, not safety-certified for children yet.
