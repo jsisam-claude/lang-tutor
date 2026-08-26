@@ -570,7 +570,9 @@ class AppContainer private constructor(context: Context) {
             // The pick changed (free memory moved between tiers): release the
             // old instance off-thread and swap in the new one.
             llmEngine?.let { old -> appScope.launch { runCatching { old.unload() } } }
-            return LiteRtLmEngine(path, installStamp()).also {
+            val compileCache = File(appContext.cacheDir, "litertlm-compile-cache")
+                .apply { mkdirs() }.absolutePath
+            return LiteRtLmEngine(path, installStamp(), compileCache).also {
                 llmEngine = it
                 llmEnginePath = path
             }

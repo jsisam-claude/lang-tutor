@@ -61,6 +61,13 @@ class LiteRtLmEngine(
      * a device that genuinely cannot do GPU still pays for it only once.
      */
     private val installStamp: String,
+    /**
+     * Directory for the runtime's compiled-model cache, or null for none.
+     * The GPU backend compiles kernels/graph on load; with a cache dir the
+     * compilation is reused, which is the difference between every session
+     * paying a cold load and only the first one paying it.
+     */
+    private val cacheDir: String? = null,
 ) : LlmEngine {
 
     private var engine: Engine? = null
@@ -132,11 +139,15 @@ class LiteRtLmEngine(
         val backends = if (skipGpu) listOf("cpu" to Backend.CPU(cpuThreads(), null))
         else listOf("gpu" to Backend.GPU(), "cpu" to Backend.CPU(cpuThreads(), null))
         for ((label, backend) in backends) {
-            // MTP is a CPU-decode accelerator; keep the GPU attempt as plain
-            // as possible (the flag is global and read at engine creation, so
-            // it must be set BEFORE Engine() for the attempt it applies to).
+            // MTP wherever the export supports it. It was scoped to CPU while
+            // the GPU attempt was being debugged; with GPU proven on device
+            // (verdict USED) that caution is stale, and upstream quotes the
+            // LARGEST MTP wins on mobile GPUs (up to ~2.2x decode). The flag
+            // is global and read at engine creation, so it is set before each
+            // Engine(); the smoke test still gates a backend that misbehaves
+            // with it on.
             @OptIn(ExperimentalApi::class)
-            runCatching { ExperimentalFlags.enableSpeculativeDecoding = mtpSupported && label == "cpu" }
+            runCatching { ExperimentalFlags.enableSpeculativeDecoding = mtpSupported }
             if (label == "gpu") runCatching { attemptMarker.createNewFile() }
             val started = System.nanoTime()
             // Multi-GB mmap plus accelerator warm-up, and a failed backend is
@@ -158,6 +169,7 @@ class LiteRtLmEngine(
                         // and matters most to the GPU attempt, where the KV
                         // block competes with the weights for device memory.
                         maxNumTokens = MAX_CONTEXT_TOKENS,
+                        cacheDir = cacheDir,
                     ),
                 )
             } catch (t: Throwable) {

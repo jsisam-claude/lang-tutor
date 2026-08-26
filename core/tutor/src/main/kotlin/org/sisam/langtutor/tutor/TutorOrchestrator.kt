@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.content.Activity
+import org.sisam.langtutor.content.AgeBand
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.CurriculumUnit
 import org.sisam.langtutor.llm.ChatMessage
@@ -469,7 +470,11 @@ class TutorOrchestrator(
         return LlmRequest(
             systemPrompt = SYSTEM_PROMPT,
             messages = listOf(ChatMessage(Role.SYSTEM, instruction)) + history,
-            maxTokens = 96,
+            // Reply budget by age: a 4-6-year-old gets one short sentence and a
+            // question — half the tokens is half the decode time AND better
+            // pedagogy (pre-readers lose the thread in long replies). Turn time
+            // scales almost linearly with this number.
+            maxTokens = if (currentUnit?.ageBand == AgeBand.AGES_4_6) 48 else 96,
         )
     }
 
