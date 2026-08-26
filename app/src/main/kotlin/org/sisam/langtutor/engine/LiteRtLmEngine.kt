@@ -139,15 +139,18 @@ class LiteRtLmEngine(
         val backends = if (skipGpu) listOf("cpu" to Backend.CPU(cpuThreads(), null))
         else listOf("gpu" to Backend.GPU(), "cpu" to Backend.CPU(cpuThreads(), null))
         for ((label, backend) in backends) {
-            // MTP wherever the export supports it. It was scoped to CPU while
-            // the GPU attempt was being debugged; with GPU proven on device
-            // (verdict USED) that caution is stale, and upstream quotes the
-            // LARGEST MTP wins on mobile GPUs (up to ~2.2x decode). The flag
-            // is global and read at engine creation, so it is set before each
-            // Engine(); the smoke test still gates a backend that misbehaves
-            // with it on.
+            // MTP for the CPU attempt ONLY — this is a measured verdict, not
+            // caution. Enabling it for the GPU attempt (with the compile
+            // cache, same commit) crashed the process NATIVELY on the Pixel 9
+            // that had just run GPU cleanly ("GPU verdict: skipped — a
+            // previous attempt crashed the process natively", 2026-08-27).
+            // A native crash is exactly what the smoke test cannot gate — it
+            // kills Kotlin along with everything else; only the attempt
+            // marker catches it. On CPU the same log shows MTP loading and
+            // generating fine (~4-7 est-tok/s vs ~1.6 without). Do not
+            // re-enable on GPU without a way to attribute the crash.
             @OptIn(ExperimentalApi::class)
-            runCatching { ExperimentalFlags.enableSpeculativeDecoding = mtpSupported }
+            runCatching { ExperimentalFlags.enableSpeculativeDecoding = mtpSupported && label == "cpu" }
             if (label == "gpu") runCatching { attemptMarker.createNewFile() }
             val started = System.nanoTime()
             // Multi-GB mmap plus accelerator warm-up, and a failed backend is
@@ -169,7 +172,14 @@ class LiteRtLmEngine(
                         // and matters most to the GPU attempt, where the KV
                         // block competes with the weights for device memory.
                         maxNumTokens = MAX_CONTEXT_TOKENS,
-                        cacheDir = cacheDir,
+                        // CPU attempt only, same evidence as the MTP scoping
+                        // above: the GPU attempt ran cleanly WITHOUT the cache
+                        // and crashed natively in the build that added it (the
+                        // other suspect being MTP; unattributable from one
+                        // crash, so the GPU attempt carries neither). Today's
+                        // log shows CPU loading fine with it (3.9s warm vs
+                        // 15.4s cold — suggestive, not attributed).
+                        cacheDir = if (label == "cpu") cacheDir else null,
                     ),
                 )
             } catch (t: Throwable) {
