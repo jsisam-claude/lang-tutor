@@ -236,7 +236,15 @@ Parent Zone → Packs → "Tuki's Voice (Kokoro)", or import/share the file, or
 `push.sh` (re-run `scripts/download-sideload.sh` first to fetch it). The voice
 style itself (af_heart) ships inside the APK. Logcat tag `TukiTts` shows
 session load time and per-sentence synth ms vs seconds of audio — that ratio
-(RTF) on your Pixel is bench data worth sending.
+(RTF) on your Pixel is bench data worth sending. First device numbers: about
+1.7-3.4 s to synthesize 1.4-3.5 s of audio on a Pixel 9, i.e. RTF near 1.0 —
+close to real time, which streaming hides for all but the first sentence.
+
+The line also prints the waveform's shape (`peak`/`rms`/`zcr`) against
+reference values. That exists because the previously shipped export returned an
+all-NaN waveform on ARM while being clean on x86, which reached the speaker as
+a burst of noise; `zcr` near 0.5 or `peak=0.000` means the model is at fault,
+not the audio path.
 
 **New: Tuki starts talking at the first sentence.** Replies used to wait for
 the model to finish the WHOLE answer before any audio; now the first finished

@@ -187,7 +187,7 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
                     "synth ${ids.size} tokens -> " +
                         "${"%.2f".format(audio.size / SAMPLE_RATE.toFloat())}s in ${ms}ms " +
                         "peak=${"%.3f".format(peak)} rms=${"%.4f".format(rms)} " +
-                        "zcr=${"%.3f".format(zcr)} (ref peak~0.45 rms~0.065 zcr~0.11)",
+                        "zcr=${"%.3f".format(zcr)} (ref peak~0.46 rms~0.064 zcr~0.23)",
                 )
                 // NEVER hand non-finite samples to AudioTrack: it renders
                 // them as a burst of noise at full volume, which is what a
