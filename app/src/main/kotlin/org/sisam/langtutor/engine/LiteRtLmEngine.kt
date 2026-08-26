@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.takeWhile
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import org.sisam.langtutor.BuildConfig
 import org.sisam.langtutor.llm.ChatMessage
@@ -63,7 +65,20 @@ class LiteRtLmEngine(
 
     private var engine: Engine? = null
 
-    override suspend fun load(spec: LlmModelSpec) = withContext(Dispatchers.Default) {
+    // One loader at a time, and loading twice is a no-op: the launch-time
+    // preload pass and a session's startSession() race here by design, and
+    // without the guard the loser built a SECOND multi-GB native engine and
+    // leaked the winner's. unload() nulls `engine`, so load() after unload is
+    // a real (re)load, preserving the load/unload thermal budget.
+    private val loadMutex = Mutex()
+
+    override suspend fun load(spec: LlmModelSpec): Unit = withContext(Dispatchers.Default) {
+        loadMutex.withLock {
+            if (engine == null) loadLocked()
+        }
+    }
+
+    private fun loadLocked() {
         // Prefer the accelerator; fall back to CPU if the delegate can't bind
         // (e.g. no Tensor TPU / GPU on the device). The failure surfaces at
         // initialize(), so we try backends in order. DEVICE-VERIFY: which of
@@ -191,7 +206,7 @@ class LiteRtLmEngine(
                         label == "gpu" && hintFile.exists() -> hintFile.delete()
                     }
                 }
-                return@withContext
+                return
             } catch (t: Throwable) {
                 // Release the half-initialized engine before falling back, or the
                 // failed attempt's native buffers leak alongside the next backend.

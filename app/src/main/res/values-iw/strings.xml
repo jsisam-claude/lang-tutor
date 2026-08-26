@@ -93,4 +93,5 @@
     <string name="parent_voice_hint">הקישו על קול כדי לשמוע אותו. הבחירה נשמרת.</string>
     <string name="parent_voice_american">אמריקאי</string>
     <string name="parent_voice_british">בריטי</string>
+    <string name="splash_tagline">…מכינים את טוקי</string>
 </resources>

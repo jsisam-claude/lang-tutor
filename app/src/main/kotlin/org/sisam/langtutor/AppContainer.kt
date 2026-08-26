@@ -389,6 +389,10 @@ class AppContainer private constructor(context: Context) {
     private val _preload = MutableStateFlow(PreloadState.IDLE)
     val preload: StateFlow<PreloadState> = _preload
 
+    /** 0..1 across the five preload steps; drives the splash progress bar. */
+    private val _preloadProgress = MutableStateFlow(0f)
+    val preloadProgress: StateFlow<Float> = _preloadProgress
+
     @Volatile private var preloadJob: Job? = null
 
     fun preloadAll(): Job = synchronized(this) {
@@ -403,18 +407,26 @@ class AppContainer private constructor(context: Context) {
     }
 
     private fun preloadInternal(): Job = appScope.launch(Dispatchers.IO) {
+        _preloadProgress.value = 0f
         runCatching { sileroVad()?.warmUp() }
             .onFailure { Log.w(MEM_TAG, "preload: vad failed", it) }
+        _preloadProgress.value = 1 / 5f
         runCatching { bundledTtsEngine()?.warmUp() }
             .onFailure { Log.w(MEM_TAG, "preload: tts failed", it) }
+        _preloadProgress.value = 2 / 5f
         runCatching { bundledAsrEngine()?.warmUp() }
             .onFailure { Log.w(MEM_TAG, "preload: asr failed", it) }
+        _preloadProgress.value = 3 / 5f
         runCatching { pronunciationScorer() }
             .onFailure { Log.w(MEM_TAG, "preload: scorer failed", it) }
-        // Biggest and slowest, so it goes last: by the time it lands the
-        // cheap engines are already usable.
+        _preloadProgress.value = 4 / 5f
+        // Biggest and slowest, so it goes last: by the time it lands the cheap
+        // engines are already usable. Thanks to the memoised engine + the
+        // idempotent load(), this is the SAME instance a session will use —
+        // the whole point of preloading.
         runCatching { createLlmEngine().load(LlmModelSpec(modelId = "tutor-default")) }
             .onFailure { Log.w(MEM_TAG, "preload: llm failed", it) }
+        _preloadProgress.value = 1f
         Log.i(MEM_TAG, "preload: done")
     }
 
@@ -514,6 +526,16 @@ class AppContainer private constructor(context: Context) {
         "${BuildConfig.VERSION_CODE}@${pi.lastUpdateTime}"
     }.getOrDefault(BuildConfig.VERSION_CODE.toString())
 
+    // The LLM engine singleton, keyed by the chosen model file. The container
+    // is the app-wide singleton, so holding it here IS the singleton — but
+    // keyed, because the tier pick (E4B vs E2B by free memory) may legitimately
+    // choose a different file next session; a hard global would freeze that.
+    // Guarantees with LiteRtLmEngine's idempotent load(): one instance per
+    // model, loaded once, shared by preload and every orchestrator.
+    @Volatile private var llmEngine: LlmEngine? = null
+    @Volatile private var llmEnginePath: String? = null
+    private val llmLock = Any()
+
     private fun createLlmEngine(): LlmEngine {
         val installed = LinkedHashMap<String, File>() // preference order kept
         val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
@@ -528,6 +550,12 @@ class AppContainer private constructor(context: Context) {
         }
         if (installed.isEmpty()) {
             modelTierLabel = null
+            synchronized(llmLock) {
+                // Models were deleted out from under a cached engine: let it go.
+                llmEngine?.let { old -> appScope.launch { runCatching { old.unload() } } }
+                llmEngine = null
+                llmEnginePath = null
+            }
             return FakeLlmEngine()
         }
         val am = appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -536,7 +564,17 @@ class AppContainer private constructor(context: Context) {
         val choice = checkNotNull(LlmTierPolicy.choose(installed.keys.toList(), info.availMem / 1e9f))
         modelTierLabel = choice.tierLabel
         Log.i("TukiLlm", "model_pick: ${choice.reason}${if (choice.tight) " [TIGHT]" else ""}")
-        return LiteRtLmEngine(installed.getValue(choice.path).absolutePath, installStamp())
+        val path = installed.getValue(choice.path).absolutePath
+        synchronized(llmLock) {
+            llmEngine?.takeIf { llmEnginePath == path }?.let { return it }
+            // The pick changed (free memory moved between tiers): release the
+            // old instance off-thread and swap in the new one.
+            llmEngine?.let { old -> appScope.launch { runCatching { old.unload() } } }
+            return LiteRtLmEngine(path, installStamp()).also {
+                llmEngine = it
+                llmEnginePath = path
+            }
+        }
     }
 
     companion object {
