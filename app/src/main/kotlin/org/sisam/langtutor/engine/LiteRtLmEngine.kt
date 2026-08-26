@@ -2,6 +2,9 @@ package org.sisam.langtutor.engine
 
 import android.util.Log
 import com.google.ai.edge.litertlm.Backend
+import com.google.ai.edge.litertlm.Capabilities
+import com.google.ai.edge.litertlm.ExperimentalApi
+import com.google.ai.edge.litertlm.ExperimentalFlags
 import java.io.File
 import com.google.ai.edge.litertlm.Contents
 import com.google.ai.edge.litertlm.Engine
@@ -94,6 +97,25 @@ class LiteRtLmEngine(
             )
         }
         val skipGpu = hintSkip || crashSkip
+
+        // Multi-Token Prediction (speculative decoding): the runtime drafts
+        // several tokens per step and verifies them in one pass — upstream
+        // quotes up to ~2.2x decode on mobile. It is NOT in EngineConfig; the
+        // switch is a global experimental flag, and whether a given .litertlm
+        // can use it is a property of the export ("not supported for model
+        // without per layer embedding" — Gemma's PLE architecture qualifies).
+        // Ask before enabling, so an export without MTP heads is not forced
+        // down a path the runtime will reject.
+        @OptIn(ExperimentalApi::class)
+        runCatching {
+            val supported = Capabilities(modelPath).use { it.hasSpeculativeDecodingSupport() }
+            if (supported) {
+                ExperimentalFlags.enableSpeculativeDecoding = true
+                Log.i(TAG, "MTP: model supports speculative decoding — enabled")
+            } else {
+                Log.i(TAG, "MTP: this export has no speculative-decoding support — leaving it off")
+            }
+        }.onFailure { Log.w(TAG, "MTP: capability probe failed, leaving it off", it) }
 
         var lastError: Throwable? = null
         var gpuFailed = false
