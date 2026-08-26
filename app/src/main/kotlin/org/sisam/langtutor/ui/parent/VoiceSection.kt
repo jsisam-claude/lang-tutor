@@ -23,6 +23,7 @@ import org.sisam.langtutor.R
 import org.sisam.langtutor.profile.LearnerProfile
 import org.sisam.langtutor.speech.TukiVoice
 import org.sisam.langtutor.speech.TukiVoices
+import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.TukiParrot
 import androidx.compose.ui.Alignment
 
@@ -56,10 +57,11 @@ fun VoiceSection(container: AppContainer) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                TukiParrot(speaking = speaking, size = 56.dp)
+                TukiParrot(speaking = speaking, size = A11y.decorativeDp(comfortable = 56, minimum = 36))
                 Text(
                     text = stringResource(R.string.parent_voice_title),
                     style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.weight(1f),
                 )
             }
             Text(

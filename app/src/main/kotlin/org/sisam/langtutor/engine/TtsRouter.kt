@@ -4,6 +4,7 @@ import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import org.sisam.langtutor.speech.HebrewText
 import org.sisam.langtutor.speech.TtsEngine
 import org.sisam.langtutor.speech.TtsEvent
 import org.sisam.langtutor.speech.TutorLanguage
@@ -62,8 +63,11 @@ class TtsRouter(
 
     private companion object {
         const val TAG = "TukiTts"
-        val HEBREW_RUN = Regex("[\\u0590-\\u05FF]+")
-        fun containsHebrew(s: String) = s.any { it in '֐'..'׿' }
-        fun stripHebrew(s: String) = HEBREW_RUN.replace(s, " ").replace(Regex("\\s+"), " ").trim()
+
+        // One shared definition of "is this Hebrew" (core/speech), so the
+        // voice router, the tutor's Hebrew-help trigger and the transcript's
+        // text direction can never disagree.
+        fun containsHebrew(s: String) = HebrewText.contains(s)
+        fun stripHebrew(s: String) = HebrewText.strip(s)
     }
 }

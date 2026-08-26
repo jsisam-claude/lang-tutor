@@ -3,6 +3,8 @@
 
     <string name="home_greeting">Hello! 👋 Ready to learn English?</string>
     <string name="home_xp">⭐ %1$d XP</string>
+    <string name="home_units_heading">Your lessons</string>
+    <string name="home_more_heading">More to do</string>
     <string name="home_start_lesson">Start lesson</string>
     <string name="home_start_conversation">Talk with Tuki</string>
     <string name="home_preload">Preload models</string>

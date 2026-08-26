@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
+import org.sisam.langtutor.ui.common.A11y
 
 /** Simple multiplication gate per Play Families expectations. */
 private data class GateChallenge(val question: String, val answer: Int, val options: List<Int>)
@@ -52,8 +53,8 @@ private fun ParentGate(onUnlocked: () -> Unit) {
             // Column silently CLIPS its tail. That hid the Parent Zone button
             // — the only route to installing models — off the bottom edge.
             .verticalScroll(rememberScrollState())
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(horizontal = A11y.gutter, vertical = A11y.sectionGap),
+        verticalArrangement = Arrangement.spacedBy(A11y.sectionGap),
     ) {
         Text(
             text = stringResource(R.string.parent_gate_title),
@@ -87,8 +88,8 @@ private fun ParentDashboard(container: AppContainer) {
             // Column silently CLIPS its tail. That hid the Parent Zone button
             // — the only route to installing models — off the bottom edge.
             .verticalScroll(rememberScrollState())
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(horizontal = A11y.gutter, vertical = A11y.sectionGap),
+        verticalArrangement = Arrangement.spacedBy(A11y.sectionGap),
     ) {
         Text(
             text = stringResource(R.string.parent_zone_title),

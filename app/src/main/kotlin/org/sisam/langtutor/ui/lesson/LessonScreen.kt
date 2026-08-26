@@ -16,11 +16,13 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.Activity
 import org.sisam.langtutor.content.CurriculumUnit
+import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.EnglishContent
 
@@ -38,8 +40,8 @@ fun LessonScreen(container: AppContainer, unitId: String) {
             // Column silently CLIPS its tail. That hid the Parent Zone button
             // — the only route to installing models — off the bottom edge.
             .verticalScroll(rememberScrollState())
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(horizontal = A11y.gutter, vertical = A11y.sectionGap),
+        verticalArrangement = Arrangement.spacedBy(A11y.sectionGap),
     ) {
         Text(
             text = unit?.title?.he ?: stringResource(R.string.lesson_loading),
@@ -54,13 +56,25 @@ fun LessonScreen(container: AppContainer, unitId: String) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(20.dp),
+                        .padding(if (A11y.largeText) 14.dp else 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     EnglishContent {
-                        Text(text = vocab.word, style = MaterialTheme.typography.displaySmall)
+                        Text(
+                            text = vocab.word,
+                            style = if (A11y.hugeText) {
+                                MaterialTheme.typography.headlineMedium
+                            } else {
+                                MaterialTheme.typography.displaySmall
+                            },
+                            textAlign = TextAlign.Center,
+                        )
                     }
-                    Text(text = vocab.translation.he, style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        text = vocab.translation.he,
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
+                    )
                 }
             }
         }

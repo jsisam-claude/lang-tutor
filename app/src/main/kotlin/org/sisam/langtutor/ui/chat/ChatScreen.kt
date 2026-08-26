@@ -35,6 +35,7 @@ import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.tutor.chat.ChatEntry
 import org.sisam.langtutor.tutor.chat.ChatSpeaker
+import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.ParrotPalette
 import org.sisam.langtutor.ui.common.TukiParrot
 
@@ -75,17 +76,18 @@ fun ChatScreen(container: AppContainer) {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surfaceVariant)
-                .padding(horizontal = 16.dp, vertical = 10.dp),
+                .padding(horizontal = A11y.gutter, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            TukiParrot(speaking = speaking == ChatSpeaker.TUKI, size = 44.dp)
+            val avatar = A11y.decorativeDp(comfortable = 44, minimum = 30)
+            TukiParrot(speaking = speaking == ChatSpeaker.TUKI, size = avatar)
             TukiParrot(
                 speaking = speaking == ChatSpeaker.KIKI,
-                size = 44.dp,
+                size = avatar,
                 palette = ParrotPalette.KIKI,
             )
-            Column {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = stringResource(R.string.chat_title),
                     style = MaterialTheme.typography.titleMedium,
@@ -102,7 +104,7 @@ fun ChatScreen(container: AppContainer) {
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp),
+                .padding(horizontal = 10.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             items(messages) { entry -> ChatBubble(entry) }
@@ -151,7 +153,7 @@ private fun ChatBubble(entry: ChatEntry) {
         if (!fromChild) {
             TukiParrot(
                 speaking = false,
-                size = 28.dp,
+                size = A11y.decorativeDp(comfortable = 28, minimum = 20),
                 palette = if (entry.speaker == ChatSpeaker.KIKI) {
                     ParrotPalette.KIKI
                 } else {
@@ -162,7 +164,10 @@ private fun ChatBubble(entry: ChatEntry) {
         }
         Box(
             modifier = Modifier
-                .widthIn(max = 300.dp)
+                // Fraction of the real viewport, not a fixed 300.dp: a large
+                // display-size setting can shrink the screen below that cap,
+                // and then every bubble ran off the edge.
+                .widthIn(max = A11y.bubbleMaxWidth)
                 .background(
                     color = when {
                         fromChild -> MaterialTheme.colorScheme.primaryContainer

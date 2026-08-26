@@ -44,10 +44,12 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
+import org.sisam.langtutor.speech.HebrewText
 import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.tutor.Speaker
 import org.sisam.langtutor.tutor.TutorMode
 import org.sisam.langtutor.tutor.TutorTurnState
+import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.TukiParrot
 import org.sisam.langtutor.ui.common.EnglishContent
@@ -108,8 +110,8 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+            .padding(horizontal = A11y.gutter, vertical = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(A11y.sectionGap),
     ) {
         // Tuki sits at the top edge beside the title, and moves only while
         // he is actually talking — a pre-reader who cannot follow the
@@ -121,70 +123,89 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
         ) {
             TukiParrot(
                 speaking = state is TutorTurnState.Speaking,
-                size = 72.dp,
+                size = A11y.decorativeDp(comfortable = 72, minimum = 44),
             )
-            Text(
-                text = stringResource(R.string.conversation_title),
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.weight(1f),
-            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.conversation_title),
+                    style = if (A11y.hugeText) {
+                        MaterialTheme.typography.titleMedium
+                    } else {
+                        MaterialTheme.typography.headlineSmall
+                    },
+                )
+                Text(text = stateLabel(state), style = MaterialTheme.typography.bodyMedium)
+            }
         }
-        Text(text = stateLabel(state), style = MaterialTheme.typography.bodyMedium)
-        // Honest indicator: is the child talking to the real on-device model or
-        // the scripted demo engine? (real only when a .litertlm file is present.)
-        Text(
-            text = when {
-                !container.usingRealLlm -> stringResource(R.string.model_mode_demo)
-                // Which tier this session's memory policy actually loaded —
-                // on a busy 12 GB device this is how a tester spots the
-                // E4B→E2B fallback without pulling logcat.
-                container.modelTierLabel != null ->
-                    stringResource(R.string.model_mode_real_tier, container.modelTierLabel!!)
-                else -> stringResource(R.string.model_mode_real)
-            },
-            style = MaterialTheme.typography.labelSmall,
-        )
-        // De-googled devices (e.g. GrapheneOS) ship NO speech recognizer service;
-        // without the bundled Whisper model installed the platform mic path can't
-        // work there. Say so instead of failing silently; typing still works.
+
+        // Everything below the title scrolls. The status chrome used to be
+        // PINNED above the transcript, which at a large font/display size ate
+        // the whole viewport and squeezed the conversation itself to nothing;
+        // as list items it is visible when the transcript is empty (exactly
+        // when it matters) and scrolls away once there is a conversation.
         val context = LocalContext.current
         val speechAvailable = remember {
             // Bundled Whisper counts as speech: the banner is only for devices
             // with NO recognition path at all.
             container.hasBundledAsr || SpeechRecognizer.isRecognitionAvailable(context)
         }
-        if (!speechAvailable) {
-            Text(
-                text = stringResource(R.string.speech_unavailable_banner),
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
-        // What the engines are doing right now, with a seconds counter once a
-        // step runs long. This is the difference between a lazy 300 MB load and
-        // an apparent freeze.
-        EngineStatusLine()
-        // The first on-device reply includes one-time warm-up and can take
-        // minutes on CPU; without this hint it reads as a hang.
-        if (state is TutorTurnState.Thinking) {
-            Text(
-                text = stringResource(R.string.thinking_first_hint),
-                style = MaterialTheme.typography.labelSmall,
-            )
-        }
-        // Debug builds: surface the actual failure reason (the kid-friendly
-        // status label hides it, which made real errors look like "nothing").
-        val failed = state
-        if (org.sisam.langtutor.BuildConfig.DEBUG && failed is TutorTurnState.Failed) {
-            Text(
-                text = "⚠ ${failed.reason}",
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
-
         LazyColumn(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            item {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    // Honest indicator: is the child talking to the real
+                    // on-device model or the scripted demo engine? (real only
+                    // when a .litertlm file is present.)
+                    Text(
+                        text = when {
+                            !container.usingRealLlm -> stringResource(R.string.model_mode_demo)
+                            // Which tier this session's memory policy actually
+                            // loaded — on a busy 12 GB device this is how a
+                            // tester spots the E4B->E2B fallback without
+                            // pulling logcat.
+                            container.modelTierLabel != null ->
+                                stringResource(R.string.model_mode_real_tier, container.modelTierLabel!!)
+                            else -> stringResource(R.string.model_mode_real)
+                        },
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                    // De-googled devices (e.g. GrapheneOS) ship NO speech
+                    // recognizer service; without the bundled Whisper model
+                    // installed the platform mic path can't work there. Say so
+                    // instead of failing silently; typing still works.
+                    if (!speechAvailable) {
+                        Text(
+                            text = stringResource(R.string.speech_unavailable_banner),
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                    // What the engines are doing right now, with a seconds
+                    // counter once a step runs long. This is the difference
+                    // between a lazy 300 MB load and an apparent freeze.
+                    EngineStatusLine()
+                    // The first on-device reply includes one-time warm-up and
+                    // can take minutes on CPU; without this hint it reads as a
+                    // hang.
+                    if (state is TutorTurnState.Thinking) {
+                        Text(
+                            text = stringResource(R.string.thinking_first_hint),
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    }
+                    // Debug builds: surface the actual failure reason (the
+                    // kid-friendly status label hides it, which made real
+                    // errors look like "nothing").
+                    val failed = state
+                    if (org.sisam.langtutor.BuildConfig.DEBUG && failed is TutorTurnState.Failed) {
+                        Text(
+                            text = "\u26a0 ${failed.reason}",
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
+            }
             items(transcript) { entry ->
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(12.dp)) {
@@ -196,22 +217,17 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                             },
                             style = MaterialTheme.typography.labelMedium,
                         )
-                        EnglishContent {
-                            Text(text = entry.text, style = MaterialTheme.typography.bodyLarge)
-                        }
+                        TranscriptText(entry.text)
                     }
                 }
             }
             val thinking = state
             if (thinking is TutorTurnState.Thinking && thinking.partialReply.isNotEmpty()) {
                 item {
-                    EnglishContent {
-                        Text(
-                            text = thinking.partialReply,
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(12.dp),
-                        )
-                    }
+                    TranscriptText(
+                        text = thinking.partialReply,
+                        modifier = Modifier.padding(12.dp),
+                    )
                 }
             }
         }
@@ -244,7 +260,9 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
         Box(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .size(88.dp)
+                // A tap target, so it shrinks far more gently than the art and
+                // never drops under the 48 dp accessibility floor.
+                .size(A11y.tapTargetDp(comfortable = 88, minimum = 64))
                 .background(
                     if (state is TutorTurnState.Listening) {
                         MaterialTheme.colorScheme.error
@@ -265,7 +283,7 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                 },
             contentAlignment = Alignment.Center,
         ) {
-            Text(text = "🎙️", style = MaterialTheme.typography.headlineMedium)
+            Text(text = "\ud83c\udf99\ufe0f", style = MaterialTheme.typography.headlineMedium)
         }
         Text(
             text = stringResource(
@@ -297,6 +315,22 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             ) {
                 Text(stringResource(R.string.conversation_send))
             }
+        }
+    }
+}
+
+/**
+ * A transcript line. English is an LTR island inside the RTL chrome; a Hebrew
+ * explanation is not, and forcing it through [EnglishContent] pushed its
+ * punctuation to the wrong end. Direction follows the text.
+ */
+@Composable
+private fun TranscriptText(text: String, modifier: Modifier = Modifier) {
+    if (HebrewText.contains(text)) {
+        Text(text = text, style = MaterialTheme.typography.bodyLarge, modifier = modifier)
+    } else {
+        EnglishContent {
+            Text(text = text, style = MaterialTheme.typography.bodyLarge, modifier = modifier)
         }
     }
 }
