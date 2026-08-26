@@ -27,6 +27,7 @@ import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmModelSpec
+import org.sisam.langtutor.speech.TukiVoice
 import org.sisam.langtutor.speech.TukiVoices
 import org.sisam.langtutor.speech.TutorLanguage
 import org.sisam.langtutor.llm.LlmTierPolicy
@@ -237,9 +238,23 @@ class AppContainer private constructor(context: Context) {
      * takes effect on the next sentence with no model reload — which is what
      * makes previewing voices in the picker feel instant.
      */
+    /** The catalogue filtered to voices actually packaged in THIS APK: a local
+     *  build made without re-running fetch-voice-assets.sh carries fewer than
+     *  the full set, and the picker must not offer what it cannot play. */
+    val availableVoices: List<TukiVoice> by lazy {
+        val present = runCatching {
+            appContext.assets.list(KokoroTtsEngine.VOICE_DIR)?.toSet()
+        }.getOrNull() ?: emptySet()
+        TukiVoices.ALL.filter { it.id in present }
+    }
+
     fun applyVoice(voiceId: String?) {
-        val voice = TukiVoices.byId(voiceId)
-        bundledTtsEngine()?.voiceAsset = voice.id
+        val chosen = TukiVoices.byId(voiceId)
+        val effective = if (availableVoices.any { it.id == chosen.id }) chosen else TukiVoices.byId(null)
+        if (effective.id != chosen.id) {
+            Log.w(MEM_TAG, "voice ${chosen.id} not packaged in this build; using ${effective.id}")
+        }
+        bundledTtsEngine()?.voiceAsset = effective.id
     }
 
     private val _speaking = MutableStateFlow(false)

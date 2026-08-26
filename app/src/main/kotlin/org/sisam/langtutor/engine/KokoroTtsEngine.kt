@@ -69,7 +69,20 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
             loadedVoice ?: readVoice(voiceAsset).also { loadedVoice = it }
         }
 
-    private fun readVoice(asset: String): FloatArray =
+    private fun readVoice(asset: String): FloatArray = try {
+        readTable(asset)
+    } catch (e: java.io.FileNotFoundException) {
+        // A persisted preference can name a voice THIS build does not carry —
+        // the classic case is a local build made without re-running
+        // scripts/fetch-voice-assets.sh, whose assets/kokoro/ still holds only
+        // the old default. One bad tap in the picker must not take speech down
+        // with it (it used to: every synthesis threw, every turn failed, and
+        // the broken choice persisted across restarts).
+        Log.e(TAG, "voice '$asset' is not in this build — falling back to ${TukiVoices.DEFAULT_ID}", e)
+        readTable(TukiVoices.DEFAULT_ID)
+    }
+
+    private fun readTable(asset: String): FloatArray =
         appContext.assets.open("$VOICE_DIR/$asset").use { input ->
             val bytes = input.readBytes()
             val floats = FloatArray(bytes.size / 4)

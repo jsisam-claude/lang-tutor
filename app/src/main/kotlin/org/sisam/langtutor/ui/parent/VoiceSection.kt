@@ -67,7 +67,7 @@ fun VoiceSection(container: AppContainer) {
                 style = MaterialTheme.typography.bodySmall,
             )
             for (accent in TukiVoice.Accent.entries) {
-                val voices = TukiVoices.ALL.filter { it.accent == accent }
+                val voices = container.availableVoices.filter { it.accent == accent }
                 if (voices.isEmpty()) continue
                 Text(
                     text = stringResource(
