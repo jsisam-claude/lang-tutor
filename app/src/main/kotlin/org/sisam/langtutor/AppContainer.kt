@@ -568,14 +568,18 @@ class AppContainer private constructor(context: Context) {
         "${BuildConfig.VERSION_CODE}@${pi.lastUpdateTime}"
     }.getOrDefault(BuildConfig.VERSION_CODE.toString())
 
-    // The LLM engine singleton, keyed by the chosen model file. The container
-    // is the app-wide singleton, so holding it here IS the singleton — but
-    // keyed, because the tier pick (E4B vs E2B by free memory) may legitimately
-    // choose a different file next session; a hard global would freeze that.
-    // Guarantees with LiteRtLmEngine's idempotent load(): one instance per
-    // model, loaded once, shared by preload and every orchestrator.
+    // The LLM engine singleton — one instance, decided ONCE per process.
+    // The container is the app-wide singleton, so holding it here IS the
+    // singleton. The tier pick (E4B vs E2B) runs only while no engine exists,
+    // because that is the only moment the memory reading is honest: re-picking
+    // per call measured free memory AFTER our own multi-GB model had occupied
+    // it — the launch preload loaded E4B on GPU, four seconds later a session
+    // repicked, read the now-lower availMem, chose E2B, and threw the warm
+    // E4B away (both GPU loads paid; device log 2026-08-27 00:45). The pick
+    // re-runs only if the cached model was uninstalled.
     @Volatile private var llmEngine: LlmEngine? = null
     @Volatile private var llmEnginePath: String? = null
+    @Volatile private var llmEngineTierLabel: String? = null
     private val llmLock = Any()
 
     private fun createLlmEngine(): LlmEngine {
@@ -590,28 +594,38 @@ class AppContainer private constructor(context: Context) {
                 }
             }
         }
-        if (installed.isEmpty()) {
-            modelTierLabel = null
-            synchronized(llmLock) {
+        synchronized(llmLock) {
+            if (installed.isEmpty()) {
+                modelTierLabel = null
                 // Models were deleted out from under a cached engine: let it go.
                 llmEngine?.let { old -> appScope.launch { runCatching { old.unload() } } }
                 llmEngine = null
                 llmEnginePath = null
+                llmEngineTierLabel = null
+                return FakeLlmEngine()
             }
-            return FakeLlmEngine()
-        }
-        val am = appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val info = ActivityManager.MemoryInfo()
-        am.getMemoryInfo(info)
-        val choice = checkNotNull(LlmTierPolicy.choose(installed.keys.toList(), info.availMem / 1e9f))
-        modelTierLabel = choice.tierLabel
-        Log.i("TukiLlm", "model_pick: ${choice.reason}${if (choice.tight) " [TIGHT]" else ""}")
-        val path = installed.getValue(choice.path).absolutePath
-        synchronized(llmLock) {
-            llmEngine?.takeIf { llmEnginePath == path }?.let { return it }
-            // The pick changed (free memory moved between tiers): release the
-            // old instance off-thread and swap in the new one.
-            llmEngine?.let { old -> appScope.launch { runCatching { old.unload() } } }
+            llmEngine?.let { cached ->
+                val path = llmEnginePath
+                if (path != null && installed.values.any { it.absolutePath == path }) {
+                    modelTierLabel = llmEngineTierLabel
+                    return cached
+                }
+                appScope.launch { runCatching { cached.unload() } }
+                llmEngine = null
+                llmEnginePath = null
+            }
+            val am = appContext.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val info = ActivityManager.MemoryInfo()
+            am.getMemoryInfo(info)
+            val choice = checkNotNull(LlmTierPolicy.choose(installed.keys.toList(), info.availMem / 1e9f))
+            modelTierLabel = choice.tierLabel
+            llmEngineTierLabel = choice.tierLabel
+            Log.i(
+                "TukiLlm",
+                "model_pick: ${choice.reason}${if (choice.tight) " [TIGHT]" else ""} " +
+                    "(sticky for this process)",
+            )
+            val path = installed.getValue(choice.path).absolutePath
             val compileCache = File(appContext.cacheDir, "litertlm-compile-cache")
                 .apply { mkdirs() }.absolutePath
             return LiteRtLmEngine(path, installStamp(), compileCache).also {
