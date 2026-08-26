@@ -106,22 +106,22 @@ class LiteRtLmEngine(
         // without per layer embedding" — Gemma's PLE architecture qualifies).
         // Ask before enabling, so an export without MTP heads is not forced
         // down a path the runtime will reject.
-        @OptIn(ExperimentalApi::class)
-        runCatching {
-            val supported = Capabilities(modelPath).use { it.hasSpeculativeDecodingSupport() }
-            if (supported) {
-                ExperimentalFlags.enableSpeculativeDecoding = true
-                Log.i(TAG, "MTP: model supports speculative decoding — enabled")
-            } else {
-                Log.i(TAG, "MTP: this export has no speculative-decoding support — leaving it off")
-            }
-        }.onFailure { Log.w(TAG, "MTP: capability probe failed, leaving it off", it) }
+        val mtpSupported = runCatching {
+            Capabilities(modelPath).use { it.hasSpeculativeDecodingSupport() }
+        }.onFailure { Log.w(TAG, "MTP: capability probe failed, treating as unsupported", it) }
+            .getOrDefault(false)
+        Log.i(TAG, "MTP: export ${if (mtpSupported) "supports" else "does not support"} speculative decoding")
 
         var lastError: Throwable? = null
         var gpuFailed = false
         val backends = if (skipGpu) listOf("cpu" to Backend.CPU(cpuThreads(), null))
         else listOf("gpu" to Backend.GPU(), "cpu" to Backend.CPU(cpuThreads(), null))
         for ((label, backend) in backends) {
+            // MTP is a CPU-decode accelerator; keep the GPU attempt as plain
+            // as possible (the flag is global and read at engine creation, so
+            // it must be set BEFORE Engine() for the attempt it applies to).
+            @OptIn(ExperimentalApi::class)
+            runCatching { ExperimentalFlags.enableSpeculativeDecoding = mtpSupported && label == "cpu" }
             if (label == "gpu") runCatching { attemptMarker.createNewFile() }
             val started = System.nanoTime()
             // Multi-GB mmap plus accelerator warm-up, and a failed backend is
@@ -132,7 +132,19 @@ class LiteRtLmEngine(
                 "${File(modelPath).name} on $label",
             )
             val candidate = try {
-                Engine(EngineConfig(modelPath = modelPath, backend = backend))
+                Engine(
+                    EngineConfig(
+                        modelPath = modelPath,
+                        backend = backend,
+                        // KV cache is pre-allocated for this whole window, on
+                        // whichever backend wins — the runtime default (4096)
+                        // doubles that memory for conversations that are ten
+                        // short child turns. 2048 is generous for our prompts
+                        // and matters most to the GPU attempt, where the KV
+                        // block competes with the weights for device memory.
+                        maxNumTokens = MAX_CONTEXT_TOKENS,
+                    ),
+                )
             } catch (t: Throwable) {
                 EngineStatus.end(loadStep, t)
                 Log.w(TAG, "engine create failed on $backend", t)
@@ -430,6 +442,11 @@ class LiteRtLmEngine(
 
         // Marker next to the model file: "GPU generation broken on this device
         // for this app build — go straight to CPU". See load().
+        /** KV-cache window. Ten short child turns + a 96-token reply fit with
+         *  lots of room; the runtime default (4096) doubles the pre-allocated
+         *  cache for nothing. */
+        private const val MAX_CONTEXT_TOKENS = 2048
+
         private const val CPU_HINT_SUFFIX = ".cpu-hint"
 
         // Present only WHILE a GPU attempt is in flight; surviving a process

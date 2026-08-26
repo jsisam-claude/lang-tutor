@@ -2,6 +2,12 @@
 # Fetch Google's prebuilt android_arm64 WebGPU libraries into the app's
 # jniLibs so the GPU sampler works on devices without OpenCL (GrapheneOS).
 #
+# CAVEAT on that premise: apps targeting API 31+ cannot dlopen vendor
+# libraries they do not declare, so before the manifest gained its
+# <uses-native-library libOpenCL.so> entries, "no OpenCL" on device was
+# indistinguishable from namespace isolation. The WebGPU chain stays bundled
+# regardless — it is the path that works with zero vendor dependencies.
+#
 # WHY: the litertlm-android 0.14.0 AAR statically fuses the WebGPU executor
 # and Dawn into liblitertlm_jni.so but omits the top-K sampler, whose factory
 # dlopen()s libLiteRtTopKWebGpuSampler.so at first generation. On stock Pixels

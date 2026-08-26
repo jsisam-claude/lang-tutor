@@ -20,6 +20,19 @@
         android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.LangTutor">
+        <!-- Android 12+ (our minSdk) blocks vendor native libraries an app does
+             not declare: dlopen("libOpenCL.so") fails with "not found" even
+             when the driver exists. Without these, LiteRT-LM's OpenCL GPU
+             backend can never initialize — the engine-create failure looks
+             like a missing driver but is namespace isolation. Google's TFLite
+             GPU docs name exactly these two; required=false keeps installs
+             working on devices that genuinely lack them. -->
+        <uses-native-library
+            android:name="libOpenCL.so"
+            android:required="false" />
+        <uses-native-library
+            android:name="libOpenCL-pixel.so"
+            android:required="false" />
 
         <activity
             android:name=".MainActivity"
