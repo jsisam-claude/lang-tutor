@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Warm sky behind Tuki: reads as friendly at launcher size and keeps
+         enough contrast against the green body and red crown. -->
+    <color name="ic_launcher_background">#FFF3D9</color>
+</resources>

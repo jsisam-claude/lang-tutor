@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Tuki as an adaptive-icon foreground. Pure vector: no PNG density ladder to
+  maintain, and minSdk 31 means every device supports adaptive icons, so this
+  single file is the whole icon. Drawn inside the centre 72x72 safe zone of the
+  108x108 viewport so no launcher mask can clip the beak or the crown.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- tail -->
+    <path android:fillColor="#1F7A44"
+        android:pathData="M46,66 L26,88 L38,84 L43,90 L54,72 Z" />
+    <!-- body -->
+    <path android:fillColor="#2E9E5B"
+        android:pathData="M54,72 m-15,-9 a15,18 0 1,0 30,0 a15,18 0 1,0 -30,0" />
+    <!-- wing -->
+    <path android:fillColor="#1F7A44"
+        android:pathData="M52,68 m-8,-5 a8,10 0 1,0 16,0 a8,10 0 1,0 -16,0" />
+    <!-- head -->
+    <path android:fillColor="#E4483D"
+        android:pathData="M58,42 m-13,0 a13,13 0 1,0 26,0 a13,13 0 1,0 -26,0" />
+    <!-- eye -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M63,38 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
+    <path android:fillColor="#23201E"
+        android:pathData="M64,39 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- upper beak -->
+    <path android:fillColor="#F7B733"
+        android:pathData="M70,36 L84,42 L72,48 Z" />
+    <!-- lower beak -->
+    <path android:fillColor="#D9931F"
+        android:pathData="M70,46 L80,46 L71,53 Z" />
+</vector>

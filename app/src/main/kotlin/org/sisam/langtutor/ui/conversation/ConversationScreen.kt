@@ -49,6 +49,7 @@ import org.sisam.langtutor.tutor.Speaker
 import org.sisam.langtutor.tutor.TutorMode
 import org.sisam.langtutor.tutor.TutorTurnState
 import org.sisam.langtutor.ui.common.EngineStatusLine
+import org.sisam.langtutor.ui.common.TukiParrot
 import org.sisam.langtutor.ui.common.EnglishContent
 
 class ConversationViewModel(container: AppContainer, unitId: String) : ViewModel() {
@@ -110,10 +111,24 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Text(
-            text = stringResource(R.string.conversation_title),
-            style = MaterialTheme.typography.headlineSmall,
-        )
+        // Tuki sits at the top edge beside the title, and moves only while
+        // he is actually talking — a pre-reader who cannot follow the
+        // transcript still gets an unambiguous "he is speaking to me" cue.
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            TukiParrot(
+                speaking = state is TutorTurnState.Speaking,
+                size = 72.dp,
+            )
+            Text(
+                text = stringResource(R.string.conversation_title),
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.weight(1f),
+            )
+        }
         Text(text = stateLabel(state), style = MaterialTheme.typography.bodyMedium)
         // Honest indicator: is the child talking to the real on-device model or
         // the scripted demo engine? (real only when a .litertlm file is present.)
