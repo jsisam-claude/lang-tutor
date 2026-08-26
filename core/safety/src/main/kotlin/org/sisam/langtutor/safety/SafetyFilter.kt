@@ -12,10 +12,23 @@ interface SafetyFilter {
 }
 
 /**
- * P1 filter: conservative word-boundary blocklist + structural checks. P3 adds
- * a small on-device classifier alongside; this deterministic layer never goes
- * away. False positives are acceptable here — the orchestrator swaps a blocked
- * reply for a safe scripted line, so the cost of over-blocking is mild.
+ * PLACEHOLDER filter: word-boundary blocklist + structural checks. Real output
+ * safety belongs in a model-based guardrail at a later stage — a lexical list
+ * cannot separate "the dinosaur is dead now" from actual harm, and tuning the
+ * word list is not the fix. Do not invest here; replace the layer.
+ *
+ * Measured against the E4B eval outputs: 0 false positives on the 24 scored
+ * tutoring replies, but 9 of 10 hand-written plausible tutor sentences trip it
+ * ("the batteries are dead", "smoke comes out of the chimney", "a blood orange
+ * is a fruit", "you are not dumb at all"). The high-precision entries — the
+ * phrases like "hate you", "your address", "secret from your parents" — are
+ * what actually earns its keep; the common nouns are noise.
+ *
+ * NOTE the cost of a false positive is NOT mild, contrary to what this comment
+ * used to claim. Since replies stream, a block cuts the audio mid-word, drops
+ * the engine's cached conversation, and speaks an unrelated fallback — see
+ * TutorOrchestrator's BLOCKED branch. That asymmetry is another reason to move
+ * this to a guardrail rather than widen the list.
  */
 class BlocklistSafetyFilter(
     blockedTerms: Set<String> = DEFAULT_BLOCKLIST,
