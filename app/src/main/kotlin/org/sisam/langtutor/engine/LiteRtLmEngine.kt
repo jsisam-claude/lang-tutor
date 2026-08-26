@@ -135,6 +135,19 @@ class LiteRtLmEngine(
                     "loaded $modelPath on backend=$backend in ${ms}ms (smoke ok); " +
                         "cores=${Runtime.getRuntime().availableProcessors()} cpuThreads=${cpuThreads()}",
                 )
+                // One unmissable line answering "why not GPU?" — otherwise the
+                // answer is the ABSENCE of a log line, which is invisible.
+                Log.i(
+                    TAG,
+                    "GPU verdict: " + when {
+                        label == "gpu" -> "USED"
+                        crashSkip -> "skipped — a previous attempt crashed the process natively"
+                        hintSkip -> "skipped — cpu hint from an earlier failure on this install"
+                        gpuFailed -> "attempted and FAILED, see the warning above: " +
+                            "${lastError?.javaClass?.simpleName}: ${lastError?.message}"
+                        else -> "not attempted"
+                    },
+                )
                 runCatching { attemptMarker.delete() }
                 runCatching {
                     when {
