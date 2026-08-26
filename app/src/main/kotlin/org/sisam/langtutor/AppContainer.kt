@@ -25,6 +25,7 @@ import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmModelSpec
+import org.sisam.langtutor.speech.TutorLanguage
 import org.sisam.langtutor.llm.LlmTierPolicy
 import org.sisam.langtutor.packs.HttpPackFetcher
 import org.sisam.langtutor.packs.PackRepository
@@ -335,6 +336,25 @@ class AppContainer private constructor(context: Context) {
         Log.i(MEM_TAG, "preload: done")
     }
 
+    /**
+     * Speaks one fixed English sentence through the real voice path.
+     *
+     * Diagnostic: it exercises phonemizer -> ONNX synthesis -> AudioTrack
+     * without needing a model, a lesson, or a working microphone, so "is the
+     * voice broken" can be answered in one tap. The per-sentence shape of the
+     * waveform (peak/rms/zero-crossing) lands in logcat under TukiTts, next to
+     * the reference values measured off-device.
+     */
+    fun testVoice(): Job = appScope.launch(Dispatchers.IO) {
+        val tts = TtsRouter(
+            english = bundledTtsEngine() ?: PlatformTtsEngine(appContext),
+            hebrew = hebrewTtsEngine(),
+        )
+        runCatching {
+            tts.speak(VOICE_TEST_LINE, TutorLanguage.ENGLISH).collect { }
+        }.onFailure { Log.w(MEM_TAG, "voice test failed", it) }
+    }
+
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator {
         val kokoro = bundledTtsEngine()
         val hebrew = hebrewTtsEngine()
@@ -460,6 +480,9 @@ class AppContainer private constructor(context: Context) {
         )
 
         // Bundled Hebrew voice (Phonikud stack), HF file names kept as above.
+        /** Covers a range of phonemes, and tells the tester what to expect. */
+        const val VOICE_TEST_LINE = "Hello! I am Tuki. Can you hear me clearly?"
+
         private const val TTS_HE_NIKUD_PATH = "models/phonikud-1.0.int8.onnx"
         private const val TTS_HE_VOICE_PATH = "models/model.onnx"
 

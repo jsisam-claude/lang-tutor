@@ -106,6 +106,11 @@ fun HomeScreen(
                 ),
             )
         }
+        // One-tap check of phonemizer -> synthesis -> playback, so a broken
+        // voice can be diagnosed without running a whole lesson.
+        OutlinedButton(onClick = { container.testVoice() }) {
+            Text(stringResource(R.string.home_test_voice))
+        }
         OutlinedButton(onClick = onOpenParent) {
             Text(stringResource(R.string.home_parent_zone))
         }

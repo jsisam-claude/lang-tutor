@@ -7,6 +7,7 @@
     <string name="home_start_conversation">Talk with Tuki</string>
     <string name="home_preload">Preload models</string>
     <string name="home_preload_running">Preloading…</string>
+    <string name="home_test_voice">Test Tuki’s voice</string>
     <string name="home_parent_zone">Parent zone</string>
 
     <string name="lesson_loading">Loading…</string>
