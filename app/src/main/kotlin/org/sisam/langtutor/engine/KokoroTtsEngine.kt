@@ -161,7 +161,30 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
                 val audio = FloatArray(buf.remaining())
                 buf.get(audio)
                 val ms = (System.nanoTime() - started) / 1_000_000
-                Log.i(TAG, "synth ${ids.size} tokens -> ${"%.2f".format(audio.size / SAMPLE_RATE.toFloat())}s in ${ms}ms")
+                // Shape of the waveform, not just its length: a device that
+                // reports plausible duration but garbage samples is an ONNX
+                // problem, while sane samples that SOUND wrong is a playback
+                // problem. Reference values from the same model+ids on x86:
+                // peak 0.45, rms 0.065, zero-crossing 0.11. White noise sits
+                // near zcr 0.5, and silence at peak 0.
+                var peak = 0f
+                var sumSq = 0.0
+                var crossings = 0
+                for (i in audio.indices) {
+                    val v = audio[i]
+                    if (kotlin.math.abs(v) > peak) peak = kotlin.math.abs(v)
+                    sumSq += v.toDouble() * v
+                    if (i > 0 && audio[i - 1] * v < 0f) crossings++
+                }
+                val rms = kotlin.math.sqrt(sumSq / audio.size.coerceAtLeast(1))
+                val zcr = crossings.toFloat() / audio.size.coerceAtLeast(1)
+                Log.i(
+                    TAG,
+                    "synth ${ids.size} tokens -> " +
+                        "${"%.2f".format(audio.size / SAMPLE_RATE.toFloat())}s in ${ms}ms " +
+                        "peak=${"%.3f".format(peak)} rms=${"%.4f".format(rms)} " +
+                        "zcr=${"%.3f".format(zcr)} (ref peak~0.45 rms~0.065 zcr~0.11)",
+                )
                 return audio
             }
         } finally {

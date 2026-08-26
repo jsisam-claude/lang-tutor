@@ -18,6 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -86,6 +89,23 @@ fun HomeScreen(
         }
 
         Spacer(modifier = Modifier.height(8.dp))
+        // Every engine is lazy, so a cold first conversation stalls once per
+        // engine. This gets it over with on demand; progress shows in the
+        // status line above and under the TukiStep logcat tag.
+        var preloading by rememberSaveable { mutableStateOf(false) }
+        OutlinedButton(
+            onClick = {
+                preloading = true
+                container.preloadAll()
+            },
+            enabled = !preloading,
+        ) {
+            Text(
+                stringResource(
+                    if (preloading) R.string.home_preload_running else R.string.home_preload,
+                ),
+            )
+        }
         OutlinedButton(onClick = onOpenParent) {
             Text(stringResource(R.string.home_parent_zone))
         }

@@ -8,6 +8,7 @@ import android.util.Log
 import java.io.File
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.content.ContentRepository
@@ -23,6 +24,7 @@ import org.sisam.langtutor.engine.Wav2Vec2GopEngine
 import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
+import org.sisam.langtutor.llm.LlmModelSpec
 import org.sisam.langtutor.llm.LlmTierPolicy
 import org.sisam.langtutor.packs.HttpPackFetcher
 import org.sisam.langtutor.packs.PackRepository
@@ -302,6 +304,35 @@ class AppContainer private constructor(context: Context) {
                 hebrewPath = key
             }
         }
+    }
+
+    /**
+     * Force every engine to load NOW, instead of lazily on first use.
+     *
+     * Each engine otherwise pays its load cost on the first turn that needs
+     * it — the LLM is multi-GB and the ONNX sessions are hundreds of MB, so a
+     * cold first conversation stalls repeatedly. This is the "get it all over
+     * with" path: progress shows in the status line and under the TukiStep
+     * logcat tag, and any engine whose model is not installed is skipped
+     * rather than treated as a failure.
+     *
+     * Safe to call more than once — every accessor below is memoised, so a
+     * second call is a no-op that just re-reports.
+     */
+    fun preloadAll(): Job = appScope.launch(Dispatchers.IO) {
+        runCatching { sileroVad()?.warmUp() }
+            .onFailure { Log.w(MEM_TAG, "preload: vad failed", it) }
+        runCatching { bundledTtsEngine()?.warmUp() }
+            .onFailure { Log.w(MEM_TAG, "preload: tts failed", it) }
+        runCatching { bundledAsrEngine()?.warmUp() }
+            .onFailure { Log.w(MEM_TAG, "preload: asr failed", it) }
+        runCatching { pronunciationScorer() }
+            .onFailure { Log.w(MEM_TAG, "preload: scorer failed", it) }
+        // Biggest and slowest, so it goes last: by the time it lands the
+        // cheap engines are already usable.
+        runCatching { createLlmEngine().load(LlmModelSpec(modelId = "tutor-default")) }
+            .onFailure { Log.w(MEM_TAG, "preload: llm failed", it) }
+        Log.i(MEM_TAG, "preload: done")
     }
 
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator {

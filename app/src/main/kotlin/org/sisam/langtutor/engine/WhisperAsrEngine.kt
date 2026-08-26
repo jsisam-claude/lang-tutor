@@ -200,12 +200,20 @@ class WhisperAsrEngine(
         }
     }
 
-    // @Synchronized so release() waits for an in-flight transcription.
+    /**
+     * Loads the interpreter up front so the first mic press does not pay a
+     * hundreds-of-MB model load inside the turn. Same memoised instance the
+     * first transcription would have created.
+     */
     @Synchronized
-    private fun transcribe(pcm: FloatArray): String {
-        // First call pays the model load (hundreds of MB) inside the turn, so
-        // it is reported separately from the transcription around it.
-        val itp = interpreter ?: EngineStatus.step(
+    fun warmUp() {
+        loadInterpreter()
+    }
+
+    // First call pays the model load (hundreds of MB); it is reported as its
+    // own step so the UI can show it separately from the work around it.
+    private fun loadInterpreter(): Interpreter =
+        interpreter ?: EngineStatus.step(
             EngineStatus.Kind.ASR_LOAD,
             modelFile.name,
         ) {
@@ -217,6 +225,11 @@ class WhisperAsrEngine(
                 graph = describe(it)
             }
         }
+
+    // @Synchronized so release() waits for an in-flight transcription.
+    @Synchronized
+    private fun transcribe(pcm: FloatArray): String {
+        val itp = loadInterpreter()
         val g = graph ?: describe(itp).also { graph = it }
 
         // The frontend truncates to the export's window, so anything past it
