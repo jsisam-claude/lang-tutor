@@ -94,4 +94,9 @@
     <string name="parent_voice_american">אמריקאי</string>
     <string name="parent_voice_british">בריטי</string>
     <string name="splash_tagline">…מכינים את טוקי</string>
+    <string name="chat_title">סתם לדבר</string>
+    <string name="chat_subtitle">טוקי · קיקי · אתם</string>
+    <string name="chat_hint">…כתבו באנגלית</string>
+    <string name="chat_send">שליחה</string>
+    <string name="home_just_chat">💬 סתם לדבר</string>
 </resources>

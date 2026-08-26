@@ -39,6 +39,7 @@ fun HomeScreen(
     onOpenLesson: (String) -> Unit,
     onOpenConversation: (String) -> Unit,
     onOpenParent: () -> Unit,
+    onOpenChat: () -> Unit,
 ) {
     val units by produceState<List<UnitSummary>>(initialValue = emptyList(), container) {
         value = container.content.listUnits()
@@ -118,6 +119,11 @@ fun HomeScreen(
                     },
                 ),
             )
+        }
+        // Freeform three-way practice with both parrots — no lesson, no
+        // scoring, just talking.
+        Button(onClick = onOpenChat) {
+            Text(stringResource(R.string.home_just_chat))
         }
         // One-tap check of phonemizer -> synthesis -> playback, so a broken
         // voice can be diagnosed without running a whole lesson.

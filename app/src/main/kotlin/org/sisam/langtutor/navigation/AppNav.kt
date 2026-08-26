@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import org.sisam.langtutor.AppContainer
+import org.sisam.langtutor.ui.chat.ChatScreen
 import org.sisam.langtutor.ui.conversation.ConversationScreen
 import org.sisam.langtutor.ui.home.HomeScreen
 import org.sisam.langtutor.ui.lesson.LessonScreen
@@ -15,6 +16,7 @@ import org.sisam.langtutor.ui.parent.ParentZoneScreen
 object Routes {
     const val HOME = "home"
     const val PARENT = "parent"
+    const val CHAT = "chat"
 
     // Unit-scoped destinations: the tapped unit travels in the route so every
     // screen teaches THAT unit (previously all roads led to unit-001).
@@ -37,6 +39,7 @@ fun AppNav(container: AppContainer) {
                 onOpenLesson = { unitId -> navController.navigate(Routes.lesson(unitId)) },
                 onOpenConversation = { unitId -> navController.navigate(Routes.conversation(unitId)) },
                 onOpenParent = { navController.navigate(Routes.PARENT) },
+                onOpenChat = { navController.navigate(Routes.CHAT) },
             )
         }
         composable(
@@ -52,5 +55,6 @@ fun AppNav(container: AppContainer) {
             ConversationScreen(container, entry.arguments?.getString("unitId") ?: Routes.DEFAULT_UNIT)
         }
         composable(Routes.PARENT) { ParentZoneScreen(container) }
+        composable(Routes.CHAT) { ChatScreen(container) }
     }
 }

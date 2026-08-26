@@ -30,11 +30,29 @@ import androidx.compose.ui.unit.dp
  * eases in and out instead of snapping, and an idle Tuki is perfectly still
  * rather than quietly animating off-screen.
  */
+/** Colors for one parrot. Two presets ship: [TUKI] (green/red) and [KIKI]
+ *  (blue/orange), so the two chat characters are tellable at a glance. */
+data class ParrotPalette(
+    val body: Color,
+    val bodyDark: Color,
+    val head: Color,
+) {
+    companion object {
+        val TUKI = ParrotPalette(
+            body = Color(0xFF2E9E5B), bodyDark = Color(0xFF1F7A44), head = Color(0xFFE4483D),
+        )
+        val KIKI = ParrotPalette(
+            body = Color(0xFF3E8ED0), bodyDark = Color(0xFF2A67A0), head = Color(0xFFEF8A2B),
+        )
+    }
+}
+
 @Composable
 fun TukiParrot(
     speaking: Boolean,
     modifier: Modifier = Modifier,
     size: androidx.compose.ui.unit.Dp = 96.dp,
+    palette: ParrotPalette = ParrotPalette.TUKI,
 ) {
     val loop = rememberInfiniteTransition(label = "tuki-loop")
     // ~3.5 beak cycles a second: fast enough to read as speech, slow enough
@@ -52,16 +70,16 @@ fun TukiParrot(
     )
 
     Canvas(modifier = modifier.size(size)) {
-        drawTuki(beakOpen = phase * amplitude, headBob = (phase - 0.5f) * amplitude)
+        drawTuki(beakOpen = phase * amplitude, headBob = (phase - 0.5f) * amplitude, palette = palette)
     }
 }
 
-private fun DrawScope.drawTuki(beakOpen: Float, headBob: Float) {
+private fun DrawScope.drawTuki(beakOpen: Float, headBob: Float, palette: ParrotPalette) {
     val w = this.size.width
     val h = this.size.height
-    val body = Color(0xFF2E9E5B) // green
-    val bodyDark = Color(0xFF1F7A44)
-    val head = Color(0xFFE4483D) // red crown, classic macaw palette
+    val body = palette.body
+    val bodyDark = palette.bodyDark
+    val head = palette.head
     val beak = Color(0xFFF7B733) // amber
     val beakDark = Color(0xFFD9931F)
 
