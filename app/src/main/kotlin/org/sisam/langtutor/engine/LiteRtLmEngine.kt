@@ -344,7 +344,18 @@ class LiteRtLmEngine(
         }
         val seconds = (System.nanoTime() - startNanos) / 1_000_000_000.0
         val estTokens = full.length / EST_CHARS_PER_TOKEN
-        Log.i(TAG, "turn done: ${full.length} chars in ${"%.1f".format(seconds)}s (~${(estTokens / seconds.coerceAtLeast(0.001)).toInt()} est-tok/s)")
+        // Split the phases: lumping prefill into one tok/s number made an 8s
+        // turn read as "~1 est-tok/s" when most of it was the silent prefill
+        // of the system prompt + history. TTFT is what the child WAITS;
+        // decode-phase rate is what streaming then rides on — different
+        // problems, different fixes, so report them separately.
+        val decodeSeconds =
+            if (firstDeltaMs > 0) (seconds - firstDeltaMs / 1000.0).coerceAtLeast(0.001) else seconds
+        Log.i(
+            TAG,
+            "turn done: ${full.length} chars in ${"%.1f".format(seconds)}s " +
+                "(ttft=${firstDeltaMs}ms, decode ~${(estTokens / decodeSeconds).toInt()} est-tok/s)",
+        )
         emit(
             LlmEvent.Done(
                 fullText = full.toString(),
