@@ -128,13 +128,20 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         emit(TtsEvent.Started)
         // Kokoro is an English voice; Hebrew letters phonemize to nothing and the
         // chunk is skipped, so a stray Hebrew line degrades to silence, not a crash.
-        for (chunk in SentenceChunker.split(text)) {
+        //
+        // GROUPED, not per-sentence: synthesizing each sentence in isolation
+        // gave every one the same isolated-statement contour — and because the
+        // style row is indexed by token count, short sentences also kept
+        // hitting the same narrow band of the voice table. Both read as
+        // monotone. Grouping restores cross-sentence intonation and moves the
+        // input into richer style rows.
+        for (group in groupForProsody(SentenceChunker.split(text))) {
             if (player.interrupted) break
-            val ids = phonemizer.phonemize(chunk.text)
+            val ids = phonemizer.phonemize(group.text)
             if (ids.isEmpty()) continue
-            emit(TtsEvent.RangeSpoken(chunk.start, chunk.end))
+            emit(TtsEvent.RangeSpoken(group.start, group.end))
             val audio = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes") {
-                synthesize(ids, speed)
+                synthesize(ids, vary(speed))
             }
             if (audio.isNotEmpty() && !player.interrupted) player.play(audio)
         }
@@ -151,15 +158,40 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
     override fun speakStream(chunks: Flow<String>, language: TutorLanguage, speed: Float): Flow<TtsEvent> = flow {
         player.interrupted = false
         emit(TtsEvent.Started)
-        chunks.collect { sentence ->
-            if (player.interrupted) return@collect
-            val ids = phonemizer.phonemize(sentence)
-            if (ids.isEmpty()) return@collect
-            val audio = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes (stream)") {
-                synthesize(ids, speed)
+        // First sentence alone — it IS the latency win streaming exists for.
+        // After that, sentences are paired before synthesis so the contour
+        // spans sentence boundaries (see the prosody note in speak()). The
+        // LLM decodes several times faster than speech plays, so by the time
+        // a pair is spoken the next pair has long since arrived — the pairing
+        // costs no audible gap.
+        var first = true
+        val pending = StringBuilder()
+        var pendingCount = 0
+        suspend fun synthAndPlay(text: String, label: String) {
+            val ids = phonemizer.phonemize(text)
+            if (ids.isEmpty()) return
+            val audio = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes ($label)") {
+                synthesize(ids, vary(speed))
             }
             if (audio.isNotEmpty() && !player.interrupted) player.play(audio)
         }
+        chunks.collect { sentence ->
+            if (player.interrupted) return@collect
+            if (first) {
+                first = false
+                synthAndPlay(sentence, "stream")
+            } else {
+                if (pending.isNotEmpty()) pending.append(' ')
+                pending.append(sentence)
+                pendingCount++
+                if (pendingCount >= GROUP_MAX_SENTENCES || pending.length >= GROUP_TARGET_CHARS) {
+                    synthAndPlay(pending.toString(), "stream pair")
+                    pending.setLength(0)
+                    pendingCount = 0
+                }
+            }
+        }
+        if (pending.isNotEmpty() && !player.interrupted) synthAndPlay(pending.toString(), "stream tail")
         player.release()
         emit(TtsEvent.Completed)
     }.flowOn(Dispatchers.IO)
@@ -246,8 +278,45 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         }
     }
 
+    private data class ProsodyGroup(val text: String, val start: Int, val end: Int)
+
+    /** Merge adjacent sentence chunks up to the group limits, keeping original
+     *  offsets so karaoke highlighting still tracks the source text. */
+    private fun groupForProsody(chunks: List<SentenceChunker.Chunk>): List<ProsodyGroup> {
+        val out = ArrayList<ProsodyGroup>()
+        var text = StringBuilder()
+        var start = -1
+        var end = -1
+        var count = 0
+        fun flush() {
+            if (text.isNotEmpty()) out.add(ProsodyGroup(text.toString(), start, end))
+            text = StringBuilder(); start = -1; count = 0
+        }
+        for (c in chunks) {
+            if (start < 0) start = c.start
+            if (text.isNotEmpty()) text.append(' ')
+            text.append(c.text)
+            end = c.end
+            count++
+            if (count >= GROUP_MAX_SENTENCES || text.length >= GROUP_TARGET_CHARS) flush()
+        }
+        flush()
+        return out
+    }
+
+    /** Small per-group speed variation (±2%): identical pace on every chunk is
+     *  part of what read as robotic. Inaudible as a tempo change, audible as
+     *  life. */
+    private fun vary(base: Float): Float =
+        base * (0.98f + kotlin.random.Random.nextFloat() * 0.04f)
+
     companion object {
         private const val TAG = "TukiTts"
+
+        /** Prosody grouping: enough for a contour to span a boundary, small
+         *  enough that synthesis latency stays in per-reply territory. */
+        private const val GROUP_MAX_SENTENCES = 2
+        private const val GROUP_TARGET_CHARS = 160
         private const val SAMPLE_RATE = 24_000
         private const val STYLE_DIM = 256
         private const val THREADS = 4
