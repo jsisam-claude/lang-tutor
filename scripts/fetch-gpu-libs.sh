@@ -14,7 +14,7 @@
 #
 # The three libs are the upstream dynamic layout: accelerator and sampler both
 # link the SHARED libwebgpu_dawn.so. All are 16KB-page-aligned arm64 builds.
-# Apache-2.0 (google-ai-edge/LiteRT-LM). ~23MB added to the APK, arm64 only —
+# Apache-2.0 (google-ai-edge/LiteRT-LM). ~34MB added to the APK, arm64 only —
 # other ABIs keep today's CPU fallback.
 #
 # Usage: scripts/fetch-gpu-libs.sh   (run from anywhere; CI runs it before
@@ -23,15 +23,15 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DEST="$REPO_ROOT/app/src/main/jniLibs/arm64-v8a"
-# LiteRT-LM v0.14.0 — keep in lockstep with libs.versions.toml's litertlm.
-COMMIT="80f301ff9a3b02c2c1e7be2dd1a567752f7b51b6"
+# LiteRT-LM v0.16.1 — keep in lockstep with libs.versions.toml's litertlm.
+COMMIT="924e79c91542761242244e4f1651851f822e4cbb"
 BASE="https://media.githubusercontent.com/media/google-ai-edge/LiteRT-LM/$COMMIT/prebuilt/android_arm64"
 
-# name|sha256 (= Git LFS oid pinned from the v0.14.0 tag's pointer files)
+# name|sha256 (= Git LFS oid pinned from the v0.16.1 tag's pointer files)
 LIBS=(
-  "libLiteRtTopKWebGpuSampler.so|36986455ae1140b601d43c17657bc2e83c18819533465951534cbc36df6c107a"
-  "libLiteRtWebGpuAccelerator.so|1e958236315a1e9e270669b733da4bfcd1fa3a272fedcb201a215d7077170fd7"
-  "libwebgpu_dawn.so|7282aacdb076ce89f0c9d93107a145b991b99eb1dfbd5b5746dd0d99466ab3c3"
+  "libLiteRtTopKWebGpuSampler.so|c52a1cf69a92a2d2c4d3c08f5c087d1eb405f709af61c3312b215221135e18db"
+  "libLiteRtWebGpuAccelerator.so|acf02905cd1d7b7d1f0f70a6d885ddbd392c0c69a99b92834da7e26d6859abcf"
+  "libwebgpu_dawn.so|3b2a53de934efabce2efb5e9f703a7bd6b63a5814b2f8f0c7ed610cabf53b147"
 )
 
 mkdir -p "$DEST"

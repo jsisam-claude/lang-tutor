@@ -36,7 +36,7 @@ scripts/fetch-gpu-libs.sh && scripts/fetch-voice-assets.sh && scripts/fetch-vad-
 
 | Script | Writes to | Size | Skip it and… |
 |---|---|---|---|
-| `fetch-gpu-libs.sh` | `app/src/main/jniLibs/arm64-v8a/` | ~23 MB | GPU generation fails on devices without OpenCL (GrapheneOS) and the engine falls back to CPU |
+| `fetch-gpu-libs.sh` | `app/src/main/jniLibs/arm64-v8a/` | ~34 MB | GPU generation fails on devices without OpenCL (GrapheneOS) and the engine falls back to CPU |
 | `fetch-voice-assets.sh` | `app/src/main/assets/kokoro/` | 522 KB | Tuki has no bundled voice; the app falls back to the platform TTS shim |
 | `fetch-vad-asset.sh` | `app/src/main/assets/vad/` | 2.3 MB | The hands-free toggle is hidden and the mic stays push-to-talk |
 

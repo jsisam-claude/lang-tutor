@@ -4,10 +4,15 @@ Verified end to end on 2026-08-20: fresh `git clone`, unprivileged user (uid 100
 SDK inside `$HOME`, cold Gradle cache, **JDK 25** — both build lanes green and a
 working APK out the other end.
 
-Sizes are approximate, not a checksum: debug lands near 245 MB and release near
-237 MB, but the exact byte count drifts a few hundred KB between environments
-(dex merging and R8 are not bit-reproducible across machines), so don't treat a
-small difference from CI's published APK as a problem.
+Sizes are approximate: debug lands near 276 MB, release near 268 MB.
+
+If your APK comes out **much** bigger than that, it is almost certainly an
+incremental build, not a real regression. AGP's packager reuses the existing
+APK and appends changed entries, leaving the freed space as holes — swapping
+the native libraries once produced a 348 MB file whose entries summed to
+276 MB, i.e. 72 MB of holes. `./gradlew :app:clean assembleDebug` compacts it.
+CI always builds clean, which is why its published APK is the size to compare
+against.
 
 Only ONE step needs `sudo`: installing the JDK. Everything else lives in `$HOME`.
 
@@ -73,7 +78,7 @@ sdkmanager --install "platform-tools" "platforms;android-36" "build-tools;36.0.0
 cd ~/lang-tutor
 scripts/fetch-gpu-libs.sh && scripts/fetch-voice-assets.sh && scripts/fetch-vad-asset.sh
 ./gradlew :app:assembleDebug
-# -> app/build/outputs/apk/debug/app-debug.apk  (~245 MB)
+# -> app/build/outputs/apk/debug/app-debug.apk  (~276 MB)
 ```
 
 Skipping the fetch scripts still builds; you lose GPU decode, Tuki's voice and
