@@ -109,4 +109,8 @@
     <string name="chat_hint">…כתבו באנגלית</string>
     <string name="chat_send">שליחה</string>
     <string name="home_just_chat">💬 סתם לדבר</string>
+
+    <string name="sticker_pick_one">🎉 הרווחתם מדבקה! בחרו אחת</string>
+    <string name="sticker_taken">!בחירה מקסימה</string>
+    <string name="sticker_collection">המדבקות שלך: %1$d</string>
 </resources>

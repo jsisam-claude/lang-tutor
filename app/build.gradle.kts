@@ -125,4 +125,8 @@ dependencies {
     implementation(libs.litert)
     // ONNX Runtime for the bundled Kokoro voice (single-graph TTS). MIT.
     implementation(libs.onnxruntime.android)
+
+    // Local unit tests for the app module's pure logic (reward bookkeeping).
+    // Picked up by the CI lane's `./gradlew test` with no workflow change.
+    testImplementation(libs.junit4)
 }

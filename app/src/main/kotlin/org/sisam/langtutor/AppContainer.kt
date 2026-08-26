@@ -20,6 +20,7 @@ import org.sisam.langtutor.engine.KokoroTtsEngine
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
+import org.sisam.langtutor.engine.RewardChime
 import org.sisam.langtutor.engine.SileroVad
 import org.sisam.langtutor.engine.TtsRouter
 import org.sisam.langtutor.engine.Wav2Vec2GopEngine
@@ -44,6 +45,8 @@ import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
 import org.sisam.langtutor.tutor.TutorOrchestrator
+import org.sisam.langtutor.ui.reward.RewardBus
+import org.sisam.langtutor.ui.reward.RewardKind
 
 /**
  * Manual composition root — the single swap point for engines.
@@ -481,6 +484,30 @@ class AppContainer private constructor(context: Context) {
      *  which sets voices per speaker. */
     fun reapplyChosenVoice() {
         appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
+    }
+
+    /**
+     * Audio-visual reinforcement. App-wide rather than per-screen: a burst
+     * fired as a lesson ends should finish over whatever comes next, and the
+     * chime must not be re-synthesized once per screen.
+     */
+    val rewards = RewardBus()
+
+    private val chime by lazy { RewardChime() }
+
+    /**
+     * Celebrate: particles on screen and one short consonant cue, together.
+     *
+     * The sound only plays when the picture does — a chime with no burst
+     * behind it (because three were already in flight) is a noise the child
+     * cannot account for.
+     */
+    fun celebrate(kind: RewardKind) {
+        if (!rewards.celebrate(kind)) return
+        appScope.launch(Dispatchers.IO) {
+            runCatching { chime.play(kind) }
+                .onFailure { Log.w(MEM_TAG, "reward chime failed: ${it.message}") }
+        }
     }
 
     fun createOrchestrator(scope: CoroutineScope): TutorOrchestrator {

@@ -101,6 +101,46 @@ pre-recorded human Hebrew audio for the ~20 fixed instruction lines
 (docs/product-phases.md); dynamic spoken Hebrew waits on a commercially
 licensed voice (docs/feasibility.md §6).
 
+## Reinforcement — what a learner gets back
+
+**Status: built.** Three cues, plus one room, all track-aware.
+
+| Cue | Fires when | Why that one |
+|---|---|---|
+| **Coins** (gold, tumbling) | a turn completes | The "you did the work" acknowledgement. Lands *after* Tuki finishes speaking — XP is awarded at the end of the turn — so it never plays over the sentence the learner is meant to hear. |
+| **Stars** (bright, spinning) | pronunciation scores ≥ 0.8 | Did it *well*, not merely did it. Fires right after the attempt, while the model is still thinking, which is also when feedback is worth most. |
+| **Flakes** (soft, drifting) | pronunciation scores 0.5–0.8 | "Nearly." A visibly and audibly different cue, so the difference is legible without anyone naming it. |
+| *(nothing)* | below 0.5 | The coloured phonemes already say what happened. A celebration here would be a lie, and a cue that fires whatever you do teaches that the cue means nothing. |
+
+Everything is synthesized or drawn: the particles are Canvas geometry and the
+chimes are a few sines rendered at first use (`RewardChime`). No audio files,
+no artwork, no third-party licence to audit — the same reasoning that produced
+the parrot. Each chime is a consonant interval or major triad held near a
+third of full scale and tagged `USAGE_ASSISTANCE_SONIFICATION`, so it sits
+under the tutor's voice rather than over it.
+
+**The sticker room** is the 4–6 reward skin
+([product-phases.md](product-phases.md) calls for one). At every 50 XP — ten
+turns, a session's worth — a young learner is taken to a room, picks one
+sticker from eight, and is returned to the exact lesson they left, on its own,
+a beat later. No confirm button and no wrong choice: a pre-reader cannot be
+asked to press "Done". "Young" is either signal — the profile's track is
+`PRE_READER`, or the open unit's age band is 4–6 — so a parent who never
+touched the track setting still gets the right behaviour inside a 4–6 unit.
+
+Owed-ness is derived, never stored: `xp / 50 > stickers.size`. Nothing to keep
+in sync, and a crash mid-celebration just means the room opens again. A
+milestone already offered this session is not re-offered, so backing out is
+not a trap.
+
+Honest tension: [product-phases.md](product-phases.md) warns against the
+overjustification effect and says to "celebrate effortful milestones only".
+Coins on every turn are arguably not that. The mitigations are that the cue is
+peripheral (an overlay that takes no input and blocks nothing), brief, and
+quiet — and that the *loud* cues are reserved for doing something well. This
+is a judgement, not a measurement; it is the kind of thing the eval harness
+cannot settle and a week with real children can.
+
 ## First artifact: "Just chat"
 
 A freeform three-way chat room (the learner + two parrots, Tuki and Kiki) —

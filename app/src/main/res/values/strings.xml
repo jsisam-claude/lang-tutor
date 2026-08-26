@@ -111,4 +111,8 @@
     <string name="chat_hint">Type in English…</string>
     <string name="chat_send">Send</string>
     <string name="home_just_chat">Just chat 💬</string>
+
+    <string name="sticker_pick_one">You earned a sticker! Pick one 🎉</string>
+    <string name="sticker_taken">Lovely choice!</string>
+    <string name="sticker_collection">Your stickers: %1$d</string>
 </resources>

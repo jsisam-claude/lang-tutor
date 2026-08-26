@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,6 +46,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
+import org.sisam.langtutor.profile.LearnerProfile
 import org.sisam.langtutor.speech.HebrewText
 import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.tutor.Speaker
@@ -54,6 +56,7 @@ import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.TukiParrot
 import org.sisam.langtutor.ui.common.EnglishContent
+import org.sisam.langtutor.ui.reward.RewardKind
 
 class ConversationViewModel(container: AppContainer, unitId: String) : ViewModel() {
 
@@ -107,6 +110,32 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
     val hebrewHelp by viewModel.hebrewHelpOffered.collectAsState()
     var draft by remember { mutableStateOf("") }
     var handsFree by remember { mutableStateOf(false) }
+
+    // Audio-visual reinforcement, driven by what actually happened rather than
+    // by a timer. Coins for finishing a turn, and — separately — a reward for
+    // saying it WELL, because a cue that fires whatever the child does teaches
+    // them the cue means nothing.
+    val profile by container.profile.profile.collectAsState(initial = LearnerProfile.EMPTY)
+    var lastXp by remember { mutableIntStateOf(UNSEEN_XP) }
+    LaunchedEffect(profile.xp) {
+        // The sentinel keeps a returning learner's existing XP from firing a
+        // burst the moment the screen opens.
+        if (lastXp != UNSEEN_XP && profile.xp > lastXp) container.celebrate(RewardKind.COIN)
+        lastXp = profile.xp
+    }
+    LaunchedEffect(pronunciation) {
+        val score = pronunciation ?: return@LaunchedEffect
+        when {
+            // Said it well: the loud, bright cue.
+            score.overall >= GOOD_ATTEMPT -> container.celebrate(RewardKind.STAR)
+            // Nearly: the soft one. Not the same sound, so the difference is
+            // audible without anyone naming it.
+            score.overall >= FAIR_ATTEMPT -> container.celebrate(RewardKind.FLAKE)
+            // Below that, nothing. The coloured phonemes already say what
+            // happened, and a celebration here would be a lie.
+            else -> Unit
+        }
+    }
 
     // The platform ASR shim needs the mic; ask once when the screen opens.
     val micPermission = rememberLauncherForActivityResult(
@@ -413,3 +442,11 @@ private fun PronunciationFeedback(score: PronunciationScore) {
 }
 
 private const val MAX_SHOWN = 24
+
+/** No XP reading yet this composition — distinguishes "first frame" from
+ *  "a real gain of zero", which cannot happen but reads clearer stated. */
+private const val UNSEEN_XP = -1
+
+/** Bright cue at or above this; soft cue above [FAIR_ATTEMPT]; silence below. */
+private const val GOOD_ATTEMPT = 0.8f
+private const val FAIR_ATTEMPT = 0.5f
