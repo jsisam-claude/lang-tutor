@@ -1,22 +1,20 @@
 #!/usr/bin/env bash
-# Fetch Google's prebuilt android_arm64 WebGPU libraries into the app's
-# jniLibs so the GPU sampler works on devices without OpenCL (GrapheneOS).
+# Fetch Google's prebuilt android_arm64 GPU libraries into the app's jniLibs
+# so LiteRT-LM's GPU path has every library its factory can dlopen.
 #
-# CAVEAT on that premise: apps targeting API 31+ cannot dlopen vendor
-# libraries they do not declare, so before the manifest gained its
-# <uses-native-library libOpenCL.so> entries, "no OpenCL" on device was
-# indistinguishable from namespace isolation. The WebGPU chain stays bundled
-# regardless — it is the path that works with zero vendor dependencies.
+# HISTORY, because this file's premise was overturned by a device result: it
+# long claimed "GrapheneOS ships no OpenCL, so GPU generation fails". That was
+# never a tested fact — apps targeting API 31+ cannot dlopen vendor libraries
+# they do not declare, so a missing driver and namespace isolation were
+# indistinguishable. Once AndroidManifest.xml declared
+# <uses-native-library libOpenCL.so / libOpenCL-pixel.so>, a Pixel 9 loaded
+# Gemma 4 E4B on the GPU backend first try (GPU verdict: USED; decode
+# ~12-14 est-tok/s vs ~1.6 on CPU, whole turns 0.9-2.2s vs 8.2s). The WebGPU
+# chain stays bundled as the zero-vendor-dependency fallback for devices whose
+# vendor image genuinely lacks the driver.
 #
-# WHY: the litertlm-android 0.14.0 AAR statically fuses the WebGPU executor
-# and Dawn into liblitertlm_jni.so but omits the top-K sampler, whose factory
-# dlopen()s libLiteRtTopKWebGpuSampler.so at first generation. On stock Pixels
-# the runtime silently falls back to an OpenCL sampler; GrapheneOS ships no
-# OpenCL, so GPU generation fails and the engine drops to CPU (see
-# LiteRtLmEngine's load-time smoke test). Google publishes exactly these
-# prebuilts in the LiteRT-LM repo via Git LFS — we pin the v0.14.0 tag
-# (commit 80f301ff), the same version as the AAR, and verify the LFS oid
-# (which IS the file's SHA-256) end to end.
+# Google publishes these prebuilts in the LiteRT-LM repo via Git LFS — we pin
+# the tag matching the AAR and verify the LFS oid (= the file's SHA-256).
 #
 # WHICH of the seven upstream prebuilts we take, and why (checked against
 # liblitertlm_jni.so's own strings — those are the dlopen candidates):
@@ -26,10 +24,9 @@
 #   libLiteRtTopKWebGpuSampler.so   referenced; the sampler the AAR omits    TAKE
 #   libwebgpu_dawn.so               not referenced by name, but DT_NEEDED of
 #                                   both accelerators above                  TAKE
-#   libLiteRtOpenClAccelerator.so   referenced, but OpenCL is exactly what
-#   libLiteRtTopKOpenClSampler.so   GrapheneOS lacks — the reason this file
-#                                   exists. 15MB for a path our target device
-#                                   cannot take.                            SKIP
+#   libLiteRtOpenClAccelerator.so   referenced, but the combined accelerator
+#   libLiteRtTopKOpenClSampler.so   above already carries the CL path that
+#                                   a Pixel 9 measurably uses. 15MB saved.  SKIP
 #   libGemmaModelConstraintProvider.so  NOT referenced by the Android runtime
 #                                   at all (19MB, CLI/other builds).        SKIP
 # If a STOCK-Android device ever needs the OpenCL path, add those two here —

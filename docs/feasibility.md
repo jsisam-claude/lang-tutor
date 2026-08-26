@@ -83,10 +83,18 @@ with full devices (storage check + clear messaging at install).
   (e.g. Gemma-3n-E2B at >1,600 tok/s prefill / 28 tok/s decode on Dimensity 9500
   NPU) — i.e., *Samsung-class phones, not Pixels*
   ([Google/Qualcomm](https://developers.googleblog.com/unlocking-peak-performance-on-qualcomm-npu-with-litert/); [MarkTechPost](https://www.marktechpost.com/2025/12/09/google-litert-neuropilot-stack-turns-mediatek-dimensity-npus-into-first-class-targets-for-on-device-llms/), 2025-12).
-- On Pixel, the GPU path is weak: Tensor GPUs are not first-class OpenCL-LLM
-  targets (LiteRT-LM GPU backend reported to silently fail on Pixel 8 Pro — OpenCL
-  not found ⚠️ [LiteRT-LM#1860](https://github.com/google-ai-edge/LiteRT-LM/issues/1860));
-  whether Pixel 9/Tensor G4 exposes usable OpenCL is not cleanly documented ❓.
+- On Pixel, the GPU path WORKS — **measured on our Pixel 9 (2026-08-27)**:
+  Gemma 4 E4B on the LiteRT-LM GPU backend, whole turns 0.9–2.2 s
+  (ttft ≈ 270 ms warm, decode ~12–14 est-tok/s) vs 8.2 s turns on CPU. The
+  catch that made it LOOK broken — likely including
+  [LiteRT-LM#1860](https://github.com/google-ai-edge/LiteRT-LM/issues/1860)'s
+  "OpenCL not found" on Pixel 8 Pro — is that apps targeting API 31+ must
+  declare `<uses-native-library libOpenCL.so>` (+ `libOpenCL-pixel.so`) in the
+  manifest or the driver is invisible to dlopen. Caveat worth watching:
+  a Mali-G715 field report ([LiteRT-LM#2202](https://github.com/google-ai-edge/LiteRT-LM/issues/2202))
+  saw digit corruption in ~6–9% of GPU tool-call outputs that CPU did not show;
+  no garbled output observed here yet, but watch transcripts for mangled
+  numbers.
 - **Pixel's real accelerator is the TPU**, opened to third parties via the **Google
   Tensor ML SDK (Beta since I/O 2026)** — AOT-compiled models, Pixel 10 family
   ([Google](https://developers.googleblog.com/google-tensor-sdk-beta-with-litert/), 2026-05). On

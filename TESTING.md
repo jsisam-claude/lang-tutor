@@ -124,6 +124,14 @@ screens now show the step in progress — "Getting Tuki's ears ready…", "Wakin
 Tuki up…" — with a seconds counter once it passes 2 s, and debug builds print
 the technical detail under it (`ASR_LOAD · acft_whisper_small.en_10s.tflite`).
 
+**First real Pixel 9 numbers (2026-08-27, GPU backend):** whole turns
+0.9–2.2 s, time-to-first-token ≈ 270 ms warm / ≈ 700 ms first turn, decode
+~12–14 est-tok/s — against 8.2 s whole turns on CPU before the GPU fix. If
+your `turn done` lines sit far from these, send them. And if Tuki ever says a
+mangled number ("1.0,293" for "1.0293"), report it immediately — a known
+Mali GPU precision issue shows exactly that signature, and it decides whether
+we pin CPU for numbers.
+
 The same steps go to logcat under tag **`TukiStep`**, entry and exit with
 elapsed milliseconds:
 
