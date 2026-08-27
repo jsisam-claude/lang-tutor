@@ -145,10 +145,13 @@ class LiteRtLmEngine(
         // the fallback steps down one rung instead of all the way to CPU.
         // Upstream quotes up to ~2.2x decode, and the device currently manages
         // 7-8 est-tok/s on GPU against a documented 12-14, so it is worth the
-        // one variable. The compile cache stays off GPU — one variable, not two.
+        // one variable.
         val mtpGpuHint = File("$modelPath$MTP_GPU_HINT_SUFFIX")
         val mtpGpuMarker = File("$modelPath$MTP_GPU_ATTEMPT_SUFFIX")
-        val mtpGpuCrashed = mtpGpuMarker.exists()
+        // Not when the compile-cache latch also fired: that one is newer and
+        // takes the blame alone, so MTP keeps its turn (see below).
+        val gpuCacheAlsoCrashed = File("$modelPath$GPU_CACHE_ATTEMPT_SUFFIX").exists()
+        val mtpGpuCrashed = mtpGpuMarker.exists() && !gpuCacheAlsoCrashed
         if (mtpGpuCrashed) {
             Log.w(TAG, "MTP+GPU crashed the process last time — GPU without MTP for this build ($buildStamp)")
             runCatching { mtpGpuHint.writeText(buildStamp) }
@@ -159,11 +162,97 @@ class LiteRtLmEngine(
         }.getOrDefault(false)
         val skipMtpGpu = mtpGpuCrashed || mtpGpuHinted
 
+        // THE COMPILE CACHE ON GPU, retried — this is where the load time is.
+        //
+        // A device log times the GPU load at 26.6s and 28.3s, and 22.5-23.8s of
+        // each is a single gap: between "Replacing 2712 out of 2712 node(s)
+        // with delegate (LITERT_CL) ... subgraph 0 (decode)" and the same line
+        // for the next subgraph. That is OpenCL compiling the decode kernels,
+        // and persisting exactly that is what cacheDir is for. Every load pays
+        // it today, including the reload after a room exit.
+        //
+        // It was pulled from the GPU attempt because the build that turned on
+        // the cache AND MTP together crashed natively — unattributable, so both
+        // went. MTP came back first and has since loaded cleanly three times in
+        // one session, and the unload/generate race that could crash a native
+        // decode has been fixed. So the cache gets its own latch and its turn.
+        //
+        // Demotion is newest-suspect-first: a crash during a gpu+mtp+cache
+        // attempt trips BOTH latches, so this one is resolved first and clears
+        // the MTP marker without acting on it. The next launch runs gpu+mtp
+        // with no cache — one variable removed, not two.
+        val gpuCacheHint = File("$modelPath$GPU_CACHE_HINT_SUFFIX")
+        val gpuCacheMarker = File("$modelPath$GPU_CACHE_ATTEMPT_SUFFIX")
+        val gpuCacheCrashed = gpuCacheMarker.exists()
+        if (gpuCacheCrashed) {
+            Log.w(TAG, "compile cache on GPU crashed the process last time — GPU without it for this build ($buildStamp)")
+            runCatching { gpuCacheHint.writeText(buildStamp) }
+            runCatching { gpuCacheMarker.delete() }
+        }
+        val gpuCacheHinted = runCatching {
+            gpuCacheHint.isFile && gpuCacheHint.readText().trim() == buildStamp
+        }.getOrDefault(false)
+        val useGpuCache = cacheDir != null && !gpuCacheCrashed && !gpuCacheHinted
+
+        // THE TPU, actually asked instead of assumed.
+        //
+        // The docs said the Edge TPU was closed to us on Tensor G4 on three
+        // grounds, one of which a device log has now put in doubt. Android's
+        // nativeloader prints, on this Pixel 9:
+        //
+        //   InitVendorPublicLibraries: libOpenCL.so:libOpenCL-pixel.so:
+        //     libedgetpu_client.google.so:libedgetpu_util.so:lib_aion_buffer.so:
+        //     lib_jpg_encoder.so:libgxp.so:libedgetpu_tachyon.google.so:
+        //     libedgetpu_litert.so
+        //
+        // Those are the vendor libraries an ordinary app IS allowed to link
+        // against, and the Edge TPU ones are on the list. Meanwhile the 0.16.1
+        // API turns out to carry Backend.NPU(nativeLibraryDir) — which is
+        // precisely the "You should provide the DispatchLibraryDir option to
+        // use NPU" the runtime warns about six times per load — and a
+        // parameterless Backend.GOOGLE_TENSOR().
+        //
+        // So the honest position is that we have never tried. This rung tries,
+        // costs nothing when it fails (a caught exception, then straight on to
+        // GPU), and is skipped entirely on hardware with no dispatch library.
+        // What we expect to learn either way: if it is really SELinux denying
+        // untrusted_app on /dev/gxp, the log will say so as an avc denial, and
+        // that turns a claim we took on authority into a measurement.
+        val npuLibDir = NPU_LIB_DIRS.firstOrNull { dir ->
+            NPU_DISPATCH_LIBS.any { File(dir, it).exists() }
+        }
+        val npuHint = File("$modelPath$NPU_HINT_SUFFIX")
+        val npuMarker = File("$modelPath$NPU_ATTEMPT_SUFFIX")
+        val npuCrashed = npuMarker.exists()
+        if (npuCrashed) {
+            Log.w(TAG, "NPU attempt crashed the process last time — skipping it for this build ($buildStamp)")
+            runCatching { npuHint.writeText(buildStamp) }
+            runCatching { npuMarker.delete() }
+        }
+        val npuHinted = runCatching {
+            npuHint.isFile && npuHint.readText().trim() == buildStamp
+        }.getOrDefault(false)
+        val tryNpu = npuLibDir != null && !npuCrashed && !npuHinted
+        Log.i(
+            TAG,
+            "NPU: " + when {
+                npuLibDir == null -> "no dispatch library on this device (looked in ${NPU_LIB_DIRS.joinToString(", ")}) — not attempted"
+                npuCrashed || npuHinted -> "pinned off for this build after an earlier failure"
+                else -> "dispatch library found in $npuLibDir — will attempt"
+            },
+        )
+
         var lastError: Throwable? = null
         var gpuFailed = false
         // Each rung is (label, backend, MTP) with its OWN crash marker, so a
         // native death is attributable to the exact combination that caused it.
         val backends = buildList {
+            // First, and only where a dispatch library actually exists. MTP is
+            // off here: the drafter is a second graph, and one unknown at a
+            // time is the rule this ladder is built on.
+            if (tryNpu && npuLibDir != null) {
+                add(Triple("npu", Backend.NPU(npuLibDir), false))
+            }
             if (!skipGpu) {
                 if (mtpSupported && !skipMtpGpu) add(Triple("gpu+mtp", Backend.GPU(), true))
                 add(Triple("gpu", Backend.GPU(), false))
@@ -176,11 +265,18 @@ class LiteRtLmEngine(
             @OptIn(ExperimentalApi::class)
             runCatching { ExperimentalFlags.enableSpeculativeDecoding = mtp }
             val marker = when (label) {
+                "npu" -> npuMarker
                 "gpu+mtp" -> mtpGpuMarker
                 "gpu" -> attemptMarker
                 else -> null
             }
             runCatching { marker?.createNewFile() }
+            // A second latch on the SAME attempt: the cache is a modifier on
+            // the GPU rungs rather than a rung of its own, so it needs its own
+            // marker to be blamed separately from the backend underneath it.
+            if (useGpuCache && label.startsWith("gpu")) {
+                runCatching { gpuCacheMarker.createNewFile() }
+            }
             val started = System.nanoTime()
             // Multi-GB mmap plus accelerator warm-up, and a failed backend is
             // paid before the fallback: report each attempt by name so a long
@@ -212,7 +308,9 @@ class LiteRtLmEngine(
                         // crash, so the GPU attempt carries neither). Today's
                         // log shows CPU loading fine with it (3.9s warm vs
                         // 15.4s cold — suggestive, not attributed).
-                        cacheDir = if (label == "cpu") cacheDir else null,
+                        // CPU always; GPU unless its own latch says the
+                        // cache is what killed the process on this device.
+                        cacheDir = if (label == "cpu" || label == "npu" || useGpuCache) cacheDir else null,
                     ),
                 ).also { it.initialize() }
                 }
@@ -220,6 +318,7 @@ class LiteRtLmEngine(
                 EngineStatus.end(loadStep, t)
                 Log.w(TAG, "engine create failed on $label", t)
                 runCatching { marker?.delete() }
+                runCatching { gpuCacheMarker.delete() }
                 lastError = t
                 if (label.startsWith("gpu")) gpuFailed = true
                 continue
@@ -244,7 +343,9 @@ class LiteRtLmEngine(
                 Log.i(
                     TAG,
                     "GPU verdict: " + when {
-                        label == "gpu+mtp" -> "USED with MTP (speculative decoding)"
+                        label == "npu" -> "not used — the NPU took this load (see the NPU line above)"
+                        label == "gpu+mtp" -> "USED with MTP (speculative decoding)" +
+                            if (useGpuCache) " + compile cache" else ", no compile cache"
                         label == "gpu" && skipMtpGpu -> "USED without MTP — MTP+GPU is pinned off for this build"
                         label == "gpu" && !mtpSupported -> "USED — this export has no MTP heads"
                         label == "gpu" -> "USED without MTP"
@@ -256,15 +357,18 @@ class LiteRtLmEngine(
                     },
                 )
                 runCatching { marker?.delete() }
+                runCatching { gpuCacheMarker.delete() }
                 runCatching {
                     when {
                         // CPU only works after GPU just failed: remember, skip next time.
                         label == "cpu" && gpuFailed -> hintFile.writeText(buildStamp)
                         // Any GPU rung working clears a stale hint from an
                         // older build; the MTP rung additionally clears its own.
+                        label == "npu" -> { if (npuHint.exists()) npuHint.delete() }
                         label.startsWith("gpu") -> {
                             if (hintFile.exists()) hintFile.delete()
                             if (label == "gpu+mtp" && mtpGpuHint.exists()) mtpGpuHint.delete()
+                            if (useGpuCache && gpuCacheHint.exists()) gpuCacheHint.delete()
                         }
                     }
                 }
@@ -274,6 +378,7 @@ class LiteRtLmEngine(
                 // failed attempt's native buffers leak alongside the next backend.
                 runCatching { candidate.close() }
                 runCatching { attemptMarker.delete() }
+                runCatching { gpuCacheMarker.delete() }
                 EngineStatus.end(loadStep, t)
                 Log.w(TAG, "initialize failed on $backend", t)
                 lastError = t
@@ -562,5 +667,18 @@ class LiteRtLmEngine(
          *  WHICH GPU variant died instead of condemning the backend. */
         private const val MTP_GPU_ATTEMPT_SUFFIX = ".gpu-mtp-attempting"
         private const val MTP_GPU_HINT_SUFFIX = ".gpu-mtp-skip"
+        private const val GPU_CACHE_ATTEMPT_SUFFIX = ".gpu-cache-attempting"
+        private const val GPU_CACHE_HINT_SUFFIX = ".gpu-cache-skip"
+        private const val NPU_ATTEMPT_SUFFIX = ".npu-attempting"
+        private const val NPU_HINT_SUFFIX = ".npu-skip"
+
+        /** Where a vendor image puts the libraries nativeloader exposes. */
+        private val NPU_LIB_DIRS = listOf("/vendor/lib64", "/system/vendor/lib64", "/odm/lib64")
+
+        /** Any one of these present means there is something to dispatch to. */
+        private val NPU_DISPATCH_LIBS = listOf(
+            "libedgetpu_litert.so",
+            "libedgetpu_client.google.so",
+        )
     }
 }

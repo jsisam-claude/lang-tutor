@@ -282,40 +282,59 @@ short-i vs long-e (ship/sheep), final consonant devoicing, /r/ quality.
 
 ### Accelerator reality on Tensor G4 (settled 2026-08-27)
 
-Three questions that had been costing device rounds, answered — by our own
+Questions that had been costing device rounds, answered — by our own
 on-device measurements and confirmed against Google-stack expertise. Everything
 here is scoped to **Tensor G4 (Pixel 9 / 9a)**; the G5 devices we also support
 are a separate question, flagged where it matters:
 
-- **The TPU is closed on G4 — but that finding is about G4, not about the TPU.**
-  Three independent walls block it on Pixel 9/9a, and each one alone is fatal:
+- **The TPU: we had never actually tried, so as of 2026-08-27 we do.** Three
+  walls were reported to block it on G4, and each alone would be fatal:
 
-  1. **C-ABI mismatch.** LiteRT's `DispatchLibraryDir` / Dispatch API expects a
-     vendor dispatch library whose ABI the G4 Edge TPU stack does not export to
-     apps. There is nothing to point it at.
-  2. **SELinux.** `/dev/gxp` — the Edge TPU device node — is not readable from
-     the `untrusted_app` domain. Even a correct delegate is denied at `open()`,
-     and no manifest entry or permission changes that.
+  1. **C-ABI mismatch.** LiteRT's Dispatch API wants a vendor dispatch library
+     whose ABI the G4 Edge TPU stack is said not to export to apps.
+  2. **SELinux.** `/dev/gxp`, the Edge TPU device node, is said to be
+     unreachable from the `untrusted_app` domain — a correct delegate would
+     still be denied at `open()`.
   3. **No AOT compiler for G4.** The TPU runs ahead-of-time-compiled graphs
-     only, and Google publishes no G4 target for the compiler. Nothing we ship
-     could be in the format the hardware executes.
+     only, and Google publishes no G4 target.
 
-  Walls 1 and 2 are platform policy, not engineering difficulty: the 49 °C of
-  idle TPU next to a 90 °C CPU is real headroom, and on this chip it is not
-  ours. **On Tensor G5 / Pixel 10 all three change at once** — that is exactly
-  what the Tensor ML SDK Beta (§2) opened, and Google's own Gemma 4 E2B build
-  tuned for the G5 TPU is the proof the path is real. We ship a
-  `pixel-10-pro-xl` profile already, so this is a tier we intend to pursue, not
-  a maybe. **Order of work: finish the Pixel 9 round first** (thermal
-  behaviour, MTP acceptance, ASR accuracy), then take the G5 TPU on as its own
-  investigation with a clean baseline to compare against.
+  A Pixel 9 log then contradicted the framing of wall 1. Android's nativeloader
+  prints, on that device:
 
-  One caveat that travels with us to G5: **dynamic-range quantization is
+  ```
+  InitVendorPublicLibraries: libOpenCL.so:libOpenCL-pixel.so:
+    libedgetpu_client.google.so:libedgetpu_util.so:lib_aion_buffer.so:
+    lib_jpg_encoder.so:libgxp.so:libedgetpu_tachyon.google.so:
+    libedgetpu_litert.so
+  ```
+
+  Those are the vendor libraries an ordinary app **is** allowed to link, and
+  the Edge TPU ones are on the list. Separately, the 0.16.1 AAR turns out to
+  expose `Backend.NPU(nativeLibraryDir)` — exactly the `DispatchLibraryDir` the
+  runtime warns about six times per load — and a parameterless
+  `Backend.GOOGLE_TENSOR()`. So the libraries are visible and the API takes the
+  argument; what we do not have is a result. Wall 2 is untouched by this
+  evidence (namespace visibility and SELinux are different gates), and wall 3
+  stands.
+
+  The engine now tries an `npu` rung first when a dispatch library is present,
+  with its own crash latch, MTP off, and a smoke test before acceptance. It
+  costs nothing when it fails and is skipped on hardware without the library.
+  Either outcome is worth having: if it is really SELinux, the log will carry
+  an `avc` denial, which turns a claim taken on authority into a measurement.
+
+  **On Tensor G5 / Pixel 10 the picture changes regardless** — that is what the
+  Tensor ML SDK Beta (§2) opened, and Google's own Gemma 4 E2B build tuned for
+  the G5 TPU shows the path is real. We ship a `pixel-10-pro-xl` profile
+  already. Order of work: finish the Pixel 9 round, then take G5 on with a
+  clean baseline.
+
+  One caveat travels with us to G5 either way: **dynamic-range quantization is
   disqualifying on any NPU**, because a systolic array cannot do dynamic float
   rescaling — it needs full static INT8 or pure FP16. Both our Whisper export
-  and the wav2vec2 coach are DRQ today, so a TPU attempt starts with re-exporting
-  them, not with a delegate flag. That work is chip-independent and could be
-  done before we ever touch a Pixel 10.
+  and the wav2vec2 coach are DRQ today, so an NPU attempt for the *speech*
+  models starts with re-exporting them, not with a flag. That work is
+  chip-independent and can be done before we ever hold a Pixel 10.
 - **One GPU runtime per process.** Mali drivers on Tensor G4 crash when two
   runtimes instantiate separate OpenCL contexts in one process — which is
   exactly what killed the app when the TFLite GPU delegate and LiteRT-LM's
@@ -323,6 +342,26 @@ are a separate question, flagged where it matters:
   isolation (`android:process=":asr_service"`), not coexistence. Since Whisper
   on GPU measured *slower* than CPU, we spend the GPU on the LLM and keep the
   speech stack on CPU.
+- **The GPU load is 27 s, and 23 s of it is kernel compilation.** A Pixel 9
+  log times two E4B loads at 26.6 s and 28.3 s, and in each the gap between
+  `Replacing 2712 out of 2712 node(s) with delegate (LITERT_CL) ... subgraph 0
+  (decode)` and the same line for the next subgraph is 22.5 s and 23.8 s. That
+  is OpenCL compiling the decode kernels, which is what `EngineConfig.cacheDir`
+  exists to persist; it had been restricted to the CPU attempt after an
+  unattributable crash and is now back on GPU behind its own latch. Related:
+  rooms no longer unload the shared engine on exit, because paying that load
+  again to walk back into a room is the worst trade in the app.
+- **The two LiteRT sampler prebuilts cannot load in this app at all.** The
+  device asked for `libLiteRtTopKOpenClSampler.so` by name, so we shipped it;
+  the next log said `dlopen failed: cannot locate symbol "kLiteRtRuntimeBuiltin"`
+  instead of "not found". Both sampler prebuilts leave that symbol undefined —
+  they are built to sit beside a *shared* LiteRT runtime — while the AAR ships
+  a single statically linked `liblitertlm_jni.so` exporting 30 symbols, all of
+  them JNI entry points. Nothing in the process can satisfy them, the runtime
+  uses its statically linked sampler either way, and the 23 MB bought a
+  different error message. Both removed. Supplying the shared runtime to fix
+  the symbol would put a second LiteRT and a second OpenCL context in the
+  process — the configuration directly above that crashes Mali on G4.
 - **ONNX Runtime is the right host for Kokoro.** Converting StyleTTS2-family
   models to LiteRT/TFLite is fragile — dynamic shapes and the custom iSTFT ops
   break the converters — so ORT + XNNPACK is the stable stack, and the thread

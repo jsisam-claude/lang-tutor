@@ -1,9 +1,6 @@
 package org.sisam.langtutor.tutor.drill
 
 import kotlin.random.Random
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.sisam.langtutor.llm.ChatMessage
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmEvent
@@ -51,10 +48,17 @@ class DrillGenerator(
         llm.load(LlmModelSpec(modelId = "drill"))
     }
 
-    /** Non-suspend release for ViewModel.onCleared(), same shape as the rooms'. */
-    fun shutdown() {
-        CoroutineScope(Dispatchers.Default).launch { llm.unload() }
-    }
+    /**
+     * Release for ViewModel.onCleared(), same shape as the rooms'.
+     *
+     * The engine itself is NOT unloaded. Every room gets the SAME container-owned
+     * engine, and a GPU load costs ~27 s on a Pixel 9 — 23 s of it compiling
+     * OpenCL kernels — so dropping it on the way out of one room made the walk
+     * back in cost half a minute. Releasing it is the container's job, on the
+     * two signals that actually mean "done": the app going to background past
+     * its grace period, and a system trim once the process is cached.
+     */
+    fun shutdown() = Unit
 
     /**
      * Up to [count] fresh items at [level]; possibly fewer, possibly none —

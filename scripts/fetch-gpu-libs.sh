@@ -21,7 +21,9 @@
 #   libLiteRtWebGpuAccelerator.so   referenced; WebGPU-only accelerator     TAKE
 #   libLiteRtGpuAccelerator.so      referenced; combined CL+WebGPU variant,
 #                                   exports the same LiteRtAcceleratorImpl   TAKE
-#   libLiteRtTopKWebGpuSampler.so   referenced; the sampler the AAR omits    TAKE
+#   libLiteRtTopKWebGpuSampler.so   referenced, but UNLOADABLE here — see the
+#                                   sampler note below.                     SKIP
+#   libLiteRtTopKOpenClSampler.so   same.                                   SKIP
 #   libwebgpu_dawn.so               not referenced by name, but DT_NEEDED of
 #                                   both accelerators above                  TAKE
 #   libLiteRtOpenClAccelerator.so   referenced, but the combined accelerator
@@ -32,8 +34,28 @@
 # If a STOCK-Android device ever needs the OpenCL path, add those two here —
 # their oids come from the same tag.
 #
+# NEITHER SAMPLER CAN EVER LOAD IN THIS APP, and shipping them was my mistake.
+# The device said "libLiteRtTopKOpenClSampler.so not found", so 2026-08-27 I
+# added it; the next log said instead:
+#
+#   dlopen failed: cannot locate symbol "kLiteRtRuntimeBuiltin"
+#     referenced by ".../libLiteRtTopKOpenClSampler.so"
+#
+# Both sampler prebuilts have that symbol UNDEFINED (`llvm-nm -D --undefined-only`
+# on either shows it), because they are built to sit beside a SHARED LiteRT
+# runtime that exports it. The AAR ships the opposite shape: one statically
+# linked liblitertlm_jni.so exporting exactly 30 symbols, all of them
+# Java_com_google_ai_edge_litertlm_* JNI entry points and none of them LiteRT
+# C API. There is nothing in the process for the samplers to bind against, so
+# the runtime falls back to its statically linked sampler either way and the
+# only thing 23MB of APK bought was a different error message. Adding the
+# shared runtime .so to satisfy the symbol would put a SECOND LiteRT (and a
+# second OpenCL context) in the process — the exact configuration that already
+# crashes Mali on Tensor G4. The accelerators below stay: neither has an
+# undefined kLiteRt* symbol, so they are at least loadable.
+#
 # All are 16KB-page-aligned arm64 builds.
-# Apache-2.0 (google-ai-edge/LiteRT-LM). ~37MB added to the APK, arm64 only —
+# Apache-2.0 (google-ai-edge/LiteRT-LM). ~26MB added to the APK, arm64 only —
 # other ABIs keep today's CPU fallback.
 #
 # Usage: scripts/fetch-gpu-libs.sh   (run from anywhere; CI runs it before
@@ -49,15 +71,6 @@ BASE="https://media.githubusercontent.com/media/google-ai-edge/LiteRT-LM/$COMMIT
 # name|sha256 (= Git LFS oid pinned from the v0.16.1 tag's pointer files)
 LIBS=(
   "libLiteRtGpuAccelerator.so|1287e5ae01666a605f2bc5d72453f32cf4a294ef38acabb86cd61140207e41c3"
-  "libLiteRtTopKWebGpuSampler.so|c52a1cf69a92a2d2c4d3c08f5c087d1eb405f709af61c3312b215221135e18db"
-  # The OpenCL sampler, added 2026-08-27 after the device said it was missing:
-  #   sampler_factory.cc: "OpenCL sampler not available, falling back to
-  #   statically linked C API ... libLiteRtTopKOpenClSampler.so not found"
-  # printed on every engine load. The comment below used to argue the combined
-  # accelerator "carries the CL path" — true of the ACCELERATOR, wrong about
-  # the SAMPLER, which the runtime dlopens separately by name. Sampling runs
-  # once per token, so the fallback was doing every token's top-K off the GPU.
-  "libLiteRtTopKOpenClSampler.so|4404dc68786460602685cab62ddfa29035e9cfc38bb4550dec15abaaa1302a82"
   "libLiteRtWebGpuAccelerator.so|acf02905cd1d7b7d1f0f70a6d885ddbd392c0c69a99b92834da7e26d6859abcf"
   "libwebgpu_dawn.so|3b2a53de934efabce2efb5e9f703a7bd6b63a5814b2f8f0c7ed610cabf53b147"
 )

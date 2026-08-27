@@ -70,9 +70,17 @@ class ChatRoom(
         llm.load(LlmModelSpec(modelId = "chat"))
     }
 
-    suspend fun shutdown() {
-        llm.unload()
-    }
+    /**
+     * Leave the room.
+     *
+     * The engine itself is NOT unloaded. Every room gets the SAME container-owned
+     * engine, and a GPU load costs ~27 s on a Pixel 9 — 23 s of it compiling
+     * OpenCL kernels — so dropping it on the way out of one room made the walk
+     * back in cost half a minute. Releasing it is the container's job, on the
+     * two signals that actually mean "done": the app going to background past
+     * its grace period, and a system trim once the process is cached.
+     */
+    fun shutdown() = Unit
 
     suspend fun send(text: String) {
         val clean = text.trim()

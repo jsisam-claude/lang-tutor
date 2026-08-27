@@ -3,7 +3,6 @@ package org.sisam.langtutor.tutor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -242,22 +241,23 @@ class TutorOrchestrator(
     }
 
     suspend fun endSession() {
-        llm.unload()
         currentUnit = null
         _state.value = TutorTurnState.Idle
     }
 
     /**
-     * Non-suspend release for ViewModel.onCleared(): by the time onCleared runs
-     * the owning [scope] is already cancelled, so the multi-GB engine unload
-     * happens on an independent one-shot scope. Without this the model was
-     * NEVER unloaded — engines accumulated across screen exits (worst on 8 GB
-     * devices) and the documented load/unload thermal budget was fiction.
+     * Release for ViewModel.onCleared(): drop the session, keep the model.
+     *
+     * The engine itself is NOT unloaded. Every room gets the SAME container-owned
+     * engine, and a GPU load costs ~27 s on a Pixel 9 — 23 s of it compiling
+     * OpenCL kernels — so dropping it on the way out of one room made the walk
+     * back in cost half a minute. Releasing it is the container's job, on the
+     * two signals that actually mean "done": the app going to background past
+     * its grace period, and a system trim once the process is cached.
      */
     fun shutdown() {
         currentUnit = null
         _state.value = TutorTurnState.Idle
-        CoroutineScope(Dispatchers.Default).launch { llm.unload() }
     }
 
     private suspend fun handleChildUtterance(
