@@ -97,6 +97,11 @@
     <string name="parent_track_title">Who is learning?</string>
     <string name="parent_track_hint">This sets how Tuki talks: how long the answers are, whether mistakes get a named rule or a gentle repeat, and whether Hebrew explanations are offered.</string>
     <string name="parent_track_hebrew_note">Hebrew explanations need the larger model (E4B) and a track that reads — they are hidden for a pre-reader, who gains nothing from Hebrew text.</string>
+    <string name="parent_gloss_title">Hebrew pronunciation</string>
+    <string name="parent_gloss_hint">Shows how to say each English word, in Hebrew letters. Follows the learner type until you change it here.</string>
+    <!-- Escaped on purpose: the nikud is invisible in an editor and gets
+         silently reordered by anything that normalises this file. qof+segol+tet. -->
+    <string name="parent_gloss_example">cat \u2192 \u05e7\u05b6\u05d8</string>
     <string name="track_pre_reader">Young child (not reading yet)</string>
     <string name="track_beginner">Beginner</string>
     <string name="track_exam">Exam preparation</string>

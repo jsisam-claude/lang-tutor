@@ -47,6 +47,8 @@ import org.sisam.langtutor.speech.RecognitionHint
 import org.sisam.langtutor.tutor.chat.ChatEntry
 import org.sisam.langtutor.tutor.chat.ChatSpeaker
 import org.sisam.langtutor.ui.common.A11y
+import org.sisam.langtutor.ui.common.GlossedText
+import org.sisam.langtutor.ui.common.rememberGloss
 import org.sisam.langtutor.ui.common.TukiParrot
 
 /**
@@ -137,10 +139,10 @@ fun ChatScreen(container: AppContainer) {
                 .padding(horizontal = 10.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            items(messages) { entry -> ChatBubble(entry) }
+            items(messages) { entry -> ChatBubble(entry, container) }
             if (typing != null) {
                 items(listOf(typing!!)) { who ->
-                    ChatBubble(ChatEntry(who, "…"))
+                    ChatBubble(ChatEntry(who, "…"), container)
                 }
             }
         }
@@ -266,7 +268,7 @@ private fun ChatMic(
 }
 
 @Composable
-private fun ChatBubble(entry: ChatEntry) {
+private fun ChatBubble(entry: ChatEntry, container: AppContainer) {
     val fromChild = entry.speaker == ChatSpeaker.CHILD
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -301,7 +303,20 @@ private fun ChatBubble(entry: ChatEntry) {
                 )
                 .padding(horizontal = 12.dp, vertical = 8.dp),
         ) {
-            Text(text = entry.text, style = MaterialTheme.typography.bodyLarge)
+            // Tuki's lines get the pronunciation key; the learner's own words
+            // do not. They already know how they said it — what they need help
+            // reading is the reply.
+            val gloss by rememberGloss(container, if (fromChild) "" else entry.text)
+            if (gloss.isEmpty()) {
+                Text(text = entry.text, style = MaterialTheme.typography.bodyLarge)
+            } else {
+                GlossedText(
+                    words = gloss,
+                    style = MaterialTheme.typography.bodyLarge,
+                    glossStyle = MaterialTheme.typography.bodyMedium,
+                    horizontalArrangement = Arrangement.Start,
+                )
+            }
         }
     }
 }

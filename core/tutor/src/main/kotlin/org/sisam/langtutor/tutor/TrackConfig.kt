@@ -9,10 +9,10 @@ import org.sisam.langtutor.profile.LearnerTrack
  * audience (docs/learner-tracks.md). This gathers them into one bundle per
  * track so serving an adult beginner is a config lookup, not a code fork.
  *
- * The split that matters pedagogically is [explicitCorrection]: the SLA
+ * The split that matters pedagogically is how a mistake is answered: the SLA
  * literature divides exactly here. Naming the rule measurably helps adults and
- * mostly bruises a young child's willingness to speak, so PRE_READER gets
- * recasts only while EXAM gets the rule named.
+ * mostly bruises a young child's willingness to speak, so PRE_READER's persona
+ * asks for recasts only while EXAM's asks for the rule named.
  */
 data class TrackConfig(
     /** Extra system-prompt lines appended to the shared tutor persona. */
@@ -26,6 +26,22 @@ data class TrackConfig(
      * Their path is pre-recorded spoken Hebrew (docs/product-phases.md).
      */
     val hebrewTextUseful: Boolean,
+    /**
+     * Default for the Hebrew-letter pronunciation gloss under English text.
+     *
+     * On for the two tracks that cannot yet decode Latin script reliably: a
+     * target you cannot read is a target you cannot attempt, which is the
+     * whole premise of "Repeat after me". Off for EXAM and IMPROVER, who read
+     * English already — for them it is visual noise, and worse, a crutch that
+     * competes with the spelling they are trying to internalise.
+     *
+     * Note this is the one place PRE_READER wants Hebrew on screen while
+     * [hebrewTextUseful] is false. There is no contradiction: that flag is
+     * about Hebrew *explanations*, which need reading; this is a pronunciation
+     * key, which a child sounds out letter by letter and which their parent
+     * can read aloud over their shoulder.
+     */
+    val transliterationByDefault: Boolean,
 ) {
     companion object {
 
@@ -37,6 +53,7 @@ data class TrackConfig(
                     "simply say the sentence back correctly and warmly.",
                 replyTokens = 48,
                 hebrewTextUseful = false,
+                transliterationByDefault = true,
             )
 
             LearnerTrack.BEGINNER -> TrackConfig(
@@ -46,6 +63,7 @@ data class TrackConfig(
                     "one plain-language line about why.",
                 replyTokens = 96,
                 hebrewTextUseful = true,
+                transliterationByDefault = true,
             )
 
             LearnerTrack.EXAM -> TrackConfig(
@@ -54,6 +72,7 @@ data class TrackConfig(
                     "any correction, and give one short example of the same pattern.",
                 replyTokens = 128,
                 hebrewTextUseful = true,
+                transliterationByDefault = false,
             )
 
             LearnerTrack.IMPROVER -> TrackConfig(
@@ -62,6 +81,7 @@ data class TrackConfig(
                     "note register, idiom or naturalness only when it genuinely matters.",
                 replyTokens = 112,
                 hebrewTextUseful = true,
+                transliterationByDefault = false,
             )
         }
     }

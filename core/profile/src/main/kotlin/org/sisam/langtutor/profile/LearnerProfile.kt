@@ -13,6 +13,17 @@ data class ParentSettings(
      * default change reaches people who never chose explicitly.
      */
     val voiceId: String? = null,
+    /**
+     * Show the Hebrew-letter pronunciation under English lines.
+     *
+     * Null means "whatever this learner's track wants" ([TrackConfig]), which
+     * is the right default for everyone who never opens this screen: a
+     * pre-reader and an exam candidate need opposite things and neither should
+     * have to ask. Setting it true or false pins the choice — an adult who
+     * finds the gloss patronising, or a child whose track says no but who is
+     * still decoding, both get to override.
+     */
+    val showTransliteration: Boolean? = null,
 )
 
 /**

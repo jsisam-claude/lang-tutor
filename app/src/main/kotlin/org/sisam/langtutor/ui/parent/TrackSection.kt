@@ -3,16 +3,20 @@ package org.sisam.langtutor.ui.parent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -33,6 +37,11 @@ import org.sisam.langtutor.profile.LearnerTrack
  * Deliberately in the Parent Zone rather than in onboarding for now: it is a
  * setting an adult should be able to change after seeing a session, and the
  * three-question onboarding the plan calls for is a separate piece of work.
+ *
+ * The pronunciation-gloss switch lives here too, because it is the one dial a
+ * parent is most likely to want against their track's default — a child whose
+ * track says EXAM but who still sounds words out, or an adult beginner who
+ * finds Hebrew letters under English patronising.
  */
 @Composable
 fun TrackSection(container: AppContainer) {
@@ -70,6 +79,47 @@ fun TrackSection(container: AppContainer) {
                 text = stringResource(R.string.parent_track_hebrew_note),
                 style = MaterialTheme.typography.bodySmall,
             )
+
+            HorizontalDivider()
+
+            // The gloss follows the track unless someone says otherwise, so
+            // the switch shows the track's answer until it is touched. That
+            // keeps "I never opened this screen" and "I chose this" as
+            // different states without a third control to explain.
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.parent_gloss_title),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                    Text(
+                        text = stringResource(R.string.parent_gloss_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                    Text(
+                        text = stringResource(R.string.parent_gloss_example),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+                Switch(
+                    checked = container.glossEnabled(profile),
+                    onCheckedChange = { on ->
+                        scope.launch {
+                            container.profile.update {
+                                it.copy(
+                                    parentSettings = it.parentSettings.copy(
+                                        showTransliteration = on,
+                                    ),
+                                )
+                            }
+                        }
+                    },
+                )
+            }
         }
     }
 }

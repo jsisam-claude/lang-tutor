@@ -1,6 +1,13 @@
 # Aligned Hebrew gloss under English — design record
 
-Queued 2026-08-27, not built. Requested shape:
+**Status.** The **transliteration** row is BUILT (2026-08-27):
+`HebrewTransliteration` in `core/speech`, `GlossedText` + `rememberGloss` in
+the app, on in the vocabulary room and under Tuki's chat replies, with a
+Parent Zone switch and a per-track default. The **translation** row and
+**landscape** remain queued, and everything below about phrase alignment is
+about translation — see "What building it changed".
+
+Requested shape:
 
 ```
 There is:1   a lion:2   in the zoo:3
@@ -32,9 +39,79 @@ Both are real and useful, and they serve **different learners**:
   me".
 
 They are not alternatives; a full reader might eventually want three rows.
-The alignment machinery below is identical for both, so build it once.
+
+**Transliteration is the one that got built**, and the reason is that it turns
+out to be nearly free — see below.
+
+## What building it changed
+
+Two assumptions in the original record were wrong for transliteration
+specifically, and both made it much cheaper than planned.
+
+**It does not need to be authored, generated, or validated.** The record
+assumed three sources with three different trust problems. That is true of
+*translation*, where only a human or a model knows that `אריה` means `lion`.
+Transliteration is a function of the SOUNDS, and the app already computes
+those: `KokoroPhonemizer.phonemizeToIpa` runs CMUdict (with `RuleG2p` for
+names) for every line Tuki speaks. So the gloss is derived from the same
+phoneme string the voice reads, which means:
+
+- no content work, and no gaps in coverage — LLM-written drill lines and free
+  conversation are glossed exactly as curriculum lines are;
+- no second model call, so nothing to add to the response-speed budget;
+- no gauntlet, because there is no model output to vet;
+- and it **cannot drift from the audio**. If the letters and the voice ever
+  disagreed, one of them would be lying to a child about how a word sounds.
+  Sharing the phoneme string makes that unrepresentable.
+
+**Alignment is word-to-word and exact.** The phrase-alignment problem — `a
+lion` as two English words over one Hebrew word — is a *meaning* problem. Each
+English word has its own pronunciation, so the transliteration row is one
+Hebrew token per English token, always. `GlossedText` is a `FlowRow` of
+per-word `Column`s, which wraps between columns and never inside one, so a
+pairing cannot be split across a line break.
+
+The RTL-under-LTR problem below is real and was solved as described: the row
+is `LayoutDirection.Ltr`, each Hebrew cell flips to `Rtl` locally.
+
+### The spelling decisions
+
+Recorded in `HebrewTransliteration`'s own doc, but the two worth repeating:
+
+- **`b`/`v`/`w` get three distinct letters** (`בּ`, `ב`, `ו`). Israeli custom
+  writes both /v/ and /w/ as `ו`; "very" said as "wery" is a mistake Hebrew
+  speakers actually make, so a pronunciation aid that blurs them is worse than
+  useless.
+- **The sounds Hebrew lacks are marked**: `θ ð ʧ ʤ ʒ` become `ת׳ ד׳ צ׳ ג׳ ז׳`,
+  the geresh convention Hebrew already uses for Arabic. An unmarked near-miss
+  would teach the wrong sound with no signal that it is an approximation.
+
+Two English contrasts are deliberately NOT drawn, because no Hebrew spelling
+carries them: `ʊ`/`u` (`book`/`blue`) and `ɜɹ`/`ɚ` (`bird`/`butter`). The
+pronunciation coach teaches those; the gloss does not pretend to.
+
+One Unicode trap, since it renders identically when wrong: **dagesh is
+combining class 21 and the vowel points are 10-19**, so canonical order is
+letter → vowel → dagesh, which is the reverse of how the marks are usually
+described. Geresh is class 0 — a starter — so it comes after everything, or
+later marks attach to the geresh rather than the letter. A test asserts NFC is
+a no-op on the output.
+
+### What is deliberately not glossed
+
+- **Any line containing Hebrew.** The Hebrew-help turn returns one string with
+  both languages; glossing it would transliterate Hebrew as English or leave
+  gaps under half the words. `rememberGloss` checks and returns nothing.
+- **The learner's own utterances** in chat. They know what they said; it is
+  the reply they need help reading.
+- **`EXAM` and `IMPROVER` by default.** They read English already, and a
+  phonetic crutch competes with the spelling they are trying to internalise.
+  The Parent Zone switch overrides in both directions.
 
 ## The hard part: RTL under LTR
+
+*(This section describes the translation row, which is still queued. The
+transliteration row does not have this problem — see above.)*
 
 Hebrew runs right-to-left, English left-to-right. Set both in their natural
 order and chunk 1 is at opposite ends of the two lines:
@@ -64,7 +141,7 @@ today's LTR island; this needs its mirror, applied per cell rather than per
 line. Long chunks wrap as units — a chunk must never split across lines, or
 the alignment silently lies.
 
-## Where the alignment comes from
+## Where the alignment comes from (translation row — still queued)
 
 Three sources, three different problems:
 

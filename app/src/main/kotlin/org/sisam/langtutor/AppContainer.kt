@@ -52,6 +52,11 @@ import org.sisam.langtutor.tutor.drill.DrillGenerator
 import org.sisam.langtutor.tutor.drill.DrillOrchestrator
 import org.sisam.langtutor.ui.reward.RewardBus
 import org.sisam.langtutor.ui.reward.RewardKind
+import kotlinx.coroutines.withContext
+import org.sisam.langtutor.profile.LearnerProfile
+import org.sisam.langtutor.speech.HebrewTransliteration
+import org.sisam.langtutor.speech.KokoroPhonemizer
+import org.sisam.langtutor.tutor.TrackConfig
 
 /**
  * Manual composition root — the single swap point for engines.
@@ -652,6 +657,40 @@ class AppContainer private constructor(context: Context) {
             speak = { _, text -> tts.speak(text, TutorLanguage.ENGLISH).collect { } },
         )
     }
+
+    /**
+     * The Hebrew-letter pronunciation key (docs/bilingual-gloss.md).
+     *
+     * Lazy and container-scoped for one reason: it needs the CMU dictionary,
+     * which is ~140k entries, and every other holder of a [KokoroPhonemizer]
+     * loads its own copy. A learner whose track has the gloss off never pays
+     * for it at all, and one who has it on pays once for the process rather
+     * than once per screen.
+     */
+    private val glossPhonemizer = lazy { KokoroPhonemizer.load() }
+
+    /**
+     * Is the gloss on for this learner? The stored setting wins; unset follows
+     * the track, so nobody has to find this screen to get the right default.
+     */
+    fun glossEnabled(profile: LearnerProfile): Boolean =
+        profile.parentSettings.showTransliteration
+            ?: TrackConfig.of(profile.track).transliterationByDefault
+
+    /**
+     * [text] with each word's pronunciation, or empty when the gloss is off.
+     *
+     * Suspending and off the main thread because the FIRST call may load the
+     * dictionary; after that it is a map lookup per word. Callers render the
+     * plain English line until this returns, so a cold start shows the lesson
+     * immediately rather than waiting on a pronunciation key.
+     */
+    suspend fun transliterate(text: String): List<HebrewTransliteration.GlossWord> =
+        withContext(Dispatchers.Default) {
+            runCatching { HebrewTransliteration.gloss(text, glossPhonemizer.value) }
+                .onFailure { Log.w(MEM_TAG, "gloss failed for \"$text\"", it) }
+                .getOrDefault(emptyList())
+        }
 
     /**
      * Audio-visual reinforcement. App-wide rather than per-screen: a burst

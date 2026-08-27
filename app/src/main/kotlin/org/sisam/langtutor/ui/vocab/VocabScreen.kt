@@ -61,6 +61,8 @@ import org.sisam.langtutor.tutor.drill.WordMatch
 import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.EnglishContent
+import org.sisam.langtutor.ui.common.GlossedText
+import org.sisam.langtutor.ui.common.rememberGloss
 import org.sisam.langtutor.ui.common.PronunciationFeedback
 import org.sisam.langtutor.ui.common.TukiParrot
 import org.sisam.langtutor.ui.reward.RewardKind
@@ -337,15 +339,34 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
                         .weight(1f),
                     contentAlignment = Alignment.Center,
                 ) {
-                    EnglishContent {
-                        Text(
-                            text = s.item.text,
-                            style = if (A11y.hugeText) {
-                                MaterialTheme.typography.headlineMedium
+                    // The target, with its Hebrew pronunciation under each
+                    // word when the learner's track wants one. This is the
+                    // room the gloss exists for: "repeat after me" asks a
+                    // child to say a line, and a line they cannot decode is a
+                    // line they can only guess at from the audio.
+                    val gloss by rememberGloss(container, s.item.text)
+                    val lineStyle = if (A11y.hugeText) {
+                        MaterialTheme.typography.headlineMedium
+                    } else {
+                        MaterialTheme.typography.displaySmall
+                    }
+                    if (gloss.isEmpty()) {
+                        EnglishContent {
+                            Text(
+                                text = s.item.text,
+                                style = lineStyle,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    } else {
+                        GlossedText(
+                            words = gloss,
+                            style = lineStyle,
+                            glossStyle = if (A11y.hugeText) {
+                                MaterialTheme.typography.bodyLarge
                             } else {
-                                MaterialTheme.typography.displaySmall
+                                MaterialTheme.typography.headlineSmall
                             },
-                            textAlign = TextAlign.Center,
                         )
                     }
                 }
