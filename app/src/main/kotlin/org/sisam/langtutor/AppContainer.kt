@@ -30,6 +30,7 @@ import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmModelSpec
+import org.sisam.langtutor.speech.ParrotEffect
 import org.sisam.langtutor.speech.TukiVoice
 import org.sisam.langtutor.speech.TukiVoices
 import org.sisam.langtutor.tutor.chat.ChatRoom
@@ -565,7 +566,17 @@ class AppContainer private constructor(context: Context) {
                 if (availableVoices.any { it.id == voice.id }) {
                     kokoro?.voiceAsset = voice.id
                 }
-                tts.speak(text, TutorLanguage.ENGLISH).collect { }
+                // Kiki is the flavored sidekick, pitched above even Tuki's
+                // praise register; Tuki's chat lines stay on the clean
+                // teaching voice — the ear separates the three speakers by
+                // treatment alone. (Kiki's replies are short reactions, not
+                // model sentences, which is what makes the flavor acceptable
+                // there and nowhere else in the conversation.)
+                if (speaker == ChatSpeaker.KIKI && kokoro != null) {
+                    kokoro.speakFlavored(text, speed = 1f, pitch = ParrotEffect.KIKI_PITCH).collect { }
+                } else {
+                    tts.speak(text, TutorLanguage.ENGLISH).collect { }
+                }
             },
         )
     }

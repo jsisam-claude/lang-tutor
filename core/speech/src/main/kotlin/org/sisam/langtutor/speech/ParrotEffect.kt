@@ -33,13 +33,22 @@ object ParrotEffect {
      *  being intelligible past ~5. */
     const val PITCH = 1.22f
 
+    /**
+     * Kiki's register: ~4.8 semitones, noticeably above Tuki's praise flavor.
+     * In the chat room Tuki stays on the clean teaching voice and Kiki is the
+     * flavored sidekick, so the ear separates the three speakers instantly:
+     * clean voice = the teacher, flavored = the parrot, higher flavored =
+     * the OTHER parrot.
+     */
+    const val KIKI_PITCH = 1.32f
+
     /** Natural-vibrato territory; faster reads as a fault in the speaker. */
     const val WARBLE_HZ = 6.5f
     const val WARBLE_DEPTH = 0.10f
 
     /** The full treatment for a synthesized line. */
-    fun apply(audio: FloatArray, sampleRate: Int): FloatArray =
-        warble(resample(audio, PITCH), sampleRate, WARBLE_HZ, WARBLE_DEPTH)
+    fun apply(audio: FloatArray, sampleRate: Int, pitch: Float = PITCH): FloatArray =
+        warble(resample(audio, pitch), sampleRate, WARBLE_HZ, WARBLE_DEPTH)
 
     /**
      * Linear resample: shortens by [factor], raising pitch AND formants by the

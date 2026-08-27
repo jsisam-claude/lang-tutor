@@ -465,6 +465,12 @@ and the split IS the feature to verify:
   that is a bug, report it immediately.
 - Only the short praise lines ("Great job!", "Well done!", "You said it!",
   "Perfect!", "Good try! Let's do the next one.") should be parrot-flavored.
+- **Kiki, in "Just chat", is fully flavored** — and pitched ABOVE Tuki's
+  praise register, so the three speakers separate by ear alone: clean voice =
+  the teacher, flavored = the parrot, higher flavored = the other parrot.
+  Tuki's chat replies stay clean (they are the model English in that room);
+  Kiki's short reactions are where the character lives. If Kiki becomes hard
+  to understand, that is a dial worth reporting (`ParrotEffect.KIKI_PITCH`).
 
 The effect is DSP over the same voice (no second model): pitch and formants
 up together — the cartoon-creature treatment — plus a ~6.5 Hz flutter.
