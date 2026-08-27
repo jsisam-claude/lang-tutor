@@ -563,6 +563,33 @@ its token cap (seconds) rather than poisoning the conversation you return
 to, and a model load already in flight finishes rather than being re-paid
 later. Rotation does not quiesce — only a real exit does.
 
+### What happens to the loaded model and assets
+A loaded model costs no battery — weights sitting in RAM schedule no work,
+and a frozen cached process cannot run any. What residency DOES cost is
+being the fattest target in the low-memory killer's sights: a cached app
+holding 4+ GB is the first thing Android kills, and then coming back pays a
+full cold start anyway.
+
+So the policy is two-stage:
+
+| When | What happens |
+|---|---|
+| Leaving the screen | Speech stops, mic released. Models stay warm. |
+| Back within **3 minutes** | Nothing was lost — instant. |
+| Backgrounded past 3 min | LLM unloaded, Whisper/Kokoro/coach/Hebrew released. Logcat: `released heavy engines (backgrounded 3 min)` |
+| System asks for memory while cached | Same full release, immediately, on the OS's own signal |
+
+Coming back after a release is **not** an error state: the next turn reloads
+the model on demand (you will see "Waking Tuki up…"), and Home's preload
+button correctly reads un-loaded again. The tier choice (E4B vs E2B)
+deliberately survives — giving memory back must not silently re-open that
+decision mid-process.
+
+Worth checking on device: background for ~4 minutes, return, and confirm the
+conversation you left is still there and its next turn works after the
+reload pause. Also confirm `adb shell dumpsys meminfo org.sisam.langtutor`
+drops by gigabytes a few minutes after backgrounding.
+
 ## Known limits in this build (expected, not bugs)
 - **English speech recognition only.** The bundled model is an English-only
   export, so a Hebrew answer into the mic will come back as English-looking

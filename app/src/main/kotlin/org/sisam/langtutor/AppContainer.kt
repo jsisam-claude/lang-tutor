@@ -113,6 +113,16 @@ class AppContainer private constructor(context: Context) {
      */
     private fun trimEngines(level: Int) {
         if (level < ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW) return
+        // Cached and the OS wants memory: skip the graduated dance and free
+        // everything, LLM included — this is the background-release policy
+        // fired by the system's own signal instead of our timer. While the
+        // app is IN USE the LLM is never trimmed (killing a live conversation
+        // to maybe-save the process is a worse trade than letting Android
+        // decide), which is why the levels below leave it alone.
+        if (level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND) {
+            appScope.launch { releaseHeavyEngines("system trim level=$level") }
+            return
+        }
         val deep = level == ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL ||
             level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE
         appScope.launch {
@@ -501,6 +511,9 @@ class AppContainer private constructor(context: Context) {
      * conversation the learner returns to. Engine loads already running are
      * likewise left to finish — they are one-time, bounded, and re-doing a
      * half-done multi-GB load costs more battery than letting it land.
+     *
+     * This is stage ONE of the background policy — instant and free to undo.
+     * Stage two is [scheduleBackgroundRelease].
      */
     fun quiesce() {
         appScope.launch {
@@ -511,6 +524,56 @@ class AppContainer private constructor(context: Context) {
             runCatching { whisperEngine?.stopCapture() }
             Log.i(MEM_TAG, "quiesced: app backgrounded — speech and mic released")
         }
+    }
+
+    @Volatile private var backgroundRelease: Job? = null
+
+    /**
+     * Stage TWO: give the memory back if the background visit turns into a
+     * stay.
+     *
+     * A LOADED model costs no battery — weights in RAM schedule no work, and
+     * a frozen cached process cannot run any. What residency costs is being
+     * the biggest target in the low-memory killer's sights: a cached app
+     * holding four-plus gigabytes is the first thing killed, and then the
+     * return pays a full cold start anyway — the reload the grace period was
+     * trying to avoid, plus the battery the preload already spent.
+     *
+     * So: backgrounded past [BACKGROUND_RELEASE_MS], everything heavy is
+     * released — the LLM (which the memory-pressure trim deliberately never
+     * touches while the app is in use) and the speech stack. Checking a
+     * notification stays free; leaving for real gives the phone its RAM
+     * back. The preload state resets so the Home button and splash tell the
+     * truth about what is warm, and a session the learner returns to
+     * self-heals: LiteRtLmEngine.generate() reloads on demand.
+     */
+    fun scheduleBackgroundRelease() {
+        backgroundRelease?.cancel()
+        backgroundRelease = appScope.launch {
+            kotlinx.coroutines.delay(BACKGROUND_RELEASE_MS)
+            releaseHeavyEngines("backgrounded ${BACKGROUND_RELEASE_MS / 60_000} min")
+        }
+    }
+
+    /** The user is back — keep whatever is still warm. */
+    fun cancelBackgroundRelease() {
+        backgroundRelease?.cancel()
+        backgroundRelease = null
+    }
+
+    private suspend fun releaseHeavyEngines(reason: String) {
+        runCatching { llmEngine?.unload() }
+        runCatching { whisperEngine?.release() }
+        runCatching { kokoroEngine?.release() }
+        runCatching { gopEngine?.release() }
+        runCatching { hebrewEngine?.release() }
+        runCatching { hebrewPhonemes?.release() }
+        runCatching { if (chimeOrNull != null) chime.release() }
+        // The sticky TIER CHOICE survives on purpose — releasing memory must
+        // not reopen the E4B/E2B decision mid-process. Only the weights go.
+        _preload.value = PreloadState.IDLE
+        _preloadProgress.value = 0f
+        Log.i(MEM_TAG, "released heavy engines ($reason)")
     }
 
     /**
@@ -825,6 +888,9 @@ class AppContainer private constructor(context: Context) {
 
         private const val MEM_TAG = "TukiMem"
         private const val REWARD_TAG = "TukiReward"
+
+        /** Longer than checking a notification, shorter than a school run. */
+        private const val BACKGROUND_RELEASE_MS = 3 * 60_000L
 
         /**
          * The only tier trusted to explain in Hebrew. Not a preference — the

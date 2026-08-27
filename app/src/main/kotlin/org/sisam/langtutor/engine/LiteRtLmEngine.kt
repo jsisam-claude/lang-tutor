@@ -319,6 +319,13 @@ class LiteRtLmEngine(
     }
 
     override fun generate(request: LlmRequest): Flow<LlmEvent> = flow {
+        // Reload rather than fail: the container releases the engine when the
+        // app sits in the background past its grace period, and a session the
+        // learner RETURNS to must pick up where it left off, not die on its
+        // next turn. load() is mutex-guarded and idempotent, so this line
+        // costs one null check in the common case and a full (status-reported)
+        // reload only when the background policy actually fired.
+        if (engine == null) load(LlmModelSpec(modelId = "reload"))
         val active = engine ?: error("generate() called before load()")
         // Leading SYSTEM messages carry the policy's per-turn lesson guidance
         // ("the child is practicing X — praise, recast, one question"). They

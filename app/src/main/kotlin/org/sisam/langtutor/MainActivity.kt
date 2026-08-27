@@ -53,14 +53,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        // Back within the grace period: everything that stayed warm stays.
+        AppContainer.get(applicationContext).cancelBackgroundRelease()
+    }
+
     override fun onStop() {
         super.onStop()
         // Backgrounded or screen locked: a phone in a pocket must not keep
         // talking or keep the mic hot. Rotation also passes through onStop,
         // and silencing Tuki mid-sentence for a rotate would be a regression
-        // — hence the guard.
+        // — hence the guard. Quiesce is instant (stage one); the multi-GB
+        // engines get a grace period before they are given back (stage two),
+        // so checking a notification does not cost a model reload.
         if (!isChangingConfigurations) {
-            AppContainer.get(applicationContext).quiesce()
+            val container = AppContainer.get(applicationContext)
+            container.quiesce()
+            container.scheduleBackgroundRelease()
         }
     }
 
