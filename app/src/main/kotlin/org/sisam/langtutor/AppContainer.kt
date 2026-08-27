@@ -480,6 +480,13 @@ class AppContainer private constructor(context: Context) {
      * (a male voice when Tuki's is female and vice versa), chosen from the
      * voices actually packaged so the picker bug class cannot recur here.
      */
+    /**
+     * The ears alone — for screens that talk without a [TutorOrchestrator]
+     * (the chat room's mic). Same singleton-backed engines the orchestrator
+     * uses, so there is no second Whisper instance behind this.
+     */
+    fun createAsrEngine() = bundledAsrEngine() ?: PlatformAsrEngine(appContext)
+
     fun createChatRoom(): ChatRoom {
         val kokoro = bundledTtsEngine()
         val tts = TtsRouter(

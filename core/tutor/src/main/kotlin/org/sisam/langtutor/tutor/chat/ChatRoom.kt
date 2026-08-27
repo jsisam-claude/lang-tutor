@@ -50,7 +50,15 @@ class ChatRoom(
     private val _speaking = MutableStateFlow<ChatSpeaker?>(null)
     val speaking: StateFlow<ChatSpeaker?> = _speaking
 
-    private var busy = false
+    /**
+     * True from the child's message landing until Kiki's reply has finished
+     * PLAYING. Observable because the UI must gate input on it: [send] drops
+     * input while busy, and `typing` alone ends too early — it clears when
+     * generation ends, well before the audio does, so a message sent during
+     * Kiki's speech was silently lost after the input field already cleared.
+     */
+    private val _busy = MutableStateFlow(false)
+    val busy: StateFlow<Boolean> = _busy
 
     suspend fun start() {
         llm.load(LlmModelSpec(modelId = "chat"))
@@ -62,14 +70,14 @@ class ChatRoom(
 
     suspend fun send(text: String) {
         val clean = text.trim()
-        if (clean.isEmpty() || busy) return
-        busy = true
+        if (clean.isEmpty() || _busy.value) return
+        _busy.value = true
         try {
             _messages.value += ChatEntry(ChatSpeaker.CHILD, clean)
             reply(ChatSpeaker.TUKI)
             reply(ChatSpeaker.KIKI)
         } finally {
-            busy = false
+            _busy.value = false
         }
     }
 

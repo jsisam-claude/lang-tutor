@@ -1,12 +1,37 @@
 package org.sisam.langtutor.tutor.chat
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.sisam.langtutor.llm.FakeLlmEngine
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class ChatRoomTest {
+
+    @Test
+    fun `input while the parrots are replying is dropped, and busy says so`() = runTest {
+        // The UI gates the send button and the mic on `busy` — `typing` ends
+        // when generation ends, before the audio finishes, and a message sent
+        // in that gap was silently lost after the input field had cleared.
+        val room = ChatRoom(llm = FakeLlmEngine())
+        room.start()
+        assertFalse(room.busy.value)
+
+        val first = launch { room.send("hello") }
+        runCurrent()
+        assertTrue(room.busy.value)
+        room.send("this one is dropped")
+        first.join()
+
+        assertFalse(room.busy.value)
+        assertEquals(1, room.messages.value.count { it.speaker == ChatSpeaker.CHILD })
+        assertEquals("hello", room.messages.value.first().text)
+    }
 
     @Test
     fun `one learner message yields tuki then kiki, each spoken in turn`() = runTest {

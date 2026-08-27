@@ -418,6 +418,22 @@ Worth reporting: whether the Hebrew is actually *correct and useful*, not just
 present. That is the thing the eval scored 4.45 on synthetic prompts and which
 only real use can confirm.
 
+## Just chat has a mic now
+The trailing control in the chat room swaps like every messenger's: **mic when
+the input is empty, Send once you type**. Hold the mic, talk, release — the
+transcript is sent as your message immediately, and the parrots answer it.
+There is no confirm step on purpose: the room is conversational-flow practice
+(for adults and teens as much as kids), and your bubble shows exactly what was
+heard — including mishearings, which the parrots will gamely answer.
+
+Both the mic and Send now stay disabled until the parrots have **finished
+talking**, not just finished generating. Before, a message sent while Kiki was
+still speaking was silently dropped after the input field had already cleared
+— if you saw text vanish without a reply, that was it, and it is fixed.
+
+The mic is hidden entirely on a device with no recognition path. First-ever
+hold may pause on "Heard you! One moment…" while Whisper loads.
+
 ## Rewards and the sticker room (new)
 Three cues, each meaning a different thing — they should never all mean "you
 did something":
