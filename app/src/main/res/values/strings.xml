@@ -133,4 +133,8 @@
     <string name="sticker_pick_one">You earned a sticker! Pick one 🎉</string>
     <string name="sticker_taken">Lovely choice!</string>
     <string name="sticker_collection">Your stickers: %1$d</string>
+    <string name="parent_experimental_title">Experimental</string>
+    <string name="parent_experimental_hint">These answer a question rather than improve anything. Leave them off unless you are testing.</string>
+    <string name="parent_npu_title">Try the Edge TPU for the model</string>
+    <string name="parent_npu_hint">Attempts the phone’s AI chip before the GPU. On a Pixel 9 this may hang the load, crash the app once, or leave it running on the CPU at a fifth the speed. Check logcat for the NPU line, then turn it back off.</string>
 </resources>

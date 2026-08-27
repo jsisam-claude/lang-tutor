@@ -98,6 +98,10 @@ class AppContainer private constructor(context: Context) {
         // dumpsys run after the fact.
         Thermal.start(appContext)
         logDeviceProfile()
+        // Keep the non-suspend mirror of the experimental NPU switch in step.
+        appScope.launch {
+            profile.profile.collect { npuOptIn = it.parentSettings.tryNpuBackend }
+        }
         // React to memory pressure by dropping idle engine sessions — the
         // difference between "the coach reloads in a couple of seconds" and
         // "Android killed the app mid-conversation". Matters most on the 12 GB
@@ -659,6 +663,18 @@ class AppContainer private constructor(context: Context) {
     }
 
     /**
+     * Mirror of the experimental NPU switch, readable without suspending.
+     *
+     * The backend ladder runs inside a non-suspend section of the engine load,
+     * and the profile store is a suspend API. A volatile mirror kept in step
+     * with the flow is the honest way across that boundary — the alternative
+     * is reading the setting once at process start, which would mean flipping
+     * the switch did nothing until the app was killed.
+     */
+    @Volatile
+    private var npuOptIn: Boolean = false
+
+    /**
      * The Hebrew-letter pronunciation key (docs/bilingual-gloss.md).
      *
      * Lazy and container-scoped for one reason: it needs the CMU dictionary,
@@ -873,7 +889,14 @@ class AppContainer private constructor(context: Context) {
             val path = installed.getValue(choice.path).absolutePath
             val compileCache = File(appContext.cacheDir, "litertlm-compile-cache")
                 .apply { mkdirs() }.absolutePath
-            return LiteRtLmEngine(path, installStamp(), compileCache).also {
+            return LiteRtLmEngine(
+                modelPath = path,
+                installStamp = installStamp(),
+                cacheDir = compileCache,
+                // Read per load, not per process, so flipping the switch takes
+                // effect on the next model load rather than the next launch.
+                npuOptIn = { npuOptIn },
+            ).also {
                 llmEngine = it
                 llmEnginePath = path
             }

@@ -131,4 +131,8 @@
     <string name="sticker_pick_one">🎉 הרווחתם מדבקה! בחרו אחת</string>
     <string name="sticker_taken">בחירה מקסימה!</string>
     <string name="sticker_collection">המדבקות שלך: %1$d</string>
+    <string name="parent_experimental_title">ניסיוני</string>
+    <string name="parent_experimental_hint">אלה נועדו לבדיקה ולא לשיפור. השאירו כבוי אלא אם אתם בודקים.</string>
+    <string name="parent_npu_title">נסו את שבב הבינה למודל</string>
+    <string name="parent_npu_hint">מנסה את שבב הבינה של המכשיר לפני המעבד הגרפי. בפיקסל 9 זה עלול לתקוע את הטעינה, להקריס את האפליקציה פעם אחת, או להשאיר אותה על המעבד בחמישית מהמהירות.</string>
 </resources>

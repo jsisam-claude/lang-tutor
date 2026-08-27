@@ -68,6 +68,15 @@ class LiteRtLmEngine(
      * paying a cold load and only the first one paying it.
      */
     private val cacheDir: String? = null,
+    /**
+     * Whether to ATTEMPT the Edge TPU before the GPU. Off unless a person has
+     * turned it on, because it is a probe and not an optimisation — the NPU
+     * block in [load] lists the four ways it can make things worse.
+     *
+     * A lambda rather than a value so flipping the switch takes effect on the
+     * next model load instead of the next process.
+     */
+    private val npuOptIn: () -> Boolean = { false },
 ) : LlmEngine {
 
     private var engine: Engine? = null
@@ -194,7 +203,35 @@ class LiteRtLmEngine(
         }.getOrDefault(false)
         val useGpuCache = cacheDir != null && !gpuCacheCrashed && !gpuCacheHinted
 
-        // THE TPU, actually asked instead of assumed.
+        // THE TPU, actually asked instead of assumed — BUT OPT-IN.
+        //
+        // This rung is a diagnostic, off by default. "It costs a caught
+        // exception when it fails" — what the commit adding it claimed — is
+        // true only of the mildest failure. Four ways it REGRESSES a device
+        // where the GPU already works:
+        //
+        //  1. It hangs. Engine()/initialize() have no timeout and run inside
+        //     AcceleratorGate.exclusive, so a wedged bring-up is a wedged
+        //     model load, not a fallback to the next rung.
+        //  2. It crashes natively. The marker demotes it on the NEXT launch,
+        //     so the price is a real crash in front of the learner, once per
+        //     install.
+        //  3. It poisons the process. A half-initialised accelerator is
+        //     exactly the shape that already crashes Mali here (one GPU
+        //     runtime per process, above); a GPU attempt that fails after it
+        //     drops the session to CPU — 1.6 est-tok/s against 7-8 — and does
+        //     so silently.
+        //  4. It succeeds and is WORSE. The smoke test proves the backend can
+        //     emit a token, not that it is fast or correct, and there is no
+        //     rung below "it worked" to fall back to.
+        //
+        // None of that argues against trying it. It argues against trying it
+        // on someone else's install, and against trying it in the middle of a
+        // round that is measuring something else.
+        //
+        // What stays free and always on is the DISCOVERY: logging which
+        // dispatch libraries the device exposes costs a few File.exists()
+        // calls and answers what the docs were guessing at.
         //
         // The docs said the Edge TPU was closed to us on Tensor G4 on three
         // grounds, one of which a device log has now put in doubt. Android's
@@ -232,13 +269,18 @@ class LiteRtLmEngine(
         val npuHinted = runCatching {
             npuHint.isFile && npuHint.readText().trim() == buildStamp
         }.getOrDefault(false)
-        val tryNpu = npuLibDir != null && !npuCrashed && !npuHinted
+        val npuWanted = runCatching { npuOptIn() }.getOrDefault(false)
+        val tryNpu = npuWanted && npuLibDir != null && !npuCrashed && !npuHinted
         Log.i(
             TAG,
             "NPU: " + when {
-                npuLibDir == null -> "no dispatch library on this device (looked in ${NPU_LIB_DIRS.joinToString(", ")}) — not attempted"
+                npuLibDir == null ->
+                    "no dispatch library in ${NPU_LIB_DIRS.joinToString(", ")} — nothing to attempt"
                 npuCrashed || npuHinted -> "pinned off for this build after an earlier failure"
-                else -> "dispatch library found in $npuLibDir — will attempt"
+                !npuWanted ->
+                    "dispatch library present in $npuLibDir, but the attempt is OFF " +
+                        "(Parent Zone -> experimental). It is a probe, not an optimisation."
+                else -> "dispatch library found in $npuLibDir — ATTEMPTING, experimentally"
             },
         )
 

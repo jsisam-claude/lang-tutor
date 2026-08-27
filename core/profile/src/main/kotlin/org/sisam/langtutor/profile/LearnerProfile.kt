@@ -24,6 +24,16 @@ data class ParentSettings(
      * still decoding, both get to override.
      */
     val showTransliteration: Boolean? = null,
+    /**
+     * Try the Edge TPU before the GPU when loading the model. Experimental,
+     * off by default, and deliberately not something a learner ever sees.
+     *
+     * It is a probe: on Tensor G4 it may hang the load, crash the process, or
+     * leave the GPU unusable so the session runs on CPU at a fifth the speed.
+     * Worth having a switch for — the device's own library list says the Edge
+     * TPU is at least visible to apps — but not worth defaulting on.
+     */
+    val tryNpuBackend: Boolean = false,
 )
 
 /**
