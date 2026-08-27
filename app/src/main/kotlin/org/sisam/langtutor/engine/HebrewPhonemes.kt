@@ -29,7 +29,10 @@ import org.sisam.langtutor.speech.PhonikudPhonemizer
  * The nikud model is the expensive half (~308 MB), so it is loaded lazily and
  * given back under memory pressure, exactly as the voices are.
  */
-class HebrewPhonemes(private val nikudModel: File) : KokoroFrontEnd {
+class HebrewPhonemes(
+    private val nikudModel: File,
+    private val installStamp: String = "",
+) : KokoroFrontEnd {
 
     private val tokenizer by lazy { DictaTokenizer.load() }
     private val encoder by lazy { KokoroPhonemizer.load() }
@@ -77,12 +80,7 @@ class HebrewPhonemes(private val nikudModel: File) : KokoroFrontEnd {
     private fun createSession(): OrtSession =
         EngineStatus.step(EngineStatus.Kind.HEBREW_LOAD, nikudModel.name) {
             val started = System.nanoTime()
-            val opts = OrtSession.SessionOptions().apply {
-                setIntraOpNumThreads(THREADS)
-                // Same conservative level as the Kokoro engine (see its note).
-                setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
-            }
-            OrtEnvironment.getEnvironment().createSession(nikudModel.absolutePath, opts).also {
+            OnnxTuning.createSession(nikudModel.absolutePath, TAG, installStamp).also {
                 Log.i(TAG, "nikud session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
             }
         }
@@ -134,7 +132,6 @@ class HebrewPhonemes(private val nikudModel: File) : KokoroFrontEnd {
 
     private companion object {
         const val TAG = "TukiTtsHe"
-        const val THREADS = 4
         const val NIKUD_MAX_CHARS = 2000
     }
 }

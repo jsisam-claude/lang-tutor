@@ -590,6 +590,47 @@ conversation you left is still there and its next turn works after the
 reload pause. Also confirm `adb shell dumpsys meminfo org.sisam.langtutor`
 drops by gigabytes a few minutes after backgrounding.
 
+## Speech engine speed and heat (new — please measure)
+Measured on your Pixel 9 log of 2026-08-27: Kokoro was synthesizing at
+**RTF 1.0–2.0** — as long to make the audio as the audio lasts — and getting
+worse with use. Identical work, four minutes apart:
+
+```
+17:55:18  synth 11 tokens -> 2.08s in 2126ms    RTF 1.02
+17:59:23  synth 11 tokens -> 2.00s in 3912ms    RTF 1.96
+```
+
+`dumpsys thermalservice` at that moment: **BIG core 90°C**, MID 71, LITTLE 66,
+GPU only 56, skin 39 with `Thermal Status: 1`. The GPU decode never
+degraded (7–8 tok/s throughout) — only CPU work halved. Two causes, both
+ours:
+
+- **No ONNX execution provider was configured anywhere.** Every model ran
+  ORT's portable reference kernels. Now XNNPACK, which is ARM-tuned.
+- **Every engine asked for 4 threads.** Tensor G4 has only FOUR fast cores
+  (1×X4 + 3×A720 + 4×A520), so each session saturated exactly the cores that
+  get hot. Now a shared budget of 3, leaving one fast core for the LLM's
+  CPU-side work and the audio thread.
+
+New logcat line per model, tag **`TukiOnnx`**:
+```
+TukiTts: XNNPACK, 3 threads          ← what we want
+TukiTts: portable kernels, 3 threads ← XNNPACK didn't bind; send this
+```
+
+**What to measure:** run the vocabulary room for ~5 minutes and compare
+`synth N tokens -> Xs in Yms` against the numbers above — same N, same
+audio length, how much less time? Then `dumpsys thermalservice` again for
+the BIG core. If RTF is still near 1.0 with XNNPACK bound, the engine choice
+itself is the problem and `docs/feasibility.md` §6 has the alternative
+(Piper, documented at RTF ~0.2 on a Raspberry Pi 4).
+
+XNNPACK carries the same crash-hint machinery as the LLM's GPU attempt — a
+marker file written before the attempt, so a native crash inside the provider
+pins the portable kernels for that install instead of crash-looping. Graph
+optimization deliberately stays at BASIC: ORT's extended optimizer was seen
+to crash on the Kokoro graph, and that stays one variable per install.
+
 ## Known limits in this build (expected, not bugs)
 - **English speech recognition only.** The bundled model is an English-only
   export, so a Hebrew answer into the mic will come back as English-looking

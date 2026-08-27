@@ -333,6 +333,9 @@ class WhisperAsrEngine(
         // audio got measurably worse once the threads matched the core count
         // (docs/asr-model-eval.md). The short-window model has the latency
         // headroom to be conservative here. DEVICE-VERIFY on the 9a.
-        const val THREADS = 4
+        /** Same budget as the ONNX engines: the fast cores, not all of them.
+         *  Four threads on a 1x-X4 + 3x-A720 + 4x-A520 phone saturates exactly
+         *  the cores that get hot — see [OnnxTuning] for the measurements. */
+        val THREADS = OnnxTuning.heavyThreads
     }
 }

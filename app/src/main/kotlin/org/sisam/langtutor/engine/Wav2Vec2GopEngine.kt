@@ -33,7 +33,10 @@ import org.sisam.langtutor.speech.TutorLanguage
  * DEVICE-VERIFY: those numbers come from clean synthesized speech; thresholds
  * ([GopScorer.Thresholds]) likely need a pass on real children in real rooms.
  */
-class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
+class Wav2Vec2GopEngine(
+    private val modelFile: File,
+    private val installStamp: String = "",
+) : PronunciationScorer {
 
     private val phonemizer by lazy { KokoroPhonemizer.load() }
 
@@ -57,11 +60,7 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
     private fun createSession(): OrtSession =
         EngineStatus.step(EngineStatus.Kind.COACH_LOAD, modelFile.name) {
             val started = System.nanoTime()
-            val opts = OrtSession.SessionOptions().apply {
-                setIntraOpNumThreads(THREADS)
-                setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
-            }
-            OrtEnvironment.getEnvironment().createSession(modelFile.absolutePath, opts).also {
+            OnnxTuning.createSession(modelFile.absolutePath, TAG, installStamp).also {
                 Log.i(TAG, "gop session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
             }
         }
@@ -153,7 +152,6 @@ class Wav2Vec2GopEngine(private val modelFile: File) : PronunciationScorer {
 
     private companion object {
         const val TAG = "TukiGop"
-        const val THREADS = 4
         const val MIN_SAMPLES = 16_000 / 4 // shorter than 0.25 s isn't a word
         val EMPTY = PronunciationScore(overall = 0f, phonemes = emptyList())
     }

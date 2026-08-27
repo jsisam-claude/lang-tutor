@@ -245,7 +245,7 @@ class AppContainer private constructor(context: Context) {
         kokoroEngine?.takeIf { kokoroPath == file.absolutePath }?.let { return it }
         synchronized(this) {
             kokoroEngine?.takeIf { kokoroPath == file.absolutePath }?.let { return it }
-            return KokoroTtsEngine(appContext, file).also {
+            return KokoroTtsEngine(appContext, file, installStamp = installStamp()).also {
                 kokoroEngine = it
                 kokoroPath = file.absolutePath
             }
@@ -378,7 +378,7 @@ class AppContainer private constructor(context: Context) {
         gopEngine?.takeIf { gopPath == file.absolutePath }?.let { return it }
         synchronized(this) {
             gopEngine?.takeIf { gopPath == file.absolutePath }?.let { return it }
-            return Wav2Vec2GopEngine(file).also {
+            return Wav2Vec2GopEngine(file, installStamp()).also {
                 gopEngine = it
                 gopPath = file.absolutePath
             }
@@ -401,7 +401,7 @@ class AppContainer private constructor(context: Context) {
         hebrewEngine?.takeIf { hebrewPath == key }?.let { return it }
         synchronized(this) {
             hebrewEngine?.takeIf { hebrewPath == key }?.let { return it }
-            val phonemes = HebrewPhonemes(files.nikud)
+            val phonemes = HebrewPhonemes(files.nikud, installStamp())
             return KokoroTtsEngine(
                 context = appContext,
                 modelFile = files.model,
@@ -409,6 +409,7 @@ class AppContainer private constructor(context: Context) {
                 voices = VoiceStore.Files(files.voiceDir),
                 defaultVoice = TTS_HE_VOICE_NAME,
                 tag = KokoroTtsEngine.TAG_HEBREW,
+                installStamp = installStamp(),
             ).also {
                 hebrewEngine = it
                 hebrewPhonemes = phonemes

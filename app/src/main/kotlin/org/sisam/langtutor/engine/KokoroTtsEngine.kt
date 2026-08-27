@@ -55,6 +55,8 @@ class KokoroTtsEngine(
     /** Fallback when the requested voice is not in this build. */
     private val defaultVoice: String = TukiVoices.DEFAULT_ID,
     private val tag: String = TAG,
+    /** Identifies this install, so an app update retries XNNPACK once. */
+    private val installStamp: String = "",
 ) : TtsEngine {
 
     private val phonemizer by frontEnd
@@ -126,13 +128,9 @@ class KokoroTtsEngine(
         // clear the status, or the UI spins on a step that is already over.
         EngineStatus.step(EngineStatus.Kind.TTS_LOAD, modelFile.name) {
             val started = System.nanoTime()
-            val opts = OrtSession.SessionOptions().apply {
-                setIntraOpNumThreads(THREADS)
-                // BASIC, not ALL: ORT's extended optimizer crashed on this graph in
-                // testing (desktop 1.28); basic fusions are enough for realtime.
-                setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
-            }
-            OrtEnvironment.getEnvironment().createSession(modelFile.absolutePath, opts).also {
+            // Provider and thread budget live in OnnxTuning — see there for
+            // why four threads was the wrong number on a big.LITTLE phone.
+            OnnxTuning.createSession(modelFile.absolutePath, tag, installStamp).also {
                 Log.i(tag, "kokoro session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
             }
         }
@@ -360,7 +358,6 @@ class KokoroTtsEngine(
         /** Every Kokoro export in this family is 24 kHz, Hebrew included. */
         private const val SAMPLE_RATE = 24_000
         private const val STYLE_DIM = 256
-        private const val THREADS = 4
 
         /** All English voices from onnx-community/Kokoro-82M-v1.0-ONNX live
          *  here, pinned by scripts/fetch-voice-assets.sh. */
