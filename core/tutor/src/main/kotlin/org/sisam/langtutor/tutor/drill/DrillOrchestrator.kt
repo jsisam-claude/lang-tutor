@@ -81,7 +81,19 @@ class DrillOrchestrator(
     private val scorer: PronunciationScorer,
     private val profile: LearnerProfileStore,
     private val scope: CoroutineScope,
+    /**
+     * The voice for PERSONALITY lines — praise and encouragement — which the
+     * app points at the parrot-flavored view of the same engine. Defaults to
+     * the teaching voice, and the split is deliberate and strict: the lines a
+     * child copies ([prompt]) or follows as instructions always use [tts]
+     * untouched, because a character voice on the model sentence would teach
+     * worse English. The character lives only where nobody is learning
+     * phonetics from it.
+     */
+    flavorTts: TtsEngine? = null,
 ) {
+
+    private val personality: TtsEngine = flavorTts ?: tts
 
     private val _state = MutableStateFlow<DrillState>(DrillState.Idle)
     val state: StateFlow<DrillState> = _state
@@ -157,13 +169,13 @@ class DrillOrchestrator(
                 correct++
                 _events.emit(DrillEvent.Correct(tries + 1))
                 profile.update { it.copy(xp = it.xp + XP_PER_CORRECT) }
-                speak(PRAISES[at.index % PRAISES.size])
+                cheer(PRAISES[at.index % PRAISES.size])
                 advance()
             } else {
                 tries++
                 if (tries >= MAX_TRIES) {
                     _events.emit(DrillEvent.Nearly)
-                    speak(GOOD_TRY)
+                    cheer(GOOD_TRY)
                     advance()
                 } else {
                     prompt(slow = true, prefix = ALMOST)
@@ -200,12 +212,18 @@ class DrillOrchestrator(
         tts.speak(text, TutorLanguage.ENGLISH, speed).collect { }
     }
 
+    /** Personality lines only — see the [personality] doc for the rule. */
+    private suspend fun cheer(text: String) {
+        personality.speak(text, TutorLanguage.ENGLISH, 1f).collect { }
+    }
+
     /** Non-suspend release for ViewModel.onCleared() — same shape as the
      *  tutor's: the owning scope is already cancelled by then. */
     fun shutdown() {
         _state.value = DrillState.Idle
         CoroutineScope(Dispatchers.Default).launch {
             runCatching { tts.stop() }
+            runCatching { personality.stop() }
             // A capture the learner walked out on must not hold the mic.
             runCatching { asr.stopCapture() }
         }

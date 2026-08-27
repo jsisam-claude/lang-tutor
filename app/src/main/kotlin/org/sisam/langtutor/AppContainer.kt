@@ -17,6 +17,7 @@ import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.engine.HebrewPhonemes
 import org.sisam.langtutor.engine.KokoroTtsEngine
+import org.sisam.langtutor.engine.ParrotVoice
 import org.sisam.langtutor.engine.VoiceStore
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
@@ -515,6 +516,9 @@ class AppContainer private constructor(context: Context) {
             scorer = pronunciationScorer(),
             profile = profile,
             scope = scope,
+            // Praise in the parrot voice — same engine, flavored view. The
+            // platform-TTS fallback has no waveform access, so no flavor.
+            flavorTts = kokoro?.let { ParrotVoice(it) },
         )
     }
 

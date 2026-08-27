@@ -453,6 +453,26 @@ Worth reporting here: repeated or samey lines across several rounds (the
 topic seed should prevent it), any line that feels off-level or off-tone for
 a child, and whether the first "Again!" is genuinely instant.
 
+### The parrot voice (new)
+Praise now sounds like a parrot: after a correct repetition (and on the
+"good try" advance), Tuki's line comes back pitched up ~3 semitones with a
+gentle warble, announced by a short "brrp!" trill. This is a strict split,
+and the split IS the feature to verify:
+
+- **Teaching speech must be completely untouched** — the target line, its
+  slow "Almost! Listen again." recast, the intro, vocab, conversation
+  replies, Hebrew. If any line the child is meant to COPY sounds processed,
+  that is a bug, report it immediately.
+- Only the short praise lines ("Great job!", "Well done!", "You said it!",
+  "Perfect!", "Good try! Let's do the next one.") should be parrot-flavored.
+
+The effect is DSP over the same voice (no second model): pitch and formants
+up together — the cartoon-creature treatment — plus a ~6.5 Hz flutter.
+Matters of taste to report: too squawky / not squawky enough, the flourish
+getting old, or the praise becoming hard to understand (it should still be
+perfectly intelligible, just birdy). The dials are three constants in
+`ParrotEffect`.
+
 Worth reporting: whether the word-judge feels FAIR on a real child's voice —
 too strict (right sentence rejected: send the transcript line from logcat) or
 too lax (nonsense accepted). The thresholds live in `WordMatch` and real

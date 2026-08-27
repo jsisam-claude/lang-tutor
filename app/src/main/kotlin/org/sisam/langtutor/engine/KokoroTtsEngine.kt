@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.sisam.langtutor.speech.KokoroFrontEnd
+import org.sisam.langtutor.speech.ParrotEffect
 import org.sisam.langtutor.speech.KokoroPhonemizer
 import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
@@ -136,9 +137,22 @@ class KokoroTtsEngine(
             }
         }
 
-    override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> = flow {
+    override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> =
+        speakInternal(text, speed, flavored = false)
+
+    /**
+     * The same voice wearing the parrot: personality lines only, reached
+     * through [ParrotVoice]. Teaching speech ([speak], [speakStream]) never
+     * passes through the effect — see [org.sisam.langtutor.speech.ParrotEffect]
+     * for the doctrine.
+     */
+    fun speakFlavored(text: String, speed: Float): Flow<TtsEvent> =
+        speakInternal(text, speed, flavored = true)
+
+    private fun speakInternal(text: String, speed: Float, flavored: Boolean): Flow<TtsEvent> = flow {
         player.interrupted = false
         emit(TtsEvent.Started)
+        var first = true
         // A chunk the front end cannot phonemize yields no ids and is skipped,
         // so text in the wrong script degrades to silence rather than a crash.
         //
@@ -153,9 +167,21 @@ class KokoroTtsEngine(
             val ids = phonemizer.phonemize(group.text)
             if (ids.isEmpty()) continue
             emit(TtsEvent.RangeSpoken(group.start, group.end))
-            val audio = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes") {
-                synthesize(ids, vary(speed))
+            // Flavored lines synthesize SLOWER by the pitch factor, so the
+            // resample inside the effect lands the duration back where it was
+            // asked for while pitch and formants ride up together.
+            val synthSpeed = if (flavored) vary(speed) / ParrotEffect.PITCH else vary(speed)
+            var audio = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes") {
+                synthesize(ids, synthSpeed)
             }
+            if (flavored && audio.isNotEmpty()) {
+                audio = ParrotEffect.apply(audio, SAMPLE_RATE)
+                if (first && !player.interrupted) {
+                    // The "brrp!" announces the character before the words.
+                    player.play(ParrotEffect.flourish(SAMPLE_RATE))
+                }
+            }
+            first = false
             if (audio.isNotEmpty() && !player.interrupted) player.play(audio)
         }
         player.release()
@@ -342,6 +368,21 @@ class KokoroTtsEngine(
         /** Logcat tag for the Hebrew instance, so two voices are tellable apart. */
         const val TAG_HEBREW = "TukiTtsHe"
     }
+}
+
+/**
+ * A [TtsEngine] view of the SAME Kokoro engine that speaks with the parrot
+ * flavor — same ORT session, same player, same picked voice; only the
+ * waveform treatment differs. Handed to orchestrators as their personality
+ * voice, so core code stays interface-only and cannot accidentally route a
+ * teaching line through the effect.
+ */
+class ParrotVoice(private val engine: KokoroTtsEngine) : TtsEngine {
+
+    override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> =
+        engine.speakFlavored(text, speed)
+
+    override suspend fun stop() = engine.stop()
 }
 
 /**

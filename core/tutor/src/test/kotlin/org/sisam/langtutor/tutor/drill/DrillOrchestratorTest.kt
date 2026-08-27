@@ -145,6 +145,39 @@ class DrillOrchestratorTest {
     }
 
     @Test
+    fun `personality lines take the flavor voice, teaching lines never do`() = runTest {
+        // The whole parrot-voice contract in one test: praise and
+        // encouragement go to the flavored engine; the intro, the target line,
+        // its slow recast, and "Almost!" stay on the clean teaching voice.
+        val teaching = FakeTtsEngine()
+        val parrot = FakeTtsEngine()
+        val drill = DrillOrchestrator(
+            asr = FakeAsrEngine().also {
+                it.enqueue(AsrResult("banana", 0.9f))
+                it.enqueue(AsrResult("i see a red ball", 0.9f))
+            },
+            tts = teaching,
+            scorer = FakePronunciationScorer(),
+            profile = InMemoryProfileStore(),
+            scope = this,
+            flavorTts = parrot,
+        )
+        drill.startRound(listOf(ball))
+        advanceUntilIdle()
+        drill.onMicPressed(); advanceUntilIdle(); drill.onMicReleased() // miss
+        advanceUntilIdle()
+        drill.onMicPressed(); advanceUntilIdle(); drill.onMicReleased() // correct
+        advanceUntilIdle()
+
+        assertEquals(
+            listOf(DrillOrchestrator.INTRO, ball.text, DrillOrchestrator.ALMOST, ball.text),
+            teaching.spoken.map { it.text },
+        )
+        assertEquals(1, parrot.spoken.size)
+        assertTrue(parrot.spoken.single().text in DrillOrchestrator.PRAISES)
+    }
+
+    @Test
     fun `the mic is closed while Tuki is talking and after the round`() = runTest {
         val f = Fixture(this)
         f.drill.onMicPressed() // Idle: ignored
