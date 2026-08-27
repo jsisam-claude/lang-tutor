@@ -16,7 +16,7 @@ concurrency:
 
 # Least privilege by default; the android job re-widens to contents:write so
 # it can publish the rolling debug-latest release.
-# PINNED AT v4 ON PURPOSE, and not because v4 is what we want.
+# Pinned at v4, which is NOT where they should stay.
 #
 # Every green run carries this annotation:
 #
@@ -24,19 +24,20 @@ concurrency:
 #   being forced to run on Node.js 24: actions/checkout@v4,
 #   actions/setup-java@v4, gradle/actions/setup-gradle@v4
 #
-# The fix is any major that declares `using: node24` — v5 for all three. That
-# was tried twice (runs #130 at v7/v6/v6, #131 at v5/v5/v5). BOTH died at
-# startup in 3-4 seconds: jobs created, zero steps, no runner assigned, no
-# logs to download. All four tags resolve and every action.yml is reachable
-# over raw.githubusercontent, so it is not resolution and not a typo.
+# The fix is any major declaring `using: node24` — v5 for all three, verified
+# by reading each action.yml. It has NOT been proven here, because the repo
+# started failing every run at startup partway through the attempt: #130
+# (v7/v6/v6), #131 (v5/v5/v5) and #132 (back at v4) all died in 3-5 seconds
+# with jobs created, zero steps, no runner assigned and no logs. #132 differs
+# from the last green run, #129, by this comment alone, so the workflow file
+# is not the cause and the version bump is neither proven nor disproven.
 #
-# What fits the evidence is a repository or organisation Actions policy that
-# allows a fixed list of action versions: v4 runs, ANY other version fails
-# identically and without logs, which is how a policy rejection surfaces.
-# That cannot be fixed from this file. Whoever administers the repo needs to
-# widen Settings -> Actions -> General -> "Allow select actions" to include
-# the v5 line, and then this pin can move. Until then the warning stays and
-# CI stays green, which is the right way round.
+# That signature — no runner, no logs, instant — is what an account-level
+# block looks like: exhausted Actions minutes, a spending limit, or a policy
+# on allowed actions. Check billing first; this repo has hit a free-tier
+# quota before (see actions-cleanup.yml). Once runs start again, retry the
+# v5 bump on its own commit and read the result.
+
 permissions:
   contents: read
 
