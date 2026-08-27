@@ -62,11 +62,12 @@ class WhisperAsrEngine(
         stopRecorderQuietly()
         chunks.clear()
         // Local val: a class property can't be smart-cast inside the capture
-        // lambda, and the inner loop must call the detector without a null check
-        // on every frame.
-        val detector = vad
-        val gate = detector?.let { VadGate() }
-        detector?.reset()
+        // lambda, and the inner loop must call the detector without a null
+        // check on every frame. ONE nullable carries the pair because the gate
+        // exists exactly when the detector does — checking both separately
+        // left the compiler proving the second check dead on every build.
+        val vadPair = vad?.let { it to VadGate() }
+        vad?.reset()
         val signal = CompletableDeferred<Unit>()
         endpoint = signal
         val minBuf = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL, ENCODING)
@@ -85,7 +86,8 @@ class WhisperAsrEngine(
                 if (n <= 0) continue
                 chunks.add(buf.copyOf(n))
                 total += n
-                if (gate == null || detector == null || signal.isCompleted) continue
+                if (vadPair == null || signal.isCompleted) continue
+                val (detector, gate) = vadPair
                 var off = 0
                 while (off + SileroVad.FRAME <= n) {
                     for (i in 0 until SileroVad.FRAME) frame[i] = buf[off + i] / 32768f

@@ -103,9 +103,15 @@ class AppContainer private constructor(context: Context) {
         // "Android killed the app mid-conversation". Matters most on the 12 GB
         // Pixel 9 running the E4B brain, where the speech stack's ~0.7-1 GB of
         // anonymous memory is exactly the margin the LLM needs.
+        // Deprecated in API 34, still delivered on every OS we target — see
+        // trimEngines. Suppressed rather than worked around: the replacement
+        // (onTrimMemory levels only) would lose the low-memory signal on the
+        // 8 GB 9a, which is the device the trim policy exists for.
+        @Suppress("DEPRECATION")
         appContext.registerComponentCallbacks(object : ComponentCallbacks2 {
             override fun onTrimMemory(level: Int) = trimEngines(level)
             override fun onConfigurationChanged(newConfig: Configuration) = Unit
+            @Deprecated("ComponentCallbacks.onLowMemory is deprecated but still delivered")
             override fun onLowMemory() = trimEngines(ComponentCallbacks2.TRIM_MEMORY_COMPLETE)
         })
     }
@@ -140,6 +146,7 @@ class AppContainer private constructor(context: Context) {
         )
     }
 
+    @Suppress("DEPRECATION") // TRIM_MEMORY_* — see the note in init.
     private fun trimEngines(level: Int) {
         if (level < ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW) return
         // Cached and the OS wants memory: skip the graduated dance and free

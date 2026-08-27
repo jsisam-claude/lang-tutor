@@ -36,7 +36,9 @@ class PlatformTtsEngine(context: Context) : TtsEngine {
 
             tts.language = when (language) {
                 TutorLanguage.ENGLISH -> Locale.US
-                TutorLanguage.HEBREW -> Locale("he")
+                // forLanguageTag, not the deprecated Locale(String): BCP-47
+                // is the tag form the profile already stores.
+                TutorLanguage.HEBREW -> Locale.forLanguageTag("he")
             }
             tts.setSpeechRate(speed)
             tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {

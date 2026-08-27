@@ -2,6 +2,7 @@ package org.sisam.langtutor.packs
 
 import java.io.InputStream
 import java.net.HttpURLConnection
+import java.net.URI
 import java.net.URL
 import java.security.cert.X509Certificate
 import javax.net.ssl.HttpsURLConnection
@@ -55,8 +56,12 @@ class HttpPackFetcher(
     override suspend fun open(url: String, offset: Long): FetchResult {
         var current = url
         repeat(MAX_REDIRECTS) {
-            val host = URL(current).host
-            val conn = (URL(current).openConnection() as HttpURLConnection).apply {
+            // URI, not the URL(String) constructor: deprecated since Java 20
+            // because it parses leniently — URI validates, which is what you
+            // want before opening a connection to it.
+            val currentUrl = URI(current).toURL()
+            val host = currentUrl.host
+            val conn = (currentUrl.openConnection() as HttpURLConnection).apply {
                 connectTimeout = connectTimeoutMs
                 readTimeout = readTimeoutMs
                 instanceFollowRedirects = false // handled manually so Range survives redirects
@@ -83,7 +88,9 @@ class HttpPackFetcher(
                     val location = conn.getHeaderField("Location")
                         ?: error("Redirect ($code) without Location for $current")
                     conn.disconnect()
-                    current = URL(URL(current), location).toString()
+                    // resolve() handles a relative Location the same way the
+                    // two-arg URL constructor did, without the deprecation.
+                    current = URI(current).resolve(location).toString()
                 }
                 HttpURLConnection.HTTP_OK -> {
                     val len = conn.contentLengthLong

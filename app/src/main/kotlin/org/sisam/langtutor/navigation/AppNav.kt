@@ -131,7 +131,7 @@ private fun StickerMilestone(container: AppContainer, navController: NavHostCont
     // right behaviour inside a 4-6 unit.
     val unitId = entry?.arguments?.getString("unitId")
     val ageBand by produceState<AgeBand?>(initialValue = null, unitId) {
-        value = unitId?.let { container.content.loadUnit(it)?.ageBand }
+        value = unitId?.let { container.content.loadUnit(it).ageBand }
     }
     val young = profile.track == LearnerTrack.PRE_READER || ageBand == AgeBand.AGES_4_6
 

@@ -270,7 +270,9 @@ class LiteRtLmEngine(
             npuHint.isFile && npuHint.readText().trim() == buildStamp
         }.getOrDefault(false)
         val npuWanted = runCatching { npuOptIn() }.getOrDefault(false)
-        val tryNpu = npuWanted && npuLibDir != null && !npuCrashed && !npuHinted
+        // One nullable carries the whole decision, so the rung below needs no
+        // second null check for the compiler to prove the directory is there.
+        val npuDir = npuLibDir?.takeIf { npuWanted && !npuCrashed && !npuHinted }
         Log.i(
             TAG,
             "NPU: " + when {
@@ -292,9 +294,7 @@ class LiteRtLmEngine(
             // First, and only where a dispatch library actually exists. MTP is
             // off here: the drafter is a second graph, and one unknown at a
             // time is the rule this ladder is built on.
-            if (tryNpu && npuLibDir != null) {
-                add(Triple("npu", Backend.NPU(npuLibDir), false))
-            }
+            if (npuDir != null) add(Triple("npu", Backend.NPU(npuDir), false))
             if (!skipGpu) {
                 if (mtpSupported && !skipMtpGpu) add(Triple("gpu+mtp", Backend.GPU(), true))
                 add(Triple("gpu", Backend.GPU(), false))

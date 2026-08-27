@@ -93,7 +93,7 @@ private fun DrawScope.drawBurst(burst: RewardBurst, t: Float, scratch: Path) {
 
         val x = originX +
             (cos(angle) * speed * t).toFloat() +
-            if (gentle) (unit * 0.12f * sin((t * 3.0 + phase * 6.28).toDouble())).toFloat() else 0f
+            if (gentle) (unit * 0.12f * sin(t * 3.0 + phase * 6.28)).toFloat() else 0f
         val y = originY +
             (sin(angle) * speed * t).toFloat() +
             GRAVITY * size.height * t * t
