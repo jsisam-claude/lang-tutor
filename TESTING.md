@@ -547,19 +547,30 @@ Whisper-on-GPU shipped in the same build. Both touch the GPU, they initialised
 attributed and the LLM ended up pinned to CPU for the install. That is the
 exact failure mode that pulled MTP the first time.
 
-**REVERTED — Whisper on the GPU delegate.** Failed three ways at once:
+**REVERTED — Whisper on the GPU delegate.** It was slower (rtf 2.14 → 4.20
+against ~2.8 on CPU), and — decisively — it took the LLM's GPU backend down
+with it: two GPU runtimes initialising 96 ms apart crashed the process
+natively twice, pinning the language model to CPU (`first token after 4184ms`
+against 618 ms). With the delegate gone, `GPU verdict: USED with MTP` came
+back clean, which confirms the delegate was the crasher.
 
-| | CPU | GPU delegate |
-|---|---|---|
-| rtf | ~2.8 | 2.14 → **4.20** |
-| confidence | **0.91** | **0.40–0.54** |
-| decoder output | normal | `-> 1 tokens` for 1.5 s of speech |
+*Correction:* an earlier version of this section also claimed the delegate
+"wrecked accuracy", citing confidence falling from 0.91 to 0.40–0.54. **The
+0.91 was an invented example in this document, not a measurement** — `conf=`
+logging landed in the same commit as the delegate, so no before-figure
+existed. CPU-only runs show `conf=0.48–0.54`, i.e. the same range. And
+`-> 1 tokens` is the correct output for a one-word drill answer, not a
+failure. The revert stands on the crash and the timings.
 
-Slower, and accuracy collapsed — the dynamic-range-quantized partition falling
-back op by op, which was the flagged risk. And it took the LLM's GPU backend
-down with it, which cost far more than the ears could ever have won:
-`first token after 4184ms` (was 618 ms), `decode ~5 est-tok/s` (was 7–8).
-Not to be retried without a way to keep the two GPU contexts apart.
+**RESTORED — Whisper's thread count.** Its `THREADS = 4` is an accuracy
+calibration, not a performance default: the export is dynamic-range quantized,
+XNNPACK partitions reductions by thread count, and the count therefore changes
+the winning token on marginal frames (`docs/asr-model-eval.md`: 17/18 correct
+at 2 threads, 9/12 at 4 on a 4-core host). Folding it into the shared thermal
+budget dropped it to 3 and **measurably degraded recognition — noticed in
+ordinary use before any log showed it.** Back to 4, with the reason stated
+where the next person will read it. The ONNX engines keep the shared budget;
+they have no such calibration.
 
 **KEPT — accelerator initialisation is now serialised** (`AcceleratorGate`).
 Only one runtime may bring up an accelerator at a time. This is what makes the

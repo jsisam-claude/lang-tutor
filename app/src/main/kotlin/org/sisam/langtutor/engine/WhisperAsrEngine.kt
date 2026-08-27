@@ -360,12 +360,19 @@ class WhisperAsrEngine(
         // thread count changes the summation order and — on a marginal frame —
         // the winning token. Measured in-container, transcripts of identical
         // audio got measurably worse once the threads matched the core count
-        // (docs/asr-model-eval.md). The short-window model has the latency
-        // headroom to be conservative here. DEVICE-VERIFY on the 9a.
-        /** Same budget as the ONNX engines: the fast cores, not all of them.
-         *  Four threads on a 1x-X4 + 3x-A720 + 4x-A520 phone saturates exactly
-         *  the cores that get hot — see [OnnxTuning] for the measurements. */
-        val THREADS = OnnxTuning.heavyThreads
+        // (docs/asr-model-eval.md: 17/18 correct at 2 threads, 9/12 at 4 on a
+        // 4-core host). The short-window model has the latency headroom to be
+        // conservative here. DEVICE-VERIFY on the 9a.
+        //
+        // This is an ACCURACY calibration and it does NOT take the shared
+        // thermal thread budget. It was briefly switched to OnnxTuning's 3 on
+        // 2026-08-27 to spare the big cores, which was a real regression: the
+        // number is not a guess about cores, it is a measured transcript-
+        // quality result, and 4 here means "half of eight", the ratio that was
+        // stable. ASR also runs in short bursts rather than continuously, so
+        // it is not the heat source that matters — the voice, at RTF ~2 for
+        // every line, is.
+        const val THREADS = 4
 
     }
 }

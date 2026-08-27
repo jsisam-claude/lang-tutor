@@ -92,6 +92,15 @@ Consequence for the app: `WhisperAsrEngine.THREADS` was **6**, chosen for the
 the big ones. It is now **4** — half the cores, the ratio that was stable here —
 which the ACFT model can afford, since it has ~10× the latency headroom it needs.
 
+**Confirmed on device, the hard way (2026-08-27).** `THREADS` was changed from
+4 to 3 as part of a *thermal* thread budget shared with the ONNX engines —
+without reading the paragraph above, which sits directly beside it in the same
+file. Recognition degraded noticeably in ordinary use, reported by the user
+before any log showed it, and restored by putting the 4 back. The count is an
+accuracy calibration wearing a performance-looking name; it does not belong to
+whichever budget happens to be passing. It is now a plain constant again with
+that stated in the comment.
+
 **DEVICE-VERIFY:** this is the one conclusion drawn from a container that may
 not transfer. A phone's big/little split is not a busy x86 box. If `TukiAsr`
 timings on the 9a show plenty of headroom, 6 threads may be both fast and
