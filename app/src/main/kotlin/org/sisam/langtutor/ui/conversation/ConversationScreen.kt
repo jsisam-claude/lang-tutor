@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,6 +35,7 @@ import android.speech.SpeechRecognizer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -43,11 +43,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
-import org.sisam.langtutor.profile.LearnerProfile
-import org.sisam.langtutor.speech.HebrewText
 import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.tutor.Speaker
 import org.sisam.langtutor.tutor.TutorMode
@@ -58,7 +58,10 @@ import org.sisam.langtutor.ui.common.TukiParrot
 import org.sisam.langtutor.ui.common.EnglishContent
 import org.sisam.langtutor.ui.reward.RewardKind
 
-class ConversationViewModel(container: AppContainer, unitId: String) : ViewModel() {
+class ConversationViewModel(
+    private val container: AppContainer,
+    unitId: String,
+) : ViewModel() {
 
     private val orchestrator = container.createOrchestrator(viewModelScope)
 
@@ -79,6 +82,32 @@ class ConversationViewModel(container: AppContainer, unitId: String) : ViewModel
     init {
         viewModelScope.launch {
             orchestrator.startSession(unitId = unitId, mode = TutorMode.SPEECH)
+        }
+        // Audio-visual reinforcement lives HERE, not in the composable.
+        // Celebrations are events in the session, and the session outlives the
+        // composition: driving them from a LaunchedEffect meant every fresh
+        // composition of the screen — a rotation, or coming back from the
+        // sticker room — replayed the last one.
+        viewModelScope.launch {
+            // drop(1) skips the StateFlow's replay of its current value; from
+            // then on every increment is exactly one finished practice turn.
+            orchestrator.turnsCompleted.drop(1).collect {
+                container.celebrate(RewardKind.COIN)
+            }
+        }
+        viewModelScope.launch {
+            orchestrator.pronunciation.filterNotNull().collect { score ->
+                when {
+                    // Said it well: the loud, bright cue.
+                    score.overall >= GOOD_ATTEMPT -> container.celebrate(RewardKind.STAR)
+                    // Nearly: the soft one. Not the same sound, so the
+                    // difference is audible without anyone naming it.
+                    score.overall >= FAIR_ATTEMPT -> container.celebrate(RewardKind.FLAKE)
+                    // Below that, nothing. The coloured phonemes already say
+                    // what happened, and a celebration here would be a lie.
+                    else -> Unit
+                }
+            }
         }
     }
 
@@ -111,31 +140,6 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
     var draft by remember { mutableStateOf("") }
     var handsFree by remember { mutableStateOf(false) }
 
-    // Audio-visual reinforcement, driven by what actually happened rather than
-    // by a timer. Coins for finishing a turn, and — separately — a reward for
-    // saying it WELL, because a cue that fires whatever the child does teaches
-    // them the cue means nothing.
-    val profile by container.profile.profile.collectAsState(initial = LearnerProfile.EMPTY)
-    var lastXp by remember { mutableIntStateOf(UNSEEN_XP) }
-    LaunchedEffect(profile.xp) {
-        // The sentinel keeps a returning learner's existing XP from firing a
-        // burst the moment the screen opens.
-        if (lastXp != UNSEEN_XP && profile.xp > lastXp) container.celebrate(RewardKind.COIN)
-        lastXp = profile.xp
-    }
-    LaunchedEffect(pronunciation) {
-        val score = pronunciation ?: return@LaunchedEffect
-        when {
-            // Said it well: the loud, bright cue.
-            score.overall >= GOOD_ATTEMPT -> container.celebrate(RewardKind.STAR)
-            // Nearly: the soft one. Not the same sound, so the difference is
-            // audible without anyone naming it.
-            score.overall >= FAIR_ATTEMPT -> container.celebrate(RewardKind.FLAKE)
-            // Below that, nothing. The coloured phonemes already say what
-            // happened, and a celebration here would be a lie.
-            else -> Unit
-        }
-    }
 
     // The platform ASR shim needs the mic; ask once when the screen opens.
     val micPermission = rememberLauncherForActivityResult(
@@ -372,19 +376,25 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
 }
 
 /**
- * A transcript line. English is an LTR island inside the RTL chrome; a Hebrew
- * explanation is not, and forcing it through [EnglishContent] pushed its
- * punctuation to the wrong end. Direction follows the text.
+ * A transcript line, whose direction follows its own content.
+ *
+ * Forcing every line through [EnglishContent] pushed a Hebrew explanation's
+ * punctuation to the wrong end. Branching on "does it contain any Hebrew" only
+ * moved the problem: a Hebrew explanation that continues in English — which is
+ * precisely what the Hebrew-help turn produces — is ONE string with two
+ * paragraphs, and a whole-string verdict gets one of them wrong either way.
+ *
+ * [TextDirection.Content] hands the decision to the BiDi algorithm, which
+ * resolves each paragraph from its own first strong character. That is the
+ * only rule that is right for all three cases.
  */
 @Composable
 private fun TranscriptText(text: String, modifier: Modifier = Modifier) {
-    if (HebrewText.contains(text)) {
-        Text(text = text, style = MaterialTheme.typography.bodyLarge, modifier = modifier)
-    } else {
-        EnglishContent {
-            Text(text = text, style = MaterialTheme.typography.bodyLarge, modifier = modifier)
-        }
-    }
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyLarge.copy(textDirection = TextDirection.Content),
+        modifier = modifier,
+    )
 }
 
 @Composable
@@ -442,10 +452,6 @@ private fun PronunciationFeedback(score: PronunciationScore) {
 }
 
 private const val MAX_SHOWN = 24
-
-/** No XP reading yet this composition — distinguishes "first frame" from
- *  "a real gain of zero", which cannot happen but reads clearer stated. */
-private const val UNSEEN_XP = -1
 
 /** Bright cue at or above this; soft cue above [FAIR_ATTEMPT]; silence below. */
 private const val GOOD_ATTEMPT = 0.8f

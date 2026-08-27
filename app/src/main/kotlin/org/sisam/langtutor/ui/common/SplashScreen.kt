@@ -110,10 +110,13 @@ fun SplashScreen(container: AppContainer) {
                 LinearProgressIndicator(
                     progress = { animated },
                     modifier = Modifier
+                        // widthIn BEFORE fillMaxWidth: the other order pins the
+                        // width to the parent first and the cap never applies,
+                        // which on a tablet drew a bar the width of the screen.
+                        .widthIn(max = 420.dp)
                         .fillMaxWidth()
                         // Rounded ends and a little weight: a hairline bar
                         // reads as a divider, not as progress.
-                        .widthIn(max = 420.dp)
                         .height(10.dp)
                         .clip(RoundedCornerShape(5.dp)),
                 )

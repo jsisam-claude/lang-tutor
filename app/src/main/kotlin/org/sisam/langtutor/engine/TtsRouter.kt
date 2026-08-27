@@ -3,6 +3,7 @@ package org.sisam.langtutor.engine
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import org.sisam.langtutor.speech.HebrewText
 import org.sisam.langtutor.speech.TtsEngine
@@ -54,7 +55,18 @@ class TtsRouter(
      * Scripted Hebrew lines use [speak], which routes properly.
      */
     override fun speakStream(chunks: Flow<String>, language: TutorLanguage, speed: Float): Flow<TtsEvent> =
-        english.speakStream(chunks.map { if (containsHebrew(it)) stripHebrew(it) else it }, language, speed)
+        english.speakStream(
+            chunks
+                .map { if (containsHebrew(it)) stripHebrew(it) else it }
+                // Stripping an ALL-Hebrew sentence leaves nothing. Forwarding
+                // that empty string made the voice synthesize silence and
+                // consume the sentence slot — which is the normal case now
+                // that Hebrew explanations lead with a Hebrew sentence and
+                // continue in English.
+                .filter { it.any(Char::isLetterOrDigit) },
+            language,
+            speed,
+        )
 
     override suspend fun stop() {
         english.stop()

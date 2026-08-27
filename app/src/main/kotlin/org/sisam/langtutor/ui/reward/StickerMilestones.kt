@@ -22,14 +22,32 @@ object StickerMilestones {
 
     fun earned(xp: Int): Int = xp / XP_PER_STICKER
 
+    /** No room has been opened yet this session. */
+    const val NEVER_OFFERED = -1
+
     /**
-     * @param lastOffered the highest milestone already opened this session.
-     *   Without it, a learner who backed out of the room would be sent
-     *   straight back into it; with it they are simply asked again at the next
-     *   milestone.
+     * Is a sticker owed right now?
+     *
+     * @param owned how many stickers the learner has actually picked.
+     * @param lastOfferedOwned the [owned] value when the room was last opened,
+     *   or [NEVER_OFFERED].
+     * @param lastOfferedEarned the [earned] value at that same moment.
+     *
+     * The pair is what makes "declined" distinguishable from "still owed".
+     * Tracking only the highest milestone offered was wrong in a way a
+     * single-number test could not show: three milestones earned at once got
+     * collapsed into ONE trip to the room, because the first trip recorded
+     * `earned = 3` and every later check then failed `earned > lastOffered`.
+     * Comparing against the COLLECTION as well means picking one re-arms the
+     * next, while backing out — which leaves the collection unchanged — does
+     * not.
      */
-    fun owed(xp: Int, owned: Int, lastOffered: Int): Boolean {
+    fun owed(xp: Int, owned: Int, lastOfferedOwned: Int, lastOfferedEarned: Int): Boolean {
         val earned = earned(xp)
-        return earned > owned && earned > lastOffered
+        if (earned <= owned) return false
+        if (lastOfferedOwned == NEVER_OFFERED) return true
+        // Either they took the last one (the collection moved), or they have
+        // earned another milestone since we asked.
+        return owned != lastOfferedOwned || earned > lastOfferedEarned
     }
 }

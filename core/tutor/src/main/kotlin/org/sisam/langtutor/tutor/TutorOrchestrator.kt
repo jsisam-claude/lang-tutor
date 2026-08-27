@@ -83,6 +83,20 @@ class TutorOrchestrator(
      */
     val hebrewHelpOffered: StateFlow<Boolean> = _hebrewHelpOffered
 
+    private val _turnsCompleted = MutableStateFlow(0)
+
+    /**
+     * How many practice turns this SESSION has completed — the signal the
+     * reward loop celebrates.
+     *
+     * Deliberately not "watch the profile's XP": the profile is exposed as a
+     * plain Flow, so a screen collecting it with a placeholder initial value
+     * sees `xp = 0` before it sees the real number, and reads the difference
+     * as a fresh gain. This starts at 0 because the session did, and it only
+     * ever moves when a turn actually finishes.
+     */
+    val turnsCompleted: StateFlow<Int> = _turnsCompleted
+
     private val _pronunciation = MutableStateFlow<PronunciationScore?>(null)
 
     /**
@@ -111,10 +125,15 @@ class TutorOrchestrator(
         _state.value = TutorTurnState.Preparing
         track = TrackConfig.of(profile.current().track)
         llm.load(LlmModelSpec(modelId = "tutor-default"))
-        // Only meaningful AFTER the load: which tier actually came up is what
-        // decides whether Hebrew is trustworthy this session.
-        _hebrewHelpOffered.value = track.hebrewTextUseful && tierSpeaksHebrew()
         currentUnit = content.loadUnit(unitId)
+        // Only meaningful AFTER the load: which tier actually came up is what
+        // decides whether Hebrew is trustworthy this session. The unit has to
+        // be loaded first too — a 4-6 unit means a child who cannot read
+        // Hebrew either, whatever track the profile happens to be left on, and
+        // the default track is BEGINNER.
+        _hebrewHelpOffered.value = track.hebrewTextUseful &&
+            currentUnit?.ageBand != AgeBand.AGES_4_6 &&
+            tierSpeaksHebrew()
         val firstPrompt = currentUnit?.activities
             ?.filterIsInstance<Activity.RepeatAfterMe>()
             ?.firstOrNull()?.phrase
@@ -189,17 +208,28 @@ class TutorOrchestrator(
      * through the same [DialoguePolicy] plumbing every other move uses — not a
      * prompt rewrite, not a second engine, not a mode the session stays in.
      * The next turn is ordinary English again.
+     *
+     * The tap DOES enter the transcript as a learner turn. An earlier version
+     * kept it out, on the theory that a button press is not something the
+     * learner said — but the engine sends the LAST message of a request as the
+     * user turn, so an empty utterance meant the model was handed Tuki's own
+     * previous reply as the child's words (and, on the very first tap, the
+     * instruction itself). A visible "I asked for Hebrew" line is both honest
+     * and the only shape that keeps the conversation history coherent for
+     * every turn after it.
+     *
+     * It does not count as practice, though — no XP and no coins. Asking for
+     * help is not the work, and XP is what drives the sticker milestone.
      */
     suspend fun onHebrewHelpRequested() {
         if (turnActive || !_hebrewHelpOffered.value) return
         val current = _state.value
         if (current !is TutorTurnState.AwaitingChild && current !is TutorTurnState.Failed) return
-        // No new child utterance: this asks Tuki to re-explain what it just
-        // said, so the transcript must not gain a phantom empty child bubble.
         handleChildUtterance(
-            utterance = "",
+            utterance = HEBREW_HELP_REQUEST,
             confidence = 1.0f,
             forcedMove = TutorMove.RespondViaLlm(HEBREW_HELP_INSTRUCTION),
+            countsAsPractice = false,
         )
     }
 
@@ -227,6 +257,7 @@ class TutorOrchestrator(
         confidence: Float,
         audio: AudioClip? = null,
         forcedMove: TutorMove? = null,
+        countsAsPractice: Boolean = true,
     ) {
         turnActive = true
         try {
@@ -252,7 +283,10 @@ class TutorOrchestrator(
                     scorePronunciation(audio, utterance)
                     _state.value = TutorTurnState.Thinking("")
                     respondStreaming(buildRequest(utterance, move.instruction))
-                    profile.update { it.copy(xp = it.xp + XP_PER_TURN) }
+                    if (countsAsPractice) {
+                        profile.update { it.copy(xp = it.xp + XP_PER_TURN) }
+                        _turnsCompleted.value += 1
+                    }
                     _state.value = TutorTurnState.AwaitingChild(null)
                 }
             }
@@ -271,6 +305,19 @@ class TutorOrchestrator(
     /** Set by a mic tap during [TutorTurnState.Speaking]; the streaming token
      *  loop converts it into a prompt end of turn instead of decoding on. */
     @Volatile private var bargeRequested = false
+
+    /**
+     * Where the streamed reply is cut, in characters, for the CURRENT turn.
+     *
+     * This used to be the safety filter's flat 400-char cap, which silently
+     * undid every budget above ~96 tokens: an Exam-track reply (128) or a
+     * bilingual Hebrew explanation (160) runs past 400 characters as a matter
+     * of course, so the tail was dropped at a sentence boundary and the
+     * English half of "Hebrew first, then continue in English" never arrived.
+     * Derived from the turn's own token budget instead, and never tighter than
+     * the filter's cap.
+     */
+    private var replyCharBudget = BlocklistSafetyFilter.MAX_REPLY_CHARS
 
     /** Why a streamed reply stopped before its natural end. */
     private enum class StopReason {
@@ -362,7 +409,7 @@ class TutorOrchestrator(
                 sentences.send(c.text)
                 sentUpTo = c.end
                 sentAny = true
-                if (sentUpTo >= BlocklistSafetyFilter.MAX_REPLY_CHARS) {
+                if (sentUpTo >= replyCharBudget) {
                     // Spoken enough — a child should never sit through a
                     // monologue. Later sentences are dropped, this one plays.
                     stop = StopReason.TRUNCATED
@@ -518,6 +565,9 @@ class TutorOrchestrator(
      * Short kid turns keep this well inside the model's 4k context.
      */
     private fun buildRequest(@Suppress("UNUSED_PARAMETER") utterance: String, instruction: String): LlmRequest {
+        // Whole-reply cut, in step with the token budget — see [replyCharBudget].
+        replyCharBudget = (replyTokensFor(instruction) * EST_CHARS_PER_TOKEN)
+            .coerceAtLeast(BlocklistSafetyFilter.MAX_REPLY_CHARS)
         val history = _transcript.value.takeLast(HISTORY_TURNS).map { entry ->
             ChatMessage(
                 role = if (entry.speaker == Speaker.CHILD) Role.USER else Role.ASSISTANT,
@@ -533,12 +583,14 @@ class TutorOrchestrator(
             // (pre-readers lose the thread in long replies). Turn time scales
             // almost linearly with this number, so a Hebrew explanation, which
             // genuinely needs two clauses in two scripts, gets its own budget.
-            maxTokens = when {
-                instruction == HEBREW_HELP_INSTRUCTION -> HEBREW_REPLY_TOKENS
-                currentUnit?.ageBand == AgeBand.AGES_4_6 -> minOf(track.replyTokens, 48)
-                else -> track.replyTokens
-            },
+            maxTokens = replyTokensFor(instruction),
         )
+    }
+
+    private fun replyTokensFor(instruction: String): Int = when {
+        instruction == HEBREW_HELP_INSTRUCTION -> HEBREW_REPLY_TOKENS
+        currentUnit?.ageBand == AgeBand.AGES_4_6 -> minOf(track.replyTokens, YOUNG_REPLY_TOKENS)
+        else -> track.replyTokens
     }
 
     private fun lessonHint(): RecognitionHint {
@@ -572,6 +624,20 @@ class TutorOrchestrator(
 
         /** A bilingual turn carries two scripts; the ordinary budget clips it. */
         const val HEBREW_REPLY_TOKENS = 160
+
+        /**
+         * What the learner's "explain in Hebrew" tap puts in the transcript.
+         * It is the button's own label, so the conversation reads back the way
+         * it happened. Not a resource string: this module is pure JVM, and the
+         * phrase is Hebrew in both app locales anyway.
+         */
+        const val HEBREW_HELP_REQUEST = "הסבר בעברית"
+
+        /** Age-band floor on the reply budget, whatever the track asks for. */
+        const val YOUNG_REPLY_TOKENS = 48
+
+        /** Rough Gemma ratio, used only to size the whole-reply cut. */
+        const val EST_CHARS_PER_TOKEN = 4
 
 
         // P1 safety posture: register, brevity, and topic bounds live in the

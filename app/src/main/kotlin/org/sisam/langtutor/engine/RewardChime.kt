@@ -20,9 +20,14 @@ import org.sisam.langtutor.ui.reward.RewardKind
  *
  * - **Consonant, always.** Each cue is a major triad or a clean interval. A
  *   reward sound that can grate is a reward sound the child learns to dread.
- * - **Quiet.** Peak amplitude is held near a third of full scale and the
- *   stream is tagged SONIFICATION, so it sits under Tuki's voice instead of
- *   talking over the sentence the child is meant to be hearing.
+ * - **Quiet, on the SAME stream as the voice.** Peak amplitude is held near a
+ *   third of full scale against the voice's ~0.46, which only means anything
+ *   if both play through the same volume control — so this uses USAGE_MEDIA,
+ *   exactly like [PcmPlayer]. Tagging it USAGE_ASSISTANCE_SONIFICATION instead
+ *   would route it to the SYSTEM stream: silenced entirely on a phone in
+ *   vibrate mode, and otherwise at whatever the ring volume happens to be
+ *   relative to Tuki. The CONTENT_TYPE still says sonification, which is the
+ *   honest description of what it is.
  * - **Short, with soft edges.** A 5 ms attack and an exponential tail: no
  *   click at either end, and it is over before it can become the point.
  */
@@ -57,10 +62,13 @@ class RewardChime(private val sampleRate: Int = 22_050) {
         val built = AudioTrack.Builder()
             .setAudioAttributes(
                 AudioAttributes.Builder()
-                    // SONIFICATION, not MEDIA: this is UI feedback, and tagging
-                    // it as such is what lets the system duck it under speech
-                    // rather than the other way round.
-                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                    // MEDIA, matching PcmPlayer: the cue is mixed against
+                    // Tuki's voice, so it has to share the voice's stream and
+                    // volume control. USAGE_ASSISTANCE_SONIFICATION routes to
+                    // STREAM_SYSTEM, which is muted in vibrate mode and scaled
+                    // by the ring volume — the reward would vanish on a silent
+                    // phone while the tutor kept talking.
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .build(),
             )

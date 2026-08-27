@@ -106,16 +106,20 @@ fun AppNav(container: AppContainer) {
  * again next time.
  *
  * Two guards. It only interrupts a learning room, never the Parent Zone or a
- * chat. And a milestone already offered this session is not re-offered, so a
- * child who backs out of the room is not trapped in a loop back into it —
- * they will be asked again at the next milestone.
+ * chat. And a room already offered for the same state is not re-offered, so a
+ * child who backs out is not trapped in a loop back into it — while a child
+ * who earned three at once still gets three trips. [StickerMilestones.owed]
+ * owns that distinction; this composable only decides WHERE it may interrupt.
  */
 @Composable
 private fun StickerMilestone(container: AppContainer, navController: NavHostController) {
     val profile by container.profile.profile.collectAsState(initial = LearnerProfile.EMPTY)
     val entry by navController.currentBackStackEntryAsState()
     val route = entry?.destination?.route
-    var lastOffered by rememberSaveable { mutableIntStateOf(0) }
+    // The pair the decline guard needs: what the collection looked like when
+    // the room was last opened, and which milestone that was.
+    var offeredAtOwned by rememberSaveable { mutableIntStateOf(StickerMilestones.NEVER_OFFERED) }
+    var offeredAtEarned by rememberSaveable { mutableIntStateOf(0) }
 
     // A young learner by EITHER signal: the profile's track, or the age band of
     // the unit actually open. A parent who never set the track still gets the
@@ -126,12 +130,17 @@ private fun StickerMilestone(container: AppContainer, navController: NavHostCont
     }
     val young = profile.track == LearnerTrack.PRE_READER || ageBand == AgeBand.AGES_4_6
 
-    val earned = StickerMilestones.earned(profile.xp)
-    val owed = StickerMilestones.owed(profile.xp, profile.stickers.size, lastOffered)
+    val owed = StickerMilestones.owed(
+        xp = profile.xp,
+        owned = profile.stickers.size,
+        lastOfferedOwned = offeredAtOwned,
+        lastOfferedEarned = offeredAtEarned,
+    )
 
     LaunchedEffect(owed, young, route) {
         if (owed && young && Routes.isLearningRoom(route)) {
-            lastOffered = earned
+            offeredAtOwned = profile.stickers.size
+            offeredAtEarned = StickerMilestones.earned(profile.xp)
             navController.navigate(Routes.STICKER)
         }
     }

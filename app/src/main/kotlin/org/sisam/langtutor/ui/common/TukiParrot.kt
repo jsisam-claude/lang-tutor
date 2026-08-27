@@ -10,6 +10,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -27,8 +28,13 @@ import androidx.compose.ui.unit.dp
  * the whole point — a pre-reader who cannot follow the transcript still gets an
  * unambiguous "it is talking to me now" signal. The motion is driven by ONE
  * looping phase; [speaking] only scales its amplitude, so starting and stopping
- * eases in and out instead of snapping, and an idle Tuki is perfectly still
- * rather than quietly animating off-screen.
+ * eases in and out instead of snapping.
+ *
+ * An idle Tuki is not merely still, it is genuinely stopped: the looping phase
+ * is only subscribed to while the amplitude can still produce motion. Holding
+ * an infinite transition open costs a vsync callback and a full redraw per
+ * frame even when every frame is pixel-identical, and there can be ten parrots
+ * on screen at once in the chat room.
  */
 /** Colors for one parrot. Two presets ship: [TUKI] (green/red) and [KIKI]
  *  (blue/orange), so the two chat characters are tellable at a glance. */
@@ -54,27 +60,54 @@ fun TukiParrot(
     size: androidx.compose.ui.unit.Dp = 96.dp,
     palette: ParrotPalette = ParrotPalette.TUKI,
 ) {
-    val loop = rememberInfiniteTransition(label = "tuki-loop")
-    // ~3.5 beak cycles a second: fast enough to read as speech, slow enough
-    // not to look like a glitch.
-    val phase by loop.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(durationMillis = 280), RepeatMode.Reverse),
-        label = "tuki-phase",
-    )
     val amplitude by animateFloatAsState(
         targetValue = if (speaking) 1f else 0f,
         animationSpec = tween(durationMillis = 220),
         label = "tuki-amplitude",
     )
+    // Subscribed only while there is motion left to make. The amplitude keeps
+    // running for its 220 ms ease-out after speaking stops, so the beak still
+    // closes smoothly rather than snapping shut.
+    val phase = if (speaking || amplitude > 0f) {
+        val loop = rememberInfiniteTransition(label = "tuki-loop")
+        // ~3.5 beak cycles a second: fast enough to read as speech, slow enough
+        // not to look like a glitch.
+        val p by loop.animateFloat(
+            initialValue = 0f,
+            targetValue = 1f,
+            animationSpec = infiniteRepeatable(tween(durationMillis = 280), RepeatMode.Reverse),
+            label = "tuki-phase",
+        )
+        p
+    } else {
+        0f
+    }
+    // Three paths, reused across frames rather than rebuilt: while Tuki IS
+    // speaking this lambda runs every frame, and there can be several parrots.
+    val tail = remember { Path() }
+    val upper = remember { Path() }
+    val lower = remember { Path() }
 
     Canvas(modifier = modifier.size(size)) {
-        drawTuki(beakOpen = phase * amplitude, headBob = (phase - 0.5f) * amplitude, palette = palette)
+        drawTuki(
+            beakOpen = phase * amplitude,
+            headBob = (phase - 0.5f) * amplitude,
+            palette = palette,
+            tail = tail,
+            upper = upper,
+            lower = lower,
+        )
     }
 }
 
-private fun DrawScope.drawTuki(beakOpen: Float, headBob: Float, palette: ParrotPalette) {
+private fun DrawScope.drawTuki(
+    beakOpen: Float,
+    headBob: Float,
+    palette: ParrotPalette,
+    tail: Path,
+    upper: Path,
+    lower: Path,
+) {
     val w = this.size.width
     val h = this.size.height
     val body = palette.body
@@ -84,7 +117,8 @@ private fun DrawScope.drawTuki(beakOpen: Float, headBob: Float, palette: ParrotP
     val beakDark = Color(0xFFD9931F)
 
     // Tail: two feathers sweeping down-left, drawn first so the body overlaps.
-    val tail = Path().apply {
+    tail.rewind()
+    tail.apply {
         moveTo(w * 0.34f, h * 0.62f)
         lineTo(w * 0.05f, h * 0.95f)
         lineTo(w * 0.22f, h * 0.90f)
@@ -117,7 +151,8 @@ private fun DrawScope.drawTuki(beakOpen: Float, headBob: Float, palette: ParrotP
         drawCircle(color = Color(0xFF23201E), radius = w * 0.028f, center = Offset(w * 0.665f, h * 0.245f))
 
         // Upper mandible: fixed to the head, hooked like a parrot's.
-        val upper = Path().apply {
+        upper.rewind()
+        upper.apply {
             moveTo(w * 0.74f, h * 0.22f)
             lineTo(w * 0.95f, h * 0.30f)
             lineTo(w * 0.78f, h * 0.36f)
@@ -128,7 +163,8 @@ private fun DrawScope.drawTuki(beakOpen: Float, headBob: Float, palette: ParrotP
         // Lower mandible: hinged at the corner of the mouth and swung down by
         // beakOpen, which is what actually animates.
         rotate(degrees = beakOpen * 20f, pivot = Offset(w * 0.75f, h * 0.34f)) {
-            val lower = Path().apply {
+            lower.rewind()
+            lower.apply {
                 moveTo(w * 0.75f, h * 0.34f)
                 lineTo(w * 0.90f, h * 0.34f)
                 lineTo(w * 0.76f, h * 0.42f)

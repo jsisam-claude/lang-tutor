@@ -19,8 +19,6 @@ data class TrackConfig(
     val personaSuffix: String,
     /** Reply budget in tokens. Turn time scales almost linearly with this. */
     val replyTokens: Int,
-    /** Name the rule (adults) vs. recast silently (children). */
-    val explicitCorrection: Boolean,
     /**
      * May this track be OFFERED written Hebrew explanations? False for
      * pre-readers — a child who cannot read Hebrew either gains nothing from
@@ -38,7 +36,6 @@ data class TrackConfig(
                     "short question. Never name a grammar rule; if they make a mistake, " +
                     "simply say the sentence back correctly and warmly.",
                 replyTokens = 48,
-                explicitCorrection = false,
                 hebrewTextUseful = false,
             )
 
@@ -48,7 +45,6 @@ data class TrackConfig(
                     "and concrete. After a mistake, say the correct sentence and add at most " +
                     "one plain-language line about why.",
                 replyTokens = 96,
-                explicitCorrection = true,
                 hebrewTextUseful = true,
             )
 
@@ -57,7 +53,6 @@ data class TrackConfig(
                     "and businesslike, not playful. Name the grammar rule or pattern behind " +
                     "any correction, and give one short example of the same pattern.",
                 replyTokens = 128,
-                explicitCorrection = true,
                 hebrewTextUseful = true,
             )
 
@@ -66,7 +61,6 @@ data class TrackConfig(
                     "better. Talk to them as an equal. Keep the conversation going first; " +
                     "note register, idiom or naturalness only when it genuinely matters.",
                 replyTokens = 112,
-                explicitCorrection = true,
                 hebrewTextUseful = true,
             )
         }

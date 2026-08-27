@@ -15,11 +15,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
 import org.sisam.langtutor.ui.common.drawCoin
 import org.sisam.langtutor.ui.common.drawFlake
-import org.sisam.langtutor.ui.common.starPath
+import org.sisam.langtutor.ui.common.starInto
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -34,8 +35,11 @@ import kotlin.math.sin
  * the tap the child was about to make is a punishment.
  *
  * Every particle's trajectory is derived from a hash of (burst id, index), so
- * a burst looks random, is identical across recompositions, and costs no
- * allocation and no `Random` instance per frame.
+ * a burst looks random and is identical across recompositions without a
+ * `Random` instance or a per-particle state object. The star and coin geometry
+ * is written into ONE scratch path that is reused for every particle of every
+ * frame — a fresh Path per star would be ~20 allocations a frame, on a device
+ * that is also decoding a language model.
  */
 @Composable
 fun RewardOverlay(bus: RewardBus, modifier: Modifier = Modifier) {
@@ -52,6 +56,7 @@ fun RewardOverlay(bus: RewardBus, modifier: Modifier = Modifier) {
 @Composable
 private fun Burst(burst: RewardBurst, onFinished: () -> Unit) {
     val progress = remember { Animatable(0f) }
+    val scratch = remember { Path() }
     LaunchedEffect(burst.id) {
         // Linear on purpose: gravity is applied inside the trajectory, so any
         // easing here would fight it and the arcs would stop reading as arcs.
@@ -59,11 +64,11 @@ private fun Burst(burst: RewardBurst, onFinished: () -> Unit) {
         onFinished()
     }
     Canvas(modifier = Modifier.fillMaxSize()) {
-        drawBurst(burst, progress.value)
+        drawBurst(burst, progress.value, scratch)
     }
 }
 
-private fun DrawScope.drawBurst(burst: RewardBurst, t: Float) {
+private fun DrawScope.drawBurst(burst: RewardBurst, t: Float, scratch: Path) {
     // Launched from low-centre, the way a fountain reads. Higher up and the
     // particles fall off the top before the eye catches them.
     val originX = size.width * 0.5f
@@ -109,13 +114,13 @@ private fun DrawScope.drawBurst(burst: RewardBurst, t: Float) {
                 // Tumbling: the disc squashes horizontally through the spin,
                 // which reads as 3D for a fraction of the cost of being 3D.
                 val spin = kotlin.math.abs(cos((t * 9.0 + phase * 6.28))).toFloat()
-                drawCoin(at, r, alpha = alpha, spin = 0.12f + 0.88f * spin)
+                drawCoin(at, r, alpha = alpha, spin = 0.12f + 0.88f * spin, scratch = scratch)
             }
 
             RewardKind.STAR -> {
                 rotate(degrees = (phase * 360f) + t * 220f * (if (lateral > 0.5f) 1f else -1f), pivot = at) {
-                    drawPath(starPath(at, r * 1.25f), STAR_GOLD, alpha = alpha)
-                    drawPath(starPath(at, r * 0.62f), STAR_CORE, alpha = alpha * 0.9f)
+                    drawPath(starInto(scratch, at, r * 1.25f), STAR_GOLD, alpha = alpha)
+                    drawPath(starInto(scratch, at, r * 0.62f), STAR_CORE, alpha = alpha * 0.9f)
                 }
             }
 

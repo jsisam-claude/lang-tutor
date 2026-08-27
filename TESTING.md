@@ -361,12 +361,19 @@ and the control is **absent rather than greyed out** when either is shut:
 2. The learner's track must be one that reads: **Parent Zone → Who is
    learning?** → anything except *"Young child (not reading yet)"*.
 
+3. The open unit must not be a **4–6** unit. Units 001–006 are 4–6, so **pick
+   unit 007 or later** to see the button at all — a child in a 4–6 unit cannot
+   read Hebrew either, so the control is hidden there whatever the track says.
+
 Then, in **Talking with Tuki**, a **הסבר בעברית** button appears under the mic
 prompt. Two ways to trigger it:
 
-- Tap the button — Tuki re-explains its last point in Hebrew, then carries on
-  in English. The next turn is ordinary English again; there is no "Hebrew
-  mode" to leave.
+- Tap the button — a **הסבר בעברית** bubble appears as YOUR turn in the
+  transcript (it has to: the engine sends the last message of a request as the
+  user turn, so a silent request handed the model Tuki's own previous reply as
+  your words), then Tuki re-explains its last point in Hebrew and carries on in
+  English. The next turn is ordinary English again; there is no "Hebrew mode"
+  to leave. Asking earns no stars — it is help, not practice.
 - **Type** anything in Hebrew into the text box. That triggers the same thing
   without the button, on the theory that a learner typing Hebrew has already
   told you English is not landing.
@@ -393,10 +400,18 @@ did something":
 | *(nothing)* | *(nothing)* | below 0.5. Deliberate: the coloured phonemes already say what happened |
 
 The coins land **after** Tuki finishes speaking, and the star lands right after
-you speak, while Tuki is thinking. If a chime ever plays over Tuki's voice, or
-is loud enough to compete with it, say so — it is tuned to sit under speech
-(peak 0.34 against the voice's ~0.46) and tagged as a UI sound so the system
-ducks it, but that is theory until a real device confirms it.
+you speak, while Tuki is thinking. Both play on the **media** volume, the same
+one as Tuki's voice — so they follow the same slider, and a phone in vibrate
+mode silences neither. That is deliberate: routing them to the system stream
+would have muted the reward on a silent phone while the tutor kept talking.
+If a chime ever plays over Tuki's voice, or is loud enough to compete with it,
+say so — it is mixed at peak 0.34 against the voice's ~0.46, but that ratio is
+theory until a real device confirms it.
+
+Worth trying specifically: earn **two milestones in one sitting** (100 XP) and
+check you get **two** trips to the room, one after the other. And back out of
+the room with the Back gesture instead of picking — you should NOT bounce
+straight back in, but you should be asked again at the next milestone.
 
 **The sticker room** appears for a young learner every 50 XP (ten turns). Young
 means either the track is *"Young child (not reading yet)"* **or** the open

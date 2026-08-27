@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.profile.LearnerProfile
@@ -52,13 +54,22 @@ import org.sisam.langtutor.ui.reward.RewardKind
 @Composable
 fun StickerRoom(container: AppContainer, onDone: () -> Unit) {
     val profile by container.profile.profile.collectAsState(initial = LearnerProfile.EMPTY)
-    var picked by remember { mutableStateOf<String?>(null) }
+    // rememberSaveable, not remember: a rotation mid-celebration would
+    // otherwise re-arm the room with the stickers still tappable, and the
+    // child could bank a second one for the same milestone.
+    var picked by rememberSaveable { mutableStateOf<String?>(null) }
 
     // One trip through the room per visit: once a sticker is taken the screen
     // is on rails to the exit, and a second tap must not stack another return.
     LaunchedEffect(picked) {
         val id = picked ?: return@LaunchedEffect
-        container.profile.update { it.copy(stickers = it.stickers + id) }
+        // The write goes to the app scope, not this effect's: leaving the
+        // screen cancels the effect, and a cancelled profile update would
+        // hand back a child who watched their sticker land and then did not
+        // own it. The wait for the burst can be cancelled; the record cannot.
+        container.appScope.launch {
+            container.profile.update { it.copy(stickers = it.stickers + id) }
+        }
         container.celebrate(RewardKind.MIX)
         delay(RETURN_DELAY_MS)
         onDone()

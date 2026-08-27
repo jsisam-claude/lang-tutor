@@ -9,6 +9,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -30,10 +31,17 @@ import kotlin.math.sin
  * lets [A11y] shrink or drop it when the user has asked for bigger text.
  */
 
-/** A five-pointed star centred on [c] with outer radius [r]. Shared geometry:
- *  the backdrop twinkles with it and the reward burst flies it. */
-internal fun starPath(c: Offset, r: Float, points: Int = 5, innerRatio: Float = 0.42f): Path {
-    val path = Path()
+/**
+ * A five-pointed star centred on [c] with outer radius [r], written into a
+ * path the CALLER owns.
+ *
+ * Reusing one path is the whole point: this is called per particle per frame,
+ * and a fresh `android.graphics.Path` for each one is tens of allocations a
+ * frame on a phone that is simultaneously decoding a language model. Callers
+ * keep a scratch path in `remember` and hand it back every frame.
+ */
+internal fun starInto(path: Path, c: Offset, r: Float, points: Int = 5, innerRatio: Float = 0.42f): Path {
+    path.rewind()
     val step = PI / points
     // Start at -90 degrees so the star points up rather than sideways.
     var angle = -PI / 2
@@ -47,6 +55,10 @@ internal fun starPath(c: Offset, r: Float, points: Int = 5, innerRatio: Float = 
     path.close()
     return path
 }
+
+/** Allocating convenience for the rare caller that draws one star, once. */
+internal fun starPath(c: Offset, r: Float, points: Int = 5, innerRatio: Float = 0.42f): Path =
+    starInto(Path(), c, r, points, innerRatio)
 
 /** A six-armed flake centred on [c]. Drawn as strokes by the caller's colour. */
 internal fun DrawScope.drawFlake(c: Offset, r: Float, color: Color, alpha: Float = 1f) {
@@ -66,7 +78,13 @@ internal fun DrawScope.drawFlake(c: Offset, r: Float, color: Color, alpha: Float
 }
 
 /** A coin: gold disc, darker rim, a star struck into the face. */
-internal fun DrawScope.drawCoin(c: Offset, r: Float, alpha: Float = 1f, spin: Float = 1f) {
+internal fun DrawScope.drawCoin(
+    c: Offset,
+    r: Float,
+    alpha: Float = 1f,
+    spin: Float = 1f,
+    scratch: Path? = null,
+) {
     // `spin` squashes the disc horizontally so a tumbling coin reads as 3D
     // without any of the cost of actually rotating one.
     val w = (r * spin).coerceAtLeast(r * 0.12f)
@@ -83,7 +101,8 @@ internal fun DrawScope.drawCoin(c: Offset, r: Float, alpha: Float = 1f, spin: Fl
         alpha = alpha,
     )
     if (spin > 0.55f) {
-        drawPath(starPath(c, r * 0.5f), Color(0xFFD9931F), alpha = alpha)
+        val face = if (scratch != null) starInto(scratch, c, r * 0.5f) else starPath(c, r * 0.5f)
+        drawPath(face, Color(0xFFD9931F), alpha = alpha)
     }
 }
 
@@ -102,18 +121,30 @@ fun SkyBackdrop(
     bottom: Color = Color(0xFFFFF6EC),
     animated: Boolean = true,
 ) {
-    val loop = rememberInfiniteTransition(label = "sky")
-    val drift by loop.animateFloat(
-        initialValue = 0f,
-        targetValue = if (animated) 1f else 0f,
-        animationSpec = infiniteRepeatable(tween(26_000, easing = LinearEasing), RepeatMode.Restart),
-        label = "sky-drift",
-    )
+    // Conditional on purpose. Animating to a target equal to the initial value
+    // still holds a vsync callback open forever — the picture stops, the frame
+    // requests do not — and this backdrop sits behind the Home screen for as
+    // long as the app is open.
+    val drift = if (animated) {
+        val loop = rememberInfiniteTransition(label = "sky")
+        val d by loop.animateFloat(
+            initialValue = 0f,
+            targetValue = 1f,
+            animationSpec = infiniteRepeatable(tween(26_000, easing = LinearEasing), RepeatMode.Restart),
+            label = "sky-drift",
+        )
+        d
+    } else {
+        0f
+    }
+    // Hoisted: building the colour list and the Brush inside the draw lambda
+    // re-created both on every frame the sky did move.
+    val sky = remember(top, bottom) { Brush.verticalGradient(listOf(top, bottom)) }
 
     Canvas(modifier = modifier) {
         val w = size.width
         val h = size.height
-        drawRect(brush = Brush.verticalGradient(listOf(top, bottom)), size = size)
+        drawRect(brush = sky, size = size)
 
         // Sun: two discs, the outer one a halo.
         drawCircle(Color(0xFFFFD98A), radius = h * 0.26f, center = Offset(w * 0.84f, h * 0.16f), alpha = 0.55f)
@@ -147,6 +178,7 @@ private fun DrawScope.cloud(at: Offset, r: Float, alpha: Float) {
  */
 @Composable
 fun TwinkleField(modifier: Modifier = Modifier, count: Int = 14, color: Color = Color.White) {
+    val scratch = remember { Path() }
     val loop = rememberInfiniteTransition(label = "twinkle")
     val t by loop.animateFloat(
         initialValue = 0f,
@@ -165,7 +197,7 @@ fun TwinkleField(modifier: Modifier = Modifier, count: Int = 14, color: Color = 
             val alpha = 0.25f + 0.75f * (0.5f + 0.5f * sin((t + phase) * 2 * PI).toFloat())
             val r = size.minDimension * (0.006f + 0.008f * hy)
             drawPath(
-                starPath(Offset(size.width * hx, size.height * hy), r * 2.4f),
+                starInto(scratch, Offset(size.width * hx, size.height * hy), r * 2.4f),
                 color,
                 alpha = alpha * 0.8f,
             )

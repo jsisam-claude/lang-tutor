@@ -103,7 +103,10 @@ licensed voice (docs/feasibility.md §6).
 
 ## Reinforcement — what a learner gets back
 
-**Status: built.** Three cues, plus one room, all track-aware.
+**Status: built.** Three cues for everyone, plus one room for the youngest.
+The cues are deliberately NOT track-aware — finishing a turn and saying a word
+well mean the same thing at every age, and a learner who switches track should
+not find the feedback has changed under them. Only the sticker room is gated.
 
 | Cue | Fires when | Why that one |
 |---|---|---|

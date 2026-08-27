@@ -113,6 +113,9 @@ class AppContainer private constructor(context: Context) {
         appScope.launch {
             runCatching { gopEngine?.release() }
             runCatching { hebrewEngine?.release() }
+            // Small (a few hundred KB of static AudioTracks) but free to give
+            // back, and they are re-synthesized lazily on the next reward.
+            runCatching { if (chimeOrNull != null) chime.release() }
             if (deep) {
                 runCatching { whisperEngine?.release() }
                 runCatching { kokoroEngine?.release() }
@@ -493,7 +496,12 @@ class AppContainer private constructor(context: Context) {
      */
     val rewards = RewardBus()
 
-    private val chime by lazy { RewardChime() }
+    private val chimeDelegate = lazy { RewardChime() }
+    private val chime by chimeDelegate
+
+    /** The chime only if it was ever built — so a memory trim does not CREATE
+     *  the thing it is trying to release. */
+    private val chimeOrNull: RewardChime? get() = if (chimeDelegate.isInitialized()) chime else null
 
     /**
      * Celebrate: particles on screen and one short consonant cue, together.
@@ -506,7 +514,7 @@ class AppContainer private constructor(context: Context) {
         if (!rewards.celebrate(kind)) return
         appScope.launch(Dispatchers.IO) {
             runCatching { chime.play(kind) }
-                .onFailure { Log.w(MEM_TAG, "reward chime failed: ${it.message}") }
+                .onFailure { Log.w(REWARD_TAG, "reward chime failed: ${it.message}") }
         }
     }
 
@@ -701,6 +709,7 @@ class AppContainer private constructor(context: Context) {
         private const val GOP_MODEL_PATH = "models/wav2vec2-phoneme-int8.onnx"
 
         private const val MEM_TAG = "TukiMem"
+        private const val REWARD_TAG = "TukiReward"
 
         /**
          * The only tier trusted to explain in Hebrew. Not a preference — the
