@@ -484,6 +484,35 @@ class AppContainer private constructor(context: Context) {
      * voices actually packaged so the picker bug class cannot recur here.
      */
     /**
+     * The app left the screen: go silent and let the silicon idle.
+     *
+     * There is deliberately nothing else to turn off. The app holds no
+     * services, no alarms, no jobs, no wake locks and does no polling, so a
+     * backgrounded idle process just gets frozen by the OS at zero cost. What
+     * CAN outlive the screen is in-flight work on lifecycle-free scopes: a
+     * reply being spoken to nobody, and — worst — an open microphone, since
+     * hands-free capture runs until told otherwise. Both are cut here; the
+     * open mic is a privacy matter besides a battery one.
+     *
+     * An in-flight LLM decode is deliberately NOT cut: it is bounded by the
+     * turn's token budget (seconds of work), cancelling a native decode
+     * mid-call is not a supported path, and killing the turn would poison the
+     * conversation the learner returns to. Engine loads already running are
+     * likewise left to finish — they are one-time, bounded, and re-doing a
+     * half-done multi-GB load costs more battery than letting it land.
+     */
+    fun quiesce() {
+        appScope.launch {
+            runCatching { kokoroEngine?.stop() }
+            runCatching { hebrewEngine?.stop() }
+            // Safe no-op when the mic is closed; releases AudioRecord and its
+            // capture thread when open.
+            runCatching { whisperEngine?.stopCapture() }
+            Log.i(MEM_TAG, "quiesced: app backgrounded — speech and mic released")
+        }
+    }
+
+    /**
      * The ears alone — for screens that talk without a [TutorOrchestrator]
      * (the chat room's mic). Same singleton-backed engines the orchestrator
      * uses, so there is no second Whisper instance behind this.

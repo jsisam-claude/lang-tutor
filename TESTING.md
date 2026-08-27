@@ -531,6 +531,32 @@ that is a bug. Backing out with the system Back gesture instead of picking
 should NOT bounce you straight back in — you get asked again at the next
 milestone.
 
+## Battery when the app is not in use (new)
+The app is built to cost nothing in the background: **no services, no
+alarms, no scheduled jobs, no wake locks, no polling** — network happens only
+for downloads you start. An idle backgrounded process just gets frozen by
+Android (and by GrapheneOS more aggressively), at effectively zero drain.
+
+What used to be able to outlive the screen was in-flight work: a reply being
+spoken to a pocket, or — worse — an open microphone from a hands-free
+session. Now, the moment the app leaves the screen (home, app switch, lock),
+it quiesces: speech stops and the mic is released. Logcat shows
+`quiesced: app backgrounded — speech and mic released` under `TukiMem`.
+
+How to verify:
+- Start Tuki talking (voice test or a reply), press home mid-sentence → the
+  voice must cut within a beat.
+- Turn on hands-free in a conversation, press home while it is listening →
+  the mic indicator (status-bar green dot; GrapheneOS shows it prominently)
+  must disappear immediately.
+- After a day of normal use, Settings → Battery → Tuki should show **no
+  background usage** to speak of.
+
+Two deliberate non-cuts, both bounded: an LLM reply already decoding runs to
+its token cap (seconds) rather than poisoning the conversation you return
+to, and a model load already in flight finishes rather than being re-paid
+later. Rotation does not quiesce — only a real exit does.
+
 ## Known limits in this build (expected, not bugs)
 - **English speech recognition only.** The bundled model is an English-only
   export, so a Hebrew answer into the mic will come back as English-looking

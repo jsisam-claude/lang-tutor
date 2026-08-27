@@ -53,6 +53,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        // Backgrounded or screen locked: a phone in a pocket must not keep
+        // talking or keep the mic hot. Rotation also passes through onStop,
+        // and silencing Tuki mid-sentence for a rotate would be a regression
+        // — hence the guard.
+        if (!isChangingConfigurations) {
+            AppContainer.get(applicationContext).quiesce()
+        }
+    }
+
     /** Share-to-import: a file shared to the app is copied into files/models
      *  (verified) — progress is visible in Parent Zone → Packs. */
     private fun handleShareToImport(container: AppContainer) {
