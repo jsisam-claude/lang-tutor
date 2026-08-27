@@ -113,8 +113,9 @@ fun HomeScreen(
             text = stringResource(R.string.home_more_heading),
             style = MaterialTheme.typography.titleMedium,
         )
-        // "Repeat after me" drills — the room with NO language model in it,
-        // so it works instantly even while the big brain is still loading.
+        // "Repeat after me" drills. Fresh LLM-written lines when a model is
+        // installed; the drill loop itself never waits on one, so the room
+        // works instantly even while the big brain is still loading.
         Button(onClick = onOpenVocab, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_vocab_room))
         }

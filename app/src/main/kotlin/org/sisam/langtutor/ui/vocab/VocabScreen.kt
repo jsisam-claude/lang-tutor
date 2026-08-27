@@ -44,15 +44,18 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlin.random.Random
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.CurriculumUnit
 import org.sisam.langtutor.tutor.drill.DrillDeck
 import org.sisam.langtutor.tutor.drill.DrillEvent
+import org.sisam.langtutor.tutor.drill.DrillItem
 import org.sisam.langtutor.tutor.drill.DrillLevel
 import org.sisam.langtutor.tutor.drill.DrillOrchestrator
 import org.sisam.langtutor.tutor.drill.DrillState
+import org.sisam.langtutor.tutor.drill.WordMatch
 import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.EnglishContent
@@ -67,12 +70,23 @@ class DrillViewModel(
 
     private val drill: DrillOrchestrator = container.createDrillOrchestrator(viewModelScope)
 
+    /** The sentence writer; null in demo mode, and optional always. */
+    private val generator = container.createDrillGenerator()
+
     val state = drill.state
     val pronunciation = drill.pronunciation
 
     private var units: List<CurriculumUnit> = emptyList()
 
+    /** The next round, written while the current one is being played, so
+     *  "Again!" is instant instead of waiting out a fresh generation. */
+    private var next: List<DrillItem>? = null
+    private var prefetch: Job? = null
+
     init {
+        // Start the model load NOW, in parallel with loading the units — by
+        // the time the child has heard the intro the writer is usually ready.
+        viewModelScope.launch { runCatching { generator?.prepare() } }
         viewModelScope.launch {
             units = container.content.listUnits().mapNotNull { container.content.loadUnit(it.id) }
             startRound()
@@ -100,23 +114,56 @@ class DrillViewModel(
     fun onMicReleased() = drill.onMicReleased()
 
     fun again() {
-        viewModelScope.launch { startRound() }
+        viewModelScope.launch {
+            val round = next ?: freshRound()
+            next = null
+            drill.startRound(round)
+            prefetchNext()
+        }
     }
 
     private suspend fun startRound() {
-        drill.startRound(DrillDeck.round(units, level, Random.Default))
+        drill.startRound(freshRound())
+        prefetchNext()
+    }
+
+    /**
+     * LLM-written lines first, curriculum deck to top up. The writer may
+     * return few or none — a cold model, a failed generation, or every line
+     * eaten by the gauntlet — and the round must be full regardless.
+     */
+    private suspend fun freshRound(): List<DrillItem> {
+        val size = DrillDeck.sizeFor(level)
+        val written = generator?.let { g ->
+            runCatching { g.generate(level, size, Random.Default) }.getOrElse { emptyList() }
+        } ?: emptyList()
+        return (written + DrillDeck.round(units, level, Random.Default))
+            .distinctBy { WordMatch.tokens(it.text) }
+            .take(size)
+    }
+
+    private fun prefetchNext() {
+        if (generator == null || prefetch?.isActive == true) return
+        prefetch = viewModelScope.launch {
+            next = runCatching { freshRound() }.getOrNull()
+        }
     }
 
     override fun onCleared() {
         drill.shutdown()
+        // Same thermal doctrine as every room: nothing stays loaded after the
+        // screen goes away.
+        generator?.shutdown()
     }
 }
 
 /**
  * The vocabulary room: pick a level, then "Repeat after me" — Tuki says a
  * line, the learner says it back, a correct repetition celebrates and moves
- * on. No language model anywhere in it, so it is the room that is instant on
- * every device, whatever the LLM tier policy decided.
+ * on. The LLM writes fresh lines each round when a model is installed; the
+ * drill LOOP itself never depends on it, so the room still starts instantly
+ * from the curriculum deck while the model loads, and works with no model at
+ * all.
  */
 @Composable
 fun VocabScreen(container: AppContainer) {
@@ -175,6 +222,12 @@ private fun LevelPicker(container: AppContainer, onPick: (DrillLevel) -> Unit) {
                 text = stringResource(R.string.vocab_pick_level),
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.weight(1f),
+            )
+        }
+        if (container.usingRealLlm) {
+            Text(
+                text = stringResource(R.string.vocab_fresh),
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
         for (level in DrillLevel.entries) {

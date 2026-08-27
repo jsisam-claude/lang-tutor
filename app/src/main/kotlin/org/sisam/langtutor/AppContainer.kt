@@ -46,6 +46,7 @@ import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
 import org.sisam.langtutor.tutor.TutorOrchestrator
+import org.sisam.langtutor.tutor.drill.DrillGenerator
 import org.sisam.langtutor.tutor.drill.DrillOrchestrator
 import org.sisam.langtutor.ui.reward.RewardBus
 import org.sisam.langtutor.ui.reward.RewardKind
@@ -489,8 +490,19 @@ class AppContainer private constructor(context: Context) {
     fun createAsrEngine() = bundledAsrEngine() ?: PlatformAsrEngine(appContext)
 
     /**
-     * The vocabulary room's engine set: voice, ears, coach — deliberately NO
-     * language model, which is what makes that room instant on every device.
+     * The sentence writer for the vocabulary room — null in demo mode, where
+     * feeding the scripted fake's canned replies through the parser would
+     * yield nothing but wasted work. Real engine only; the room falls back to
+     * the curriculum deck whenever this is null or comes back empty.
+     */
+    fun createDrillGenerator(): DrillGenerator? =
+        if (usingRealLlm) DrillGenerator(createLlmEngine()) else null
+
+    /**
+     * The vocabulary room's drill loop: voice, ears, coach. The loop itself
+     * has NO language model in it — the LLM writes the lines upstream
+     * ([createDrillGenerator]) but never judges, and a missing or still-
+     * loading model never blocks the room.
      */
     fun createDrillOrchestrator(scope: CoroutineScope): DrillOrchestrator {
         val kokoro = bundledTtsEngine()

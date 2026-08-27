@@ -434,10 +434,24 @@ cards are real). Then: Tuki says a line, you hold the mic and say it back.
   installed; it never gates progress.
 - Round ends with a score screen, a MIX burst, and Again / Pick a level.
 
-The point to verify on hardware: this room has **no language model in it** —
-TTS + Whisper + coach only — so it must be usable seconds after a cold app
-start, on every tier, even while the LLM is still loading for other rooms.
-First-ever mic hold pays the Whisper load once (status line says so).
+**Where the lines come from:** when a model is installed, the LLM writes a
+fresh set every round (the picker says so — "Tuki makes up new lines every
+round ✨"), seeded with a rotating topic so consecutive rounds differ. Every
+generated line runs a gauntlet before a child ever hears it: level bucket
+check, plain-English charset (no digits, no Hebrew, no markdown), the same
+safety filter as everywhere else, dedupe — and anything that fails is
+silently replaced from the curriculum deck, so a round is always full. The
+NEXT round is written while you play the current one, so "Again!" is instant.
+
+The drill LOOP itself still has no model in it — the LLM writes, never
+judges — so the room starts immediately from the curriculum deck even while
+a cold model is still loading, and works with no model at all (demo builds
+use the deck only). First-ever mic hold pays the Whisper load once (status
+line says so).
+
+Worth reporting here: repeated or samey lines across several rounds (the
+topic seed should prevent it), any line that feels off-level or off-tone for
+a child, and whether the first "Again!" is genuinely instant.
 
 Worth reporting: whether the word-judge feels FAIR on a real child's voice —
 too strict (right sentence rejected: send the transcript line from logcat) or
