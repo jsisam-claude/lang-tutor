@@ -20,6 +20,7 @@ import org.sisam.langtutor.speech.WhisperLayout
 import org.sisam.langtutor.speech.WhisperGreedyDecoder
 import org.sisam.langtutor.speech.WhisperTokenizer
 import org.tensorflow.lite.Interpreter
+import org.tensorflow.lite.gpu.GpuDelegate
 
 /**
  * BUNDLED on-device ASR — our own stack, no Google services, no network:
@@ -45,9 +46,15 @@ class WhisperAsrEngine(
     private val modelFile: File,
     /** When present, the engine can end the turn by itself (hands-free). */
     private val vad: SileroVad? = null,
+    /** Identifies this install, so an app update retries the GPU delegate once. */
+    private val installStamp: String = "",
 ) : AsrEngine {
 
     private var interpreter: Interpreter? = null
+
+    /** Held because a delegate must outlive its interpreter and be closed
+     *  WITH it — dropping it on the floor leaks the GPU context. */
+    @Volatile private var gpuDelegate: GpuDelegate? = null
     private var recorder: AudioRecord? = null
     private var captureThread: Thread? = null
     private val chunks = ArrayList<ShortArray>()
@@ -196,6 +203,8 @@ class WhisperAsrEngine(
             runCatching { it.close() }
             interpreter = null
             graph = null
+            runCatching { gpuDelegate?.close() }
+            gpuDelegate = null
             Log.i(TAG, "interpreter released (memory pressure)")
         }
     }
@@ -217,14 +226,75 @@ class WhisperAsrEngine(
             EngineStatus.Kind.ASR_LOAD,
             modelFile.name,
         ) {
-            Interpreter(
-                modelFile,
-                Interpreter.Options().apply { setNumThreads(THREADS) },
-            ).also {
+            createInterpreter().also {
                 interpreter = it
                 graph = describe(it)
             }
         }
+
+    /**
+     * GPU first, CPU as the fallback — the same shape as the LLM's backend
+     * ladder, and for a measured reason: under the speech stack this device's
+     * CPU big cores reach 90 C junction while the GPU sits at 56 C with
+     * headroom, and every CPU engine then halves in speed. Moving the ears to
+     * the cool silicon buys latency AND takes heat out of the thing that is
+     * slowing everything else down.
+     *
+     * Not assumed to work. This export is dynamic-range quantized, which the
+     * GPU delegate handles by dequantizing weights — sometimes a win, sometimes
+     * a partition that falls back to CPU op by op and ends up slower. So the
+     * attempt is guarded by the same crash-marker machinery as the LLM's GPU
+     * rung (a native crash inside a driver kills Kotlin along with everything
+     * else; only a marker written BEFORE the attempt catches it), and the
+     * verdict is logged unmissably. The device's `rtf=` line decides whether it
+     * stays.
+     */
+    private fun createInterpreter(): Interpreter {
+        val marker = File("${modelFile.absolutePath}$GPU_ATTEMPT_SUFFIX")
+        val hint = File("${modelFile.absolutePath}$GPU_HINT_SUFFIX")
+        val crashed = marker.exists()
+        val hinted = runCatching {
+            hint.isFile && hint.readText().trim() == installStamp
+        }.getOrDefault(false)
+        if (crashed) {
+            Log.w(TAG, "previous ASR GPU attempt crashed the process — pinning CPU for this build")
+            runCatching { hint.writeText(installStamp) }
+            runCatching { marker.delete() }
+        }
+
+        if (!crashed && !hinted) {
+            runCatching { marker.createNewFile() }
+            val gpu = runCatching {
+                val delegate = GpuDelegate()
+                val itp = Interpreter(
+                    modelFile,
+                    Interpreter.Options().apply {
+                        addDelegate(delegate)
+                        setNumThreads(THREADS)
+                    },
+                )
+                gpuDelegate = delegate
+                itp
+            }.getOrElse { t ->
+                Log.w(TAG, "ASR GPU verdict: attempted and FAILED — ${t.javaClass.simpleName}: ${t.message}")
+                runCatching { gpuDelegate?.close() }
+                gpuDelegate = null
+                null
+            }
+            runCatching { marker.delete() }
+            if (gpu != null) {
+                runCatching { if (hint.exists()) hint.delete() }
+                Log.i(TAG, "ASR GPU verdict: USED")
+                return gpu
+            }
+            runCatching { hint.writeText(installStamp) }
+        } else if (hinted) {
+            Log.i(TAG, "ASR GPU verdict: skipped — pinned off for this install")
+        }
+
+        Log.i(TAG, "ASR GPU verdict: not used, CPU with $THREADS threads")
+        return Interpreter(modelFile, Interpreter.Options().apply { setNumThreads(THREADS) })
+    }
 
     // @Synchronized so release() waits for an in-flight transcription.
     @Synchronized
@@ -349,5 +419,10 @@ class WhisperAsrEngine(
          *  Four threads on a 1x-X4 + 3x-A720 + 4x-A520 phone saturates exactly
          *  the cores that get hot — see [OnnxTuning] for the measurements. */
         val THREADS = OnnxTuning.heavyThreads
+
+        /** Written before a GPU attempt, deleted after it survives — the only
+         *  thing that catches a NATIVE crash inside a graphics driver. */
+        const val GPU_ATTEMPT_SUFFIX = ".asr-gpu-attempting"
+        const val GPU_HINT_SUFFIX = ".asr-gpu-skip"
     }
 }

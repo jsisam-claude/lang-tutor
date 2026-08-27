@@ -33,6 +33,7 @@ jtransforms = { group = "com.github.wendykierp", name = "JTransforms", version =
 # LiteRT interpreter (classic org.tensorflow.lite API) — runs the bundled
 # Whisper ASR tflite (and later Kokoro TTS). Android AAR from Google Maven.
 litert = { group = "com.google.ai.edge.litert", name = "litert", version = "1.4.2" }
+litert-gpu = { group = "com.google.ai.edge.litert", name = "litert-gpu", version = "1.4.2" }
 # Google's on-device LLM runtime (LiteRT-LM) — the real Gemma 4 engine.
 # Android AAR pulls native .so; resolved from Google Maven in CI (not in the
 # in-container jvmOnly build, which excludes :app).

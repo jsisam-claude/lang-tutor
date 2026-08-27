@@ -134,24 +134,53 @@ class LiteRtLmEngine(
             .getOrDefault(false)
         Log.i(TAG, "MTP: export ${if (mtpSupported) "supports" else "does not support"} speculative decoding")
 
+        // MTP ON GPU, retried — with attribution this time.
+        //
+        // It was disabled for the GPU attempt after a native crash on a Pixel 9
+        // that had just run GPU cleanly. But that build enabled MTP *and* the
+        // compile cache together, so the crash was unattributable and BOTH were
+        // pulled. The condition for retrying was "a way to attribute the
+        // crash", and that is what the separate marker below provides: the GPU
+        // attempt now has two of them, so a crash names which variant died and
+        // the fallback steps down one rung instead of all the way to CPU.
+        // Upstream quotes up to ~2.2x decode, and the device currently manages
+        // 7-8 est-tok/s on GPU against a documented 12-14, so it is worth the
+        // one variable. The compile cache stays off GPU — one variable, not two.
+        val mtpGpuHint = File("$modelPath$MTP_GPU_HINT_SUFFIX")
+        val mtpGpuMarker = File("$modelPath$MTP_GPU_ATTEMPT_SUFFIX")
+        val mtpGpuCrashed = mtpGpuMarker.exists()
+        if (mtpGpuCrashed) {
+            Log.w(TAG, "MTP+GPU crashed the process last time — GPU without MTP for this build ($buildStamp)")
+            runCatching { mtpGpuHint.writeText(buildStamp) }
+            runCatching { mtpGpuMarker.delete() }
+        }
+        val mtpGpuHinted = runCatching {
+            mtpGpuHint.isFile && mtpGpuHint.readText().trim() == buildStamp
+        }.getOrDefault(false)
+        val skipMtpGpu = mtpGpuCrashed || mtpGpuHinted
+
         var lastError: Throwable? = null
         var gpuFailed = false
-        val backends = if (skipGpu) listOf("cpu" to Backend.CPU(cpuThreads(), null))
-        else listOf("gpu" to Backend.GPU(), "cpu" to Backend.CPU(cpuThreads(), null))
-        for ((label, backend) in backends) {
-            // MTP for the CPU attempt ONLY — this is a measured verdict, not
-            // caution. Enabling it for the GPU attempt (with the compile
-            // cache, same commit) crashed the process NATIVELY on the Pixel 9
-            // that had just run GPU cleanly ("GPU verdict: skipped — a
-            // previous attempt crashed the process natively", 2026-08-27).
-            // A native crash is exactly what the smoke test cannot gate — it
-            // kills Kotlin along with everything else; only the attempt
-            // marker catches it. On CPU the same log shows MTP loading and
-            // generating fine (~4-7 est-tok/s vs ~1.6 without). Do not
-            // re-enable on GPU without a way to attribute the crash.
+        // Each rung is (label, backend, MTP) with its OWN crash marker, so a
+        // native death is attributable to the exact combination that caused it.
+        val backends = buildList {
+            if (!skipGpu) {
+                if (mtpSupported && !skipMtpGpu) add(Triple("gpu+mtp", Backend.GPU(), true))
+                add(Triple("gpu", Backend.GPU(), false))
+            }
+            // CPU keeps MTP unconditionally: measured at ~4-7 est-tok/s with
+            // it against ~1.6 without, on the same device and log.
+            add(Triple("cpu", Backend.CPU(cpuThreads(), null), mtpSupported))
+        }
+        for ((label, backend, mtp) in backends) {
             @OptIn(ExperimentalApi::class)
-            runCatching { ExperimentalFlags.enableSpeculativeDecoding = mtpSupported && label == "cpu" }
-            if (label == "gpu") runCatching { attemptMarker.createNewFile() }
+            runCatching { ExperimentalFlags.enableSpeculativeDecoding = mtp }
+            val marker = when (label) {
+                "gpu+mtp" -> mtpGpuMarker
+                "gpu" -> attemptMarker
+                else -> null
+            }
+            runCatching { marker?.createNewFile() }
             val started = System.nanoTime()
             // Multi-GB mmap plus accelerator warm-up, and a failed backend is
             // paid before the fallback: report each attempt by name so a long
@@ -184,10 +213,10 @@ class LiteRtLmEngine(
                 )
             } catch (t: Throwable) {
                 EngineStatus.end(loadStep, t)
-                Log.w(TAG, "engine create failed on $backend", t)
-                runCatching { attemptMarker.delete() }
+                Log.w(TAG, "engine create failed on $label", t)
+                runCatching { marker?.delete() }
                 lastError = t
-                if (label == "gpu") gpuFailed = true
+                if (label.startsWith("gpu")) gpuFailed = true
                 continue
             }
             try {
@@ -203,7 +232,7 @@ class LiteRtLmEngine(
                 EngineStatus.end(loadStep, null)
                 Log.i(
                     TAG,
-                    "loaded $modelPath on backend=$backend in ${ms}ms (smoke ok); " +
+                    "loaded $modelPath on $label (mtp=$mtp) in ${ms}ms (smoke ok); " +
                         "cores=${Runtime.getRuntime().availableProcessors()} cpuThreads=${cpuThreads()}",
                 )
                 // One unmissable line answering "why not GPU?" — otherwise the
@@ -211,7 +240,10 @@ class LiteRtLmEngine(
                 Log.i(
                     TAG,
                     "GPU verdict: " + when {
-                        label == "gpu" -> "USED"
+                        label == "gpu+mtp" -> "USED with MTP (speculative decoding)"
+                        label == "gpu" && skipMtpGpu -> "USED without MTP — MTP+GPU is pinned off for this build"
+                        label == "gpu" && !mtpSupported -> "USED — this export has no MTP heads"
+                        label == "gpu" -> "USED without MTP"
                         crashSkip -> "skipped — a previous attempt crashed the process natively"
                         hintSkip -> "skipped — cpu hint from an earlier failure on this install"
                         gpuFailed -> "attempted and FAILED, see the warning above: " +
@@ -219,13 +251,17 @@ class LiteRtLmEngine(
                         else -> "not attempted"
                     },
                 )
-                runCatching { attemptMarker.delete() }
+                runCatching { marker?.delete() }
                 runCatching {
                     when {
                         // CPU only works after GPU just failed: remember, skip next time.
                         label == "cpu" && gpuFailed -> hintFile.writeText(buildStamp)
-                        // GPU works: clear any stale hint from an older build.
-                        label == "gpu" && hintFile.exists() -> hintFile.delete()
+                        // Any GPU rung working clears a stale hint from an
+                        // older build; the MTP rung additionally clears its own.
+                        label.startsWith("gpu") -> {
+                            if (hintFile.exists()) hintFile.delete()
+                            if (label == "gpu+mtp" && mtpGpuHint.exists()) mtpGpuHint.delete()
+                        }
                     }
                 }
                 return
@@ -496,5 +532,10 @@ class LiteRtLmEngine(
         // Present only WHILE a GPU attempt is in flight; surviving a process
         // death, it marks the attempt as having crashed natively. See load().
         private const val GPU_ATTEMPT_SUFFIX = ".gpu-attempting"
+
+        /** Separate markers for the MTP-on-GPU rung, so a native crash names
+         *  WHICH GPU variant died instead of condemning the backend. */
+        private const val MTP_GPU_ATTEMPT_SUFFIX = ".gpu-mtp-attempting"
+        private const val MTP_GPU_HINT_SUFFIX = ".gpu-mtp-skip"
     }
 }

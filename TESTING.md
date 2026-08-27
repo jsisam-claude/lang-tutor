@@ -537,6 +537,54 @@ that is a bug. Backing out with the system Back gesture instead of picking
 should NOT bounce you straight back in — you get asked again at the next
 milestone.
 
+## MTP on GPU, and the ears on GPU (new — both are experiments)
+Two accelerator changes went in together, each with its own crash marker so a
+native death names which one caused it.
+
+**Speculative decoding (MTP) is retried on the GPU.** It was pulled after a
+native crash, but that build enabled MTP *and* the compile cache in the same
+commit, so the crash was unattributable and both were removed. The GPU rung is
+now two rungs — `gpu+mtp`, then plain `gpu` — with separate markers, so a
+crash steps down one rung instead of falling all the way to CPU. Upstream
+quotes up to ~2.2x decode; the device currently manages 7–8 est-tok/s against
+a documented 12–14. The compile cache stays off GPU: one variable, not two.
+
+```
+TukiLlm  GPU verdict: USED with MTP (speculative decoding)     ← the win
+TukiLlm  GPU verdict: USED without MTP — MTP+GPU is pinned off for this build
+TukiLlm  MTP+GPU crashed the process last time — GPU without MTP for this build
+```
+Check `decode ~N est-tok/s` on the `turn done` line against your old 7–8.
+
+**Whisper now tries the GPU delegate.** Motivated by your own thermals: the
+CPU big cores were at 90 °C while the GPU sat at 56 °C with headroom, so the
+ears move to the cool silicon and take heat out of the thing that was slowing
+everything else down.
+
+```
+TukiAsr  ASR GPU verdict: USED
+TukiAsr  ASR GPU verdict: attempted and FAILED — …
+TukiAsr  ASR GPU verdict: not used, CPU with 3 threads
+```
+
+**This one may genuinely not pay off, and the log will say so.** The ACFT
+export is dynamic-range quantized, which the GPU delegate handles by
+dequantizing weights — sometimes a win, sometimes an op-by-op partition that
+falls back to CPU and ends up *slower*. The number that decides it is already
+printed:
+
+```
+TukiAsr  transcribed 1120ms audio in 3159ms rtf=2.82 conf=0.91
+```
+
+Send that line with the verdict line above it. If `rtf` did not improve, the
+delegate comes back out — it costs APK size for nothing. Also worth a glance:
+whether the BIG core temperature drops, since that was the real problem.
+
+**If a crash loop ever happens**, both are self-limiting: the marker pins the
+safe path for that install, and reinstalling retries once. To force a retry
+sooner, delete the `.gpu-mtp-skip` / `.asr-gpu-skip` file next to the model.
+
 ## Battery when the app is not in use (new)
 The app is built to cost nothing in the background: **no services, no
 alarms, no scheduled jobs, no wake locks, no polling** — network happens only
