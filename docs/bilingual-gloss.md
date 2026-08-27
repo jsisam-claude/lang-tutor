@@ -82,6 +82,41 @@ Three sources, three different problems:
   generation per turn. Given the response-speed work in flight, this is a
   later question, not a first one.
 
+## Landscape
+
+**Queued with the gloss, because they are the same problem.** The app already
+rotates — nothing in the manifest locks orientation — so landscape "works"
+today in the sense that it does not crash. It is not designed for.
+
+A glossed reading line is the case that *wants* landscape: two stacked rows of
+chunks need horizontal room more than anything else in the app, and a phone
+held sideways gives ~2x the width for exactly the axis the chunks run along.
+A sentence that wraps to three lines portrait may fit on one landscape, and a
+wrapped interlinear block is much harder to read than a wrapped paragraph —
+the eye has to re-find the pairing after every break.
+
+What landscape needs, beyond not crashing:
+
+- **The [A11y] rules apply to width too.** Today `A11y` reasons about
+  `screenHeightDp` and font scale; landscape inverts the pressure — height
+  becomes scarce (a 411x914 phone is 914x411 rotated), so the vertical stacks
+  that fit portrait will not. The mascot, the big drill line and the mic are
+  all in one vertical column right now.
+- **Side-by-side layouts where the content is genuinely two things.** The
+  vocabulary room is a line plus a mic; the conversation is a transcript plus
+  controls. In landscape those want to be columns, not a squeezed stack.
+  `A11y` should grow a `wideViewport` question to sit beside `shortViewport`.
+- **Rotation must not interrupt.** `MainActivity.onStop` already guards on
+  `isChangingConfigurations`, so a rotate does not silence Tuki or release the
+  mic — that part is done and should stay tested.
+- **State that survives**: the sticker room already learned this
+  (`rememberSaveable`); the drill round, the picked level and the chat draft
+  need the same audit.
+
+Worth doing as one pass across every screen rather than per-screen, since the
+answer is the same shape each time: a `wideViewport` branch that moves the
+column into two, and the same decorative-yields rule already in place.
+
 ## Scope notes
 
 - Track-aware, like everything else here: PRE_READER and BEGINNER want the
