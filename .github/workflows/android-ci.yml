@@ -16,10 +16,13 @@ concurrency:
 
 # Least privilege by default; the android job re-widens to contents:write so
 # it can publish the rolling debug-latest release.
-# Action majors are kept current because the runner deprecates the Node
-# version older ones bundle: v4 of checkout/setup-java/setup-gradle targeted
-# Node 20, which the runner force-ran on Node 24 and annotated every single
-# run with a warning. These majors target Node 24 natively.
+# v5 of each, which is the FIRST major of all three that declares
+# `using: node24`. v4 declared node20, which the runner force-ran on node24
+# and annotated every single run with a deprecation warning. Deliberately not
+# the newest majors (checkout v7 / setup-java v6 / setup-gradle v6): those
+# also declare node24, so they fix nothing extra, and a run pinned to them
+# died at startup in 3 seconds with no steps and no logs — unexplained, and
+# not worth carrying an unexplained failure to buy nothing.
 permissions:
   contents: read
 
@@ -32,12 +35,12 @@ jobs:
       github.event_name == 'push' ||
       github.event.pull_request.head.repo.full_name != github.repository
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-java@v6
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '25'
-      - uses: gradle/actions/setup-gradle@v6
+      - uses: gradle/actions/setup-gradle@v5
       - run: ./gradlew -Plangtutor.jvmOnly=true build --stacktrace
 
   # Full lane: compiles the Compose app and exercises the asset-pack module
@@ -54,12 +57,12 @@ jobs:
     # runner quota (observed once after adding a new AAR dependency).
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-java@v6
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '25'
-      - uses: gradle/actions/setup-gradle@v6
+      - uses: gradle/actions/setup-gradle@v5
       # Google's prebuilt WebGPU sampler/accelerator/dawn (LiteRT-LM v0.14.0,
       # SHA-256-pinned in the script) → app jniLibs, so GPU generation works on
       # devices without OpenCL (GrapheneOS). Without this step the build still
