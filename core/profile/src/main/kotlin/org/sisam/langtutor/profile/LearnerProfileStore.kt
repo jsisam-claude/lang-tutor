@@ -14,6 +14,21 @@ import kotlinx.serialization.json.Json
 
 interface LearnerProfileStore {
     val profile: Flow<LearnerProfile>
+
+    /**
+     * The current value, without suspending.
+     *
+     * Some callers cannot suspend and cannot wait: the LLM backend ladder
+     * decides which accelerator to try from inside a non-suspend section, and
+     * a chat turn reads a display setting while assembling a request. The
+     * alternative — mirroring settings into volatile fields from a collector —
+     * looked cheaper and was not: the collector has to start somewhere, and
+     * starting it in AppContainer's init block read `profile` before the
+     * property was assigned and crashed the app on launch with an NPE. Both
+     * implementations are StateFlow-backed, so the value is always there.
+     */
+    fun snapshot(): LearnerProfile
+
     suspend fun current(): LearnerProfile
     suspend fun update(transform: (LearnerProfile) -> LearnerProfile)
 }
@@ -24,6 +39,8 @@ class InMemoryProfileStore(
 
     private val state = MutableStateFlow(initial)
     override val profile: StateFlow<LearnerProfile> = state
+
+    override fun snapshot(): LearnerProfile = state.value
 
     override suspend fun current(): LearnerProfile = state.value
 
@@ -45,6 +62,8 @@ class JsonFileProfileStore(
     private val mutex = Mutex()
     private val state = MutableStateFlow(readFromDisk())
     override val profile: StateFlow<LearnerProfile> = state
+
+    override fun snapshot(): LearnerProfile = state.value
 
     override suspend fun current(): LearnerProfile = state.value
 

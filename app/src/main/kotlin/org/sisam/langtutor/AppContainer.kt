@@ -98,13 +98,6 @@ class AppContainer private constructor(context: Context) {
         // dumpsys run after the fact.
         Thermal.start(appContext)
         logDeviceProfile()
-        // Keep the non-suspend mirror of the experimental NPU switch in step.
-        appScope.launch {
-            profile.profile.collect {
-                npuOptIn = it.parentSettings.tryNpuBackend
-                translationWanted = translationEnabled(it)
-            }
-        }
         // React to memory pressure by dropping idle engine sessions — the
         // difference between "the coach reloads in a couple of seconds" and
         // "Android killed the app mid-conversation". Matters most on the 12 GB
@@ -662,25 +655,9 @@ class AppContainer private constructor(context: Context) {
         return ChatRoom(
             llm = createLlmEngine(),
             speak = { _, text -> tts.speak(text, TutorLanguage.ENGLISH).collect { } },
-            wantsHebrew = { translationWanted },
+            wantsHebrew = { translationEnabled(profile.snapshot()) },
         )
     }
-
-    /**
-     * Mirror of the experimental NPU switch, readable without suspending.
-     *
-     * The backend ladder runs inside a non-suspend section of the engine load,
-     * and the profile store is a suspend API. A volatile mirror kept in step
-     * with the flow is the honest way across that boundary — the alternative
-     * is reading the setting once at process start, which would mean flipping
-     * the switch did nothing until the app was killed.
-     */
-    @Volatile
-    private var npuOptIn: Boolean = false
-
-    /** Mirror of the translation switch, readable from a non-suspend context. */
-    @Volatile
-    private var translationWanted: Boolean = false
 
     /**
      * The Hebrew-letter pronunciation key (docs/bilingual-gloss.md).
@@ -912,7 +889,9 @@ class AppContainer private constructor(context: Context) {
                 cacheDir = compileCache,
                 // Read per load, not per process, so flipping the switch takes
                 // effect on the next model load rather than the next launch.
-                npuOptIn = { npuOptIn },
+                // Read at load time, straight from the store: no mirror to
+                // keep in step, and nothing touched during construction.
+                npuOptIn = { profile.snapshot().parentSettings.tryNpuBackend },
             ).also {
                 llmEngine = it
                 llmEnginePath = path
