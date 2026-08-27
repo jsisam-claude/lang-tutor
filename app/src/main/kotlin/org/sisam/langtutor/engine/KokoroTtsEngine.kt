@@ -119,6 +119,8 @@ class KokoroTtsEngine(
         session?.let {
             runCatching { it.close() }
             session = null
+            // The cached audio is worth far less than the model beside it.
+            SynthCache.clear()
             Log.i(tag, "session released (memory pressure)")
         }
     }
@@ -166,19 +168,40 @@ class KokoroTtsEngine(
             val ids = phonemizer.phonemize(group.text)
             if (ids.isEmpty()) continue
             emit(TtsEvent.RangeSpoken(group.start, group.end))
-            // Flavored lines synthesize SLOWER by the pitch factor, so the
-            // resample inside the effect lands the duration back where it was
-            // asked for while pitch and formants ride up together.
-            val synthSpeed = if (flavorPitch != null) vary(speed) / flavorPitch else vary(speed)
-            var audio = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes") {
-                synthesize(ids, synthSpeed)
+            // Lines the app repeats — praise, prompts, drill targets — come
+            // back from the cache already voiced. "Great job!" measured 2977 ms
+            // to synthesize on device and the drill room says it after every
+            // correct answer; recomputing a byte-identical waveform on a CPU
+            // that is already thermally throttled is the cheapest waste in the
+            // app to remove. The key carries everything that changes the
+            // sound, and the cache holds several renditions per line so the
+            // repetition is still varied (see [SynthCache]).
+            val cacheable = SynthCache.eligible(group.text)
+            val cacheKey = if (cacheable) {
+                SynthCache.key(group.text, voiceAsset, flavorPitch, speed)
+            } else {
+                null
             }
-            if (flavorPitch != null && audio.isNotEmpty()) {
-                audio = ParrotEffect.apply(audio, SAMPLE_RATE, flavorPitch)
-                if (first && !player.interrupted) {
-                    // The "brrp!" announces the character before the words.
-                    player.play(ParrotEffect.flourish(SAMPLE_RATE))
+            var audio = cacheKey?.let { SynthCache.get(it) }
+            if (audio == null) {
+                // Flavored lines synthesize SLOWER by the pitch factor, so the
+                // resample inside the effect lands the duration back where it
+                // was asked for while pitch and formants ride up together.
+                val synthSpeed = if (flavorPitch != null) vary(speed) / flavorPitch else vary(speed)
+                var fresh = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes") {
+                    synthesize(ids, synthSpeed)
                 }
+                if (flavorPitch != null && fresh.isNotEmpty()) {
+                    fresh = ParrotEffect.apply(fresh, SAMPLE_RATE, flavorPitch)
+                }
+                // Cached AFTER the effect: the flavor is part of the sound,
+                // and the pitch is part of the key.
+                if (cacheKey != null) SynthCache.put(cacheKey, fresh)
+                audio = fresh
+            }
+            if (flavorPitch != null && first && !player.interrupted) {
+                // The "brrp!" announces the character before the words.
+                player.play(ParrotEffect.flourish(SAMPLE_RATE))
             }
             first = false
             if (audio.isNotEmpty() && !player.interrupted) player.play(audio)

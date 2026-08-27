@@ -275,6 +275,42 @@ short-i vs long-e (ship/sheep), final consonant devoicing, /r/ quality.
 
 ## 6. The mouth — text-to-speech
 
+### Accelerator reality on Tensor G4 (settled 2026-08-27)
+
+Three questions that had been costing device rounds, answered — two by our own
+measurements, two confirmed against Google-stack expertise:
+
+- **The TPU is not available to us.** There is no public, un-sandboxed TPU
+  delegate for third-party apps on Pixel 6–9; Google's LiteRT Tensor SDK is
+  locked to system services (AICore, Pixel Camera) and opens to third parties
+  only from **Pixel 10 / Tensor G5**. So the 49 °C of idle TPU sitting next to
+  a 90 °C CPU is not ours to use, and no amount of engineering on this device
+  reaches it. *Independently*, dynamic-range quantization would disqualify our
+  models anyway: NPUs need full static INT8 or pure FP16, because a systolic
+  array cannot do dynamic float rescaling. Both our Whisper export and the
+  wav2vec2 coach are DRQ.
+- **One GPU runtime per process.** Mali drivers on Tensor G4 crash when two
+  runtimes instantiate separate OpenCL contexts in one process — which is
+  exactly what killed the app when the TFLite GPU delegate and LiteRT-LM's
+  accelerator initialised 96 ms apart. The supported escape is process
+  isolation (`android:process=":asr_service"`), not coexistence. Since Whisper
+  on GPU measured *slower* than CPU, we spend the GPU on the LLM and keep the
+  speech stack on CPU.
+- **ONNX Runtime is the right host for Kokoro.** Converting StyleTTS2-family
+  models to LiteRT/TFLite is fragile — dynamic shapes and the custom iSTFT ops
+  break the converters — so ORT + XNNPACK is the stable stack, and the thread
+  pairing we ship (`addXnnpack(intra_op_num_threads=3)` with ORT's own
+  intra-op at 1) is the correct one; raising ORT's would make the two pools
+  fight for cores and add heat for nothing.
+
+**The consequence for TTS speed.** RTF 0.94 cold is this hardware's nominal
+figure, and 1.7–2.3 is the *throttled* one: at 90 °C junction the G4 clamps the
+X4 and A720 cores by roughly half. The published ~0.6 figures are cold silicon.
+So the voice is not misconfigured and swapping engines does not obviously help —
+**heat is the problem**, and the levers that matter are doing less synthesis
+(caching the lines we repeat), spreading it (pre-rendering while the learner
+talks), and backing off when the thermal API says to.
+
 ### English — solved
 
 | Engine | Size | Quality/speed |

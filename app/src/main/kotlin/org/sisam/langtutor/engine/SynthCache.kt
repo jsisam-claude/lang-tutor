@@ -87,7 +87,11 @@ object SynthCache {
         samples = 0
     }
 
-    /** Key must separate everything that changes the waveform. */
-    fun key(text: String, voice: String, pitch: Float?): String =
-        "$voice|${pitch ?: 0f}|$text"
+    /**
+     * Key must separate everything that changes the waveform — including
+     * [speed], because the drill's "Almost! Listen again." recast is the same
+     * sentence at 0.75x and must not be served the full-speed rendition.
+     */
+    fun key(text: String, voice: String, pitch: Float?, speed: Float): String =
+        "$voice|${pitch ?: 0f}|${"%.2f".format(speed)}|$text"
 }

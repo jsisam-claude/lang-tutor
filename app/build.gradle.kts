@@ -91,6 +91,16 @@ android {
     }
 
     assetPacks += ":asset-packs:model_pack"
+
+    testOptions {
+        unitTests {
+            // Android framework stubs throw by default. Returning defaults
+            // instead makes pure-logic classes that happen to log — the reward
+            // bus, the synthesis cache — testable off-device without dragging
+            // in a mocking framework for one Log.i call.
+            isReturnDefaultValues = true
+        }
+    }
 }
 
 kotlin {
