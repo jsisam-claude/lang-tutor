@@ -23,9 +23,17 @@ import org.sisam.langtutor.speech.HebrewTransliteration.GlossWord
  * word by word.
  *
  * ```
- *   There      is       a       lion
- *   דֶ׳ר       אִיז     אֶ      לַיאֶן
+ *   I        see       a      lion
+ *   אַי      סִי       אֶ      לַיאֶן      <- sounds, aligned per word
+ *   אני רואה אריה                         <- meaning, one natural sentence
  * ```
+ *
+ * The two Hebrew rows are different KINDS of thing and are laid out
+ * differently on purpose. The pronunciation is per word, so it stacks in
+ * columns. The translation is a sentence — `a lion` is two English words and
+ * one Hebrew one — so forcing it into the same columns would either lie about
+ * the correspondence or wreck the Hebrew word order. It gets its own line,
+ * right-to-left, reading as ordinary Hebrew.
  *
  * ## Why this is a column per word and not two lines of text
  *
@@ -48,10 +56,17 @@ fun GlossedText(
     style: TextStyle = LocalTextStyle.current,
     glossStyle: TextStyle = MaterialTheme.typography.titleMedium,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
+    translation: String? = null,
 ) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = when (horizontalArrangement) {
+            Arrangement.Center -> Alignment.CenterHorizontally
+            else -> Alignment.Start
+        },
+    ) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         FlowRow(
-            modifier = modifier,
             horizontalArrangement = horizontalArrangement,
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
@@ -78,6 +93,19 @@ fun GlossedText(
                         }
                     }
                 }
+            }
+        }
+    }
+        if (!translation.isNullOrBlank()) {
+            // Natural Hebrew, not a column: RTL for the whole line, and its
+            // own direction scope so it is unaffected by the LTR row above.
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+                Text(
+                    text = translation,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 2.dp),
+                )
             }
         }
     }

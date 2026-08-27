@@ -8,7 +8,19 @@ import org.sisam.langtutor.content.CurriculumUnit
  *  they cannot read the label. */
 enum class DrillLevel { WORDS, SHORT, LONG }
 
-data class DrillItem(val text: String, val level: DrillLevel)
+/**
+ * One thing to say, and its Hebrew meaning when we have a trustworthy one.
+ *
+ * [hebrew] is null unless the curriculum already carried it. That is the only
+ * source here that is authored and reviewed; a model-written translation is a
+ * different trust class and belongs to whatever produced the line, not to the
+ * deck. Null renders as no translation row, which is the honest outcome.
+ */
+data class DrillItem(
+    val text: String,
+    val level: DrillLevel,
+    val hebrew: String? = null,
+)
 
 /**
  * Builds practice rounds from the curriculum that already exists — the deck is
@@ -33,16 +45,22 @@ object DrillDeck {
         val out = mutableListOf<DrillItem>()
         for (unit in units) {
             for (activity in unit.activities) {
+                // Vocab is the one activity that already carries a reviewed
+                // Hebrew translation, so it is the one that can show one.
+                // A question's prompt.he translates the QUESTION, not the
+                // answer we drill, so it would be the wrong Hebrew — worse
+                // than none.
                 val line = when (activity) {
                     is Activity.Vocab -> activity.word
                     is Activity.RepeatAfterMe -> activity.phrase
                     is Activity.QuestionAnswer -> activity.expectedAnswers.maxByOrNull { it.length }
                 } ?: continue
+                val hebrew = (activity as? Activity.Vocab)?.translation?.he?.takeIf { it.isNotBlank() }
                 if (classify(line) != level) continue
                 // Dedupe on the words, not the spelling — "Red!" and "red"
                 // are the same drill item.
                 if (!seen.add(WordMatch.tokens(line))) continue
-                out += DrillItem(line, level)
+                out += DrillItem(line, level, hebrew)
             }
         }
         return out

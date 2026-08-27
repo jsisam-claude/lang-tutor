@@ -25,6 +25,17 @@ data class ParentSettings(
      */
     val showTransliteration: Boolean? = null,
     /**
+     * Show the Hebrew MEANING under English lines — a separate question from
+     * [showTransliteration], which shows how to say it.
+     *
+     * Null follows the track's [TrackConfig.hebrewTextUseful], which already
+     * asks the right question: is written Hebrew any use to this learner? A
+     * pre-reader who cannot read Hebrew gains nothing from a translation
+     * while still gaining from a pronunciation key, which is exactly why
+     * these are two settings and not one.
+     */
+    val showTranslation: Boolean? = null,
+    /**
      * Try the Edge TPU before the GPU when loading the model. Experimental,
      * off by default, and deliberately not something a learner ever sees.
      *

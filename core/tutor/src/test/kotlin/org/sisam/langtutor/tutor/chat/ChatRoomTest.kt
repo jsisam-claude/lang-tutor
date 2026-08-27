@@ -6,6 +6,7 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.sisam.langtutor.llm.FakeLlmEngine
@@ -95,5 +96,117 @@ class ChatRoomTest {
         room.start()
         room.send("   ")
         assertTrue(room.messages.value.isEmpty())
+    }
+
+    // --- the Hebrew translation row ---------------------------------------
+
+    @Test
+    fun `the translation rides along in the same reply, not a second one`() = runTest {
+        // One generation per turn is the whole reason the second parrot went.
+        // Buying the translation with another decode would put it straight
+        // back.
+        val llm = FakeLlmEngine(listOf("I see a lion.\nHE: \u05d0\u05e0\u05d9 \u05e8\u05d5\u05d0\u05d4 \u05d0\u05e8\u05d9\u05d4"))
+        val room = ChatRoom(llm = llm, wantsHebrew = { true })
+        room.start()
+        room.send("hi")
+
+        assertEquals(1, llm.calls.size)
+        val reply = room.messages.value.last()
+        assertEquals("I see a lion.", reply.text)
+        assertEquals("\u05d0\u05e0\u05d9 \u05e8\u05d5\u05d0\u05d4 \u05d0\u05e8\u05d9\u05d4", reply.hebrew)
+    }
+
+    @Test
+    fun `only the english is spoken`() = runTest {
+        // Reading the translation aloud would undercut the point of an
+        // English room, and the marker itself must never reach the voice.
+        val spoken = mutableListOf<String>()
+        val room = ChatRoom(
+            llm = FakeLlmEngine(listOf("Hello!\nHE: \u05e9\u05dc\u05d5\u05dd")),
+            speak = { _, t -> spoken += t },
+            wantsHebrew = { true },
+        )
+        room.start()
+        room.send("hi")
+        assertEquals(listOf("Hello!"), spoken)
+    }
+
+    @Test
+    fun `no translation is asked for when the learner does not want one`() = runTest {
+        // Not just hidden — not requested, so it costs no tokens either.
+        val llm = FakeLlmEngine(listOf("Hello!"))
+        val room = ChatRoom(llm = llm, wantsHebrew = { false })
+        room.start()
+        room.send("hi")
+        assertFalse(llm.calls.single().systemPrompt.contains(ChatRoom.HEBREW_MARKER))
+        assertNull(room.messages.value.last().hebrew)
+    }
+
+    @Test
+    fun `a missing marker leaves the reply whole and the translation absent`() = runTest {
+        val room = ChatRoom(
+            llm = FakeLlmEngine(listOf("Hello there!")),
+            wantsHebrew = { true },
+        )
+        room.start()
+        room.send("hi")
+        assertEquals("Hello there!", room.messages.value.last().text)
+        assertNull(room.messages.value.last().hebrew)
+    }
+
+    @Test
+    fun `a translation that is not Hebrew is dropped, not shown`() = runTest {
+        // Our own eval put this model below the gate on Hebrew overall. A
+        // learner cannot check this row, so anything structurally wrong has
+        // to vanish rather than be shown confidently.
+        for (bad in listOf("I said hello", "", "   ", "shalom")) {
+            val room = ChatRoom(
+                llm = FakeLlmEngine(listOf("Hello!\nHE: $bad")),
+                wantsHebrew = { true },
+            )
+            room.start()
+            room.send("hi")
+            assertEquals("Hello!", room.messages.value.last().text)
+            assertNull("expected no translation for \"$bad\"", room.messages.value.last().hebrew)
+        }
+    }
+
+    @Test
+    fun `a mostly-English translation is dropped`() = runTest {
+        // Cross-language leakage is the exact failure the eval recorded.
+        val room = ChatRoom(
+            llm = FakeLlmEngine(listOf("Hello!\nHE: the word is \u05e9\u05dc\u05d5\u05dd in Hebrew")),
+            wantsHebrew = { true },
+        )
+        room.start()
+        room.send("hi")
+        assertNull(room.messages.value.last().hebrew)
+    }
+
+    @Test
+    fun `only the first line after the marker is taken`() = runTest {
+        // The model sometimes keeps going. A paragraph of commentary under an
+        // English sentence is not a translation.
+        val room = ChatRoom(
+            llm = FakeLlmEngine(
+                listOf("Hi!\nHE: \u05e9\u05dc\u05d5\u05dd\nAnd here is some more chatter."),
+            ),
+            wantsHebrew = { true },
+        )
+        room.start()
+        room.send("hi")
+        assertEquals("\u05e9\u05dc\u05d5\u05dd", room.messages.value.last().hebrew)
+    }
+
+    @Test
+    fun `an unsafe reply loses its translation too`() = runTest {
+        val room = ChatRoom(
+            llm = FakeLlmEngine(listOf("Let's play with the gun!\nHE: \u05e9\u05dc\u05d5\u05dd")),
+            wantsHebrew = { true },
+        )
+        room.start()
+        room.send("hi")
+        assertEquals(ChatRoom.FALLBACK, room.messages.value.last().text)
+        assertNull(room.messages.value.last().hebrew)
     }
 }

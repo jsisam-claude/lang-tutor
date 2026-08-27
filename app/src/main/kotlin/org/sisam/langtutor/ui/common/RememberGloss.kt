@@ -40,3 +40,20 @@ fun rememberGloss(container: AppContainer, text: String): State<List<GlossWord>>
         }
     }
 }
+
+/**
+ * [hebrew] if this learner's settings show translations, else null.
+ *
+ * A one-line gate rather than a call site's `if`, so "should the meaning be
+ * on screen" is answered in exactly one place for every room. The text itself
+ * is never produced here — it comes authored from the curriculum or from the
+ * turn that generated the line, both of which have already vetted it.
+ */
+@Composable
+fun rememberTranslation(container: AppContainer, hebrew: String?): State<String?> {
+    val profile by container.profile.profile.collectAsState(initial = LearnerProfile.EMPTY)
+    val enabled = container.translationEnabled(profile)
+    return produceState<String?>(initialValue = null, hebrew, enabled) {
+        value = hebrew?.takeIf { enabled && it.isNotBlank() }
+    }
+}

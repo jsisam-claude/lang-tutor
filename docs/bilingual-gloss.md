@@ -1,11 +1,66 @@
 # Aligned Hebrew gloss under English — design record
 
-**Status.** The **transliteration** row is BUILT (2026-08-27):
-`HebrewTransliteration` in `core/speech`, `GlossedText` + `rememberGloss` in
-the app, on in the vocabulary room and under Tuki's chat replies, with a
-Parent Zone switch and a per-track default. The **translation** row and
-**landscape** remain queued, and everything below about phrase alignment is
-about translation — see "What building it changed".
+**Status.** Both Hebrew rows are BUILT (2026-08-27). **Landscape** is still
+queued.
+
+```
+I        see       a      lion
+אַי      סִי       אֶ      לַיאֶן      <- sounds, aligned per word
+אני רואה אריה                         <- meaning, one natural sentence
+```
+
+- **Transliteration**: `HebrewTransliteration` in `core/speech`, derived from
+  the IPA the voice already uses. Free, exact, everywhere.
+- **Translation**: authored where the curriculum has it (`Activity.Vocab`
+  already carried `translation.he`); model-written in the chat room, in the
+  same generation as the reply.
+
+Two switches in Parent Zone, because they answer different questions — how to
+say it, and what it means. Transliteration defaults on for PRE_READER and
+BEGINNER; translation follows `TrackConfig.hebrewTextUseful`, which is already
+"is written Hebrew any use to this learner" and so is off for PRE_READER.
+
+### The alignment question, settled by having two different answers
+
+The record agonised over phrase alignment — `a lion` being two English words
+over one Hebrew word — and proposed chunk-major layout to force the rows to
+line up. **That turned out to be the wrong problem.** The two rows are
+different kinds of thing:
+
+- The **pronunciation** is per word and therefore stacks in columns, always,
+  with no ambiguity.
+- The **meaning** is a sentence. Forcing it into columns would either lie
+  about the correspondence or wreck Hebrew word order.
+
+So the translation gets its own line, right-to-left, reading as ordinary
+Hebrew. No chunking, no `:n` markers, no authored alignment. The requested
+example shows exactly this shape.
+
+### Trusting model Hebrew — the one category that was unlocked
+
+`eval/hebrew/results/VERDICT.md` failed Gemma on Hebrew overall (3.73 against
+a 4.0 gate) and P1 adopted "zero dynamic Hebrew". Reading the **category**
+breakdown, that verdict argues *for* this feature rather than against it:
+
+| category | score |
+|---|---|
+| **translate-scaffold** | **4.60** |
+| bilingual-turn | 4.15 |
+| praise | 4.10 |
+| error-explain | 3.20 |
+| vocab-hint | 3.15 |
+| recast | 2.95 |
+
+The failure is category-shaped, and the verdict's own recommendation is to
+"consider unlocking **translate-scaffold only** first — it already passes
+every threshold today." Translation is the single Hebrew task the model is
+good at, and it is the only one asked for here. E4B passes the gate outright.
+
+It still gets a gauntlet, because a learner cannot check this row: the
+translation must be present, be actually Hebrew, be *mostly* Hebrew (the
+recorded failure mode is cross-language leakage), be short enough to be a
+translation rather than a new thought, and pass the safety filter. Anything
+else shows no row at all. Never a confident mistranslation.
 
 Requested shape:
 
@@ -40,8 +95,8 @@ Both are real and useful, and they serve **different learners**:
 
 They are not alternatives; a full reader might eventually want three rows.
 
-**Transliteration is the one that got built**, and the reason is that it turns
-out to be nearly free — see below.
+Both are built now, from different sources and with different trust
+properties — see the status block above.
 
 ## What building it changed
 

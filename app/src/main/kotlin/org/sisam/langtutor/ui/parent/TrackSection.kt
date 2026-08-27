@@ -120,6 +120,41 @@ fun TrackSection(container: AppContainer) {
                     },
                 )
             }
+
+            // Separate switch, because these are separate questions. A child
+            // who cannot read Hebrew still benefits from sounding a word out;
+            // an adult who reads both may want the meaning and not the
+            // phonetic crutch.
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.parent_translation_title),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                    Text(
+                        text = stringResource(R.string.parent_translation_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+                Switch(
+                    checked = container.translationEnabled(profile),
+                    onCheckedChange = { on ->
+                        scope.launch {
+                            container.profile.update {
+                                it.copy(
+                                    parentSettings = it.parentSettings.copy(
+                                        showTranslation = on,
+                                    ),
+                                )
+                            }
+                        }
+                    },
+                )
+            }
         }
     }
 }

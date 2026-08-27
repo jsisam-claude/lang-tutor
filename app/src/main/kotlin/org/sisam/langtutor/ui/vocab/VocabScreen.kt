@@ -61,7 +61,9 @@ import org.sisam.langtutor.tutor.drill.WordMatch
 import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.EnglishContent
+import org.sisam.langtutor.speech.HebrewTransliteration.GlossWord
 import org.sisam.langtutor.ui.common.GlossedText
+import org.sisam.langtutor.ui.common.rememberTranslation
 import org.sisam.langtutor.ui.common.rememberGloss
 import org.sisam.langtutor.ui.common.PronunciationFeedback
 import org.sisam.langtutor.ui.common.TukiParrot
@@ -350,7 +352,10 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
                     } else {
                         MaterialTheme.typography.displaySmall
                     }
-                    if (gloss.isEmpty()) {
+                    // The curriculum's own Hebrew where the item has it;
+                    // generated lines carry none and simply show two rows.
+                    val meaning by rememberTranslation(container, s.item.hebrew)
+                    if (gloss.isEmpty() && meaning == null) {
                         EnglishContent {
                             Text(
                                 text = s.item.text,
@@ -360,13 +365,14 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
                         }
                     } else {
                         GlossedText(
-                            words = gloss,
+                            words = gloss.ifEmpty { listOf(GlossWord(s.item.text, "")) },
                             style = lineStyle,
                             glossStyle = if (A11y.hugeText) {
                                 MaterialTheme.typography.bodyLarge
                             } else {
                                 MaterialTheme.typography.headlineSmall
                             },
+                            translation = meaning,
                         )
                     }
                 }

@@ -46,6 +46,7 @@ import org.sisam.langtutor.engine.TurnLatency
 import org.sisam.langtutor.speech.RecognitionHint
 import org.sisam.langtutor.tutor.chat.ChatEntry
 import org.sisam.langtutor.tutor.chat.ChatSpeaker
+import org.sisam.langtutor.speech.HebrewTransliteration.GlossWord
 import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.GlossedText
 import org.sisam.langtutor.ui.common.rememberGloss
@@ -307,14 +308,24 @@ private fun ChatBubble(entry: ChatEntry, container: AppContainer) {
             // do not. They already know how they said it — what they need help
             // reading is the reply.
             val gloss by rememberGloss(container, if (fromChild) "" else entry.text)
-            if (gloss.isEmpty()) {
+            if (gloss.isEmpty() && entry.hebrew == null) {
                 Text(text = entry.text, style = MaterialTheme.typography.bodyLarge)
+            } else if (gloss.isEmpty()) {
+                // Meaning without the pronunciation key: still a stacked pair,
+                // just with nothing in the middle row.
+                GlossedText(
+                    words = listOf(GlossWord(entry.text, "")),
+                    style = MaterialTheme.typography.bodyLarge,
+                    horizontalArrangement = Arrangement.Start,
+                    translation = entry.hebrew,
+                )
             } else {
                 GlossedText(
                     words = gloss,
                     style = MaterialTheme.typography.bodyLarge,
                     glossStyle = MaterialTheme.typography.bodyMedium,
                     horizontalArrangement = Arrangement.Start,
+                    translation = entry.hebrew,
                 )
             }
         }

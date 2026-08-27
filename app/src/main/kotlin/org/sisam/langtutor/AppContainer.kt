@@ -100,7 +100,10 @@ class AppContainer private constructor(context: Context) {
         logDeviceProfile()
         // Keep the non-suspend mirror of the experimental NPU switch in step.
         appScope.launch {
-            profile.profile.collect { npuOptIn = it.parentSettings.tryNpuBackend }
+            profile.profile.collect {
+                npuOptIn = it.parentSettings.tryNpuBackend
+                translationWanted = translationEnabled(it)
+            }
         }
         // React to memory pressure by dropping idle engine sessions — the
         // difference between "the coach reloads in a couple of seconds" and
@@ -659,6 +662,7 @@ class AppContainer private constructor(context: Context) {
         return ChatRoom(
             llm = createLlmEngine(),
             speak = { _, text -> tts.speak(text, TutorLanguage.ENGLISH).collect { } },
+            wantsHebrew = { translationWanted },
         )
     }
 
@@ -673,6 +677,10 @@ class AppContainer private constructor(context: Context) {
      */
     @Volatile
     private var npuOptIn: Boolean = false
+
+    /** Mirror of the translation switch, readable from a non-suspend context. */
+    @Volatile
+    private var translationWanted: Boolean = false
 
     /**
      * The Hebrew-letter pronunciation key (docs/bilingual-gloss.md).
@@ -692,6 +700,15 @@ class AppContainer private constructor(context: Context) {
     fun glossEnabled(profile: LearnerProfile): Boolean =
         profile.parentSettings.showTransliteration
             ?: TrackConfig.of(profile.track).transliterationByDefault
+
+    /**
+     * Is the Hebrew MEANING shown? Separate from [glossEnabled] because the
+     * two answer different questions — how to say it, and what it means — and
+     * a pre-reader wants the first without the second.
+     */
+    fun translationEnabled(profile: LearnerProfile): Boolean =
+        profile.parentSettings.showTranslation
+            ?: TrackConfig.of(profile.track).hebrewTextUseful
 
     /**
      * [text] with each word's pronunciation, or empty when the gloss is off.
