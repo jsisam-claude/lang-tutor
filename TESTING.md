@@ -418,6 +418,32 @@ Worth reporting: whether the Hebrew is actually *correct and useful*, not just
 present. That is the thing the eval scored 4.45 on synthetic prompts and which
 only real use can confirm.
 
+## Vocabulary room (new)
+Home → **Vocabulary room 🗣️** → pick a level (Words / Short sentences / Big
+sentences — bucketed by length from the same ten units, so the counts on the
+cards are real). Then: Tuki says a line, you hold the mic and say it back.
+
+- **Correct** → stars fly, a chime, +5 XP, next line. "Correct" is judged on
+  the TRANSCRIPT (were the words there), not on pronunciation — extra words
+  around the target are free, and a five-word sentence tolerates one miss.
+- **Wrong** → Tuki says "Almost! Listen again." and repeats the line SLOWER
+  (the slow-clear TTS mode getting used for the first time). Third miss moves
+  on with encouragement — the room is designed to never be a dead end.
+- **Silence** → "I didn't hear you" and the try is not counted.
+- The per-sound colour row appears after attempts when the coach model is
+  installed; it never gates progress.
+- Round ends with a score screen, a MIX burst, and Again / Pick a level.
+
+The point to verify on hardware: this room has **no language model in it** —
+TTS + Whisper + coach only — so it must be usable seconds after a cold app
+start, on every tier, even while the LLM is still loading for other rooms.
+First-ever mic hold pays the Whisper load once (status line says so).
+
+Worth reporting: whether the word-judge feels FAIR on a real child's voice —
+too strict (right sentence rejected: send the transcript line from logcat) or
+too lax (nonsense accepted). The thresholds live in `WordMatch` and real
+attempts are what calibrate them.
+
 ## Just chat has a mic now
 The trailing control in the chat room swaps like every messenger's: **mic when
 the input is empty, Send once you type**. Hold the mic, talk, release — the

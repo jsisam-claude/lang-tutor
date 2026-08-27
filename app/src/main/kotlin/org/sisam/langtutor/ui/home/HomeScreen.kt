@@ -69,6 +69,7 @@ fun HomeScreen(
     onOpenConversation: (String) -> Unit,
     onOpenParent: () -> Unit,
     onOpenChat: () -> Unit,
+    onOpenVocab: () -> Unit,
 ) {
     val units by produceState<List<UnitSummary>>(initialValue = emptyList(), container) {
         value = container.content.listUnits()
@@ -112,6 +113,11 @@ fun HomeScreen(
             text = stringResource(R.string.home_more_heading),
             style = MaterialTheme.typography.titleMedium,
         )
+        // "Repeat after me" drills — the room with NO language model in it,
+        // so it works instantly even while the big brain is still loading.
+        Button(onClick = onOpenVocab, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.home_vocab_room))
+        }
         // Freeform three-way practice with both parrots — no lesson, no
         // scoring, just talking.
         Button(onClick = onOpenChat, modifier = Modifier.fillMaxWidth()) {

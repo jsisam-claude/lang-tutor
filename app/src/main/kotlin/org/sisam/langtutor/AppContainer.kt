@@ -46,6 +46,7 @@ import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
 import org.sisam.langtutor.tutor.TutorOrchestrator
+import org.sisam.langtutor.tutor.drill.DrillOrchestrator
 import org.sisam.langtutor.ui.reward.RewardBus
 import org.sisam.langtutor.ui.reward.RewardKind
 
@@ -486,6 +487,24 @@ class AppContainer private constructor(context: Context) {
      * uses, so there is no second Whisper instance behind this.
      */
     fun createAsrEngine() = bundledAsrEngine() ?: PlatformAsrEngine(appContext)
+
+    /**
+     * The vocabulary room's engine set: voice, ears, coach — deliberately NO
+     * language model, which is what makes that room instant on every device.
+     */
+    fun createDrillOrchestrator(scope: CoroutineScope): DrillOrchestrator {
+        val kokoro = bundledTtsEngine()
+        appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
+        appScope.launch(Dispatchers.IO) { runCatching { kokoro?.warmUp() } }
+        return DrillOrchestrator(
+            asr = createAsrEngine(),
+            // English-only room; no router, no Hebrew stack woken.
+            tts = kokoro ?: PlatformTtsEngine(appContext),
+            scorer = pronunciationScorer(),
+            profile = profile,
+            scope = scope,
+        )
+    }
 
     fun createChatRoom(): ChatRoom {
         val kokoro = bundledTtsEngine()

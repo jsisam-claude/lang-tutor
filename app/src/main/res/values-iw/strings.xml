@@ -109,6 +109,18 @@
     <string name="chat_hint">…כתבו באנגלית</string>
     <string name="chat_send">שליחה</string>
     <string name="home_just_chat">💬 סתם לדבר</string>
+    <string name="home_vocab_room">🗣️ חדר מילים</string>
+
+    <string name="vocab_pick_level">מה נתרגל היום?</string>
+    <string name="vocab_level_words">מילים</string>
+    <string name="vocab_level_short">משפטים קצרים</string>
+    <string name="vocab_level_long">משפטים גדולים</string>
+    <string name="vocab_items_count">%1$d לתרגול</string>
+    <string name="vocab_progress">%1$d מתוך %2$d</string>
+    <string name="vocab_round_done">כל הכבוד! 🎉</string>
+    <string name="vocab_round_score">%1$d מתוך %2$d נאמרו נכון</string>
+    <string name="vocab_again">עוד פעם!</string>
+    <string name="vocab_pick_other">בחירת רמה</string>
 
     <string name="sticker_pick_one">🎉 הרווחתם מדבקה! בחרו אחת</string>
     <string name="sticker_taken">בחירה מקסימה!</string>

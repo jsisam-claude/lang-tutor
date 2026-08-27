@@ -36,7 +36,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDirection
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -56,6 +55,7 @@ import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.TukiParrot
 import org.sisam.langtutor.ui.common.EnglishContent
+import org.sisam.langtutor.ui.common.PronunciationFeedback
 import org.sisam.langtutor.ui.reward.RewardKind
 
 class ConversationViewModel(
@@ -408,50 +408,6 @@ private fun stateLabel(state: TutorTurnState): String = when (state) {
     is TutorTurnState.AwaitingChild -> stringResource(R.string.state_your_turn)
     is TutorTurnState.Failed -> stringResource(R.string.state_failed)
 }
-
-/**
- * Per-sound result of the last attempt: each expected sound coloured by how
- * confidently the model heard it. Deliberately wordless — a 5-year-old reads
- * colours, not scores (docs/mockups/pronunciation.html).
- */
-@Composable
-private fun PronunciationFeedback(score: PronunciationScore) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.pronunciation_title),
-                style = MaterialTheme.typography.labelMedium,
-            )
-            EnglishContent {
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    score.phonemes.take(MAX_SHOWN).forEach { p ->
-                        Text(
-                            text = p.symbol,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = when {
-                                p.score >= 0.8f -> Color(0xFF2E7D32) // green: said well
-                                p.score >= 0.4f -> Color(0xFFEF6C00) // amber: nearly
-                                else -> Color(0xFFC62828) // red: try again
-                            },
-                        )
-                    }
-                }
-            }
-            Text(
-                text = stringResource(
-                    R.string.pronunciation_stars,
-                    (score.overall * 5).toInt().coerceIn(1, 5),
-                ),
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
-    }
-}
-
-private const val MAX_SHOWN = 24
 
 /** Bright cue at or above this; soft cue above [FAIR_ATTEMPT]; silence below. */
 private const val GOOD_ATTEMPT = 0.8f

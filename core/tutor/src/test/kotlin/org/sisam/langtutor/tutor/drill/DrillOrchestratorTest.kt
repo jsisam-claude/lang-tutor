@@ -1,0 +1,163 @@
+package org.sisam.langtutor.tutor.drill
+
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Test
+import org.sisam.langtutor.profile.InMemoryProfileStore
+import org.sisam.langtutor.speech.AsrResult
+import org.sisam.langtutor.speech.FakeAsrEngine
+import org.sisam.langtutor.speech.FakePronunciationScorer
+import org.sisam.langtutor.speech.FakeTtsEngine
+import org.sisam.langtutor.speech.RecognitionHint
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class DrillOrchestratorTest {
+
+    private class Fixture(scope: TestScope) {
+        val asr = FakeAsrEngine()
+        val tts = FakeTtsEngine()
+        val profile = InMemoryProfileStore()
+        val events = mutableListOf<DrillEvent>()
+        val drill = DrillOrchestrator(
+            asr = asr,
+            tts = tts,
+            scorer = FakePronunciationScorer(),
+            profile = profile,
+            scope = scope,
+        )
+        val collector = scope.launch(UnconfinedTestDispatcher(scope.testScheduler)) {
+            drill.events.collect { events += it }
+        }
+    }
+
+    private val ball = DrillItem("I see a red ball!", DrillLevel.LONG)
+    private val bear = DrillItem("The bear is blue!", DrillLevel.SHORT)
+
+    /** Press, let the mic actually open (as a held finger does), release. */
+    private fun TestScope.attempt(f: Fixture, transcript: String, confidence: Float = 0.9f) {
+        f.asr.enqueue(AsrResult(transcript = transcript, confidence = confidence))
+        f.drill.onMicPressed()
+        advanceUntilIdle()
+        f.drill.onMicReleased()
+    }
+
+    @Test
+    fun `a correct repetition celebrates, pays XP, and advances`() = runTest {
+        val f = Fixture(this)
+        f.drill.startRound(listOf(ball, bear))
+        advanceUntilIdle()
+        // Intro plus the first line, then the mic is open.
+        assertEquals(listOf(DrillOrchestrator.INTRO, ball.text), f.tts.spoken.map { it.text })
+        assertTrue(f.drill.state.value is DrillState.AwaitingChild)
+
+        attempt(f, "i see a red ball")
+        advanceUntilIdle()
+
+        assertEquals(listOf(DrillEvent.Correct(tries = 1)), f.events)
+        assertEquals(DrillOrchestrator.XP_PER_CORRECT, f.profile.current().xp)
+        // Praise spoken, then the NEXT item — the round moved on by itself.
+        val awaiting = f.drill.state.value as DrillState.AwaitingChild
+        assertEquals(bear, awaiting.item)
+        // The mic was hinted with the exact target, not a whole lesson.
+        val hint = f.asr.recordedHints.single()
+        assertTrue(hint is RecognitionHint.ConstrainedVocab && ball.text in hint.phrases)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `a miss gets the line again, slower`() = runTest {
+        val f = Fixture(this)
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+
+        attempt(f, "banana")
+        advanceUntilIdle()
+
+        val awaiting = f.drill.state.value as DrillState.AwaitingChild
+        assertEquals(1, awaiting.triesUsed)
+        assertEquals(ball, awaiting.item)
+        // "Almost!" then the line at the slow-clear speed.
+        val lastTwo = f.tts.spoken.takeLast(2)
+        assertEquals(DrillOrchestrator.ALMOST, lastTwo[0].text)
+        assertEquals(ball.text, lastTwo[1].text)
+        assertEquals(DrillOrchestrator.SLOW_SPEED, lastTwo[1].speed)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `the third miss advances with encouragement, never a dead end`() = runTest {
+        val f = Fixture(this)
+        f.drill.startRound(listOf(ball, bear))
+        advanceUntilIdle()
+
+        repeat(DrillOrchestrator.MAX_TRIES) {
+            attempt(f, "banana")
+            advanceUntilIdle()
+        }
+
+        assertTrue(DrillEvent.Nearly in f.events)
+        assertTrue(f.tts.spoken.any { it.text == DrillOrchestrator.GOOD_TRY })
+        // No XP for a miss, but the round moved to the next item.
+        assertEquals(0, f.profile.current().xp)
+        assertEquals(bear, (f.drill.state.value as DrillState.AwaitingChild).item)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `silence costs nothing`() = runTest {
+        val f = Fixture(this)
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+
+        attempt(f, "   ")
+        advanceUntilIdle()
+
+        assertEquals(listOf<DrillEvent>(DrillEvent.TooQuiet), f.events)
+        val awaiting = f.drill.state.value as DrillState.AwaitingChild
+        assertEquals(0, awaiting.triesUsed)
+        assertTrue(f.tts.spoken.any { it.text == DrillOrchestrator.DIDNT_HEAR })
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `the round ends with its score, and rounds are distinguishable`() = runTest {
+        val f = Fixture(this)
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+        attempt(f, "I see a red ball")
+        advanceUntilIdle()
+        assertEquals(DrillState.RoundDone(correct = 1, total = 1, round = 1), f.drill.state.value)
+
+        // Same items, same score — a different round. The UI keys its one-shot
+        // celebration on the state, so equal states would swallow the second.
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+        attempt(f, "I see a red ball")
+        advanceUntilIdle()
+        assertEquals(DrillState.RoundDone(correct = 1, total = 1, round = 2), f.drill.state.value)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `the mic is closed while Tuki is talking and after the round`() = runTest {
+        val f = Fixture(this)
+        f.drill.onMicPressed() // Idle: ignored
+        advanceUntilIdle()
+        assertEquals(0, f.asr.startCalls)
+
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+        attempt(f, "I see a red ball")
+        advanceUntilIdle()
+        f.drill.onMicPressed() // RoundDone: ignored
+        advanceUntilIdle()
+        assertEquals(1, f.asr.startCalls)
+        f.collector.cancel()
+    }
+}

@@ -111,6 +111,18 @@
     <string name="chat_hint">Type in English…</string>
     <string name="chat_send">Send</string>
     <string name="home_just_chat">Just chat 💬</string>
+    <string name="home_vocab_room">Vocabulary room 🗣️</string>
+
+    <string name="vocab_pick_level">What shall we practice?</string>
+    <string name="vocab_level_words">Words</string>
+    <string name="vocab_level_short">Short sentences</string>
+    <string name="vocab_level_long">Big sentences</string>
+    <string name="vocab_items_count">%1$d to practice</string>
+    <string name="vocab_progress">%1$d of %2$d</string>
+    <string name="vocab_round_done">You did it! 🎉</string>
+    <string name="vocab_round_score">%1$d of %2$d said right</string>
+    <string name="vocab_again">Again!</string>
+    <string name="vocab_pick_other">Pick a level</string>
 
     <string name="sticker_pick_one">You earned a sticker! Pick one 🎉</string>
     <string name="sticker_taken">Lovely choice!</string>

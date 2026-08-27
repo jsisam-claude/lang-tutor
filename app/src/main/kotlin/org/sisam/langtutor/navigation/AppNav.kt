@@ -30,12 +30,14 @@ import org.sisam.langtutor.ui.parent.ParentZoneScreen
 import org.sisam.langtutor.ui.reward.RewardOverlay
 import org.sisam.langtutor.ui.reward.StickerMilestones
 import org.sisam.langtutor.ui.sticker.StickerRoom
+import org.sisam.langtutor.ui.vocab.VocabScreen
 
 object Routes {
     const val HOME = "home"
     const val PARENT = "parent"
     const val CHAT = "chat"
     const val STICKER = "sticker"
+    const val VOCAB = "vocab"
 
     // Unit-scoped destinations: the tapped unit travels in the route so every
     // screen teaches THAT unit (previously all roads led to unit-001).
@@ -47,9 +49,10 @@ object Routes {
 
     const val DEFAULT_UNIT = "unit-001"
 
-    /** The two places a child is actually working — the only ones the sticker
+    /** The places a child is actually working — the only ones the sticker
      *  room may interrupt, and the only ones it returns to. */
-    fun isLearningRoom(route: String?) = route == LESSON || route == CONVERSATION
+    fun isLearningRoom(route: String?) =
+        route == LESSON || route == CONVERSATION || route == VOCAB
 }
 
 @Composable
@@ -65,6 +68,7 @@ fun AppNav(container: AppContainer) {
                     onOpenConversation = { unitId -> navController.navigate(Routes.conversation(unitId)) },
                     onOpenParent = { navController.navigate(Routes.PARENT) },
                     onOpenChat = { navController.navigate(Routes.CHAT) },
+                    onOpenVocab = { navController.navigate(Routes.VOCAB) },
                 )
             }
             composable(
@@ -79,6 +83,7 @@ fun AppNav(container: AppContainer) {
             ) { entry ->
                 ConversationScreen(container, entry.arguments?.getString("unitId") ?: Routes.DEFAULT_UNIT)
             }
+            composable(Routes.VOCAB) { VocabScreen(container) }
             composable(Routes.PARENT) { ParentZoneScreen(container) }
             composable(Routes.CHAT) { ChatScreen(container) }
             composable(Routes.STICKER) {
