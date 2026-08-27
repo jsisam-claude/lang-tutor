@@ -655,7 +655,16 @@ class AppContainer private constructor(context: Context) {
         return ChatRoom(
             llm = createLlmEngine(),
             speak = { _, text -> tts.speak(text, TutorLanguage.ENGLISH).collect { } },
-            wantsHebrew = { translationEnabled(profile.snapshot()) },
+            // Model-WRITTEN Hebrew, so it rides the same tier gate as Hebrew
+            // explanations do. Measured 2026-08-27 on 16 tutor sentences
+            // (eval/hebrew/results/TRANSLATION-ROW.md): E4B got 16/16 right,
+            // E2B produced "soup"->sushi, "apples"->stitches, "lion"->ox and
+            // leaked an Arabic word mid-sentence. The gauntlet in ChatRoom
+            // cannot catch those — they are fluent, well-formed Hebrew that
+            // happens to be wrong, and no structural check sees meaning.
+            wantsHebrew = {
+                modelTierLabel == HEBREW_CAPABLE_TIER && translationEnabled(profile.snapshot())
+            },
         )
     }
 

@@ -59,8 +59,27 @@ good at, and it is the only one asked for here. E4B passes the gate outright.
 It still gets a gauntlet, because a learner cannot check this row: the
 translation must be present, be actually Hebrew, be *mostly* Hebrew (the
 recorded failure mode is cross-language leakage), be short enough to be a
-translation rather than a new thought, and pass the safety filter. Anything
-else shows no row at all. Never a confident mistranslation.
+translation rather than a new thought, and pass the safety filter. It also has
+its dress removed — the shipping model wraps every translation as
+`התרגום לעברית הוא: **…**`. Anything that fails shows no row at all. Never a
+confident mistranslation.
+
+### E4B only, and the gauntlet is not why
+
+Measured 2026-08-27 against the alternatives on 16 tutor sentences
+([TRANSLATION-ROW.md](../eval/hebrew/results/TRANSLATION-ROW.md)): **E4B got
+16/16 semantically correct** — including `bear`, `duck`, `purple umbrella`,
+`his sister` and `soup`, every one of which broke DictaLM 1.7B, TranslateGemma
+and E2B. No second model is worth adding.
+
+**E2B is a different story and the row is now gated off it**, on the same
+`HEBREW_CAPABLE_TIER` gate Hebrew explanations already used. It produced
+`soup`→סושי, `apples`→תפירות (stitches), `lion`→שור (ox) and leaked an Arabic
+word mid-sentence. The gauntlet cannot help here and it is important to be
+clear why: those outputs are fluent, well-formed, safe Hebrew that is simply
+about the wrong thing. Every check in the gauntlet is structural, and no
+structural check sees meaning. The only defence against a wrong translation is
+a model that does not produce one.
 
 Requested shape:
 

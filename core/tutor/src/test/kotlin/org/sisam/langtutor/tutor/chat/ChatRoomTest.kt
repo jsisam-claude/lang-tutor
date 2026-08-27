@@ -209,4 +209,26 @@ class ChatRoomTest {
         assertEquals(ChatRoom.FALLBACK, room.messages.value.last().text)
         assertNull(room.messages.value.last().hebrew)
     }
+
+    @Test
+    fun `the model's preamble and markdown are stripped, not shown`() = runTest {
+        // Measured on the shipping E4B: every translation came back wrapped as
+        // `התרגום לעברית הוא: **...**`. Rendered literally that is a bubble
+        // full of asterisks and an announcement nobody asked for.
+        val heb = "\u05d0\u05e0\u05d9 \u05e8\u05d5\u05d0\u05d4 \u05d0\u05e8\u05d9\u05d4"
+        for (dressed in listOf(
+            "**$heb**",
+            "\u05d4\u05ea\u05e8\u05d2\u05d5\u05dd \u05dc\u05e2\u05d1\u05e8\u05d9\u05ea \u05d4\u05d5\u05d0: **$heb**",
+            "\u05ea\u05e8\u05d2\u05d5\u05dd: $heb",
+            "\"$heb\"",
+        )) {
+            val room = ChatRoom(
+                llm = FakeLlmEngine(listOf("I see a lion.\nHE: $dressed")),
+                wantsHebrew = { true },
+            )
+            room.start()
+            room.send("hi")
+            assertEquals("failed to undress: $dressed", heb, room.messages.value.last().hebrew)
+        }
+    }
 }

@@ -184,7 +184,14 @@ class ChatRoom(
      * structurally sound.
      */
     private fun vetHebrew(candidate: String?): String? {
-        val t = candidate?.trim()?.trim('"', '\u201c', '\u201d')?.trim() ?: return null
+        var t = candidate?.trim() ?: return null
+        // The model dresses translations up. Measured on the shipping E4B:
+        // every reply came back as `התרגום לעברית הוא: **...**` — a preamble
+        // plus markdown emphasis, neither of which is part of the sentence and
+        // both of which would render literally in a bubble.
+        PREAMBLES.forEach { p -> if (t.startsWith(p)) t = t.removePrefix(p).trim() }
+        t = t.removeSurrounding("**").trim()
+        t = t.trim('"', '\u201c', '\u201d', '*').trim()
         if (t.isEmpty() || t.length > MAX_HEBREW_CHARS) return null
         // It must actually be Hebrew, and mostly Hebrew — a reply that leaked
         // English into the translation slot is a failed translation.
@@ -264,6 +271,14 @@ class ChatRoom(
         /** A translation of a two-sentence reply; anything longer is the model
          *  having started a new thought rather than translating. */
         const val MAX_HEBREW_CHARS = 300
+
+        /** How the model announces a translation instead of just giving one. */
+        val PREAMBLES = listOf(
+            "\u05d4\u05ea\u05e8\u05d2\u05d5\u05dd \u05dc\u05e2\u05d1\u05e8\u05d9\u05ea \u05d4\u05d5\u05d0:", // "the Hebrew translation is:"
+            "\u05d4\u05ea\u05e8\u05d2\u05d5\u05dd \u05d4\u05d5\u05d0:",                     // "the translation is:"
+            "\u05ea\u05e8\u05d2\u05d5\u05dd:",                                // "translation:"
+            "Translation:",
+        )
 
         const val HISTORY_ENTRIES = 18
     }
