@@ -25,7 +25,7 @@
 #   libwebgpu_dawn.so               not referenced by name, but DT_NEEDED of
 #                                   both accelerators above                  TAKE
 #   libLiteRtOpenClAccelerator.so   referenced, but the combined accelerator
-#   libLiteRtTopKOpenClSampler.so   above already carries the CL path that
+#                                   above already carries the CL path that
 #                                   a Pixel 9 measurably uses. 15MB saved.  SKIP
 #   libGemmaModelConstraintProvider.so  NOT referenced by the Android runtime
 #                                   at all (19MB, CLI/other builds).        SKIP
@@ -50,6 +50,14 @@ BASE="https://media.githubusercontent.com/media/google-ai-edge/LiteRT-LM/$COMMIT
 LIBS=(
   "libLiteRtGpuAccelerator.so|1287e5ae01666a605f2bc5d72453f32cf4a294ef38acabb86cd61140207e41c3"
   "libLiteRtTopKWebGpuSampler.so|c52a1cf69a92a2d2c4d3c08f5c087d1eb405f709af61c3312b215221135e18db"
+  # The OpenCL sampler, added 2026-08-27 after the device said it was missing:
+  #   sampler_factory.cc: "OpenCL sampler not available, falling back to
+  #   statically linked C API ... libLiteRtTopKOpenClSampler.so not found"
+  # printed on every engine load. The comment below used to argue the combined
+  # accelerator "carries the CL path" — true of the ACCELERATOR, wrong about
+  # the SAMPLER, which the runtime dlopens separately by name. Sampling runs
+  # once per token, so the fallback was doing every token's top-K off the GPU.
+  "libLiteRtTopKOpenClSampler.so|4404dc68786460602685cab62ddfa29035e9cfc38bb4550dec15abaaa1302a82"
   "libLiteRtWebGpuAccelerator.so|acf02905cd1d7b7d1f0f70a6d885ddbd392c0c69a99b92834da7e26d6859abcf"
   "libwebgpu_dawn.so|3b2a53de934efabce2efb5e9f703a7bd6b63a5814b2f8f0c7ed610cabf53b147"
 )

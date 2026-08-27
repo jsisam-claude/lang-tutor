@@ -586,6 +586,30 @@ that false attribution. So every TTS number so far is portable kernels. The
 thread cut 4→3 alone moved cold rtf from 1.02 to **0.94**, which is small.
 This is the number still to get.
 
+**CONFIRMED — MTP is genuinely running.** The native runtime reports its own
+draft acceptance rate:
+```
+llm_litert_mtp_drafter.cc:172] MTP Drafter - Success rate: 0.458333
+```
+46 % of drafted tokens accepted, with `mtp_drafter` (206 ops) and `verify`
+(2801 ops) both delegated to the GPU. So the feature works; our
+`decode ~N est-tok/s` figure is simply too crude to show it on 40-character
+replies — it is `chars÷4÷seconds` over a couple of seconds. Do not conclude
+MTP is inert from that number.
+
+**FIXED — the OpenCL sampler was missing.** Every engine load printed:
+```
+sampler_factory.cc:403] OpenCL sampler not available, falling back to
+  statically linked C API ... libLiteRtTopKOpenClSampler.so not found
+```
+`scripts/fetch-gpu-libs.sh` deliberately skipped that library, on the
+reasoning that the combined accelerator "already carries the CL path". True of
+the *accelerator*; wrong about the *sampler*, which the runtime dlopens
+separately by name. **Sampling runs once per token**, so every token's top-K
+was being done off the GPU by a fallback. Now fetched and pinned. This is the
+most promising remaining lead on decode speed — re-run `scripts/fetch-gpu-libs.sh`
+before building, and the warning should be gone.
+
 **KEPT — MTP on GPU**, now with a clean run at it: the ladder
 (`gpu+mtp` → `gpu` → `cpu+mtp`) worked exactly as designed, stepping down one
 rung per crash, and CPU+MTP came up fine. With the ASR delegate gone the GPU

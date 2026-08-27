@@ -365,7 +365,12 @@ class LiteRtLmEngine(
         // next turn. load() is mutex-guarded and idempotent, so this line
         // costs one null check in the common case and a full (status-reported)
         // reload only when the background policy actually fired.
-        if (engine == null) load(LlmModelSpec(modelId = "reload"))
+        // The mutex is held for the WHOLE turn, not just to read the engine:
+        // unload() takes the same one, so a timed background release arriving
+        // mid-generation waits instead of freeing native state under a running
+        // graph. loadLocked(), not load(), because the mutex is not reentrant.
+        loadMutex.withLock {
+        if (engine == null) loadLocked()
         val active = engine ?: error("generate() called before load()")
         // Leading SYSTEM messages carry the policy's per-turn lesson guidance
         // ("the child is practicing X — praise, recast, one question"). They
@@ -462,14 +467,30 @@ class LiteRtLmEngine(
                 ),
             ),
         )
+        }
     }.flowOn(Dispatchers.Default)
 
     override fun invalidateContext() = closeConvo()
 
+    /**
+     * Release the engine under the SAME mutex that guards loading and
+     * generating.
+     *
+     * It used to take no lock, which was survivable while unloading only
+     * happened on a screen exit the user had just performed. It is not
+     * survivable now: the container releases engines on a timer once the app
+     * has been backgrounded a few minutes, and generate() reloads on demand —
+     * so close() could land mid-decode, and freeing native state under a
+     * running graph is a SIGSEGV, not an exception. A crash inside
+     * liblitertlm_jni.so was observed on device (2026-08-27) minutes after a
+     * background release. Now a release arriving mid-turn simply waits.
+     */
     override suspend fun unload() = withContext(Dispatchers.Default) {
-        closeConvo()
-        engine?.close()
-        engine = null
+        loadMutex.withLock {
+            closeConvo()
+            runCatching { engine?.close() }
+            engine = null
+        }
     }
 
     /** One minimal end-to-end generation; throws if the backend cannot sample.
