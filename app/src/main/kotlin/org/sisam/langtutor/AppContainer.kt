@@ -17,7 +17,9 @@ import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.engine.HebrewPhonemes
 import org.sisam.langtutor.engine.KokoroTtsEngine
+import org.sisam.langtutor.engine.OnnxTuning
 import org.sisam.langtutor.engine.ParrotVoice
+import org.sisam.langtutor.engine.Thermal
 import org.sisam.langtutor.engine.VoiceStore
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
@@ -88,6 +90,11 @@ class AppContainer private constructor(context: Context) {
     }
 
     init {
+        // Thermal first: every timing line below wants this context, and the
+        // 2026-08-27 Pixel 9 investigation could only get it from a separate
+        // dumpsys run after the fact.
+        Thermal.start(appContext)
+        logDeviceProfile()
         // React to memory pressure by dropping idle engine sessions — the
         // difference between "the coach reloads in a couple of seconds" and
         // "Android killed the app mid-conversation". Matters most on the 12 GB
@@ -111,6 +118,25 @@ class AppContainer private constructor(context: Context) {
      * (The TRIM_MEMORY_RUNNING_* constants are deprecated in API 34 but still
      * delivered; this stays correct on every OS we target.)
      */
+    /**
+     * One line that makes every later timing readable: what silicon this is,
+     * how many threads the engines will take, how much memory there is, and
+     * how hot it already is. Pasted logs arrive without any of that otherwise,
+     * and the same numbers mean different things on a 9a and a 10 Pro XL.
+     */
+    private fun logDeviceProfile() {
+        val runtime = Runtime.getRuntime()
+        Log.i(
+            MEM_TAG,
+            "device: ${android.os.Build.MODEL} (${android.os.Build.SOC_MODEL}) " +
+                "cores=${runtime.availableProcessors()} " +
+                "onnxThreads=${OnnxTuning.heavyThreads} " +
+                "ram=${deviceRamGb}GB " +
+                "thermal=${Thermal.label(Thermal.status)} " +
+                "headroom=${"%.2f".format(Thermal.headroom)}",
+        )
+    }
+
     private fun trimEngines(level: Int) {
         if (level < ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW) return
         // Cached and the OS wants memory: skip the graduated dance and free

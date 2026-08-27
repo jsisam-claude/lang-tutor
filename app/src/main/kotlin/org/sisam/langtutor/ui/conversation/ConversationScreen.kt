@@ -47,6 +47,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
+import org.sisam.langtutor.engine.TurnLatency
 import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.tutor.Speaker
 import org.sisam.langtutor.tutor.TutorMode
@@ -319,6 +320,7 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                             viewModel.onMicPressed()
                             tryAwaitRelease()
                             // Hands-free ignores the release; the VAD ends the turn.
+                            TurnLatency.mark(if (handsFree) "hands-free endpoint" else "mic release")
                             if (!handsFree) viewModel.onMicReleased()
                         },
                     )
@@ -364,6 +366,7 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             }
             Button(
                 onClick = {
+                    TurnLatency.mark("send")
                     viewModel.onTextSubmitted(draft)
                     draft = ""
                 },

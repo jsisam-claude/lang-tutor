@@ -21,6 +21,10 @@ class PcmPlayer(private val sampleRate: Int) {
     @Volatile var interrupted = false
 
     fun play(audio: FloatArray) {
+        // Every path to audible speech goes through here, which makes it the
+        // one honest place to close the "learner stopped -> first sound"
+        // measurement. No-op unless a turn is being timed.
+        TurnLatency.firstAudio()
         val t = track ?: AudioTrack.Builder()
             .setAudioAttributes(
                 AudioAttributes.Builder()

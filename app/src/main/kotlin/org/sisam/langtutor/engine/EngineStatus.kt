@@ -104,10 +104,15 @@ object EngineStatus {
         } ?: return
         val ms = System.currentTimeMillis() - finished.startedAtMillis
         val detail = if (finished.detail.isEmpty()) "" else " ${finished.detail}"
+        // Thermal state rides along, because a step that took twice as long
+        // as yesterday is unreadable without it — that is exactly the question
+        // the 2026-08-27 Pixel 9 logs could not answer without a separate
+        // dumpsys. Empty while the device is cool, so quiet logs stay quiet.
+        val heat = Thermal.suffix()
         if (failure == null) {
-            Log.i(TAG, "✔ ${finished.kind}$detail in ${ms}ms")
+            Log.i(TAG, "✔ ${finished.kind}$detail in ${ms}ms$heat")
         } else {
-            Log.w(TAG, "✖ ${finished.kind}$detail failed after ${ms}ms: ${failure.message}")
+            Log.w(TAG, "✖ ${finished.kind}$detail failed after ${ms}ms$heat: ${failure.message}")
         }
     }
 

@@ -612,18 +612,64 @@ ours:
   get hot. Now a shared budget of 3, leaving one fast core for the LLM's
   CPU-side work and the audio thread.
 
-New logcat line per model, tag **`TukiOnnx`**:
-```
-TukiTts: XNNPACK, 3 threads          ← what we want
-TukiTts: portable kernels, 3 threads ← XNNPACK didn't bind; send this
+### The four lines that answer everything
+One command now captures the whole picture — no `dumpsys`, no arithmetic:
+
+```bash
+adb logcat -v time -s TukiLatency:I TukiOnnx:I TukiThermal:I TukiStep:I \
+                     TukiTts:I TukiAsr:I TukiLlm:I TukiMem:I
 ```
 
-**What to measure:** run the vocabulary room for ~5 minutes and compare
-`synth N tokens -> Xs in Yms` against the numbers above — same N, same
-audio length, how much less time? Then `dumpsys thermalservice` again for
-the BIG core. If RTF is still near 1.0 with XNNPACK bound, the engine choice
-itself is the problem and `docs/feasibility.md` §6 has the alternative
-(Piper, documented at RTF ~0.2 on a Raspberry Pi 4).
+**1. Is it responsive?** The one number that matters — the learner stops, to
+the first sound back — measured end to end, including cold loads:
+```
+TukiLatency  first audio 3420ms after mic release [thermal LIGHT hr=0.98]
+```
+Marked at mic release / Send in all three rooms. **Anything over ~1.5 s is
+the complaint you reported, quantified.**
+
+**2. Did the optimization land?** Once per model:
+```
+TukiOnnx  TukiTts: XNNPACK, 3 threads          ← what we want
+TukiOnnx  TukiTts: portable kernels, 3 threads ← didn't bind; send this
+```
+
+**3. Is the engine fast enough?** RTF is now printed, not left to arithmetic —
+1.0 means synthesis takes as long as the speech lasts:
+```
+TukiTts  synth 22 tokens -> 2.58s in 2745ms rtf=1.06 peak=0.435 …
+TukiAsr  transcribed 1120ms audio in 3159ms rtf=2.82 conf=0.91
+```
+
+**4. Was the phone throttling while you measured?** Every completed step now
+carries thermal context when it is not cool, and transitions are logged the
+moment they happen:
+```
+TukiStep     ✔ TTS_RUN 22 phonemes in 2745ms [thermal LIGHT hr=0.98]
+TukiThermal  thermal status -> LIGHT (headroom 0.99)
+```
+`hr` is Android's forecast headroom: **1.0 is the throttling point.** A
+benchmark taken near 1.0 is measuring the weather, not the code — which is
+exactly what happened on 2026-08-27 and took a separate `dumpsys` to discover.
+
+And once at startup, so a pasted log says what silicon produced it:
+```
+TukiMem  device: Pixel 9 (Tensor G4) cores=8 onnxThreads=3 ram=12GB thermal=NONE headroom=0.31
+```
+
+**What to measure:** run the vocabulary room for ~5 minutes, then send the
+`TukiLatency`, `TukiOnnx` and `TukiTts rtf=` lines from the START and the END
+of the run. That comparison — same work, cold vs warm, with headroom printed
+beside it — settles the remaining question by itself:
+
+- **rtf drops well under 1.0 and stays there** → XNNPACK fixed it; next stop
+  is streaming for perceived latency.
+- **rtf near 1.0 with `XNNPACK` bound and `hr` well below 1.0** → not heat and
+  not our config: Kokoro is the wrong engine for this device, and
+  `docs/feasibility.md` §6 has the alternative (Piper, documented at RTF ~0.2
+  on a Raspberry Pi 4 — effectively instant on a Tensor).
+- **rtf fine cold, bad warm, `hr` climbing to 1.0** → still thermal, and the
+  answer is the degradation ladder rather than a faster engine.
 
 XNNPACK carries the same crash-hint machinery as the LLM's GPU attempt — a
 marker file written before the attempt, so a native crash inside the provider

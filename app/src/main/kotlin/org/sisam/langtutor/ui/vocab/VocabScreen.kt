@@ -49,6 +49,7 @@ import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.CurriculumUnit
+import org.sisam.langtutor.engine.TurnLatency
 import org.sisam.langtutor.tutor.drill.DrillDeck
 import org.sisam.langtutor.tutor.drill.DrillEvent
 import org.sisam.langtutor.tutor.drill.DrillItem
@@ -396,6 +397,9 @@ private fun Mic(
                     onPress = {
                         onPressed()
                         tryAwaitRelease()
+                        // The wait the learner FEELS starts here, not when
+                        // some engine does.
+                        TurnLatency.mark("drill mic release")
                         onReleased()
                     },
                 )

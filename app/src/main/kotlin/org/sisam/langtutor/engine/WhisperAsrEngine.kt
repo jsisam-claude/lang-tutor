@@ -236,6 +236,8 @@ class WhisperAsrEngine(
         // would be silently dropped — split first and transcribe each piece.
         val pieces = AudioChunker.split(pcm, g.melFrames * WhisperFrontend.HOP)
         if (pieces.size > 1) Log.i(TAG, "utterance split into ${pieces.size} windows")
+        val audioMs = pcm.size * 1000L / SAMPLE_RATE
+        val asrStarted = System.currentTimeMillis()
 
         // Reused across pieces: the mask is static and the buffers are shaped by
         // the graph, not by the audio.
@@ -258,6 +260,16 @@ class WhisperAsrEngine(
         val tokens = windows.sumOf { it.tokens }
         lastConfidence = if (tokens == 0) 0f
         else (windows.sumOf { (it.avgProb * it.tokens).toDouble() } / tokens).toFloat()
+        // RTF against the speech actually captured, not the padded window —
+        // "3.2s to transcribe" means nothing until you know it was 1.1s of
+        // audio. Same headline number the voice logs, so the two compare.
+        val elapsed = System.currentTimeMillis() - asrStarted
+        val rtf = if (audioMs > 0) elapsed / audioMs.toFloat() else Float.NaN
+        Log.i(
+            TAG,
+            "transcribed ${audioMs}ms audio in ${elapsed}ms rtf=${"%.2f".format(rtf)} " +
+                "conf=${"%.2f".format(lastConfidence)}${Thermal.suffix()}",
+        )
         return windows.joinToString(" ") { it.text }.trim()
     }
 

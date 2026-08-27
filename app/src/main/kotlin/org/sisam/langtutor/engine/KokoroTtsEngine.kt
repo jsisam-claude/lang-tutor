@@ -288,10 +288,15 @@ class KokoroTtsEngine(
                 }
                 val rms = kotlin.math.sqrt(sumSq / audio.size.coerceAtLeast(1))
                 val zcr = crossings.toFloat() / audio.size.coerceAtLeast(1)
+                val seconds = audio.size / SAMPLE_RATE.toFloat()
+                // RTF is the number that decides whether this engine is
+                // viable at all: 1.0 means synthesis takes as long as the
+                // speech lasts, so the room can never feel responsive.
+                val rtf = if (seconds > 0f) ms / 1000f / seconds else Float.NaN
                 Log.i(
                     tag,
                     "synth ${ids.size} tokens -> " +
-                        "${"%.2f".format(audio.size / SAMPLE_RATE.toFloat())}s in ${ms}ms " +
+                        "${"%.2f".format(seconds)}s in ${ms}ms rtf=${"%.2f".format(rtf)} " +
                         "peak=${"%.3f".format(peak)} rms=${"%.4f".format(rms)} " +
                         "zcr=${"%.3f".format(zcr)} (ref peak~0.46 rms~0.064 zcr~0.23)",
                 )

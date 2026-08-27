@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
+import org.sisam.langtutor.engine.TurnLatency
 import org.sisam.langtutor.speech.RecognitionHint
 import org.sisam.langtutor.tutor.chat.ChatEntry
 import org.sisam.langtutor.tutor.chat.ChatSpeaker
@@ -185,6 +186,7 @@ fun ChatScreen(container: AppContainer) {
                     onClick = {
                         val text = draft
                         draft = ""
+                        TurnLatency.mark("chat send")
                         scope.launch { room.send(text) }
                     },
                     enabled = draft.isNotBlank() && !busy,
@@ -196,7 +198,10 @@ fun ChatScreen(container: AppContainer) {
                     enabled = !busy,
                     state = micState,
                     onStateChange = { micState = it },
-                    onHeard = { text -> scope.launch { room.send(text) } },
+                    onHeard = { text ->
+                        TurnLatency.mark("chat mic")
+                        scope.launch { room.send(text) }
+                    },
                     asr = asr,
                 )
             }
