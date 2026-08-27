@@ -1,6 +1,18 @@
 package org.sisam.langtutor.speech
 
 /**
+ * Text in one language → Kokoro phoneme ids.
+ *
+ * Kokoro is language-agnostic below the front end: every export shares one
+ * 114-symbol IPA vocabulary, so what changes between English and Hebrew is
+ * which grapheme-to-phoneme stage produces the IPA, not how it is encoded or
+ * what the model does with it.
+ */
+fun interface KokoroFrontEnd {
+    fun phonemize(text: String): IntArray
+}
+
+/**
  * English text → Kokoro phoneme-token IDs, the front-end of the bundled Kokoro
  * TTS voice (StyleTTS2-family; the model consumes misaki-style IPA tokens, not
  * graphemes). Fully offline, pure JVM:
@@ -23,14 +35,38 @@ package org.sisam.langtutor.speech
  * disambiguation, so heteronyms ("read", "lives") get their dictionary-first
  * pronunciation.
  */
+
 class KokoroPhonemizer private constructor(
     private val cmu: Map<String, String>,
     private val vocab: Map<String, Int>,
-) {
+) : KokoroFrontEnd {
 
     /** Token IDs WITHOUT the surrounding BOS/EOS zeros (the engine adds them). */
-    fun phonemize(text: String): IntArray {
-        val ipa = phonemizeToIpa(text)
+    override fun phonemize(text: String): IntArray = encode(phonemizeToIpa(text))
+
+    /**
+     * IPA string → Kokoro token ids.
+     *
+     * Split out from [phonemize] because the ENGLISH G2P above is the only
+     * English-specific part of this class: the Hebrew voice is the same Kokoro
+     * architecture with a byte-identical vocab, so it reaches the model
+     * through this same encoder with Phonikud supplying the IPA instead of
+     * CMUdict. Unknown symbols are dropped, as they always were.
+     */
+    /**
+     * Characters of [ipa] this vocabulary cannot carry — empty means the whole
+     * string survives [encode] intact.
+     *
+     * Exists for one reason: the Hebrew voice reaches the model through the
+     * same encoder, and [encode] drops what it does not recognise SILENTLY. A
+     * front end that emitted, say, ASCII `g` where the vocabulary holds script
+     * `ɡ` would lose every hard-g in Hebrew and simply sound wrong. This turns
+     * that into an assertion.
+     */
+    fun unsupported(ipa: String): Set<Char> =
+        ipa.filterNot { it.toString() in vocab }.toSet()
+
+    fun encode(ipa: String): IntArray {
         val out = ArrayList<Int>(ipa.length)
         for (c in ipa) vocab[c.toString()]?.let { out.add(it) }
         return out.toIntArray()

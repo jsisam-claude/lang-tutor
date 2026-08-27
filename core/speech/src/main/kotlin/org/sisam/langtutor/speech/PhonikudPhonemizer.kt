@@ -7,8 +7,9 @@ import java.text.Normalizer
  * rule engine (github.com/thewh1teagle/phonikud, MIT), the front-end of the
  * bundled Hebrew voice. Input is Hebrew WITH niqqud plus phonikud's extra
  * marks (stress U+05AB, vocal-shva U+05BD, prefix '|'), as produced by the
- * on-device nikud model + [NikudRestorer]; output is the phoneme string the
- * Piper voice consumes via [PiperPhonemes].
+ * on-device nikud model + [NikudRestorer]; output is IPA in exactly the
+ * alphabet Kokoro's shared 114-symbol vocabulary carries, so it feeds the same
+ * encoder the English voice uses ([KokoroPhonemizer.encode]).
  *
  * Deliberately bug-compatible with the Python reference (same rule order,
  * same dead branches) — equivalence is enforced by golden tests generated

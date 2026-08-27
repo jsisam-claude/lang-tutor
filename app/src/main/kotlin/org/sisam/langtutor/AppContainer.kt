@@ -15,8 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.ResourceContentRepository
-import org.sisam.langtutor.engine.HebrewTtsEngine
+import org.sisam.langtutor.engine.HebrewPhonemes
 import org.sisam.langtutor.engine.KokoroTtsEngine
+import org.sisam.langtutor.engine.VoiceStore
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
@@ -113,6 +114,7 @@ class AppContainer private constructor(context: Context) {
         appScope.launch {
             runCatching { gopEngine?.release() }
             runCatching { hebrewEngine?.release() }
+            runCatching { hebrewPhonemes?.release() }
             // Small (a few hundred KB of static AudioTracks) but free to give
             // back, and they are re-synthesized lazily on the next reward.
             runCatching { if (chimeOrNull != null) chime.release() }
@@ -194,14 +196,17 @@ class AppContainer private constructor(context: Context) {
      * Bundled Hebrew voice — needs BOTH Phonikud files (nikud model + Piper
      * voice); with only one installed the router keeps English-only behavior.
      */
-    private val hebrewTtsFiles: Pair<File, File>?
+    private data class HebrewVoiceFiles(val nikud: File, val model: File, val voiceDir: File)
+
+    private val hebrewTtsFiles: HebrewVoiceFiles?
         get() {
             val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
             for (base in bases) {
                 val nikud = File(base, TTS_HE_NIKUD_PATH)
+                val model = File(base, TTS_HE_MODEL_PATH)
                 val voice = File(base, TTS_HE_VOICE_PATH)
-                if (nikud.exists() && nikud.length() > 0L && voice.exists() && voice.length() > 0L) {
-                    return nikud to voice
+                if (listOf(nikud, model, voice).all { it.exists() && it.length() > 0L }) {
+                    return HebrewVoiceFiles(nikud, model, voice.parentFile!!)
                 }
             }
             return null
@@ -297,7 +302,8 @@ class AppContainer private constructor(context: Context) {
     }
 
     /** One Hebrew engine app-wide, same reasoning as [kokoroEngine]. */
-    @Volatile private var hebrewEngine: HebrewTtsEngine? = null
+    @Volatile private var hebrewEngine: KokoroTtsEngine? = null
+    @Volatile private var hebrewPhonemes: HebrewPhonemes? = null
     @Volatile private var hebrewPath: String? = null
 
     /**
@@ -365,14 +371,33 @@ class AppContainer private constructor(context: Context) {
         }
     }
 
-    private fun hebrewTtsEngine(): HebrewTtsEngine? {
-        val (nikud, voice) = hebrewTtsFiles ?: return null
-        val key = nikud.absolutePath + "|" + voice.absolutePath
+    /**
+     * Tuki's Hebrew voice: the SAME Kokoro engine as English, with the Phonikud
+     * front end and the Hebrew export's weights.
+     *
+     * This used to be a separate Piper/VITS engine with its own tokenizer,
+     * sample rate and synthesis path. It is not any more, because the Hebrew
+     * Kokoro export ships a byte-identical 114-symbol vocabulary and Phonikud
+     * already emits exactly those symbols — so the second engine was carrying
+     * no weight that this one does not already carry.
+     */
+    private fun hebrewTtsEngine(): KokoroTtsEngine? {
+        val files = hebrewTtsFiles ?: return null
+        val key = files.nikud.absolutePath + "|" + files.model.absolutePath
         hebrewEngine?.takeIf { hebrewPath == key }?.let { return it }
         synchronized(this) {
             hebrewEngine?.takeIf { hebrewPath == key }?.let { return it }
-            return HebrewTtsEngine(nikud, voice).also {
+            val phonemes = HebrewPhonemes(files.nikud)
+            return KokoroTtsEngine(
+                context = appContext,
+                modelFile = files.model,
+                frontEnd = lazyOf<org.sisam.langtutor.speech.KokoroFrontEnd>(phonemes),
+                voices = VoiceStore.Files(files.voiceDir),
+                defaultVoice = TTS_HE_VOICE_NAME,
+                tag = KokoroTtsEngine.TAG_HEBREW,
+            ).also {
                 hebrewEngine = it
+                hebrewPhonemes = phonemes
                 hebrewPath = key
             }
         }
@@ -551,6 +576,9 @@ class AppContainer private constructor(context: Context) {
             // Hebrew eval gate (4.03) where E4B passed (4.45), and the pick is
             // sticky per process, so this reads the same answer all session.
             tierSpeaksHebrew = { modelTierLabel == HEBREW_CAPABLE_TIER },
+            // With a Hebrew voice installed, even a pre-reader can be helped:
+            // they hear the explanation instead of reading it.
+            canSpeakHebrew = { hasHebrewTts },
         )
     }
 
@@ -702,8 +730,13 @@ class AppContainer private constructor(context: Context) {
         /** Covers a range of phonemes, and tells the tester what to expect. */
         const val VOICE_TEST_LINE = "Hello! I am Tuki. Can you hear me clearly?"
 
+        // Hebrew voice: the Phonikud nikud model (MIT) + the Hebrew Kokoro
+        // export and its single conditioning table. See docs/feasibility.md
+        // section 6 for the licensing of each piece — they differ.
         private const val TTS_HE_NIKUD_PATH = "models/phonikud-1.0.int8.onnx"
-        private const val TTS_HE_VOICE_PATH = "models/model.onnx"
+        private const val TTS_HE_MODEL_PATH = "models/kokoro-hebrew.onnx"
+        private const val TTS_HE_VOICE_NAME = "he_shaul.bin"
+        private const val TTS_HE_VOICE_PATH = "models/$TTS_HE_VOICE_NAME"
 
         // Pronunciation coach (wav2vec2 IPA phoneme CTC, int8).
         private const val GOP_MODEL_PATH = "models/wav2vec2-phoneme-int8.onnx"

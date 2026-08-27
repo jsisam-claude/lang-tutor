@@ -64,11 +64,35 @@ class PhonikudPhonemizerTest {
         }
     }
 
+    /**
+     * The whole Hebrew-voice integration rests on this: Kokoro's Hebrew export
+     * ships a vocabulary byte-identical to the English one, and Phonikud
+     * already normalises its output to exactly those symbols (ɡ, χ, ʁ — not
+     * ASCII g, x, r). So there is no Hebrew tokenizer and no mapping layer.
+     *
+     * [KokoroPhonemizer.encode] drops unrecognised symbols SILENTLY, so a
+     * front end that drifted out of that alphabet would not fail — it would
+     * quietly lose phonemes and just sound wrong. This is the assertion that
+     * makes the shared encoder safe to rely on.
+     */
     @Test
-    fun `piper id encoding matches the validated reference sequence`() {
-        val (phonemes, idsStr) = resource("phonikud/piper-golden.tsv").readLine().split('\t')
-        val expected = idsStr.split(' ').map { it.toLong() }.toLongArray()
-        assertArrayEquals(expected, PiperPhonemes.toIds(phonemes))
+    fun `every phoneme Phonikud emits is carried by the Kokoro vocabulary`() {
+        val kokoro = KokoroPhonemizer.load()
+        var cases = 0
+        resource("phonikud/goldens.tsv").useLines { lines ->
+            for (line in lines) {
+                if (line.isBlank()) continue
+                val expected = line.split('\t', limit = 2)[1]
+                assertEquals(
+                    "Kokoro cannot encode these symbols from: $expected",
+                    emptySet<Char>(),
+                    kokoro.unsupported(expected),
+                )
+                assertTrue("nothing encoded for: $expected", kokoro.encode(expected).isNotEmpty())
+                cases++
+            }
+        }
+        assertTrue("suspiciously few cases: $cases", cases >= 12)
     }
 
     @Test

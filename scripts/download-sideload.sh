@@ -16,6 +16,13 @@
 #   scripts/download-sideload.sh pixel-9a        # one device
 #   scripts/download-sideload.sh --no-speech     # models only
 #   scripts/download-sideload.sh --apk           # also fetch the newest green CI APK
+#   scripts/download-sideload.sh --hebrew        # ALSO fetch the Hebrew voice
+#
+# --hebrew adds ~630 MB per device and pulls NON-COMMERCIAL weights: the Hebrew
+# Kokoro voice is trained on SASPEECH ((c) IPBC), licensed "non-commercial
+# purposes only - not for commercial or broadcast needs". Fine for a free,
+# non-monetised build; must be left out of anything sold or ad-supported.
+# docs/feasibility.md section 6 has the full licence chain.
 #
 # Files are fetched once into sideload/_cache/, SHA-256-verified against the
 # pinned hashes below, then hard-linked (or copied) into each device dir.
@@ -32,6 +39,7 @@ for arg in "$@"; do
   case "$arg" in
     pixel-9a|pixel-9|pixel-10-pro-xl) DEVICES+=("$arg") ;;
     --no-speech) WITH_SPEECH=0 ;;
+    --hebrew) WITH_HEBREW=1 ;;
     --apk) WITH_APK=1 ;;
     --out=*) OUT="${arg#--out=}" ;;
     -h|--help) sed -n '2,20p' "$0"; exit 0 ;;
@@ -39,6 +47,8 @@ for arg in "$@"; do
   esac
 done
 [ ${#DEVICES[@]} -eq 0 ] && DEVICES=(pixel-9a pixel-9 pixel-10-pro-xl)
+
+WITH_HEBREW=${WITH_HEBREW:-0}
 
 CACHE="$OUT/_cache"
 mkdir -p "$CACHE"
@@ -52,10 +62,15 @@ sha_of() {
     whisper_medium_30s_i4.tflite) echo "4d5a521109aa64383bcb99d1f1951316bce024a916f89683c95579db4f5ffa63" ;;
     acft_whisper_small.en_10s.tflite) echo "58edc288e8aad1da2a3df0545edadf5f1c6119ff70682e37031119ad89130daf" ;;
     model_quantized.onnx) echo "fbae9257e1e05ffc727e951ef9b9c98418e6d79f1c9b6b13bd59f5c9028a1478" ;;
-    # Hebrew nikud model (MIT) — pin kept for private testing, but NOT fetched by
-    # default: the Piper Hebrew VOICE it fed turned out to be CC-BY-NC with an
-    # academic-only rider (docs/feasibility.md) and was removed from the app.
+    # ---- Hebrew voice: opt-in with --hebrew, NON-COMMERCIAL weights ----
+    # Three pieces with three different licences; read docs/feasibility.md
+    # section 6 before shipping any build that contains them.
+    #   phonikud-1.0.int8.onnx  MIT                    (the nikud model)
+    #   kokoro-hebrew.onnx      saspeech-noncommercial (the voice weights)
+    #   voices-hebrew.bin       saspeech-noncommercial (the he_shaul table)
     phonikud-1.0.int8.onnx) echo "113afb58d3140502aa1e7691cdc6b240b56cf97e5852fc870e1a7fb5a400dd62" ;;
+    kokoro-hebrew.onnx) echo "6b9b16fbba87fec17a21cd3b11203286e1e657014dbab236703fdf0cf13a9a2f" ;;
+    voices-hebrew.bin) echo "5efaa05741532c144a535677f02e02fd72c76fd8ec45840d6e3194b38194e9a7" ;;
     wav2vec2-phoneme-int8.onnx) echo "74174710e34035bbb7f611601d016c32fc575de7a6f53b1078107dc10a84e7ae" ;;
     *) echo "" ;;
   esac
@@ -72,8 +87,10 @@ url_of() {
     # Kokoro voice model — single-graph ONNX build (q8f16), spoken by the app's
     # bundled ONNX Runtime engine.
     model_quantized.onnx) echo "https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/onnx/model_quantized.onnx" ;;
-    # Hebrew nikud model (see the license note in sha_of above).
+    # Hebrew voice (see the license block in sha_of above).
     phonikud-1.0.int8.onnx) echo "https://huggingface.co/Phonikud/phonikud-onnx/resolve/main/phonikud-1.0.int8.onnx" ;;
+    kokoro-hebrew.onnx) echo "https://huggingface.co/thewh1teagle/kokoro-hebrew-nc/resolve/main/kokoro.onnx" ;;
+    voices-hebrew.bin) echo "https://huggingface.co/thewh1teagle/kokoro-hebrew-nc/resolve/main/voices-hebrew.bin" ;;
     # Pronunciation coach: IPA phoneme CTC model behind the GOP scorer.
     wav2vec2-phoneme-int8.onnx) echo "https://huggingface.co/onnx-community/wav2vec2-lv-60-espeak-cv-ft-ONNX/resolve/main/onnx/model_int8.onnx" ;;
     *) echo ""; return 1 ;;
@@ -101,6 +118,28 @@ fetch() { # fetch <name> -> cached path on stdout
     rm -f "$f"; exit 1
   fi
   echo "$f"
+}
+
+# The Hebrew voice ships as an .npz holding one he_shaul.npy of shape
+# (510, 1, 256) float32. The app reads conditioning tables as RAW little-endian
+# floats — exactly what every English voice already is — so unwrap it here
+# rather than teach the device about numpy containers. The ARCHIVE is the thing
+# under a SHA-256 pin; this step is a deterministic function of it.
+extract_hebrew_voice() { # extract_hebrew_voice <archive> <out.bin>
+  python3 - "$1" "$2" <<'PYX'
+import sys, zipfile, struct
+src, dst = sys.argv[1], sys.argv[2]
+with zipfile.ZipFile(src) as z:
+    name = next(n for n in z.namelist() if n.endswith(".npy"))
+    raw = z.read(name)
+assert raw[:6] == b"\x93NUMPY", "not a .npy payload"
+header_len = struct.unpack("<H", raw[8:10])[0]
+body = raw[10 + header_len:]
+expected = 510 * 256 * 4
+assert len(body) == expected, f"{name}: got {len(body)} bytes, expected {expected}"
+open(dst, "wb").write(body)
+print(f">> extracted {name} -> {dst} ({len(body)} bytes)", file=sys.stderr)
+PYX
 }
 
 place() { # place <cached> <destdir>
@@ -150,7 +189,7 @@ for M in $models; do
   adb shell rm -f /data/local/tmp/"\$M"
 done
 adb shell run-as "\$PKG" ls -l files/models
-for W in speech/whisper_*.tflite speech/acft_whisper_*.tflite speech/model_quantized.onnx speech/wav2vec2-phoneme-int8.onnx; do
+for W in speech/whisper_*.tflite speech/acft_whisper_*.tflite speech/model_quantized.onnx speech/wav2vec2-phoneme-int8.onnx speech/phonikud-1.0.int8.onnx speech/kokoro-hebrew.onnx speech/he_shaul.bin; do
   [ -f "\$W" ] || continue
   WB=\$(basename "\$W")
   echo ">> pushing bundled speech model (\$WB) — works without Google services"
@@ -200,13 +239,28 @@ for dev in "${DEVICES[@]}"; do
     for f in "$(whisper_for "$dev")" model_quantized.onnx wav2vec2-phoneme-int8.onnx; do
       place "$(fetch "$f")" "$devdir/speech"
     done
+    if [ "$WITH_HEBREW" = 1 ]; then
+      place "$(fetch phonikud-1.0.int8.onnx)" "$devdir/speech"
+      place "$(fetch kokoro-hebrew.onnx)" "$devdir/speech"
+      extract_hebrew_voice "$(fetch voices-hebrew.bin)" "$CACHE/he_shaul.bin"
+      place "$CACHE/he_shaul.bin" "$devdir/speech"
+    fi
     cat > "$devdir/speech/README.txt" <<'NOTE'
 Bundled speech models, pushed into files/models by push.sh:
 - acft_whisper_*.tflite    — Tuki's ears: short-window ASR, no Google services
 - model_quantized.onnx     — Tuki's English voice: Kokoro TTS (24 kHz)
 - wav2vec2-phoneme-int8.onnx — pronunciation coach (per-sound scoring)
-(The Hebrew voice was removed: its license is CC-BY-NC + academic-only.)
+Hebrew voice (only with --hebrew; NON-COMMERCIAL weights, see below):
+- phonikud-1.0.int8.onnx   — nikud restoration (MIT)
+- kokoro-hebrew.onnx       — Hebrew Kokoro voice (saspeech-noncommercial)
+- he_shaul.bin             — its one conditioning table (saspeech-noncommercial)
 All are read by the current APK as soon as they are in place.
+
+LICENSE: the Hebrew VOICE weights are trained on SASPEECH ((c) Israeli Public
+Broadcasting Corporation) and are licensed for NON-COMMERCIAL use only, "not
+for commercial or broadcast needs". They are fine in a free, non-monetised
+app and must be removed from any build that is sold, ad-supported, or
+otherwise commercial. docs/feasibility.md section 6 has the full chain.
 NOTE
   fi
   if [ -f "$CACHE/apk/app-debug.apk" ]; then place "$CACHE/apk/app-debug.apk" "$devdir"; fi

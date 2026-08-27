@@ -287,34 +287,63 @@ No open-source purpose-built child voice exists — use a bright/clear voice +
 `length_scale` slow-down (both engines support it), and pre-render fixed phrases.
 ([Piper](https://github.com/rhasspy/piper); [Kokoro/sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx/discussions/3383); [KittenTTS](https://github.com/KittenML/KittenTTS)).
 
-### Hebrew — the gap that REOPENED on licensing
+### Hebrew — solved for a FREE app, blocked for a commercial one
 
 Hebrew text is written **without vowels (nikud)**; TTS must restore them first.
-This killed most options:
+That is the hard part, and it is done: the **Phonikud** G2P
+([arXiv 2506.12311](https://arxiv.org/abs/2506.12311);
+[repo](https://github.com/thewh1teagle/phonikud)) does diacritization +
+phonemization in one int8 ONNX model and is genuinely **MIT**. It has been
+ported to Kotlin in `core/speech` and golden-pinned to the reference since P1.
 
-- Official Piper voices: **no Hebrew exists** ([VOICES.md](https://github.com/rhasspy/piper/blob/master/VOICES.md)).
-- Meta MMS-TTS-heb: runs on-device but **CC-BY-NC** — blocked for a commercial app.
-- Robo-Shaul/SASPEECH: dataset non-commercial; HebTTS (2024): great quality, too
-  big/autoregressive for phones.
+What was missing was a *voice* with a usable licence, and the answer depends
+entirely on whether the app is commercial:
 
-**The stack that ALMOST worked — Phonikud** ([arXiv 2506.12311](https://arxiv.org/abs/2506.12311),
-2025-06; [repo](https://github.com/thewh1teagle/phonikud)): a lightweight
-Hebrew G2P doing **diacritization + phonemization in one int8 ONNX model**
-(that model is genuinely **MIT**), paired with
-[phonikud-tts](https://github.com/thewh1teagle/phonikud-tts) Piper/VITS Hebrew
-voices. Technically excellent — validated end-to-end in-container at RTF ≈
-0.09 — but **the VOICE checkpoints are CC-BY-NC with an "academic research
-and educational use" rider** (the HF `cardData.license` field is null, which
-an earlier screen misread as permissive; the LICENSE file in the checkpoint
-repo is explicit). Non-commercial weights cannot ship in this app, so the
-voice packs were REMOVED and Tuki currently speaks English only; Hebrew
-scaffolding appears as on-screen text. The engine code stays in the repo
-awaiting a commercially licensed voice (train-our-own on ILSpeech-class data,
-or a future permissive release).
+| Candidate | Licence | Free app | Commercial app |
+|---|---|---|---|
+| **Kokoro-Hebrew** ([`thewh1teagle/kokoro-hebrew-nc`](https://huggingface.co/thewh1teagle/kokoro-hebrew-nc)) | `saspeech-noncommercial` via gated [`avris/kokoro-hebrew-saspeech`](https://huggingface.co/avris/kokoro-hebrew-saspeech) | ✅ **shipped, opt-in** | ❌ |
+| Phonikud-TTS Piper voices | CC BY-NC 4.0 **plus** "academic research and educational use" only; "non-academic non-commercial use are not permitted" | ⚠️ ambiguous | ❌ |
+| Meta MMS-TTS-heb | CC-BY-NC | ⚠️ | ❌ |
+| Robo-Shaul / SASPEECH raw, HebTTS | non-commercial; HebTTS also too big/autoregressive for phones | ❌ | ❌ |
+| Official Piper Hebrew | **does not exist** ([VOICES.md](https://github.com/rhasspy/piper/blob/master/VOICES.md)) | — | — |
 
-**Belt and suspenders**: all *fixed* Hebrew instruction lines ship as
-**pre-recorded human audio** (best quality a child will hear, zero model risk);
-Phonikud handles *dynamic* Hebrew only. Android's system TTS is not a fallback:
+**What ships (2026-08-26): Kokoro-Hebrew, behind `--hebrew`.** Three reasons it
+won over the Piper stack, in order of weight:
+
+1. **Cleaner terms for this app.** SASPEECH's conditions are "non-commercial
+   purposes only — not for commercial or broadcast needs", plus not-political
+   and not-defamatory. A free, non-monetised tutor trips none of them. The
+   Phonikud voices add a rider that CC BY-NC does not — *"intended only for
+   academic research and educational use"* and *"non-academic non-commercial
+   use are not permitted"* — which a home-use app can argue but cannot settle.
+   Their own LICENSE says to ask; that ask has not been made.
+2. **It deletes an engine instead of adding one.** Kokoro's Hebrew export ships
+   a vocabulary **byte-identical** to the English one (114 IPA symbols, same
+   ids), and Phonikud already normalises its output to exactly those symbols
+   (`ɡ`, `χ`, `ʁ` — not ASCII `g`, `x`, `r`). So Hebrew is the SAME
+   `KokoroTtsEngine` with a different front end and different weights: no
+   second tokenizer, no second sample rate, no second synthesis path. The
+   separate Piper `HebrewTtsEngine` and its phoneme map were deleted, not
+   supplemented. `PhonikudPhonemizerTest` asserts the alphabet claim over the
+   whole reference corpus, because the shared encoder drops unknown symbols
+   silently and would otherwise just sound wrong.
+3. One voice, `he_shaul`, at 24 kHz like everything else.
+
+**The constraint to remember: if this app ever monetises — a paid tier, ads,
+anything — the Hebrew voice must come out.** It is an opt-in download
+(`scripts/download-sideload.sh --hebrew`), never bundled in the APK, and the
+app runs correctly without it.
+
+Two things still open. The export is **fp32 at 325 MB** where the English voice
+is int8 at 92 MB, so quantizing it is the obvious next win on an 8 GB device.
+And the voice is **Shaul Amsterdamski, an adult male broadcast journalist** —
+right for an adult learner, a poor fit for a parrot talking to a five-year-old.
+No licence fixes that; only a different recording does.
+
+**Belt and suspenders**: all *fixed* Hebrew instruction lines still ship as
+**pre-recorded human audio** (best quality a child will hear, zero model risk,
+and a child-appropriate voice — which the shipped model is not); the synthetic
+voice handles *dynamic* Hebrew only. Android's system TTS is not a fallback:
 an offline Hebrew system voice is not reliably present, is user-downloaded, and
 can't be bundled ❓ — never depend on it.
 

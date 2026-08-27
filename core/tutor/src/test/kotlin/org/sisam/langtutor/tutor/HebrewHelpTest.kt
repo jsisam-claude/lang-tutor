@@ -31,6 +31,7 @@ class HebrewHelpTest {
         scope: TestScope,
         track: LearnerTrack = LearnerTrack.BEGINNER,
         tierSpeaksHebrew: Boolean = true,
+        canSpeakHebrew: Boolean = false,
     ): Pair<TutorOrchestrator, FakeLlmEngine> {
         val llm = FakeLlmEngine()
         val orchestrator = TutorOrchestrator(
@@ -43,6 +44,7 @@ class HebrewHelpTest {
             policy = ScriptedDialoguePolicy(),
             scope = scope,
             tierSpeaksHebrew = { tierSpeaksHebrew },
+            canSpeakHebrew = { canSpeakHebrew },
         )
         return orchestrator to llm
     }
@@ -83,7 +85,38 @@ class HebrewHelpTest {
     }
 
     @Test
-    fun `a 4-6 unit vetoes Hebrew even when the track would allow it`() = runTest {
+    fun `a Hebrew VOICE lets a pre-reader in, because they can hear it`() = runTest {
+        // The text gate exists because a child who cannot read Hebrew gains
+        // nothing from Hebrew writing. Spoken Hebrew is the opposite: it is
+        // exactly what they need, and it was only ever withheld for want of a
+        // voice to say it with.
+        val (tutor, _) = fixture(
+            this,
+            track = LearnerTrack.PRE_READER,
+            tierSpeaksHebrew = true,
+            canSpeakHebrew = true,
+        )
+        tutor.startSession(YOUNG_UNIT, TutorMode.TEXT)
+        advanceUntilIdle()
+        assertTrue(tutor.hebrewHelpOffered.value)
+    }
+
+    @Test
+    fun `a voice does not override the tier gate`() = runTest {
+        // A voice that can SAY anything does not make E2B's Hebrew trustworthy.
+        val (tutor, _) = fixture(
+            this,
+            track = LearnerTrack.BEGINNER,
+            tierSpeaksHebrew = false,
+            canSpeakHebrew = true,
+        )
+        tutor.startSession(READING_UNIT, TutorMode.TEXT)
+        advanceUntilIdle()
+        assertFalse(tutor.hebrewHelpOffered.value)
+    }
+
+    @Test
+    fun `a 4-6 unit vetoes Hebrew TEXT when there is no voice to say it`() = runTest {
         // The track defaults to BEGINNER, so without this the age band that
         // already governs the reply budget would be ignored by the one feature
         // whose whole premise is "can this learner read?".

@@ -49,24 +49,49 @@ class TtsRouter(
     }
 
     /**
-     * Streaming goes to the ENGLISH voice only, with Hebrew stripped per chunk:
-     * streamed replies come from the LLM mid-generation, where per-chunk
-     * language routing across two engines would interleave two audio sessions.
-     * Scripted Hebrew lines use [speak], which routes properly.
+     * Streaming, in two shapes.
+     *
+     * **No Hebrew voice installed** — the shipping default — keeps the original
+     * fast path exactly: everything goes to the English voice with Hebrew runs
+     * stripped per chunk, so the first sentence starts speaking while the model
+     * is still decoding the rest. That latency win is the reason streaming
+     * exists and is not worth trading away for a voice that is not there.
+     * Stripping an ALL-Hebrew sentence leaves nothing, and forwarding that
+     * empty string made the voice synthesize silence and consume the sentence
+     * slot — so blank chunks are dropped.
+     *
+     * **Hebrew voice installed** routes each chunk to the voice that can
+     * actually say it. The old objection — that per-chunk routing across two
+     * engines would interleave two audio sessions — does not apply: chunks are
+     * collected sequentially and each [TtsEngine.speak] drains its player
+     * before returning, so the two voices take turns rather than overlap. The
+     * cost is losing cross-sentence prosody grouping on a bilingual reply,
+     * which is a smaller loss than not saying the Hebrew at all.
      */
-    override fun speakStream(chunks: Flow<String>, language: TutorLanguage, speed: Float): Flow<TtsEvent> =
-        english.speakStream(
+    override fun speakStream(chunks: Flow<String>, language: TutorLanguage, speed: Float): Flow<TtsEvent> {
+        val he = hebrew ?: return english.speakStream(
             chunks
                 .map { if (containsHebrew(it)) stripHebrew(it) else it }
-                // Stripping an ALL-Hebrew sentence leaves nothing. Forwarding
-                // that empty string made the voice synthesize silence and
-                // consume the sentence slot — which is the normal case now
-                // that Hebrew explanations lead with a Hebrew sentence and
-                // continue in English.
                 .filter { it.any(Char::isLetterOrDigit) },
             language,
             speed,
         )
+        return flow {
+            emit(TtsEvent.Started)
+            chunks.collect { chunk ->
+                if (!chunk.any(Char::isLetterOrDigit)) return@collect
+                val voice = if (containsHebrew(chunk)) he else english
+                val lang = if (containsHebrew(chunk)) TutorLanguage.HEBREW else language
+                // Started/Completed are the STREAM's, not each chunk's — a
+                // listener that keys "is it talking" on them must not see the
+                // conversation end between two sentences of one reply.
+                voice.speak(chunk, lang, speed).collect { event ->
+                    if (event !is TtsEvent.Started && event !is TtsEvent.Completed) emit(event)
+                }
+            }
+            emit(TtsEvent.Completed)
+        }
+    }
 
     override suspend fun stop() {
         english.stop()

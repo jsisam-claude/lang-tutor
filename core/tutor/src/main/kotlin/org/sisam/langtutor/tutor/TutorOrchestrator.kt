@@ -59,6 +59,13 @@ class TutorOrchestrator(
      * rejected, so the button simply does not appear on that tier.
      */
     private val tierSpeaksHebrew: () -> Boolean = { false },
+    /**
+     * Whether a Hebrew VOICE is installed. This is the gate that lets the
+     * youngest learners in: written Hebrew is useless to a child who cannot
+     * read it, but spoken Hebrew is exactly what they need, and it was only
+     * ever withheld because there was no voice to say it with.
+     */
+    private val canSpeakHebrew: () -> Boolean = { false },
 ) {
 
     private val _state = MutableStateFlow<TutorTurnState>(TutorTurnState.Idle)
@@ -127,13 +134,14 @@ class TutorOrchestrator(
         llm.load(LlmModelSpec(modelId = "tutor-default"))
         currentUnit = content.loadUnit(unitId)
         // Only meaningful AFTER the load: which tier actually came up is what
-        // decides whether Hebrew is trustworthy this session. The unit has to
-        // be loaded first too — a 4-6 unit means a child who cannot read
-        // Hebrew either, whatever track the profile happens to be left on, and
-        // the default track is BEGINNER.
-        _hebrewHelpOffered.value = track.hebrewTextUseful &&
-            currentUnit?.ageBand != AgeBand.AGES_4_6 &&
-            tierSpeaksHebrew()
+        // decides whether Hebrew is trustworthy this session.
+        //
+        // Two ways to qualify. Either the learner READS Hebrew — a track that
+        // wants text, and not a 4-6 unit, because the unit's age band knows
+        // something the default BEGINNER track does not — or we can SAY it,
+        // in which case being unable to read is not a reason to withhold it.
+        val readsHebrew = track.hebrewTextUseful && currentUnit?.ageBand != AgeBand.AGES_4_6
+        _hebrewHelpOffered.value = tierSpeaksHebrew() && (readsHebrew || canSpeakHebrew())
         val firstPrompt = currentUnit?.activities
             ?.filterIsInstance<Activity.RepeatAfterMe>()
             ?.firstOrNull()?.phrase

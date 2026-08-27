@@ -267,27 +267,55 @@ APK around. Names outside the dictionary
 (Noa, Yael…) use approximate letter-to-sound rules — report any that sound
 wrong.
 
-## Tuki speaks Hebrew — currently OFF (licensing)
-The Hebrew voice packs were **removed from this build**: the Phonikud voice
-checkpoint's upstream license is CC-BY-NC with an "academic research and
-educational use" rider — not usable in an app we intend to distribute
-(docs/feasibility.md has the full story). The engine code is still in the
-app; only the weights are gone.
+## Tuki speaks Hebrew (new — opt-in download)
 
-What that means in testing:
-- Lines that MIX Hebrew and English speak the **English words only** —
-  Hebrew runs are stripped before Kokoro sees them, so "Great! כל הכבוד!"
-  says "Great!" instead of going silent.
-- Lines that are **entirely Hebrew** are skipped with a `TukiTts` warning
-  (`no Hebrew voice installed — skipping an all-Hebrew line`), never a hang.
-- The on-screen text still shows the full line including the Hebrew, so
-  nothing is lost for a reading child or parent.
+Tuki now has a Hebrew voice: the same Kokoro engine as English, with the
+Phonikud front end and a Hebrew-trained export. It is **not in the APK** and
+**not fetched by default** — its weights are non-commercial (see below).
 
-For development only, the voice can be re-enabled by privately pushing BOTH
-files to `files/models/` (`phonikud-1.0.int8.onnx` + the Piper voice as
-`model.onnx`); the router then sends any line containing Hebrew letters to
-that voice (logcat tag `TukiTtsHe`, measured RTF ≈ 0.09). Do NOT ship a
-build with those files — the license does not allow it.
+```bash
+scripts/download-sideload.sh pixel-9 --hebrew   # +~630 MB
+cd sideload/pixel-9 && ./push.sh
+```
+
+That installs three files into `files/models/`: `phonikud-1.0.int8.onnx` (nikud
+restoration, MIT), `kokoro-hebrew.onnx` (the voice), and `he_shaul.bin` (its one
+conditioning table). The app picks them up with no restart — `hasHebrewTts`
+flips as soon as all three are present.
+
+What should change once they are in place:
+
+- A reply that **mixes** Hebrew and English now speaks BOTH, taking turns
+  between the two voices. Before, the Hebrew was stripped and only the English
+  was spoken. This is the normal shape of a Hebrew-help reply, so it is the
+  fastest way to check the voice works at all.
+- The **הסבר בעברית** button appears for a **4–6 unit** too (units 001–006),
+  which it never did before: written Hebrew is useless to a child who cannot
+  read it, but *spoken* Hebrew is exactly what they need. The E4B tier gate
+  still applies.
+- Logcat tag `TukiTtsHe` prints the nikud load and per-line synthesis, in the
+  same `synth N tokens -> Xs in Yms peak/rms/zcr` shape as the English voice —
+  so the same sanity check applies. Silence with a plausible duration, or a
+  `zcr` near 0.5, means a bad waveform, not a bad voice.
+
+Worth reporting: whether the Hebrew is **intelligible and correctly stressed**,
+not merely audible. The nikud model is guessing vowels, and a wrong guess is a
+real word pronounced as a different real word.
+
+Two known rough edges, both expected:
+
+- The voice is **Shaul Amsterdamski, an adult male news journalist**. It is
+  right for an adult learner and wrong for a parrot talking to a five-year-old.
+  That is a recording problem, not a bug.
+- The export is **fp32, 325 MB** (the English voice is int8 at 92 MB), so the
+  first Hebrew line pays a bigger load and an 8 GB Pixel 9a feels it most.
+
+**LICENCE — read before shipping anything.** The voice weights are trained on
+SASPEECH (© Israeli Public Broadcasting Corporation) and licensed
+*"non-commercial purposes only — not for commercial or broadcast needs"*. That
+is fine for this free, non-monetised app. **If it ever gains a paid tier or
+ads, the Hebrew voice has to come out.** Nothing bundles it, so removing it is
+deleting three files. `docs/feasibility.md` §6 has the full chain.
 
 ## When Tuki asks you to repeat (new)
 The listener now reports how SURE it was about what it heard (it used to
@@ -361,9 +389,11 @@ and the control is **absent rather than greyed out** when either is shut:
 2. The learner's track must be one that reads: **Parent Zone → Who is
    learning?** → anything except *"Young child (not reading yet)"*.
 
-3. The open unit must not be a **4–6** unit. Units 001–006 are 4–6, so **pick
-   unit 007 or later** to see the button at all — a child in a 4–6 unit cannot
-   read Hebrew either, so the control is hidden there whatever the track says.
+3. The open unit must not be a **4–6** unit *unless the Hebrew voice is
+   installed*. Units 001–006 are 4–6, so on a build without the voice **pick
+   unit 007 or later** to see the button at all: a child in a 4–6 unit cannot
+   read Hebrew either. With the voice installed the button appears there too,
+   because they can hear it instead.
 
 Then, in **Talking with Tuki**, a **הסבר בעברית** button appears under the mic
 prompt. Two ways to trigger it:
@@ -439,9 +469,9 @@ milestone.
   silently, mixed lines speak their English words.
 - Pronunciation thresholds were calibrated on synthesized speech (see the
   section above) — the numbers you report are what recalibrates them.
-- **Hebrew explanations are text only.** The Hebrew voice is out of this build
-  over licensing, so a Hebrew explanation is displayed and its English half is
-  spoken. This is the documented degradation, not a failure of the feature.
+- **Hebrew explanations are text only UNTIL you install the Hebrew voice**
+  (`--hebrew`, see above). Without it a Hebrew explanation is displayed and
+  only its English half is spoken — the documented degradation, not a failure.
 - The learner track is set in the Parent Zone, not by onboarding — the
   three-question onboarding the plan calls for is not built yet, so a fresh
   profile starts on **Beginner**.

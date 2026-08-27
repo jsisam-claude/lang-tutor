@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import org.sisam.langtutor.speech.KokoroFrontEnd
 import org.sisam.langtutor.speech.KokoroPhonemizer
 import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
@@ -39,10 +40,23 @@ import org.sisam.langtutor.speech.TutorLanguage
  * DEVICE-VERIFY (docs/bench.md): per-sentence synth RTF on Tensor CPU — logcat
  * tag [TAG] prints ms per chunk vs seconds of audio.
  */
-class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine {
+class KokoroTtsEngine(
+    context: Context,
+    private val modelFile: File,
+    /**
+     * Text → phoneme ids. Defaults to the English G2P; the Hebrew voice is the
+     * same Kokoro architecture over a byte-identical vocabulary, so it is the
+     * SAME engine with [HebrewPhonemes] here instead.
+     */
+    frontEnd: Lazy<KokoroFrontEnd> = lazy { KokoroPhonemizer.load() },
+    /** Where the 510x256 conditioning tables live. */
+    private val voices: VoiceStore = VoiceStore.Assets(context, VOICE_DIR),
+    /** Fallback when the requested voice is not in this build. */
+    private val defaultVoice: String = TukiVoices.DEFAULT_ID,
+    private val tag: String = TAG,
+) : TtsEngine {
 
-    private val appContext = context.applicationContext
-    private val phonemizer by lazy { KokoroPhonemizer.load() }
+    private val phonemizer by frontEnd
     private val player = PcmPlayer(SAMPLE_RATE)
 
     /**
@@ -51,12 +65,12 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
      * changing it in the picker takes effect on the next sentence.
      */
     @Volatile
-    var voiceAsset: String = TukiVoices.DEFAULT_ID
+    var voiceAsset: String = defaultVoice
         set(value) {
             if (field != value) {
                 field = value
                 synchronized(voiceLock) { loadedVoice = null }
-                Log.i(TAG, "voice switched to $value")
+                Log.i(tag, "voice switched to $value")
             }
         }
 
@@ -78,17 +92,16 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         // the old default. One bad tap in the picker must not take speech down
         // with it (it used to: every synthesis threw, every turn failed, and
         // the broken choice persisted across restarts).
-        Log.e(TAG, "voice '$asset' is not in this build — falling back to ${TukiVoices.DEFAULT_ID}", e)
-        readTable(TukiVoices.DEFAULT_ID)
+        Log.e(tag, "voice '$asset' is not in this build — falling back to $defaultVoice", e)
+        readTable(defaultVoice)
     }
 
-    private fun readTable(asset: String): FloatArray =
-        appContext.assets.open("$VOICE_DIR/$asset").use { input ->
-            val bytes = input.readBytes()
-            val floats = FloatArray(bytes.size / 4)
-            ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer().get(floats)
-            floats
-        }
+    private fun readTable(asset: String): FloatArray {
+        val bytes = voices.read(asset)
+        val floats = FloatArray(bytes.size / 4)
+        ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer().get(floats)
+        return floats
+    }
 
     // Nullable + accessor rather than `by lazy`, so trimMemory() can close the
     // session and the next line of speech quietly reloads it.
@@ -103,7 +116,7 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         session?.let {
             runCatching { it.close() }
             session = null
-            Log.i(TAG, "session released (memory pressure)")
+            Log.i(tag, "session released (memory pressure)")
         }
     }
 
@@ -119,15 +132,15 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
                 setOptimizationLevel(OrtSession.SessionOptions.OptLevel.BASIC_OPT)
             }
             OrtEnvironment.getEnvironment().createSession(modelFile.absolutePath, opts).also {
-                Log.i(TAG, "kokoro session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
+                Log.i(tag, "kokoro session loaded in ${(System.nanoTime() - started) / 1_000_000}ms")
             }
         }
 
     override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> = flow {
         player.interrupted = false
         emit(TtsEvent.Started)
-        // Kokoro is an English voice; Hebrew letters phonemize to nothing and the
-        // chunk is skipped, so a stray Hebrew line degrades to silence, not a crash.
+        // A chunk the front end cannot phonemize yields no ids and is skipped,
+        // so text in the wrong script degrades to silence rather than a crash.
         //
         // GROUPED, not per-sentence: synthesizing each sentence in isolation
         // gave every one the same isolated-statement contour — and because the
@@ -251,7 +264,7 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
                 val rms = kotlin.math.sqrt(sumSq / audio.size.coerceAtLeast(1))
                 val zcr = crossings.toFloat() / audio.size.coerceAtLeast(1)
                 Log.i(
-                    TAG,
+                    tag,
                     "synth ${ids.size} tokens -> " +
                         "${"%.2f".format(audio.size / SAMPLE_RATE.toFloat())}s in ${ms}ms " +
                         "peak=${"%.3f".format(peak)} rms=${"%.4f".format(rms)} " +
@@ -317,6 +330,7 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
          *  enough that synthesis latency stays in per-reply territory. */
         private const val GROUP_MAX_SENTENCES = 2
         private const val GROUP_TARGET_CHARS = 160
+        /** Every Kokoro export in this family is 24 kHz, Hebrew included. */
         private const val SAMPLE_RATE = 24_000
         private const val STYLE_DIM = 256
         private const val THREADS = 4
@@ -324,5 +338,35 @@ class KokoroTtsEngine(context: Context, private val modelFile: File) : TtsEngine
         /** All English voices from onnx-community/Kokoro-82M-v1.0-ONNX live
          *  here, pinned by scripts/fetch-voice-assets.sh. */
         const val VOICE_DIR = "kokoro"
+
+        /** Logcat tag for the Hebrew instance, so two voices are tellable apart. */
+        const val TAG_HEBREW = "TukiTtsHe"
+    }
+}
+
+/**
+ * Where a Kokoro conditioning table comes from.
+ *
+ * The English voices ride in APK assets (522 KB each, 28 of them); the Hebrew
+ * one arrives with its model as an installed pack, because its weights cannot
+ * be bundled. Same 510x256 float table either way.
+ */
+sealed interface VoiceStore {
+
+    /** @throws java.io.FileNotFoundException when this build has no such voice. */
+    fun read(name: String): ByteArray
+
+    class Assets(context: Context, private val dir: String) : VoiceStore {
+        private val appContext = context.applicationContext
+        override fun read(name: String): ByteArray =
+            appContext.assets.open("$dir/$name").use { it.readBytes() }
+    }
+
+    class Files(private val dir: File) : VoiceStore {
+        override fun read(name: String): ByteArray {
+            val f = File(dir, name)
+            if (!f.exists()) throw java.io.FileNotFoundException(f.absolutePath)
+            return f.readBytes()
+        }
     }
 }

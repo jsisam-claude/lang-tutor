@@ -5,9 +5,6 @@
 #   phonikud/tokenizer-vocab.tsv — char→id vocab of the dicta char-level BERT
 #     tokenizer ("id<TAB>char"), from Phonikud/phonikud tokenizer.json (MIT).
 #     Specials: [UNK]=0 [CLS]=1 [SEP]=2 [PAD]=3 (encoded by name).
-#   phonikud/phoneme-map.tsv — Piper phoneme_id_map of the Hebrew voice
-#     ("id<TAB>char"), from Phonikud/phonikud-tts-checkpoints
-#     model.config.json (^=1 BOS, $=2 EOS, _=0 PAD, phoneme_type "raw").
 #
 # Rerun only to refresh the pins; outputs are committed so builds and tests
 # never need the network.
@@ -34,14 +31,10 @@ with open(f"{dest}/tokenizer-vocab.tsv", "w", encoding="utf-8") as f:
         f.write(f"{i}\t{esc(ch)}\n")
 print(f"tokenizer-vocab.tsv: {len(vocab)} entries")
 
-cfg = json.load(urllib.request.urlopen(
-    "https://huggingface.co/Phonikud/phonikud-tts-checkpoints/raw/main/model.config.json"))
-id_map = cfg["phoneme_id_map"]
-with open(f"{dest}/phoneme-map.tsv", "w", encoding="utf-8") as f:
-    for ch, ids in sorted(id_map.items(), key=lambda kv: kv[1][0]):
-        f.write(f"{ids[0]}\t{ch}\n")
-print(f"phoneme-map.tsv: {len(id_map)} entries; "
-      f"sr={cfg['audio']['sample_rate']} inference={cfg['inference']}")
+# NOTE: this script used to also emit phoneme-map.tsv, the Piper voice's
+# phoneme_id_map. The Hebrew voice is Kokoro now, and Kokoro's Hebrew export
+# shares the English vocabulary already committed at kokoro/vocab.tsv — so
+# there is no second phoneme table to generate or keep in sync.
 PY
 
 # number-names.tsv — bare Hebrew number word → pointed form, from the phonikud

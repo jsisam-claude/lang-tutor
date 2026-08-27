@@ -94,12 +94,17 @@ All three steps are **built** (`TutorOrchestrator`, `HebrewHelpTest`):
    the eval rejected — **and** the track must be one written Hebrew helps.
    The button is absent, not disabled, when either gate is shut.
 
-Known limitation, now enforced rather than merely noted: this delivers Hebrew
-as **text**, which serves B/C/D fully and A not at all — so track A is not
-offered it. For pre-readers the answer remains
-pre-recorded human Hebrew audio for the ~20 fixed instruction lines
-(docs/product-phases.md); dynamic spoken Hebrew waits on a commercially
-licensed voice (docs/feasibility.md §6).
+Known limitation, now enforced rather than merely noted: **without a Hebrew
+voice installed** this delivers Hebrew as text, which serves B/C/D fully and A
+not at all — so track A is not offered it. **With one** (opt-in, see
+`docs/feasibility.md` §6) the limitation lifts and track A qualifies too: a
+pre-reader cannot read the explanation but can hear it, and hearing it was
+always the intended answer for them. The gate reads exactly that way — the tier
+must be E4B, and then either the learner reads or we can speak. For the ~20 FIXED instruction lines the
+answer remains pre-recorded human audio (docs/product-phases.md) — better
+quality than any model, and a child-appropriate voice, which the shipped
+Hebrew model is not. Dynamic spoken Hebrew is now available in a free build;
+a *commercially* licensed voice is still outstanding (docs/feasibility.md §6).
 
 ## Reinforcement — what a learner gets back
 
