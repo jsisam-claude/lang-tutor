@@ -28,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -138,6 +139,9 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
     val transcript by viewModel.transcript.collectAsState()
     val pronunciation by viewModel.pronunciation.collectAsState()
     val hebrewHelp by viewModel.hebrewHelpOffered.collectAsState()
+    // The gesture block is keyed on handsFree and outlives recompositions,
+    // so the state it tests must be read fresh rather than captured.
+    val stateNow by rememberUpdatedState(state)
     var draft by remember { mutableStateOf("") }
     var handsFree by remember { mutableStateOf(false) }
 
@@ -317,10 +321,20 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                 .pointerInput(handsFree) {
                     detectTapGestures(
                         onPress = {
+                            // Same rule as the drill room: a press the state
+                            // machine refuses must not start the clock, or the
+                            // audio already playing closes it with a number
+                            // that flatters us and means nothing.
+                            val accepted = stateNow is TutorTurnState.AwaitingChild ||
+                                stateNow is TutorTurnState.Failed
                             viewModel.onMicPressed()
                             tryAwaitRelease()
                             // Hands-free ignores the release; the VAD ends the turn.
-                            TurnLatency.mark(if (handsFree) "hands-free endpoint" else "mic release")
+                            if (accepted) {
+                                TurnLatency.mark(
+                                    if (handsFree) "hands-free endpoint" else "mic release",
+                                )
+                            }
                             if (!handsFree) viewModel.onMicReleased()
                         },
                     )

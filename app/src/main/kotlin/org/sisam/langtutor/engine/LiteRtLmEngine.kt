@@ -190,6 +190,10 @@ class LiteRtLmEngine(
                 "${File(modelPath).name} on $label",
             )
             val candidate = try {
+                // Exclusive: another runtime bringing up an accelerator at the
+                // same moment is what crashed this process natively, and what
+                // made the marker files blame the wrong attempt.
+                AcceleratorGate.exclusive(label) {
                 Engine(
                     EngineConfig(
                         modelPath = modelPath,
@@ -210,7 +214,8 @@ class LiteRtLmEngine(
                         // 15.4s cold — suggestive, not attributed).
                         cacheDir = if (label == "cpu") cacheDir else null,
                     ),
-                )
+                ).also { it.initialize() }
+                }
             } catch (t: Throwable) {
                 EngineStatus.end(loadStep, t)
                 Log.w(TAG, "engine create failed on $label", t)
@@ -220,7 +225,6 @@ class LiteRtLmEngine(
                 continue
             }
             try {
-                candidate.initialize()
                 // initialize() succeeding does NOT prove the backend can generate:
                 // on GrapheneOS the WebGPU executor initializes fine but the top-K
                 // sampler needs OpenCL (absent there) and errors only on the first

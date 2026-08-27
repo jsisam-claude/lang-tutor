@@ -123,10 +123,6 @@ dependencies {
     implementation(libs.litertlm.android)
     // LiteRT interpreter for the bundled speech models (Whisper ASR).
     implementation(libs.litert)
-    // GPU delegate for that interpreter. The CPU big cores hit 90 C under the
-    // speech stack while the GPU sat at 56 C with headroom, so moving ASR
-    // there buys speed AND heat — attempted with a fallback, never assumed.
-    implementation(libs.litert.gpu)
     // ONNX Runtime for the bundled Kokoro voice (single-graph TTS). MIT.
     implementation(libs.onnxruntime.android)
 

@@ -68,6 +68,15 @@ object OnnxTuning {
         label: String,
         stamp: String,
         threads: Int = heavyThreads,
+    ): OrtSession = AcceleratorGate.exclusive(label) {
+        createSessionLocked(modelPath, label, stamp, threads)
+    }
+
+    private fun createSessionLocked(
+        modelPath: String,
+        label: String,
+        stamp: String,
+        threads: Int,
     ): OrtSession {
         val env = OrtEnvironment.getEnvironment()
         val hint = File("$modelPath$HINT_SUFFIX")

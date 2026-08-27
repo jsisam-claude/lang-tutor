@@ -359,7 +359,7 @@ class AppContainer private constructor(context: Context) {
         whisperEngine?.takeIf { whisperPath == file.absolutePath }?.let { return it }
         synchronized(this) {
             whisperEngine?.takeIf { whisperPath == file.absolutePath }?.let { return it }
-            return WhisperAsrEngine(file, vad = sileroVad(), installStamp = installStamp()).also {
+            return WhisperAsrEngine(file, vad = sileroVad()).also {
                 whisperEngine = it
                 whisperPath = file.absolutePath
             }
