@@ -33,11 +33,11 @@ import androidx.compose.ui.unit.dp
  * An idle Tuki is not merely still, it is genuinely stopped: the looping phase
  * is only subscribed to while the amplitude can still produce motion. Holding
  * an infinite transition open costs a vsync callback and a full redraw per
- * frame even when every frame is pixel-identical, and there can be ten parrots
- * on screen at once in the chat room.
+ * frame even when every frame is pixel-identical, and the chat room draws one
+ * per bubble.
  */
-/** Colors for one parrot. Two presets ship: [TUKI] (green/red) and [KIKI]
- *  (blue/orange), so the two chat characters are tellable at a glance. */
+/** Colors for one parrot. [TUKI] (green/red) is the only preset the app
+ *  needs today; the type stays because every drawing pass reads from it. */
 data class ParrotPalette(
     val body: Color,
     val bodyDark: Color,
@@ -46,9 +46,6 @@ data class ParrotPalette(
     companion object {
         val TUKI = ParrotPalette(
             body = Color(0xFF2E9E5B), bodyDark = Color(0xFF1F7A44), head = Color(0xFFE4483D),
-        )
-        val KIKI = ParrotPalette(
-            body = Color(0xFF3E8ED0), bodyDark = Color(0xFF2A67A0), head = Color(0xFFEF8A2B),
         )
     }
 }

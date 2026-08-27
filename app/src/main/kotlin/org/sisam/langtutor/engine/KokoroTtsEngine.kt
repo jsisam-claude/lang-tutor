@@ -142,10 +142,10 @@ class KokoroTtsEngine(
 
     /**
      * The same voice wearing the parrot: personality lines only, reached
-     * through [ParrotVoice] (or directly for Kiki, whose register is set by
-     * [pitch]). Teaching speech ([speak], [speakStream]) never passes through
-     * the effect — see [org.sisam.langtutor.speech.ParrotEffect] for the
-     * doctrine.
+     * through [ParrotVoice], or directly when a caller wants its own register
+     * via [pitch]. Teaching speech ([speak], [speakStream]) never passes
+     * through the effect — see [org.sisam.langtutor.speech.ParrotEffect] for
+     * the doctrine.
      */
     fun speakFlavored(text: String, speed: Float, pitch: Float = ParrotEffect.PITCH): Flow<TtsEvent> =
         speakInternal(text, speed, flavorPitch = pitch)

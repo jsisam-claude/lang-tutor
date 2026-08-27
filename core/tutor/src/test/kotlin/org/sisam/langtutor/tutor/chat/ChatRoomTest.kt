@@ -9,12 +9,13 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.sisam.langtutor.llm.FakeLlmEngine
+import org.sisam.langtutor.llm.Role
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ChatRoomTest {
 
     @Test
-    fun `input while the parrots are replying is dropped, and busy says so`() = runTest {
+    fun `input while the parrot is replying is dropped, and busy says so`() = runTest {
         // The UI gates the send button and the mic on `busy` — `typing` ends
         // when generation ends, before the audio finishes, and a message sent
         // in that gap was silently lost after the input field had cleared.
@@ -34,7 +35,9 @@ class ChatRoomTest {
     }
 
     @Test
-    fun `one learner message yields tuki then kiki, each spoken in turn`() = runTest {
+    fun `one learner message yields exactly one spoken reply`() = runTest {
+        // The room used to answer twice — Tuki then Kiki — which doubled both
+        // the generation and the synthesis for every single message.
         val spoken = mutableListOf<Pair<ChatSpeaker, String>>()
         val room = ChatRoom(
             llm = FakeLlmEngine(listOf("Hello friend!", "So fun! What game do you like?")),
@@ -43,30 +46,47 @@ class ChatRoomTest {
         room.start()
         room.send("hello")
 
-        val speakers = room.messages.value.map { it.speaker }
-        assertEquals(listOf(ChatSpeaker.CHILD, ChatSpeaker.TUKI, ChatSpeaker.KIKI), speakers)
+        assertEquals(
+            listOf(ChatSpeaker.CHILD, ChatSpeaker.TUKI),
+            room.messages.value.map { it.speaker },
+        )
         assertEquals("Hello friend!", room.messages.value[1].text)
-        assertEquals(listOf(ChatSpeaker.TUKI, ChatSpeaker.KIKI), spoken.map { it.first })
+        assertEquals(listOf(ChatSpeaker.TUKI to "Hello friend!"), spoken)
+    }
+
+    @Test
+    fun `the history sent to the model is verbatim, so the KV cache survives`() = runTest {
+        // The engine records each reply exactly as generated. Decorating the
+        // window with a "Tuki: " prefix made it stop matching, and every turn
+        // rebuilt the conversation from scratch — seconds of redundant
+        // prefill per message on a phone.
+        val llm = FakeLlmEngine(listOf("Hi there!", "Nice!"))
+        val room = ChatRoom(llm = llm)
+        room.start()
+        room.send("hello")
+        room.send("how are you")
+
+        val sent = llm.calls.last().messages.map { it.text }
+        assertEquals(listOf("hello", "Hi there!", "how are you"), sent)
+        // A per-speaker instruction here would change the system text every
+        // turn and defeat reuse on its own.
+        assertTrue(llm.calls.last().messages.none { it.role == Role.SYSTEM })
     }
 
     @Test
     fun `a name prefix echoed by the model is stripped`() = runTest {
-        val room = ChatRoom(llm = FakeLlmEngine(listOf("Tuki: Hi there!", "Kiki: Me too!")))
+        val room = ChatRoom(llm = FakeLlmEngine(listOf("Tuki: Hi there!")))
         room.start()
         room.send("hi")
         assertEquals("Hi there!", room.messages.value[1].text)
-        assertEquals("Me too!", room.messages.value[2].text)
     }
 
     @Test
-    fun `an unsafe reply is replaced by the fallback, per speaker`() = runTest {
-        val room = ChatRoom(
-            llm = FakeLlmEngine(listOf("Let's play with the gun!", "Nice day today!")),
-        )
+    fun `an unsafe reply is replaced by the fallback`() = runTest {
+        val room = ChatRoom(llm = FakeLlmEngine(listOf("Let's play with the gun!")))
         room.start()
         room.send("what should we play")
         assertEquals(ChatRoom.FALLBACK, room.messages.value[1].text)
-        assertEquals("Nice day today!", room.messages.value[2].text)
     }
 
     @Test

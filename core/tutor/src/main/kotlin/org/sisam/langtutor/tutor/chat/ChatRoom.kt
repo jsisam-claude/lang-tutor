@@ -12,26 +12,32 @@ import org.sisam.langtutor.safety.BlocklistSafetyFilter
 import org.sisam.langtutor.safety.SafetyFilter
 
 /** Who is talking in the room. */
-enum class ChatSpeaker { CHILD, TUKI, KIKI }
+enum class ChatSpeaker { CHILD, TUKI }
 
 data class ChatEntry(val speaker: ChatSpeaker, val text: String)
 
 /**
- * "Just chat" — a freeform three-way room: the learner plus TWO parrots.
+ * "Just chat" — a freeform room: the learner and Tuki, one reply per message.
  *
- * Every learner message gets two replies in sequence: Tuki answers, then Kiki
- * reacts to BOTH the learner and Tuki — that second hop is what makes it read
- * as a conversation of three instead of two parallel chatbots. One LLM plays
- * both parts; each reply is its own generate call carrying the shared history
- * plus a "reply as X" instruction, and Kiki's budget is smaller because a
- * sidekick who talks as much as the lead is exhausting.
+ * It used to be a three-way room with a second parrot, Kiki, reacting to both
+ * the learner and Tuki. That cost two generations and two synthesis passes per
+ * learner message — roughly double the wait on a thermally clamped phone — and
+ * bought a character the learner never speaks to. One parrot, one reply.
+ *
+ * The removal also un-broke the KV cache. Each reply used to carry a
+ * per-speaker "reply as X" SYSTEM message, which the engine folds into the
+ * conversation's system text; alternating it between Tuki and Kiki changed
+ * that text every turn, so no conversation could ever be reused and every
+ * reply re-prefilled the whole history. With one speaker the instruction is
+ * constant and lives in [ROOM_PROMPT], and the transcript we send is a plain
+ * growing suffix — which is exactly the shape `ConvoReuse` will reuse.
  *
  * Freeform does NOT mean unfiltered: every reply passes the same safety
  * filter as lesson replies before it is shown or spoken, and a blocked reply
  * drops the engine's cached context exactly like the lesson path does.
  *
- * Pure JVM; speech is injected as a lambda so the app can route each speaker
- * to a different voice.
+ * Pure JVM; speech is injected as a lambda so the app can route the reply to
+ * whichever voice the parent picked.
  */
 class ChatRoom(
     private val llm: LlmEngine,
@@ -42,20 +48,20 @@ class ChatRoom(
     private val _messages = MutableStateFlow<List<ChatEntry>>(emptyList())
     val messages: StateFlow<List<ChatEntry>> = _messages
 
-    /** Which parrot is generating right now — drives the "typing…" bubble. */
+    /** Set while Tuki is generating — drives the "typing…" bubble. */
     private val _typing = MutableStateFlow<ChatSpeaker?>(null)
     val typing: StateFlow<ChatSpeaker?> = _typing
 
-    /** Which parrot is audibly speaking — drives the avatar animation. */
+    /** Set while Tuki is audibly speaking — drives the avatar animation. */
     private val _speaking = MutableStateFlow<ChatSpeaker?>(null)
     val speaking: StateFlow<ChatSpeaker?> = _speaking
 
     /**
-     * True from the child's message landing until Kiki's reply has finished
+     * True from the child's message landing until the reply has finished
      * PLAYING. Observable because the UI must gate input on it: [send] drops
      * input while busy, and `typing` alone ends too early — it clears when
      * generation ends, well before the audio does, so a message sent during
-     * Kiki's speech was silently lost after the input field already cleared.
+     * Tuki's speech was silently lost after the input field already cleared.
      */
     private val _busy = MutableStateFlow(false)
     val busy: StateFlow<Boolean> = _busy
@@ -74,18 +80,23 @@ class ChatRoom(
         _busy.value = true
         try {
             _messages.value += ChatEntry(ChatSpeaker.CHILD, clean)
-            reply(ChatSpeaker.TUKI)
-            reply(ChatSpeaker.KIKI)
+            // Words first, then voice: the bubble appears the moment the model
+            // is done, so the learner has something to read while the ~2 s of
+            // synthesis runs instead of watching a still screen.
+            val reply = compose()
+            _messages.value += ChatEntry(ChatSpeaker.TUKI, reply)
+            voice(reply)
         } finally {
             _busy.value = false
         }
     }
 
-    private suspend fun reply(speaker: ChatSpeaker) {
-        _typing.value = speaker
+    /** Generate and vet Tuki's line. No side effects on the room. */
+    private suspend fun compose(): String {
+        _typing.value = ChatSpeaker.TUKI
         var out = ""
         try {
-            llm.generate(buildRequest(speaker)).collect { event ->
+            llm.generate(buildRequest()).collect { event ->
                 when (event) {
                     is LlmEvent.Token -> out += event.text
                     is LlmEvent.Done -> out = event.fullText
@@ -98,64 +109,63 @@ class ChatRoom(
         } finally {
             _typing.value = null
         }
-        var final = sanitize(out)
+        val final = sanitize(out)
         if (final.isEmpty() || !safety.check(final).allowed) {
             // The cached conversation holds what the model actually said.
             llm.invalidateContext()
-            final = FALLBACK
+            return FALLBACK
         }
-        _messages.value += ChatEntry(speaker, final)
-        _speaking.value = speaker
+        return final
+    }
+
+    private suspend fun voice(text: String) {
+        _speaking.value = ChatSpeaker.TUKI
         try {
-            runCatching { speak(speaker, final) }
+            runCatching { speak(ChatSpeaker.TUKI, text) }
         } finally {
             _speaking.value = null
         }
     }
 
-    /** The model sees named turns, so it sometimes echoes the name back. */
+    /** The prompt names him, so he sometimes signs his lines. */
     private fun sanitize(raw: String): String {
         var t = raw.trim()
-        for (name in listOf("Tuki:", "Kiki:", "TUKI:", "KIKI:")) {
+        for (name in listOf("Tuki:", "TUKI:")) {
             t = t.removePrefix(name).trim()
         }
         return t
     }
 
-    private fun buildRequest(speaker: ChatSpeaker): LlmRequest {
+    private fun buildRequest(): LlmRequest {
+        // Verbatim text, no "Tuki: " prefix: the engine records each reply as
+        // it was generated, and this window has to match it exactly or the
+        // conversation gets rebuilt from scratch on every turn.
         val history = _messages.value.takeLast(HISTORY_ENTRIES).map { entry ->
             when (entry.speaker) {
                 ChatSpeaker.CHILD -> ChatMessage(Role.USER, entry.text)
-                ChatSpeaker.TUKI -> ChatMessage(Role.ASSISTANT, "Tuki: ${entry.text}")
-                ChatSpeaker.KIKI -> ChatMessage(Role.ASSISTANT, "Kiki: ${entry.text}")
+                ChatSpeaker.TUKI -> ChatMessage(Role.ASSISTANT, entry.text)
             }
         }
-        val who = if (speaker == ChatSpeaker.TUKI) TUKI_INSTRUCTION else KIKI_INSTRUCTION
         return LlmRequest(
             systemPrompt = ROOM_PROMPT,
-            messages = listOf(ChatMessage(Role.SYSTEM, who)) + history,
-            maxTokens = if (speaker == ChatSpeaker.TUKI) 64 else 40,
+            messages = history,
+            maxTokens = REPLY_TOKENS,
         )
     }
 
     companion object {
         const val FALLBACK = "Let's talk about something fun instead!"
 
-        /** Both personas live in ONE stable system prompt; the per-call
-         *  instruction only selects which one answers. */
+        /** One stable system prompt, reused for the life of the room. */
         val ROOM_PROMPT = """
-            You are two friendly parrots chatting in English with a Hebrew-speaking
-            English learner. Tuki is warm and encouraging. Kiki is playful and
-            curious. Keep every message to one or two short, simple sentences.
-            Never write both parrots in one reply. Never discuss unsafe, scary,
-            or grown-up subjects.
+            You are Tuki, a friendly parrot chatting in English with a
+            Hebrew-speaking English learner. You are warm, encouraging and
+            curious. Reply to the learner's last message in one or two short,
+            simple sentences, and usually end with a question that keeps the
+            chat going. Never discuss unsafe, scary, or grown-up subjects.
         """.trimIndent()
 
-        const val TUKI_INSTRUCTION =
-            "Reply as Tuki only. Respond to the learner's last message and keep the chat going."
-        const val KIKI_INSTRUCTION =
-            "Reply as Kiki only, reacting briefly to what the learner and Tuki just said. " +
-                "Add one playful thought or question."
+        const val REPLY_TOKENS = 64
 
         const val HISTORY_ENTRIES = 18
     }

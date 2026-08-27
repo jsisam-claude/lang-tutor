@@ -32,11 +32,9 @@ import org.sisam.langtutor.engine.WhisperAsrEngine
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmModelSpec
-import org.sisam.langtutor.speech.ParrotEffect
 import org.sisam.langtutor.speech.TukiVoice
 import org.sisam.langtutor.speech.TukiVoices
 import org.sisam.langtutor.tutor.chat.ChatRoom
-import org.sisam.langtutor.tutor.chat.ChatSpeaker
 import org.sisam.langtutor.speech.TutorLanguage
 import org.sisam.langtutor.llm.LlmTierPolicy
 import org.sisam.langtutor.packs.HttpPackFetcher
@@ -516,12 +514,6 @@ class AppContainer private constructor(context: Context) {
     fun testVoice(): Job = appScope.launch(Dispatchers.IO) { speakTestLine() }
 
     /**
-     * "Just chat" room: one LLM plays both parrots; each speaks with its own
-     * voice. Tuki uses the parent-picked voice; Kiki uses a contrasting one
-     * (a male voice when Tuki's is female and vice versa), chosen from the
-     * voices actually packaged so the picker bug class cannot recur here.
-     */
-    /**
      * The app left the screen: go silent and let the silicon idle.
      *
      * There is deliberately nothing else to turn off. The app holds no
@@ -642,48 +634,23 @@ class AppContainer private constructor(context: Context) {
         )
     }
 
+    /**
+     * "Just chat" room: Tuki alone, on the parent-picked teaching voice.
+     *
+     * No flavor here, deliberately. The parrot effect is for praise lines
+     * nobody is learning phonetics from; a conversation reply is exactly the
+     * kind of sentence a learner copies, so it gets the clean voice — the
+     * same one the lesson rooms use.
+     */
     fun createChatRoom(): ChatRoom {
-        val kokoro = bundledTtsEngine()
         val tts = TtsRouter(
-            english = kokoro ?: PlatformTtsEngine(appContext),
+            english = bundledTtsEngine() ?: PlatformTtsEngine(appContext),
             hebrew = hebrewTtsEngine(),
         )
         return ChatRoom(
             llm = createLlmEngine(),
-            speak = { speaker, text ->
-                val tuki = TukiVoices.byId(profile.current().parentSettings.voiceId)
-                val voice = if (speaker == ChatSpeaker.KIKI) kikiVoiceFor(tuki) else tuki
-                if (availableVoices.any { it.id == voice.id }) {
-                    kokoro?.voiceAsset = voice.id
-                }
-                // Kiki is the flavored sidekick, pitched above even Tuki's
-                // praise register; Tuki's chat lines stay on the clean
-                // teaching voice — the ear separates the three speakers by
-                // treatment alone. (Kiki's replies are short reactions, not
-                // model sentences, which is what makes the flavor acceptable
-                // there and nowhere else in the conversation.)
-                if (speaker == ChatSpeaker.KIKI && kokoro != null) {
-                    kokoro.speakFlavored(text, speed = 1f, pitch = ParrotEffect.KIKI_PITCH).collect { }
-                } else {
-                    tts.speak(text, TutorLanguage.ENGLISH).collect { }
-                }
-            },
+            speak = { _, text -> tts.speak(text, TutorLanguage.ENGLISH).collect { } },
         )
-    }
-
-    /** A voice that contrasts with Tuki's, from what this APK carries. */
-    private fun kikiVoiceFor(tuki: TukiVoice): TukiVoice {
-        val pool = availableVoices.filter { it.id != tuki.id }
-        return pool.firstOrNull { it.gender != tuki.gender && it.accent == tuki.accent }
-            ?: pool.firstOrNull { it.gender != tuki.gender }
-            ?: pool.firstOrNull()
-            ?: tuki
-    }
-
-    /** Re-applies the parent-picked voice; call when leaving the chat room,
-     *  which sets voices per speaker. */
-    fun reapplyChosenVoice() {
-        appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
     }
 
     /**

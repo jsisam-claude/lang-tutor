@@ -47,14 +47,13 @@ import org.sisam.langtutor.speech.RecognitionHint
 import org.sisam.langtutor.tutor.chat.ChatEntry
 import org.sisam.langtutor.tutor.chat.ChatSpeaker
 import org.sisam.langtutor.ui.common.A11y
-import org.sisam.langtutor.ui.common.ParrotPalette
 import org.sisam.langtutor.ui.common.TukiParrot
 
 /**
- * "Just chat" — a messenger-style three-way room: the learner plus Tuki and
- * Kiki. Learner bubbles sit at the end (right in LTR), each parrot's bubbles
- * at the start with its own avatar; the avatar of whichever parrot is talking
- * animates, and a typing bubble shows while one is generating.
+ * "Just chat" — a messenger-style room: the learner and Tuki. Learner bubbles
+ * sit at the end (right in LTR), Tuki's at the start with his avatar; the
+ * avatar animates while he is talking, and a typing bubble shows while he is
+ * generating.
  *
  * Input is dual-channel like the lesson rooms: type, or hold the mic and
  * talk. The trailing control swaps the way every messenger's does — mic when
@@ -93,14 +92,12 @@ fun ChatScreen(container: AppContainer) {
     DisposableEffect(Unit) {
         onDispose {
             // Same thermal doctrine as lessons: nothing stays loaded between
-            // screens. Also puts the parent-picked voice back — the room sets
-            // a voice per speaker.
+            // screens.
             container.appScope.launch {
                 // A capture the learner walked out on must not hold the mic.
                 runCatching { asr.stopCapture() }
                 room.shutdown()
             }
-            container.reapplyChosenVoice()
         }
     }
     LaunchedEffect(messages.size, typing) {
@@ -109,7 +106,7 @@ fun ChatScreen(container: AppContainer) {
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        // Header: both parrots, like a group-chat title row.
+        // Header: Tuki and the room name, like a chat title row.
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -120,11 +117,6 @@ fun ChatScreen(container: AppContainer) {
         ) {
             val avatar = A11y.decorativeDp(comfortable = 44, minimum = 30)
             TukiParrot(speaking = speaking == ChatSpeaker.TUKI, size = avatar)
-            TukiParrot(
-                speaking = speaking == ChatSpeaker.KIKI,
-                size = avatar,
-                palette = ParrotPalette.KIKI,
-            )
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = stringResource(R.string.chat_title),
@@ -285,11 +277,6 @@ private fun ChatBubble(entry: ChatEntry) {
             TukiParrot(
                 speaking = false,
                 size = A11y.decorativeDp(comfortable = 28, minimum = 20),
-                palette = if (entry.speaker == ChatSpeaker.KIKI) {
-                    ParrotPalette.KIKI
-                } else {
-                    ParrotPalette.TUKI
-                },
                 modifier = Modifier.padding(end = 4.dp),
             )
         }
@@ -300,11 +287,10 @@ private fun ChatBubble(entry: ChatEntry) {
                 // and then every bubble ran off the edge.
                 .widthIn(max = A11y.bubbleMaxWidth)
                 .background(
-                    color = when {
-                        fromChild -> MaterialTheme.colorScheme.primaryContainer
-                        entry.speaker == ChatSpeaker.KIKI ->
-                            MaterialTheme.colorScheme.tertiaryContainer
-                        else -> MaterialTheme.colorScheme.secondaryContainer
+                    color = if (fromChild) {
+                        MaterialTheme.colorScheme.primaryContainer
+                    } else {
+                        MaterialTheme.colorScheme.secondaryContainer
                     },
                     shape = RoundedCornerShape(
                         topStart = 14.dp,

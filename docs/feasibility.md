@@ -54,11 +54,16 @@ Data-safety declaration remains "collects nothing."
 
 | Device | Chip | RAM | Storage | Notes |
 |---|---|---|---|---|
-| Pixel 9 | Tensor G4 | 12 GB | 128/256 GB | Floor device |
+| Pixel 9a | Tensor G4 | 8 GB | 128/256 GB | **Floor device** — E2B only |
+| Pixel 9 | Tensor G4 | 12 GB | 128/256 GB | Primary test device — E4B + E2B |
 | Pixel 9 Pro / Pro XL | Tensor G4 | 16 GB | 128 GB–1 TB | 9 Pro XL: UFS 3.1 |
-| Pixel 10 | Tensor G5 | 12 GB | 128/256 GB | |
+| Pixel 10 | Tensor G5 | 12 GB | 128/256 GB | First TPU-capable tier |
 | Pixel 10 Pro | Tensor G5 | 16 GB | 128 GB–1 TB | |
 | Pixel 10 Pro XL | Tensor G5 | 16 GB | 256 GB–1 TB | UFS 4.0; reference device |
+
+All six are supported targets and all three sideload profiles
+(`pixel-9a`, `pixel-9`, `pixel-10-pro-xl`) are maintained together — the 9a is
+not a degraded afterthought, it is the device that decides what "works" means.
 
 Implications: base models (12 GB RAM) are the tight-but-OK floor — a ~2 GB-resident
 LLM plus speech models co-exist with the OS, but 16 GB Pro devices give real
@@ -277,18 +282,40 @@ short-i vs long-e (ship/sheep), final consonant devoicing, /r/ quality.
 
 ### Accelerator reality on Tensor G4 (settled 2026-08-27)
 
-Three questions that had been costing device rounds, answered — two by our own
-measurements, two confirmed against Google-stack expertise:
+Three questions that had been costing device rounds, answered — by our own
+on-device measurements and confirmed against Google-stack expertise. Everything
+here is scoped to **Tensor G4 (Pixel 9 / 9a)**; the G5 devices we also support
+are a separate question, flagged where it matters:
 
-- **The TPU is not available to us.** There is no public, un-sandboxed TPU
-  delegate for third-party apps on Pixel 6–9; Google's LiteRT Tensor SDK is
-  locked to system services (AICore, Pixel Camera) and opens to third parties
-  only from **Pixel 10 / Tensor G5**. So the 49 °C of idle TPU sitting next to
-  a 90 °C CPU is not ours to use, and no amount of engineering on this device
-  reaches it. *Independently*, dynamic-range quantization would disqualify our
-  models anyway: NPUs need full static INT8 or pure FP16, because a systolic
-  array cannot do dynamic float rescaling. Both our Whisper export and the
-  wav2vec2 coach are DRQ.
+- **The TPU is closed on G4 — but that finding is about G4, not about the TPU.**
+  Three independent walls block it on Pixel 9/9a, and each one alone is fatal:
+
+  1. **C-ABI mismatch.** LiteRT's `DispatchLibraryDir` / Dispatch API expects a
+     vendor dispatch library whose ABI the G4 Edge TPU stack does not export to
+     apps. There is nothing to point it at.
+  2. **SELinux.** `/dev/gxp` — the Edge TPU device node — is not readable from
+     the `untrusted_app` domain. Even a correct delegate is denied at `open()`,
+     and no manifest entry or permission changes that.
+  3. **No AOT compiler for G4.** The TPU runs ahead-of-time-compiled graphs
+     only, and Google publishes no G4 target for the compiler. Nothing we ship
+     could be in the format the hardware executes.
+
+  Walls 1 and 2 are platform policy, not engineering difficulty: the 49 °C of
+  idle TPU next to a 90 °C CPU is real headroom, and on this chip it is not
+  ours. **On Tensor G5 / Pixel 10 all three change at once** — that is exactly
+  what the Tensor ML SDK Beta (§2) opened, and Google's own Gemma 4 E2B build
+  tuned for the G5 TPU is the proof the path is real. We ship a
+  `pixel-10-pro-xl` profile already, so this is a tier we intend to pursue, not
+  a maybe. **Order of work: finish the Pixel 9 round first** (thermal
+  behaviour, MTP acceptance, ASR accuracy), then take the G5 TPU on as its own
+  investigation with a clean baseline to compare against.
+
+  One caveat that travels with us to G5: **dynamic-range quantization is
+  disqualifying on any NPU**, because a systolic array cannot do dynamic float
+  rescaling — it needs full static INT8 or pure FP16. Both our Whisper export
+  and the wav2vec2 coach are DRQ today, so a TPU attempt starts with re-exporting
+  them, not with a delegate flag. That work is chip-independent and could be
+  done before we ever touch a Pixel 10.
 - **One GPU runtime per process.** Mali drivers on Tensor G4 crash when two
   runtimes instantiate separate OpenCL contexts in one process — which is
   exactly what killed the app when the TFLite GPU delegate and LiteRT-LM's
@@ -546,7 +573,7 @@ server costs scaling per user.
 | 4 | Thermal/battery on long sessions | Medium | Turn-based architecture, session caps, engine unload; matches child attention spans anyway |
 | 5 | Play GenAI-for-kids review bar | Medium | Safety layers + documented red-teaming from P1; report flow; Teacher Approved track |
 | 6 | Hebrew TTS licensing (no commercially usable voice) | High | Voice packs removed (CC-BY-NC); pre-recorded human audio covers all FIXED Hebrew lines; dynamic Hebrew is text-only until a licensed voice exists (train-our-own or future permissive release) |
-| 7 | Pixel TPU SDK immaturity (AOT-only Beta) | Low | CPU baseline is sufficient (§8); TPU is upside |
+| 7 | Pixel TPU SDK immaturity (AOT-only Beta) | Low | CPU baseline is sufficient (§8); TPU is upside. Closed on Tensor G4 for three reasons (§6) — not attempted there. Open on G5/Pixel 10; the prerequisite is static-INT8/FP16 re-exports, which can be done chip-independently while the Pixel 9 round finishes |
 | 8 | Kids corpus licensing (MyST non-commercial) | Medium | License negotiation or alternative corpora + augmentation; never train on users' audio |
 
 ---

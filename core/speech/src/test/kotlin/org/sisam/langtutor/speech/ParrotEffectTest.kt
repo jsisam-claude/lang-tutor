@@ -67,21 +67,16 @@ class ParrotEffectTest {
     }
 
     @Test
-    fun `kiki's register sits measurably above tuki's`() {
-        // The whole point of the second pitch: the two parrots must be
-        // tellable apart by ear, so the constants must actually differ and
-        // the effect must actually track the parameter.
-        assertTrue(ParrotEffect.KIKI_PITCH > ParrotEffect.PITCH)
+    fun `the effect tracks the pitch it is given`() {
+        // apply() takes a pitch so a caller can set a register; prove the
+        // knob is wired to the output and not just to the default.
+        val higher = 1.32f
         val tone = sine(300.0, 1.0)
-        val tuki = ParrotEffect.apply(tone, sr, ParrotEffect.PITCH)
-        val kiki = ParrotEffect.apply(tone, sr, ParrotEffect.KIKI_PITCH)
-        val tukiHz = zeroCrossings(tuki) / (tuki.size / sr.toFloat())
-        val kikiHz = zeroCrossings(kiki) / (kiki.size / sr.toFloat())
-        assertEquals(
-            ParrotEffect.KIKI_PITCH / ParrotEffect.PITCH,
-            kikiHz / tukiHz,
-            0.05f,
-        )
+        val base = ParrotEffect.apply(tone, sr, ParrotEffect.PITCH)
+        val raised = ParrotEffect.apply(tone, sr, higher)
+        val baseHz = zeroCrossings(base) / (base.size / sr.toFloat())
+        val raisedHz = zeroCrossings(raised) / (raised.size / sr.toFloat())
+        assertEquals(higher / ParrotEffect.PITCH, raisedHz / baseHz, 0.05f)
     }
 
     @Test
