@@ -65,6 +65,12 @@ WITH_HEBREW=${WITH_HEBREW:-0}
 
 CACHE="$OUT/_cache"
 mkdir -p "$CACHE"
+# The one script that was missing this, and the one where it matters most:
+# a ^C partway through a 3.66 GB model leaves the largest partial in the
+# tree. Recurses, so $CACHE/apk is covered too. (A concurrent run of this
+# same script could have its in-flight .part swept; downloading the same
+# cache twice at once is not a supported thing to do.)
+trap 'clean_partials "$CACHE"' EXIT
 
 # ---- pinned artifacts: name | url-path | sha256 (empty = size-check only) ----
 sha_of() {
