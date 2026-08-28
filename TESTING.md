@@ -7,14 +7,19 @@ Everything needed to run today's test, copy-paste ready. Full background:
 
 [`scripts/download-sideload.sh`](scripts/download-sideload.sh) downloads every
 dependency, SHA-256-verified, into one directory per device — then each dir's
-`push.sh` does the adb work:
+`push.sh` does the adb work. Anything already present with the right hash is
+not re-downloaded, so re-running is free.
+
+**The APK is your local build.** `app/build/outputs/apk/debug/app-debug.apk`
+is placed automatically whenever it exists, so the usual loop is
+`./gradlew :app:assembleDebug` then re-run this. Pass `--ci-apk` for CI's.
 
 ```bash
 scripts/download-sideload.sh            # sideload/pixel-9a, /pixel-9, /pixel-10-pro-xl
 scripts/download-sideload.sh pixel-9a   # just one device
-scripts/download-sideload.sh --apk      # also grab the latest CI APK (needs `gh` logged in)
+scripts/download-sideload.sh --ci-apk   # take CI's APK instead of your own build
 
-cd sideload/pixel-9a && ./push.sh       # installs APK (if fetched) + pushes the model
+cd sideload/pixel-9a && ./push.sh       # installs the APK (if any) + pushes the model
 ```
 
 Each dir contains the device's brain(s) — 9a → E2B 2.6 GB; **9 → E4B *and*

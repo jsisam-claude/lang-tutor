@@ -15,7 +15,7 @@
 #   scripts/download-sideload.sh                 # all three devices
 #   scripts/download-sideload.sh pixel-9a        # one device
 #   scripts/download-sideload.sh --no-speech     # models only
-#   scripts/download-sideload.sh --apk           # also fetch the newest green CI APK
+#   scripts/download-sideload.sh --ci-apk        # use CI's APK instead of your build
 #   scripts/download-sideload.sh --hebrew        # ALSO fetch the Hebrew voice
 #
 # --hebrew adds ~630 MB per device and pulls NON-COMMERCIAL weights: the Hebrew
@@ -25,14 +25,26 @@
 # docs/feasibility.md section 6 has the full licence chain.
 #
 # Files are fetched once into sideload/_cache/, SHA-256-verified against the
-# pinned hashes below, then hard-linked (or copied) into each device dir.
+# pinned hashes below, then hard-linked (or copied) into each device dir. A
+# file already present with the right hash is never re-downloaded; the rules
+# live in scripts/lib/fetch.sh.
+#
+# THE APK IS YOUR LOCAL BUILD. app/build/outputs/apk/debug/app-debug.apk is
+# placed automatically whenever it exists — no flag needed. Pass --ci-apk to
+# take the rolling debug-latest release instead. It used to be the other way
+# round, and the old shape could swap builds under you: the placement was not
+# gated on the flag at all, so once ANY earlier run had cached a CI APK, every
+# later run copied it into the device dir and over the top of a local build you
+# had just put there.
 set -euo pipefail
+
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/fetch.sh"
 
 HF=https://huggingface.co/litert-community
 REPO_SLUG=jsisam-claude/lang-tutor
 OUT=sideload
 WITH_SPEECH=1
-WITH_APK=0
+USE_CI_APK=0
 DEVICES=()
 
 for arg in "$@"; do
@@ -40,7 +52,8 @@ for arg in "$@"; do
     pixel-9a|pixel-9|pixel-10-pro-xl) DEVICES+=("$arg") ;;
     --no-speech) WITH_SPEECH=0 ;;
     --hebrew) WITH_HEBREW=1 ;;
-    --apk) WITH_APK=1 ;;
+    --ci-apk) USE_CI_APK=1 ;;
+    --apk) echo "note: --apk is now the default (your local build); use --ci-apk for CI's" >&2 ;;
     --out=*) OUT="${arg#--out=}" ;;
     -h|--help) sed -n '2,20p' "$0"; exit 0 ;;
     *) echo "unknown arg: $arg (see --help)"; exit 1 ;;
@@ -97,27 +110,28 @@ url_of() {
   esac
 }
 
-sha_check() { # sha_check <file> <expected>
-  local got
-  got=$( (sha256sum "$1" 2>/dev/null || shasum -a 256 "$1") | awk '{print $1}')
-  [ "$got" = "$2" ]
-}
-
-fetch() { # fetch <name> -> cached path on stdout
+fetch() { # fetch <name> -> cached path on stdout, non-zero on any failure
   local name="$1" url sha f="$CACHE/$1"
   url=$(url_of "$name"); sha=$(sha_of "$name")
-  # A __PLACEHOLDER__ means the pin hasn't been recorded yet: warn, don't block.
-  case "$sha" in __*__) echo "!! $name: no pinned SHA-256 yet — integrity NOT verified" >&2; sha="";; esac
-  if [ -f "$f" ] && { [ -z "$sha" ] || sha_check "$f" "$sha"; }; then
-    echo "$f"; return 0
-  fi
-  echo ">> downloading $name" >&2
-  curl -L --fail --retry 4 --retry-all-errors -C - -o "$f" "$url" >&2
-  if [ -n "$sha" ] && ! sha_check "$f" "$sha"; then
-    echo "!! SHA-256 MISMATCH for $name — deleting; re-run to retry" >&2
-    rm -f "$f"; exit 1
-  fi
+  # An unrecorded pin used to warn and continue, which made "no hash" mean
+  # "anything on disk is fine". These are multi-GB weights that get pushed to
+  # a child's phone; refuse instead.
+  case "$sha" in ""|__*__) echo "!! $name: no pinned SHA-256 — refusing" >&2; return 1;; esac
+  fetch_verified "$url" "$f" "$sha" "$name" || return 1
   echo "$f"
+}
+
+# fetch_into <name> <destdir> — the only correct way to call fetch().
+#
+# `place "$(fetch X)" dir` looks right and is not: fetch() runs in a command
+# substitution, so a failure there exits the SUBSHELL. Verified: the old code
+# printed its mismatch error, deleted the file, then called place() with an
+# EMPTY path, continued, and exited 0 — a device dir silently missing its
+# model under an "All set" banner.
+fetch_into() {
+  local f
+  f=$(fetch "$1") || { echo "!! aborting: could not obtain $1" >&2; exit 1; }
+  place "$f" "$2"
 }
 
 # The Hebrew voice ships as an .npz holding one he_shaul.npy of shape
@@ -126,6 +140,14 @@ fetch() { # fetch <name> -> cached path on stdout
 # rather than teach the device about numpy containers. The ARCHIVE is the thing
 # under a SHA-256 pin; this step is a deterministic function of it.
 extract_hebrew_voice() { # extract_hebrew_voice <archive> <out.bin>
+  # Deterministic function of a hash-pinned archive, so a correct output is
+  # reusable: 510*256*4 bytes is the only shape that can be right. Skipping
+  # also stops the per-device loop rewriting a file it has already hard-linked
+  # into an earlier device dir.
+  if [ -f "$2" ] && [ "$(wc -c < "$2")" -eq 522240 ]; then
+    echo "   cached   $(basename "$2")" >&2
+    return 0
+  fi
   python3 - "$1" "$2" <<'PYX'
 import sys, zipfile, struct
 src, dst = sys.argv[1], sys.argv[2]
@@ -137,7 +159,11 @@ header_len = struct.unpack("<H", raw[8:10])[0]
 body = raw[10 + header_len:]
 expected = 510 * 256 * 4
 assert len(body) == expected, f"{name}: got {len(body)} bytes, expected {expected}"
-open(dst, "wb").write(body)
+# Atomic: a killed interpreter must not leave a short file that the size
+# check above would then have to catch on the next run.
+import os
+open(dst + ".part", "wb").write(body)
+os.replace(dst + ".part", dst)
 print(f">> extracted {name} -> {dst} ({len(body)} bytes)", file=sys.stderr)
 PYX
 }
@@ -202,47 +228,77 @@ PUSH
   chmod +x "$devdir/push.sh"
 }
 
-fetch_apk() { # newest green APK from the rolling debug-latest release
+LOCAL_APK="app/build/outputs/apk/debug/app-debug.apk"
+
+fetch_ci_apk() { # only with --ci-apk: the rolling debug-latest release
   mkdir -p "$CACHE/apk"
-  # CI replaces this release's asset on every green build, and the repo is
-  # public, so a plain curl works with no GitHub CLI and no login. (There is
-  # deliberately no per-run artifact to fall back to: the workflow publishes
-  # only the release — see .github/workflows/android-ci.yml.)
   local url="https://github.com/$REPO_SLUG/releases/download/debug-latest/app-debug.apk"
-  if curl -fsSL --retry 4 --retry-all-errors -o "$CACHE/apk/app-debug.apk.tmp" "$url"; then
-    mv "$CACHE/apk/app-debug.apk.tmp" "$CACHE/apk/app-debug.apk"
-    echo ">> fetched APK from the debug-latest release"
+  # No pin is possible — the release asset moves with every green build — so
+  # this one writes to .part and moves only on success. That is the same
+  # atomicity the pinned artifacts get; it just cannot also verify content.
+  if curl -fsSL --retry 4 --retry-all-errors -o "$CACHE/apk/app-debug.apk.part" "$url"; then
+    mv -f "$CACHE/apk/app-debug.apk.part" "$CACHE/apk/app-debug.apk"
+    echo ">> APK: fetched CI's debug-latest release" >&2
     return 0
   fi
-  rm -f "$CACHE/apk/app-debug.apk.tmp"
-  # Private-repo (or pre-release) case: fall back to the authenticated CLI.
+  rm -f "$CACHE/apk/app-debug.apk.part"
   if command -v gh >/dev/null && gh release download debug-latest -R "$REPO_SLUG" \
-       -p app-debug.apk --clobber --dir "$CACHE/apk" 2>/dev/null; then
-    echo ">> fetched APK from the debug-latest release (via gh)"
+       -p app-debug.apk --clobber --dir "$CACHE/apk.part" 2>/dev/null; then
+    mv -f "$CACHE/apk.part/app-debug.apk" "$CACHE/apk/app-debug.apk"
+    rmdir "$CACHE/apk.part" 2>/dev/null || true
+    echo ">> APK: fetched CI's debug-latest release (via gh)" >&2
     return 0
   fi
-  echo "!! could not fetch the debug-latest APK; skipping (build one with :app:assembleDebug)"
+  rm -rf "$CACHE/apk.part"
+  echo "!! APK: could not fetch debug-latest; skipping" >&2
+  return 1
+}
+
+# apk_to_place -> path on stdout, or empty. Your build wins unless you ask for
+# CI's. Nothing is placed implicitly from the cache: the old code placed
+# whatever happened to be in $CACHE/apk regardless of any flag, which is how a
+# stale CI build could overwrite the APK you had just compiled.
+apk_to_place() {
+  if [ "$USE_CI_APK" = 1 ]; then
+    fetch_ci_apk >/dev/null 2>&1 || fetch_ci_apk || return 0
+    [ -f "$CACHE/apk/app-debug.apk" ] && echo "$CACHE/apk/app-debug.apk"
+    return 0
+  fi
+  if [ -f "$LOCAL_APK" ]; then
+    echo "$LOCAL_APK"
+    return 0
+  fi
   return 0
 }
 
 # ------------------------------- main ----------------------------------------
-[ "$WITH_APK" = 1 ] && fetch_apk
+APK_SRC="$(apk_to_place)"
+if [ -n "$APK_SRC" ]; then
+  if [ "$USE_CI_APK" = 1 ]; then
+    echo "== APK: CI debug-latest ($APK_SRC)"
+  else
+    echo "== APK: your local build ($APK_SRC, built $(date -r "$APK_SRC" '+%Y-%m-%d %H:%M' 2>/dev/null || echo 'unknown'))"
+  fi
+elif [ "$USE_CI_APK" != 1 ]; then
+  echo "== APK: none — build one with './gradlew :app:assembleDebug', or pass --ci-apk"
+fi
 
 for dev in "${DEVICES[@]}"; do
   devdir="$OUT/$dev"
   models=$(models_for "$dev")
   echo "== $dev -> $devdir"
   for m in $models; do
-    place "$(fetch "$m")" "$devdir"
+    fetch_into "$m" "$devdir"
   done
   if [ "$WITH_SPEECH" = 1 ]; then
     for f in "$(whisper_for "$dev")" model_quantized.onnx wav2vec2-phoneme-int8.onnx; do
-      place "$(fetch "$f")" "$devdir/speech"
+      fetch_into "$f" "$devdir/speech"
     done
     if [ "$WITH_HEBREW" = 1 ]; then
-      place "$(fetch phonikud-1.0.int8.onnx)" "$devdir/speech"
-      place "$(fetch kokoro-hebrew.onnx)" "$devdir/speech"
-      extract_hebrew_voice "$(fetch voices-hebrew.bin)" "$CACHE/he_shaul.bin"
+      fetch_into phonikud-1.0.int8.onnx "$devdir/speech"
+      fetch_into kokoro-hebrew.onnx "$devdir/speech"
+      heb=$(fetch voices-hebrew.bin) || { echo "!! aborting: voices-hebrew.bin" >&2; exit 1; }
+      extract_hebrew_voice "$heb" "$CACHE/he_shaul.bin"
       place "$CACHE/he_shaul.bin" "$devdir/speech"
     fi
     cat > "$devdir/speech/README.txt" <<'NOTE'
@@ -263,11 +319,13 @@ app and must be removed from any build that is sold, ad-supported, or
 otherwise commercial. docs/feasibility.md section 6 has the full chain.
 NOTE
   fi
-  if [ -f "$CACHE/apk/app-debug.apk" ]; then place "$CACHE/apk/app-debug.apk" "$devdir"; fi
+  [ -n "$APK_SRC" ] && place "$APK_SRC" "$devdir"
   # shellcheck disable=SC2086 # word-splitting the model list is intended
   write_push_sh "$devdir" $models
 done
 
 echo
 echo "All set. Per-device: cd $OUT/<device> && ./push.sh"
-echo "APK (if not fetched with --apk): https://github.com/$REPO_SLUG/releases/tag/debug-latest"
+if [ -z "$APK_SRC" ]; then
+  echo "No APK placed. ./gradlew :app:assembleDebug then re-run, or --ci-apk for CI's."
+fi

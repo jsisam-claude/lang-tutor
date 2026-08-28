@@ -19,6 +19,8 @@
 # (voice missing -> the app falls back to the platform TTS shim).
 set -euo pipefail
 
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/fetch.sh"
+
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DEST="$REPO_ROOT/app/src/main/assets/kokoro"
 BASE="https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/voices"
@@ -56,26 +58,20 @@ VOICES=(
 )
 
 mkdir -p "$DEST"
+# A ^C partway through 28 voices used to leave a .tmp rotting in the assets
+# dir, which then ships in the APK. The trap fires on every exit path.
+trap 'clean_partials "$DEST"' EXIT
+
 fetched=0
 cached=0
 for entry in "${VOICES[@]}"; do
   name="${entry%%|*}"
   sha="${entry##*|}"
-  out="$DEST/$name"
-  if [[ -f "$out" ]] && echo "$sha  $out" | sha256sum -c --status 2>/dev/null; then
+  if cached_ok "$DEST/$name" "$sha"; then
     cached=$((cached + 1))
     continue
   fi
-  # --retry-all-errors: covers curl's HTTP/2 PROTOCOL_ERROR (exit 92), which
-  # plain --retry does not — see the same note in fetch-gpu-libs.sh.
-  curl -fsSL --retry 4 --retry-all-errors -o "$out.tmp" "$BASE/$name"
-  got="$(sha256sum "$out.tmp" | awk '{print $1}')"
-  if [[ "$got" != "$sha" ]]; then
-    rm -f "$out.tmp"
-    echo "!! $name sha256 mismatch: expected $sha, got $got" >&2
-    exit 1
-  fi
-  mv "$out.tmp" "$out"
+  fetch_verified "$BASE/$name" "$DEST/$name" "$sha" "$name"
   fetched=$((fetched + 1))
 done
 echo "Kokoro voices ready in $DEST ($fetched fetched, $cached cached, ${#VOICES[@]} total)"

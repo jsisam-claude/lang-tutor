@@ -17,6 +17,8 @@
 # stays push-to-talk (the toggle is hidden when the asset is absent).
 set -euo pipefail
 
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/fetch.sh"
+
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DEST="$REPO_ROOT/app/src/main/assets/vad"
 NAME="silero_vad.onnx"
@@ -24,18 +26,5 @@ URL="https://raw.githubusercontent.com/snakers4/silero-vad/v6.2.1/src/silero_vad
 SHA="1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
 
 mkdir -p "$DEST"
-out="$DEST/$NAME"
-if [[ -f "$out" ]] && echo "$SHA  $out" | sha256sum -c --status 2>/dev/null; then
-  echo "OK (cached)   $NAME"
-  exit 0
-fi
-# --retry-all-errors also covers curl's HTTP/2 PROTOCOL_ERROR (exit 92).
-curl -fsSL --retry 4 --retry-all-errors -o "$out.tmp" "$URL"
-got="$(sha256sum "$out.tmp" | awk '{print $1}')"
-if [[ "$got" != "$SHA" ]]; then
-  rm -f "$out.tmp"
-  echo "SHA-256 MISMATCH for $NAME: got $got, want $SHA" >&2
-  exit 1
-fi
-mv "$out.tmp" "$out"
-echo "OK (verified) $NAME -> $out"
+trap 'clean_partials "$DEST"' EXIT
+fetch_verified "$URL" "$DEST/$NAME" "$SHA" "$NAME"

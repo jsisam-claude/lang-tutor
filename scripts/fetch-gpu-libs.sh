@@ -62,6 +62,8 @@
 # assembling, and a local build without it still works — CPU fallback).
 set -euo pipefail
 
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/fetch.sh"
+
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DEST="$REPO_ROOT/app/src/main/jniLibs/arm64-v8a"
 # LiteRT-LM v0.16.1 — keep in lockstep with libs.versions.toml's litertlm.
@@ -76,26 +78,32 @@ LIBS=(
 )
 
 mkdir -p "$DEST"
+trap 'clean_partials "$DEST"' EXIT
+
 for entry in "${LIBS[@]}"; do
   name="${entry%%|*}"
   want="${entry##*|}"
-  out="$DEST/$name"
-  if [[ -f "$out" ]] && echo "$want  $out" | sha256sum -c --status 2>/dev/null; then
-    echo "OK (cached)   $name"
-    continue
-  fi
-  echo "fetching      $name"
-  # --retry-all-errors: plain --retry does NOT cover curl's HTTP/2
+  # --retry-all-errors inside fetch_verified also covers curl's HTTP/2
   # PROTOCOL_ERROR (exit 92), which GitHub's LFS media CDN throws
   # intermittently on larger files (killed a CI run once).
-  curl -fsSL --retry 4 --retry-all-errors -o "$out.tmp" "$BASE/$name"
-  got="$(sha256sum "$out.tmp" | awk '{print $1}')"
-  if [[ "$got" != "$want" ]]; then
-    rm -f "$out.tmp"
-    echo "SHA-256 MISMATCH for $name: got $got, want $want" >&2
-    exit 1
+  fetch_verified "$BASE/$name" "$DEST/$name" "$want" "$name"
+done
+
+# PRUNE what LIBS no longer lists. This directory is gitignored and owned
+# entirely by this script, so anything here that is not pinned above is a
+# leftover from an older revision — and leftovers here are not inert, they get
+# PACKAGED INTO THE APK. Removing the two TopK sampler prebuilts (23 MB that
+# provably cannot load: they need a `kLiteRtRuntimeBuiltin` symbol the
+# statically linked liblitertlm_jni.so does not export) would otherwise have
+# kept shipping them for everyone whose checkout predates the change.
+for f in "$DEST"/*.so; do
+  [ -e "$f" ] || continue
+  base="$(basename "$f")"
+  keep=0
+  for entry in "${LIBS[@]}"; do [ "${entry%%|*}" = "$base" ] && keep=1 && break; done
+  if [ "$keep" = 0 ]; then
+    echo "   pruned   $base (no longer pinned; would otherwise ship in the APK)"
+    rm -f "$f"
   fi
-  mv "$out.tmp" "$out"
-  echo "OK (verified) $name"
 done
 echo "GPU libs ready in $DEST"

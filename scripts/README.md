@@ -52,8 +52,11 @@ layout, and `fetch-vad-asset.sh` documents the Silero v6 input contract that
 scripts/download-sideload.sh                 # all three device profiles
 scripts/download-sideload.sh pixel-9a        # just one
 scripts/download-sideload.sh --no-speech     # LLM only, skip ASR/TTS/coach
-scripts/download-sideload.sh --apk           # also grab the newest green CI APK
+scripts/download-sideload.sh --ci-apk        # take CI's APK instead of your build
 ```
+
+The APK placed in each device dir is **your local build** —
+`app/build/outputs/apk/debug/app-debug.apk` — whenever it exists. No flag.
 
 **Run this one from the repo root** — its output path is relative, unlike the
 fetchers. It produces one directory per device, sized to that device's RAM:
@@ -78,8 +81,37 @@ the download happens here, on your workstation, where the CA is already trusted,
 and the files reach the device over USB. See
 [docs/building-on-debian.md](../docs/building-on-debian.md) for that discussion.
 
-`--apk` pulls the rolling `debug-latest` release asset with plain `curl` (the
-repo is public, so no login is needed) and falls back to `gh` if that fails.
+`--ci-apk` pulls the rolling `debug-latest` release asset with plain `curl`
+(the repo is public, so no login is needed) and falls back to `gh` if that
+fails. It is opt-in because the default has to be your own build: the APK
+placement used not to be gated on any flag, so once a CI APK was in the cache
+every later run copied it into the device dir — including over a local build
+you had just compiled and dropped there, silently.
+
+## Re-running is free
+
+Every script here skips a file that is already present with the right
+SHA-256, so a second run downloads nothing. The rules live in one place,
+[`lib/fetch.sh`](lib/fetch.sh), and are worth knowing because each exists to
+stop a specific failure:
+
+- **Skip what already matches its pin** — the models are gigabytes.
+- **Never resume into a file that failed its hash.** `curl -C -` continues
+  from the existing byte count, so a corrupt cache entry gets a remote tail
+  appended to a wrong prefix. Measured: a 30-byte bad file plus a resumed
+  fetch produced a 7,923-byte hybrid, which then failed the hash and was
+  deleted — costing a *second* full download. Bad files are removed first.
+- **Write atomically** via `<dest>.part` + `mv`. This matters doubly for
+  `download-sideload.sh`, which hard-links cache entries into the device dirs:
+  writing in place would corrupt copies already placed.
+- **Clean up partials** on exit, so an interrupted run leaves nothing that
+  later ships inside the APK.
+- **An absent pin is an error**, never a pass.
+
+`fetch-gpu-libs.sh` additionally **prunes** `.so` files it no longer pins.
+That directory is gitignored and script-owned, and its contents get packaged
+into the APK — without pruning, the 23 MB of TopK sampler prebuilts dropped in
+August would keep shipping for anyone whose checkout predates the change.
 
 ## Regenerating committed data (rarely)
 
@@ -119,7 +151,7 @@ Useful when working behind a restrictive egress policy:
 | `fetch-gpu-libs.sh` | `media.githubusercontent.com` (Git LFS) |
 | `fetch-vad-asset.sh` | `raw.githubusercontent.com` |
 | `fetch-voice-assets.sh` | `huggingface.co` |
-| `download-sideload.sh` | `huggingface.co`, `github.com` (only with `--apk`) |
+| `download-sideload.sh` | `huggingface.co`, `github.com` (only with `--ci-apk`) |
 | `gen-kokoro-frontend-data.sh` | `huggingface.co`, `raw.githubusercontent.com` |
 | `gen-phonikud-frontend-data.sh` | `huggingface.co` |
 | `generate-vad-golden.py` | none — fully local |

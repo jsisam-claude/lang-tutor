@@ -7,12 +7,14 @@
 #     Specials: [UNK]=0 [CLS]=1 [SEP]=2 [PAD]=3 (encoded by name).
 #
 # Rerun only to refresh the pins; outputs are committed so builds and tests
-# never need the network.
+# never need the network. Writes land on a .part and move into place only once
+# complete, so a failed run cannot leave a committed file truncated.
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DEST="$REPO_ROOT/core/speech/src/main/resources/phonikud"
 mkdir -p "$DEST"
+trap 'rm -f "$DEST"/*.part' EXIT
 
 python3 - "$DEST" <<'PY'
 import json, sys, urllib.request
@@ -26,9 +28,11 @@ vocab = tok["model"]["vocab"]
 # the TSV stays line-per-entry (the Kotlin loader unescapes).
 def esc(ch):
     return ch.replace("\\", "\\\\").replace("\t", "\\t").replace("\n", "\\n").replace("\r", "\\r")
-with open(f"{dest}/tokenizer-vocab.tsv", "w", encoding="utf-8") as f:
+import os
+with open(f"{dest}/tokenizer-vocab.tsv.part", "w", encoding="utf-8") as f:
     for ch, i in sorted(vocab.items(), key=lambda kv: kv[1]):
         f.write(f"{i}\t{esc(ch)}\n")
+os.replace(f"{dest}/tokenizer-vocab.tsv.part", f"{dest}/tokenizer-vocab.tsv")
 print(f"tokenizer-vocab.tsv: {len(vocab)} entries")
 
 # NOTE: this script used to also emit phoneme-map.tsv, the Piper voice's
@@ -43,16 +47,20 @@ PY
 PHONIKUD_SRC="${PHONIKUD_SRC:-}"
 if [[ -n "$PHONIKUD_SRC" && -d "$PHONIKUD_SRC/phonikud/expander" ]]; then
   python3 - "$DEST/number-names.tsv" "$PHONIKUD_SRC" <<'PY'
-import sys
+import os, sys
 sys.path.insert(0, sys.argv[2])
 from phonikud.expander.number_names import NUMBER_NAMES
-with open(sys.argv[1], "w", encoding="utf-8") as f:
+dst = sys.argv[1]
+with open(dst + ".part", "w", encoding="utf-8") as f:
     for bare, pointed in NUMBER_NAMES.items():
         f.write(f"{bare}\t{pointed}\n")
+os.replace(dst + ".part", dst)
 print(f"number-names.tsv: {len(NUMBER_NAMES)} entries")
 PY
 else
   echo "PHONIKUD_SRC not set — skipping number-names.tsv refresh"
 fi
 
-wc -l "$DEST/tokenizer-vocab.tsv" "$DEST/phoneme-map.tsv"
+# phoneme-map.tsv is NOT generated any more (see the note above). Naming it
+# here made wc exit 1, failing the whole script after all its work succeeded.
+wc -l "$DEST"/*.tsv
