@@ -94,12 +94,34 @@ Rules, enforced by `scripts/phrasebank-lint.py`:
 | level | grammar center of gravity |
 |---|---|
 | 1 | 2–4 words; be + adjective, I see/like; colors, sizes, 1–3 |
-| 2 | present simple + progressive; questions; want-to; emotions + because |
+| 2 | present simple + progressive; questions; want-to; can/can't (ability, permission); emotions + because |
 | 3 | past simple; plurals, possessives; did-questions |
-| 4 | future (will / going to); comparatives & superlatives; must/should; zero conditional |
-| 5 | present perfect; can/might; first conditional |
+| 4 | future (going to first, then will); comparatives & superlatives; must/should; zero conditional |
+| 5 | present perfect; may/might; first conditional |
 | 6 | past progressive & perfect; second conditional; passive |
 | 7 | perfect progressive; third conditional; reported speech; discourse structures |
+
+Two ladder adjustments landed after checking the consultation's
+CEFR/English-Grammar-Profile ordering against the ladder (they agreed on
+everything else): *can/can't* belongs at Level 2, not 5 — ability and
+permission are A1 structures — and Level 4 batches introduce *going to*
+before predictive *will*. Levels are cumulative, so earlier-level
+structures remain legal at every level above.
+
+## Vocabulary source for batches (license-checked)
+
+- **NGSL** (Browne, Culligan & Phillips; 2,809 high-frequency words) is the
+  batch-authoring vocabulary guide. License per the project's pages:
+  **CC BY-SA 4.0** — usable in a free app with attribution; ShareAlike
+  binds anything derived from the LIST itself, not original sentences that
+  merely use common words. The consultation round claimed plain CC-BY —
+  **wrong on the SA clause**, which is exactly why license claims get
+  checked before anything is embedded. Confirm the license line on the
+  official site before the list itself (as data) ever ships in-app;
+  guiding authoring requires no embedding at all.
+- **Oxford 3000/5000, English Vocabulary Profile**: proprietary (OUP /
+  Cambridge). Never embed, never reproduce. Consultation and prior
+  knowledge agree here.
 
 Every batch: common conversational subjects, common objects, frames that
 repeat with one slot changed, emotions usable at every level, nothing

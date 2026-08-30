@@ -80,6 +80,12 @@ and the responsiveness comes from overlap instead:
   at `SpeechSoftEnd`, match the speculative transcript against the drill
   target and accept without waiting out the hangover.)
 
+External sanity check (consultation round 3, unverifiable but low-stakes —
+nothing here depends on it): production voice stacks reportedly speculate
+at 200–300 ms of silence and hold L2 firm endpoints near ours, with L2
+intra-utterance hesitations quoted at 600–1,200 ms — the same band round 2
+gave. The 250/700 pair shipped on our own reasoning and stays on it.
+
 Do not "fix" the 700 ms number for snappiness again without re-reading this.
 
 ## Dead ends, so they are not retried
@@ -167,6 +173,32 @@ for when we build it:
   cares about). So: AEC-filtered audio for **VAD only** (barge detection),
   raw audio for ASR. Concurrent-capture limits on one mic need a device
   check before committing to the split-stream design.
+
+Consultation round 3 (2026-08-30) on the split-stream question — all of it
+is device-behavior we cannot verify from a container, so every claim ships
+as DEVICE-VERIFY, not fact (this round's sibling claim about NGSL's license
+was already wrong, see docs/phrasebank.md):
+
+- **Same-UID concurrent capture**: one app may hold two AudioRecords at
+  once (`VOICE_COMMUNICATION` + `UNPROCESSED`); Android's cross-app capture
+  policy restricts *apps*, not streams within one. Plausible and consistent
+  with the documented sharing policy. DEVICE-VERIFY on Pixel 9: both
+  streams actually deliver, at our rates, with the LLM loaded.
+- **Digital isolation**: `UNPROCESSED` requests the raw input path, so AEC/
+  NS attached to the other stream should not touch it. Check
+  `PROPERTY_SUPPORT_AUDIO_SOURCE_UNPROCESSED` before trusting the source
+  exists at all.
+- **Shared analog gain caveat**: the claim is that AGC on the voice stream
+  can move the shared mic pre-amp and amplitude-modulate the "raw" stream.
+  The suggested mitigation is a real API (`AutomaticGainControl.create(
+  sessionId)` + `setEnabled(false)`) — but whether Pixel AGC is analog at
+  all, and whether the platform honors the disable on a voice stream, is
+  unverifiable here. Record levels on both streams side by side on device.
+- **Post-firm grace window** (resume within 300–500 ms *after* the firm
+  endpoint, splice, continue): considered and DECLINED. Our firm endpoint
+  is already the L2-calibrated 700 ms; delaying commitment past it re-adds
+  the exact latency the soft endpoint just removed. Barge-in is the right
+  home for late resumption.
 
 ## Policy actions that fell out (not latency, but load-bearing)
 
