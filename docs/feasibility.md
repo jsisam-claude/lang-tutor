@@ -574,8 +574,10 @@ drops the **perceived** gap to ~1–1.5 s without changing the real budget.
 - **Our safety architecture** (per-layer, all offline): curated topic templates →
   strict kid-tutor system prompt → constrained decoding where possible → output
   filter (blocklists + small on-device classifier) → session topic fencing →
-  report button + local incident log (parent-visible). Red-team evidence is a
-  release artifact, not an afterthought.
+  report button + local incident log (parent-visible; BUILT 2026-08-30 —
+  long-press a generated reply in the chat or lesson room flags it into
+  `ReportStore`, reviewed and cleared in the Parent Zone, device-local only).
+  Red-team evidence is a release artifact, not an afterthought.
 - **Privacy law**: COPPA (2025 rule, compliance 2026-04-22) barely applies when
   nothing is collected — the strongest marketing claim in the category. Israel's
   Privacy Protection Law Amendment 13 (in force 2025-08-14) similarly mostly

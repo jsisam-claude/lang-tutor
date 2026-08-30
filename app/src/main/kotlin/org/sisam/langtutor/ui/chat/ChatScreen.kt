@@ -1,6 +1,7 @@
 package org.sisam.langtutor.ui.chat
 
 import android.speech.SpeechRecognizer
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -296,6 +297,8 @@ private fun ChatMic(
 @Composable
 private fun ChatBubble(entry: ChatEntry, container: AppContainer) {
     val fromChild = entry.speaker == ChatSpeaker.CHILD
+    val context = LocalContext.current
+    val flaggedNote = stringResource(R.string.report_flagged)
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = if (fromChild) Arrangement.End else Arrangement.Start,
@@ -327,7 +330,18 @@ private fun ChatBubble(entry: ChatEntry, container: AppContainer) {
                         bottomEnd = if (fromChild) 3.dp else 14.dp,
                     ),
                 )
-                .padding(horizontal = 12.dp, vertical = 8.dp),
+                .padding(horizontal = 12.dp, vertical = 8.dp)
+                // The report mechanism, where the content is: long-pressing a
+                // generated reply flags it for Parent Zone review. Only
+                // Tuki's bubbles — the learner's own words need no policing.
+                .pointerInput(entry.text, fromChild) {
+                    if (!fromChild) {
+                        detectTapGestures(onLongPress = {
+                            container.flagReply(entry.text, room = "chat")
+                            Toast.makeText(context, flaggedNote, Toast.LENGTH_SHORT).show()
+                        })
+                    }
+                },
         ) {
             // Tuki's lines get the pronunciation key; the learner's own words
             // do not. They already know how they said it — what they need help

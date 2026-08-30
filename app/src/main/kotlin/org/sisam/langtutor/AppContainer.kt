@@ -45,8 +45,11 @@ import org.sisam.langtutor.packs.PackRepository
 import org.sisam.langtutor.packs.RealPackRepository
 import org.sisam.langtutor.packs.ResourceCatalogLoader
 import org.sisam.langtutor.packs.ramTierGb
+import org.sisam.langtutor.profile.FlaggedReply
 import org.sisam.langtutor.profile.JsonFileProfileStore
+import org.sisam.langtutor.profile.JsonFileReportStore
 import org.sisam.langtutor.profile.LearnerProfileStore
+import org.sisam.langtutor.profile.ReportStore
 import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
@@ -185,6 +188,21 @@ class AppContainer private constructor(context: Context) {
 
     val profile: LearnerProfileStore =
         JsonFileProfileStore(File(context.filesDir, "profile.json").toPath())
+
+    /** Flagged AI replies — device-local, reviewed in the Parent Zone, never
+     *  transmitted (the report mechanism generated-content policy requires;
+     *  docs/feasibility.md risk #5). */
+    val reports: ReportStore =
+        JsonFileReportStore(File(context.filesDir, "reports.json").toPath())
+
+    /** Fire-and-forget flag from any room; safe to call from composition. */
+    fun flagReply(text: String, room: String) {
+        appScope.launch {
+            runCatching {
+                reports.add(FlaggedReply(text, room, System.currentTimeMillis()))
+            }
+        }
+    }
 
     // User-approved enhancement downloads, real streaming downloader. Installs
     // into filesDir, so a downloaded model lands at the exact path the engine

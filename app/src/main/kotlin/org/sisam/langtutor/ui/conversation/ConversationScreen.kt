@@ -20,6 +20,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
@@ -269,7 +270,23 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                 }
             }
             items(transcript) { entry ->
-                Card(modifier = Modifier.fillMaxWidth()) {
+                val context = LocalContext.current
+                val flaggedNote = stringResource(R.string.report_flagged)
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        // The report mechanism, where the content is: long-
+                        // pressing a generated reply flags it for Parent Zone
+                        // review. Learner turns need no policing.
+                        .pointerInput(entry.text, entry.speaker) {
+                            if (entry.speaker == Speaker.TUTOR) {
+                                detectTapGestures(onLongPress = {
+                                    container.flagReply(entry.text, room = "lesson")
+                                    Toast.makeText(context, flaggedNote, Toast.LENGTH_SHORT).show()
+                                })
+                            }
+                        },
+                ) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text(
                             text = if (entry.speaker == Speaker.TUTOR) {

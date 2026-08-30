@@ -140,6 +140,12 @@
     <string name="parent_experimental_hint">These answer a question rather than improve anything. Leave them off unless you are testing.</string>
     <string name="parent_npu_title">Try the Edge TPU for the model</string>
     <string name="parent_npu_hint">Attempts the phone’s AI chip before the GPU. On a Pixel 9 this may hang the load, crash the app once, or leave it running on the CPU at a fifth the speed. Check logcat for the NPU line, then turn it back off.</string>
+    <string name="report_flagged">Flagged for review in the Parent Zone</string>
+    <string name="report_hint">Long-press one of Tuki\'s replies to flag it.</string>
+    <string name="parent_reports_title">Flagged replies</string>
+    <string name="parent_reports_hint">Replies someone long-pressed to flag. They stay on this device only — reviewing and clearing them is entirely yours.</string>
+    <string name="parent_reports_empty">Nothing flagged.</string>
+    <string name="parent_reports_clear">Clear all</string>
     <string name="home_picture_room">🖼️ Picture words</string>
     <string name="picture_title">Picture words</string>
     <string name="picture_next">Next</string>
