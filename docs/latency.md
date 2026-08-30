@@ -94,6 +94,50 @@ Do not "fix" the 700 ms number for snappiness again without re-reading this.
   touch Whisper's threading — it is an accuracy calibration
   (docs/asr-model-eval.md).
 
+## Consultation validated against the binary (2026-08-30)
+
+Two external models were consulted (relayed); both fabricated at least once,
+so every claim below carries how it was checked:
+
+- **The ORT spin keys exist** — `strings` on our shipped
+  `libonnxruntime.so` (1.29.0) contains `session.intra_op.spin_duration_us`,
+  `spin_backoff_max`, `allow_spinning`. Round 1's vagueness and my own doubt
+  were wrong; round 2 was right.
+- **ORT's own binary describes our exact situation**, embedded as a
+  diagnostic: "The XNNPACK EP utilizes an internal pthread-based thread
+  pool... Please set either intra_op_param.allow_spinning to 0 ... or the
+  ORT intra-op threadpool size to 1." **We already run intra-op=1**
+  (OnnxTuning), so the documented contention is already avoided and the
+  spinning experiment is deprioritized.
+- **`PTHREADPOOL_SPIN_WAIT` env var: no such string in the binary** (getenv
+  names appear in strings; none do). Treated as fabricated.
+- Round 1 fabricated a LiteRT-LM "Session Cloning" API (javap: no such JNI
+  export) and claimed 3-word Kokoro synthesis at ~50 ms (we measured
+  2,977 ms throttled). Round 2 corrected round 1 twice (endpointing,
+  two-stage generation). Neither is citable without a check like these.
+
+## Found by consultation, verified in code: the lesson room's KV leak
+
+`TutorOrchestrator.buildRequest` sends the policy's per-turn guidance as a
+leading `Role.SYSTEM` message; `LiteRtLmEngine` folds leading SYSTEM messages
+into the conversation's system text; `ConvoReuse` requires that text to be
+identical to reuse the KV cache. Consequence: **whenever the guidance changes
+between turns (different move, Hebrew help), the lesson room re-prefills the
+entire conversation** — the same defect removed from the chat room with the
+second parrot, still alive here. Fix shape: keep the system text constant and
+carry per-turn guidance inside the USER turn (or only alongside the child's
+message), exactly as the chat room now does. Unfixed as of this note.
+
+## Scorecard on the five follow-up recommendations
+
+| rec | verdict |
+|---|---|
+| Static-prefix prompt topography | Misread our engine (ConvoReuse already keeps the conversation prefilled) — but led straight to the lesson-room KV leak above. Adopt as that bug fix. |
+| 85 Hz HPF + peak normalize on raw PCM | Sensible; park with the barge-in / `UNPROCESSED` work. |
+| Foreground service (`microphone`) for OOM priority | **Rejected.** Contradicts the deliberate no-services battery/privacy doctrine; in active use the activity is foreground anyway, and `onTrimMemory` is already implemented. |
+| Hesitation-gap highlighting as fluency feedback | Nice product idea; needs streaming-ASR timestamps → parked with the P3 zipformer work. |
+| Cap refresh to 60 Hz during decode | Plausible (UI composition shares the Mali with decode); cheap device A/B via `Surface.setFrameRate`. Experiment list. |
+
 ## Barge-in (full duplex) — design notes for later
 
 Real conversation allows interrupting Tuki. What consultation says, recorded
