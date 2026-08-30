@@ -140,6 +140,11 @@
     <string name="parent_experimental_hint">These answer a question rather than improve anything. Leave them off unless you are testing.</string>
     <string name="parent_npu_title">Try the Edge TPU for the model</string>
     <string name="parent_npu_hint">Attempts the phone’s AI chip before the GPU. On a Pixel 9 this may hang the load, crash the app once, or leave it running on the CPU at a fifth the speed. Check logcat for the NPU line, then turn it back off.</string>
+    <string name="home_picture_room">🖼️ Picture words</string>
+    <string name="picture_title">Picture words</string>
+    <string name="picture_next">Next</string>
+    <string name="picture_where_is">Where is the %1$s?</string>
+    <string name="picture_done">%1$d of %2$d on the first try!</string>
     <string name="parent_refresh_cap_title">60 Hz screen while thinking</string>
     <string name="parent_refresh_cap_hint">Halves the screen’s refresh rate while the model is writing a reply, freeing the graphics chip for it. Compare tokens-per-second in logcat with it on and off.</string>
     <string name="parent_translation_title">Hebrew meaning</string>

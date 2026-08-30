@@ -70,6 +70,7 @@ fun HomeScreen(
     onOpenParent: () -> Unit,
     onOpenChat: () -> Unit,
     onOpenVocab: () -> Unit,
+    onOpenPictures: () -> Unit,
 ) {
     val units by produceState<List<UnitSummary>>(initialValue = emptyList(), container) {
         value = container.content.listUnits()
@@ -118,6 +119,11 @@ fun HomeScreen(
         // works instantly even while the big brain is still loading.
         Button(onClick = onOpenVocab, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_vocab_room))
+        }
+        // Recognition before production: see a picture, hear the word, then
+        // find the one Tuki asks for. No model, no mic — works on anything.
+        Button(onClick = onOpenPictures, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.home_picture_room))
         }
         // Freeform three-way practice with both parrots — no lesson, no
         // scoring, just talking.

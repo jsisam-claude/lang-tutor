@@ -53,6 +53,7 @@ import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
 import org.sisam.langtutor.tutor.TutorOrchestrator
 import org.sisam.langtutor.tutor.drill.DrillGenerator
 import org.sisam.langtutor.tutor.drill.DrillOrchestrator
+import org.sisam.langtutor.tutor.picture.PictureVocabOrchestrator
 import org.sisam.langtutor.ui.reward.RewardBus
 import org.sisam.langtutor.ui.reward.RewardKind
 import kotlinx.coroutines.withContext
@@ -636,6 +637,21 @@ class AppContainer private constructor(context: Context) {
      * ([createDrillGenerator]) but never judges, and a missing or still-
      * loading model never blocks the room.
      */
+    /** The picture vocabulary room: authored words, synthesized speech, no
+     *  model — instant on every device (docs/picture-vocabulary.md). */
+    fun createPictureVocab(scope: CoroutineScope): PictureVocabOrchestrator {
+        val kokoro = bundledTtsEngine()
+        appScope.launch(Dispatchers.IO) {
+            runCatching { kokoro?.warmUp() }
+            runCatching { ListeningAck.warmUp() }
+        }
+        return PictureVocabOrchestrator(
+            tts = kokoro ?: PlatformTtsEngine(appContext),
+            profile = profile,
+            scope = scope,
+        )
+    }
+
     fun createDrillOrchestrator(scope: CoroutineScope): DrillOrchestrator {
         val kokoro = bundledTtsEngine()
         appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
