@@ -303,7 +303,12 @@ class LiteRtLmEngine(
             // it against ~1.6 without, on the same device and log.
             add(Triple("cpu", Backend.CPU(cpuThreads(), null), mtpSupported))
         }
-        for ((label, backend, mtp) in backends) {
+        // A queue rather than a for-loop so a rung can be retried: see the
+        // compile-cache wipe in the create-failure path below.
+        val queue = ArrayDeque(backends)
+        var cacheWiped = false
+        while (queue.isNotEmpty()) {
+            val (label, backend, mtp) = queue.removeFirst()
             @OptIn(ExperimentalApi::class)
             runCatching { ExperimentalFlags.enableSpeculativeDecoding = mtp }
             val marker = when (label) {
@@ -363,6 +368,24 @@ class LiteRtLmEngine(
                 runCatching { gpuCacheMarker.delete() }
                 lastError = t
                 if (label.startsWith("gpu")) gpuFailed = true
+                // The one failure a wipe can cure: the OpenCL cache serializes
+                // on the FIRST cached load, and a process death mid-write
+                // leaves a file the driver chokes on ever after. That chokes
+                // exactly here — deserialization happens inside create — so
+                // wipe the cache and retry this rung ONCE before any latch
+                // demotes a backend that was never the problem. Once only, and
+                // only when there was something to wipe: an empty cache dir
+                // means this failure predates any cache file, and a second
+                // failure after a wipe means the cache was not the cause.
+                // (A smoke-test failure deliberately gets no retry — that is a
+                // generate-path fault, not a deserialization one.)
+                if (useGpuCache && label.startsWith("gpu") && !cacheWiped) {
+                    cacheWiped = true
+                    if (wipeCompileCache()) {
+                        Log.w(TAG, "retrying $label once with a clean compile cache")
+                        queue.addFirst(Triple(label, backend, mtp))
+                    }
+                }
                 continue
             }
             try {
@@ -429,6 +452,19 @@ class LiteRtLmEngine(
         }
         Log.e(TAG, "load failed on ALL backends for $modelPath", lastError)
         throw IllegalStateException("LiteRT-LM failed to load $modelPath on any backend", lastError)
+    }
+
+    /** Empty the shared compiled-model cache. True when anything was removed —
+     *  the CPU pays one slower load next time (measured 15.4 s cold vs 3.9 s
+     *  warm), which is the right price for recovering the GPU. */
+    private fun wipeCompileCache(): Boolean {
+        val dir = cacheDir?.let(::File) ?: return false
+        val entries = dir.listFiles().orEmpty()
+        if (entries.isEmpty()) return false
+        var removed = 0
+        entries.forEach { if (runCatching { it.deleteRecursively() }.getOrDefault(false)) removed++ }
+        Log.w(TAG, "compile cache wiped: $removed entries removed")
+        return removed > 0
     }
 
     // --- conversation reuse (the Pixel 9 latency lever) -----------------------
