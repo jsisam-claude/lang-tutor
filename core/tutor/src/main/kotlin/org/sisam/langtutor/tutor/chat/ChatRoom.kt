@@ -1,7 +1,13 @@
 package org.sisam.langtutor.tutor.chat
 
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import org.sisam.langtutor.llm.ChatMessage
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmEvent
@@ -11,6 +17,10 @@ import org.sisam.langtutor.llm.Role
 import org.sisam.langtutor.safety.BlocklistSafetyFilter
 import org.sisam.langtutor.speech.HebrewText
 import org.sisam.langtutor.safety.SafetyFilter
+import org.sisam.langtutor.speech.SentenceChunker
+import org.sisam.langtutor.speech.TtsEngine
+import org.sisam.langtutor.speech.TtsEvent
+import org.sisam.langtutor.speech.TutorLanguage
 
 /** Who is talking in the room. */
 enum class ChatSpeaker { CHILD, TUKI }
@@ -39,20 +49,25 @@ data class ChatEntry(
  * conversation's system text; alternating it between Tuki and Kiki changed
  * that text every turn, so no conversation could ever be reused and every
  * reply re-prefilled the whole history. With one speaker the instruction is
- * constant and lives in [ROOM_PROMPT], and the transcript we send is a plain
- * growing suffix — which is exactly the shape `ConvoReuse` will reuse.
+ * constant and lives in [ROOM_PROMPT], and the history we send —
+ * [sentHistory], the raw exchanges exactly as the engine recorded them — is a
+ * plain growing suffix, which is exactly the shape `ConvoReuse` will reuse.
  *
- * Freeform does NOT mean unfiltered: every reply passes the same safety
+ * Freeform does NOT mean unfiltered: every SENTENCE passes the same safety
  * filter as lesson replies before it is shown or spoken, and a blocked reply
  * drops the engine's cached context exactly like the lesson path does.
  *
- * Pure JVM; speech is injected as a lambda so the app can route the reply to
- * whichever voice the parent picked.
+ * Pure JVM; speech comes through the [TtsEngine] interface so the app can
+ * hand in whichever voice the parent picked.
  */
 class ChatRoom(
     private val llm: LlmEngine,
     private val safety: SafetyFilter = BlocklistSafetyFilter(),
-    private val speak: suspend (ChatSpeaker, String) -> Unit = { _, _ -> },
+    /**
+     * The room's voice. A real engine streams: the first sentence is audible
+     * while the rest of the reply is still decoding (see [respondStreaming]).
+     */
+    private val tts: TtsEngine = SilentVoice,
     /**
      * Whether to ask for a Hebrew translation of each reply.
      *
@@ -86,6 +101,7 @@ class ChatRoom(
     val busy: StateFlow<Boolean> = _busy
 
     suspend fun start() {
+        sentHistory = emptyList()
         llm.load(LlmModelSpec(modelId = "chat"))
     }
 
@@ -107,49 +123,184 @@ class ChatRoom(
         _busy.value = true
         try {
             _messages.value += ChatEntry(ChatSpeaker.CHILD, clean)
-            // Words first, then voice: the bubble appears the moment the model
-            // is done, so the learner has something to read while the ~2 s of
-            // synthesis runs instead of watching a still screen.
-            val reply = compose()
-            _messages.value += ChatEntry(ChatSpeaker.TUKI, reply.english, reply.hebrew)
-            // Only the English is spoken. The translation is a reading aid;
-            // hearing it would undercut the point of an English room.
-            voice(reply.english)
+            respondStreaming(clean)
         } finally {
             _busy.value = false
+            _typing.value = null
+            _speaking.value = null
         }
     }
 
     /** What one turn produced: the spoken line, and its meaning if asked for. */
     internal data class Reply(val english: String, val hebrew: String?)
 
-    /** Generate and vet Tuki's line. No side effects on the room. */
-    private suspend fun compose(): Reply {
+    /** Thrown to stop LLM collection the moment the reply must end early. */
+    private class StopStreaming : CancellationException("stream stopped early")
+
+    /**
+     * Streamed reply, the lesson room's shape: tokens → sentence chunks →
+     * per-sentence safety → the voice, first sentence alone. The room used to
+     * collect the WHOLE generation before showing or saying anything, which
+     * put the entire decode (many seconds throttled) between the learner's
+     * message and any response; now the bubble grows sentence by sentence and
+     * the first sentence is audible while the rest is still decoding.
+     *
+     * The `HE:` translation trails the reply by construction — the model
+     * writes it last — so the English streams out first and the Hebrew row
+     * attaches to the finished bubble when it arrives and survives the vet.
+     * Everything before the marker is the spoken half; the marker itself and
+     * anything after it never reach the voice or the visible text.
+     *
+     * Safety moves WITH the audio, exactly like the lesson room: a sentence
+     * passes the filter before it is queued or shown, and a blocked sentence
+     * stops generation, cuts the audio, swaps the whole bubble for the
+     * scripted fallback and drops the poisoned engine context.
+     */
+    private suspend fun respondStreaming(userText: String) {
         val hebrewWanted = runCatching { wantsHebrew() }.getOrDefault(false)
+        val request = buildRequest(userText, hebrewWanted)
         _typing.value = ChatSpeaker.TUKI
-        var out = ""
-        try {
-            llm.generate(buildRequest(hebrewWanted)).collect { event ->
-                when (event) {
-                    is LlmEvent.Token -> out += event.text
-                    is LlmEvent.Done -> out = event.fullText
+        var raw = ""
+        var sentUpTo = 0
+        var blocked = false
+        var failed = false
+        var bubbleAt = -1
+        val sentences = Channel<String>(Channel.UNLIMITED)
+
+        // The English half of what has arrived so far, and whether it is
+        // complete. The marker freezes it: once `HE:` appears, no more English
+        // is coming and the tail sentence no longer needs to wait for
+        // stability.
+        fun english(): Pair<String, Boolean> {
+            val at = raw.indexOf(HEBREW_MARKER)
+            return if (at >= 0) raw.substring(0, at) to true else raw to false
+        }
+
+        fun showUpTo(chars: Int) {
+            val text = sanitize(raw.take(chars))
+            if (text.isEmpty()) return
+            val list = _messages.value
+            if (bubbleAt < 0) {
+                bubbleAt = list.size
+                _messages.value = list + ChatEntry(ChatSpeaker.TUKI, text)
+                _typing.value = null
+            } else {
+                _messages.value = list.toMutableList().also {
+                    it[bubbleAt] = it[bubbleAt].copy(text = text)
                 }
             }
-        } catch (e: Exception) {
-            // A failed generation must not kill the room — the parrot just
-            // says something safe and the conversation moves on.
-            out = ""
-        } finally {
-            _typing.value = null
         }
-        val split = split(out)
-        val final = sanitize(split.english)
-        if (final.isEmpty() || !safety.check(final).allowed) {
-            // The cached conversation holds what the model actually said.
-            llm.invalidateContext()
-            return Reply(FALLBACK, null)
+
+        suspend fun flushCompleteSentences(finalFlush: Boolean) {
+            val (visible, markerSeen) = english()
+            for (c in SentenceChunker.split(visible)) {
+                if (c.start < sentUpTo) continue
+                // The buffer's tail chunk waits for more tokens — the next
+                // token can dissolve its boundary — unless nothing more can
+                // arrive for the English half.
+                if (c.end >= visible.length && !(finalFlush || markerSeen)) break
+                // The model sometimes signs its lines; the voice and the
+                // bubble both get the undressed text.
+                val heard = if (c.start == 0) sanitize(c.text) else c.text
+                if (heard.isNotEmpty()) {
+                    if (!safety.check(heard).allowed) {
+                        blocked = true
+                        return
+                    }
+                    sentences.send(heard)
+                }
+                sentUpTo = c.end
+                showUpTo(sentUpTo)
+            }
         }
-        return Reply(final, if (hebrewWanted) vetHebrew(split.hebrew) else null)
+
+        coroutineScope {
+            val speaking = launch {
+                try {
+                    tts.speakStream(sentences.consumeAsFlow(), TutorLanguage.ENGLISH).collect { event ->
+                        if (event is TtsEvent.Started) _speaking.value = ChatSpeaker.TUKI
+                    }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (_: Exception) {
+                    // A voice failure must not kill the room — the words are
+                    // already on screen, which is the part that cannot be lost.
+                } finally {
+                    _speaking.value = null
+                }
+            }
+            try {
+                try {
+                    llm.generate(request).collect { event ->
+                        when (event) {
+                            is LlmEvent.Token -> {
+                                raw += event.text
+                                flushCompleteSentences(finalFlush = false)
+                                if (blocked) throw StopStreaming()
+                            }
+                            // Adopt the engine's full text only when it
+                            // preserves what was already sent to the voice.
+                            is LlmEvent.Done ->
+                                if (event.fullText.startsWith(raw.take(sentUpTo))) raw = event.fullText
+                        }
+                    }
+                    if (!blocked) flushCompleteSentences(finalFlush = true)
+                } catch (_: StopStreaming) {
+                    // generation cancelled mid-reply; handled below
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    // A failed generation must not kill the room — the parrot
+                    // just says something safe and the conversation moves on.
+                    failed = true
+                }
+                sentences.close()
+
+                val shown = sanitize(english().first).trim()
+                // Belt-and-braces parity with the lesson room: every spoken
+                // character already passed the per-sentence gate; a failure on
+                // the whole is a filter or chunker bug, but still cleaned up.
+                if (!blocked && !failed && shown.isNotEmpty() && !safety.check(shown).allowed) {
+                    blocked = true
+                }
+
+                if (blocked || failed || shown.isEmpty()) {
+                    speaking.cancel()
+                    runCatching { tts.stop() }
+                    runCatching { speaking.join() }
+                    // The cached conversation holds what the model actually
+                    // said; the ledger records what the child was given.
+                    llm.invalidateContext()
+                    val list = _messages.value
+                    val entry = ChatEntry(ChatSpeaker.TUKI, FALLBACK)
+                    _messages.value = if (bubbleAt < 0) list + entry else {
+                        list.toMutableList().also { it[bubbleAt] = entry }
+                    }
+                    recordExchange(userText, FALLBACK)
+                    voice(FALLBACK)
+                } else {
+                    // Final dress: the full vetted English, plus the meaning
+                    // row if it was asked for and survives the gauntlet.
+                    val hebrew = if (hebrewWanted) vetHebrew(split(raw).hebrew) else null
+                    val list = _messages.value
+                    _messages.value = list.toMutableList().also {
+                        it[bubbleAt] = it[bubbleAt].copy(text = shown, hebrew = hebrew)
+                    }
+                    // The ledger keeps the RAW reply — translation line and
+                    // all — because that is what the engine's conversation
+                    // recorded, and the next request must repeat it verbatim
+                    // for the KV cache to survive (see the lesson room's
+                    // sentHistory for the full story).
+                    recordExchange(userText, raw)
+                    speaking.join()
+                }
+            } catch (e: Exception) {
+                sentences.close()
+                speaking.cancel()
+                runCatching { tts.stop() }
+                throw e
+            }
+        }
     }
 
     /**
@@ -203,10 +354,11 @@ class ChatRoom(
         return t
     }
 
+    /** Batch speech for the scripted fallback — short, likely cached. */
     private suspend fun voice(text: String) {
         _speaking.value = ChatSpeaker.TUKI
         try {
-            runCatching { speak(ChatSpeaker.TUKI, text) }
+            runCatching { tts.speak(text, TutorLanguage.ENGLISH).collect { } }
         } finally {
             _speaking.value = null
         }
@@ -221,25 +373,35 @@ class ChatRoom(
         return t
     }
 
-    private fun buildRequest(hebrewWanted: Boolean): LlmRequest {
-        // Verbatim text, no "Tuki: " prefix: the engine records each reply as
-        // it was generated, and this window has to match it exactly or the
-        // conversation gets rebuilt from scratch on every turn.
-        val history = _messages.value.takeLast(HISTORY_ENTRIES).map { entry ->
-            when (entry.speaker) {
-                ChatSpeaker.CHILD -> ChatMessage(Role.USER, entry.text)
-                ChatSpeaker.TUKI -> ChatMessage(Role.ASSISTANT, entry.text)
-            }
-        }
-        return LlmRequest(
+    /**
+     * What the MODEL has processed, exactly as sent and received. The bubbles
+     * cannot serve as request history: the engine records the RAW reply — the
+     * `HE:` translation line, the "Tuki:" tic — while the bubble shows the
+     * undressed English, and `ConvoReuse` demands the request window repeat
+     * the recorded text verbatim or the whole conversation is re-prefilled.
+     * With the translation on, that mismatch made EVERY turn rebuild. Same
+     * fix, same reasons as the lesson room's `sentHistory`.
+     */
+    private var sentHistory: List<ChatMessage> = emptyList()
+
+    private fun recordExchange(userText: String, replyText: String) {
+        if (replyText.isBlank()) return
+        sentHistory = (
+            sentHistory +
+                ChatMessage(Role.USER, userText) +
+                ChatMessage(Role.ASSISTANT, replyText)
+            ).takeLast(HISTORY_ENTRIES)
+    }
+
+    private fun buildRequest(userText: String, hebrewWanted: Boolean): LlmRequest =
+        LlmRequest(
             // Appended, not swapped: the whole point of one stable prompt is
             // that the conversation can be reused, and this text only changes
             // when the learner changes the setting.
             systemPrompt = if (hebrewWanted) ROOM_PROMPT + "\n\n" + HEBREW_INSTRUCTION else ROOM_PROMPT,
-            messages = history,
+            messages = sentHistory.takeLast(HISTORY_ENTRIES) + ChatMessage(Role.USER, userText),
             maxTokens = if (hebrewWanted) REPLY_TOKENS + HEBREW_TOKENS else REPLY_TOKENS,
         )
-    }
 
     companion object {
         const val FALLBACK = "Let's talk about something fun instead!"
@@ -281,5 +443,14 @@ class ChatRoom(
         )
 
         const val HISTORY_ENTRIES = 18
+
+        /** The default voice: emits the lifecycle and says nothing, so a room
+         *  built without speech still runs full turns (tests, previews). */
+        private object SilentVoice : TtsEngine {
+            override fun speak(text: String, language: TutorLanguage, speed: Float) =
+                flowOf(TtsEvent.Started, TtsEvent.Completed)
+
+            override suspend fun stop() = Unit
+        }
     }
 }

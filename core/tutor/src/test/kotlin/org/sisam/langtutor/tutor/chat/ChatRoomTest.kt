@@ -11,6 +11,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.Role
+import org.sisam.langtutor.speech.FakeTtsEngine
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ChatRoomTest {
@@ -39,10 +40,10 @@ class ChatRoomTest {
     fun `one learner message yields exactly one spoken reply`() = runTest {
         // The room used to answer twice — Tuki then Kiki — which doubled both
         // the generation and the synthesis for every single message.
-        val spoken = mutableListOf<Pair<ChatSpeaker, String>>()
+        val tts = FakeTtsEngine()
         val room = ChatRoom(
             llm = FakeLlmEngine(listOf("Hello friend!", "So fun! What game do you like?")),
-            speak = { s, t -> spoken += s to t },
+            tts = tts,
         )
         room.start()
         room.send("hello")
@@ -52,7 +53,7 @@ class ChatRoomTest {
             room.messages.value.map { it.speaker },
         )
         assertEquals("Hello friend!", room.messages.value[1].text)
-        assertEquals(listOf(ChatSpeaker.TUKI to "Hello friend!"), spoken)
+        assertEquals(listOf("Hello friend!"), tts.spoken.map { it.text })
     }
 
     @Test
@@ -72,6 +73,25 @@ class ChatRoomTest {
         // A per-speaker instruction here would change the system text every
         // turn and defeat reuse on its own.
         assertTrue(llm.calls.last().messages.none { it.role == Role.SYSTEM })
+    }
+
+    @Test
+    fun `the history repeats the RAW reply, translation line and all`() = runTest {
+        // The engine's conversation recorded the reply WITH its HE: line; a
+        // window built from the bubbles (undressed English) would mismatch
+        // and silently rebuild the whole conversation on every turn — the
+        // exact cost the translation was designed not to add.
+        val rawReply = "I see a lion.\nHE: אני רואה אריה"
+        val llm = FakeLlmEngine(listOf(rawReply, "Nice!"))
+        val room = ChatRoom(llm = llm, wantsHebrew = { true })
+        room.start()
+        room.send("hi")
+        room.send("wow")
+
+        assertEquals(
+            listOf("hi", rawReply, "wow"),
+            llm.calls.last().messages.map { it.text },
+        )
     }
 
     @Test
@@ -120,15 +140,15 @@ class ChatRoomTest {
     fun `only the english is spoken`() = runTest {
         // Reading the translation aloud would undercut the point of an
         // English room, and the marker itself must never reach the voice.
-        val spoken = mutableListOf<String>()
+        val tts = FakeTtsEngine()
         val room = ChatRoom(
             llm = FakeLlmEngine(listOf("Hello!\nHE: \u05e9\u05dc\u05d5\u05dd")),
-            speak = { _, t -> spoken += t },
+            tts = tts,
             wantsHebrew = { true },
         )
         room.start()
         room.send("hi")
-        assertEquals(listOf("Hello!"), spoken)
+        assertEquals(listOf("Hello!"), tts.spoken.map { it.text })
     }
 
     @Test

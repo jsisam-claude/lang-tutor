@@ -669,7 +669,9 @@ class AppContainer private constructor(context: Context) {
         )
         return ChatRoom(
             llm = createLlmEngine(),
-            speak = { _, text -> tts.speak(text, TutorLanguage.ENGLISH).collect { } },
+            // The router streams: the room's first sentence is audible while
+            // the rest of the reply is still decoding, same as lessons.
+            tts = tts,
             // Model-WRITTEN Hebrew, so it rides the same tier gate as Hebrew
             // explanations do. Measured 2026-08-27 on 16 tutor sentences
             // (eval/hebrew/results/TRANSLATION-ROW.md): E4B got 16/16 right,
