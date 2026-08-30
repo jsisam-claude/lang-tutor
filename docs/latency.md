@@ -118,15 +118,23 @@ so every claim below carries how it was checked:
 
 ## Found by consultation, verified in code: the lesson room's KV leak
 
-`TutorOrchestrator.buildRequest` sends the policy's per-turn guidance as a
+`TutorOrchestrator.buildRequest` sent the policy's per-turn guidance as a
 leading `Role.SYSTEM` message; `LiteRtLmEngine` folds leading SYSTEM messages
 into the conversation's system text; `ConvoReuse` requires that text to be
-identical to reuse the KV cache. Consequence: **whenever the guidance changes
-between turns (different move, Hebrew help), the lesson room re-prefills the
+identical to reuse the KV cache. Consequence: **whenever the guidance changed
+between turns (different move, Hebrew help), the lesson room re-prefilled the
 entire conversation** — the same defect removed from the chat room with the
-second parrot, still alive here. Fix shape: keep the system text constant and
-carry per-turn guidance inside the USER turn (or only alongside the child's
-message), exactly as the chat room now does. Unfixed as of this note.
+second parrot.
+
+**FIXED**: the guidance now rides inside the user turn
+(`TutorOrchestrator.guideWrap`), the system text is constant per session, and
+the orchestrator keeps a ledger (`sentHistory`) of exactly what was sent —
+the transcript cannot serve, because the conversation recorded the *wrapped*
+user turns. Bonus from the ledger: a scripted `AskRepeat` between LLM turns no
+longer breaks reuse either (the transcript-based window used to gain entries
+the conversation had never seen). `KvReuseTest` drives real turns against the
+real `ConvoReuse` rule and pins all of it: 3 turns with guidance changing
+twice = 1 build + 2 reuses.
 
 ## Scorecard on the five follow-up recommendations
 

@@ -55,8 +55,10 @@ class HebrewHelpTest {
     /** A 4-6 unit: a child who cannot read Hebrew either. */
     private val YOUNG_UNIT = "unit-001"
 
-    private fun systemInstruction(llm: FakeLlmEngine, index: Int = 0): String =
-        llm.calls[index].messages.first { it.role == Role.SYSTEM }.text
+    /** The guidance now rides INSIDE the user turn (the KV-leak fix — see
+     *  KvReuseTest); the last message is where every instruction lives. */
+    private fun lastUserText(llm: FakeLlmEngine, index: Int = 0): String =
+        llm.calls[index].messages.last().text
 
     @Test
     fun `base tier never offers Hebrew, whatever the track`() = runTest {
@@ -136,7 +138,13 @@ class HebrewHelpTest {
         advanceUntilIdle()
 
         assertEquals(1, llm.calls.size)
-        assertEquals(TutorOrchestrator.HEBREW_HELP_INSTRUCTION, systemInstruction(llm))
+        assertEquals(
+            TutorOrchestrator.guideWrap(
+                TutorOrchestrator.HEBREW_HELP_INSTRUCTION,
+                TutorOrchestrator.HEBREW_HELP_REQUEST,
+            ),
+            lastUserText(llm),
+        )
         // A bilingual turn carries two scripts; the ordinary budget clips it.
         assertEquals(TutorOrchestrator.HEBREW_REPLY_TOKENS, llm.calls.single().maxTokens)
     }
@@ -145,8 +153,8 @@ class HebrewHelpTest {
     fun `asking for Hebrew enters the transcript as a real learner turn`() = runTest {
         // Not cosmetic. LiteRtLmEngine sends the LAST message of a request as
         // the user turn, so an empty utterance handed the model Tuki's own
-        // previous reply as the child's words — and, on the very first tap,
-        // the instruction itself.
+        // previous reply as the child's words. The guide is wrapped into that
+        // same turn now, but the child's request must still END it.
         val (tutor, llm) = fixture(this)
         tutor.startSession(READING_UNIT, TutorMode.TEXT)
         advanceUntilIdle()
@@ -159,9 +167,12 @@ class HebrewHelpTest {
             tutor.transcript.value.map { it.speaker },
         )
         assertEquals(TutorOrchestrator.HEBREW_HELP_REQUEST, tutor.transcript.value.first().text)
-        // The message the engine will treat as the user turn is the request,
-        // never the instruction and never Tuki's own last line.
-        assertEquals(TutorOrchestrator.HEBREW_HELP_REQUEST, llm.calls.single().messages.last().text)
+        // The user turn the engine sees carries the request as its final
+        // words — never the instruction alone, never Tuki's own last line.
+        assertTrue(
+            llm.calls.single().messages.last().text
+                .endsWith(TutorOrchestrator.HEBREW_HELP_REQUEST),
+        )
     }
 
     @Test
@@ -176,7 +187,7 @@ class HebrewHelpTest {
         advanceUntilIdle()
 
         val last = llm.calls.last().messages.last()
-        assertEquals(TutorOrchestrator.HEBREW_HELP_REQUEST, last.text)
+        assertTrue(last.text.endsWith(TutorOrchestrator.HEBREW_HELP_REQUEST))
         assertEquals(Role.USER, last.role)
     }
 
@@ -263,7 +274,7 @@ class HebrewHelpTest {
         tutor.onTextSubmitted("לא הבנתי")
         advanceUntilIdle()
 
-        assertEquals(TutorOrchestrator.HEBREW_HELP_INSTRUCTION, systemInstruction(llm))
+        assertTrue(lastUserText(llm).contains(TutorOrchestrator.HEBREW_HELP_INSTRUCTION))
         // The learner's own words still belong in the transcript.
         assertEquals("לא הבנתי", tutor.transcript.value.first().text)
     }
@@ -277,7 +288,7 @@ class HebrewHelpTest {
         tutor.onTextSubmitted("לא הבנתי")
         advanceUntilIdle()
 
-        assertFalse(systemInstruction(llm) == TutorOrchestrator.HEBREW_HELP_INSTRUCTION)
+        assertFalse(lastUserText(llm).contains(TutorOrchestrator.HEBREW_HELP_INSTRUCTION))
     }
 
     @Test
@@ -289,7 +300,7 @@ class HebrewHelpTest {
         tutor.onTextSubmitted("I see a red ball")
         advanceUntilIdle()
 
-        assertFalse(systemInstruction(llm) == TutorOrchestrator.HEBREW_HELP_INSTRUCTION)
+        assertFalse(lastUserText(llm).contains(TutorOrchestrator.HEBREW_HELP_INSTRUCTION))
     }
 
     @Test

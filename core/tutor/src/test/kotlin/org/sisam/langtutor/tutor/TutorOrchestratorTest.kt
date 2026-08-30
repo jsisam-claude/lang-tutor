@@ -164,11 +164,14 @@ class TutorOrchestratorTest {
 
         assertEquals(2, fixture.llm.calls.size)
         val second = fixture.llm.calls[1].messages
-        // History: first child turn + Tuki's first reply are in the request…
-        assertTrue(second.any { it.role == Role.USER && it.text == "My name is Noa" })
+        // History: first child turn + Tuki's first reply are in the request.
+        // User turns carry the per-turn guide as a prefix (the KV-leak fix,
+        // KvReuseTest), so the child's words END the message rather than
+        // being the whole of it.
+        assertTrue(second.any { it.role == Role.USER && it.text.endsWith("My name is Noa") })
         assertTrue(second.any { it.role == Role.ASSISTANT })
         // …and the newest message is the current utterance.
-        assertEquals("What is my name?", second.last().text)
+        assertTrue(second.last().text.endsWith("What is my name?"))
         assertEquals(Role.USER, second.last().role)
     }
 

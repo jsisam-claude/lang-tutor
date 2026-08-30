@@ -129,6 +129,7 @@ class TutorOrchestrator(
         // waiting state and input stays gated (a turn may only start from
         // AwaitingChild) — this prevents generate()-before-load() on the real engine.
         _state.value = TutorTurnState.Preparing
+        sentHistory = emptyList()
         track = TrackConfig.of(profile.current().track)
         llm.load(LlmModelSpec(modelId = "tutor-default"))
         currentUnit = content.loadUnit(unitId)
@@ -242,6 +243,7 @@ class TutorOrchestrator(
 
     suspend fun endSession() {
         currentUnit = null
+        sentHistory = emptyList()
         _state.value = TutorTurnState.Idle
     }
 
@@ -257,6 +259,7 @@ class TutorOrchestrator(
      */
     fun shutdown() {
         currentUnit = null
+        sentHistory = emptyList()
         _state.value = TutorTurnState.Idle
     }
 
@@ -359,6 +362,9 @@ class TutorOrchestrator(
      */
     private suspend fun respondStreaming(request: LlmRequest) {
         bargeRequested = false
+        // What the engine will record as this turn's user message — the ledger
+        // must repeat it verbatim or the next turn cannot reuse the KV cache.
+        val sentUserText = request.messages.last().text
         var reply = ""
         var stop: StopReason? = null
         var sentUpTo = 0
@@ -499,6 +505,11 @@ class TutorOrchestrator(
                     llm.invalidateContext()
                     reply = SAFE_FALLBACK_REPLY
                     _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
+                    // Ledger gets what the child HEARD, not what the model
+                    // said: the engine context is dirty and the next turn
+                    // rebuilds from this history, which must not resurrect a
+                    // rejected reply.
+                    recordExchange(sentUserText, reply)
                     speak(reply)
                 }
 
@@ -508,12 +519,16 @@ class TutorOrchestrator(
                     runCatching { tts.stop() }
                     runCatching { speaking.join() }
                     // The cache holds the model's fuller reply; the child heard
-                    // a prefix. Drop it so later turns build on the transcript.
+                    // a prefix. Drop it so later turns build on what was heard.
                     llm.invalidateContext()
                     val heard = reply.take(sentUpTo).trim()
                     if (heard.isNotEmpty()) {
                         _transcript.value += TranscriptEntry(Speaker.TUTOR, heard)
                     }
+                    // An empty prefix skips the whole exchange — for history
+                    // purposes the turn never happened (recordExchange drops
+                    // blank replies).
+                    recordExchange(sentUserText, heard)
                 }
 
                 StopReason.TRUNCATED -> {
@@ -521,6 +536,7 @@ class TutorOrchestrator(
                     llm.invalidateContext()
                     val spokenText = reply.take(sentUpTo).trim()
                     _transcript.value += TranscriptEntry(Speaker.TUTOR, spokenText)
+                    recordExchange(sentUserText, spokenText)
                     _state.value = TutorTurnState.Speaking(spokenText)
                     speaking.join()
                     ttsError?.let { throw it }
@@ -529,6 +545,9 @@ class TutorOrchestrator(
                 null -> {
                     sentences.close()
                     _transcript.value += TranscriptEntry(Speaker.TUTOR, reply)
+                    // The clean path: reply text identical to what the engine
+                    // recorded, so the live conversation is reusable next turn.
+                    recordExchange(sentUserText, reply)
                     _state.value = TutorTurnState.Speaking(reply)
                     speaking.join()
                     ttsError?.let { throw it }
@@ -566,25 +585,56 @@ class TutorOrchestrator(
     }
 
     /**
-     * Conversation memory: the request carries the last [HISTORY_TURNS]
-     * transcript entries (the current child utterance is already the newest),
-     * so Tuki remembers names, topics, and its own questions across turns —
-     * previously each turn was sent in isolation and the tutor had amnesia.
-     * Short kid turns keep this well inside the model's 4k context.
+     * What the MODEL has actually processed, exactly as sent — the request
+     * history the engine's KV-reuse check (`ConvoReuse`) can prove is a
+     * continuation.
+     *
+     * The transcript cannot serve here, and using it was this room's KV leak:
+     * the per-turn guidance went out as a leading SYSTEM message, the engine
+     * folds those into the conversation's system text, and `ConvoReuse`
+     * requires that text to be identical — so any change of guidance (a
+     * Hebrew-help tap, and the turn after it) re-prefilled the entire
+     * conversation. The same defect was removed from the chat room with the
+     * second parrot (docs/latency.md).
+     *
+     * Now the guidance rides INSIDE each user turn ([guideWrap]) and the
+     * system text never changes. The engine records the wrapped text, so the
+     * next request must repeat it verbatim — which the raw transcript cannot.
+     * This ledger holds the wrapped user turns and the replies as recorded
+     * (the CUT text on a truncated or barged turn, the fallback on a blocked
+     * one). Scripted turns never enter it, so an AskRepeat between LLM turns
+     * no longer forces a rebuild either — the transcript-based window used to
+     * gain entries the conversation had never seen.
      */
-    private fun buildRequest(@Suppress("UNUSED_PARAMETER") utterance: String, instruction: String): LlmRequest {
+    private var sentHistory: List<ChatMessage> = emptyList()
+
+    /** One clean exchange for the ledger, trimmed so it cannot grow without
+     *  bound; the request window is smaller still. */
+    private fun recordExchange(userText: String, replyText: String) {
+        if (replyText.isBlank()) return
+        sentHistory = (
+            sentHistory +
+                ChatMessage(Role.USER, userText) +
+                ChatMessage(Role.ASSISTANT, replyText)
+            ).takeLast(LEDGER_ENTRIES)
+    }
+
+    /**
+     * Conversation memory: the request carries the last [HISTORY_TURNS]
+     * ledger entries plus the new turn, so Tuki remembers names, topics, and
+     * its own questions across turns. Short kid turns keep this well inside
+     * the model's 4k context, and because the window is always a suffix of
+     * [sentHistory], the engine reuses its live conversation and prefills ONE
+     * message instead of the whole history.
+     */
+    private fun buildRequest(utterance: String, instruction: String): LlmRequest {
         // Whole-reply cut, in step with the token budget — see [replyCharBudget].
         replyCharBudget = (replyTokensFor(instruction) * EST_CHARS_PER_TOKEN)
             .coerceAtLeast(BlocklistSafetyFilter.MAX_REPLY_CHARS)
-        val history = _transcript.value.takeLast(HISTORY_TURNS).map { entry ->
-            ChatMessage(
-                role = if (entry.speaker == Speaker.CHILD) Role.USER else Role.ASSISTANT,
-                text = entry.text,
-            )
-        }
         return LlmRequest(
             systemPrompt = SYSTEM_PROMPT + "\n" + track.personaSuffix,
-            messages = listOf(ChatMessage(Role.SYSTEM, instruction)) + history,
+            messages = sentHistory.takeLast(HISTORY_TURNS) +
+                ChatMessage(Role.USER, guideWrap(instruction, utterance)),
             // Reply budget from the track, floored to the age band: a 4-6 unit
             // gets one short sentence and a question whichever track is set —
             // half the tokens is half the decode time AND better pedagogy
@@ -618,7 +668,26 @@ class TutorOrchestrator(
     companion object {
         const val XP_PER_TURN = 5
         const val HISTORY_TURNS = 10
+
+        /** Ledger cap: comfortably more than the request window ever reads. */
+        const val LEDGER_ENTRIES = HISTORY_TURNS * 3
+
         const val SAFE_FALLBACK_REPLY = "Let's get back to our lesson! Can you say the word again?"
+
+        /**
+         * The per-turn guidance, carried INSIDE the user turn.
+         *
+         * Not a SYSTEM message: the engine folds leading SYSTEM messages into
+         * the conversation's system text, and a system text that changes with
+         * the guidance forces a full re-prefill of the conversation every time
+         * the move changes (see [sentHistory]). Bracketed so the model reads
+         * it as stage direction rather than the child speaking; on a rebuild
+         * the same wrapped lines appear in history, an honest record of what
+         * each turn was asked to do.
+         */
+        fun guideWrap(instruction: String, utterance: String): String =
+            if (instruction.isBlank()) utterance
+            else "[Lesson guide: $instruction]\n$utterance"
 
         /**
          * The whole Hebrew feature, in one line. Deliberately asks for Hebrew
