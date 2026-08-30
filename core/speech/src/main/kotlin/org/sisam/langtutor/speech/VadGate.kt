@@ -28,8 +28,23 @@ class VadGate(private val config: Config = Config()) {
         val startThreshold: Float = 0.5f,
         /** Only below this does a frame count as quiet (hysteresis band). */
         val endThreshold: Float = 0.35f,
-        /** Continuous quiet that ends an utterance. Kid-friendly: kids pause. */
+        /**
+         * Continuous quiet that ends an utterance. Calibrated for LOW-
+         * PROFICIENCY L2 speakers, whose within-utterance hesitations run
+         * 600–1,500 ms — do not shrink this for snappiness; that reversal is
+         * recorded in docs/latency.md. Responsiveness comes from
+         * [softHangoverMs] instead.
+         */
         val hangoverMs: Int = 700,
+        /**
+         * Quiet after which a TENTATIVE endpoint fires ([Event.SpeechSoftEnd])
+         * while listening continues. The caller may start transcribing
+         * speculatively; if speech resumes before [hangoverMs] closes the
+         * turn, the speculation is simply wasted work — nothing was cut, and
+         * the learner never notices. Aggressive on purpose: a false soft
+         * endpoint costs CPU, never words.
+         */
+        val softHangoverMs: Int = 250,
         /** Shorter bursts are coughs/knocks, not turns. */
         val minSpeechMs: Int = 150,
         /** Safety stop so a noisy room can't record forever. */
@@ -44,6 +59,14 @@ class VadGate(private val config: Config = Config()) {
         /** First confident speech frame — UI can show "I'm listening". */
         data object SpeechStart : Event
 
+        /**
+         * The child has been quiet for [Config.softHangoverMs] — probably
+         * done, not certainly. Fired at most once per quiet stretch, only for
+         * speech long enough to be a turn, and it ends nothing: the gate
+         * keeps listening and a resumed word re-arms it for the next stretch.
+         */
+        data class SpeechSoftEnd(val startFrame: Int, val endFrame: Int) : Event
+
         /** Utterance finished; [startFrame]/[endFrame] bound the speech. */
         data class SpeechEnd(val startFrame: Int, val endFrame: Int, val reason: EndReason) : Event
     }
@@ -55,8 +78,10 @@ class VadGate(private val config: Config = Config()) {
     private var startFrame = 0
     private var quietFrames = 0
     private var finished = false
+    private var softFired = false
 
     private val hangoverFrames get() = (config.hangoverMs / config.frameMs).coerceAtLeast(1)
+    private val softHangoverFrames get() = (config.softHangoverMs / config.frameMs).coerceAtLeast(1)
     private val minSpeechFrames get() = (config.minSpeechMs / config.frameMs).coerceAtLeast(1)
     private val maxFrames get() = config.maxUtteranceMs / config.frameMs
     private val noSpeechFrames get() = config.noSpeechTimeoutMs / config.frameMs
@@ -95,11 +120,22 @@ class VadGate(private val config: Config = Config()) {
                     // Too short to be a turn — a door slam, not a child. Re-arm.
                     speaking = false
                     quietFrames = 0
+                    softFired = false
                     null
+                }
+            }
+            if (!softFired && quietFrames >= softHangoverFrames) {
+                val end = index - quietFrames + 1
+                // The same too-short guard as the firm endpoint: speculating
+                // on a door slam wastes exactly the work this exists to save.
+                if (end - startFrame >= minSpeechFrames) {
+                    softFired = true
+                    return Event.SpeechSoftEnd(startFrame, end)
                 }
             }
         } else {
             quietFrames = 0
+            softFired = false
         }
         return null
     }
@@ -113,5 +149,6 @@ class VadGate(private val config: Config = Config()) {
         startFrame = 0
         quietFrames = 0
         finished = false
+        softFired = false
     }
 }

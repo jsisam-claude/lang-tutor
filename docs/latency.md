@@ -66,13 +66,19 @@ for natives. A 300 ms cutoff would cut our actual users off mid-thought
 constantly. **`VadGate.hangoverMs` stays at 700** (its original calibration),
 and the responsiveness comes from overlap instead:
 
-- **Tentative endpointing with audio splicing** (standard pattern): at the
-  700 ms soft endpoint, *start* ASR (and downstream work) speculatively; if
-  speech resumes within a ~500 ms grace window, cancel, splice the buffered
-  audio, continue capturing. Latency of the aggressive cutoff, safety of the
-  long one.
+- **Tentative endpointing — BUILT** (`VadGate.softHangoverMs = 250` +
+  `WhisperAsrEngine.maybeSpeculate`): at 250 ms of quiet a `SpeechSoftEnd`
+  fires and transcription starts speculatively while the mic keeps
+  listening; the 700 ms firm endpoint still decides the turn. No splicing
+  was ever needed — capture is continuous, so a resumed word just makes the
+  speculation wasted CPU (capped at latest + one draining). At the firm
+  endpoint a speculation that covered every detected speech sample is
+  adopted (~450 ms saved); one the child talked past is ignored. Works for
+  push-to-talk too, since the VAD runs whenever installed.
 - Drill rooms may close early on a target match — the expected answer is
-  known there.
+  known there. (Still open; rides on the soft-endpoint machinery above:
+  at `SpeechSoftEnd`, match the speculative transcript against the drill
+  target and accept without waiting out the hangover.)
 
 Do not "fix" the 700 ms number for snappiness again without re-reading this.
 

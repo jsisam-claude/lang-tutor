@@ -92,6 +92,46 @@ class VadGateTest {
         assertEquals(VadGate.EndReason.MAX_LENGTH, end.reason)
     }
 
+    // --- the tentative endpoint (docs/latency.md) -------------------------
+
+    @Test
+    fun `the soft endpoint fires early, once per quiet stretch, and ends nothing`() {
+        // 10 speech frames, then a long quiet: soft at ~250ms of quiet,
+        // firm at 700ms — and exactly one of each.
+        val probs = FloatArray(10) { 0.9f } + FloatArray(40) { 0.02f }
+        val events = run(VadGate(), probs)
+        val soft = events.filterIsInstance<VadGate.Event.SpeechSoftEnd>().single()
+        val firm = events.filterIsInstance<VadGate.Event.SpeechEnd>().single()
+        val softAt = events.indexOf(soft)
+        val firmAt = events.indexOf(firm)
+        assertTrue("soft must precede firm", softAt < firmAt)
+        // Both bound the same speech.
+        assertEquals(firm.startFrame, soft.startFrame)
+        assertEquals(firm.endFrame, soft.endFrame)
+    }
+
+    @Test
+    fun `a resumed word re-arms the soft endpoint for the next stretch`() {
+        // Speech, a 300ms think (long enough for ONE soft), more speech, then
+        // real quiet: two stretches, two softs, still one turn and one firm end.
+        val probs = FloatArray(10) { 0.9f } + FloatArray(9) { 0.05f } +
+            FloatArray(10) { 0.9f } + FloatArray(40) { 0.02f }
+        val events = run(VadGate(), probs)
+        assertEquals(2, events.count { it is VadGate.Event.SpeechSoftEnd })
+        assertEquals(1, events.count { it is VadGate.Event.SpeechEnd })
+        assertEquals(1, events.count { it is VadGate.Event.SpeechStart })
+    }
+
+    @Test
+    fun `no speculation on a door slam`() {
+        // Two frames of noise then quiet: too short to be a turn, so the soft
+        // endpoint must not fire either — speculating on it wastes exactly
+        // the work it exists to save.
+        val probs = FloatArray(2) { 0.9f } + FloatArray(15) { 0.01f }
+        val events = run(VadGate(), probs)
+        assertEquals(0, events.count { it is VadGate.Event.SpeechSoftEnd })
+    }
+
     @Test
     fun `nothing is emitted after the turn ends until reset`() {
         val gate = VadGate()

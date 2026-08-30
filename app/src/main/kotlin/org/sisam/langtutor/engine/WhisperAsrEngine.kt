@@ -55,18 +55,47 @@ class WhisperAsrEngine(
     @Volatile private var capturing = false
     @Volatile private var endpoint: CompletableDeferred<Unit>? = null
 
+    // --- tentative endpointing (docs/latency.md) ---------------------------
+    // At the SOFT endpoint (250 ms of quiet) transcription starts
+    // speculatively while the mic keeps listening; the firm endpoint stays at
+    // 700 ms because low-proficiency L2 speakers hesitate that long INSIDE a
+    // sentence. If the child resumes, nothing was cut — capture is continuous,
+    // so there is no audio to splice back — and the speculation was just
+    // wasted CPU. If they were done, the transcript is ~450 ms further along
+    // by the time the turn actually ends, which is pure latency removed.
+
+    /** One speculative transcription: the snapshot it covers and its result. */
+    private class SpecRun(val samples: Int) {
+        @Volatile var text: String? = null
+        @Volatile var confidence = 0f
+        @Volatile var done = false
+        lateinit var thread: Thread
+    }
+
+    @Volatile private var spec: SpecRun? = null
+
+    /** Highest sample index at which the detector saw confident speech —
+     *  the fact that decides whether a speculation covered the whole turn. */
+    @Volatile private var lastSpeechSample = 0
+
+    /** How many speculative threads may exist at once: the latest one plus at
+     *  most one stale run still draining on the transcribe lock. */
+    private val specsInFlight = java.util.concurrent.atomic.AtomicInteger(0)
+
     override val supportsHandsFree: Boolean get() = vad != null
 
     @SuppressLint("MissingPermission") // RECORD_AUDIO requested by ConversationScreen
     override suspend fun startCapture(hint: RecognitionHint) {
         stopRecorderQuietly()
         chunks.clear()
+        spec = null
+        lastSpeechSample = 0
         // Local val: a class property can't be smart-cast inside the capture
         // lambda, and the inner loop must call the detector without a null
         // check on every frame. ONE nullable carries the pair because the gate
         // exists exactly when the detector does — checking both separately
         // left the compiler proving the second check dead on every build.
-        val vadPair = vad?.let { it to VadGate() }
+        val vadPair = vad?.let { it to VadGate(VAD_CONFIG) }
         vad?.reset()
         val signal = CompletableDeferred<Unit>()
         endpoint = signal
@@ -90,21 +119,69 @@ class WhisperAsrEngine(
                 val (detector, gate) = vadPair
                 var off = 0
                 while (off + SileroVad.FRAME <= n) {
+                    val frameEnd = total - n + off + SileroVad.FRAME
                     for (i in 0 until SileroVad.FRAME) frame[i] = buf[off + i] / 32768f
                     off += SileroVad.FRAME
-                    val event = runCatching { gate.accept(detector.probability(frame)) }
+                    val p = runCatching { detector.probability(frame) }
                         .onFailure { Log.w(TAG, "vad frame failed", it) }
                         .getOrNull() ?: continue
-                    if (event is VadGate.Event.SpeechEnd) {
-                        Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
-                        signal.complete(Unit)
-                        break
+                    // Same bar the gate opens on: this is the last moment we
+                    // KNOW the child was talking, and a speculation is only
+                    // trustworthy if its snapshot reaches past this point.
+                    if (p >= VAD_CONFIG.startThreshold) lastSpeechSample = frameEnd
+                    when (val event = gate.accept(p)) {
+                        is VadGate.Event.SpeechSoftEnd -> maybeSpeculate()
+                        is VadGate.Event.SpeechEnd -> {
+                            Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
+                            signal.complete(Unit)
+                        }
+                        else -> Unit
                     }
+                    if (signal.isCompleted) break
                 }
             }
             // Capture ended without the gate firing (button release / max length).
             signal.complete(Unit)
         }.also { it.start() }
+    }
+
+    /**
+     * Start transcribing what we have, on the bet that the turn is over.
+     * Runs on the capture thread, so it must only snapshot and spawn — the
+     * decode itself happens on its own thread, serialized with every other
+     * transcription by [transcribe]'s lock. Push-to-talk turns benefit too:
+     * the VAD runs whenever it is installed, and a learner who stops talking
+     * a beat before releasing the button gets the same head start.
+     */
+    private fun maybeSpeculate() {
+        // Cap the fleet: the latest bet plus at most one stale run still
+        // draining. A child pausing every half-second must not queue a pile
+        // of doomed decodes behind one lock.
+        if (specsInFlight.get() >= 2) return
+        val samples = chunks.sumOf { it.size }
+        if (samples < SAMPLE_RATE / 4) return
+        val pcm = FloatArray(samples)
+        var i = 0
+        for (c in chunks) for (s in c) pcm[i++] = s / 32768f
+        val run = SpecRun(samples)
+        spec = run
+        specsInFlight.incrementAndGet()
+        run.thread = Thread {
+            try {
+                runCatching {
+                    val text = transcribe(pcm)
+                    run.confidence = if (text.isBlank()) 0f else lastConfidence
+                    run.text = text.trim()
+                }.onFailure { Log.w(TAG, "speculative transcription failed", it) }
+            } finally {
+                run.done = true
+                specsInFlight.decrementAndGet()
+            }
+        }.also {
+            it.isDaemon = true
+            it.start()
+        }
+        Log.i(TAG, "soft endpoint: speculative transcription started on ${samples * 1000L / SAMPLE_RATE}ms")
     }
 
     /** Hands-free: resumes when the bundled VAD says the child stopped talking. */
@@ -128,6 +205,27 @@ class WhisperAsrEngine(
             pcm[i++] = s / 32768f
         }
         chunks.clear()
+        // A speculation that covered every speech sample we ever detected IS
+        // this turn's transcript — it excludes only trailing silence, which
+        // Whisper pads away regardless. It started at the soft endpoint,
+        // ~450 ms before the firm one, so it is usually done or nearly; a
+        // speculation the child talked past is ignored without waiting.
+        val s = spec
+        spec = null
+        if (s != null && lastSpeechSample <= s.samples) {
+            runCatching { s.thread.join(SPEC_JOIN_MS) }
+            val text = s.text
+            if (s.done && text != null) {
+                Log.i(TAG, "speculative transcript adopted (${s.samples * 1000L / SAMPLE_RATE}ms slice)")
+                return@withContext AsrResult(
+                    transcript = text,
+                    confidence = s.confidence,
+                    // The FULL capture, not the slice: pronunciation scoring
+                    // wants everything the mic heard this turn.
+                    audio = AudioClip(pcm16, SAMPLE_RATE),
+                )
+            }
+        }
         try {
             val text = transcribe(pcm)
             AsrResult(
@@ -376,5 +474,13 @@ class WhisperAsrEngine(
         // every line, is.
         const val THREADS = 4
 
+        /** One shared gate config, so the speculation code can reference the
+         *  same thresholds the gate decides with instead of retyping them. */
+        val VAD_CONFIG = VadGate.Config()
+
+        /** Bound on waiting out a valid speculation. It started ~450 ms ahead
+         *  of the firm endpoint, so this is a formality; on timeout the fresh
+         *  path below runs and merely queues behind the same lock. */
+        const val SPEC_JOIN_MS = 5_000L
     }
 }
