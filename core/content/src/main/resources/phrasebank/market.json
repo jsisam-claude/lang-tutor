@@ -1,0 +1,1780 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "market",
+  "title": {
+    "en": "At the Market",
+    "he": "בשוק"
+  },
+  "notes": "Batch 2. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-3.",
+  "sentences": [
+    {
+      "id": "mkt-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "An apple!",
+      "he": "תפוח!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-want-X",
+      "en": "I want bread.",
+      "he": "אני רוצה לחם.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The milk is cold.",
+      "he": "החלב קר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-the-X",
+      "en": "I see the market.",
+      "he": "אני רואה את השוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "num-X",
+      "en": "Two bananas.",
+      "he": "שתי בננות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bread is warm.",
+      "he": "הלחם חם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like grapes.",
+      "he": "אני אוהב ענבים.",
+      "he_f": "אני אוהבת ענבים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A big fish.",
+      "he": "דג גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-Xs-are-adj",
+      "en": "The eggs are white.",
+      "he": "הביצים לבנות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see cheese.",
+      "he": "אני רואה גבינה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The tomato is red.",
+      "he": "העגבנייה אדומה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "num-X-please",
+      "en": "One orange, please.",
+      "he": "תפוז אחד, בבקשה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-001",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "how-much-is-X",
+      "en": "How much is the bread?",
+      "he": "כמה עולה הלחם?",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-002",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "i-want-to-verb-X",
+      "en": "I want to buy apples.",
+      "he": "אני רוצה לקנות תפוחים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-003",
+      "level": 2,
+      "tense": "past-simple",
+      "frame": "X-is-emotion-because",
+      "en": "Dana is happy because she found sweet grapes.",
+      "he": "דנה שמחה כי היא מצאה ענבים מתוקים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-004",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "the-X-is-verbing-Y",
+      "en": "The man is selling fish.",
+      "he": "האיש מוכר דגים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-i-verb-X",
+      "en": "Can I taste the cheese?",
+      "he": "אפשר לטעום את הגבינה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-006",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "we-are-verbing",
+      "en": "We are buying food for dinner.",
+      "he": "אנחנו קונים אוכל לארוחת ערב.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-are-the-Xs",
+      "en": "Where are the tomatoes?",
+      "he": "איפה העגבניות?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "X-is-emotion-because",
+      "en": "Yoav is sad because the bananas are green.",
+      "he": "יואב עצוב כי הבננות ירוקות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "do-you-have-X",
+      "en": "Do you have fresh bread?",
+      "he": "יש לכם לחם טרי?",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "i-am-verbing-X",
+      "en": "I am carrying the heavy bag.",
+      "he": "אני סוחב את התיק הכבד.",
+      "he_f": "אני סוחבת את התיק הכבד.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj-today",
+      "en": "The market is full today.",
+      "he": "השוק מלא היום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l2-012",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-verbing-a-adj-Y",
+      "en": "She is choosing a sweet melon.",
+      "he": "היא בוחרת מלון מתוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-verbed-num-X-time",
+      "en": "I bought three apples yesterday.",
+      "he": "קניתי שלושה תפוחים אתמול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-X-verbed-me-Y",
+      "en": "The seller gave me a good price.",
+      "he": "המוכר נתן לי מחיר טוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-verbed-to-X",
+      "en": "We walked to the market in the morning.",
+      "he": "הלכנו לשוק בבוקר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            5,
+            7
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-you-verb-X",
+      "en": "Did you find the honey?",
+      "he": "מצאת את הדבש?",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive-was-adj",
+      "en": "My mother's basket was full.",
+      "he": "הסל של אמא שלי היה מלא.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-Xs-verbed-all-the-Y",
+      "en": "The children ate all the grapes.",
+      "he": "הילדים אכלו את כל הענבים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-X-verbed-adj",
+      "en": "The fish smelled fresh.",
+      "he": "הדג הריח טרי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-verbed-my-X-at",
+      "en": "I forgot my list at home.",
+      "he": "שכחתי את הרשימה שלי בבית.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-X-verbed-his-last-Y",
+      "en": "The baker sold his last bread.",
+      "he": "האופה מכר את הלחם האחרון שלו.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-verbed-X-from",
+      "en": "We tasted cheese from the north.",
+      "he": "טעמנו גבינה מהצפון.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-the-X-verb-early",
+      "en": "Did the store close early?",
+      "he": "החנות נסגרה מוקדם?",
+      "align": [
+        {
+          "en": [
+            0,
+            3
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-Xs-verbed-from-place",
+      "en": "The oranges came from Jaffa.",
+      "he": "התפוזים הגיעו מיפו.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mkt-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "time-we-are-going-to-verb",
+      "en": "Tomorrow we are going to buy fruit for the week.",
+      "he": "מחר אנחנו הולכים לקנות פירות לשבוע."
+    },
+    {
+      "id": "mkt-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "X-is-comparative-than",
+      "en": "This melon is heavier than that one.",
+      "he": "המלון הזה כבד יותר מההוא."
+    },
+    {
+      "id": "mkt-l4-003",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "the-X-will-verb-at-time",
+      "en": "The market will close at seven.",
+      "he": "השוק ייסגר בשבע."
+    },
+    {
+      "id": "mkt-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "you-should-try-X",
+      "en": "You should try the green olives.",
+      "he": "כדאי לך לנסות את הזיתים הירוקים."
+    },
+    {
+      "id": "mkt-l4-005",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-X-is-adj-then",
+      "en": "If the fruit is soft, it is ready to eat.",
+      "he": "אם הפרי רך, הוא מוכן לאכילה."
+    },
+    {
+      "id": "mkt-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "X-is-comparative-than",
+      "en": "Fresh juice is healthier than soda.",
+      "he": "מיץ טבעי בריא יותר משתייה מתוקה."
+    },
+    {
+      "id": "mkt-l4-007",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "i-will-verb-for-you",
+      "en": "I will carry the bags for you.",
+      "he": "אני אסחב את השקיות בשבילך."
+    },
+    {
+      "id": "mkt-l4-008",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative-X-verb-time",
+      "en": "The best tomatoes come early in the morning.",
+      "he": "העגבניות הכי טובות מגיעות מוקדם בבוקר."
+    },
+    {
+      "id": "mkt-l4-009",
+      "level": 4,
+      "tense": "modal",
+      "frame": "we-must-not-verb",
+      "en": "We must not forget the eggs.",
+      "he": "אסור לנו לשכוח את הביצים."
+    },
+    {
+      "id": "mkt-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "is-X-comparative-today",
+      "en": "Is the fish cheaper today?",
+      "he": "הדג זול יותר היום?"
+    },
+    {
+      "id": "mkt-l4-011",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "X-is-going-to-verb",
+      "en": "She is going to make soup tonight.",
+      "he": "היא עומדת להכין מרק הערב."
+    },
+    {
+      "id": "mkt-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "time-the-X-will-verb",
+      "en": "Next week the market will move to a new street.",
+      "he": "בשבוע הבא השוק יעבור לרחוב חדש."
+    },
+    {
+      "id": "mkt-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "i-have-never-verbed",
+      "en": "I have never seen such red strawberries.",
+      "he": "מעולם לא ראיתי תותים כל כך אדומים."
+    },
+    {
+      "id": "mkt-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "X-has-verbed-for-time",
+      "en": "The seller has worked here for twenty years.",
+      "he": "המוכר עובד כאן עשרים שנה."
+    },
+    {
+      "id": "mkt-l5-003",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-you-verb-you-will",
+      "en": "If you come early, you will find the best fruit.",
+      "he": "אם תגיעו מוקדם, תמצאו את הפירות הכי טובים."
+    },
+    {
+      "id": "mkt-l5-004",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "we-have-already-verbed",
+      "en": "We have already spent all our money.",
+      "he": "כבר בזבזנו את כל הכסף שלנו."
+    },
+    {
+      "id": "mkt-l5-005",
+      "level": 5,
+      "tense": "modal",
+      "frame": "X-might-verb",
+      "en": "The price of olive oil might rise this year.",
+      "he": "מחיר שמן הזית עשוי לעלות השנה."
+    },
+    {
+      "id": "mkt-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "have-you-ever-verbed",
+      "en": "Have you ever tasted fresh figs?",
+      "he": "טעמתם פעם תאנים טריות?"
+    },
+    {
+      "id": "mkt-l5-007",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "X-has-been-for-time",
+      "en": "The shop has been in the family for three generations.",
+      "he": "החנות נמצאת במשפחה כבר שלושה דורות."
+    },
+    {
+      "id": "mkt-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-X-verbs-Y-will",
+      "en": "If it rains, the sellers will cover the stands.",
+      "he": "אם ירד גשם, המוכרים יכסו את הדוכנים."
+    },
+    {
+      "id": "mkt-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "i-have-verbed-since",
+      "en": "I have bought bread here since I was little.",
+      "he": "אני קונה כאן לחם מאז שהייתי קטן.",
+      "he_f": "אני קונה כאן לחם מאז שהייתי קטנה."
+    },
+    {
+      "id": "mkt-l5-010",
+      "level": 5,
+      "tense": "modal",
+      "frame": "X-may-verb-you",
+      "en": "She may give you a better price.",
+      "he": "אולי היא תיתן לך מחיר טוב יותר."
+    },
+    {
+      "id": "mkt-l5-011",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "we-have-verbed-num-X",
+      "en": "We have filled two baskets with vegetables.",
+      "he": "מילאנו שני סלים בירקות."
+    },
+    {
+      "id": "mkt-l5-012",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "X-has-verbed-twice",
+      "en": "The honey has won a prize twice.",
+      "he": "הדבש זכה בפרס פעמיים."
+    },
+    {
+      "id": "mkt-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while-we-were-verbing",
+      "en": "While we were choosing fruit, the rain began.",
+      "he": "בזמן שבחרנו פירות, התחיל לרדת גשם."
+    },
+    {
+      "id": "mkt-l6-002",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "X-is-made-from",
+      "en": "The cheese is made from goat milk.",
+      "he": "הגבינה מיוצרת מחלב עיזים."
+    },
+    {
+      "id": "mkt-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-had-i-would",
+      "en": "If I had more money, I would buy the big fish.",
+      "he": "אם היה לי יותר כסף, הייתי קונה את הדג הגדול."
+    },
+    {
+      "id": "mkt-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "by-time-X-had-verbed",
+      "en": "By noon, the baker had sold everything.",
+      "he": "עד הצהריים האופה מכר הכול."
+    },
+    {
+      "id": "mkt-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "X-was-verbed-with",
+      "en": "The stand was decorated with fresh flowers.",
+      "he": "הדוכן קושט בפרחים טריים."
+    },
+    {
+      "id": "mkt-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "Xs-were-verbing",
+      "en": "The sellers were shouting their prices along the street.",
+      "he": "המוכרים צעקו את המחירים לאורך הרחוב."
+    },
+    {
+      "id": "mkt-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-X-were-adj-we-would",
+      "en": "If the market were closer, we would come every day.",
+      "he": "אם השוק היה קרוב יותר, היינו באים כל יום."
+    },
+    {
+      "id": "mkt-l6-008",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "X-had-verbed-before",
+      "en": "The oranges had ripened before the first rain.",
+      "he": "התפוזים הבשילו לפני הגשם הראשון."
+    },
+    {
+      "id": "mkt-l6-009",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "X-is-verbed-without",
+      "en": "Everything here is grown without chemicals.",
+      "he": "הכול כאן גדל בלי חומרים כימיים."
+    },
+    {
+      "id": "mkt-l6-010",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-verbing-when",
+      "en": "She was counting her change when I arrived.",
+      "he": "היא ספרה את העודף כשהגעתי."
+    },
+    {
+      "id": "mkt-l6-011",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "X-was-verbed-from",
+      "en": "The recipe was passed down from her grandmother.",
+      "he": "המתכון עבר בירושה מסבתא שלה."
+    },
+    {
+      "id": "mkt-l6-012",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "i-would-verb-if",
+      "en": "I would take the figs if they were softer.",
+      "he": "הייתי לוקח את התאנים אם הן היו רכות יותר.",
+      "he_f": "הייתי לוקחת את התאנים אם הן היו רכות יותר."
+    },
+    {
+      "id": "mkt-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "X-has-been-verbing-since",
+      "en": "The family has been selling spices here since the fifties.",
+      "he": "המשפחה מוכרת כאן תבלינים מאז שנות החמישים."
+    },
+    {
+      "id": "mkt-l7-002",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "had-we-verbed",
+      "en": "Had we arrived earlier, we would have found fresh fish.",
+      "he": "אילו הגענו מוקדם יותר, היינו מוצאים דג טרי."
+    },
+    {
+      "id": "mkt-l7-003",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "X-said-that-Y-had",
+      "en": "The seller said that the mangoes had come that morning.",
+      "he": "המוכר אמר שהמנגו הגיע באותו בוקר."
+    },
+    {
+      "id": "mkt-l7-004",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "although-X-Y",
+      "en": "Although the market is crowded, everyone finds their favorite stand.",
+      "he": "למרות שהשוק צפוף, כל אחד מוצא את הדוכן האהוב עליו."
+    },
+    {
+      "id": "mkt-l7-005",
+      "level": 7,
+      "tense": "future-perfect",
+      "frame": "by-time-X-will-have-verbed",
+      "en": "By the holiday, the honey will have sold out at every stand.",
+      "he": "עד החג הדבש ייגמר בכל הדוכנים."
+    },
+    {
+      "id": "mkt-l7-006",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "what-verbed-me-was",
+      "en": "What amazed me most was how quickly the bread disappeared.",
+      "he": "מה שהכי הדהים אותי היה כמה מהר הלחם נעלם."
+    },
+    {
+      "id": "mkt-l7-007",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "not-only-do-X",
+      "en": "Not only do they sell vegetables, they also teach you to cook them.",
+      "he": "הם לא רק מוכרים ירקות, הם גם מלמדים אותך לבשל אותם."
+    },
+    {
+      "id": "mkt-l7-008",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "X-asked-whether",
+      "en": "She asked whether the olives would keep until winter.",
+      "he": "היא שאלה אם הזיתים יחזיקו מעמד עד החורף."
+    },
+    {
+      "id": "mkt-l7-009",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "X-which-had-been-verbed",
+      "en": "The spices, which had been ground that week, filled the air.",
+      "he": "התבלינים, שנטחנו באותו שבוע, מילאו את האוויר."
+    },
+    {
+      "id": "mkt-l7-010",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "the-comparative-X-the-comparative-Y",
+      "en": "The earlier you come, the better the choice will be.",
+      "he": "ככל שתגיעו מוקדם יותר, כך הבחירה תהיה טובה יותר."
+    },
+    {
+      "id": "mkt-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "i-have-been-verbing-since",
+      "en": "I have been coming to this stand since before I could count.",
+      "he": "אני בא לדוכן הזה עוד מלפני שידעתי לספור.",
+      "he_f": "אני באה לדוכן הזה עוד מלפני שידעתי לספור."
+    },
+    {
+      "id": "mkt-l7-012",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-X-had-been-verbed",
+      "en": "If the recipe had been written down, it would never have been lost.",
+      "he": "אם המתכון היה נכתב, הוא לעולם לא היה הולך לאיבוד."
+    }
+  ]
+}

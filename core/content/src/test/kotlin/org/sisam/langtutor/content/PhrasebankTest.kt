@@ -11,11 +11,11 @@ class PhrasebankTest {
     private val repository = ResourcePhrasebankRepository()
 
     @Test
-    fun `the seed loads whole, 12 sentences at every level`() = runTest {
+    fun `both themes load whole, 12 sentences per level each`() = runTest {
         val sentences = repository.sentences()
-        assertEquals(84, sentences.size)
+        assertEquals(168, sentences.size)
         for (level in 1..7) {
-            assertEquals("level $level", 12, sentences.count { it.level == level })
+            assertEquals("level $level", 24, sentences.count { it.level == level })
         }
         assertEquals(sentences.size, sentences.map { it.id }.distinct().size)
     }
