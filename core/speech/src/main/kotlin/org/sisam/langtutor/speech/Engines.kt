@@ -22,6 +22,13 @@ interface AsrEngine {
     val supportsHandsFree: Boolean get() = false
 
     /**
+     * Load whatever the first capture would otherwise load, so the first mic
+     * press does not pay a model load inside the turn. Default no-op: the
+     * platform recognizer has nothing to warm.
+     */
+    fun warmUp() {}
+
+    /**
      * Hands-free turn-taking: suspends until end-of-speech is detected, so a
      * young child never has to hold a button. Only meaningful between
      * [startCapture] and [stopCapture], and only when [supportsHandsFree].

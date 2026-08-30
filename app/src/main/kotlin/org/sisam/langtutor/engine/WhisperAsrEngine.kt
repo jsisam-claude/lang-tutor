@@ -209,7 +209,7 @@ class WhisperAsrEngine(
      * first transcription would have created.
      */
     @Synchronized
-    fun warmUp() {
+    override fun warmUp() {
         loadInterpreter()
     }
 

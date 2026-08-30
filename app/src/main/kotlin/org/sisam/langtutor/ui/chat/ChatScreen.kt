@@ -39,7 +39,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.engine.TurnLatency
@@ -89,6 +91,10 @@ fun ChatScreen(container: AppContainer) {
     ) { }
     LaunchedEffect(Unit) {
         if (speechAvailable) micPermission.launch(android.Manifest.permission.RECORD_AUDIO)
+        // Off the main thread: the first press otherwise pays the Whisper
+        // interpreter load inside the turn — the container's preload covers
+        // this only when the parent pressed that button.
+        withContext(Dispatchers.IO) { runCatching { asr.warmUp() } }
     }
 
     LaunchedEffect(Unit) { room.start() }
@@ -194,7 +200,7 @@ fun ChatScreen(container: AppContainer) {
                     state = micState,
                     onStateChange = { micState = it },
                     onHeard = { text ->
-                        TurnLatency.mark("chat mic")
+                        // Clock already running: marked at mic release.
                         scope.launch { room.send(text) }
                     },
                     asr = asr,
@@ -246,6 +252,12 @@ private fun ChatMic(
                             runCatching { asr.startCapture(RecognitionHint.None) }
                         }
                         tryAwaitRelease()
+                        // The learner-felt clock starts HERE. It was marked in
+                        // onHeard — after stopCapture returned — so the chat
+                        // metric silently excluded the entire Whisper decode,
+                        // while the lesson room counted it. Same name, two
+                        // meanings: the worst kind of number.
+                        TurnLatency.mark("chat mic release")
                         scope.launch {
                             // Never stop before start has finished — on the
                             // first ever press start may be loading Whisper.
@@ -254,7 +266,10 @@ private fun ChatMic(
                             val result = runCatching { asr.stopCapture() }.getOrNull()
                             onStateChange(MicState.IDLE)
                             val text = result?.transcript?.trim().orEmpty()
-                            if (text.isNotEmpty()) onHeard(text)
+                            // A silent press produces no turn and must not
+                            // leave a stale mark for the NEXT play() to close
+                            // with a nonsense number.
+                            if (text.isNotEmpty()) onHeard(text) else TurnLatency.clear()
                         }
                     },
                 )
