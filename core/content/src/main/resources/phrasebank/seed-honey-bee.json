@@ -1,0 +1,1830 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "honey-bee",
+  "title": {
+    "en": "The Honey Bee and the Garden",
+    "he": "דבורת הדבש והגינה"
+  },
+  "notes": "SEED BATCH for level and format judgment — one theme carried through all seven levels, ~12 sentences each. Authoring rules in docs/phrasebank.md. Hebrew is meaning-first, never word-by-word; transliteration is always DERIVED at runtime, never authored. align cues are authored for levels 1-3 where word mapping is clean; upper levels translate less literally, and there the meaning row stands alone by design.",
+  "sentences": [
+    {
+      "id": "bee-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A bee!",
+      "he": "דבורה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-a-X",
+      "en": "I see a bee.",
+      "he": "אני רואה דבורה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bee is small.",
+      "he": "הדבורה קטנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The flower is red.",
+      "he": "הפרח אדום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-num-X",
+      "en": "I see two bees.",
+      "he": "אני רואה שתי דבורים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-verbs",
+      "en": "The bee flies.",
+      "he": "הדבורה עפה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like honey.",
+      "he": "אני אוהב דבש.",
+      "he_f": "אני אוהבת דבש.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bee is yellow.",
+      "he": "הדבורה צהובה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The garden is big.",
+      "he": "הגינה גדולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A red flower.",
+      "he": "פרח אדום.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The sun is hot.",
+      "he": "השמש חמה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-the-X",
+      "en": "I see the garden.",
+      "he": "אני רואה את הגינה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-001",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "X-is-emotion-because",
+      "en": "The bee is happy because it found a flower.",
+      "he": "הדבורה שמחה כי היא מצאה פרח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-verbing",
+      "en": "The bee is flying to the flower.",
+      "he": "הדבורה עפה אל הפרח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "i-am-emotion",
+      "en": "I am happy today.",
+      "he": "אני שמח היום.",
+      "he_f": "אני שמחה היום.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-004",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "the-X-verbs-from",
+      "en": "The bee drinks from the flower.",
+      "he": "הדבורה שותה מהפרח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "Xs-make-Y",
+      "en": "Bees make honey.",
+      "he": "דבורים מייצרות דבש.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-the-X",
+      "en": "Where is the bee?",
+      "he": "איפה הדבורה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-emotion-because",
+      "en": "The bee is sad because it is raining.",
+      "he": "הדבורה עצובה כי יורד גשם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            7
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "i-want-to-verb",
+      "en": "I want to see the bees.",
+      "he": "אני רוצה לראות את הדבורים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "the-adj-X-verbs-in",
+      "en": "The little bee sleeps in the flower.",
+      "he": "הדבורה הקטנה ישנה בתוך הפרח.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-010",
+      "level": 2,
+      "tense": "past-simple",
+      "frame": "X-is-emotion-because",
+      "en": "Dave is sad because his ice cream fell.",
+      "he": "דייב עצוב כי הגלידה שלו נפלה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            4
+          ]
+        },
+        {
+          "en": [
+            7,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "Xs-are-verbing",
+      "en": "The bees are dancing in the sun.",
+      "he": "הדבורים רוקדות בשמש.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "do-you-like-X",
+      "en": "Do you like honey?",
+      "he": "אתה אוהב דבש?",
+      "he_f": "את אוהבת דבש?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-saw-a-X-in",
+      "en": "I saw a bee in the garden.",
+      "he": "ראיתי דבורה בגינה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-X-verbed-a-Y",
+      "en": "The bee found a big flower.",
+      "he": "הדבורה מצאה פרח גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "time-the-X-verbed",
+      "en": "Yesterday the bee visited ten flowers.",
+      "he": "אתמול הדבורה ביקרה בעשרה פרחים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-004",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-are-adj",
+      "en": "The bee's wings are very fast.",
+      "he": "הכנפיים של הדבורה מהירות מאוד.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-verbed-X-for",
+      "en": "We picked flowers for our mother.",
+      "he": "קטפנו פרחים לאמא שלנו.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-verbed-before-Y",
+      "en": "The bee flew home before the rain.",
+      "he": "הדבורה עפה הביתה לפני הגשם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-you-verb-X",
+      "en": "Did you see the queen bee?",
+      "he": "ראית את מלכת הדבורים?",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            1,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-Xs-verbed-a-Y",
+      "en": "The children planted a small garden.",
+      "he": "הילדים שתלו גינה קטנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-was-emotion-of",
+      "en": "My brother was afraid of the bee.",
+      "he": "אח שלי פחד מהדבורה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-X-verbed-adj",
+      "en": "The honey tasted sweet.",
+      "he": "הדבש היה מתוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-Xs-verbed-all-day",
+      "en": "The bees worked all day.",
+      "he": "הדבורים עבדו כל היום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "time-it-verbed-on",
+      "en": "Last night it rained on the garden.",
+      "he": "אתמול בלילה ירד גשם על הגינה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bee-l4-001",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "time-X-will-verb",
+      "en": "Tomorrow the bee will visit the white flowers.",
+      "he": "מחר הדבורה תבקר בפרחים הלבנים."
+    },
+    {
+      "id": "bee-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "X-is-comparative-than",
+      "en": "This flower is bigger than that one.",
+      "he": "הפרח הזה גדול יותר מההוא."
+    },
+    {
+      "id": "bee-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "X-is-going-to-verb",
+      "en": "The bee is going to build a new home.",
+      "he": "הדבורה עומדת לבנות בית חדש."
+    },
+    {
+      "id": "bee-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "X-is-comparative-than",
+      "en": "Bees are more important than people think.",
+      "he": "דבורים חשובות יותר ממה שאנשים חושבים."
+    },
+    {
+      "id": "bee-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "we-should-verb",
+      "en": "We should plant more flowers for the bees.",
+      "he": "אנחנו צריכים לשתול עוד פרחים בשביל הדבורים."
+    },
+    {
+      "id": "bee-l4-006",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-X-verb-soon",
+      "en": "Will the rain stop soon?",
+      "he": "הגשם ייפסק בקרוב?"
+    },
+    {
+      "id": "bee-l4-007",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "X-is-superlative",
+      "en": "The queen is the biggest bee in the hive.",
+      "he": "המלכה היא הדבורה הגדולה ביותר בכוורת."
+    },
+    {
+      "id": "bee-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "i-will-help-you",
+      "en": "I will help you water the garden.",
+      "he": "אני אעזור לך להשקות את הגינה."
+    },
+    {
+      "id": "bee-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-X-then-Y",
+      "en": "If it rains, the bees stay home.",
+      "he": "אם יורד גשם, הדבורים נשארות בבית."
+    },
+    {
+      "id": "bee-l4-010",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "X-will-be-adj",
+      "en": "The garden will be full of flowers in spring.",
+      "he": "באביב הגינה תהיה מלאה בפרחים."
+    },
+    {
+      "id": "bee-l4-011",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "X-is-comparative-than",
+      "en": "Honey is sweeter than sugar.",
+      "he": "דבש מתוק יותר מסוכר."
+    },
+    {
+      "id": "bee-l4-012",
+      "level": 4,
+      "tense": "modal",
+      "frame": "you-must-not-verb",
+      "en": "You must not touch the hive.",
+      "he": "אסור לגעת בכוורת."
+    },
+    {
+      "id": "bee-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "X-has-verbed-today",
+      "en": "The bee has visited a hundred flowers today.",
+      "he": "הדבורה ביקרה היום במאה פרחים."
+    },
+    {
+      "id": "bee-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "i-have-never-verbed",
+      "en": "I have never seen so many bees.",
+      "he": "מעולם לא ראיתי כל כך הרבה דבורים."
+    },
+    {
+      "id": "bee-l5-003",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-we-verb-X-will",
+      "en": "If we plant flowers, the bees will come.",
+      "he": "אם נשתול פרחים, הדבורים יבואו."
+    },
+    {
+      "id": "bee-l5-004",
+      "level": 5,
+      "tense": "modal",
+      "frame": "X-can-verb-that-we-cannot",
+      "en": "Bees can see colors that we cannot see.",
+      "he": "דבורים יכולות לראות צבעים שאנחנו לא יכולים לראות."
+    },
+    {
+      "id": "bee-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "X-has-verbed-all-season",
+      "en": "The hive has grown all summer.",
+      "he": "הכוורת גדלה כל הקיץ."
+    },
+    {
+      "id": "bee-l5-006",
+      "level": 5,
+      "tense": "modal",
+      "frame": "you-should-verb-when",
+      "en": "You should stand still when a bee is near.",
+      "he": "כדאי לעמוד בלי לזוז כשדבורה קרובה."
+    },
+    {
+      "id": "bee-l5-007",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "have-you-ever-verbed",
+      "en": "Have you ever tasted fresh honey?",
+      "he": "טעמת פעם דבש טרי?"
+    },
+    {
+      "id": "bee-l5-008",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "X-has-already-verbed",
+      "en": "The bees have already filled the hive with honey.",
+      "he": "הדבורים כבר מילאו את הכוורת בדבש."
+    },
+    {
+      "id": "bee-l5-009",
+      "level": 5,
+      "tense": "modal",
+      "frame": "X-must-verb-to-verb",
+      "en": "A bee must dance to show the way.",
+      "he": "דבורה חייבת לרקוד כדי להראות את הדרך."
+    },
+    {
+      "id": "bee-l5-010",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-X-is-adj-Y-will",
+      "en": "If the flower is closed, the bee will wait.",
+      "he": "אם הפרח סגור, הדבורה תחכה."
+    },
+    {
+      "id": "bee-l5-011",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "we-have-verbed-every",
+      "en": "We have watered the garden every morning.",
+      "he": "השקינו את הגינה כל בוקר."
+    },
+    {
+      "id": "bee-l5-012",
+      "level": 5,
+      "tense": "modal",
+      "frame": "it-might-verb",
+      "en": "It might rain this afternoon.",
+      "he": "אולי ירד גשם אחר הצהריים."
+    },
+    {
+      "id": "bee-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-verbing-when",
+      "en": "The bee was flying home when the rain began.",
+      "he": "הדבורה עפה הביתה כשהגשם התחיל."
+    },
+    {
+      "id": "bee-l6-002",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "X-is-made-from",
+      "en": "Honey is made from the nectar of flowers.",
+      "he": "דבש מיוצר מצוף הפרחים."
+    },
+    {
+      "id": "bee-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were-X",
+      "en": "If I were a bee, I would sleep in a flower.",
+      "he": "אם הייתי דבורה, הייתי ישן בתוך פרח.",
+      "he_f": "אם הייתי דבורה, הייתי ישנה בתוך פרח."
+    },
+    {
+      "id": "bee-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "X-had-verbed-before",
+      "en": "The garden had dried up before we returned.",
+      "he": "הגינה התייבשה לפני שחזרנו."
+    },
+    {
+      "id": "bee-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "X-were-verbed-by",
+      "en": "The flowers were planted by the whole class.",
+      "he": "הפרחים נשתלו על ידי כל הכיתה."
+    },
+    {
+      "id": "bee-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while-X-was-verbing",
+      "en": "While the bees were working, the queen was resting.",
+      "he": "בזמן שהדבורים עבדו, המלכה נחה."
+    },
+    {
+      "id": "bee-l6-007",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "X-was-verbed-location",
+      "en": "The hive was built high in the old tree.",
+      "he": "הכוורת נבנתה גבוה בעץ הישן."
+    },
+    {
+      "id": "bee-l6-008",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-X-were-adj-Y-would",
+      "en": "If the winter were warmer, the bees would fly all year.",
+      "he": "אם החורף היה חם יותר, הדבורים היו עפות כל השנה."
+    },
+    {
+      "id": "bee-l6-009",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "by-time-X-had-verbed",
+      "en": "By sunset, the bee had visited every flower in the garden.",
+      "he": "עד השקיעה הדבורה ביקרה בכל פרח בגינה."
+    },
+    {
+      "id": "bee-l6-010",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-were-verbing-through",
+      "en": "The children were watching the bees through the window.",
+      "he": "הילדים הסתכלו על הדבורים דרך החלון."
+    },
+    {
+      "id": "bee-l6-011",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "nothing-is-verbed",
+      "en": "Nothing is wasted in a beehive.",
+      "he": "שום דבר לא מתבזבז בכוורת."
+    },
+    {
+      "id": "bee-l6-012",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "i-would-verb-if",
+      "en": "I would help the bee if it fell in the water.",
+      "he": "הייתי עוזר לדבורה אם היא הייתה נופלת למים.",
+      "he_f": "הייתי עוזרת לדבורה אם היא הייתה נופלת למים."
+    },
+    {
+      "id": "bee-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "X-have-been-verbing-since",
+      "en": "The bees have been working since sunrise without a single break.",
+      "he": "הדבורים עובדות מאז הזריחה בלי הפסקה אחת."
+    },
+    {
+      "id": "bee-l7-002",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-X-had-not-verbed",
+      "en": "If the gardener had not planted lavender, the bees would never have come.",
+      "he": "אם הגנן לא היה שותל לבנדר, הדבורים לעולם לא היו מגיעות."
+    },
+    {
+      "id": "bee-l7-003",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "X-said-that-Y-had",
+      "en": "The beekeeper said that the hive had doubled in size.",
+      "he": "הכוורן אמר שהכוורת הכפילה את גודלה."
+    },
+    {
+      "id": "bee-l7-004",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "although-X-Y",
+      "en": "Although bees are small, the whole garden depends on them.",
+      "he": "למרות שהדבורים קטנות, כל הגינה תלויה בהן."
+    },
+    {
+      "id": "bee-l7-005",
+      "level": 7,
+      "tense": "future-perfect",
+      "frame": "by-time-X-will-have-verbed",
+      "en": "By next spring, the colony will have grown too large for this hive.",
+      "he": "עד האביב הבא המושבה תהיה גדולה מדי בשביל הכוורת הזאת."
+    },
+    {
+      "id": "bee-l7-006",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "what-verbed-me-was",
+      "en": "What surprised me most was how gently the bees behaved.",
+      "he": "מה שהכי הפתיע אותי היה כמה שהדבורים התנהגו בעדינות."
+    },
+    {
+      "id": "bee-l7-007",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "X-have-been-verbing-how",
+      "en": "Scientists have been studying how bees remember faces.",
+      "he": "מדענים חוקרים כיצד דבורים זוכרות פנים."
+    },
+    {
+      "id": "bee-l7-008",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "had-we-verbed",
+      "en": "Had we known about the storm, we would have covered the hive.",
+      "he": "אילו ידענו על הסערה, היינו מכסים את הכוורת."
+    },
+    {
+      "id": "bee-l7-009",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "X-which-had-been-verbed",
+      "en": "The honey, which had been gathered all summer, was finally ready.",
+      "he": "הדבש, שנאסף במשך כל הקיץ, היה מוכן סוף סוף."
+    },
+    {
+      "id": "bee-l7-010",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "not-only-do-X",
+      "en": "Not only do bees make honey, they also help flowers grow.",
+      "he": "הדבורים לא רק מייצרות דבש, הן גם עוזרות לפרחים לגדול."
+    },
+    {
+      "id": "bee-l7-011",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "X-asked-whether",
+      "en": "She asked whether the bees would survive the cold winter.",
+      "he": "היא שאלה אם הדבורים ישרדו את החורף הקר."
+    },
+    {
+      "id": "bee-l7-012",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "the-more-X-the-more-Y",
+      "en": "The more flowers a garden has, the more bees it will welcome.",
+      "he": "ככל שיש בגינה יותר פרחים, כך יגיעו אליה יותר דבורים."
+    }
+  ]
+}

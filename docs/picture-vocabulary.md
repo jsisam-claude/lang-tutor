@@ -94,3 +94,14 @@ animal names once and every presentation is instant thereafter.
   tappable answer cells are targets and must not (`tapTargetDp`).
 - Track-aware: this is a PRE_READER and BEGINNER room. An IMPROVER does not
   need to be told what a cat is.
+
+## Asset assignment (2026-08-30)
+
+The pictures/icons/emoji for this room are assigned to the OTHER models
+(Opus/Sonnet sessions), per the owner's direction — not to this session's
+queue. Constraints they inherit: no downloaded art without a license the
+project can carry (the reward system's precedent is Canvas-drawn/procedural
+art and synthesized audio precisely to avoid third-party licenses); emoji
+are the zero-license path for a first cut; anything drawn must read at
+`decorativeSize` floors. Word list comes from the phrasebank/curriculum, so
+picture ids should key on the vocab word, not on a file path.
