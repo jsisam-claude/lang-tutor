@@ -1,7 +1,9 @@
 # Aligned Hebrew gloss under English — design record
 
-**Status.** Both Hebrew rows are BUILT (2026-08-27). **Landscape** is still
-queued.
+**Status.** Both Hebrew rows are BUILT (2026-08-27). **Landscape** is BUILT
+(2026-08-30): `A11y.wideViewport` names the wide-axis question, and the drill
+and conversation rooms split their tall stacks into side-by-side columns —
+the interlinear line takes the wider pane, exactly the axis it wanted.
 
 ```
 I        see       a      lion
@@ -256,7 +258,7 @@ What landscape needs, beyond not crashing:
 - **Side-by-side layouts where the content is genuinely two things.** The
   vocabulary room is a line plus a mic; the conversation is a transcript plus
   controls. In landscape those want to be columns, not a squeezed stack.
-  `A11y` should grow a `wideViewport` question to sit beside `shortViewport`.
+  `A11y` grew the `wideViewport` question (BUILT), and both rooms branch on it.
 - **Rotation must not interrupt.** `MainActivity.onStop` already guards on
   `isChangingConfigurations`, so a rotate does not silence Tuki or release the
   mic — that part is done and should stay tested.

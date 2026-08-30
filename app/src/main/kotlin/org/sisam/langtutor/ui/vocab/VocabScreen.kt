@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -364,10 +366,9 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
             is DrillState.Active -> {
                 // The line itself, big: the karaoke text for whoever reads,
                 // decoration for whoever does not — the AUDIO is the content.
+                val target: @Composable (Modifier) -> Unit = { paneModifier ->
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
+                    modifier = paneModifier,
                     contentAlignment = Alignment.Center,
                 ) {
                     // The target, with its Hebrew pronunciation under each
@@ -456,23 +457,50 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
                         )
                     }
                 }
-                Text(
-                    text = stateLabel(s),
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                )
-                pronunciation?.let { PronunciationFeedback(it) }
-                Mic(
-                    state = s,
-                    onPressed = viewModel::onMicPressed,
-                    onReleased = viewModel::onMicReleased,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                )
-                Text(
-                    text = stringResource(R.string.conversation_hold_to_talk),
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                )
+                }
+                val controls: @Composable ColumnScope.() -> Unit = {
+                    Text(
+                        text = stateLabel(s),
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                    )
+                    pronunciation?.let { PronunciationFeedback(it) }
+                    Mic(
+                        state = s,
+                        onPressed = viewModel::onMicPressed,
+                        onReleased = viewModel::onMicReleased,
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                    )
+                    Text(
+                        text = stringResource(R.string.conversation_hold_to_talk),
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                    )
+                }
+                if (A11y.wideViewport) {
+                    // Sideways, the line and the mic become columns: the
+                    // interlinear line is the thing that WANTS the width
+                    // (docs/bilingual-gloss.md), and the stacked layout was
+                    // built for the axis a rotation takes away.
+                    Row(
+                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(A11y.sectionGap),
+                    ) {
+                        target(Modifier.weight(1.4f).fillMaxHeight())
+                        Column(
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
+                            verticalArrangement = Arrangement.spacedBy(
+                                A11y.sectionGap,
+                                Alignment.CenterVertically,
+                            ),
+                        ) {
+                            controls()
+                        }
+                    }
+                } else {
+                    target(Modifier.fillMaxWidth().weight(1f))
+                    controls()
+                }
             }
 
             else -> Box(modifier = Modifier.weight(1f))

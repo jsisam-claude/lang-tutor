@@ -47,6 +47,13 @@ object A11y {
     val shortViewport: Boolean
         @Composable @ReadOnlyComposable get() = screenHeightDp < 640
 
+    /** True when width is the abundant axis — a phone held sideways, or a
+     *  tablet. Height is then the scarce one, so screens split their tall
+     *  stack into side-by-side columns (docs/bilingual-gloss.md, Landscape). */
+    val wideViewport: Boolean
+        @Composable @ReadOnlyComposable get() =
+            screenWidthDp > screenHeightDp && screenWidthDp >= 600
+
     /** True when the layout is under real pressure from either dial. Screens
      *  use it to drop a whole ornamental element rather than shrink it into
      *  an unreadable smudge. */

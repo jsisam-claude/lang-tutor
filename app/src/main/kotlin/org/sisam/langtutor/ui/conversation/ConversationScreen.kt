@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
@@ -212,8 +216,9 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             // with NO recognition path at all.
             container.hasBundledAsr || SpeechRecognizer.isRecognitionAvailable(context)
         }
+        val transcriptPane: @Composable (Modifier) -> Unit = { paneModifier ->
         LazyColumn(
-            modifier = Modifier.weight(1f),
+            modifier = paneModifier,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             item {
@@ -310,7 +315,9 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                 }
             }
         }
+        }
 
+        val controls: @Composable ColumnScope.() -> Unit = {
         // Per-sound feedback for the last spoken attempt, when the pronunciation
         // coach is installed and the lesson had a phrase to compare against.
         pronunciation?.let { score -> PronunciationFeedback(score) }
@@ -423,6 +430,31 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             ) {
                 Text(stringResource(R.string.conversation_send))
             }
+        }
+        }
+
+        if (A11y.wideViewport) {
+            // Sideways, transcript and controls become columns — height is
+            // the scarce axis rotated, and the squeezed vertical stack was
+            // the recorded objection (docs/bilingual-gloss.md, Landscape).
+            Row(
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(A11y.sectionGap),
+            ) {
+                transcriptPane(Modifier.weight(1.2f).fillMaxHeight())
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(A11y.sectionGap),
+                ) {
+                    controls()
+                }
+            }
+        } else {
+            transcriptPane(Modifier.weight(1f))
+            controls()
         }
     }
 }
