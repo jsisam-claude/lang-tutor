@@ -125,6 +125,10 @@ class TutorOrchestrator(
 
     val handsFreeAvailable: Boolean get() = asr.supportsHandsFree
 
+    /** Live guesses while the learner is still talking ([AsrEngine.speculative])
+     *  — shown as a "heard so far" preview, never acted on. */
+    val speculative get() = asr.speculative
+
     suspend fun startSession(unitId: String, @Suppress("UNUSED_PARAMETER") mode: TutorMode) {
         // Model load can be slow on first run; hold Preparing so the UI shows a
         // waiting state and input stays gated (a turn may only start from

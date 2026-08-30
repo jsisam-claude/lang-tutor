@@ -131,6 +131,7 @@ class DrillViewModel(
     fun onMicReleased() = drill.onMicReleased()
 
     val missedWords = drill.lastMissedWords
+    val speculative = drill.speculative
 
     fun again() {
         viewModelScope.launch {
@@ -478,6 +479,24 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
                         style = MaterialTheme.typography.labelMedium,
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                     )
+                    // "Heard so far", live — a guess, quoted and muted.
+                    var heard by remember { mutableStateOf<String?>(null) }
+                    LaunchedEffect(s is DrillState.Listening) {
+                        heard = null
+                        if (s is DrillState.Listening) {
+                            viewModel.speculative.collect { heard = it }
+                        }
+                    }
+                    if (s is DrillState.Listening && !heard.isNullOrBlank()) {
+                        EnglishContent {
+                            Text(
+                                text = "“$heard”",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                            )
+                        }
+                    }
                 }
                 if (A11y.wideViewport) {
                     // Sideways, the line and the mic become columns: the

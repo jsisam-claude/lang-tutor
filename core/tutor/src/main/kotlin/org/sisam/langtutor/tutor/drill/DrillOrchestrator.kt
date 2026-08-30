@@ -145,6 +145,10 @@ class DrillOrchestrator(
         _state.value = DrillState.AwaitingChild(item, index, items.size, tries)
     }
 
+    /** Live guesses for the "heard so far" preview; the early-close matcher
+     *  below consumes the same stream. */
+    val speculative get() = asr.speculative
+
     /** Watches [AsrEngine.speculative] during a capture; cancelled with it. */
     private var earlyClose: Job? = null
 

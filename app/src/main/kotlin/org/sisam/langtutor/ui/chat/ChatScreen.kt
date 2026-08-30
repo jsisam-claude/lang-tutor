@@ -172,6 +172,23 @@ fun ChatScreen(container: AppContainer) {
                 modifier = Modifier.padding(horizontal = A11y.gutter),
             )
         }
+        // "Heard so far": the soft-endpoint speculation, surfaced live. A
+        // guess, quoted and muted — the sent message stays the final result.
+        var heard by remember { mutableStateOf<String?>(null) }
+        LaunchedEffect(micState == MicState.LISTENING) {
+            heard = null
+            if (micState == MicState.LISTENING) {
+                asr.speculative.collect { heard = it }
+            }
+        }
+        if (micState == MicState.LISTENING && !heard.isNullOrBlank()) {
+            Text(
+                text = "“$heard”",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = A11y.gutter),
+            )
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()

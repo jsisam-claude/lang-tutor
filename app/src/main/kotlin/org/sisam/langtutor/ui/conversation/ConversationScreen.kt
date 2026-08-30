@@ -80,8 +80,10 @@ class ConversationViewModel(
     val handsFreeAvailable = orchestrator.handsFreeAvailable
     fun setHandsFree(enabled: Boolean) { orchestrator.handsFree = enabled }
 
-    /** Gated by BOTH the loaded model tier and the learner's track. */
+    /** Gated by BOTH the loaded model tier and the learner's level. */
     val hebrewHelpOffered = orchestrator.hebrewHelpOffered
+
+    val speculative = orchestrator.speculative
 
     fun onHebrewHelp() {
         viewModelScope.launch { orchestrator.onHebrewHelpRequested() }
@@ -392,6 +394,26 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             style = MaterialTheme.typography.labelMedium,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
+        // "Heard so far": the soft-endpoint speculation, surfaced live while
+        // the mic is still open. A guess, so it is quoted and muted — the
+        // turn's truth stays stopCapture()'s result.
+        var heard by remember { mutableStateOf<String?>(null) }
+        LaunchedEffect(state is TutorTurnState.Listening) {
+            heard = null
+            if (state is TutorTurnState.Listening) {
+                viewModel.speculative.collect { heard = it }
+            }
+        }
+        if (state is TutorTurnState.Listening && !heard.isNullOrBlank()) {
+            EnglishContent {
+                Text(
+                    text = "“$heard”",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                )
+            }
+        }
 
         // The Hebrew escape hatch. A deliberate tap, not a guess from ASR
         // confidence: the learner is the only one who knows they are lost.
