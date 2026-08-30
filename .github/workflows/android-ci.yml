@@ -32,11 +32,19 @@ concurrency:
 # from the last green run, #129, by this comment alone, so the workflow file
 # is not the cause and the version bump is neither proven nor disproven.
 #
-# That signature — no runner, no logs, instant — is what an account-level
-# block looks like: exhausted Actions minutes, a spending limit, or a policy
-# on allowed actions. Check billing first; this repo has hit a free-tier
-# quota before (see actions-cleanup.yml). Once runs start again, retry the
-# v5 bump on its own commit and read the result.
+# RESOLVED (as a mystery, not a diagnosis): every run from #136 onward is
+# green again with NOTHING changed — same file, same account, no billing
+# action taken. The failures span exactly #130-#133, an eleven-minute window
+# on 2026-08-27 (22:18-22:29 UTC); the next push, 15 hours later, just
+# worked. Two earlier theories are dead: "version policy" was disproven by
+# #132 (the v4 revert failed identically), and "exhausted minutes/billing"
+# by the repo being public (standard runners on public repos are free) and
+# by the recovery happening without anyone touching billing. What remains is
+# a GitHub-side transient — runner pool or scheduling outage. If this
+# signature recurs (instant failure, jobs created, zero steps, no runner,
+# no logs): first check githubstatus.com and simply wait; do not churn the
+# workflow file, it has been proven innocent. The v5 bump above remains
+# unproven — retry it on its own commit some quiet day and read the result.
 
 permissions:
   contents: read
