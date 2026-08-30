@@ -16,22 +16,13 @@ concurrency:
 
 # Least privilege by default; the android job re-widens to contents:write so
 # it can publish the rolling debug-latest release.
-# Pinned at v4, which is NOT where they should stay.
 #
-# Every green run carries this annotation:
+# All three actions sit at v5, the majors that declare `using: node24` and
+# silence the Node.js-20 deprecation warning every green v4 run carried.
+# The bump was attempted on 2026-08-27 (#130-#131) and could not be judged —
+# see below — so THIS commit is the clean retry the note asked for.
 #
-#   Node.js 20 is deprecated. The following actions target Node.js 20 but are
-#   being forced to run on Node.js 24: actions/checkout@v4,
-#   actions/setup-java@v4, gradle/actions/setup-gradle@v4
-#
-# The fix is any major declaring `using: node24` — v5 for all three, verified
-# by reading each action.yml. It has NOT been proven here, because the repo
-# started failing every run at startup partway through the attempt: #130
-# (v7/v6/v6), #131 (v5/v5/v5) and #132 (back at v4) all died in 3-5 seconds
-# with jobs created, zero steps, no runner assigned and no logs. #132 differs
-# from the last green run, #129, by this comment alone, so the workflow file
-# is not the cause and the version bump is neither proven nor disproven.
-#
+# The 2026-08-27 startup failures, for the record:
 # RESOLVED (as a mystery, not a diagnosis): every run from #136 onward is
 # green again with NOTHING changed — same file, same account, no billing
 # action taken. The failures span exactly #130-#133, an eleven-minute window
@@ -58,12 +49,12 @@ jobs:
       github.event_name == 'push' ||
       github.event.pull_request.head.repo.full_name != github.repository
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '25'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - run: ./gradlew -Plangtutor.jvmOnly=true build --stacktrace
 
   # Full lane: compiles the Compose app and exercises the asset-pack module
@@ -80,12 +71,12 @@ jobs:
     # runner quota (observed once after adding a new AAR dependency).
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '25'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       # Google's prebuilt WebGPU sampler/accelerator/dawn (LiteRT-LM v0.14.0,
       # SHA-256-pinned in the script) → app jniLibs, so GPU generation works on
       # devices without OpenCL (GrapheneOS). Without this step the build still
