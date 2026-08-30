@@ -54,4 +54,18 @@ class WordMatchTest {
         assertTrue(WordMatch.matches("don't stop", "don't stop"))
         assertFalse(WordMatch.matches("don't stop", "dont stop go"))
     }
+
+    @Test
+    fun `missed word indexes name the exact words, in target order`() {
+        assertEquals(
+            setOf(1, 3),
+            WordMatch.missedWordIndexes("I see a bee", "I a flower"),
+        )
+        assertEquals(emptySet<Int>(), WordMatch.missedWordIndexes("I see", "um I see yes"))
+        // Duplicates are a multiset: saying "the" once covers only one "the".
+        assertEquals(
+            setOf(3),
+            WordMatch.missedWordIndexes("the cat and the dog", "the cat and dog"),
+        )
+    }
 }

@@ -11,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -57,6 +59,12 @@ fun GlossedText(
     glossStyle: TextStyle = MaterialTheme.typography.titleMedium,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Center,
     translation: String? = null,
+    /** Karaoke: index of the word being SPOKEN right now — bolded and tinted
+     *  so the eye rides the voice. */
+    highlightWordIndex: Int? = null,
+    /** Post-attempt karaoke: indices the last attempt missed, marked in the
+     *  error colour so a retry has somewhere to aim. */
+    missedWords: Set<Int> = emptySet(),
 ) {
     Column(
         modifier = modifier,
@@ -70,14 +78,27 @@ fun GlossedText(
             horizontalArrangement = horizontalArrangement,
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            for (word in words) {
+            for ((index, word) in words.withIndex()) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     // Breathing room between columns; without it the eye pairs
                     // a Hebrew word with the wrong neighbour at small sizes.
                     modifier = Modifier.padding(horizontal = 6.dp),
                 ) {
-                    Text(text = word.english, style = style, textAlign = TextAlign.Center)
+                    Text(
+                        text = word.english,
+                        style = when {
+                            index == highlightWordIndex ->
+                                style.copy(fontWeight = FontWeight.Bold)
+                            else -> style
+                        },
+                        color = when {
+                            index == highlightWordIndex -> MaterialTheme.colorScheme.primary
+                            index in missedWords -> MaterialTheme.colorScheme.error
+                            else -> Color.Unspecified
+                        },
+                        textAlign = TextAlign.Center,
+                    )
                     if (word.hebrew.isNotEmpty()) {
                         // The one place the direction flips back. Hebrew inside
                         // an LTR row renders correctly only if the cell says so.

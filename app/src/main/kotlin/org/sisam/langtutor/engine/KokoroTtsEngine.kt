@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import org.sisam.langtutor.speech.KaraokeTiming
 import org.sisam.langtutor.speech.KokoroFrontEnd
 import org.sisam.langtutor.speech.ParrotEffect
 import org.sisam.langtutor.speech.KokoroPhonemizer
@@ -183,7 +184,17 @@ class KokoroTtsEngine(
                     for (group in groupForProsody(SentenceChunker.split(text))) {
                         if (player.interrupted) break
                         val audio = renderOrCache(group.text, speed, flavorPitch, "speak")
-                        if (audio.isNotEmpty()) rendered.send(Rendered(audio, group.start, group.end))
+                        if (audio.isEmpty()) continue
+                        // Word timing for karaoke: each word's share of the
+                        // waveform, weighted by its phoneme count — cheap
+                        // dictionary lookups, so cached audio gets timed too.
+                        // Flavored (personality) lines are not karaoke text.
+                        val timing = if (flavorPitch == null) {
+                            KaraokeTiming.of(group.text, { w -> phonemizer.phonemize(w).size }, audio.size)
+                        } else {
+                            emptyList()
+                        }
+                        rendered.send(Rendered(audio, group.start, group.end, timing))
                     }
                 } finally {
                     rendered.close()
@@ -198,10 +209,22 @@ class KokoroTtsEngine(
             for (item in rendered) {
                 if (player.interrupted) break
                 emit(TtsEvent.RangeSpoken(item.start, item.end))
-                player.play(item.audio)
+                val timing = item.timing
+                if (timing.isEmpty()) {
+                    player.play(item.audio)
+                } else {
+                    // Driven by the PLAYBACK HEAD, not the writer: the word
+                    // that lights up is the word that is sounding. The first
+                    // timing entry starts at frame 0, so last{} never misses.
+                    player.play(item.audio) { frames ->
+                        val w = timing.last { frames >= it.startFrame }
+                        Karaoke.set(text, item.start + w.charStart, item.start + w.charEnd)
+                    }
+                }
             }
             producer.cancelAndJoin()
         }
+        Karaoke.clear()
         player.release()
         emit(TtsEvent.Completed)
     }.flowOn(Dispatchers.IO)
@@ -270,7 +293,13 @@ class KokoroTtsEngine(
     /** A synthesized group waiting its turn at the speaker. Offsets are the
      *  source-text range for karaoke ([TtsEvent.RangeSpoken]), or -1 when the
      *  stream has no stable offsets to report. */
-    private class Rendered(val audio: FloatArray, val start: Int, val end: Int)
+    private class Rendered(
+        val audio: FloatArray,
+        val start: Int,
+        val end: Int,
+        /** Estimated word starts for karaoke; empty when nothing tracks. */
+        val timing: List<KaraokeTiming.Word> = emptyList(),
+    )
 
     /**
      * One group of text to one waveform, through the cache when eligible.
@@ -313,6 +342,7 @@ class KokoroTtsEngine(
 
     override suspend fun stop() {
         player.interrupted = true
+        Karaoke.clear()
         player.release()
     }
 

@@ -20,7 +20,14 @@ class PcmPlayer(private val sampleRate: Int) {
     /** Interrupt hook: checked between writes and while draining. */
     @Volatile var interrupted = false
 
-    fun play(audio: FloatArray) {
+    /**
+     * [onProgress], when given, is called from this (blocking) thread with
+     * the playback head's offset into THIS chunk, in frames — once per write
+     * and once per 20 ms drain poll. It is how karaoke tracks the word being
+     * SPOKEN rather than the word being written: writes run up to a buffer
+     * ahead of sound, but the head does not lie.
+     */
+    fun play(audio: FloatArray, onProgress: ((Int) -> Unit)? = null) {
         // Every path to audible speech goes through here, which makes it the
         // one honest place to close the "learner stopped -> first sound"
         // measurement. No-op unless a turn is being timed.
@@ -37,13 +44,13 @@ class PcmPlayer(private val sampleRate: Int) {
             android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
         }
         try {
-            playAt(audio)
+            playAt(audio, onProgress)
         } finally {
             prior?.let { p -> runCatching { android.os.Process.setThreadPriority(tid, p) } }
         }
     }
 
-    private fun playAt(audio: FloatArray) {
+    private fun playAt(audio: FloatArray, onProgress: ((Int) -> Unit)?) {
         val t = track ?: AudioTrack.Builder()
             .setAudioAttributes(
                 AudioAttributes.Builder()
@@ -66,17 +73,23 @@ class PcmPlayer(private val sampleRate: Int) {
                 framesWritten = 0
             }
         if (t.playState != AudioTrack.PLAYSTATE_PLAYING) t.play()
+        // The head counts from track start across chunks; progress reports
+        // are relative to THIS chunk's first frame.
+        val base = framesWritten
         var offset = 0
         while (offset < audio.size && !interrupted) {
             val n = t.write(audio, offset, audio.size - offset, AudioTrack.WRITE_BLOCKING)
             if (n <= 0) break
             offset += n
+            onProgress?.invoke((t.playbackHeadPosition - base).coerceAtLeast(0))
         }
         framesWritten += offset // mono: one sample == one frame
         val deadline = System.currentTimeMillis() + (audio.size * 1000L / sampleRate) + DRAIN_GRACE_MS
         while (!interrupted && t.playbackHeadPosition < framesWritten && System.currentTimeMillis() < deadline) {
+            onProgress?.invoke((t.playbackHeadPosition - base).coerceAtLeast(0))
             Thread.sleep(20)
         }
+        onProgress?.invoke(audio.size)
     }
 
     fun release() {

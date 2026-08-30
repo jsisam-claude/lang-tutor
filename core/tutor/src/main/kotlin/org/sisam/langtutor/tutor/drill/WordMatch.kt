@@ -28,12 +28,22 @@ object WordMatch {
         .filter { it.isNotEmpty() }
 
     /** How many target words are missing from the transcript (multiset). */
-    fun missing(target: String, transcript: String): Int {
+    fun missing(target: String, transcript: String): Int =
+        missedWordIndexes(target, transcript).size
+
+    /**
+     * WHICH target words (by token index) the transcript is missing — the
+     * post-attempt karaoke: said words stay plain, missed ones are marked.
+     * Token index equals whitespace-word index for ordinary text; a caller
+     * displaying by whitespace words should check the counts line up first
+     * (a hyphenated word splits into two tokens).
+     */
+    fun missedWordIndexes(target: String, transcript: String): Set<Int> {
         val said = tokens(transcript).groupingBy { it }.eachCount().toMutableMap()
-        var missed = 0
-        for (word in tokens(target)) {
+        val missed = mutableSetOf<Int>()
+        tokens(target).forEachIndexed { index, word ->
             val have = said[word] ?: 0
-            if (have > 0) said[word] = have - 1 else missed++
+            if (have > 0) said[word] = have - 1 else missed.add(index)
         }
         return missed
     }

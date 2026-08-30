@@ -107,6 +107,16 @@ class DrillOrchestrator(
     /** Per-sound colours for the LAST attempt; cleared when a new one starts. */
     val pronunciation: StateFlow<PronunciationScore?> = _pronunciation
 
+    private val _lastMissedWords = MutableStateFlow<Set<Int>>(emptySet())
+
+    /**
+     * Which words of the CURRENT item the last judged attempt missed
+     * ([WordMatch.missedWordIndexes]) — the UI marks them on the target line
+     * so a retry has somewhere to aim. Kept through the retry (that is when
+     * it helps) and cleared when the item changes.
+     */
+    val lastMissedWords: StateFlow<Set<Int>> = _lastMissedWords
+
     private var items: List<DrillItem> = emptyList()
     private var index = 0
     private var tries = 0
@@ -122,6 +132,7 @@ class DrillOrchestrator(
         correct = 0
         rounds++
         _pronunciation.value = null
+        _lastMissedWords.value = emptySet()
         speak(INTRO)
         prompt()
     }
@@ -190,6 +201,7 @@ class DrillOrchestrator(
                 return
             }
             scorePronunciation(result, at.item.text)
+            _lastMissedWords.value = WordMatch.missedWordIndexes(at.item.text, result.transcript)
             if (WordMatch.matches(at.item.text, result.transcript)) {
                 correct++
                 _events.emit(DrillEvent.Correct(tries + 1))
@@ -219,6 +231,7 @@ class DrillOrchestrator(
     private suspend fun advance() {
         index++
         tries = 0
+        _lastMissedWords.value = emptySet()
         if (index >= items.size) {
             _state.value = DrillState.RoundDone(correct, items.size, rounds)
         } else {

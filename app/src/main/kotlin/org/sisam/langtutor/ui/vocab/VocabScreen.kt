@@ -37,6 +37,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -50,8 +53,10 @@ import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.CurriculumUnit
+import org.sisam.langtutor.engine.Karaoke
 import org.sisam.langtutor.engine.ListeningAck
 import org.sisam.langtutor.engine.TurnLatency
+import org.sisam.langtutor.speech.KaraokeTiming
 import org.sisam.langtutor.tutor.drill.DrillDeck
 import org.sisam.langtutor.tutor.drill.DrillEvent
 import org.sisam.langtutor.tutor.drill.DrillItem
@@ -119,6 +124,8 @@ class DrillViewModel(
 
     fun onMicPressed() = drill.onMicPressed()
     fun onMicReleased() = drill.onMicReleased()
+
+    val missedWords = drill.lastMissedWords
 
     fun again() {
         viewModelScope.launch {
@@ -370,15 +377,64 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
                     // The curriculum's own Hebrew where the item has it;
                     // generated lines carry none and simply show two rows.
                     val meaning by rememberTranslation(container, s.item.hebrew)
+
+                    // Karaoke, both directions. While Tuki SAYS the line, the
+                    // word that is sounding right now is bolded (the engine's
+                    // playhead-driven position, keyed to this exact text so a
+                    // stale utterance can never light the wrong line). After a
+                    // judged attempt, the words the child missed are marked
+                    // until the item changes, so the retry has a target.
+                    val spans = KaraokeTiming.wordSpans(s.item.text)
+                    val karaoke by Karaoke.position.collectAsState()
+                    val highlightIndex = karaoke
+                        ?.takeIf { it.utterance == s.item.text }
+                        ?.let { pos -> spans.indexOfFirst { (st, en) -> pos.charStart in st until en } }
+                        ?.takeIf { it >= 0 }
+                    val missedRaw by viewModel.missedWords.collectAsState()
+                    // Token index == whitespace-word index only when the counts
+                    // agree (a hyphenated word splits into two tokens); when
+                    // they do not, no marks beat wrong marks.
+                    val missed = if (
+                        missedRaw.isNotEmpty() && WordMatch.tokens(s.item.text).size == spans.size
+                    ) {
+                        missedRaw
+                    } else {
+                        emptySet()
+                    }
                     if (gloss.isEmpty() && meaning == null) {
                         EnglishContent {
                             Text(
-                                text = s.item.text,
+                                text = buildAnnotatedString {
+                                    append(s.item.text)
+                                    highlightIndex?.let { i ->
+                                        spans.getOrNull(i)?.let { (st, en) ->
+                                            addStyle(
+                                                SpanStyle(
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = MaterialTheme.colorScheme.primary,
+                                                ),
+                                                st, en,
+                                            )
+                                        }
+                                    }
+                                    missed.forEach { i ->
+                                        spans.getOrNull(i)?.let { (st, en) ->
+                                            addStyle(
+                                                SpanStyle(color = MaterialTheme.colorScheme.error),
+                                                st, en,
+                                            )
+                                        }
+                                    }
+                                },
                                 style = lineStyle,
                                 textAlign = TextAlign.Center,
                             )
                         }
                     } else {
+                        // The gloss splits per whitespace word, the same shape
+                        // as the spans — guarded so a mismatch drops the marks
+                        // rather than shifting them onto neighbours.
+                        val aligned = gloss.size == spans.size
                         GlossedText(
                             words = gloss.ifEmpty { listOf(GlossWord(s.item.text, "")) },
                             style = lineStyle,
@@ -388,6 +444,8 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
                                 MaterialTheme.typography.headlineSmall
                             },
                             translation = meaning,
+                            highlightWordIndex = highlightIndex.takeIf { aligned },
+                            missedWords = if (aligned) missed else emptySet(),
                         )
                     }
                 }
