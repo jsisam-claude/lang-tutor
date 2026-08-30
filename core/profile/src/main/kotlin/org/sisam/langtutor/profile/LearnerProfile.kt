@@ -56,25 +56,19 @@ data class ParentSettings(
 )
 
 /**
- * Which of the four learner tracks this profile follows (docs/learner-tracks.md).
+ * LEGACY: the four learner tracks that predate Levels 1–7.
  *
- * The five user types the product serves collapse to four: types 2 and 4
- * (young adults and adults who never learned English) differ in theming and
- * pace, not pedagogy. The track is a config bundle — persona, reply budget,
- * Hebrew scaffolding, feedback style — not a code fork.
+ * Kept only so existing stored profiles keep deserializing and can be
+ * migrated ([LearnerProfile.effectiveLevel] maps a track to its nearest
+ * level). Nothing should branch on this anymore — the app's audience is
+ * non-native speakers at proficiency Levels 1–7, not age groups, and every
+ * dial the track used to move now lives in `LevelConfig`.
  */
 @Serializable
 enum class LearnerTrack {
-    /** Young kids, pre-alphabet. Audio and pictures; Hebrew TEXT is useless here. */
     PRE_READER,
-
-    /** Never learned, or forgot. Bilingual text and audio; Hebrew fades as level rises. */
     BEGINNER,
-
-    /** Bagrut / college prep. Text-first, explicit metalinguistic feedback. */
     EXAM,
-
-    /** Learned it, wants to be better. Conversation-first; Hebrew is an escape hatch. */
     IMPROVER,
 }
 
@@ -98,11 +92,18 @@ data class LearnerProfile(
     /** BKT mastery estimates per skill id — the input to adaptivity and the parent skill map. */
     val skills: Map<String, SkillState> = emptyMap(),
     /**
-     * Which track the tutor teaches to. Defaults to BEGINNER — the widest
-     * audience and the safest guess for a profile created before tracks
-     * existed. A parent changes it in the Parent Zone.
+     * LEGACY — see [LearnerTrack]. Read only by [effectiveLevel] to migrate
+     * a stored profile that predates levels; never written anymore.
      */
     val track: LearnerTrack = LearnerTrack.BEGINNER,
+    /**
+     * The learner's proficiency, 1–7 (docs/learner-levels.md). 0 means
+     * "never chosen": [effectiveLevel] then derives a starting level from the
+     * legacy track, so an existing profile lands where its track pointed and
+     * a fresh one starts at the widest default. Levels replace every age
+     * construct — the app serves non-native speakers of ALL ages.
+     */
+    val learnerLevel: Int = 0,
     /**
      * Stickers the child has picked, oldest first. The reward loop's only
      * durable state; ids are stable strings from the sticker book so a future
@@ -111,6 +112,18 @@ data class LearnerProfile(
     val stickers: List<String> = emptyList(),
     val parentSettings: ParentSettings = ParentSettings(),
 ) {
+    /**
+     * The level every gate and config reads: the chosen [learnerLevel], or —
+     * for a profile that predates levels — the legacy track's nearest level.
+     */
+    val effectiveLevel: Int
+        get() = if (learnerLevel in 1..7) learnerLevel else when (track) {
+            LearnerTrack.PRE_READER -> 1
+            LearnerTrack.BEGINNER -> 2
+            LearnerTrack.EXAM -> 4
+            LearnerTrack.IMPROVER -> 5
+        }
+
     companion object {
         val EMPTY = LearnerProfile()
     }

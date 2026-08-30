@@ -23,8 +23,9 @@ interface DialoguePolicy {
 }
 
 /**
- * P1 policy: low ASR confidence never reaches the LLM — the tutor asks the child
- * to try again (fast, cheap, and avoids "responding" to a misheard utterance).
+ * P1 policy: low ASR confidence never reaches the LLM — the tutor asks the
+ * learner to try again (fast, cheap, and avoids "responding" to a misheard
+ * utterance).
  */
 class ScriptedDialoguePolicy(
     private val confidenceThreshold: Float = 0.5f,
@@ -36,7 +37,7 @@ class ScriptedDialoguePolicy(
         }
         val lessonTitle = context.unit?.title?.en ?: "the lesson"
         return TutorMove.RespondViaLlm(
-            instruction = "The child is practicing \"$lessonTitle\". " +
+            instruction = "The learner is practicing \"$lessonTitle\". " +
                 "Praise briefly, gently recast any mistake, then ask one short follow-up question.",
         )
     }

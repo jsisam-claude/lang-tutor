@@ -26,7 +26,9 @@ class ContentRoundTripTest {
     fun `sample unit deserializes with polymorphic activities`() = runTest {
         val unit = repository.loadUnit("unit-001")
         assertEquals(1, unit.schemaVersion)
-        assertEquals(AgeBand.AGES_4_6, unit.ageBand)
+        // Levels replaced age bands (docs/learner-levels.md); the old 4-6
+        // band mapped to Level 1 in the file migration.
+        assertEquals(1, unit.level)
         assertEquals(7, unit.activities.size)
         assertEquals(4, unit.activities.filterIsInstance<Activity.Vocab>().size)
         assertEquals(2, unit.activities.filterIsInstance<Activity.RepeatAfterMe>().size)

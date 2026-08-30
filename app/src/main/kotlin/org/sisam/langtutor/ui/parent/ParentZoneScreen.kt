@@ -111,7 +111,7 @@ private fun ParentDashboard(container: AppContainer) {
             }
         }
 
-        TrackSection(container)
+        LevelSection(container)
         VoiceSection(container)
         PacksSection(container)
         ExperimentalSection(container)

@@ -20,7 +20,6 @@ import org.sisam.langtutor.llm.LlmRequest
 import org.sisam.langtutor.llm.Role
 import org.sisam.langtutor.profile.InMemoryProfileStore
 import org.sisam.langtutor.profile.LearnerProfile
-import org.sisam.langtutor.profile.LearnerTrack
 import org.sisam.langtutor.speech.FakeAsrEngine
 import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.FakeTtsEngine
@@ -108,7 +107,7 @@ class KvReuseTest {
             tts = FakeTtsEngine(),
             scorer = FakePronunciationScorer(),
             content = ResourceContentRepository(),
-            profile = InMemoryProfileStore(LearnerProfile(track = LearnerTrack.BEGINNER)),
+            profile = InMemoryProfileStore(LearnerProfile(learnerLevel = 2)),
             policy = policy,
             scope = scope,
             tierSpeaksHebrew = { true },

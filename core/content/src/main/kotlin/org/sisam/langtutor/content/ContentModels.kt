@@ -6,14 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LocalizedText(val en: String, val he: String)
 
-@Serializable
-enum class AgeBand {
-    @SerialName("4-6") AGES_4_6,
-    @SerialName("5-8") AGES_5_8,
-    @SerialName("7-10") AGES_7_10,
-    @SerialName("9-12") AGES_9_12,
-    @SerialName("11-13") AGES_11_13,
-}
+
 
 /**
  * Polymorphic activity types, discriminated by a "type" field in JSON. New
@@ -50,7 +43,13 @@ data class CurriculumUnit(
     val id: String,
     val title: LocalizedText,
     val cefrLevel: String,
-    val ageBand: AgeBand,
+    /**
+     * The unit's proficiency Level, 1–7 (docs/learner-levels.md). Replaced
+     * the age bands — content difficulty is a fact about the CONTENT, and
+     * the learners it fits are of every age. Old bands mapped 4-6→1, 5-8→2,
+     * 7-10→3, 9-12→4, 11-13→5 when the files were migrated.
+     */
+    val level: Int,
     val activities: List<Activity>,
 )
 

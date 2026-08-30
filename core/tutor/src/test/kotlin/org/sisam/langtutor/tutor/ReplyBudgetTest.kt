@@ -9,7 +9,6 @@ import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.profile.InMemoryProfileStore
 import org.sisam.langtutor.profile.LearnerProfile
-import org.sisam.langtutor.profile.LearnerTrack
 import org.sisam.langtutor.speech.FakeAsrEngine
 import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.FakeTtsEngine
@@ -53,7 +52,7 @@ class ReplyBudgetTest {
             tts = FakeTtsEngine(),
             scorer = FakePronunciationScorer(),
             content = ResourceContentRepository(),
-            profile = InMemoryProfileStore(LearnerProfile(track = LearnerTrack.BEGINNER)),
+            profile = InMemoryProfileStore(LearnerProfile(learnerLevel = 2)),
             policy = ScriptedDialoguePolicy(),
             scope = this,
             thermalHeadroom = { headroom },
@@ -70,7 +69,7 @@ class ReplyBudgetTest {
         advanceUntilIdle()
         val hot = llm.calls.last().maxTokens
 
-        assertEquals(TrackConfig.of(LearnerTrack.BEGINNER).replyTokens, cool)
+        assertEquals(LevelConfig.of(2).replyTokens, cool)
         assertEquals(ReplyBudget.scaled(cool, 1.1f), hot)
     }
 }

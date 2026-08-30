@@ -24,27 +24,28 @@ import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.profile.LearnerProfile
-import org.sisam.langtutor.profile.LearnerTrack
 
 /**
- * Who is learning.
+ * The learner's Level, 1–7.
  *
- * One choice that moves several dials at once (docs/learner-tracks.md): the
- * tutor's register, the reply budget, whether a mistake gets a named rule or a
- * gentle recast, and whether Hebrew explanations are offered at all. The
- * levers all existed already — they were hardcoded for a six-year-old.
+ * One choice that moves several dials at once (docs/learner-levels.md): the
+ * tutor's register, the reply budget, whether a mistake gets a named rule or
+ * a gentle recast, and how much Hebrew scaffolding is offered. Levels are
+ * PROFICIENCY, never age — the app serves non-native speakers of all ages,
+ * and the old age-flavored tracks are gone (an existing profile lands on the
+ * level its track pointed to).
  *
  * Deliberately in the Parent Zone rather than in onboarding for now: it is a
  * setting an adult should be able to change after seeing a session, and the
  * three-question onboarding the plan calls for is a separate piece of work.
  *
- * The pronunciation-gloss switch lives here too, because it is the one dial a
- * parent is most likely to want against their track's default — a child whose
- * track says EXAM but who still sounds words out, or an adult beginner who
- * finds Hebrew letters under English patronising.
+ * The pronunciation-gloss switch lives here too, because it is the one dial
+ * most likely to be wanted against the level's default — a learner at Level 4
+ * who still sounds words out, or a Level 1 adult who finds Hebrew letters
+ * under English patronising.
  */
 @Composable
-fun TrackSection(container: AppContainer) {
+fun LevelSection(container: AppContainer) {
     val profile by container.profile.profile.collectAsState(initial = LearnerProfile.EMPTY)
     val scope = rememberCoroutineScope()
 
@@ -54,36 +55,38 @@ fun TrackSection(container: AppContainer) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = stringResource(R.string.parent_track_title),
+                text = stringResource(R.string.parent_level_title),
                 style = MaterialTheme.typography.titleMedium,
             )
             Text(
-                text = stringResource(R.string.parent_track_hint),
+                text = stringResource(R.string.parent_level_hint),
                 style = MaterialTheme.typography.bodySmall,
             )
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
-                for (track in LearnerTrack.entries) {
+                for (level in 1..7) {
                     FilterChip(
-                        selected = track == profile.track,
+                        selected = level == profile.effectiveLevel,
                         onClick = {
-                            scope.launch { container.profile.update { it.copy(track = track) } }
+                            scope.launch {
+                                container.profile.update { it.copy(learnerLevel = level) }
+                            }
                         },
-                        label = { Text(stringResource(labelFor(track))) },
+                        label = { Text(stringResource(labelFor(level), level)) },
                     )
                 }
             }
             Text(
-                text = stringResource(R.string.parent_track_hebrew_note),
+                text = stringResource(R.string.parent_level_hebrew_note),
                 style = MaterialTheme.typography.bodySmall,
             )
 
             HorizontalDivider()
 
-            // The gloss follows the track unless someone says otherwise, so
-            // the switch shows the track's answer until it is touched. That
+            // The gloss follows the level unless someone says otherwise, so
+            // the switch shows the level's answer until it is touched. That
             // keeps "I never opened this screen" and "I chose this" as
             // different states without a third control to explain.
             Row(
@@ -159,9 +162,12 @@ fun TrackSection(container: AppContainer) {
     }
 }
 
-private fun labelFor(track: LearnerTrack): Int = when (track) {
-    LearnerTrack.PRE_READER -> R.string.track_pre_reader
-    LearnerTrack.BEGINNER -> R.string.track_beginner
-    LearnerTrack.EXAM -> R.string.track_exam
-    LearnerTrack.IMPROVER -> R.string.track_improver
+private fun labelFor(level: Int): Int = when (level) {
+    1 -> R.string.level_1
+    2 -> R.string.level_2
+    3 -> R.string.level_3
+    4 -> R.string.level_4
+    5 -> R.string.level_5
+    6 -> R.string.level_6
+    else -> R.string.level_7
 }

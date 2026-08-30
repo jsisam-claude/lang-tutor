@@ -4,7 +4,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 import org.sisam.langtutor.content.Activity
-import org.sisam.langtutor.content.AgeBand
 import org.sisam.langtutor.content.CurriculumUnit
 import org.sisam.langtutor.content.LocalizedText
 
@@ -15,7 +14,7 @@ class TargetPickerTest {
         id = "unit-test",
         title = LocalizedText(en = "Test", he = "בדיקה"),
         cefrLevel = "pre-A1",
-        ageBand = AgeBand.AGES_4_6,
+        level = 1,
         activities = activities.toList(),
     )
 

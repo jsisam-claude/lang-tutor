@@ -19,9 +19,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import org.sisam.langtutor.AppContainer
-import org.sisam.langtutor.content.AgeBand
 import org.sisam.langtutor.profile.LearnerProfile
-import org.sisam.langtutor.profile.LearnerTrack
+import org.sisam.langtutor.tutor.LevelConfig
 import org.sisam.langtutor.ui.chat.ChatScreen
 import org.sisam.langtutor.ui.conversation.ConversationScreen
 import org.sisam.langtutor.ui.home.HomeScreen
@@ -102,7 +101,9 @@ fun AppNav(container: AppContainer) {
 }
 
 /**
- * Sends a young learner to the sticker room when they have earned one.
+ * Sends an early-level learner to the sticker room when they have earned
+ * one — at Levels 1-2 the celebration IS the reward loop; above that the
+ * sticker lands quietly in the book.
  *
  * The bookkeeping is deliberately derived rather than stored: stickers earned
  * is XP over a threshold, stickers owned is the length of the collection, and
@@ -126,14 +127,15 @@ private fun StickerMilestone(container: AppContainer, navController: NavHostCont
     var offeredAtOwned by rememberSaveable { mutableIntStateOf(StickerMilestones.NEVER_OFFERED) }
     var offeredAtEarned by rememberSaveable { mutableIntStateOf(0) }
 
-    // A young learner by EITHER signal: the profile's track, or the age band of
-    // the unit actually open. A parent who never set the track still gets the
-    // right behaviour inside a 4-6 unit.
+    // The ceremony learner by EITHER signal: the profile's level, or the
+    // level of the unit actually open. Someone who never chose a level still
+    // gets the right behaviour inside a Level 1-2 unit.
     val unitId = entry?.arguments?.getString("unitId")
-    val ageBand by produceState<AgeBand?>(initialValue = null, unitId) {
-        value = unitId?.let { container.content.loadUnit(it).ageBand }
+    val unitLevel by produceState<Int?>(initialValue = null, unitId) {
+        value = unitId?.let { container.content.loadUnit(it).level }
     }
-    val young = profile.track == LearnerTrack.PRE_READER || ageBand == AgeBand.AGES_4_6
+    val ceremony = LevelConfig.of(profile.effectiveLevel).stickerCeremony ||
+        (unitLevel ?: Int.MAX_VALUE) <= LevelConfig.EARLY_UNIT_LEVEL
 
     val owed = StickerMilestones.owed(
         xp = profile.xp,
@@ -142,8 +144,8 @@ private fun StickerMilestone(container: AppContainer, navController: NavHostCont
         lastOfferedEarned = offeredAtEarned,
     )
 
-    LaunchedEffect(owed, young, route) {
-        if (owed && young && Routes.isLearningRoom(route)) {
+    LaunchedEffect(owed, ceremony, route) {
+        if (owed && ceremony && Routes.isLearningRoom(route)) {
             offeredAtOwned = profile.stickers.size
             offeredAtEarned = StickerMilestones.earned(profile.xp)
             navController.navigate(Routes.STICKER)

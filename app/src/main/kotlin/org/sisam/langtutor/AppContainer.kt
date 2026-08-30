@@ -57,7 +57,7 @@ import kotlinx.coroutines.withContext
 import org.sisam.langtutor.profile.LearnerProfile
 import org.sisam.langtutor.speech.HebrewTransliteration
 import org.sisam.langtutor.speech.KokoroPhonemizer
-import org.sisam.langtutor.tutor.TrackConfig
+import org.sisam.langtutor.tutor.LevelConfig
 
 /**
  * Manual composition root — the single swap point for engines.
@@ -691,7 +691,7 @@ class AppContainer private constructor(context: Context) {
      *
      * Lazy and container-scoped for one reason: it needs the CMU dictionary,
      * which is ~140k entries, and every other holder of a [KokoroPhonemizer]
-     * loads its own copy. A learner whose track has the gloss off never pays
+     * loads its own copy. A learner whose level has the gloss off never pays
      * for it at all, and one who has it on pays once for the process rather
      * than once per screen.
      */
@@ -699,11 +699,11 @@ class AppContainer private constructor(context: Context) {
 
     /**
      * Is the gloss on for this learner? The stored setting wins; unset follows
-     * the track, so nobody has to find this screen to get the right default.
+     * the level, so nobody has to find this screen to get the right default.
      */
     fun glossEnabled(profile: LearnerProfile): Boolean =
         profile.parentSettings.showTransliteration
-            ?: TrackConfig.of(profile.track).transliterationByDefault
+            ?: LevelConfig.of(profile.effectiveLevel).transliterationByDefault
 
     /**
      * Is the Hebrew MEANING shown? Separate from [glossEnabled] because the
@@ -712,7 +712,7 @@ class AppContainer private constructor(context: Context) {
      */
     fun translationEnabled(profile: LearnerProfile): Boolean =
         profile.parentSettings.showTranslation
-            ?: TrackConfig.of(profile.track).hebrewTextUseful
+            ?: LevelConfig.of(profile.effectiveLevel).translationByDefault
 
     /**
      * [text] with each word's pronunciation, or empty when the gloss is off.
@@ -792,9 +792,6 @@ class AppContainer private constructor(context: Context) {
             // Hebrew eval gate (4.03) where E4B passed (4.45), and the pick is
             // sticky per process, so this reads the same answer all session.
             tierSpeaksHebrew = { modelTierLabel == HEBREW_CAPABLE_TIER },
-            // With a Hebrew voice installed, even a pre-reader can be helped:
-            // they hear the explanation instead of reading it.
-            canSpeakHebrew = { hasHebrewTts },
             // A throttled phone gets shorter replies (ReplyBudget) — decode
             // and synthesis both stretch when the SoC clamps, and saying less
             // is the one lever that shortens both.

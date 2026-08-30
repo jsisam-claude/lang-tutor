@@ -94,18 +94,21 @@
     <string name="packs_consent_body">%1$s (%2$s) will be downloaded once, over your current connection. You can remove it anytime.</string>
     <string name="packs_consent_confirm">Download</string>
     <string name="packs_consent_cancel">Not now</string>
-    <string name="parent_track_title">Who is learning?</string>
-    <string name="parent_track_hint">This sets how Tuki talks: how long the answers are, whether mistakes get a named rule or a gentle repeat, and whether Hebrew explanations are offered.</string>
-    <string name="parent_track_hebrew_note">Hebrew explanations need the larger model (E4B) and a track that reads — they are hidden for a pre-reader, who gains nothing from Hebrew text.</string>
+    <string name="parent_level_title">English level</string>
+    <string name="parent_level_hint">Level 1 to 7, for any age. It sets how Tuki talks: how long the answers are, whether mistakes get a named rule or a gentle repeat, and how much Hebrew help is offered. Hebrew fades as the level rises and is off at 6–7.</string>
+    <string name="parent_level_hebrew_note">Hebrew explanations need the larger model (E4B), and are offered through Level 5 — at 6 and 7 the practice is English-only on purpose.</string>
     <string name="parent_gloss_title">Hebrew pronunciation</string>
     <string name="parent_gloss_hint">Shows how to say each English word, in Hebrew letters. Follows the learner type until you change it here.</string>
     <!-- Escaped on purpose: the nikud is invisible in an editor and gets
          silently reordered by anything that normalises this file. qof+segol+tet. -->
     <string name="parent_gloss_example">cat \u2192 \u05e7\u05b6\u05d8</string>
-    <string name="track_pre_reader">Young child (not reading yet)</string>
-    <string name="track_beginner">Beginner</string>
-    <string name="track_exam">Exam preparation</string>
-    <string name="track_improver">Already speaks, improving</string>
+    <string name="level_1">%d · First words</string>
+    <string name="level_2">%d · First sentences</string>
+    <string name="level_3">%d · Simple stories</string>
+    <string name="level_4">%d · Everyday English</string>
+    <string name="level_5">%d · Conversations</string>
+    <string name="level_6">%d · Rich English</string>
+    <string name="level_7">%d · Mastery</string>
     <string name="parent_voice_title">Tuki’s voice</string>
     <string name="parent_voice_hint">Tap a voice to hear it. The choice is saved.</string>
     <string name="parent_voice_american">American</string>

@@ -1,20 +1,67 @@
 {
-  "schemaVersion": 1,
-  "id": "unit-003",
-  "title": { "en": "Yummy Food", "he": "אוכל טעים" },
-  "cefrLevel": "pre-A1",
-  "ageBand": "4-6",
-  "activities": [
-    { "type": "vocab", "word": "apple", "translation": { "en": "apple", "he": "תפוח" } },
-    { "type": "vocab", "word": "banana", "translation": { "en": "banana", "he": "בננה" } },
-    { "type": "vocab", "word": "bread", "translation": { "en": "bread", "he": "לחם" } },
-    { "type": "vocab", "word": "milk", "translation": { "en": "milk", "he": "חלב" } },
-    { "type": "repeatAfterMe", "phrase": "I like apples!" },
-    { "type": "repeatAfterMe", "phrase": "The banana is yellow." },
-    {
-      "type": "questionAnswer",
-      "prompt": { "en": "What do you like to eat?", "he": "מה אתם אוהבים לאכול?" },
-      "expectedAnswers": ["I like apples", "I like bananas", "I like bread", "apples", "bananas", "bread"]
-    }
-  ]
+ "schemaVersion": 1,
+ "id": "unit-003",
+ "title": {
+  "en": "Yummy Food",
+  "he": "אוכל טעים"
+ },
+ "cefrLevel": "pre-A1",
+ "level": 1,
+ "activities": [
+  {
+   "type": "vocab",
+   "word": "apple",
+   "translation": {
+    "en": "apple",
+    "he": "תפוח"
+   }
+  },
+  {
+   "type": "vocab",
+   "word": "banana",
+   "translation": {
+    "en": "banana",
+    "he": "בננה"
+   }
+  },
+  {
+   "type": "vocab",
+   "word": "bread",
+   "translation": {
+    "en": "bread",
+    "he": "לחם"
+   }
+  },
+  {
+   "type": "vocab",
+   "word": "milk",
+   "translation": {
+    "en": "milk",
+    "he": "חלב"
+   }
+  },
+  {
+   "type": "repeatAfterMe",
+   "phrase": "I like apples!"
+  },
+  {
+   "type": "repeatAfterMe",
+   "phrase": "The banana is yellow."
+  },
+  {
+   "type": "questionAnswer",
+   "prompt": {
+    "en": "What do you like to eat?",
+    "he": "מה אתם אוהבים לאכול?"
+   },
+   "expectedAnswers": [
+    "I like apples",
+    "I like bananas",
+    "I like bread",
+    "apples",
+    "bananas",
+    "bread"
+   ]
+  }
+ ]
 }

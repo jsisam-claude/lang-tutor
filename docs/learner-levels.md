@@ -1,3 +1,34 @@
+# Learner Levels 1–7
+
+> **2026-08-30: Levels replaced tracks.** The app's audience is non-native
+> speakers of ALL ages at proficiency **Levels 1–7** — never age groups. The
+> four tracks below survive only as a migration mapping (`LearnerProfile.
+> effectiveLevel`: PRE_READER→1, BEGINNER→2, EXAM→4, IMPROVER→5); every dial
+> they moved now lives in `LevelConfig` as a function of proficiency:
+>
+> | level | name | tokens | translit | meaning row | Hebrew help | ceremony |
+> |---|---|---|---|---|---|---|
+> | 1 | First words | 48 | on | on | on | on |
+> | 2 | First sentences | 64 | on | on | on | — |
+> | 3 | Simple stories | 80 | on | on | on | — |
+> | 4 | Everyday English | 96 | — | on | on | — |
+> | 5 | Conversations | 112 | — | — | on | — |
+> | 6 | Rich English | 128 | — | — | — | — |
+> | 7 | Mastery | 128 | — | — | — | — |
+>
+> Scaffolds fade in a strict order (transliteration, then the meaning row,
+> then Hebrew help; 6–7 are English-only immersion on purpose), defaults are
+> always overridable in the Parent Zone, and curriculum units carry a `level`
+> instead of an age band (old bands mapped 4-6→1, 5-8→2, 7-10→3, 9-12→4,
+> 11-13→5). Sentence content per level lives in the phrasebank
+> (docs/phrasebank.md), whose ladder table is the content contract.
+> Correction style still follows the SLA split the tracks encoded: recasts
+> only at the bottom, named rules at the top.
+>
+> The remainder of this file is the ORIGINAL track design, kept for the
+> reasoning that produced those levers; read its four tracks as the levels
+> they became.
+
 # Learner tracks — one spine, four tracks
 
 Decision record (2026-08-27): how the tutor serves audiences beyond the

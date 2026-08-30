@@ -1,20 +1,64 @@
 {
-  "schemaVersion": 1,
-  "id": "unit-002",
-  "title": { "en": "Animal Friends", "he": "חברים מעולם החי" },
-  "cefrLevel": "pre-A1",
-  "ageBand": "4-6",
-  "activities": [
-    { "type": "vocab", "word": "dog", "translation": { "en": "dog", "he": "כלב" } },
-    { "type": "vocab", "word": "cat", "translation": { "en": "cat", "he": "חתול" } },
-    { "type": "vocab", "word": "bird", "translation": { "en": "bird", "he": "ציפור" } },
-    { "type": "vocab", "word": "fish", "translation": { "en": "fish", "he": "דג" } },
-    { "type": "repeatAfterMe", "phrase": "The dog is big!" },
-    { "type": "repeatAfterMe", "phrase": "I see a little bird." },
-    {
-      "type": "questionAnswer",
-      "prompt": { "en": "Which animal says meow?", "he": "איזו חיה עושה מיאו?" },
-      "expectedAnswers": ["cat", "a cat", "the cat"]
-    }
-  ]
+ "schemaVersion": 1,
+ "id": "unit-002",
+ "title": {
+  "en": "Animal Friends",
+  "he": "חברים מעולם החי"
+ },
+ "cefrLevel": "pre-A1",
+ "level": 1,
+ "activities": [
+  {
+   "type": "vocab",
+   "word": "dog",
+   "translation": {
+    "en": "dog",
+    "he": "כלב"
+   }
+  },
+  {
+   "type": "vocab",
+   "word": "cat",
+   "translation": {
+    "en": "cat",
+    "he": "חתול"
+   }
+  },
+  {
+   "type": "vocab",
+   "word": "bird",
+   "translation": {
+    "en": "bird",
+    "he": "ציפור"
+   }
+  },
+  {
+   "type": "vocab",
+   "word": "fish",
+   "translation": {
+    "en": "fish",
+    "he": "דג"
+   }
+  },
+  {
+   "type": "repeatAfterMe",
+   "phrase": "The dog is big!"
+  },
+  {
+   "type": "repeatAfterMe",
+   "phrase": "I see a little bird."
+  },
+  {
+   "type": "questionAnswer",
+   "prompt": {
+    "en": "Which animal says meow?",
+    "he": "איזו חיה עושה מיאו?"
+   },
+   "expectedAnswers": [
+    "cat",
+    "a cat",
+    "the cat"
+   ]
+  }
+ ]
 }

@@ -28,7 +28,7 @@ update checks, nothing ever uploaded**.
 | [docs/mockups/](docs/mockups/) | 5 interactive HTML screen mockups + [`demo.html`](docs/mockups/demo.html), the animated product walkthrough the demo video is rendered from. |
 | `app/`, `core/*` | Android scaffold (Kotlin + Compose): the phase-1 architecture with **fake engines** — the app runs a full scripted tutoring turn with zero model weights. |
 | `asset-packs/model_pack/` | Play Asset Delivery stub where model weights live in production (never committed). |
-| [docs/learner-tracks.md](docs/learner-tracks.md) | The audience plan: five user types collapsed into four tracks (modality mix, feedback style, Hebrew's role per track), the config levers, and the greenlit next step for in-Hebrew explanations. |
+| [docs/learner-levels.md](docs/learner-levels.md) | The audience plan: proficiency Levels 1–7 for non-native speakers of all ages — the per-level dials (register, reply budget, Hebrew scaffolding fade), the migration from the old age-flavored tracks, and the original track reasoning. |
 | [scripts/](scripts/) | Tooling to fetch the large binaries that are not committed (models, native libs, voice data) and to sideload them onto a phone — all SHA-256-pinned. [`scripts/README.md`](scripts/README.md) says which to run when. |
 
 ## Building the scaffold

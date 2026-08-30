@@ -33,7 +33,7 @@ import org.sisam.langtutor.safety.SafetyFilter
  * - **No names, no brands, no digits.** Names phonemize badly and drill
  *   nothing; digits come back from ASR as "3" and fail the word match even
  *   when said perfectly, so numbers must arrive spelled out.
- * - **A topic seed per round**, drawn from the child's world, so consecutive
+ * - **A topic seed per round**, drawn from the learner's world, so consecutive
  *   rounds differ even under near-greedy decoding.
  * - **Format examples, then "new"**: the examples pin the output shape; the
  *   word "new" plus a parse-time filter keeps them from being echoed back.
@@ -114,10 +114,10 @@ class DrillGenerator(
     private fun request(level: DrillLevel, count: Int, topic: String): LlmRequest {
         val task = when (level) {
             DrillLevel.WORDS -> """
-                Write $count different single English words about $topic, for the child to say aloud.
+                Write $count different single English words about $topic, for the learner to say aloud.
                 Rules:
                 - Exactly one word per line and nothing else: no numbering, no bullets, no translations, no explanations.
-                - Concrete words the child can picture: things, animals, colors, simple actions.
+                - Concrete words the learner can picture: things, animals, colors, simple actions.
                 - Only very common words a beginner learns first.
                 Example format:
                 ${EXAMPLES_WORDS.joinToString("\n                ")}
@@ -125,7 +125,7 @@ class DrillGenerator(
             """.trimIndent()
 
             DrillLevel.SHORT -> """
-                Write $count different short English sentences about $topic, for the child to repeat aloud.
+                Write $count different short English sentences about $topic, for the learner to repeat aloud.
                 Rules:
                 - Each sentence is 2 to 4 words, on its own line, ending with . or !
                 - Present tense. Only simple, concrete words a five-year-old knows.
@@ -139,7 +139,7 @@ class DrillGenerator(
             """.trimIndent()
 
             DrillLevel.LONG -> """
-                Write $count different English sentences about $topic, for the child to repeat aloud.
+                Write $count different English sentences about $topic, for the learner to repeat aloud.
                 Rules:
                 - Each sentence is 5 to 8 words, on its own line, ending with . or !
                 - Present tense. Only simple, concrete words a young beginner knows.

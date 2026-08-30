@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.content.Activity
-import org.sisam.langtutor.content.AgeBand
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.CurriculumUnit
 import org.sisam.langtutor.llm.ChatMessage
@@ -17,7 +16,6 @@ import org.sisam.langtutor.llm.LlmModelSpec
 import org.sisam.langtutor.llm.LlmRequest
 import org.sisam.langtutor.llm.Role
 import org.sisam.langtutor.profile.LearnerProfileStore
-import org.sisam.langtutor.profile.LearnerTrack
 import org.sisam.langtutor.safety.BlocklistSafetyFilter
 import org.sisam.langtutor.safety.SafetyFilter
 import org.sisam.langtutor.speech.AsrEngine
@@ -59,13 +57,6 @@ class TutorOrchestrator(
      */
     private val tierSpeaksHebrew: () -> Boolean = { false },
     /**
-     * Whether a Hebrew VOICE is installed. This is the gate that lets the
-     * youngest learners in: written Hebrew is useless to a child who cannot
-     * read it, but spoken Hebrew is exactly what they need, and it was only
-     * ever withheld because there was no voice to say it with.
-     */
-    private val canSpeakHebrew: () -> Boolean = { false },
-    /**
      * Android's thermal headroom forecast (1.0 = throttling threshold), read
      * per turn; NaN when unknown. Injected because this module is pure JVM.
      * Drives [ReplyBudget]: a throttled phone gets shorter replies, which is
@@ -83,16 +74,19 @@ class TutorOrchestrator(
     private var currentUnit: CurriculumUnit? = null
     private var turnActive = false
 
-    /** The track's config bundle for this session, read once at session start. */
-    private var track: TrackConfig = TrackConfig.of(LearnerTrack.BEGINNER)
+    /** The learner's level bundle for this session, read once at session start. */
+    private var level: LevelConfig = LevelConfig.of(2)
 
     private val _hebrewHelpOffered = MutableStateFlow(false)
 
     /**
      * Whether to show the "explain in Hebrew" control. Two independent gates:
      * the loaded model must be the tier that passed the Hebrew eval, and the
-     * learner's track must be one written Hebrew actually helps — a pre-reader
-     * cannot read Hebrew either, so for them the button would be decoration.
+     * learner's LEVEL must be one Hebrew scaffolding serves — offered through
+     * Level 5, withheld at 6–7 where immersion is the product. No age gate
+     * anywhere: levels are proficiency. (A learner who cannot READ the Hebrew
+     * still hears it when a Hebrew voice is installed — TtsRouter routes
+     * Hebrew lines to it automatically, no separate gate needed.)
      */
     val hebrewHelpOffered: StateFlow<Boolean> = _hebrewHelpOffered
 
@@ -137,18 +131,13 @@ class TutorOrchestrator(
         // AwaitingChild) — this prevents generate()-before-load() on the real engine.
         _state.value = TutorTurnState.Preparing
         sentHistory = emptyList()
-        track = TrackConfig.of(profile.current().track)
+        level = LevelConfig.of(profile.current().effectiveLevel)
         llm.load(LlmModelSpec(modelId = "tutor-default"))
         currentUnit = content.loadUnit(unitId)
         // Only meaningful AFTER the load: which tier actually came up is what
-        // decides whether Hebrew is trustworthy this session.
-        //
-        // Two ways to qualify. Either the learner READS Hebrew — a track that
-        // wants text, and not a 4-6 unit, because the unit's age band knows
-        // something the default BEGINNER track does not — or we can SAY it,
-        // in which case being unable to read is not a reason to withhold it.
-        val readsHebrew = track.hebrewTextUseful && currentUnit?.ageBand != AgeBand.AGES_4_6
-        _hebrewHelpOffered.value = tierSpeaksHebrew() && (readsHebrew || canSpeakHebrew())
+        // decides whether Hebrew is trustworthy this session; the level
+        // decides whether the scaffold helps at all.
+        _hebrewHelpOffered.value = tierSpeaksHebrew() && level.hebrewTextUseful
         val firstPrompt = currentUnit?.activities
             ?.filterIsInstance<Activity.RepeatAfterMe>()
             ?.firstOrNull()?.phrase
@@ -639,15 +628,15 @@ class TutorOrchestrator(
         replyCharBudget = (replyTokensFor(instruction) * EST_CHARS_PER_TOKEN)
             .coerceAtLeast(BlocklistSafetyFilter.MAX_REPLY_CHARS)
         return LlmRequest(
-            systemPrompt = SYSTEM_PROMPT + "\n" + track.personaSuffix,
+            systemPrompt = SYSTEM_PROMPT + "\n" + level.personaSuffix,
             messages = sentHistory.takeLast(HISTORY_TURNS) +
                 ChatMessage(Role.USER, guideWrap(instruction, utterance)),
-            // Reply budget from the track, floored to the age band: a 4-6 unit
-            // gets one short sentence and a question whichever track is set —
-            // half the tokens is half the decode time AND better pedagogy
-            // (pre-readers lose the thread in long replies). Turn time scales
-            // almost linearly with this number, so a Hebrew explanation, which
-            // genuinely needs two clauses in two scripts, gets its own budget.
+            // Reply budget from the level, floored for early-level UNITS: a
+            // Level 1-2 unit gets one short sentence and a question whatever
+            // the profile says — half the tokens is half the decode time AND
+            // better pedagogy (early learners lose the thread in long
+            // replies). A Hebrew explanation, which genuinely needs two
+            // clauses in two scripts, keeps its own budget.
             maxTokens = replyTokensFor(instruction),
         )
     }
@@ -655,8 +644,9 @@ class TutorOrchestrator(
     private fun replyTokensFor(instruction: String): Int {
         val base = when {
             instruction == HEBREW_HELP_INSTRUCTION -> HEBREW_REPLY_TOKENS
-            currentUnit?.ageBand == AgeBand.AGES_4_6 -> minOf(track.replyTokens, YOUNG_REPLY_TOKENS)
-            else -> track.replyTokens
+            (currentUnit?.level ?: Int.MAX_VALUE) <= LevelConfig.EARLY_UNIT_LEVEL ->
+                minOf(level.replyTokens, EARLY_UNIT_REPLY_TOKENS)
+            else -> level.replyTokens
         }
         return ReplyBudget.scaled(base, runCatching { thermalHeadroom() }.getOrDefault(Float.NaN))
     }
@@ -720,8 +710,8 @@ class TutorOrchestrator(
          */
         const val HEBREW_HELP_REQUEST = "הסבר בעברית"
 
-        /** Age-band floor on the reply budget, whatever the track asks for. */
-        const val YOUNG_REPLY_TOKENS = 48
+        /** Early-unit floor on the reply budget, whatever the level asks for. */
+        const val EARLY_UNIT_REPLY_TOKENS = 48
 
         /** Rough Gemma ratio, used only to size the whole-reply cut. */
         const val EST_CHARS_PER_TOKEN = 4
@@ -733,12 +723,12 @@ class TutorOrchestrator(
         // note: the first sentence gates the audio, and a three-word opener is
         // on the speaker seconds before a long one would be.
         val SYSTEM_PROMPT = """
-            You are Tuki, a warm, patient English tutor for a young Hebrew-speaking child.
-            Use very short sentences and simple words the child already knows.
+            You are Tuki, a warm, patient English tutor for a Hebrew-speaking learner.
+            Use short sentences and words the learner already knows.
             Begin each reply with a very short phrase, like "Good try!". Praise effort.
             Correct mistakes by repeating the sentence correctly, never by
             saying "wrong". Ask exactly one short question per turn. Stay on the lesson
-            topic. Never discuss unsafe, scary, or grown-up subjects.
+            topic. Never discuss unsafe or explicit subjects.
         """.trimIndent()
     }
 }

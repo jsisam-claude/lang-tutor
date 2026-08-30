@@ -13,25 +13,23 @@ import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.Role
 import org.sisam.langtutor.profile.InMemoryProfileStore
 import org.sisam.langtutor.profile.LearnerProfile
-import org.sisam.langtutor.profile.LearnerTrack
 import org.sisam.langtutor.speech.FakeAsrEngine
 import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.FakeTtsEngine
 
 /**
- * The Hebrew escape hatch (docs/learner-tracks.md) and the track config that
+ * The Hebrew escape hatch (docs/learner-levels.md) and the level config that
  * gates it. Two independent gates guard one instruction, so both are asserted
  * separately — a regression that opened either one would ship Hebrew the eval
- * rejected, or a button that does nothing for a child who cannot read.
+ * rejected, or a scaffold at the immersion levels that exist to not have one.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class HebrewHelpTest {
 
     private fun fixture(
         scope: TestScope,
-        track: LearnerTrack = LearnerTrack.BEGINNER,
+        level: Int = 2,
         tierSpeaksHebrew: Boolean = true,
-        canSpeakHebrew: Boolean = false,
     ): Pair<TutorOrchestrator, FakeLlmEngine> {
         val llm = FakeLlmEngine()
         val orchestrator = TutorOrchestrator(
@@ -40,19 +38,18 @@ class HebrewHelpTest {
             tts = FakeTtsEngine(),
             scorer = FakePronunciationScorer(),
             content = ResourceContentRepository(),
-            profile = InMemoryProfileStore(LearnerProfile(track = track)),
+            profile = InMemoryProfileStore(LearnerProfile(learnerLevel = level)),
             policy = ScriptedDialoguePolicy(),
             scope = scope,
             tierSpeaksHebrew = { tierSpeaksHebrew },
-            canSpeakHebrew = { canSpeakHebrew },
         )
         return orchestrator to llm
     }
 
-    /** A 5-8 unit: old enough that the age band does not veto Hebrew. */
+    /** A Level 2 unit: no early-unit reply floor in play. */
     private val READING_UNIT = "unit-007"
 
-    /** A 4-6 unit: a child who cannot read Hebrew either. */
+    /** A Level 1 unit: the early-unit floor and ceremony content. */
     private val YOUNG_UNIT = "unit-001"
 
     /** The guidance now rides INSIDE the user turn (the KV-leak fix — see
@@ -61,71 +58,36 @@ class HebrewHelpTest {
         llm.calls[index].messages.last().text
 
     @Test
-    fun `base tier never offers Hebrew, whatever the track`() = runTest {
-        val (tutor, _) = fixture(this, track = LearnerTrack.BEGINNER, tierSpeaksHebrew = false)
+    fun `base tier never offers Hebrew, whatever the level`() = runTest {
+        val (tutor, _) = fixture(this, level = 2, tierSpeaksHebrew = false)
         tutor.startSession(READING_UNIT, TutorMode.TEXT)
         advanceUntilIdle()
         assertFalse(tutor.hebrewHelpOffered.value)
     }
 
     @Test
-    fun `a pre-reader is never offered Hebrew TEXT, even on the capable tier`() = runTest {
-        // Hebrew writing is worthless to a child who cannot read Hebrew either;
-        // their path is pre-recorded spoken Hebrew, not this button.
-        val (tutor, _) = fixture(this, track = LearnerTrack.PRE_READER, tierSpeaksHebrew = true)
-        tutor.startSession(READING_UNIT, TutorMode.TEXT)
-        advanceUntilIdle()
-        assertFalse(tutor.hebrewHelpOffered.value)
-    }
-
-    @Test
-    fun `capable tier plus a reading track offers it`() = runTest {
-        val (tutor, _) = fixture(this, track = LearnerTrack.BEGINNER, tierSpeaksHebrew = true)
-        tutor.startSession(READING_UNIT, TutorMode.TEXT)
-        advanceUntilIdle()
-        assertTrue(tutor.hebrewHelpOffered.value)
-    }
-
-    @Test
-    fun `a Hebrew VOICE lets a pre-reader in, because they can hear it`() = runTest {
-        // The text gate exists because a child who cannot read Hebrew gains
-        // nothing from Hebrew writing. Spoken Hebrew is the opposite: it is
-        // exactly what they need, and it was only ever withheld for want of a
-        // voice to say it with.
-        val (tutor, _) = fixture(
-            this,
-            track = LearnerTrack.PRE_READER,
-            tierSpeaksHebrew = true,
-            canSpeakHebrew = true,
-        )
+    fun `Level 1 is offered Hebrew, because proficiency is not an age`() = runTest {
+        // The old pre-reader veto was an age assumption: a Level 1 ADULT
+        // reads Hebrew fine. A learner who cannot still HEARS the reply when
+        // a Hebrew voice is installed (TtsRouter routes it automatically).
+        val (tutor, _) = fixture(this, level = 1, tierSpeaksHebrew = true)
         tutor.startSession(YOUNG_UNIT, TutorMode.TEXT)
         advanceUntilIdle()
         assertTrue(tutor.hebrewHelpOffered.value)
     }
 
     @Test
-    fun `a voice does not override the tier gate`() = runTest {
-        // A voice that can SAY anything does not make E2B's Hebrew trustworthy.
-        val (tutor, _) = fixture(
-            this,
-            track = LearnerTrack.BEGINNER,
-            tierSpeaksHebrew = false,
-            canSpeakHebrew = true,
-        )
-        tutor.startSession(READING_UNIT, TutorMode.TEXT)
-        advanceUntilIdle()
-        assertFalse(tutor.hebrewHelpOffered.value)
-    }
-
-    @Test
-    fun `a 4-6 unit vetoes Hebrew TEXT when there is no voice to say it`() = runTest {
-        // The track defaults to BEGINNER, so without this the age band that
-        // already governs the reply budget would be ignored by the one feature
-        // whose whole premise is "can this learner read?".
-        val (tutor, _) = fixture(this, track = LearnerTrack.BEGINNER, tierSpeaksHebrew = true)
-        tutor.startSession(YOUNG_UNIT, TutorMode.TEXT)
-        advanceUntilIdle()
-        assertFalse(tutor.hebrewHelpOffered.value)
+    fun `offered through Level 5, withheld at 6 and 7`() = runTest {
+        for (level in 1..7) {
+            val (tutor, _) = fixture(this, level = level, tierSpeaksHebrew = true)
+            tutor.startSession(READING_UNIT, TutorMode.TEXT)
+            advanceUntilIdle()
+            assertEquals(
+                "level $level",
+                level <= 5,
+                tutor.hebrewHelpOffered.value,
+            )
+        }
     }
 
     @Test
@@ -193,7 +155,7 @@ class HebrewHelpTest {
 
     @Test
     fun `asking for help earns no XP, so it cannot farm stickers`() = runTest {
-        val store = InMemoryProfileStore(LearnerProfile(track = LearnerTrack.BEGINNER))
+        val store = InMemoryProfileStore(LearnerProfile(learnerLevel = 2))
         val llm = FakeLlmEngine()
         val tutor = TutorOrchestrator(
             llm = llm,
@@ -244,7 +206,7 @@ class HebrewHelpTest {
             tts = tts,
             scorer = FakePronunciationScorer(),
             content = ResourceContentRepository(),
-            profile = InMemoryProfileStore(LearnerProfile(track = LearnerTrack.BEGINNER)),
+            profile = InMemoryProfileStore(LearnerProfile(learnerLevel = 2)),
             policy = ScriptedDialoguePolicy(),
             scope = this,
             tierSpeaksHebrew = { true },
@@ -304,9 +266,9 @@ class HebrewHelpTest {
     }
 
     @Test
-    fun `the track sets the reply budget and the persona`() = runTest {
-        // A 5-8 unit, so the age floor is not in play here.
-        val (tutor, llm) = fixture(this, track = LearnerTrack.EXAM)
+    fun `the level sets the reply budget and the persona`() = runTest {
+        // A Level 2 unit, so the early-unit floor is not in play here.
+        val (tutor, llm) = fixture(this, level = 5)
         tutor.startSession(READING_UNIT, TutorMode.TEXT)
         advanceUntilIdle()
 
@@ -314,24 +276,25 @@ class HebrewHelpTest {
         advanceUntilIdle()
 
         val request = llm.calls.single()
-        assertEquals(TrackConfig.of(LearnerTrack.EXAM).replyTokens, request.maxTokens)
+        assertEquals(LevelConfig.of(5).replyTokens, request.maxTokens)
         assertTrue(
-            "the exam persona should ride along with the shared prompt",
-            request.systemPrompt.contains(TrackConfig.of(LearnerTrack.EXAM).personaSuffix),
+            "the level persona should ride along with the shared prompt",
+            request.systemPrompt.contains(LevelConfig.of(5).personaSuffix),
         )
         assertTrue(request.systemPrompt.contains("You are Tuki"))
     }
 
     @Test
-    fun `an age-4-6 unit floors the budget however talkative the track is`() = runTest {
-        // Pedagogy, not just decode time: a young child loses the thread in a
-        // long reply, and unit-001 is a 4-6 unit whatever the profile says.
-        val (tutor, llm) = fixture(this, track = LearnerTrack.EXAM)
+    fun `a Level 1 unit floors the budget however high the level is`() = runTest {
+        // Pedagogy, not just decode time: early-level content is one short
+        // sentence and a question whatever the profile says — unit-001 is a
+        // Level 1 unit.
+        val (tutor, llm) = fixture(this, level = 5)
         tutor.startSession(YOUNG_UNIT, TutorMode.TEXT)
         advanceUntilIdle()
         tutor.onTextSubmitted("I see a red ball")
         advanceUntilIdle()
 
-        assertEquals(TutorOrchestrator.YOUNG_REPLY_TOKENS, llm.calls.single().maxTokens)
+        assertEquals(TutorOrchestrator.EARLY_UNIT_REPLY_TOKENS, llm.calls.single().maxTokens)
     }
 }
