@@ -106,7 +106,7 @@ fun AppNav(container: AppContainer) {
 
 /**
  * Sends an early-level learner to the sticker room when they have earned
- * one — at Levels 1-2 the celebration IS the reward loop; above that the
+ * one — at Level 1 the celebration IS the reward loop; above that the
  * sticker lands quietly in the book.
  *
  * The bookkeeping is deliberately derived rather than stored: stickers earned
@@ -133,7 +133,7 @@ private fun StickerMilestone(container: AppContainer, navController: NavHostCont
 
     // The ceremony learner by EITHER signal: the profile's level, or the
     // level of the unit actually open. Someone who never chose a level still
-    // gets the right behaviour inside a Level 1-2 unit.
+    // gets the right behaviour inside a Level 1 unit.
     val unitId = entry?.arguments?.getString("unitId")
     val unitLevel by produceState<Int?>(initialValue = null, unitId) {
         value = unitId?.let { container.content.loadUnit(it).level }

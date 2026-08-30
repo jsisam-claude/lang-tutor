@@ -81,7 +81,7 @@ class PcmPlayer(private val sampleRate: Int) {
             val n = t.write(audio, offset, audio.size - offset, AudioTrack.WRITE_BLOCKING)
             if (n <= 0) break
             offset += n
-            onProgress?.invoke((t.playbackHeadPosition - base).coerceAtLeast(0))
+            if (!interrupted) onProgress?.invoke((t.playbackHeadPosition - base).coerceAtLeast(0))
         }
         framesWritten += offset // mono: one sample == one frame
         val deadline = System.currentTimeMillis() + (audio.size * 1000L / sampleRate) + DRAIN_GRACE_MS
@@ -89,7 +89,10 @@ class PcmPlayer(private val sampleRate: Int) {
             onProgress?.invoke((t.playbackHeadPosition - base).coerceAtLeast(0))
             Thread.sleep(20)
         }
-        onProgress?.invoke(audio.size)
+        // Not when interrupted: stop() has already cleared the karaoke
+        // position, and a final report here would resurrect it as a stale
+        // highlight after the voice went quiet.
+        if (!interrupted) onProgress?.invoke(audio.size)
     }
 
     fun release() {

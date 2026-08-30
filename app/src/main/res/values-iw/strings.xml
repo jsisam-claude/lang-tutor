@@ -92,11 +92,24 @@
     <string name="packs_consent_body">%1$s (%2$s) תרד פעם אחת, בחיבור הנוכחי שלכם. אפשר להסיר בכל רגע.</string>
     <string name="packs_consent_confirm">הורדה</string>
     <string name="packs_consent_cancel">לא עכשיו</string>
+    <string name="report_flagged">סומן לבדיקה באזור ההורים</string>
+    <string name="report_hint">לחיצה ארוכה על תשובה של תוקי מסמנת אותה.</string>
+    <string name="parent_reports_title">תשובות שסומנו</string>
+    <string name="parent_reports_hint">תשובות שסומנו בלחיצה ארוכה. הן נשמרות במכשיר הזה בלבד — הבדיקה והמחיקה כולן בידיים שלכם.</string>
+    <string name="parent_reports_empty">שום דבר לא סומן.</string>
+    <string name="parent_reports_clear">מחיקת הכול</string>
+    <string name="home_picture_room">🖼️ מילים בתמונות</string>
+    <string name="picture_title">מילים בתמונות</string>
+    <string name="picture_next">הבא</string>
+    <string name="picture_where_is">איפה ה־%1$s?</string>
+    <string name="picture_done">%1$d מתוך %2$d בניסיון הראשון!</string>
+    <string name="parent_refresh_cap_title">מסך 60 הרץ בזמן חשיבה</string>
+    <string name="parent_refresh_cap_hint">מוריד את קצב הרענון של המסך בזמן שהמודל כותב תשובה, ומפנה את שבב הגרפיקה עבורו. השוו טוקנים-לשנייה ב‑logcat עם ובלי.</string>
     <string name="parent_level_title">רמת אנגלית</string>
     <string name="parent_level_hint">רמה 1 עד 7, לכל גיל. הרמה קובעת איך תוקי מדבר: אורך התשובות, האם טעות מקבלת שם של כלל או חזרה עדינה, וכמה עזרה בעברית מוצעת. העברית פוחתת ככל שהרמה עולה, וברמות 6–7 אינה מוצעת.</string>
     <string name="parent_level_hebrew_note">הסברים בעברית דורשים את המודל הגדול (⁦E4B⁩), ומוצעים עד רמה 5 — ברמות 6 ו‑7 התרגול באנגלית בלבד, בכוונה.</string>
     <string name="parent_gloss_title">תעתוק הגייה</string>
-    <string name="parent_gloss_hint">מציג איך לומר כל מילה באנגלית, באותיות עבריות. נקבע לפי סוג הלומד עד שמשנים כאן.</string>
+    <string name="parent_gloss_hint">מציג איך לומר כל מילה באנגלית, באותיות עבריות. נקבע לפי הרמה עד שמשנים כאן.</string>
     <!-- Escaped on purpose: the nikud is invisible in an editor and gets
          silently reordered by anything that normalises this file. qof+segol+tet. -->
     <string name="parent_gloss_example">cat \u2192 \u05e7\u05b6\u05d8</string>

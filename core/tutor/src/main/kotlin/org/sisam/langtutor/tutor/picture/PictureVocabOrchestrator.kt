@@ -2,6 +2,7 @@ package org.sisam.langtutor.tutor.picture
 
 import kotlin.random.Random
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -85,7 +86,10 @@ class PictureVocabOrchestrator(
         speak(cards[0].word)
     }
 
-    /** Tapping the card on stage repeats its word — free, never scored. */
+    /** Tapping the card on stage repeats its word — free, never scored.
+     *  Serialized like every other line: the engine owns ONE player, and two
+     *  concurrent speaks interleave into garble, so a tap during speech is
+     *  simply ignored — the next tap repeats it. */
     fun onCardTapped(index: Int) {
         val s = _state.value
         val word = when (s) {
@@ -93,18 +97,32 @@ class PictureVocabOrchestrator(
             is PictureState.Asking -> null // the check answers through onAnswerPicked
             else -> null
         } ?: return
-        scope.launch { speak(word) }
+        if (busy) return
+        scope.launch {
+            busy = true
+            try {
+                speak(word)
+            } finally {
+                busy = false
+            }
+        }
     }
 
     /** Advance the presentation; after the last card the check begins. */
     fun onNext() {
         val s = _state.value as? PictureState.Teaching ?: return
+        if (busy) return
         scope.launch {
-            if (s.index + 1 < s.cards.size) {
-                _state.value = PictureState.Teaching(s.cards, s.index + 1)
-                speak(s.cards[s.index + 1].word)
-            } else {
-                ask(s.cards, asked = 0)
+            busy = true
+            try {
+                if (s.index + 1 < s.cards.size) {
+                    _state.value = PictureState.Teaching(s.cards, s.index + 1)
+                    speak(s.cards[s.index + 1].word)
+                } else {
+                    ask(s.cards, asked = 0)
+                }
+            } finally {
+                busy = false
             }
         }
     }
@@ -145,9 +163,13 @@ class PictureVocabOrchestrator(
         speak(question(cards[target].word))
     }
 
+    /** Non-suspend release for ViewModel.onCleared() — same shape as the
+     *  drill's: the OWNING scope is already cancelled by then, so a launch on
+     *  it would never run and the voice would keep talking over the next
+     *  screen. A detached scope actually stops it. */
     fun shutdown() {
         _state.value = PictureState.Idle
-        scope.launch { runCatching { tts.stop() } }
+        CoroutineScope(Dispatchers.Default).launch { runCatching { tts.stop() } }
     }
 
     private suspend fun speak(text: String) {

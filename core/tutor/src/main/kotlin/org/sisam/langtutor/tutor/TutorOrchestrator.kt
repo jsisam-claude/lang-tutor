@@ -632,7 +632,7 @@ class TutorOrchestrator(
             messages = sentHistory.takeLast(HISTORY_TURNS) +
                 ChatMessage(Role.USER, guideWrap(instruction, utterance)),
             // Reply budget from the level, floored for early-level UNITS: a
-            // Level 1-2 unit gets one short sentence and a question whatever
+            // Level 1 unit gets one short sentence and a question whatever
             // the profile says — half the tokens is half the decode time AND
             // better pedagogy (early learners lose the thread in long
             // replies). A Hebrew explanation, which genuinely needs two

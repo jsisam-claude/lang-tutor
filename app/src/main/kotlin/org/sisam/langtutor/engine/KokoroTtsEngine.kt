@@ -17,6 +17,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.speech.KaraokeTiming
 import org.sisam.langtutor.speech.KokoroFrontEnd
@@ -188,9 +189,18 @@ class KokoroTtsEngine(
                         // Word timing for karaoke: each word's share of the
                         // waveform, weighted by its phoneme count — cheap
                         // dictionary lookups, so cached audio gets timed too.
+                        // Computed over the RAW region of the original text
+                        // (not group.text, whose joins re-space multi-chunk
+                        // groups): word offsets must land exactly where the
+                        // screen's own wordSpans(text) puts them, or the
+                        // highlight silently dies after the first group.
                         // Flavored (personality) lines are not karaoke text.
                         val timing = if (flavorPitch == null) {
-                            KaraokeTiming.of(group.text, { w -> phonemizer.phonemize(w).size }, audio.size)
+                            KaraokeTiming.of(
+                                text.substring(group.start, group.end),
+                                { w -> phonemizer.phonemize(w).size },
+                                audio.size,
+                            )
                         } else {
                             emptyList()
                         }
@@ -227,6 +237,11 @@ class KokoroTtsEngine(
         Karaoke.clear()
         player.release()
         emit(TtsEvent.Completed)
+    }.onCompletion {
+        // Cancellation (a barge, a screen exit killing the collector) skips
+        // the normal epilogue above; the global karaoke position must not
+        // outlive the voice either way.
+        Karaoke.clear()
     }.flowOn(Dispatchers.IO)
 
     /**

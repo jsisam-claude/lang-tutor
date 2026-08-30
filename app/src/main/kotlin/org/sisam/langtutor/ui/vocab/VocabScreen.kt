@@ -147,11 +147,13 @@ class DrillViewModel(
     }
 
     /**
-     * Phrasebank first — authored, reviewed, level-tagged, and carrying its
-     * own Hebrew meaning — then LLM-written lines for variety, then the
-     * curriculum deck to top up. The writer may return few or none — a cold
-     * model, a failed generation, or every line eaten by the gauntlet — and
-     * the round must be full regardless.
+     * A mixed round: the phrasebank — authored, reviewed, level-tagged, with
+     * its own Hebrew meaning — takes at most HALF the slots, so the
+     * LLM-written lines (fresh topics every round) and the curriculum deck
+     * keep the other half instead of being starved by a bank that can always
+     * fill a round alone. Any source may come up short — a cold model, a
+     * failed generation, a thin level — so the bank tops the round back up
+     * at the end and the round is full regardless.
      */
     private suspend fun freshRound(): List<DrillItem> {
         val size = DrillDeck.sizeFor(level)
@@ -160,7 +162,7 @@ class DrillViewModel(
         val written = generator?.let { g ->
             runCatching { g.generate(level, size, Random.Default) }.getOrElse { emptyList() }
         } ?: emptyList()
-        return (banked + written + DrillDeck.round(units, level, Random.Default))
+        return (banked.take((size + 1) / 2) + written + DrillDeck.round(units, level, Random.Default) + banked)
             .distinctBy { WordMatch.tokens(it.text) }
             .take(size)
     }
