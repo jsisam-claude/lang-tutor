@@ -43,7 +43,17 @@ class MainActivity : AppCompatActivity() {
                 // generation globally, not per room.
                 org.sisam.langtutor.ui.common.RefreshRateCapEffect(appContainer)
                 var splashDone by rememberSaveable { mutableStateOf(false) }
-                if (splashDone) {
+                // Fresh installs answer the one question first: what Level?
+                // Checked once per process via snapshot — the flag flips only
+                // forward, so the screen can never reappear mid-session.
+                var onboarded by rememberSaveable {
+                    mutableStateOf(
+                        !org.sisam.langtutor.ui.onboarding.isFreshProfile(container.profile.snapshot()),
+                    )
+                }
+                if (splashDone && !onboarded) {
+                    org.sisam.langtutor.ui.onboarding.LevelOnboarding(appContainer) { onboarded = true }
+                } else if (splashDone) {
                     AppNav(appContainer)
                 } else {
                     SplashScreen(appContainer)

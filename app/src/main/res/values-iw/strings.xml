@@ -92,6 +92,9 @@
     <string name="packs_consent_body">%1$s (%2$s) תרד פעם אחת, בחיבור הנוכחי שלכם. אפשר להסיר בכל רגע.</string>
     <string name="packs_consent_confirm">הורדה</string>
     <string name="packs_consent_cancel">לא עכשיו</string>
+    <string name="onboarding_title">ברוכים הבאים! מה רמת האנגלית?</string>
+    <string name="onboarding_hint">רמה 1 עד 7, לכל גיל — הרמה קובעת איך תוקי מדבר וכמה עזרה בעברית מופיעה. אפשר לשנות בכל רגע באזור ההורים.</string>
+    <string name="onboarding_skip">לא בטוחים — התחילו ברמה 2</string>
     <string name="report_flagged">סומן לבדיקה באזור ההורים</string>
     <string name="report_hint">לחיצה ארוכה על תשובה של תוקי מסמנת אותה.</string>
     <string name="parent_reports_title">תשובות שסומנו</string>
