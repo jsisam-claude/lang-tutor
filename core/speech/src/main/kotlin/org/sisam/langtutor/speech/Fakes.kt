@@ -2,6 +2,7 @@ package org.sisam.langtutor.speech
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 
 /**
@@ -30,6 +31,14 @@ class FakeAsrEngine : AsrEngine {
     override suspend fun stopCapture(): AsrResult {
         stopCalls++
         return queue.removeFirstOrNull() ?: DEFAULT_RESULT
+    }
+
+    private val _speculative = MutableSharedFlow<String>(extraBufferCapacity = 4)
+    override val speculative: Flow<String> get() = _speculative
+
+    /** Tests drive the soft-endpoint guesses by hand. */
+    suspend fun emitSpeculative(guess: String) {
+        _speculative.emit(guess)
     }
 
     companion object {

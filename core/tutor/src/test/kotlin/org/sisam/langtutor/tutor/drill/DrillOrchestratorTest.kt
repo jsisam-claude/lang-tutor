@@ -193,4 +193,50 @@ class DrillOrchestratorTest {
         assertEquals(1, f.asr.startCalls)
         f.collector.cancel()
     }
+
+    // --- early close on a target match (docs/latency.md) ------------------
+
+    @Test
+    fun `a speculative match ends the turn before the button lifts`() = runTest {
+        val f = Fixture(this)
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+
+        f.asr.enqueue(AsrResult(transcript = "i see a red ball", confidence = 0.9f))
+        f.drill.onMicPressed()
+        advanceUntilIdle()
+        // The soft-endpoint guess already matches the target: the turn must
+        // end NOW, with the finger still down.
+        f.asr.emitSpeculative("i see a red ball")
+        advanceUntilIdle()
+
+        assertEquals(listOf(DrillEvent.Correct(tries = 1)), f.events)
+        assertEquals(1, f.asr.stopCalls)
+        // The eventual release lands after the turn already ended — a no-op.
+        f.drill.onMicReleased()
+        advanceUntilIdle()
+        assertEquals(1, f.asr.stopCalls)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `a wrong guess closes nothing`() = runTest {
+        val f = Fixture(this)
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+
+        f.asr.enqueue(AsrResult(transcript = "i see a red ball", confidence = 0.9f))
+        f.drill.onMicPressed()
+        advanceUntilIdle()
+        f.asr.emitSpeculative("banana")
+        advanceUntilIdle()
+
+        // Still listening: a guess that does not match must not cut a child
+        // off mid-sentence.
+        assertTrue(f.drill.state.value is DrillState.Listening)
+        f.drill.onMicReleased()
+        advanceUntilIdle()
+        assertEquals(listOf(DrillEvent.Correct(tries = 1)), f.events)
+        f.collector.cancel()
+    }
 }

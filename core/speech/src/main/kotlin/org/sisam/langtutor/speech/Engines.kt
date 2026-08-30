@@ -2,6 +2,7 @@ package org.sisam.langtutor.speech
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 
 /**
@@ -34,6 +35,20 @@ interface AsrEngine {
      * [startCapture] and [stopCapture], and only when [supportsHandsFree].
      */
     suspend fun awaitEndpoint() = Unit
+
+    /**
+     * Tentative transcripts produced WHILE capture is still running — the
+     * yield of the soft-endpoint speculation (docs/latency.md): at a short
+     * quiet the engine transcribes what it has, and if that guess still
+     * covers everything said, it lands here. A room that knows the expected
+     * answer (the drill) can match a guess against it and end the turn at
+     * once instead of waiting out the hangover or the button.
+     *
+     * Guesses are exactly that: a later one supersedes an earlier one, a
+     * resumed word invalidates them all, and [stopCapture]'s result remains
+     * the turn's truth. Default: an engine with no speculation emits nothing.
+     */
+    val speculative: Flow<String> get() = emptyFlow()
 }
 
 /**

@@ -2,6 +2,7 @@ package org.sisam.langtutor.tutor.drill
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -133,6 +134,9 @@ class DrillOrchestrator(
         _state.value = DrillState.AwaitingChild(item, index, items.size, tries)
     }
 
+    /** Watches [AsrEngine.speculative] during a capture; cancelled with it. */
+    private var earlyClose: Job? = null
+
     fun onMicPressed() {
         val current = _state.value
         if (turnActive || current !is DrillState.AwaitingChild) return
@@ -140,14 +144,35 @@ class DrillOrchestrator(
             _pronunciation.value = null
             _state.value = DrillState.Listening(current.item, current.index, current.total)
             asr.startCapture(RecognitionHint.ConstrainedVocab(listOf(current.item.text)))
+            // EARLY CLOSE (docs/latency.md): this room KNOWS the expected
+            // answer, so the moment a speculative transcript already matches
+            // it, the turn is over — no waiting out the VAD hangover, no
+            // waiting for the finger to lift. The engine only surfaces
+            // guesses that cover everything said, and stopCapture() adopts
+            // the same speculation, so the judged text is the matched text.
+            earlyClose?.cancel()
+            earlyClose = scope.launch {
+                asr.speculative.collect { guess ->
+                    if (WordMatch.matches(current.item.text, guess)) finishAttempt()
+                }
+            }
         }
     }
 
-    fun onMicReleased() {
+    fun onMicReleased() = finishAttempt()
+
+    /**
+     * End the capture and judge — from the button lifting or from an early
+     * close, whichever comes first. Both paths run on [scope]'s dispatcher,
+     * so the state check makes the second arrival a no-op.
+     */
+    private fun finishAttempt() {
         val current = _state.value
         if (current !is DrillState.Listening) return
+        _state.value = DrillState.Judging(current.item, current.index, current.total)
         scope.launch {
-            _state.value = DrillState.Judging(current.item, current.index, current.total)
+            earlyClose?.cancel()
+            earlyClose = null
             val result = asr.stopCapture()
             handleAttempt(current, result)
         }

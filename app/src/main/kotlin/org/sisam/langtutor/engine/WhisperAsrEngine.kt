@@ -8,6 +8,8 @@ import android.util.Log
 import java.io.File
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.withContext
 import org.sisam.langtutor.speech.AsrEngine
 import org.sisam.langtutor.speech.AsrResult
@@ -73,6 +75,13 @@ class WhisperAsrEngine(
     }
 
     @Volatile private var spec: SpecRun? = null
+
+    /** Valid speculative transcripts, surfaced live for early-accept rooms
+     *  (see [AsrEngine.speculative]). tryEmit from the spec thread; capacity
+     *  absorbs a burst, and a dropped guess costs nothing — the firm path
+     *  still owns the turn. */
+    private val _speculative = MutableSharedFlow<String>(extraBufferCapacity = 4)
+    override val speculative: Flow<String> get() = _speculative
 
     /** Highest sample index at which the detector saw confident speech —
      *  the fact that decides whether a speculation covered the whole turn. */
@@ -172,6 +181,12 @@ class WhisperAsrEngine(
                     val text = transcribe(pcm)
                     run.confidence = if (text.isBlank()) 0f else lastConfidence
                     run.text = text.trim()
+                    // Surface the guess only while it is CURRENT (not replaced,
+                    // capture not stopped) and still covers every speech sample
+                    // seen — a guess the child talked past is not a guess.
+                    if (spec === run && lastSpeechSample <= run.samples && !text.isBlank()) {
+                        _speculative.tryEmit(text.trim())
+                    }
                 }.onFailure { Log.w(TAG, "speculative transcription failed", it) }
             } finally {
                 run.done = true

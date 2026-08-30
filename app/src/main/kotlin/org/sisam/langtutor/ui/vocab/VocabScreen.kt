@@ -28,7 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -290,6 +290,20 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
     val state by viewModel.state.collectAsState()
     val pronunciation by viewModel.pronunciation.collectAsState()
 
+    // The turn can now end BEFORE the finger lifts (early close on a target
+    // match), so the felt clock and the "heard you" blip key on the state
+    // machine's Listening -> Judging transition — the one moment that is the
+    // end of the turn on both paths — instead of on the release gesture.
+    var wasListening by remember { mutableStateOf(false) }
+    LaunchedEffect(state) {
+        val listening = state is DrillState.Listening
+        if (wasListening && state is DrillState.Judging) {
+            TurnLatency.mark("drill turn end")
+            ListeningAck.play()
+        }
+        wasListening = listening
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -409,9 +423,6 @@ private fun Mic(
     modifier: Modifier = Modifier,
 ) {
     val open = state is DrillState.AwaitingChild || state is DrillState.Listening
-    // Read through rememberUpdatedState: the gesture block below is keyed on
-    // Unit and outlives recompositions, so a captured `state` would be stale.
-    val stateNow by rememberUpdatedState(state)
     Box(
         modifier = modifier
             .size(A11y.tapTargetDp(comfortable = 88, minimum = 64))
@@ -427,23 +438,12 @@ private fun Mic(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
-                        // Only time a press the orchestrator will ACT on. A tap
-                        // while Tuki is talking is ignored by the state machine
-                        // but used to start the clock anyway, and the audio
-                        // already playing then closed it with a meaningless
-                        // 300ms — an instrument that reported success for a
-                        // turn that had not happened.
-                        val accepted = stateNow is DrillState.AwaitingChild
                         onPressed()
                         tryAwaitRelease()
-                        // The wait the learner FEELS starts here, not when
-                        // some engine does.
-                        if (accepted) {
-                            TurnLatency.mark("drill mic release")
-                            // "Heard you" — the judging takes seconds, the
-                            // acknowledgement must not.
-                            ListeningAck.play()
-                        }
+                        // The clock and the ack blip live on the Listening ->
+                        // Judging transition (see DrillPane), which covers
+                        // both this release and an early close equally — and
+                        // ignores presses the state machine ignored.
                         onReleased()
                     },
                 )
