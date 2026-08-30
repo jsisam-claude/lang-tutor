@@ -62,6 +62,13 @@ object EngineStatus {
     /** The most recently started step still running, or null when idle. */
     val current: StateFlow<Step?> = _current.asStateFlow()
 
+    private val _generating = MutableStateFlow(false)
+
+    /** True while ANY LLM_GENERATE step runs, whatever is nested inside it —
+     *  the 60 Hz refresh-cap experiment keys on this, and `current` cannot
+     *  serve because a nested TTS step displaces it mid-decode. */
+    val generating: StateFlow<Boolean> = _generating.asStateFlow()
+
     /**
      * Run [block] as a reported step. Logs entry and exit with elapsed ms, and
      * publishes it for the UI while it runs. Safe across threads and nesting:
@@ -89,6 +96,7 @@ object EngineStatus {
         synchronized(running) {
             running[id] = step
             _current.value = step
+            if (kind == Kind.LLM_GENERATE) _generating.value = true
         }
         Log.i(TAG, "▶ $kind${if (detail.isEmpty()) "" else " $detail"}")
         return id
@@ -100,6 +108,7 @@ object EngineStatus {
             val done = running.remove(handle)
             // Re-publish the newest still-running step (null when nothing is).
             _current.value = running.values.lastOrNull()
+            _generating.value = running.values.any { it.kind == Kind.LLM_GENERATE }
             done
         } ?: return
         val ms = System.currentTimeMillis() - finished.startedAtMillis

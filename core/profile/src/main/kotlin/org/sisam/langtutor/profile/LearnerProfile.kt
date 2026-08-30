@@ -45,6 +45,14 @@ data class ParentSettings(
      * TPU is at least visible to apps — but not worth defaulting on.
      */
     val tryNpuBackend: Boolean = false,
+    /**
+     * Prefer a 60 Hz display refresh while the model is decoding.
+     * Experimental A/B: UI composition shares the GPU with decode, and half
+     * the frames may mean measurably faster tokens — or nothing. Harmless
+     * either way (the panel just runs at 60 for those seconds), but it stays
+     * a switch until a device says which.
+     */
+    val capRefreshDuringDecode: Boolean = false,
 )
 
 /**

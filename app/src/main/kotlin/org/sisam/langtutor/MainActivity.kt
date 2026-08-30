@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val appContainer = remember { container }
             LangTutorTheme {
+                // Active on every screen: the 60 Hz decode experiment watches
+                // generation globally, not per room.
+                org.sisam.langtutor.ui.common.RefreshRateCapEffect(appContainer)
                 var splashDone by rememberSaveable { mutableStateOf(false) }
                 if (splashDone) {
                     AppNav(appContainer)
