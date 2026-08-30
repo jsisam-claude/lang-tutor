@@ -25,6 +25,25 @@ class PcmPlayer(private val sampleRate: Int) {
         // one honest place to close the "learner stopped -> first sound"
         // measurement. No-op unless a turn is being timed.
         TurnLatency.firstAudio()
+        // While this thread feeds the AudioTrack it competes with LLM decode
+        // and the next group's synthesis for saturated cores — exactly when an
+        // underrun (an audible pop or stutter) is likeliest. Raise it to the
+        // platform's audio priority for the duration, and RESTORE it after:
+        // play() runs on a pooled dispatcher thread, and a priority left
+        // behind would quietly ride along under unrelated work later.
+        val tid = android.os.Process.myTid()
+        val prior = runCatching { android.os.Process.getThreadPriority(tid) }.getOrNull()
+        runCatching {
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
+        }
+        try {
+            playAt(audio)
+        } finally {
+            prior?.let { p -> runCatching { android.os.Process.setThreadPriority(tid, p) } }
+        }
+    }
+
+    private fun playAt(audio: FloatArray) {
         val t = track ?: AudioTrack.Builder()
             .setAudioAttributes(
                 AudioAttributes.Builder()

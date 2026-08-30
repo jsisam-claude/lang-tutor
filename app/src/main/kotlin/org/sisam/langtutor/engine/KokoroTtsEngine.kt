@@ -11,9 +11,13 @@ import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import java.nio.LongBuffer
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import org.sisam.langtutor.speech.KokoroFrontEnd
 import org.sisam.langtutor.speech.ParrotEffect
 import org.sisam.langtutor.speech.KokoroPhonemizer
@@ -153,58 +157,50 @@ class KokoroTtsEngine(
     private fun speakInternal(text: String, speed: Float, flavorPitch: Float?): Flow<TtsEvent> = flow {
         player.interrupted = false
         emit(TtsEvent.Started)
-        var first = true
-        // A chunk the front end cannot phonemize yields no ids and is skipped,
-        // so text in the wrong script degrades to silence rather than a crash.
-        //
-        // GROUPED, not per-sentence: synthesizing each sentence in isolation
-        // gave every one the same isolated-statement contour — and because the
-        // style row is indexed by token count, short sentences also kept
-        // hitting the same narrow band of the voice table. Both read as
-        // monotone. Grouping restores cross-sentence intonation and moves the
-        // input into richer style rows.
-        for (group in groupForProsody(SentenceChunker.split(text))) {
-            if (player.interrupted) break
-            val ids = phonemizer.phonemize(group.text)
-            if (ids.isEmpty()) continue
-            emit(TtsEvent.RangeSpoken(group.start, group.end))
-            // Lines the app repeats — praise, prompts, drill targets — come
-            // back from the cache already voiced. "Great job!" measured 2977 ms
-            // to synthesize on device and the drill room says it after every
-            // correct answer; recomputing a byte-identical waveform on a CPU
-            // that is already thermally throttled is the cheapest waste in the
-            // app to remove. The key carries everything that changes the
-            // sound, and the cache holds several renditions per line so the
-            // repetition is still varied (see [SynthCache]).
-            val cacheable = SynthCache.eligible(group.text)
-            val cacheKey = if (cacheable) {
-                SynthCache.key(group.text, voiceAsset, flavorPitch, speed)
-            } else {
-                null
-            }
-            var audio = cacheKey?.let { SynthCache.get(it) }
-            if (audio == null) {
-                // Flavored lines synthesize SLOWER by the pitch factor, so the
-                // resample inside the effect lands the duration back where it
-                // was asked for while pitch and formants ride up together.
-                val synthSpeed = if (flavorPitch != null) vary(speed) / flavorPitch else vary(speed)
-                var fresh = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes") {
-                    synthesize(ids, synthSpeed)
+        // SYNTH-AHEAD (docs/latency.md item 1): the player deliberately drains —
+        // "done" must mean finished SOUNDING, because the mic opens next — so
+        // running synthesis and playback in one loop made every sentence gap
+        // exactly one synthesis long (7.5 s once, measured, on a throttled
+        // phone). A rendezvous handoff overlaps them instead: while group N is
+        // sounding, group N+1 is synthesizing. Gaps vanish at RTF <= 1 and
+        // halve when throttled, and memory holds at most one rendered group
+        // beyond the one playing.
+        coroutineScope {
+            val rendered = Channel<Rendered>(Channel.RENDEZVOUS)
+            val producer = launch(Dispatchers.IO) {
+                try {
+                    // A chunk the front end cannot phonemize yields no ids and
+                    // is skipped, so text in the wrong script degrades to
+                    // silence rather than a crash.
+                    //
+                    // GROUPED, not per-sentence: synthesizing each sentence in
+                    // isolation gave every one the same isolated-statement
+                    // contour — and because the style row is indexed by token
+                    // count, short sentences also kept hitting the same narrow
+                    // band of the voice table. Both read as monotone. Grouping
+                    // restores cross-sentence intonation and moves the input
+                    // into richer style rows.
+                    for (group in groupForProsody(SentenceChunker.split(text))) {
+                        if (player.interrupted) break
+                        val audio = renderOrCache(group.text, speed, flavorPitch, "speak")
+                        if (audio.isNotEmpty()) rendered.send(Rendered(audio, group.start, group.end))
+                    }
+                } finally {
+                    rendered.close()
                 }
-                if (flavorPitch != null && fresh.isNotEmpty()) {
-                    fresh = ParrotEffect.apply(fresh, SAMPLE_RATE, flavorPitch)
-                }
-                // Cached AFTER the effect: the flavor is part of the sound,
-                // and the pitch is part of the key.
-                if (cacheKey != null) SynthCache.put(cacheKey, fresh)
-                audio = fresh
             }
-            if (flavorPitch != null && first && !player.interrupted) {
-                // The "brrp!" announces the character before the words.
+            if (flavorPitch != null && !player.interrupted) {
+                // The "brrp!" announces the character before the words — and
+                // now before the first synthesis finishes, so a flavored line
+                // answers instantly even when its words are seconds away.
                 player.play(ParrotEffect.flourish(SAMPLE_RATE))
             }
-            first = false
-            if (audio.isNotEmpty() && !player.interrupted) player.play(audio)
+            for (item in rendered) {
+                if (player.interrupted) break
+                emit(TtsEvent.RangeSpoken(item.start, item.end))
+                player.play(item.audio)
+            }
+            producer.cancelAndJoin()
         }
         player.release()
         emit(TtsEvent.Completed)
@@ -214,48 +210,106 @@ class KokoroTtsEngine(
      * Streaming path: each incoming chunk is already a sentence (the
      * orchestrator runs SentenceChunker on the LLM token stream), so synthesis
      * starts on the FIRST sentence while later ones are still being generated.
-     * Playback order is preserved because collection is sequential.
+     * Playback order is preserved because the rendezvous channel is FIFO and
+     * the playing loop is sequential; synthesis of the next group overlaps the
+     * sounding of the current one exactly as in [speakInternal].
      */
     override fun speakStream(chunks: Flow<String>, language: TutorLanguage, speed: Float): Flow<TtsEvent> = flow {
         player.interrupted = false
         emit(TtsEvent.Started)
-        // First sentence alone — it IS the latency win streaming exists for.
-        // After that, sentences are paired before synthesis so the contour
-        // spans sentence boundaries (see the prosody note in speak()). The
-        // LLM decodes several times faster than speech plays, so by the time
-        // a pair is spoken the next pair has long since arrived — the pairing
-        // costs no audible gap.
-        var first = true
-        val pending = StringBuilder()
-        var pendingCount = 0
-        suspend fun synthAndPlay(text: String, label: String) {
-            val ids = phonemizer.phonemize(text)
-            if (ids.isEmpty()) return
-            val audio = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes ($label)") {
-                synthesize(ids, vary(speed))
-            }
-            if (audio.isNotEmpty() && !player.interrupted) player.play(audio)
-        }
-        chunks.collect { sentence ->
-            if (player.interrupted) return@collect
-            if (first) {
-                first = false
-                synthAndPlay(sentence, "stream")
-            } else {
-                if (pending.isNotEmpty()) pending.append(' ')
-                pending.append(sentence)
-                pendingCount++
-                if (pendingCount >= GROUP_MAX_SENTENCES || pending.length >= GROUP_TARGET_CHARS) {
-                    synthAndPlay(pending.toString(), "stream pair")
-                    pending.setLength(0)
-                    pendingCount = 0
+        coroutineScope {
+            val rendered = Channel<Rendered>(Channel.RENDEZVOUS)
+            val producer = launch(Dispatchers.IO) {
+                try {
+                    // First sentence alone — it IS the latency win streaming
+                    // exists for. After that, sentences are paired before
+                    // synthesis so the contour spans sentence boundaries (see
+                    // the prosody note in speakInternal). The LLM decodes
+                    // several times faster than speech plays, so by the time a
+                    // pair is spoken the next pair has long since arrived —
+                    // the pairing costs no audible gap.
+                    var first = true
+                    val pending = StringBuilder()
+                    var pendingCount = 0
+                    suspend fun render(text: String, label: String) {
+                        if (player.interrupted) return
+                        val audio = renderOrCache(text, speed, flavorPitch = null, label = label)
+                        if (audio.isNotEmpty()) rendered.send(Rendered(audio, -1, -1))
+                    }
+                    chunks.collect { sentence ->
+                        if (player.interrupted) return@collect
+                        if (first) {
+                            first = false
+                            render(sentence, "stream")
+                        } else {
+                            if (pending.isNotEmpty()) pending.append(' ')
+                            pending.append(sentence)
+                            pendingCount++
+                            if (pendingCount >= GROUP_MAX_SENTENCES || pending.length >= GROUP_TARGET_CHARS) {
+                                render(pending.toString(), "stream pair")
+                                pending.setLength(0)
+                                pendingCount = 0
+                            }
+                        }
+                    }
+                    if (pending.isNotEmpty()) render(pending.toString(), "stream tail")
+                } finally {
+                    rendered.close()
                 }
             }
+            for (item in rendered) {
+                if (player.interrupted) break
+                player.play(item.audio)
+            }
+            producer.cancelAndJoin()
         }
-        if (pending.isNotEmpty() && !player.interrupted) synthAndPlay(pending.toString(), "stream tail")
         player.release()
         emit(TtsEvent.Completed)
     }.flowOn(Dispatchers.IO)
+
+    /** A synthesized group waiting its turn at the speaker. Offsets are the
+     *  source-text range for karaoke ([TtsEvent.RangeSpoken]), or -1 when the
+     *  stream has no stable offsets to report. */
+    private class Rendered(val audio: FloatArray, val start: Int, val end: Int)
+
+    /**
+     * One group of text to one waveform, through the cache when eligible.
+     *
+     * Lines the app repeats — praise, prompts, drill targets — come back from
+     * the cache already voiced. "Great job!" measured 2977 ms to synthesize on
+     * device and the drill room says it after every correct answer;
+     * recomputing a byte-identical waveform on a CPU that is already thermally
+     * throttled is the cheapest waste in the app to remove. The key carries
+     * everything that changes the sound, and the cache holds several
+     * renditions per line so the repetition is still varied (see [SynthCache]).
+     * A hit also skips phonemization — only lines that phonemized before can
+     * be in the cache. Both speech paths call this, so short repeated lines
+     * from a STREAMED reply are ~0.2 s too (they used to bypass the cache).
+     */
+    private fun renderOrCache(text: String, speed: Float, flavorPitch: Float?, label: String): FloatArray {
+        val cacheKey = if (SynthCache.eligible(text)) {
+            SynthCache.key(text, voiceAsset, flavorPitch, speed)
+        } else {
+            null
+        }
+        cacheKey?.let { SynthCache.get(it) }?.let { return it }
+        val ids = phonemizer.phonemize(text)
+        if (ids.isEmpty()) return FloatArray(0)
+        // Flavored lines synthesize SLOWER by the pitch factor, so the
+        // resample inside the effect lands the duration back where it was
+        // asked for while pitch and formants ride up together.
+        val synthSpeed = if (flavorPitch != null) vary(speed) / flavorPitch else vary(speed)
+        var fresh = EngineStatus.step(EngineStatus.Kind.TTS_RUN, "${ids.size} phonemes ($label)") {
+            synthesize(ids, synthSpeed)
+        }
+        if (flavorPitch != null && fresh.isNotEmpty()) {
+            fresh = ParrotEffect.apply(fresh, SAMPLE_RATE, flavorPitch)
+        }
+        // Cached AFTER the effect: the flavor is part of the sound, and the
+        // pitch is part of the key.
+        if (cacheKey != null) SynthCache.put(cacheKey, fresh)
+        return fresh
+    }
 
     override suspend fun stop() {
         player.interrupted = true
