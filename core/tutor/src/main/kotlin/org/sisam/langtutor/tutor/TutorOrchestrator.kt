@@ -65,6 +65,13 @@ class TutorOrchestrator(
      * ever withheld because there was no voice to say it with.
      */
     private val canSpeakHebrew: () -> Boolean = { false },
+    /**
+     * Android's thermal headroom forecast (1.0 = throttling threshold), read
+     * per turn; NaN when unknown. Injected because this module is pure JVM.
+     * Drives [ReplyBudget]: a throttled phone gets shorter replies, which is
+     * the one lever that shortens decode AND synthesis together.
+     */
+    private val thermalHeadroom: () -> Float = { Float.NaN },
 ) {
 
     private val _state = MutableStateFlow<TutorTurnState>(TutorTurnState.Idle)
@@ -645,10 +652,13 @@ class TutorOrchestrator(
         )
     }
 
-    private fun replyTokensFor(instruction: String): Int = when {
-        instruction == HEBREW_HELP_INSTRUCTION -> HEBREW_REPLY_TOKENS
-        currentUnit?.ageBand == AgeBand.AGES_4_6 -> minOf(track.replyTokens, YOUNG_REPLY_TOKENS)
-        else -> track.replyTokens
+    private fun replyTokensFor(instruction: String): Int {
+        val base = when {
+            instruction == HEBREW_HELP_INSTRUCTION -> HEBREW_REPLY_TOKENS
+            currentUnit?.ageBand == AgeBand.AGES_4_6 -> minOf(track.replyTokens, YOUNG_REPLY_TOKENS)
+            else -> track.replyTokens
+        }
+        return ReplyBudget.scaled(base, runCatching { thermalHeadroom() }.getOrDefault(Float.NaN))
     }
 
     private fun lessonHint(): RecognitionHint {
@@ -719,10 +729,14 @@ class TutorOrchestrator(
 
         // P1 safety posture: register, brevity, and topic bounds live in the
         // system prompt; an output filter runs downstream (docs/architecture.md).
+        // The "begin with a few words" line is a latency lever, not a style
+        // note: the first sentence gates the audio, and a three-word opener is
+        // on the speaker seconds before a long one would be.
         val SYSTEM_PROMPT = """
             You are Tuki, a warm, patient English tutor for a young Hebrew-speaking child.
             Use very short sentences and simple words the child already knows.
-            Praise effort. Correct mistakes by repeating the sentence correctly, never by
+            Begin each reply with a very short phrase, like "Good try!". Praise effort.
+            Correct mistakes by repeating the sentence correctly, never by
             saying "wrong". Ask exactly one short question per turn. Stay on the lesson
             topic. Never discuss unsafe, scary, or grown-up subjects.
         """.trimIndent()

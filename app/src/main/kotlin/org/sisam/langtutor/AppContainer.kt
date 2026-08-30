@@ -682,6 +682,7 @@ class AppContainer private constructor(context: Context) {
             wantsHebrew = {
                 modelTierLabel == HEBREW_CAPABLE_TIER && translationEnabled(profile.snapshot())
             },
+            thermalHeadroom = { Thermal.headroom },
         )
     }
 
@@ -794,6 +795,10 @@ class AppContainer private constructor(context: Context) {
             // With a Hebrew voice installed, even a pre-reader can be helped:
             // they hear the explanation instead of reading it.
             canSpeakHebrew = { hasHebrewTts },
+            // A throttled phone gets shorter replies (ReplyBudget) — decode
+            // and synthesis both stretch when the SoC clamps, and saying less
+            // is the one lever that shortens both.
+            thermalHeadroom = { Thermal.headroom },
         )
     }
 

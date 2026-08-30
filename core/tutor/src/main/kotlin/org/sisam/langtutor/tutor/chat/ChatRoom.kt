@@ -17,6 +17,7 @@ import org.sisam.langtutor.llm.Role
 import org.sisam.langtutor.safety.BlocklistSafetyFilter
 import org.sisam.langtutor.speech.HebrewText
 import org.sisam.langtutor.safety.SafetyFilter
+import org.sisam.langtutor.tutor.ReplyBudget
 import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
 import org.sisam.langtutor.speech.TtsEvent
@@ -77,6 +78,12 @@ class ChatRoom(
      * so a learner who does not want it does not pay for it.
      */
     private val wantsHebrew: () -> Boolean = { false },
+    /**
+     * Thermal headroom forecast (1.0 = throttling threshold; NaN unknown),
+     * read per turn. A throttled phone gets shorter replies — the one lever
+     * that shortens decode and synthesis together ([ReplyBudget]).
+     */
+    private val thermalHeadroom: () -> Float = { Float.NaN },
 ) {
 
     private val _messages = MutableStateFlow<List<ChatEntry>>(emptyList())
@@ -393,26 +400,39 @@ class ChatRoom(
             ).takeLast(HISTORY_ENTRIES)
     }
 
-    private fun buildRequest(userText: String, hebrewWanted: Boolean): LlmRequest =
-        LlmRequest(
+    private fun buildRequest(userText: String, hebrewWanted: Boolean): LlmRequest {
+        // Only the SPOKEN half shrinks with heat: the translation is silent,
+        // so it costs decode but no synthesis, and clipping it would break the
+        // one row the learner cannot check halfway through.
+        val replyTokens = ReplyBudget.scaled(
+            REPLY_TOKENS,
+            runCatching { thermalHeadroom() }.getOrDefault(Float.NaN),
+        )
+        return LlmRequest(
             // Appended, not swapped: the whole point of one stable prompt is
             // that the conversation can be reused, and this text only changes
             // when the learner changes the setting.
             systemPrompt = if (hebrewWanted) ROOM_PROMPT + "\n\n" + HEBREW_INSTRUCTION else ROOM_PROMPT,
             messages = sentHistory.takeLast(HISTORY_ENTRIES) + ChatMessage(Role.USER, userText),
-            maxTokens = if (hebrewWanted) REPLY_TOKENS + HEBREW_TOKENS else REPLY_TOKENS,
+            maxTokens = if (hebrewWanted) replyTokens + HEBREW_TOKENS else replyTokens,
         )
+    }
 
     companion object {
         const val FALLBACK = "Let's talk about something fun instead!"
 
-        /** One stable system prompt, reused for the life of the room. */
+        /** One stable system prompt, reused for the life of the room. The
+         *  "open with a few words" line is a latency lever, not a style note:
+         *  the first sentence is the unit that gates audio, and a three-word
+         *  opener is on the speaker seconds before a long one would be. */
         val ROOM_PROMPT = """
             You are Tuki, a friendly parrot chatting in English with a
             Hebrew-speaking English learner. You are warm, encouraging and
-            curious. Reply to the learner's last message in one or two short,
-            simple sentences, and usually end with a question that keeps the
-            chat going. Never discuss unsafe, scary, or grown-up subjects.
+            curious. Open each reply with a very short phrase of a few words,
+            like "Oh, fun!". Reply to the learner's last message in one or two
+            short, simple sentences, and usually end with a question that
+            keeps the chat going. Never discuss unsafe, scary, or grown-up
+            subjects.
         """.trimIndent()
 
         /** What the model writes before the translation. ASCII, so it cannot
