@@ -26,6 +26,7 @@ import org.sisam.langtutor.engine.VoiceStore
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
+import org.sisam.langtutor.engine.BargeListener
 import org.sisam.langtutor.engine.ListeningAck
 import org.sisam.langtutor.engine.RewardChime
 import org.sisam.langtutor.engine.SileroVad
@@ -657,6 +658,14 @@ class AppContainer private constructor(context: Context) {
      */
     /** The picture vocabulary room: authored words, synthesized speech, no
      *  model — instant on every device (docs/picture-vocabulary.md). */
+    /** The voice-barge probe, when the VAD is installed and the switch is on
+     *  (read per call so the Parent Zone toggle applies without a restart). */
+    fun createBargeListener(): BargeListener? {
+        if (!profile.snapshot().parentSettings.tryVoiceBarge) return null
+        val vad = sileroVad() ?: return null
+        return BargeListener(vad)
+    }
+
     fun createPictureVocab(scope: CoroutineScope): PictureVocabOrchestrator {
         val kokoro = bundledTtsEngine()
         appScope.launch(Dispatchers.IO) {

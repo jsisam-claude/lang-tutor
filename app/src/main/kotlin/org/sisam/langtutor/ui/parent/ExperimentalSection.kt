@@ -116,6 +116,37 @@ fun ExperimentalSection(container: AppContainer) {
                     },
                 )
             }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.parent_voice_barge_title),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                    Text(
+                        text = stringResource(R.string.parent_voice_barge_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+                Switch(
+                    checked = profile.parentSettings.tryVoiceBarge,
+                    onCheckedChange = { on ->
+                        scope.launch {
+                            container.profile.update {
+                                it.copy(
+                                    parentSettings = it.parentSettings.copy(
+                                        tryVoiceBarge = on,
+                                    ),
+                                )
+                            }
+                        }
+                    },
+                )
+            }
         }
     }
 }

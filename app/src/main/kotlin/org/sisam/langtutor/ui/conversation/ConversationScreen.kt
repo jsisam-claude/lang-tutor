@@ -28,6 +28,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -174,6 +175,18 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
     ) { }
     LaunchedEffect(Unit) {
         micPermission.launch(android.Manifest.permission.RECORD_AUDIO)
+    }
+
+    // The voice-barge probe (experimental): while Tuki SPEAKS, an
+    // echo-cancelled listener hushes him on sustained speech — the same path
+    // as a mic tap during Speaking. Created per speaking stretch so the
+    // Parent Zone switch applies immediately; everything it learns about
+    // this device's AEC lands under the TukiBarge logcat tag.
+    val speakingNow = state is TutorTurnState.Speaking
+    DisposableEffect(speakingNow) {
+        val barge = if (speakingNow) container.createBargeListener() else null
+        barge?.start { viewModel.onMicPressed() }
+        onDispose { barge?.stop() }
     }
 
     Column(

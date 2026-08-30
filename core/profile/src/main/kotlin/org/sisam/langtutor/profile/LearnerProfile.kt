@@ -53,6 +53,14 @@ data class ParentSettings(
      * a switch until a device says which.
      */
     val capRefreshDuringDecode: Boolean = false,
+    /**
+     * Voice barge-in probe: while Tuki talks, listen on the echo-cancelled
+     * path and hush him when the learner speaks over him. Experimental and
+     * off by default — whether this device's AEC actually subtracts Tuki
+     * (playback rides USAGE_MEDIA, the recorded design tension) and whether
+     * the stream opens at all are exactly what the TukiBarge log answers.
+     */
+    val tryVoiceBarge: Boolean = false,
 )
 
 /**
