@@ -24,6 +24,7 @@ import org.sisam.langtutor.engine.VoiceStore
 import org.sisam.langtutor.engine.LiteRtLmEngine
 import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
+import org.sisam.langtutor.engine.ListeningAck
 import org.sisam.langtutor.engine.RewardChime
 import org.sisam.langtutor.engine.SileroVad
 import org.sisam.langtutor.engine.TtsRouter
@@ -168,6 +169,7 @@ class AppContainer private constructor(context: Context) {
             // Small (a few hundred KB of static AudioTracks) but free to give
             // back, and they are re-synthesized lazily on the next reward.
             runCatching { if (chimeOrNull != null) chime.release() }
+        runCatching { ListeningAck.release() }
             if (deep) {
                 runCatching { whisperEngine?.release() }
                 runCatching { kokoroEngine?.release() }
@@ -492,6 +494,8 @@ class AppContainer private constructor(context: Context) {
 
     private fun preloadInternal(): Job = appScope.launch(Dispatchers.IO) {
         _preloadProgress.value = 0f
+        // Rendered in a blink, but on the turn path if left to first use.
+        runCatching { ListeningAck.warmUp() }
         runCatching { sileroVad()?.warmUp() }
             .onFailure { Log.w(MEM_TAG, "preload: vad failed", it) }
         _preloadProgress.value = 1 / 5f
@@ -600,6 +604,7 @@ class AppContainer private constructor(context: Context) {
         runCatching { hebrewEngine?.release() }
         runCatching { hebrewPhonemes?.release() }
         runCatching { if (chimeOrNull != null) chime.release() }
+        runCatching { ListeningAck.release() }
         // The sticky TIER CHOICE survives on purpose — releasing memory must
         // not reopen the E4B/E2B decision mid-process. Only the weights go.
         _preload.value = PreloadState.IDLE
@@ -632,7 +637,10 @@ class AppContainer private constructor(context: Context) {
     fun createDrillOrchestrator(scope: CoroutineScope): DrillOrchestrator {
         val kokoro = bundledTtsEngine()
         appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
-        appScope.launch(Dispatchers.IO) { runCatching { kokoro?.warmUp() } }
+        appScope.launch(Dispatchers.IO) {
+            runCatching { kokoro?.warmUp() }
+            runCatching { ListeningAck.warmUp() }
+        }
         return DrillOrchestrator(
             asr = createAsrEngine(),
             // English-only room; no router, no Hebrew stack woken.
@@ -763,6 +771,7 @@ class AppContainer private constructor(context: Context) {
             // 2.3 MB — warming it costs nothing and keeps the first hands-free
             // turn from stalling on session creation.
             runCatching { sileroVad()?.warmUp() }
+            runCatching { ListeningAck.warmUp() }
         }
         return TutorOrchestrator(
             llm = createLlmEngine(),

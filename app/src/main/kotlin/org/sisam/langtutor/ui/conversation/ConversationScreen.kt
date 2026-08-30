@@ -48,6 +48,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
+import org.sisam.langtutor.engine.ListeningAck
 import org.sisam.langtutor.engine.TurnLatency
 import org.sisam.langtutor.speech.PronunciationScore
 import org.sisam.langtutor.tutor.Speaker
@@ -145,6 +146,20 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
     var draft by remember { mutableStateOf("") }
     var handsFree by remember { mutableStateOf(false) }
 
+    // Hands-free turns end when the VAD says so, not when a finger lifts —
+    // the observable moment is the Listening -> Transcribing transition. The
+    // clock and the "heard you" blip both belong THERE: marking at the tap
+    // (as this screen once did) started the clock before the child had said
+    // anything, which counted their whole utterance as our latency.
+    var wasListening by remember { mutableStateOf(false) }
+    LaunchedEffect(state) {
+        val listening = state is TutorTurnState.Listening
+        if (wasListening && state is TutorTurnState.Transcribing && handsFree) {
+            TurnLatency.mark("hands-free endpoint")
+            ListeningAck.play()
+        }
+        wasListening = listening
+    }
 
     // The platform ASR shim needs the mic; ask once when the screen opens.
     val micPermission = rememberLauncherForActivityResult(
@@ -329,11 +344,14 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                                 stateNow is TutorTurnState.Failed
                             viewModel.onMicPressed()
                             tryAwaitRelease()
-                            // Hands-free ignores the release; the VAD ends the turn.
-                            if (accepted) {
-                                TurnLatency.mark(
-                                    if (handsFree) "hands-free endpoint" else "mic release",
-                                )
+                            // Hands-free ignores the release entirely: the VAD
+                            // ends the turn, and the LaunchedEffect above marks
+                            // that endpoint when it actually happens.
+                            if (accepted && !handsFree) {
+                                TurnLatency.mark("mic release")
+                                // "Heard you", instantly — the reply is seconds
+                                // away, the acknowledgement must not be.
+                                ListeningAck.play()
                             }
                             if (!handsFree) viewModel.onMicReleased()
                         },

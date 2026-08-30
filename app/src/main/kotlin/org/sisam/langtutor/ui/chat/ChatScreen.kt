@@ -44,6 +44,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
+import org.sisam.langtutor.engine.ListeningAck
 import org.sisam.langtutor.engine.TurnLatency
 import org.sisam.langtutor.speech.RecognitionHint
 import org.sisam.langtutor.tutor.chat.ChatEntry
@@ -94,7 +95,12 @@ fun ChatScreen(container: AppContainer) {
         // Off the main thread: the first press otherwise pays the Whisper
         // interpreter load inside the turn — the container's preload covers
         // this only when the parent pressed that button.
-        withContext(Dispatchers.IO) { runCatching { asr.warmUp() } }
+        withContext(Dispatchers.IO) {
+            runCatching { asr.warmUp() }
+            // A few KB of static PCM; built now so the first turn's "heard
+            // you" blip is as instant as every later one.
+            runCatching { ListeningAck.warmUp() }
+        }
     }
 
     LaunchedEffect(Unit) { room.start() }
@@ -258,6 +264,10 @@ private fun ChatMic(
                         // while the lesson room counted it. Same name, two
                         // meanings: the worst kind of number.
                         TurnLatency.mark("chat mic release")
+                        // "Heard you" — instant, before ASR has even returned.
+                        // The felt wait starts here; the blip is what stops it
+                        // feeling like being ignored (docs/latency.md item 3).
+                        ListeningAck.play()
                         scope.launch {
                             // Never stop before start has finished — on the
                             // first ever press start may be loading Whisper.
