@@ -3,6 +3,7 @@ package org.sisam.langtutor.tutor.drill
 import kotlin.random.Random
 import org.sisam.langtutor.content.Activity
 import org.sisam.langtutor.content.CurriculumUnit
+import org.sisam.langtutor.content.PhraseSentence
 
 /** Difficulty is sentence LENGTH, which a pre-reader can feel even though
  *  they cannot read the label. */
@@ -69,6 +70,33 @@ object DrillDeck {
     /** A shuffled round of at most [sizeFor] items. */
     fun round(units: List<CurriculumUnit>, level: DrillLevel, random: Random): List<DrillItem> =
         pool(units, level).shuffled(random).take(sizeFor(level))
+
+    /**
+     * The phrasebank's contribution: authored, lint-gated sentences at the
+     * learner's proficiency Level and one below (practice plus light review),
+     * bucketed by the same length rule. Every line arrives with its authored
+     * Hebrew meaning — the phrasebank is exactly the trust class the
+     * [DrillItem.hebrew] doc demands.
+     */
+    fun phrasePool(
+        sentences: List<PhraseSentence>,
+        level: DrillLevel,
+        learnerLevel: Int,
+    ): List<DrillItem> {
+        val floor = (learnerLevel - 1).coerceAtLeast(1)
+        return sentences
+            .filter { it.level in floor..learnerLevel }
+            .filter { classify(it.en) == level }
+            .map { DrillItem(it.en, level, it.he) }
+    }
+
+    fun phraseRound(
+        sentences: List<PhraseSentence>,
+        level: DrillLevel,
+        learnerLevel: Int,
+        random: Random,
+    ): List<DrillItem> =
+        phrasePool(sentences, level, learnerLevel).shuffled(random).take(sizeFor(level))
 
     /** Longer sentences are more work per item, so rounds shrink with level. */
     fun sizeFor(level: DrillLevel): Int = when (level) {

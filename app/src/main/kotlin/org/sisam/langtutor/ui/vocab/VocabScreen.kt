@@ -53,6 +53,7 @@ import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.CurriculumUnit
+import org.sisam.langtutor.content.PhraseSentence
 import org.sisam.langtutor.engine.Karaoke
 import org.sisam.langtutor.engine.ListeningAck
 import org.sisam.langtutor.engine.TurnLatency
@@ -89,6 +90,7 @@ class DrillViewModel(
     val pronunciation = drill.pronunciation
 
     private var units: List<CurriculumUnit> = emptyList()
+    private var phrases: List<PhraseSentence> = emptyList()
 
     /** The next round, written while the current one is being played, so
      *  "Again!" is instant instead of waiting out a fresh generation. */
@@ -101,6 +103,7 @@ class DrillViewModel(
         viewModelScope.launch { runCatching { generator?.prepare() } }
         viewModelScope.launch {
             units = container.content.listUnits().mapNotNull { container.content.loadUnit(it.id) }
+            phrases = runCatching { container.phrasebank.sentences() }.getOrDefault(emptyList())
             startRound()
         }
         // Celebrations live HERE, not in the composable: they are events in the
@@ -142,16 +145,20 @@ class DrillViewModel(
     }
 
     /**
-     * LLM-written lines first, curriculum deck to top up. The writer may
-     * return few or none — a cold model, a failed generation, or every line
-     * eaten by the gauntlet — and the round must be full regardless.
+     * Phrasebank first — authored, reviewed, level-tagged, and carrying its
+     * own Hebrew meaning — then LLM-written lines for variety, then the
+     * curriculum deck to top up. The writer may return few or none — a cold
+     * model, a failed generation, or every line eaten by the gauntlet — and
+     * the round must be full regardless.
      */
     private suspend fun freshRound(): List<DrillItem> {
         val size = DrillDeck.sizeFor(level)
+        val learnerLevel = container.profile.snapshot().effectiveLevel
+        val banked = DrillDeck.phraseRound(phrases, level, learnerLevel, Random.Default)
         val written = generator?.let { g ->
             runCatching { g.generate(level, size, Random.Default) }.getOrElse { emptyList() }
         } ?: emptyList()
-        return (written + DrillDeck.round(units, level, Random.Default))
+        return (banked + written + DrillDeck.round(units, level, Random.Default))
             .distinctBy { WordMatch.tokens(it.text) }
             .take(size)
     }

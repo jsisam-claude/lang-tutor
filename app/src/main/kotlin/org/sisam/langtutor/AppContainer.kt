@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.content.ContentRepository
+import org.sisam.langtutor.content.PhrasebankRepository
 import org.sisam.langtutor.content.ResourceContentRepository
+import org.sisam.langtutor.content.ResourcePhrasebankRepository
 import org.sisam.langtutor.engine.HebrewPhonemes
 import org.sisam.langtutor.engine.KokoroTtsEngine
 import org.sisam.langtutor.engine.OnnxTuning
@@ -734,6 +736,10 @@ class AppContainer private constructor(context: Context) {
      * fired as a lesson ends should finish over whatever comes next, and the
      * chime must not be re-synthesized once per screen.
      */
+    /** The authored sentence bank (docs/phrasebank.md): loaded once, cached,
+     *  and trusted as-is — it is lint-gated data, not model output. */
+    val phrasebank: PhrasebankRepository by lazy { ResourcePhrasebankRepository() }
+
     val rewards = RewardBus()
 
     private val chimeDelegate = lazy { RewardChime() }
