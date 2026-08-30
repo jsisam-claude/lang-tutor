@@ -1204,7 +1204,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "i-verbed-my-X-at",
-      "en": "I forgot my list at home.",
+      "en": "I left my list at home.",
       "he": "שכחתי את הרשימה שלי בבית.",
       "align": [
         {
@@ -1244,7 +1244,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "the-X-verbed-his-last-Y",
-      "en": "The baker sold his last bread.",
+      "en": "The baker sold his last loaf of bread.",
       "he": "האופה מכר את הלחם האחרון שלו.",
       "align": [
         {
@@ -1270,7 +1270,7 @@
         {
           "en": [
             3,
-            5
+            7
           ],
           "he": [
             2,
@@ -1515,7 +1515,7 @@
       "tense": "present-perfect",
       "frame": "we-have-already-verbed",
       "en": "We have already spent all our money.",
-      "he": "כבר בזבזנו את כל הכסף שלנו."
+      "he": "כבר הוצאנו את כל הכסף שלנו."
     },
     {
       "id": "mkt-l5-005",
@@ -1754,7 +1754,7 @@
     {
       "id": "mkt-l7-010",
       "level": 7,
-      "tense": "present-simple",
+      "tense": "future-simple",
       "frame": "the-comparative-X-the-comparative-Y",
       "en": "The earlier you come, the better the choice will be.",
       "he": "ככל שתגיעו מוקדם יותר, כך הבחירה תהיה טובה יותר."

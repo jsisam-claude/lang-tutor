@@ -181,9 +181,9 @@
       "id": "bee-l1-006",
       "level": 1,
       "tense": "present-simple",
-      "frame": "the-X-verbs",
-      "en": "The bee flies.",
-      "he": "הדבורה עפה.",
+      "frame": "the-X-is-adj",
+      "en": "The bee is fast.",
+      "he": "הדבורה מהירה.",
       "align": [
         {
           "en": [
@@ -198,7 +198,7 @@
         {
           "en": [
             2,
-            2
+            3
           ],
           "he": [
             1,
@@ -401,7 +401,7 @@
     {
       "id": "bee-l2-001",
       "level": 2,
-      "tense": "present-simple",
+      "tense": "past-simple",
       "frame": "X-is-emotion-because",
       "en": "The bee is happy because it found a flower.",
       "he": "הדבורה שמחה כי היא מצאה פרח.",
@@ -1582,7 +1582,7 @@
       "tense": "modal",
       "frame": "you-should-verb-when",
       "en": "You should stand still when a bee is near.",
-      "he": "כדאי לעמוד בלי לזוז כשדבורה קרובה."
+      "he": "כדאי לעמוד בלי לזוז כשיש דבורה בסביבה."
     },
     {
       "id": "bee-l5-007",
@@ -1768,7 +1768,7 @@
       "tense": "future-perfect",
       "frame": "by-time-X-will-have-verbed",
       "en": "By next spring, the colony will have grown too large for this hive.",
-      "he": "עד האביב הבא המושבה תהיה גדולה מדי בשביל הכוורת הזאת."
+      "he": "עד האביב הבא מושבת הדבורים תהיה גדולה מדי בשביל הכוורת הזאת."
     },
     {
       "id": "bee-l7-006",
@@ -1821,7 +1821,7 @@
     {
       "id": "bee-l7-012",
       "level": 7,
-      "tense": "present-simple",
+      "tense": "future-simple",
       "frame": "the-more-X-the-more-Y",
       "en": "The more flowers a garden has, the more bees it will welcome.",
       "he": "ככל שיש בגינה יותר פרחים, כך יגיעו אליה יותר דבורים."

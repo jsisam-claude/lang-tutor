@@ -142,7 +142,14 @@ framing anywhere.
 
 ## Growth plan
 
-- Seed (this commit): 1 theme × 7 levels × 12 = 84.
+- Seed: honey-bee, 1 theme × 7 levels × 12 = 84. **Batch 2: market** (same
+  shape) — 168 total, both wired into the drill deck via
+  `ResourcePhrasebankRepository` + `phrasebank/index.json`.
+- Every batch now also passes an **adversarial verification workflow** on top
+  of the lint: per level, two independent review lenses (Hebrew accuracy,
+  pedagogy/level fit), then a skeptic per finding who must walk the criticism
+  end-to-end to uphold it; only upheld findings are applied. The lint is
+  structure; the workflow is meaning.
 - After seed sign-off: batches of one theme across all levels (~200–350
   sentences each) until ~36 themes ≈ 7,000+ sentences, tracked per level
   and per tense by the lint's coverage report.
