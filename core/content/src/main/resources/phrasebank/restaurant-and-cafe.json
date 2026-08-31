@@ -1,0 +1,1425 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "restaurant-and-cafe",
+  "title": {
+    "en": "At the cafe",
+    "he": "בבית הקפה"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "rst-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A cafe!",
+      "he": "בית קפה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-our-X",
+      "en": "This is our table.",
+      "he": "זה השולחן שלנו.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-the-X",
+      "en": "I see the menu.",
+      "he": "אני רואה את התפריט.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The soup is hot.",
+      "he": "המרק חם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The cake is pink.",
+      "he": "העוגה ורודה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-X",
+      "en": "I love this cafe.",
+      "he": "אני אוהב את בית הקפה הזה.",
+      "he_f": "אני אוהבת את בית הקפה הזה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Four plates.",
+      "he": "ארבע צלחות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The food is here!",
+      "he": "האוכל כאן!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "Grandpa is hungry.",
+      "he": "סבא רעב.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-010",
+      "level": 1,
+      "tense": "imperative",
+      "frame": "thank-you",
+      "en": "Thank you!",
+      "he": "תודה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "youre-welcome",
+      "en": "You're welcome!",
+      "he": "בבקשה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "num-X-please",
+      "en": "One cake, please.",
+      "he": "עוגה אחת, בבקשה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The waiter is bringing the menus.",
+      "he": "המלצר מביא את התפריטים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My sister is reading the menu.",
+      "he": "אחותי קוראת את התפריט.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to order soup.",
+      "he": "אני רוצה להזמין מרק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you bring some water, please?",
+      "he": "אתה יכול להביא מים, בבקשה?",
+      "he_f": "את יכולה להביא מים, בבקשה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can share my cake with you.",
+      "he": "אני יכול לחלוק את העוגה שלי איתך.",
+      "he_f": "אני יכולה לחלוק את העוגה שלי איתך.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            5
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            6,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is our table?",
+      "he": "איפה השולחן שלנו?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "what-do-you-want-to-verb",
+      "en": "What do you want to eat?",
+      "he": "מה אתה רוצה לאכול?",
+      "he_f": "מה את רוצה לאכול?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-008",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "We are waiting because the cafe is busy.",
+      "he": "אנחנו מחכים כי בית הקפה עמוס.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "My brother is happy because he loves cake.",
+      "he": "אחי שמח כי הוא אוהב עוגה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            7,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you sharing your dessert?",
+      "he": "אתה חולק את הקינוח שלך?",
+      "he_f": "את חולקת את הקינוח שלך?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "why-question",
+      "en": "Why are we waiting?",
+      "he": "למה אנחנו מחכים?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't finish this cake.",
+      "he": "אני לא יכול לגמור את העוגה הזאת.",
+      "he_f": "אני לא יכולה לגמור את העוגה הזאת.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rst-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We ordered pizza and salad.",
+      "he": "הזמנו פיצה וסלט."
+    },
+    {
+      "id": "rst-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The waiter brought us bread.",
+      "he": "המלצר הביא לנו לחם."
+    },
+    {
+      "id": "rst-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "My sister's soup was too hot.",
+      "he": "המרק של אחותי היה חם מדי."
+    },
+    {
+      "id": "rst-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you say thank you to the waiter?",
+      "he": "אמרת תודה למלצר?"
+    },
+    {
+      "id": "rst-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The forks are next to the plates.",
+      "he": "המזלגות ליד הצלחות."
+    },
+    {
+      "id": "rst-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I left my napkin on the chair.",
+      "he": "השארתי את המפית על הכיסא."
+    },
+    {
+      "id": "rst-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents shared a dessert.",
+      "he": "ההורים שלי חלקו קינוח."
+    },
+    {
+      "id": "rst-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the waiter forget our water?",
+      "he": "המלצר שכח את המים שלנו?"
+    },
+    {
+      "id": "rst-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We waited a long time for our food.",
+      "he": "חיכינו הרבה זמן לאוכל שלנו."
+    },
+    {
+      "id": "rst-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive-plural",
+      "en": "My brother's hands were sticky after the cake.",
+      "he": "הידיים של אחי היו דביקות אחרי העוגה."
+    },
+    {
+      "id": "rst-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad paid the check quickly.",
+      "he": "אבא שילם את החשבון מהר."
+    },
+    {
+      "id": "rst-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "We cleaned our table before we left.",
+      "he": "ניקינו את השולחן שלנו לפני שיצאנו."
+    },
+    {
+      "id": "rst-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to order dessert.",
+      "he": "אנחנו עומדים להזמין קינוח."
+    },
+    {
+      "id": "rst-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to say thank you to the waiter.",
+      "he": "אני עומד להגיד תודה למלצר.",
+      "he_f": "אני עומדת להגיד תודה למלצר."
+    },
+    {
+      "id": "rst-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "The family is going to share a big dessert.",
+      "he": "המשפחה עומדת לחלוק קינוח גדול."
+    },
+    {
+      "id": "rst-l4-004",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The waiter will bring our check soon.",
+      "he": "המלצר יביא את החשבון שלנו בקרוב."
+    },
+    {
+      "id": "rst-l4-005",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you pass the bread, please?",
+      "he": "תעביר לי את הלחם, בבקשה?",
+      "he_f": "תעבירי לי את הלחם, בבקשה?"
+    },
+    {
+      "id": "rst-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This cafe is quieter than the other one.",
+      "he": "בית הקפה הזה שקט יותר מהאחר."
+    },
+    {
+      "id": "rst-l4-007",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My plate is bigger than my brother's plate.",
+      "he": "הצלחת שלי גדולה יותר מהצלחת של אחי."
+    },
+    {
+      "id": "rst-l4-008",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the best cake in the cafe.",
+      "he": "זאת העוגה הכי טובה בבית הקפה."
+    },
+    {
+      "id": "rst-l4-009",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must say please when you order.",
+      "he": "אתה חייב להגיד בבקשה כשאתה מזמין.",
+      "he_f": "את חייבת להגיד בבקשה כשאת מזמינה."
+    },
+    {
+      "id": "rst-l4-010",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should leave the table tidy.",
+      "he": "כדאי שתשאיר את השולחן מסודר.",
+      "he_f": "כדאי שתשאירי את השולחן מסודר."
+    },
+    {
+      "id": "rst-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you finish your plate, you get a cookie.",
+      "he": "אם מסיימים את הצלחת, מקבלים עוגייה."
+    },
+    {
+      "id": "rst-l4-012",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the cafe is busy, we wait outside.",
+      "he": "אם בית הקפה עמוס, אנחנו מחכים בחוץ."
+    },
+    {
+      "id": "rst-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "We have already ordered our food.",
+      "he": "כבר הזמנו את האוכל שלנו."
+    },
+    {
+      "id": "rst-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "This cafe has been open for ten years.",
+      "he": "בית הקפה הזה פתוח כבר עשר שנים."
+    },
+    {
+      "id": "rst-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The dessert might be ready soon.",
+      "he": "הקינוח אולי יהיה מוכן בקרוב."
+    },
+    {
+      "id": "rst-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you share your cake, everyone will get a piece.",
+      "he": "אם תחלוק את העוגה שלך, כולם יקבלו חתיכה.",
+      "he_f": "אם תחלקי את העוגה שלך, כולם יקבלו חתיכה."
+    },
+    {
+      "id": "rst-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you finished your soup?",
+      "he": "סיימת את המרק שלך?"
+    },
+    {
+      "id": "rst-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The waiter has just brought our check.",
+      "he": "המלצר בדיוק הביא את החשבון שלנו."
+    },
+    {
+      "id": "rst-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "May I have a napkin, please?",
+      "he": "אפשר לקבל מפית, בבקשה?"
+    },
+    {
+      "id": "rst-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you ask nicely, the waiter will bring more bread.",
+      "he": "אם תבקש בנימוס, המלצר יביא עוד לחם.",
+      "he_f": "אם תבקשי בנימוס, המלצר יביא עוד לחם."
+    },
+    {
+      "id": "rst-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never tasted such a good soup.",
+      "he": "מעולם לא טעמתי מרק כל כך טוב."
+    },
+    {
+      "id": "rst-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have been at this table since noon.",
+      "he": "אנחנו ליד השולחן הזה מאז הצהריים."
+    },
+    {
+      "id": "rst-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so let's sit inside the cafe.",
+      "he": "אולי יירד גשם, אז בואו נשב בתוך בית הקפה."
+    },
+    {
+      "id": "rst-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If the check is wrong, we will tell the waiter.",
+      "he": "אם החשבון לא נכון, נגיד למלצר."
+    },
+    {
+      "id": "rst-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was reading the menu while Dad was talking to the waiter.",
+      "he": "אמא קראה את התפריט בזמן שאבא דיבר עם המלצר."
+    },
+    {
+      "id": "rst-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The table was cleaned before we sat down.",
+      "he": "השולחן נוקה לפני שהתיישבנו."
+    },
+    {
+      "id": "rst-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more room, I would order another dessert.",
+      "he": "אם היה לי יותר מקום, הייתי מזמין עוד קינוח.",
+      "he_f": "אם היה לי יותר מקום, הייתי מזמינה עוד קינוח."
+    },
+    {
+      "id": "rst-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already ordered when the waiter arrived.",
+      "he": "כבר הזמנו כשהמלצר הגיע."
+    },
+    {
+      "id": "rst-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "Our cake was made by the chef.",
+      "he": "העוגה שלנו הוכנה על ידי השף."
+    },
+    {
+      "id": "rst-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was eating my soup when it spilled.",
+      "he": "אכלתי את המרק שלי כשהוא נשפך."
+    },
+    {
+      "id": "rst-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If the cafe were quieter, we would talk more.",
+      "he": "אם בית הקפה היה שקט יותר, היינו מדברים יותר."
+    },
+    {
+      "id": "rst-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The bread was served warm.",
+      "he": "הלחם הוגש חם."
+    },
+    {
+      "id": "rst-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The waiter was writing down our order.",
+      "he": "המלצר רשם את ההזמנה שלנו."
+    },
+    {
+      "id": "rst-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never eaten such a big sandwich before.",
+      "he": "היא מעולם לא אכלה כריך כל כך גדול לפני כן."
+    },
+    {
+      "id": "rst-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would order the soup.",
+      "he": "במקומך הייתי מזמין את המרק.",
+      "he_f": "במקומך הייתי מזמינה את המרק."
+    },
+    {
+      "id": "rst-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Dessert is always shared in our family.",
+      "he": "קינוח תמיד מתחלק במשפחה שלנו."
+    },
+    {
+      "id": "rst-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been sitting at this table for two hours.",
+      "he": "אנחנו יושבים ליד השולחן הזה כבר שעתיים."
+    },
+    {
+      "id": "rst-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The waiter said that the soup was fresh.",
+      "he": "המלצר אמר שהמרק היה טרי."
+    },
+    {
+      "id": "rst-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had come earlier, we would have gotten a better table.",
+      "he": "אם היינו מגיעים מוקדם יותר, היינו מקבלים שולחן טוב יותר."
+    },
+    {
+      "id": "rst-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The waiter has been helping us all evening.",
+      "he": "המלצר עוזר לנו כל הערב."
+    },
+    {
+      "id": "rst-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could have more juice.",
+      "he": "אחותי שאלה אם היא יכולה לקבל עוד מיץ."
+    },
+    {
+      "id": "rst-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First the waiter takes our order, then he brings our drinks.",
+      "he": "קודם המלצר לוקח את ההזמנה שלנו, ואז הוא מביא לנו את המשקאות."
+    },
+    {
+      "id": "rst-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the cafe was crowded, we found a nice table.",
+      "he": "למרות שבית הקפה היה עמוס, מצאנו שולחן נחמד."
+    },
+    {
+      "id": "rst-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time our food arrived, we had been waiting for half an hour.",
+      "he": "עד שהאוכל שלנו הגיע, כבר חיכינו חצי שעה."
+    },
+    {
+      "id": "rst-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the waiter had forgotten our order, we would have asked again politely.",
+      "he": "אם המלצר היה שוכח את ההזמנה שלנו, היינו שואלים שוב בנימוס."
+    },
+    {
+      "id": "rst-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had already paid the check.",
+      "he": "אמא סיפרה לנו שהיא כבר שילמה את החשבון."
+    },
+    {
+      "id": "rst-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been talking about this cafe for weeks.",
+      "he": "אנחנו מדברים על בית הקפה הזה כבר שבועות."
+    },
+    {
+      "id": "rst-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone was polite, so we had a wonderful meal.",
+      "he": "בקיצור, כולם היו מנומסים, אז הייתה לנו ארוחה נפלאה."
+    }
+  ]
+}

@@ -1,0 +1,813 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "colors-and-shapes",
+  "title": {
+    "en": "Colors and shapes",
+    "he": "צבעים וצורות"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "col-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A circle!",
+      "he": "עיגול!",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] }
+      ]
+    },
+    {
+      "id": "col-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A red square!",
+      "he": "ריבוע אדום!",
+      "align": [
+        { "en": [0, 2], "he": [0, 1] }
+      ]
+    },
+    {
+      "id": "col-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The triangle is yellow.",
+      "he": "המשולש צהוב.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "col-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-a-X",
+      "en": "I see a green star.",
+      "he": "אני רואה כוכב ירוק.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 4], "he": [2, 3] }
+      ]
+    },
+    {
+      "id": "col-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two hearts.",
+      "he": "שני לבבות.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "col-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The circle is big.",
+      "he": "העיגול גדול.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "col-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The door is purple.",
+      "he": "הדלת סגולה.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "col-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The wall is gray.",
+      "he": "הקיר אפור.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "col-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my blue cup.",
+      "he": "אני אוהב את הכוס הכחולה שלי.",
+      "he_f": "אני אוהבת את הכוס הכחולה שלי.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 4], "he": [3, 5] }
+      ]
+    },
+    {
+      "id": "col-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-X",
+      "en": "I love orange squares.",
+      "he": "אני אוהב ריבועים כתומים.",
+      "he_f": "אני אוהבת ריבועים כתומים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 3] }
+      ]
+    },
+    {
+      "id": "col-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A black star!",
+      "he": "כוכב שחור!",
+      "align": [
+        { "en": [0, 2], "he": [0, 1] }
+      ]
+    },
+    {
+      "id": "col-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-Ving",
+      "en": "I love drawing.",
+      "he": "אני אוהב לצייר.",
+      "he_f": "אני אוהבת לצייר.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "col-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am coloring the picture.",
+      "he": "אני צובע את התמונה.",
+      "he_f": "אני צובעת את התמונה.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "col-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My brother is drawing a square.",
+      "he": "אחי מצייר ריבוע.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] },
+        { "en": [4, 5], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "col-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to draw a star.",
+      "he": "אני רוצה לצייר כוכב.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] },
+        { "en": [4, 5], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "col-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you find the yellow ball?",
+      "he": "אתה יכול למצוא את הכדור הצהוב?",
+      "he_f": "את יכולה למצוא את הכדור הצהוב?",
+      "align": [
+        { "en": [0, 1], "he": [0, 1] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 5], "he": [4, 5] }
+      ]
+    },
+    {
+      "id": "col-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can draw a triangle.",
+      "he": "אני יכול לצייר משולש.",
+      "he_f": "אני יכולה לצייר משולש.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 4], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "col-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the blue paintbrush?",
+      "he": "איפה המברשת הכחולה?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 4], "he": [1, 2] }
+      ]
+    },
+    {
+      "id": "col-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the picture is colorful.",
+      "he": "אני שמח כי התמונה צבעונית.",
+      "he_f": "אני שמחה כי התמונה צבעונית.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 3], "he": [2, 2] },
+        { "en": [4, 5], "he": [3, 3] },
+        { "en": [6, 7], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "col-l2-008",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you drawing a heart?",
+      "he": "אתה מצייר לב?",
+      "he_f": "את מציירת לב?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "col-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "what-is-X",
+      "en": "What color is your shirt?",
+      "he": "מה הצבע של החולצה שלך?",
+      "align": [
+        { "en": [0, 2], "he": [0, 1] },
+        { "en": [3, 4], "he": [2, 4] }
+      ]
+    },
+    {
+      "id": "col-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are mixing blue and yellow.",
+      "he": "אנחנו מערבבים כחול וצהוב.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 5], "he": [2, 3] }
+      ]
+    },
+    {
+      "id": "col-l2-011",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my green triangle.",
+      "he": "אני לא מוצא את המשולש הירוק שלי.",
+      "he_f": "אני לא מוצאת את המשולש הירוק שלי.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 2] },
+        { "en": [3, 5], "he": [4, 6] }
+      ]
+    },
+    {
+      "id": "col-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-is-X",
+      "en": "Why is the sky blue?",
+      "he": "למה השמיים כחולים?",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 3], "he": [1, 1] },
+        { "en": [4, 4], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "col-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We drew shapes yesterday.",
+      "he": "ציירנו צורות אתמול."
+    },
+    {
+      "id": "col-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad drew a brown star for me.",
+      "he": "אבא צייר לי כוכב חום."
+    },
+    {
+      "id": "col-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My sister's picture is colorful.",
+      "he": "התמונה של אחותי צבעונית."
+    },
+    {
+      "id": "col-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you draw a star?",
+      "he": "ציירת כוכב?"
+    },
+    {
+      "id": "col-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The paintbrushes are on the table.",
+      "he": "המברשות על השולחן."
+    },
+    {
+      "id": "col-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I mixed red and blue this morning.",
+      "he": "ערבבתי אדום וכחול הבוקר."
+    },
+    {
+      "id": "col-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "My parents painted my room blue.",
+      "he": "ההורים שלי צבעו את החדר שלי בכחול."
+    },
+    {
+      "id": "col-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did Mom buy white paint?",
+      "he": "אמא קנתה צבע לבן?"
+    },
+    {
+      "id": "col-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We found five colors in our house.",
+      "he": "מצאנו חמישה צבעים בבית שלנו."
+    },
+    {
+      "id": "col-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My brother's drawings are colorful.",
+      "he": "הציורים של אחי צבעוניים."
+    },
+    {
+      "id": "col-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma showed us her favorite color.",
+      "he": "סבתא הראתה לנו את הצבע האהוב עליה."
+    },
+    {
+      "id": "col-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children drew shapes on the sidewalk.",
+      "he": "הילדים ציירו צורות על המדרכה."
+    },
+    {
+      "id": "col-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to draw a big star.",
+      "he": "אנחנו עומדים לצייר כוכב גדול."
+    },
+    {
+      "id": "col-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My circle is bigger than your square.",
+      "he": "העיגול שלי גדול יותר מהריבוע שלך."
+    },
+    {
+      "id": "col-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the biggest triangle in my drawing.",
+      "he": "זה המשולש הגדול ביותר בציור שלי."
+    },
+    {
+      "id": "col-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must clean the paintbrush after painting.",
+      "he": "אתה חייב לנקות את המברשת אחרי הציור.",
+      "he_f": "את חייבת לנקות את המברשת אחרי הציור."
+    },
+    {
+      "id": "col-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should mix more colors.",
+      "he": "כדאי שתערבב עוד צבעים.",
+      "he_f": "כדאי שתערבבי עוד צבעים."
+    },
+    {
+      "id": "col-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you mix blue and yellow, you get green.",
+      "he": "אם מערבבים כחול וצהוב, מקבלים ירוק."
+    },
+    {
+      "id": "col-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to paint a rainbow together.",
+      "he": "אנחנו עומדים לצייר קשת ביחד."
+    },
+    {
+      "id": "col-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "I will draw a purple heart for you.",
+      "he": "אני אצייר לך לב סגול."
+    },
+    {
+      "id": "col-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to color the square blue.",
+      "he": "אני עומד לצבוע את הריבוע בכחול.",
+      "he_f": "אני עומדת לצבוע את הריבוע בכחול."
+    },
+    {
+      "id": "col-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The green paint is lighter than the blue paint.",
+      "he": "הצבע הירוק בהיר יותר מהצבע הכחול."
+    },
+    {
+      "id": "col-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you mix yellow and red, you get orange.",
+      "he": "אם מערבבים צהוב ואדום, מקבלים כתום."
+    },
+    {
+      "id": "col-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you draw a circle for me?",
+      "he": "תצייר לי עיגול?",
+      "he_f": "תציירי לי עיגול?"
+    },
+    {
+      "id": "col-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have drawn three shapes already.",
+      "he": "כבר ציירתי שלוש צורות."
+    },
+    {
+      "id": "col-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "My brother has liked red for years.",
+      "he": "אחי אוהב אדום כבר שנים."
+    },
+    {
+      "id": "col-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might paint the wall yellow.",
+      "he": "אולי נצבע את הקיר בצהוב."
+    },
+    {
+      "id": "col-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you draw a triangle, I will draw a star.",
+      "he": "אם תצייר משולש, אני אצייר כוכב.",
+      "he_f": "אם תציירי משולש, אני אצייר כוכב."
+    },
+    {
+      "id": "col-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my purple ball?",
+      "he": "ראית את הכדור הסגול שלי?"
+    },
+    {
+      "id": "col-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "Dad has just painted the fence green.",
+      "he": "אבא בדיוק צבע את הגדר בירוק."
+    },
+    {
+      "id": "col-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My sister may draw a pink heart.",
+      "he": "אולי אחותי תצייר לב ורוד."
+    },
+    {
+      "id": "col-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we finish the drawing today, we will start a new one.",
+      "he": "אם נסיים את הציור היום, נתחיל אחד חדש."
+    },
+    {
+      "id": "col-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never mixed so many colors.",
+      "he": "מעולם לא ערבבתי כל כך הרבה צבעים."
+    },
+    {
+      "id": "col-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have used this paint box since winter.",
+      "he": "אנחנו משתמשים בקופסת הצבעים הזאת מאז החורף."
+    },
+    {
+      "id": "col-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so bring the paints inside.",
+      "he": "אולי יירד גשם, אז תכניס את הצבעים פנימה.",
+      "he_f": "אולי יירד גשם, אז תכניסי את הצבעים פנימה."
+    },
+    {
+      "id": "col-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me draw, we will finish faster.",
+      "he": "אם תעזור לי לצייר, נגמור מהר יותר.",
+      "he_f": "אם תעזרי לי לצייר, נגמור מהר יותר."
+    },
+    {
+      "id": "col-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was drawing while my sister was painting.",
+      "he": "ציירתי בזמן שאחותי צבעה."
+    },
+    {
+      "id": "col-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The picture was painted before we left.",
+      "he": "התמונה צוירה לפני שיצאנו."
+    },
+    {
+      "id": "col-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more colors, I would paint a rainbow.",
+      "he": "אם היו לי יותר צבעים, הייתי מצייר קשת.",
+      "he_f": "אם היו לי יותר צבעים, הייתי מציירת קשת."
+    },
+    {
+      "id": "col-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already drawn the shapes when Mom got home.",
+      "he": "כבר ציירנו את הצורות כשאמא הגיעה הביתה."
+    },
+    {
+      "id": "col-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The heart was drawn by my little sister.",
+      "he": "הלב צויר על ידי אחותי הקטנה."
+    },
+    {
+      "id": "col-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was mixing colors when the paint spilled.",
+      "he": "ערבבתי צבעים כשהצבע נשפך."
+    },
+    {
+      "id": "col-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had more paint, we would color the whole wall.",
+      "he": "אם היה לנו יותר צבע, היינו צובעים את כל הקיר."
+    },
+    {
+      "id": "col-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The square was drawn very carefully.",
+      "he": "הריבוע צויר בזהירות רבה."
+    },
+    {
+      "id": "col-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My friends were choosing colors quietly.",
+      "he": "החברים שלי בחרו צבעים בשקט."
+    },
+    {
+      "id": "col-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never mixed paint colors before.",
+      "he": "היא מעולם לא ערבבה צבעי ציור לפני כן."
+    },
+    {
+      "id": "col-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were a rainbow, I would have every color.",
+      "he": "אילו הייתי קשת, היה לי כל צבע."
+    },
+    {
+      "id": "col-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Paint is kept in the closet in our house.",
+      "he": "הצבע נשמר בארון בבית שלנו."
+    },
+    {
+      "id": "col-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been drawing shapes all afternoon.",
+      "he": "אני מצייר צורות כל אחר הצהריים.",
+      "he_f": "אני מציירת צורות כל אחר הצהריים."
+    },
+    {
+      "id": "col-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the paint was still wet.",
+      "he": "אבא אמר שהצבע עדיין רטוב."
+    },
+    {
+      "id": "col-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had asked me, I would have drawn you a star.",
+      "he": "אם היית מבקש ממני, הייתי מצייר לך כוכב.",
+      "he_f": "אם היית מבקשת ממני, הייתי מציירת לך כוכב."
+    },
+    {
+      "id": "col-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandma has been painting flowers all morning.",
+      "he": "סבתא מציירת פרחים כל הבוקר."
+    },
+    {
+      "id": "col-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My brother asked whether he could use my paints.",
+      "he": "אחי שאל אם הוא יכול להשתמש בצבעים שלי."
+    },
+    {
+      "id": "col-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we choose the colors, then we start painting.",
+      "he": "קודם אנחנו בוחרים את הצבעים, ואז אנחנו מתחילים לצבוע."
+    },
+    {
+      "id": "col-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the picture was simple, the colors were beautiful.",
+      "he": "למרות שהתמונה הייתה פשוטה, הצבעים היו יפים."
+    },
+    {
+      "id": "col-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we finished, we had been mixing colors for an hour.",
+      "he": "עד שסיימנו, כבר ערבבנו צבעים שעה."
+    },
+    {
+      "id": "col-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the paint had been ready, we would have started earlier.",
+      "he": "אם הצבע היה מוכן, היינו מתחילים מוקדם יותר."
+    },
+    {
+      "id": "col-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had found more paper.",
+      "he": "אמא סיפרה לנו שהיא מצאה עוד נייר."
+    },
+    {
+      "id": "col-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been drawing this picture for weeks.",
+      "he": "אנחנו מציירים את התמונה הזאת כבר שבועות."
+    },
+    {
+      "id": "col-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone helped, so the picture turned out great.",
+      "he": "בקיצור, כולם עזרו, ולכן התמונה יצאה נהדרת."
+    }
+  ]
+}
