@@ -1,0 +1,1460 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "helping-at-home",
+  "title": {
+    "en": "Helping at home",
+    "he": "עוזרים בבית"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "hlp-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A broom!",
+      "he": "מטאטא!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my bucket.",
+      "he": "זה הדלי שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a basket.",
+      "he": "אני רואה סל.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The broom is new.",
+      "he": "המטאטא חדש.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The bucket is orange.",
+      "he": "הדלי כתום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my chores.",
+      "he": "אני אוהב את המטלות שלי.",
+      "he_f": "אני אוהבת את המטלות שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two bags.",
+      "he": "שני תיקים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The cat is here.",
+      "he": "החתול כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The table is clean.",
+      "he": "השולחן נקי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-Ving",
+      "en": "I love helping.",
+      "he": "אני אוהב לעזור.",
+      "he_f": "אני אוהבת לעזור.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The plant is green.",
+      "he": "הצמח ירוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "We are happy.",
+      "he": "אנחנו שמחים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Dad is watering the plants.",
+      "he": "אבא משקה את הצמחים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My sister is feeding the cat.",
+      "he": "אחותי מאכילה את החתול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to help with the chores.",
+      "he": "אני רוצה לעזור במטלות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you carry this bag?",
+      "he": "אתה יכול לשאת את התיק הזה?",
+      "he_f": "את יכולה לשאת את התיק הזה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can fold the laundry.",
+      "he": "אני יכול לקפל את הכביסה.",
+      "he_f": "אני יכולה לקפל את הכביסה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the broom?",
+      "he": "איפה המטאטא?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "I am sweeping the porch because it is dusty.",
+      "he": "אני מטאטא את המרפסת כי היא מאובקת.",
+      "he_f": "אני מטאטאת את המרפסת כי היא מאובקת.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            5,
+            5
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            6,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because we help together.",
+      "he": "אני שמח כי אנחנו עוזרים ביחד.",
+      "he_f": "אני שמחה כי אנחנו עוזרים ביחד.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you sorting the recycling?",
+      "he": "אתה ממיין את המיחזור?",
+      "he_f": "את ממיינת את המיחזור?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My brother wants to set the table.",
+      "he": "אחי רוצה לערוך את השולחן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are clearing the table together.",
+      "he": "אנחנו מפנים את השולחן ביחד.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my watering can.",
+      "he": "אני לא מוצא את המזלף שלי.",
+      "he_f": "אני לא מוצאת את המזלף שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hlp-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We folded the laundry together.",
+      "he": "קיפלנו את הכביסה ביחד."
+    },
+    {
+      "id": "hlp-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma thanked me for my help.",
+      "he": "סבתא הודתה לי על העזרה שלי."
+    },
+    {
+      "id": "hlp-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My sister's watering can is green.",
+      "he": "המזלף של אחותי ירוק."
+    },
+    {
+      "id": "hlp-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you feed the cat?",
+      "he": "האכלת את החתול?"
+    },
+    {
+      "id": "hlp-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The folded clothes are in the basket.",
+      "he": "הבגדים המקופלים בסל."
+    },
+    {
+      "id": "hlp-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I watered the plants this morning.",
+      "he": "השקיתי את הצמחים הבוקר."
+    },
+    {
+      "id": "hlp-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents swept the porch together.",
+      "he": "ההורים שלי טאטאו את המרפסת ביחד."
+    },
+    {
+      "id": "hlp-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did Dad carry the heavy bags?",
+      "he": "אבא נשא את התיקים הכבדים?"
+    },
+    {
+      "id": "hlp-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We sorted the recycling after breakfast.",
+      "he": "מיינו את המיחזור אחרי ארוחת הבוקר."
+    },
+    {
+      "id": "hlp-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My brother's chores are finished.",
+      "he": "המטלות של אחי גמורות."
+    },
+    {
+      "id": "hlp-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma taught us a new chore.",
+      "he": "סבתא לימדה אותנו מטלה חדשה."
+    },
+    {
+      "id": "hlp-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children carried the bags happily.",
+      "he": "הילדים נשאו את התיקים בשמחה."
+    },
+    {
+      "id": "hlp-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to water the plants after breakfast.",
+      "he": "אנחנו עומדים להשקות את הצמחים אחרי ארוחת הבוקר."
+    },
+    {
+      "id": "hlp-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My bucket is bigger than yours.",
+      "he": "הדלי שלי גדול יותר משלך."
+    },
+    {
+      "id": "hlp-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the heaviest bag in the house.",
+      "he": "זה התיק הכבד ביותר בבית."
+    },
+    {
+      "id": "hlp-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must water the plants every day.",
+      "he": "אתה חייב להשקות את הצמחים כל יום.",
+      "he_f": "את חייבת להשקות את הצמחים כל יום."
+    },
+    {
+      "id": "hlp-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should help clear the table.",
+      "he": "כדאי שתעזור לפנות את השולחן.",
+      "he_f": "כדאי שתעזרי לפנות את השולחן."
+    },
+    {
+      "id": "hlp-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If everyone helps, the house gets clean fast.",
+      "he": "אם כולם עוזרים, הבית מתנקה מהר."
+    },
+    {
+      "id": "hlp-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to sort the recycling this weekend.",
+      "he": "אנחנו עומדים למיין את המיחזור בסוף השבוע."
+    },
+    {
+      "id": "hlp-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will carry the heavy bags tomorrow.",
+      "he": "אבא יישא את התיקים הכבדים מחר."
+    },
+    {
+      "id": "hlp-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to feed the cat after lunch.",
+      "he": "אני עומד להאכיל את החתול אחרי ארוחת הצהריים.",
+      "he_f": "אני עומדת להאכיל את החתול אחרי ארוחת הצהריים."
+    },
+    {
+      "id": "hlp-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My chores are easier than my sister's.",
+      "he": "המטלות שלי קלות יותר משל אחותי."
+    },
+    {
+      "id": "hlp-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you carry too many bags, they fall.",
+      "he": "אם נושאים יותר מדי תיקים, הם נופלים."
+    },
+    {
+      "id": "hlp-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you help me water the plants?",
+      "he": "תעזור לי להשקות את הצמחים?",
+      "he_f": "תעזרי לי להשקות את הצמחים?"
+    },
+    {
+      "id": "hlp-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have watered the plants already.",
+      "he": "כבר השקיתי את הצמחים."
+    },
+    {
+      "id": "hlp-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "Grandma has folded laundry for many years.",
+      "he": "סבתא מקפלת כביסה הרבה שנים."
+    },
+    {
+      "id": "hlp-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might sort the recycling tonight.",
+      "he": "אולי נמיין את המיחזור הערב."
+    },
+    {
+      "id": "hlp-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you feed the cat now, she will be happy.",
+      "he": "אם תאכיל את החתול עכשיו, היא תהיה שמחה.",
+      "he_f": "אם תאכילי את החתול עכשיו, היא תהיה שמחה."
+    },
+    {
+      "id": "hlp-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you fed the cat yet?",
+      "he": "האכלת את החתול כבר?"
+    },
+    {
+      "id": "hlp-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "Mom has just cleared the table.",
+      "he": "אמא בדיוק פינתה את השולחן."
+    },
+    {
+      "id": "hlp-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may help with the dishes.",
+      "he": "אולי אחי יעזור עם הכלים."
+    },
+    {
+      "id": "hlp-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we finish the chores early, we will play outside.",
+      "he": "אם נסיים את המטלות מוקדם, נשחק בחוץ."
+    },
+    {
+      "id": "hlp-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never forgotten to water the plants.",
+      "he": "מעולם לא שכחתי להשקות את הצמחים."
+    },
+    {
+      "id": "hlp-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have sorted the recycling since spring.",
+      "he": "אנחנו ממיינים מיחזור מאז האביב."
+    },
+    {
+      "id": "hlp-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so bring the laundry inside.",
+      "he": "אולי יירד גשם, אז תכניס את הכביסה פנימה.",
+      "he_f": "אולי יירד גשם, אז תכניסי את הכביסה פנימה."
+    },
+    {
+      "id": "hlp-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me carry the bags, we will finish faster.",
+      "he": "אם תעזור לי לשאת את התיקים, נגמור מהר יותר.",
+      "he_f": "אם תעזרי לי לשאת את התיקים, נגמור מהר יותר."
+    },
+    {
+      "id": "hlp-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was folding laundry while I was sweeping the porch.",
+      "he": "אמא קיפלה כביסה בזמן שאני טיאטאתי את המרפסת."
+    },
+    {
+      "id": "hlp-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The table was cleared before the guests arrived.",
+      "he": "השולחן היה מפונה לפני שהאורחים הגיעו."
+    },
+    {
+      "id": "hlp-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more time, I would help more at home.",
+      "he": "אם היה לי יותר זמן, הייתי עוזר יותר בבית.",
+      "he_f": "אם היה לי יותר זמן, הייתי עוזרת יותר בבית."
+    },
+    {
+      "id": "hlp-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already fed the cat when Dad got home.",
+      "he": "כבר האכלנו את החתול כשאבא הגיע הביתה."
+    },
+    {
+      "id": "hlp-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The plants were watered by my little brother.",
+      "he": "הצמחים הושקו על ידי אחי הקטן."
+    },
+    {
+      "id": "hlp-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was carrying the bags when it started to rain.",
+      "he": "נשאתי את התיקים כשהתחיל לרדת גשם."
+    },
+    {
+      "id": "hlp-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had a bigger garden, we would grow more plants.",
+      "he": "אם הייתה לנו גינה גדולה יותר, היינו מגדלים יותר צמחים."
+    },
+    {
+      "id": "hlp-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "This broom was bought many years ago.",
+      "he": "המטאטא הזה נקנה לפני הרבה שנים."
+    },
+    {
+      "id": "hlp-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My parents were tidying the kitchen quietly.",
+      "he": "ההורים שלי סידרו את המטבח בשקט."
+    },
+    {
+      "id": "hlp-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "He had never folded laundry before.",
+      "he": "הוא מעולם לא קיפל כביסה לפני כן."
+    },
+    {
+      "id": "hlp-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would help clear the table.",
+      "he": "במקומך הייתי עוזר לפנות את השולחן.",
+      "he_f": "במקומך הייתי עוזרת לפנות את השולחן."
+    },
+    {
+      "id": "hlp-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "The recycling is sorted every Sunday in our house.",
+      "he": "המיחזור ממוין בכל יום ראשון אצלנו בבית."
+    },
+    {
+      "id": "hlp-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been helping Mom fold laundry all afternoon.",
+      "he": "אני עוזר לאמא לקפל כביסה כל אחר הצהריים.",
+      "he_f": "אני עוזרת לאמא לקפל כביסה כל אחר הצהריים."
+    },
+    {
+      "id": "hlp-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the recycling was ready to go out.",
+      "he": "אבא אמר שהמיחזור מוכן לצאת."
+    },
+    {
+      "id": "hlp-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had told me, I would have carried the bags for you.",
+      "he": "אם היית אומר לי, הייתי נושא לך את התיקים.",
+      "he_f": "אם היית אומרת לי, הייתי נושאת לך את התיקים."
+    },
+    {
+      "id": "hlp-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandma has been sorting the recycling all morning.",
+      "he": "סבתא ממיינת את המיחזור כל הבוקר."
+    },
+    {
+      "id": "hlp-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could help set the table.",
+      "he": "אחותי שאלה אם היא יכולה לעזור לערוך את השולחן."
+    },
+    {
+      "id": "hlp-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we feed the cat, then we water the plants.",
+      "he": "קודם אנחנו מאכילים את החתול, ואז אנחנו משקים את הצמחים."
+    },
+    {
+      "id": "hlp-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the chores took time, everyone had fun helping.",
+      "he": "למרות שהמטלות לקחו זמן, לכולם היה כיף לעזור."
+    },
+    {
+      "id": "hlp-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time Mom got home, we had been cleaning for an hour.",
+      "he": "עד שאמא הגיעה הביתה, כבר ניקינו שעה."
+    },
+    {
+      "id": "hlp-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the plants had been dry, we would have watered them sooner.",
+      "he": "אם הצמחים היו יבשים, היינו משקים אותם מוקדם יותר."
+    },
+    {
+      "id": "hlp-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had finished sorting the recycling.",
+      "he": "אמא סיפרה לנו שהיא סיימה למיין את המיחזור."
+    },
+    {
+      "id": "hlp-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been planning this cleaning day for weeks.",
+      "he": "אנחנו מתכננים את יום הניקיון הזה כבר שבועות."
+    },
+    {
+      "id": "hlp-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone helped, so the chores were finished quickly.",
+      "he": "בקיצור, כולם עזרו, ולכן המטלות הסתיימו מהר."
+    }
+  ]
+}
