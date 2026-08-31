@@ -1222,7 +1222,7 @@
       "tense": "present-perfect",
       "frame": "perfect-never",
       "en": "I have never fed a hamster before.",
-      "he": "מעולם לא האכלתי אוגר לפני כן."
+      "he": "מעולם לא האכלתי אוגר."
     },
     {
       "id": "pet-l5-010",
@@ -1247,8 +1247,8 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If you help me walk the dogs, we will finish faster.",
-      "he": "אם תעזור לי להוציא את הכלבים לטיול, נגמור מהר יותר.",
-      "he_f": "אם תעזרי לי להוציא את הכלבים לטיול, נגמור מהר יותר."
+      "he": "אם תעזור לי להוציא את הכלבים לטיול, נסיים מהר יותר.",
+      "he_f": "אם תעזרי לי להוציא את הכלבים לטיול, נסיים מהר יותר."
     },
     {
       "id": "pet-l6-001",
@@ -1264,7 +1264,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "The cage was cleaned before the guests came.",
-      "he": "הכלוב היה מנוקה לפני שהאורחים הגיעו."
+      "he": "הכלוב נוקה לפני שהאורחים הגיעו."
     },
     {
       "id": "pet-l6-003",
@@ -1371,8 +1371,8 @@
       "tense": "conditional-third",
       "frame": "if-third",
       "en": "If you had told me the hamster was sick, I would have called the vet.",
-      "he": "אם היית אומר לי שהאוגר חולה, הייתי מתקשר לוטרינר.",
-      "he_f": "אם היית אומרת לי שהאוגר חולה, הייתי מתקשרת לוטרינר."
+      "he": "אם היית אומר לי שהאוגר חולה, הייתי מתקשר לווטרינר.",
+      "he_f": "אם היית אומרת לי שהאוגר חולה, הייתי מתקשרת לווטרינר."
     },
     {
       "id": "pet-l7-004",
@@ -1412,7 +1412,7 @@
       "tense": "past-perfect-progressive",
       "frame": "by-the-time",
       "en": "By the time the vet arrived, we had been waiting for an hour.",
-      "he": "עד שהוטרינר הגיע, כבר חיכינו שעה."
+      "he": "עד שהווטרינר הגיע, כבר חיכינו שעה."
     },
     {
       "id": "pet-l7-009",
@@ -1428,7 +1428,7 @@
       "tense": "past-perfect",
       "frame": "reported-speech",
       "en": "Mom told us that she had taken the dog to the vet.",
-      "he": "אמא סיפרה לנו שהיא לקחה את הכלב לוטרינר."
+      "he": "אמא סיפרה לנו שהיא לקחה את הכלב לווטרינר."
     },
     {
       "id": "pet-l7-011",

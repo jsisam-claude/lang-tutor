@@ -1058,7 +1058,7 @@
       "frame": "must",
       "en": "You must close the gate after you.",
       "he": "אתה חייב לסגור את השער אחריך.",
-      "he_f": "את חייבת לסגור את השער אחריך."
+      "he_f": "את חייבת לסגור את השער אחרייך."
     },
     {
       "id": "frm-l4-005",
@@ -1091,7 +1091,7 @@
       "tense": "future-simple",
       "frame": "will",
       "en": "Dad will take us to the farm on Sunday.",
-      "he": "אבא יקח אותנו לחווה ביום ראשון."
+      "he": "אבא ייקח אותנו לחווה ביום ראשון."
     },
     {
       "id": "frm-l4-009",
@@ -1312,8 +1312,8 @@
       "tense": "conditional-second",
       "frame": "if-i-were",
       "en": "If I were a farmer, I would have many animals.",
-      "he": "אם הייתי חקלאי, היה לי הרבה בעלי חיים.",
-      "he_f": "אם הייתי חקלאית, היה לי הרבה בעלי חיים."
+      "he": "אם הייתי חקלאי, היו לי הרבה בעלי חיים.",
+      "he_f": "אם הייתי חקלאית, היו לי הרבה בעלי חיים."
     },
     {
       "id": "frm-l6-012",

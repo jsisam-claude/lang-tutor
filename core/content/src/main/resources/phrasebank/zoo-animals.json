@@ -1003,7 +1003,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "we-Ved",
-      "en": "We watched the penguins swim.",
+      "en": "We watched the penguins in the pool.",
       "he": "צפינו בפינגווינים שוחים."
     },
     {
@@ -1069,8 +1069,8 @@
       "tense": "modal",
       "frame": "should",
       "en": "You should visit the giraffes today.",
-      "he": "כדאי שתבקר בג'ירפות היום.",
-      "he_f": "כדאי שתבקרי בג'ירפות היום."
+      "he": "כדאי שתבקר את הג'ירפות היום.",
+      "he_f": "כדאי שתבקרי את הג'ירפות היום."
     },
     {
       "id": "zoo-l4-006",
@@ -1094,7 +1094,7 @@
       "tense": "future-simple",
       "frame": "will",
       "en": "The zookeeper will feed the lions at noon.",
-      "he": "שומר גן החיות יאכיל את האריות בצהריים."
+      "he": "המטפל בגן החיות יאכיל את האריות בצהריים."
     },
     {
       "id": "zoo-l4-009",
@@ -1143,7 +1143,7 @@
       "tense": "present-perfect",
       "frame": "perfect-for",
       "en": "The turtle has lived at the zoo for ten years.",
-      "he": "הצב חי בגן החיות עשר שנים."
+      "he": "הצב חי בגן החיות כבר עשר שנים."
     },
     {
       "id": "zoo-l5-003",
@@ -1158,7 +1158,7 @@
       "level": 5,
       "tense": "conditional-first",
       "frame": "if-first",
-      "en": "If you throw the ball, the monkey will catch it.",
+      "en": "If the zookeeper throws the ball, the monkey will catch it.",
       "he": "אם תזרוק את הכדור, הקוף יתפוס אותו.",
       "he_f": "אם תזרקי את הכדור, הקוף יתפוס אותו."
     },
@@ -1207,7 +1207,7 @@
       "level": 5,
       "tense": "present-perfect",
       "frame": "perfect-since",
-      "en": "The penguins have swum in the pool since this morning.",
+      "en": "The penguins have been in the pool since this morning.",
       "he": "הפינגווינים שוחים בבריכה מאז הבוקר."
     },
     {
@@ -1266,7 +1266,7 @@
       "tense": "past-simple",
       "frame": "passive-by",
       "en": "The baby giraffe was named by the visitors.",
-      "he": "גור הג'ירפה נקרא על ידי המבקרים."
+      "he": "שמו של גור הג'ירפה נבחר על ידי המבקרים."
     },
     {
       "id": "zoo-l6-006",
@@ -1314,8 +1314,8 @@
       "tense": "conditional-second",
       "frame": "if-i-were",
       "en": "If I were a zookeeper, I would feed the lions every morning.",
-      "he": "אילו הייתי שומר גן החיות, הייתי מאכיל את האריות כל בוקר.",
-      "he_f": "אילו הייתי שומרת גן החיות, הייתי מאכילה את האריות כל בוקר."
+      "he": "אילו הייתי שומר גן חיות, הייתי מאכיל את האריות כל בוקר.",
+      "he_f": "אילו הייתי שומרת גן חיות, הייתי מאכילה את האריות כל בוקר."
     },
     {
       "id": "zoo-l6-012",
@@ -1340,7 +1340,7 @@
       "tense": "past-simple",
       "frame": "reported-speech",
       "en": "The guide said that the lions were tired.",
-      "he": "המדריך אמר שהאריות היו עייפים."
+      "he": "המדריך אמר שהאריות עייפים."
     },
     {
       "id": "zoo-l7-003",
@@ -1372,7 +1372,7 @@
       "tense": "present-simple",
       "frame": "discourse-sequence",
       "en": "First we watch the elephants, then we visit the penguins.",
-      "he": "קודם אנחנו צופים בפילים, ואז אנחנו מבקרים בפינגווינים."
+      "he": "קודם אנחנו צופים בפילים, ואז אנחנו הולכים לפינגווינים."
     },
     {
       "id": "zoo-l7-007",

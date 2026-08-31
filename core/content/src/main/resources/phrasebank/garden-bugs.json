@@ -13,7 +13,7 @@
       "tense": "present-simple",
       "frame": "bare-noun",
       "en": "A snail!",
-      "he": "חלזון!",
+      "he": "חילזון!",
       "align": [
         {
           "en": [
@@ -274,7 +274,7 @@
       "tense": "present-simple",
       "frame": "the-X-is-adj",
       "en": "The snail is slow.",
-      "he": "החלזון איטי.",
+      "he": "החילזון איטי.",
       "align": [
         {
           "en": [
@@ -586,8 +586,8 @@
       "tense": "modal",
       "frame": "i-can-X",
       "en": "I can hold the snail gently.",
-      "he": "אני יכול להחזיק את החלזון בעדינות.",
-      "he_f": "אני יכולה להחזיק את החלזון בעדינות.",
+      "he": "אני יכול להחזיק את החילזון בעדינות.",
+      "he_f": "אני יכולה להחזיק את החילזון בעדינות.",
       "align": [
         {
           "en": [
@@ -727,8 +727,8 @@
       "tense": "present-simple",
       "frame": "emotion-because",
       "en": "I am happy because I see a ladybug.",
-      "he": "אני שמח כי אני רואה את פרת משה רבנו.",
-      "he_f": "אני שמחה כי אני רואה את פרת משה רבנו.",
+      "he": "אני שמח כי אני רואה פרת משה רבנו.",
+      "he_f": "אני שמחה כי אני רואה פרת משה רבנו.",
       "align": [
         {
           "en": [
@@ -786,8 +786,8 @@
             7
           ],
           "he": [
-            6,
-            8
+            5,
+            7
           ]
         }
       ]
@@ -983,7 +983,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "did-question",
-      "en": "Did you see the grasshopper jump?",
+      "en": "Did the grasshopper jump?",
       "he": "ראית את החגב קופץ?"
     },
     {
@@ -1064,7 +1064,7 @@
       "tense": "present-simple",
       "frame": "comparative",
       "en": "The grasshopper is faster than the snail.",
-      "he": "החגב מהיר יותר מהחלזון."
+      "he": "החגב מהיר יותר מהחילזון."
     },
     {
       "id": "bug-l4-003",
@@ -1080,8 +1080,8 @@
       "tense": "modal",
       "frame": "must",
       "en": "You must be gentle with the snail.",
-      "he": "אתה חייב להיות עדין עם החלזון.",
-      "he_f": "את חייבת להיות עדינה עם החלזון."
+      "he": "אתה חייב להיות עדין עם החילזון.",
+      "he_f": "את חייבת להיות עדינה עם החילזון."
     },
     {
       "id": "bug-l4-005",
@@ -1138,8 +1138,8 @@
       "level": 4,
       "tense": "conditional-zero",
       "frame": "if-zero",
-      "en": "If a snail feels scared, it hides in its house.",
-      "he": "אם חלזון מרגיש מפוחד, הוא מתחבא בבית שלו."
+      "en": "If a snail feels scared, it hides in its shell.",
+      "he": "אם חילזון מפחד, הוא מתחבא בבית שלו."
     },
     {
       "id": "bug-l4-012",
@@ -1163,7 +1163,7 @@
       "tense": "present-perfect",
       "frame": "perfect-for",
       "en": "The snail has lived in the garden for two years.",
-      "he": "החלזון גר בגינה כבר שנתיים."
+      "he": "החילזון גר בגינה כבר שנתיים."
     },
     {
       "id": "bug-l5-003",
@@ -1212,7 +1212,7 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If we walk slowly, we will not scare the snail.",
-      "he": "אם נלך לאט, לא נבהיל את החלזון."
+      "he": "אם נלך לאט, לא נבהיל את החילזון."
     },
     {
       "id": "bug-l5-009",
@@ -1294,7 +1294,7 @@
       "tense": "past-progressive",
       "frame": "when",
       "en": "I was watching the snail when it went into its house.",
-      "he": "צפיתי בחלזון כשהוא נכנס לבית שלו."
+      "he": "צפיתי בחילזון כשהוא נכנס לבית שלו."
     },
     {
       "id": "bug-l6-007",
@@ -1310,7 +1310,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "The nest was hidden under a big leaf.",
-      "he": "הקן הוסתר מתחת לעלה גדול."
+      "he": "הקן היה מוסתר מתחת לעלה גדול."
     },
     {
       "id": "bug-l6-009",
@@ -1360,7 +1360,7 @@
       "tense": "past-simple",
       "frame": "reported-speech",
       "en": "My friend said that the ladybug was on her hand.",
-      "he": "החברה שלי אמרה שפרת משה רבנו הייתה על היד שלה."
+      "he": "החברה שלי אמרה שפרת משה רבנו על היד שלה."
     },
     {
       "id": "bug-l7-003",
@@ -1400,7 +1400,7 @@
       "tense": "past-simple",
       "frame": "discourse-although",
       "en": "Although the grasshopper jumped away quickly, it was not afraid of us.",
-      "he": "למרות שהחגב קפץ הרחק במהירות, הוא לא פחד מאיתנו."
+      "he": "למרות שהחגב קפץ משם מהר, הוא לא פחד מאיתנו."
     },
     {
       "id": "bug-l7-008",
@@ -1424,7 +1424,7 @@
       "tense": "past-perfect",
       "frame": "reported-speech",
       "en": "My sister told me that she had found a snail under the porch.",
-      "he": "אחותי סיפרה לי שהיא מצאה חלזון מתחת למרפסת."
+      "he": "אחותי סיפרה לי שהיא מצאה חילזון מתחת למרפסת."
     },
     {
       "id": "bug-l7-011",

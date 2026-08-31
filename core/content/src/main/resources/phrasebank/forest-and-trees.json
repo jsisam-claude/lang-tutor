@@ -900,7 +900,7 @@
       "tense": "present-simple",
       "frame": "want-to",
       "en": "My sister wants to pick up pinecones.",
-      "he": "אחותי רוצה להרים אצטרובלים.",
+      "he": "אחותי רוצה לאסוף אצטרובלים.",
       "align": [
         {
           "en": [
@@ -1054,8 +1054,8 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "I am going to pick up pinecones in the forest.",
-      "he": "אני עומד להרים אצטרובלים ביער.",
-      "he_f": "אני עומדת להרים אצטרובלים ביער."
+      "he": "אני עומד לאסוף אצטרובלים ביער.",
+      "he_f": "אני עומדת לאסוף אצטרובלים ביער."
     },
     {
       "id": "fst-l4-003",
@@ -1366,7 +1366,7 @@
       "tense": "past-simple",
       "frame": "reported-speech",
       "en": "Dad said that the forest was very quiet.",
-      "he": "אבא אמר שהיער היה מאוד שקט."
+      "he": "אבא אמר שהיער מאוד שקט."
     },
     {
       "id": "fst-l7-005",
