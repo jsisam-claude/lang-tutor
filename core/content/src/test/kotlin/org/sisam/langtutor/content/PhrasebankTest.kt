@@ -11,11 +11,14 @@ class PhrasebankTest {
     private val repository = ResourcePhrasebankRepository()
 
     @Test
-    fun `all six themes load whole, 12 sentences per level each`() = runTest {
+    fun `every indexed theme loads whole, 12 sentences per level each`() = runTest {
         val sentences = repository.sentences()
-        assertEquals(504, sentences.size)
+        // 84 per theme; grows with the index — per-level balance is the
+        // invariant that matters, so the total is derived, not hardcoded.
+        assertEquals(0, sentences.size % 84)
+        assertEquals(15 * 84, sentences.size)
         for (level in 1..7) {
-            assertEquals("level $level", 72, sentences.count { it.level == level })
+            assertEquals("level $level", sentences.size / 7, sentences.count { it.level == level })
         }
         assertEquals(sentences.size, sentences.map { it.id }.distinct().size)
     }

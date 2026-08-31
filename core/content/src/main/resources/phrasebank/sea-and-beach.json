@@ -1,0 +1,814 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "sea-and-beach",
+  "title": { "en": "Sea and beach", "he": "ים וחוף" },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "sea-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A wave!",
+      "he": "גל!",
+      "align": [ { "en": [0, 1], "he": [0, 0] } ]
+    },
+    {
+      "id": "sea-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my boat.",
+      "he": "זו הסירה שלי.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "sea-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a crab.",
+      "he": "אני רואה סרטן.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "sea-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The sand is warm.",
+      "he": "החול חם.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "sea-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my shell.",
+      "he": "אני אוהב את הקונכייה שלי.",
+      "he_f": "אני אוהבת את הקונכייה שלי.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [3, 4] }
+      ]
+    },
+    {
+      "id": "sea-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The water is cold.",
+      "he": "המים קרים.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "sea-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two crabs.",
+      "he": "שני סרטנים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "sea-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The seagull is here.",
+      "he": "השחף כאן.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "sea-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The sea is blue.",
+      "he": "הים כחול.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "sea-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I love my sandcastle.",
+      "he": "אני אוהב את טירת החול שלי.",
+      "he_f": "אני אוהבת את טירת החול שלי.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [3, 5] }
+      ]
+    },
+    {
+      "id": "sea-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The shell is small.",
+      "he": "הקונכייה קטנה.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "sea-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The crab is angry.",
+      "he": "הסרטן כועס.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "sea-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Dad is swimming in the sea.",
+      "he": "אבא שוחה בים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 5], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "sea-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My sister is building a sandcastle.",
+      "he": "אחותי בונה טירת חול.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] },
+        { "en": [4, 5], "he": [2, 3] }
+      ]
+    },
+    {
+      "id": "sea-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to swim in the waves.",
+      "he": "אני רוצה לשחות בגלים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] },
+        { "en": [4, 6], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "sea-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you see the boat?",
+      "he": "אתה רואה את הסירה?",
+      "he_f": "את רואה את הסירה?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "sea-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can find shells on the sand.",
+      "he": "אני יכול למצוא קונכיות בחול.",
+      "he_f": "אני יכולה למצוא קונכיות בחול.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 3], "he": [3, 3] },
+        { "en": [4, 6], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "sea-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my sunscreen?",
+      "he": "איפה קרם ההגנה שלי?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [3, 3] },
+        { "en": [3, 3], "he": [1, 2] }
+      ]
+    },
+    {
+      "id": "sea-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The crab is hiding because it is scared.",
+      "he": "הסרטן מתחבא כי הוא מפחד.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] },
+        { "en": [4, 4], "he": [2, 2] },
+        { "en": [5, 5], "he": [3, 3] },
+        { "en": [6, 7], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "sea-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the sea is warm.",
+      "he": "אני שמח כי הים חם.",
+      "he_f": "אני שמחה כי הים חם.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 3], "he": [2, 2] },
+        { "en": [4, 5], "he": [3, 3] },
+        { "en": [6, 7], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "sea-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you putting on sunscreen?",
+      "he": "אתה מורח קרם הגנה?",
+      "he_f": "את מורחת קרם הגנה?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] },
+        { "en": [4, 4], "he": [2, 3] }
+      ]
+    },
+    {
+      "id": "sea-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My brother wants to collect shells.",
+      "he": "אחי רוצה לאסוף קונכיות.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [2, 2] },
+        { "en": [5, 5], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "sea-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are swimming near the boat.",
+      "he": "אנחנו שוחים ליד הסירה.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 5], "he": [2, 3] }
+      ]
+    },
+    {
+      "id": "sea-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my beach ball.",
+      "he": "אני לא מוצא את כדור הים שלי.",
+      "he_f": "אני לא מוצאת את כדור הים שלי.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 2] },
+        { "en": [3, 5], "he": [4, 6] }
+      ]
+    },
+    {
+      "id": "sea-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We swam in the sea yesterday.",
+      "he": "שחינו בים אתמול."
+    },
+    {
+      "id": "sea-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad built a sandcastle for us.",
+      "he": "אבא בנה טירת חול בשבילנו."
+    },
+    {
+      "id": "sea-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My brother's shell is beautiful.",
+      "he": "הקונכייה של אחי יפה."
+    },
+    {
+      "id": "sea-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you see the crab?",
+      "he": "ראית את הסרטן?"
+    },
+    {
+      "id": "sea-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The shells are on the sand.",
+      "he": "הקונכיות על החול."
+    },
+    {
+      "id": "sea-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I lost my sunscreen this morning.",
+      "he": "איבדתי את קרם ההגנה שלי הבוקר."
+    },
+    {
+      "id": "sea-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents swam far from the beach.",
+      "he": "ההורים שלי שחו רחוק מהחוף."
+    },
+    {
+      "id": "sea-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the boat sail to the island?",
+      "he": "הסירה שטה לאי?"
+    },
+    {
+      "id": "sea-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We watched the boat on the horizon.",
+      "he": "צפינו בסירה באופק."
+    },
+    {
+      "id": "sea-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My sister's sandals are wet.",
+      "he": "הסנדלים של אחותי רטובים."
+    },
+    {
+      "id": "sea-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandpa told us about the crabs.",
+      "he": "סבא סיפר לנו על הסרטנים."
+    },
+    {
+      "id": "sea-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children played in the waves.",
+      "he": "הילדים שיחקו בגלים."
+    },
+    {
+      "id": "sea-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to build a big sandcastle.",
+      "he": "אנחנו עומדים לבנות טירת חול גדולה."
+    },
+    {
+      "id": "sea-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The sea is calmer than yesterday.",
+      "he": "הים רגוע יותר מאתמול."
+    },
+    {
+      "id": "sea-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the biggest wave today.",
+      "he": "זה הגל הגדול ביותר היום."
+    },
+    {
+      "id": "sea-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must swim near the lifeguard.",
+      "he": "אתה חייב לשחות ליד המציל.",
+      "he_f": "את חייבת לשחות ליד המציל."
+    },
+    {
+      "id": "sea-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should wear sunscreen at the beach.",
+      "he": "כדאי שתמרח קרם הגנה בחוף.",
+      "he_f": "כדאי שתמרחי קרם הגנה בחוף."
+    },
+    {
+      "id": "sea-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the waves are big, we don't swim.",
+      "he": "אם הגלים גדולים, אנחנו לא שוחים."
+    },
+    {
+      "id": "sea-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to look for crabs at low tide.",
+      "he": "אנחנו עומדים לחפש סרטנים בשפל."
+    },
+    {
+      "id": "sea-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will fix the boat tomorrow.",
+      "he": "אבא יתקן את הסירה מחר."
+    },
+    {
+      "id": "sea-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to put on sunscreen before we go to the beach.",
+      "he": "אני עומד למרוח קרם הגנה לפני שאנחנו הולכים לחוף.",
+      "he_f": "אני עומדת למרוח קרם הגנה לפני שאנחנו הולכים לחוף."
+    },
+    {
+      "id": "sea-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My sandcastle is taller than yours.",
+      "he": "טירת החול שלי גבוהה יותר משלך."
+    },
+    {
+      "id": "sea-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the tide comes in, the sand gets wet.",
+      "he": "אם הגאות מגיעה, החול נרטב."
+    },
+    {
+      "id": "sea-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you help me carry the boat?",
+      "he": "תעזור לי לסחוב את הסירה?",
+      "he_f": "תעזרי לי לסחוב את הסירה?"
+    },
+    {
+      "id": "sea-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have collected ten shells already.",
+      "he": "כבר אספתי עשר קונכיות."
+    },
+    {
+      "id": "sea-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "Grandpa has fished from that boat for many years.",
+      "he": "סבא דג מהסירה ההיא הרבה שנים."
+    },
+    {
+      "id": "sea-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might see dolphins today.",
+      "he": "אולי נראה דולפינים היום."
+    },
+    {
+      "id": "sea-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you swim too far, you will get tired.",
+      "he": "אם תשחה רחוק מדי, תתעייף.",
+      "he_f": "אם תשחי רחוק מדי, תתעייפי."
+    },
+    {
+      "id": "sea-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen the boat on the horizon?",
+      "he": "ראית את הסירה באופק?"
+    },
+    {
+      "id": "sea-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The tide has just come in.",
+      "he": "הגאות בדיוק הגיעה."
+    },
+    {
+      "id": "sea-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may build the next sandcastle.",
+      "he": "אולי אחי יבנה את טירת החול הבאה."
+    },
+    {
+      "id": "sea-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we get to the beach early, we will find good shells.",
+      "he": "אם נגיע לחוף מוקדם, נמצא קונכיות טובות."
+    },
+    {
+      "id": "sea-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never seen such a big wave.",
+      "he": "מעולם לא ראיתי גל גדול כזה."
+    },
+    {
+      "id": "sea-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have swum in this sea since spring.",
+      "he": "אנחנו שוחים בים הזה מאז האביב."
+    },
+    {
+      "id": "sea-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might be windy, so watch the waves.",
+      "he": "אולי תהיה רוח, אז תעקוב אחרי הגלים.",
+      "he_f": "אולי תהיה רוח, אז תעקבי אחרי הגלים."
+    },
+    {
+      "id": "sea-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me collect shells, we will finish before lunch.",
+      "he": "אם תעזור לי לאסוף קונכיות, נסיים לפני ארוחת הצהריים.",
+      "he_f": "אם תעזרי לי לאסוף קונכיות, נסיים לפני ארוחת הצהריים."
+    },
+    {
+      "id": "sea-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Dad was watching the boats while we were swimming.",
+      "he": "אבא צפה בסירות בזמן ששחינו."
+    },
+    {
+      "id": "sea-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The sandcastle was destroyed before we left.",
+      "he": "טירת החול נהרסה לפני שעזבנו."
+    },
+    {
+      "id": "sea-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a boat, I would sail every weekend.",
+      "he": "אם היה לי סירה, הייתי שט בכל סוף שבוע.",
+      "he_f": "אם היה לי סירה, הייתי שטה בכל סוף שבוע."
+    },
+    {
+      "id": "sea-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already left the beach when it started to rain.",
+      "he": "כבר עזבנו את החוף כשהתחיל לרדת גשם."
+    },
+    {
+      "id": "sea-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The sandcastle was washed away by the waves.",
+      "he": "טירת החול נשטפה על ידי הגלים."
+    },
+    {
+      "id": "sea-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was collecting shells when the tide came in.",
+      "he": "אספתי קונכיות כשהגאות הגיעה."
+    },
+    {
+      "id": "sea-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If the sea were calmer, we would sail to the island.",
+      "he": "אם הים היה רגוע יותר, היינו שטים לאי."
+    },
+    {
+      "id": "sea-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The old boat was repaired last year.",
+      "he": "הסירה הישנה תוקנה בשנה שעברה."
+    },
+    {
+      "id": "sea-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The seagulls were flying over the water.",
+      "he": "השחפים עפו מעל המים."
+    },
+    {
+      "id": "sea-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "He had never swum in the sea before that summer.",
+      "he": "הוא מעולם לא שחה בים לפני הקיץ ההוא."
+    },
+    {
+      "id": "sea-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would wear more sunscreen.",
+      "he": "במקומך הייתי מורח יותר קרם הגנה.",
+      "he_f": "במקומך הייתי מורחת יותר קרם הגנה."
+    },
+    {
+      "id": "sea-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Ice cream is sold on the beach every summer.",
+      "he": "גלידה נמכרת בחוף כל קיץ."
+    },
+    {
+      "id": "sea-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been building this sandcastle all afternoon.",
+      "he": "אני בונה את טירת החול הזאת כל אחר הצהריים."
+    },
+    {
+      "id": "sea-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Mom said that the water was too cold.",
+      "he": "אמא אמרה שהמים היו קרים מדי."
+    },
+    {
+      "id": "sea-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had told me about the crab, I would have moved my towel.",
+      "he": "אם היית מספר לי על הסרטן, הייתי מזיז את המגבת שלי.",
+      "he_f": "אם היית מספרת לי על הסרטן, הייתי מזיזה את המגבת שלי."
+    },
+    {
+      "id": "sea-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The seagulls have been circling the boat all morning.",
+      "he": "השחפים מסתובבים מעל הסירה כל הבוקר."
+    },
+    {
+      "id": "sea-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could swim to the boat.",
+      "he": "אחותי שאלה אם היא יכולה לשחות עד הסירה."
+    },
+    {
+      "id": "sea-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we put on sunscreen, then we run into the waves.",
+      "he": "קודם אנחנו מורחים קרם הגנה, ואז אנחנו רצים לתוך הגלים."
+    },
+    {
+      "id": "sea-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the water was cold, we swam anyway.",
+      "he": "למרות שהמים היו קרים, שחינו בכל זאת."
+    },
+    {
+      "id": "sea-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we reached the beach, the tide had been coming in for an hour.",
+      "he": "עד שהגענו לחוף, הגאות כבר עלתה שעה שלמה."
+    },
+    {
+      "id": "sea-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the wind had been calmer, the boat would have sailed on time.",
+      "he": "אם הרוח הייתה שקטה יותר, הסירה הייתה שטה בזמן."
+    },
+    {
+      "id": "sea-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Dad told us that he had found a huge crab under a rock.",
+      "he": "אבא סיפר לנו שהוא מצא סרטן ענק מתחת לאבן."
+    },
+    {
+      "id": "sea-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been collecting shells since sunrise.",
+      "he": "אנחנו אוספים קונכיות מאז הזריחה."
+    },
+    {
+      "id": "sea-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, the waves were big, but everyone stayed safe.",
+      "he": "בקיצור, הגלים היו גדולים, אבל כולם נשארו בטוחים."
+    }
+  ]
+}

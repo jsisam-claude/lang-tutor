@@ -1,0 +1,1424 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "farm-animals",
+  "title": {
+    "en": "Farm animals",
+    "he": "חיות המשק"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "frm-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A cow!",
+      "he": "פרה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a horse.",
+      "he": "אני רואה סוס.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The chicken is white.",
+      "he": "התרנגולת לבנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Three sheep.",
+      "he": "שלוש כבשים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-the-X",
+      "en": "I like the goat.",
+      "he": "אני אוהב את העז.",
+      "he_f": "אני אוהבת את העז.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The barn is big.",
+      "he": "האסם גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The rooster is here.",
+      "he": "התרנגול כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The horse is strong.",
+      "he": "הסוס חזק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-the-X",
+      "en": "I love the sheep.",
+      "he": "אני אוהב את הכבשה.",
+      "he_f": "אני אוהבת את הכבשה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Five eggs.",
+      "he": "חמש ביצים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The cow is brown.",
+      "he": "הפרה חומה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The rooster is happy.",
+      "he": "התרנגול שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The farmer is milking the cow.",
+      "he": "החקלאי חולב את הפרה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The hens are laying eggs.",
+      "he": "התרנגולות מטילות ביצים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the barn?",
+      "he": "איפה האסם?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-004",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "why-question",
+      "en": "Why is the rooster crowing?",
+      "he": "למה התרנגול קורא?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to feed the goat.",
+      "he": "אני רוצה להאכיל את העז.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "The children want to visit the farm.",
+      "he": "הילדים רוצים לבקר בחווה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-007",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you milk a cow?",
+      "he": "אתה יכול לחלוב פרה?",
+      "he_f": "את יכולה לחלוב פרה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-008",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can carry the hay.",
+      "he": "אני יכול לסחוב את החציר.",
+      "he_f": "אני יכולה לסחוב את החציר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-009",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "The sheep can't open the gate.",
+      "he": "הכבשה לא יכולה לפתוח את השער.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The horse is running because it is happy.",
+      "he": "הסוס רץ כי הוא שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "The goat is happy because the hay is fresh.",
+      "he": "העז שמחה כי החציר טרי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "what-question",
+      "en": "What does the goat eat?",
+      "he": "מה העז אוכלת?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frm-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We visited the farm last weekend.",
+      "he": "ביקרנו בחווה בסוף השבוע שעבר."
+    },
+    {
+      "id": "frm-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The farmer milked the cows early in the morning.",
+      "he": "החקלאי חלב את הפרות מוקדם בבוקר."
+    },
+    {
+      "id": "frm-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "The horse's tail is long.",
+      "he": "הזנב של הסוס ארוך."
+    },
+    {
+      "id": "frm-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you feed the chickens?",
+      "he": "האכלת את התרנגולות?"
+    },
+    {
+      "id": "frm-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The sheep are in the field.",
+      "he": "הכבשים בשדה."
+    },
+    {
+      "id": "frm-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I collected the eggs this morning.",
+      "he": "אספתי את הביצים הבוקר."
+    },
+    {
+      "id": "frm-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The goat jumped over the fence.",
+      "he": "העז קפצה מעל הגדר."
+    },
+    {
+      "id": "frm-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the rooster wake you up?",
+      "he": "התרנגול העיר אותך?"
+    },
+    {
+      "id": "frm-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We fed the horses in the barn.",
+      "he": "האכלנו את הסוסים באסם."
+    },
+    {
+      "id": "frm-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "The rooster's feathers are colorful.",
+      "he": "הנוצות של התרנגול צבעוניות."
+    },
+    {
+      "id": "frm-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The children gave hay to the horses.",
+      "he": "הילדים נתנו חציר לסוסים."
+    },
+    {
+      "id": "frm-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The hens laid many eggs yesterday.",
+      "he": "התרנגולות הטילו הרבה ביצים אתמול."
+    },
+    {
+      "id": "frm-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to visit the farm this weekend.",
+      "he": "אנחנו עומדים לבקר בחווה בסוף השבוע."
+    },
+    {
+      "id": "frm-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The horse is bigger than the goat.",
+      "he": "הסוס גדול יותר מהעז."
+    },
+    {
+      "id": "frm-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the biggest cow on the farm.",
+      "he": "זו הפרה הגדולה ביותר בחווה."
+    },
+    {
+      "id": "frm-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must close the gate after you.",
+      "he": "אתה חייב לסגור את השער אחריך.",
+      "he_f": "את חייבת לסגור את השער אחריך."
+    },
+    {
+      "id": "frm-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should feed the chickens now.",
+      "he": "כדאי שתאכיל את התרנגולות עכשיו.",
+      "he_f": "כדאי שתאכילי את התרנגולות עכשיו."
+    },
+    {
+      "id": "frm-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the rooster crows, the farmer wakes up.",
+      "he": "אם התרנגול קורא, החקלאי מתעורר."
+    },
+    {
+      "id": "frm-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "The farmer is going to milk the cows soon.",
+      "he": "החקלאי עומד לחלוב את הפרות בקרוב."
+    },
+    {
+      "id": "frm-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will take us to the farm on Sunday.",
+      "he": "אבא יקח אותנו לחווה ביום ראשון."
+    },
+    {
+      "id": "frm-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to gather the eggs.",
+      "he": "אני עומד לאסוף את הביצים.",
+      "he_f": "אני עומדת לאסוף את הביצים."
+    },
+    {
+      "id": "frm-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The hay is drier than the grass.",
+      "he": "החציר יבש יותר מהעשב."
+    },
+    {
+      "id": "frm-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you milk the cow every morning, you get fresh milk.",
+      "he": "אם חולבים את הפרה כל בוקר, מקבלים חלב טרי."
+    },
+    {
+      "id": "frm-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you help me feed the animals?",
+      "he": "תעזור לי להאכיל את החיות?",
+      "he_f": "תעזרי לי להאכיל את החיות?"
+    },
+    {
+      "id": "frm-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already fed the chickens.",
+      "he": "כבר האכלתי את התרנגולות."
+    },
+    {
+      "id": "frm-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "This horse has lived on the farm for ten years.",
+      "he": "הסוס הזה חי בחווה כבר עשר שנים."
+    },
+    {
+      "id": "frm-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might see the new lambs today.",
+      "he": "אולי נראה את הטלאים החדשים היום."
+    },
+    {
+      "id": "frm-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you milk the cow now, we will have fresh milk for breakfast.",
+      "he": "אם תחלוב את הפרה עכשיו, יהיה לנו חלב טרי לארוחת בוקר.",
+      "he_f": "אם תחלבי את הפרה עכשיו, יהיה לנו חלב טרי לארוחת בוקר."
+    },
+    {
+      "id": "frm-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen the goat?",
+      "he": "ראית את העז?"
+    },
+    {
+      "id": "frm-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The hens have just laid fresh eggs.",
+      "he": "התרנגולות בדיוק הטילו ביצים טריות."
+    },
+    {
+      "id": "frm-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "The farmer may sell the horse next month.",
+      "he": "אולי החקלאי ימכור את הסוס בחודש הבא."
+    },
+    {
+      "id": "frm-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If it rains tomorrow, the sheep will stay in the barn.",
+      "he": "אם יירד גשם מחר, הכבשים יישארו באסם."
+    },
+    {
+      "id": "frm-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never ridden a horse.",
+      "he": "מעולם לא רכבתי על סוס."
+    },
+    {
+      "id": "frm-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The horses have grazed in this field since spring.",
+      "he": "הסוסים רועים בשדה הזה מאז האביב."
+    },
+    {
+      "id": "frm-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The rooster might wake everyone up early.",
+      "he": "אולי התרנגול יעיר את כולם מוקדם."
+    },
+    {
+      "id": "frm-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me collect the eggs, we will finish faster.",
+      "he": "אם תעזור לי לאסוף את הביצים, נסיים מהר יותר.",
+      "he_f": "אם תעזרי לי לאסוף את הביצים, נסיים מהר יותר."
+    },
+    {
+      "id": "frm-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "The farmer was milking the cow while the rooster was crowing.",
+      "he": "החקלאי חלב את הפרה בזמן שהתרנגול קרא."
+    },
+    {
+      "id": "frm-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The hay was collected before the rain started.",
+      "he": "החציר נאסף לפני שהגשם התחיל."
+    },
+    {
+      "id": "frm-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a horse, I would ride it every day.",
+      "he": "אם היה לי סוס, הייתי רוכב עליו כל יום.",
+      "he_f": "אם היה לי סוס, הייתי רוכבת עליו כל יום."
+    },
+    {
+      "id": "frm-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "The farmer had already milked the cows when we arrived.",
+      "he": "החקלאי כבר חלב את הפרות כשהגענו."
+    },
+    {
+      "id": "frm-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The barn was built by the farmer's grandfather.",
+      "he": "האסם נבנה על ידי סבא של החקלאי."
+    },
+    {
+      "id": "frm-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was feeding the chickens when it started to rain.",
+      "he": "האכלתי את התרנגולות כשהתחיל לרדת גשם."
+    },
+    {
+      "id": "frm-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we lived on a farm, we would wake up early every day.",
+      "he": "אם היינו גרים בחווה, היינו קמים מוקדם כל יום."
+    },
+    {
+      "id": "frm-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The eggs were gathered early in the morning.",
+      "he": "הביצים נאספו מוקדם בבוקר."
+    },
+    {
+      "id": "frm-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The sheep were grazing quietly in the field.",
+      "he": "הכבשים רעו בשקט בשדה."
+    },
+    {
+      "id": "frm-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "The goat had never jumped over such a high fence before.",
+      "he": "העז מעולם לא קפצה מעל גדר כל כך גבוהה לפני כן."
+    },
+    {
+      "id": "frm-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were a farmer, I would have many animals.",
+      "he": "אם הייתי חקלאי, היה לי הרבה בעלי חיים.",
+      "he_f": "אם הייתי חקלאית, היה לי הרבה בעלי חיים."
+    },
+    {
+      "id": "frm-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Fresh milk is sold every morning at this farm.",
+      "he": "חלב טרי נמכר כל בוקר בחווה הזאת."
+    },
+    {
+      "id": "frm-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been helping with the milking all morning.",
+      "he": "אני עוזר בחליבה כל הבוקר.",
+      "he_f": "אני עוזרת בחליבה כל הבוקר."
+    },
+    {
+      "id": "frm-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The farmer said that the cow was sick.",
+      "he": "החקלאי אמר שהפרה חולה."
+    },
+    {
+      "id": "frm-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the gate had been closed, the goat would not have escaped.",
+      "he": "אם השער היה סגור, העז לא הייתה בורחת."
+    },
+    {
+      "id": "frm-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The hens have been laying eggs all week.",
+      "he": "התרנגולות מטילות ביצים כל השבוע."
+    },
+    {
+      "id": "frm-l7-005",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-question",
+      "en": "The farmer asked whether the horses would need new shoes.",
+      "he": "החקלאי שאל אם הסוסים יצטרכו פרסות חדשות."
+    },
+    {
+      "id": "frm-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we milk the cows, then we feed the chickens.",
+      "he": "קודם אנחנו חולבים את הפרות, ואז אנחנו מאכילים את התרנגולות."
+    },
+    {
+      "id": "frm-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the barn was old, it was always warm inside.",
+      "he": "למרות שהאסם היה ישן, תמיד היה חם בפנים."
+    },
+    {
+      "id": "frm-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we arrived, the farmer had been milking the cows for an hour.",
+      "he": "עד שהגענו, החקלאי כבר חלב את הפרות במשך שעה."
+    },
+    {
+      "id": "frm-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had left earlier, we would have seen the baby goats.",
+      "he": "אם היינו יוצאים מוקדם יותר, היינו רואים את הגדיים."
+    },
+    {
+      "id": "frm-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "The farmer told us that the horses had eaten all the hay.",
+      "he": "החקלאי סיפר לנו שהסוסים אכלו את כל החציר."
+    },
+    {
+      "id": "frm-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been planning this farm visit for weeks.",
+      "he": "אנחנו מתכננים את הביקור בחווה כבר שבועות."
+    },
+    {
+      "id": "frm-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone helped, so the farm visit was a success.",
+      "he": "בקיצור, כולם עזרו, ולכן הביקור בחווה הצליח."
+    }
+  ]
+}

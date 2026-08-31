@@ -1,0 +1,1471 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "body-and-health",
+  "title": {
+    "en": "Body and health",
+    "he": "גוף ובריאות"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "bdy-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two hands!",
+      "he": "שתי ידיים!",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A tooth!",
+      "he": "שן!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "My hands are clean.",
+      "he": "הידיים שלי נקיות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "My feet are warm.",
+      "he": "הרגליים שלי חמות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "My eyes are brown.",
+      "he": "העיניים שלי חומות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-my-X",
+      "en": "I see my ears.",
+      "he": "אני רואה את האוזניים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like water.",
+      "he": "אני אוהב מים.",
+      "he_f": "אני אוהבת מים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A big smile.",
+      "he": "חיוך גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "My teeth are white.",
+      "he": "השיניים שלי לבנות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-my-X",
+      "en": "I see my fingers.",
+      "he": "אני רואה את האצבעות שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Ten fingers.",
+      "he": "עשר אצבעות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-X",
+      "en": "I love my toes.",
+      "he": "אני אוהב את אצבעות הרגליים שלי.",
+      "he_f": "אני אוהבת את אצבעות הרגליים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am washing my hands.",
+      "he": "אני רוחץ את הידיים שלי.",
+      "he_f": "אני רוחצת את הידיים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My brother is brushing his teeth.",
+      "he": "אחי מצחצח שיניים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to drink water.",
+      "he": "אני רוצה לשתות מים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you touch your toes?",
+      "he": "אתה יכול לגעת באצבעות הרגליים שלך?",
+      "he_f": "את יכולה לגעת באצבעות הרגליים שלך?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can stretch really tall.",
+      "he": "אני יכול להתמתח ממש גבוה.",
+      "he_f": "אני יכולה להתמתח ממש גבוה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the soap?",
+      "he": "איפה הסבון?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "My eyes are closing because I am sleepy.",
+      "he": "העיניים שלי נסגרות כי אני מנומנם.",
+      "he_f": "העיניים שלי נסגרות כי אני מנומנמת.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because my teeth are clean.",
+      "he": "אני שמח כי השיניים שלי נקיות.",
+      "he_f": "אני שמחה כי השיניים שלי נקיות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you drinking water?",
+      "he": "אתה שותה מים?",
+      "he_f": "את שותה מים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My sister wants to sleep well tonight.",
+      "he": "אחותי רוצה לישון טוב הלילה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are stretching every morning.",
+      "he": "אנחנו מתמתחים כל בוקר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't stop hiccupping.",
+      "he": "אני לא מצליח להפסיק לשהק.",
+      "he_f": "אני לא מצליחה להפסיק לשהק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bdy-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We washed our hands before dinner.",
+      "he": "רחצנו את הידיים לפני ארוחת הערב."
+    },
+    {
+      "id": "bdy-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-for-time",
+      "en": "I brushed my teeth for two minutes.",
+      "he": "צחצחתי שיניים במשך שתי דקות."
+    },
+    {
+      "id": "bdy-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you drink enough water today?",
+      "he": "שתית מספיק מים היום?"
+    },
+    {
+      "id": "bdy-l3-004",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My brother's hands are always warm.",
+      "he": "הידיים של אחי תמיד חמות."
+    },
+    {
+      "id": "bdy-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I slept really well last night.",
+      "he": "ישנתי ממש טוב אתמול בלילה."
+    },
+    {
+      "id": "bdy-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you stretch this morning?",
+      "he": "התמתחת הבוקר?"
+    },
+    {
+      "id": "bdy-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My feet hurt after the long walk.",
+      "he": "הרגליים שלי כאבו אחרי ההליכה הארוכה."
+    },
+    {
+      "id": "bdy-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the baby sneeze twice?",
+      "he": "התינוק התעטש פעמיים?"
+    },
+    {
+      "id": "bdy-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We stretched our arms before the game.",
+      "he": "מתחנו את הידיים לפני המשחק."
+    },
+    {
+      "id": "bdy-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My sister's hiccups are very loud.",
+      "he": "השיהוקים של אחותי מאוד רועשים."
+    },
+    {
+      "id": "bdy-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The cold water woke me up quickly.",
+      "he": "המים הקרים העירו אותי מהר."
+    },
+    {
+      "id": "bdy-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We drank a lot of water after our walk.",
+      "he": "שתינו הרבה מים אחרי ההליכה שלנו."
+    },
+    {
+      "id": "bdy-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to wash my hands before lunch.",
+      "he": "אני עומד לרחוץ את הידיים שלי לפני ארוחת הצהריים.",
+      "he_f": "אני עומדת לרחוץ את הידיים שלי לפני ארוחת הצהריים."
+    },
+    {
+      "id": "bdy-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My feet are colder than my hands.",
+      "he": "הרגליים שלי קרות יותר מהידיים שלי."
+    },
+    {
+      "id": "bdy-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "Water is the best drink after exercise.",
+      "he": "מים הם המשקה הכי טוב אחרי פעילות גופנית."
+    },
+    {
+      "id": "bdy-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must wash your hands before you eat.",
+      "he": "אתה חייב לרחוץ את הידיים שלך לפני שאתה אוכל.",
+      "he_f": "את חייבת לרחוץ את הידיים שלך לפני שאת אוכלת."
+    },
+    {
+      "id": "bdy-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should sleep eight hours every night.",
+      "he": "כדאי לישון שמונה שעות בכל לילה."
+    },
+    {
+      "id": "bdy-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you rub your eyes too much, they get red.",
+      "he": "אם משפשפים את העיניים יותר מדי, הן מאדימות."
+    },
+    {
+      "id": "bdy-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to brush our teeth after breakfast.",
+      "he": "אנחנו עומדים לצחצח שיניים אחרי ארוחת הבוקר."
+    },
+    {
+      "id": "bdy-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "I will drink more water tomorrow.",
+      "he": "אני אשתה יותר מים מחר."
+    },
+    {
+      "id": "bdy-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "My sister is going to stretch before her run.",
+      "he": "אחותי עומדת להתמתח לפני הריצה שלה."
+    },
+    {
+      "id": "bdy-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "Sleeping early is better than sleeping late.",
+      "he": "ללכת לישון מוקדם עדיף מללכת לישון מאוחר."
+    },
+    {
+      "id": "bdy-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you don't sleep enough, you feel tired.",
+      "he": "אם לא ישנים מספיק, מרגישים עייפים."
+    },
+    {
+      "id": "bdy-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you brush your teeth before bed?",
+      "he": "תצחצח שיניים לפני השינה?",
+      "he_f": "תצחצחי שיניים לפני השינה?"
+    },
+    {
+      "id": "bdy-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have washed my hands already.",
+      "he": "כבר רחצתי את הידיים שלי."
+    },
+    {
+      "id": "bdy-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "My brother has slept well for a whole week.",
+      "he": "אחי ישן טוב כבר שבוע שלם."
+    },
+    {
+      "id": "bdy-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "I might sneeze again.",
+      "he": "אולי אני אתעטש שוב."
+    },
+    {
+      "id": "bdy-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you drink more water, you will feel better.",
+      "he": "אם תשתה יותר מים, תרגיש טוב יותר.",
+      "he_f": "אם תשתי יותר מים, תרגישי טוב יותר."
+    },
+    {
+      "id": "bdy-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you brushed your teeth?",
+      "he": "צחצחת שיניים?"
+    },
+    {
+      "id": "bdy-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "I have just stretched my arms.",
+      "he": "אני בדיוק מתחתי את הידיים שלי."
+    },
+    {
+      "id": "bdy-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may get hiccups after dinner.",
+      "he": "אולי יהיו לאחי שיהוקים אחרי ארוחת הערב."
+    },
+    {
+      "id": "bdy-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you stretch every morning, you will feel great.",
+      "he": "אם תתמתח כל בוקר, תרגיש מצוין.",
+      "he_f": "אם תתמתחי כל בוקר, תרגישי מצוין."
+    },
+    {
+      "id": "bdy-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never sneezed so many times in one day.",
+      "he": "מעולם לא התעטשתי כל כך הרבה פעמים ביום אחד."
+    },
+    {
+      "id": "bdy-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "I have washed my hands three times since this morning.",
+      "he": "רחצתי את הידיים שלי שלוש פעמים מאז הבוקר."
+    },
+    {
+      "id": "bdy-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "My eyes might feel tired after reading.",
+      "he": "אולי העיניים שלי ירגישו עייפות אחרי קריאה."
+    },
+    {
+      "id": "bdy-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you close your eyes and rest, you will feel calmer.",
+      "he": "אם תעצום את העיניים ותנוח, תרגיש רגוע יותר.",
+      "he_f": "אם תעצמי את העיניים ותנוחי, תרגישי רגועה יותר."
+    },
+    {
+      "id": "bdy-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was brushing my teeth while my sister was washing her hands.",
+      "he": "צחצחתי שיניים בזמן שאחותי רחצה את הידיים שלה."
+    },
+    {
+      "id": "bdy-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "My hands were washed before the meal.",
+      "he": "הידיים שלי נרחצו לפני הארוחה."
+    },
+    {
+      "id": "bdy-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had four hands, I would clean my room faster.",
+      "he": "אם היו לי ארבע ידיים, הייתי מנקה את החדר שלי מהר יותר."
+    },
+    {
+      "id": "bdy-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "I had already brushed my teeth when Mom called me.",
+      "he": "כבר צחצחתי שיניים כשאמא קראה לי."
+    },
+    {
+      "id": "bdy-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The water was poured by my brother.",
+      "he": "המים נשפכו על ידי אחי."
+    },
+    {
+      "id": "bdy-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was stretching when the phone rang.",
+      "he": "התמתחתי כשהטלפון צלצל."
+    },
+    {
+      "id": "bdy-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I drank more water, I would feel less tired.",
+      "he": "אם הייתי שותה יותר מים, הייתי מרגיש פחות עייף.",
+      "he_f": "אם הייתי שותה יותר מים, הייתי מרגישה פחות עייפה."
+    },
+    {
+      "id": "bdy-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "Fresh water was poured into every cup.",
+      "he": "מים טריים נשפכו לתוך כל כוס."
+    },
+    {
+      "id": "bdy-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My eyes were closing during the long story.",
+      "he": "העיניים שלי נסגרו במהלך הסיפור הארוך."
+    },
+    {
+      "id": "bdy-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "I had never sneezed so loudly before that day.",
+      "he": "מעולם לא התעטשתי כל כך בקול לפני היום ההוא."
+    },
+    {
+      "id": "bdy-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were a doctor, I would tell everyone to drink more water.",
+      "he": "אם הייתי רופא, הייתי אומר לכולם לשתות יותר מים.",
+      "he_f": "אם הייתי רופאה, הייתי אומרת לכולם לשתות יותר מים."
+    },
+    {
+      "id": "bdy-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Hands are washed before every meal in our house.",
+      "he": "הידיים נרחצות לפני כל ארוחה בבית שלנו."
+    },
+    {
+      "id": "bdy-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been stretching for ten minutes.",
+      "he": "אני מתמתח כבר עשר דקות.",
+      "he_f": "אני מתמתחת כבר עשר דקות."
+    },
+    {
+      "id": "bdy-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The doctor said that clean hands were important.",
+      "he": "הרופא אמר שידיים נקיות חשובות."
+    },
+    {
+      "id": "bdy-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had washed your hands, you would not have gotten sick.",
+      "he": "אם היית רוחץ את הידיים שלך, לא היית מצטנן.",
+      "he_f": "אם היית רוחצת את הידיים שלך, לא היית מצטננת."
+    },
+    {
+      "id": "bdy-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "My eyes have been feeling tired all day.",
+      "he": "העיניים שלי מרגישות עייפות כל היום."
+    },
+    {
+      "id": "bdy-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could stay up late.",
+      "he": "אחותי שאלה אם היא יכולה להישאר ערה עד מאוחר."
+    },
+    {
+      "id": "bdy-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we wash our hands, then we eat lunch together.",
+      "he": "קודם אנחנו רוחצים ידיים, ואז אנחנו אוכלים ארוחת צהריים ביחד."
+    },
+    {
+      "id": "bdy-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although I sneezed all morning, I still felt fine.",
+      "he": "למרות שהתעטשתי כל הבוקר, עדיין הרגשתי בסדר."
+    },
+    {
+      "id": "bdy-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time I went to sleep, I had been yawning for an hour.",
+      "he": "עד שהלכתי לישון, כבר פיהקתי במשך שעה."
+    },
+    {
+      "id": "bdy-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If I had slept more, I would not have yawned so much today.",
+      "he": "אם הייתי ישן יותר, לא הייתי מפהק כל כך היום.",
+      "he_f": "אם הייתי ישנה יותר, לא הייתי מפהקת כל כך היום."
+    },
+    {
+      "id": "bdy-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had already brushed the baby's teeth.",
+      "he": "אמא סיפרה לנו שהיא כבר צחצחה לתינוק את השיניים."
+    },
+    {
+      "id": "bdy-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been drinking a lot of water this week.",
+      "he": "אנחנו שותים הרבה מים השבוע."
+    },
+    {
+      "id": "bdy-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, we washed up, brushed our teeth, and went to bed early.",
+      "he": "בקיצור, התרחצנו, צחצחנו שיניים, והלכנו לישון מוקדם."
+    }
+  ]
+}

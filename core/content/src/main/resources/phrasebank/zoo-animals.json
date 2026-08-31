@@ -1,0 +1,814 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "zoo-animals",
+  "title": {
+    "en": "At the zoo",
+    "he": "בגן החיות"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "zoo-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A lion!",
+      "he": "אריה!",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] }
+      ]
+    },
+    {
+      "id": "zoo-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-a-X",
+      "en": "I see an elephant.",
+      "he": "אני רואה פיל.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "zoo-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The giraffe is tall.",
+      "he": "הג'ירפה גבוהה.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "zoo-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The monkey is small.",
+      "he": "הקוף קטן.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "zoo-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-num-X",
+      "en": "I see two penguins.",
+      "he": "אני רואה שני פינגווינים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 3], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "zoo-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The turtle is slow.",
+      "he": "הצב איטי.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "zoo-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like elephants.",
+      "he": "אני אוהב פילים.",
+      "he_f": "אני אוהבת פילים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "zoo-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The lion is big.",
+      "he": "האריה גדול.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "zoo-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A gray elephant.",
+      "he": "פיל אפור.",
+      "align": [
+        { "en": [0, 2], "he": [0, 1] }
+      ]
+    },
+    {
+      "id": "zoo-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The turtle is green.",
+      "he": "הצב ירוק.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "zoo-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-the-Xs",
+      "en": "I love the giraffes.",
+      "he": "אני אוהב את הג'ירפות.",
+      "he_f": "אני אוהבת את הג'ירפות.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "zoo-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Three giraffes.",
+      "he": "שלוש ג'ירפות.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "zoo-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The elephant is eating hay.",
+      "he": "הפיל אוכל חציר.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] },
+        { "en": [4, 4], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "zoo-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "what-are-X-Ving",
+      "en": "What are the monkeys doing?",
+      "he": "מה הקופים עושים?",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 3], "he": [1, 1] },
+        { "en": [4, 4], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "zoo-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to see the lions.",
+      "he": "אני רוצה לראות את האריות.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] },
+        { "en": [4, 5], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "zoo-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you see the giraffe?",
+      "he": "אתה יכול לראות את הג'ירפה?",
+      "he_f": "את יכולה לראות את הג'ירפה?",
+      "align": [
+        { "en": [0, 1], "he": [0, 1] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 4], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "zoo-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can hear the lion.",
+      "he": "אני יכול לשמוע את האריה.",
+      "he_f": "אני יכולה לשמוע את האריה.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 4], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "zoo-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the penguin pool?",
+      "he": "איפה בריכת הפינגווינים?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 4], "he": [1, 2] }
+      ]
+    },
+    {
+      "id": "zoo-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The lion is roaring because he is hungry.",
+      "he": "האריה שואג כי הוא רעב.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] },
+        { "en": [4, 4], "he": [2, 2] },
+        { "en": [5, 5], "he": [3, 3] },
+        { "en": [6, 7], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "zoo-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the monkeys are funny.",
+      "he": "אני שמח כי הקופים מצחיקים.",
+      "he_f": "אני שמחה כי הקופים מצחיקים.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 3], "he": [2, 2] },
+        { "en": [4, 5], "he": [3, 3] },
+        { "en": [6, 7], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "zoo-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you feeding the giraffe?",
+      "he": "אתה מאכיל את הג'ירפה?",
+      "he_f": "את מאכילה את הג'ירפה?",
+      "align": [
+        { "en": [0, 2], "he": [0, 1] },
+        { "en": [3, 4], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "zoo-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "The children want to feed the penguins.",
+      "he": "הילדים רוצים להאכיל את הפינגווינים.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] },
+        { "en": [4, 4], "he": [2, 2] },
+        { "en": [5, 6], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "zoo-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are watching the turtles.",
+      "he": "אנחנו מסתכלים על הצבים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "zoo-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find the monkeys.",
+      "he": "אני לא מוצא את הקופים.",
+      "he_f": "אני לא מוצאת את הקופים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 2] },
+        { "en": [3, 4], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "zoo-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We visited the zoo yesterday.",
+      "he": "ביקרנו בגן החיות אתמול."
+    },
+    {
+      "id": "zoo-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The zookeeper fed the elephants.",
+      "he": "שומר גן החיות האכיל את הפילים."
+    },
+    {
+      "id": "zoo-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "The lion's mane is thick.",
+      "he": "הרעמה של האריה עבה."
+    },
+    {
+      "id": "zoo-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you see the elephants?",
+      "he": "ראית את הפילים?"
+    },
+    {
+      "id": "zoo-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The turtles are near the pond.",
+      "he": "הצבים ליד הבריכה."
+    },
+    {
+      "id": "zoo-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I took a photo of the giraffe.",
+      "he": "צילמתי את הג'ירפה."
+    },
+    {
+      "id": "zoo-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The monkeys climbed the tall tree.",
+      "he": "הקופים טיפסו על העץ הגבוה."
+    },
+    {
+      "id": "zoo-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the lion eat the meat?",
+      "he": "האריה אכל את הבשר?"
+    },
+    {
+      "id": "zoo-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We watched the penguins swim.",
+      "he": "צפינו בפינגווינים שוחים."
+    },
+    {
+      "id": "zoo-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "The elephants' ears are very big.",
+      "he": "האוזניים של הפילים גדולות מאוד."
+    },
+    {
+      "id": "zoo-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y-Z",
+      "en": "The guide showed us the lions.",
+      "he": "המדריך הראה לנו את האריות."
+    },
+    {
+      "id": "zoo-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The children ate ice cream at the zoo.",
+      "he": "הילדים אכלו גלידה בגן החיות."
+    },
+    {
+      "id": "zoo-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to see the lions first.",
+      "he": "אנחנו עומדים לראות את האריות קודם."
+    },
+    {
+      "id": "zoo-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The elephant is bigger than the lion.",
+      "he": "הפיל גדול יותר מהאריה."
+    },
+    {
+      "id": "zoo-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "The giraffe is the tallest animal in the zoo.",
+      "he": "הג'ירפה היא החיה הגבוהה ביותר בגן החיות."
+    },
+    {
+      "id": "zoo-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must stay behind the fence.",
+      "he": "אתה חייב להישאר מאחורי הגדר.",
+      "he_f": "את חייבת להישאר מאחורי הגדר."
+    },
+    {
+      "id": "zoo-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should visit the giraffes today.",
+      "he": "כדאי שתבקר בג'ירפות היום.",
+      "he_f": "כדאי שתבקרי בג'ירפות היום."
+    },
+    {
+      "id": "zoo-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the elephant is hungry, it eats hay.",
+      "he": "אם הפיל רעב, הוא אוכל חציר."
+    },
+    {
+      "id": "zoo-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to watch the penguins at feeding time.",
+      "he": "אנחנו עומדים לצפות בפינגווינים בזמן ההאכלה."
+    },
+    {
+      "id": "zoo-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The zookeeper will feed the lions at noon.",
+      "he": "שומר גן החיות יאכיל את האריות בצהריים."
+    },
+    {
+      "id": "zoo-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to take a picture of the giraffe.",
+      "he": "אני עומד לצלם את הג'ירפה.",
+      "he_f": "אני עומדת לצלם את הג'ירפה."
+    },
+    {
+      "id": "zoo-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The monkey is faster than the turtle.",
+      "he": "הקוף מהיר יותר מהצב."
+    },
+    {
+      "id": "zoo-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you stand near the cage, the monkeys come closer.",
+      "he": "אם עומדים ליד הכלוב, הקופים מתקרבים."
+    },
+    {
+      "id": "zoo-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will the penguins swim today?",
+      "he": "הפינגווינים ישחו היום?"
+    },
+    {
+      "id": "zoo-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "We have already seen the lions.",
+      "he": "כבר ראינו את האריות."
+    },
+    {
+      "id": "zoo-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "The turtle has lived at the zoo for ten years.",
+      "he": "הצב חי בגן החיות עשר שנים."
+    },
+    {
+      "id": "zoo-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might feed the giraffes later.",
+      "he": "אולי נאכיל את הג'ירפות מאוחר יותר."
+    },
+    {
+      "id": "zoo-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you throw the ball, the monkey will catch it.",
+      "he": "אם תזרוק את הכדור, הקוף יתפוס אותו.",
+      "he_f": "אם תזרקי את הכדור, הקוף יתפוס אותו."
+    },
+    {
+      "id": "zoo-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen the penguins yet?",
+      "he": "ראית כבר את הפינגווינים?"
+    },
+    {
+      "id": "zoo-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The lion has just woken up.",
+      "he": "האריה בדיוק התעורר."
+    },
+    {
+      "id": "zoo-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "The elephants may go into the water now.",
+      "he": "אולי הפילים ייכנסו למים עכשיו."
+    },
+    {
+      "id": "zoo-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we arrive early, we will see the elephant show.",
+      "he": "אם נגיע מוקדם, נראה את מופע הפילים."
+    },
+    {
+      "id": "zoo-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never seen a real lion.",
+      "he": "מעולם לא ראיתי אריה אמיתי."
+    },
+    {
+      "id": "zoo-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The penguins have swum in the pool since this morning.",
+      "he": "הפינגווינים שוחים בבריכה מאז הבוקר."
+    },
+    {
+      "id": "zoo-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so the lions will stay inside.",
+      "he": "אולי יירד גשם, אז האריות יישארו בפנים."
+    },
+    {
+      "id": "zoo-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you are quiet, the animals will come closer.",
+      "he": "אם תהיה בשקט, החיות יתקרבו.",
+      "he_f": "אם תהיי בשקט, החיות יתקרבו."
+    },
+    {
+      "id": "zoo-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "The lion was resting while the cubs were playing.",
+      "he": "האריה נח בזמן שהגורים שיחקו."
+    },
+    {
+      "id": "zoo-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The cages were cleaned before the zoo opened.",
+      "he": "הכלובים נוקו לפני שגן החיות נפתח."
+    },
+    {
+      "id": "zoo-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bigger yard, I would keep a turtle.",
+      "he": "אם היה לי חצר גדולה יותר, הייתי מגדל צב.",
+      "he_f": "אם היה לי חצר גדולה יותר, הייתי מגדלת צב."
+    },
+    {
+      "id": "zoo-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "The penguins had already eaten when we arrived.",
+      "he": "הפינגווינים כבר אכלו כשהגענו."
+    },
+    {
+      "id": "zoo-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The baby giraffe was named by the visitors.",
+      "he": "גור הג'ירפה נקרא על ידי המבקרים."
+    },
+    {
+      "id": "zoo-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "We were watching the monkeys when it started to rain.",
+      "he": "צפינו בקופים כשהתחיל לרדת גשם."
+    },
+    {
+      "id": "zoo-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we lived closer to the zoo, we would visit every week.",
+      "he": "אם היינו גרים קרוב יותר לגן החיות, היינו מבקרים כל שבוע."
+    },
+    {
+      "id": "zoo-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The elephant enclosure was built last year.",
+      "he": "מתחם הפילים נבנה בשנה שעברה."
+    },
+    {
+      "id": "zoo-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The zookeeper was carrying a bucket of fish.",
+      "he": "שומר גן החיות נשא דלי דגים."
+    },
+    {
+      "id": "zoo-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "I had never fed an animal before that day.",
+      "he": "מעולם לא האכלתי חיה לפני היום ההוא."
+    },
+    {
+      "id": "zoo-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were a zookeeper, I would feed the lions every morning.",
+      "he": "אילו הייתי שומר גן החיות, הייתי מאכיל את האריות כל בוקר.",
+      "he_f": "אילו הייתי שומרת גן החיות, הייתי מאכילה את האריות כל בוקר."
+    },
+    {
+      "id": "zoo-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "The animals are fed twice a day.",
+      "he": "החיות מואכלות פעמיים ביום."
+    },
+    {
+      "id": "zoo-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been watching the monkeys all afternoon.",
+      "he": "אני מסתכל על הקופים כל אחר הצהריים.",
+      "he_f": "אני מסתכלת על הקופים כל אחר הצהריים."
+    },
+    {
+      "id": "zoo-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The guide said that the lions were tired.",
+      "he": "המדריך אמר שהאריות היו עייפים."
+    },
+    {
+      "id": "zoo-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had arrived earlier, we would have seen the elephant show.",
+      "he": "אם היינו מגיעים מוקדם יותר, היינו רואים את מופע הפילים."
+    },
+    {
+      "id": "zoo-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The lions have been sleeping all morning.",
+      "he": "האריות ישנים כל הבוקר."
+    },
+    {
+      "id": "zoo-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could hold the turtle.",
+      "he": "אחותי שאלה אם היא יכולה להחזיק את הצב."
+    },
+    {
+      "id": "zoo-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we watch the elephants, then we visit the penguins.",
+      "he": "קודם אנחנו צופים בפילים, ואז אנחנו מבקרים בפינגווינים."
+    },
+    {
+      "id": "zoo-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the lion looked lazy, it was actually very strong.",
+      "he": "למרות שהאריה נראה עצלן, הוא היה למעשה חזק מאוד."
+    },
+    {
+      "id": "zoo-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we reached the giraffes, we had been walking for an hour.",
+      "he": "עד שהגענו לג'ירפות, כבר הלכנו שעה."
+    },
+    {
+      "id": "zoo-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the zoo had not closed early, we would have seen the penguins eat.",
+      "he": "אם גן החיות לא היה נסגר מוקדם, היינו רואים את הפינגווינים אוכלים."
+    },
+    {
+      "id": "zoo-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "The guide told us that the giraffe had just been born.",
+      "he": "המדריך סיפר לנו שהג'ירפה נולדה הרגע."
+    },
+    {
+      "id": "zoo-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been planning this zoo trip for weeks.",
+      "he": "אנחנו מתכננים את הטיול הזה לגן החיות כבר שבועות."
+    },
+    {
+      "id": "zoo-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone had fun, so we stayed until closing time.",
+      "he": "בקיצור, כולם נהנו, ולכן נשארנו עד שעת הסגירה."
+    }
+  ]
+}

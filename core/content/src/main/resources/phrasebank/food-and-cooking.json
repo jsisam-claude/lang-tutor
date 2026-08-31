@@ -1,0 +1,813 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "food-and-cooking",
+  "title": {
+    "en": "Food and cooking",
+    "he": "אוכל ובישול"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "foo-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A big pot!",
+      "he": "סיר גדול!",
+      "align": [
+        { "en": [0, 2], "he": [0, 1] }
+      ]
+    },
+    {
+      "id": "foo-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "Hot soup!",
+      "he": "מרק חם!",
+      "align": [
+        { "en": [0, 1], "he": [0, 1] }
+      ]
+    },
+    {
+      "id": "foo-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "White rice!",
+      "he": "אורז לבן!",
+      "align": [
+        { "en": [0, 1], "he": [0, 1] }
+      ]
+    },
+    {
+      "id": "foo-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The soup is hot.",
+      "he": "המרק חם.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "foo-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The pan is heavy.",
+      "he": "המחבת כבדה.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "foo-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The salad is green.",
+      "he": "הסלט ירוק.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "foo-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The spoon is small.",
+      "he": "הכף קטנה.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "foo-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-a-X",
+      "en": "I see a pot.",
+      "he": "אני רואה סיר.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "foo-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-the-X",
+      "en": "I see the kitchen.",
+      "he": "אני רואה את המטבח.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 3] }
+      ]
+    },
+    {
+      "id": "foo-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like rice.",
+      "he": "אני אוהב אורז.",
+      "he_f": "אני אוהבת אורז.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "foo-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-X",
+      "en": "I love pasta.",
+      "he": "אני אוהב פסטה.",
+      "he_f": "אני אוהבת פסטה.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "foo-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two eggs.",
+      "he": "שתי ביצים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "foo-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Dad is stirring the sauce.",
+      "he": "אבא מערבב את הרוטב.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [2, 3] }
+      ]
+    },
+    {
+      "id": "foo-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "i-am-Ving-X",
+      "en": "I am mixing the salad.",
+      "he": "אני מערבב את הסלט.",
+      "he_f": "אני מערבבת את הסלט.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [2, 3] }
+      ]
+    },
+    {
+      "id": "foo-l2-003",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "we-are-Ving-X",
+      "en": "We are chopping vegetables.",
+      "he": "אנחנו חותכים ירקות.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 3], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "foo-l2-004",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "what-are-you-Ving",
+      "en": "What are you cooking?",
+      "he": "מה אתה מבשל?",
+      "he_f": "מה את מבשלת?",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 3], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "foo-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the timer?",
+      "he": "איפה הטיימר?",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "foo-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to make soup.",
+      "he": "אני רוצה להכין מרק.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] },
+        { "en": [4, 4], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "foo-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "She wants to taste the sauce.",
+      "he": "היא רוצה לטעום את הרוטב.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] },
+        { "en": [4, 5], "he": [3, 4] }
+      ]
+    },
+    {
+      "id": "foo-l2-008",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you stir the soup?",
+      "he": "אתה יכול לערבב את המרק?",
+      "he_f": "את יכולה לערבב את המרק?",
+      "align": [
+        { "en": [0, 1], "he": [0, 1] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 4], "he": [3, 4] }
+      ]
+    },
+    {
+      "id": "foo-l2-009",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find the timer.",
+      "he": "אני לא מוצא את הטיימר.",
+      "he_f": "אני לא מוצאת את הטיימר.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 4], "he": [3, 4] }
+      ]
+    },
+    {
+      "id": "foo-l2-010",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can chop an onion.",
+      "he": "אני יכול לחתוך בצל.",
+      "he_f": "אני יכולה לחתוך בצל.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 4], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "foo-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the soup smells good.",
+      "he": "אני שמח כי המרק מריח טוב.",
+      "he_f": "אני שמחה כי המרק מריח טוב.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 3], "he": [2, 2] },
+        { "en": [4, 5], "he": [3, 3] },
+        { "en": [6, 6], "he": [4, 4] },
+        { "en": [7, 7], "he": [5, 5] }
+      ]
+    },
+    {
+      "id": "foo-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-is-X",
+      "en": "Why is the kitchen so noisy?",
+      "he": "למה המטבח כל כך רועש?",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 3], "he": [1, 1] },
+        { "en": [4, 4], "he": [2, 3] },
+        { "en": [5, 5], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "foo-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved-num-X",
+      "en": "I chopped three onions.",
+      "he": "חתכתי שלושה בצלים."
+    },
+    {
+      "id": "foo-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-for-time",
+      "en": "The rice cooked for twenty minutes.",
+      "he": "האורז התבשל עשרים דקות."
+    },
+    {
+      "id": "foo-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved-X-num",
+      "en": "We tasted the sauce twice.",
+      "he": "טעמנו את הרוטב פעמיים."
+    },
+    {
+      "id": "foo-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad set a timer for the cake.",
+      "he": "אבא הגדיר טיימר לעוגה."
+    },
+    {
+      "id": "foo-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-Xs-were-adj",
+      "en": "The onions were fresh.",
+      "he": "הבצלים היו טריים."
+    },
+    {
+      "id": "foo-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "My mother's salad was delicious.",
+      "he": "הסלט של אמא שלי היה טעים."
+    },
+    {
+      "id": "foo-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you wash the vegetables?",
+      "he": "שטפת את הירקות?"
+    },
+    {
+      "id": "foo-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the soup smell good?",
+      "he": "המרק הריח טוב?"
+    },
+    {
+      "id": "foo-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved-X-and-Y",
+      "en": "I mixed the eggs and the flour.",
+      "he": "ערבבתי את הביצים ואת הקמח."
+    },
+    {
+      "id": "foo-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-was-adj-in-time",
+      "en": "The pasta was ready in ten minutes.",
+      "he": "הפסטה הייתה מוכנה תוך עשר דקות."
+    },
+    {
+      "id": "foo-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "My sister's hands smelled like garlic.",
+      "he": "הידיים של אחותי הריחו כמו שום."
+    },
+    {
+      "id": "foo-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved-X-into-Y",
+      "en": "We poured the soup into bowls.",
+      "he": "יצקנו את המרק לקערות."
+    },
+    {
+      "id": "foo-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to make tomato soup.",
+      "he": "אנחנו עומדים להכין מרק עגבניות."
+    },
+    {
+      "id": "foo-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to chop the vegetables first.",
+      "he": "אני עומד לחתוך את הירקות קודם.",
+      "he_f": "אני עומדת לחתוך את הירקות קודם."
+    },
+    {
+      "id": "foo-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "She is going to set the timer for ten minutes.",
+      "he": "היא עומדת להגדיר טיימר לעשר דקות."
+    },
+    {
+      "id": "foo-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The rice cooks faster than the pasta.",
+      "he": "האורז מתבשל מהר יותר מהפסטה."
+    },
+    {
+      "id": "foo-l4-005",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the biggest pot in our kitchen.",
+      "he": "זה הסיר הכי גדול במטבח שלנו."
+    },
+    {
+      "id": "foo-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must taste the soup before serving.",
+      "he": "אתה חייב לטעום את המרק לפני ההגשה.",
+      "he_f": "את חייבת לטעום את המרק לפני ההגשה."
+    },
+    {
+      "id": "foo-l4-007",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should stir the sauce every few minutes.",
+      "he": "כדאי לך לערבב את הרוטב כל כמה דקות."
+    },
+    {
+      "id": "foo-l4-008",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the water boils, add the pasta.",
+      "he": "אם המים רותחים, מוסיפים את הפסטה."
+    },
+    {
+      "id": "foo-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you add too much salt, the soup becomes salty.",
+      "he": "אם מוסיפים יותר מדי מלח, המרק נהיה מלוח."
+    },
+    {
+      "id": "foo-l4-010",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to bake cookies this weekend.",
+      "he": "אנחנו עומדים לאפות עוגיות בסוף השבוע."
+    },
+    {
+      "id": "foo-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The rice will be ready in fifteen minutes.",
+      "he": "האורז יהיה מוכן בעוד חמש עשרה דקות."
+    },
+    {
+      "id": "foo-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will the soup taste good with more garlic?",
+      "he": "המרק יהיה טעים יותר עם עוד שום?"
+    },
+    {
+      "id": "foo-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already chopped the onions.",
+      "he": "כבר חתכתי את הבצלים."
+    },
+    {
+      "id": "foo-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-many-times",
+      "en": "We have made this soup many times.",
+      "he": "הכנו את המרק הזה הרבה פעמים."
+    },
+    {
+      "id": "foo-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might add more garlic.",
+      "he": "אולי נוסיף עוד שום."
+    },
+    {
+      "id": "foo-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you taste the soup, you will love it.",
+      "he": "אם תטעם את המרק, תאהב אותו.",
+      "he_f": "אם תטעמי את המרק, תאהבי אותו."
+    },
+    {
+      "id": "foo-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you tasted the sauce yet?",
+      "he": "טעמת את הרוטב כבר?"
+    },
+    {
+      "id": "foo-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The rice has just finished cooking.",
+      "he": "האורז בדיוק סיים להתבשל."
+    },
+    {
+      "id": "foo-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "The soup may need more salt.",
+      "he": "אולי המרק צריך עוד מלח."
+    },
+    {
+      "id": "foo-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we chop faster, the soup will be ready sooner.",
+      "he": "אם נחתוך מהר יותר, המרק יהיה מוכן מוקדם יותר."
+    },
+    {
+      "id": "foo-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never made pasta from scratch.",
+      "he": "מעולם לא הכנתי פסטה תוצרת בית."
+    },
+    {
+      "id": "foo-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "She has cooked without help since the summer.",
+      "he": "היא מבשלת בלי עזרה מאז הקיץ."
+    },
+    {
+      "id": "foo-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might taste better with lemon.",
+      "he": "אולי זה יהיה טעים יותר עם לימון."
+    },
+    {
+      "id": "foo-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If the timer beeps, the cake will be ready.",
+      "he": "אם הטיימר מצלצל, העוגה תהיה מוכנה."
+    },
+    {
+      "id": "foo-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was chopping vegetables while the rice was cooking.",
+      "he": "חתכתי ירקות בזמן שהאורז התבשל."
+    },
+    {
+      "id": "foo-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The cookies were baked in a very hot oven.",
+      "he": "העוגיות נאפו בתנור חם מאוד."
+    },
+    {
+      "id": "foo-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more time, I would bake bread every week.",
+      "he": "אם היה לי יותר זמן, הייתי אופה לחם כל שבוע."
+    },
+    {
+      "id": "foo-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already cleaned the pots when Mom started cooking.",
+      "he": "כבר ניקינו את הסירים כשאמא התחילה לבשל."
+    },
+    {
+      "id": "foo-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The vegetables were washed before they were chopped.",
+      "he": "הירקות נשטפו לפני שהם נחתכו."
+    },
+    {
+      "id": "foo-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was stirring the pot when the phone rang.",
+      "he": "ערבבתי בסיר כשהטלפון צלצל."
+    },
+    {
+      "id": "foo-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had a bigger kitchen, we would cook more often.",
+      "he": "אם היה לנו מטבח גדול יותר, היינו מבשלים יותר."
+    },
+    {
+      "id": "foo-l6-008",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The smell of garlic was filling the whole kitchen.",
+      "he": "ריח השום מילא את כל המטבח."
+    },
+    {
+      "id": "foo-l6-009",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never made rice pudding before.",
+      "he": "היא מעולם לא הכינה אורז חלב לפני כן."
+    },
+    {
+      "id": "foo-l6-010",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were the chef, I would add more spices.",
+      "he": "אם הייתי השף, הייתי מוסיף עוד תבלינים.",
+      "he_f": "אם הייתי השפית, הייתי מוסיפה עוד תבלינים."
+    },
+    {
+      "id": "foo-l6-011",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "This cake is baked without sugar.",
+      "he": "העוגה הזאת נאפית בלי סוכר."
+    },
+    {
+      "id": "foo-l6-012",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "by-time",
+      "en": "By the time the rice was ready, we had already finished the salad.",
+      "he": "עד שהאורז היה מוכן, כבר סיימנו את הסלט."
+    },
+    {
+      "id": "foo-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been chopping vegetables for an hour.",
+      "he": "אני חותך ירקות כבר שעה.",
+      "he_f": "אני חותכת ירקות כבר שעה."
+    },
+    {
+      "id": "foo-l7-002",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The soup has been simmering on the stove all morning.",
+      "he": "המרק מתבשל על הכיריים כל הבוקר."
+    },
+    {
+      "id": "foo-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If I had tasted the sauce earlier, I would have added less salt.",
+      "he": "אם הייתי טועם את הרוטב קודם, הייתי מוסיף פחות מלח.",
+      "he_f": "אם הייתי טועמת את הרוטב קודם, הייתי מוסיפה פחות מלח."
+    },
+    {
+      "id": "foo-l7-004",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Mom said that the pasta needed more time.",
+      "he": "אמא אמרה שהפסטה צריכה עוד זמן."
+    },
+    {
+      "id": "foo-l7-005",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Dad told us that he had already washed the vegetables.",
+      "he": "אבא סיפר לנו שהוא כבר שטף את הירקות."
+    },
+    {
+      "id": "foo-l7-006",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-question",
+      "en": "My sister asked whether the cake would be ready by six.",
+      "he": "אחותי שאלה אם העוגה תהיה מוכנה עד שש."
+    },
+    {
+      "id": "foo-l7-007",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we chop the vegetables, then we add them to the pot.",
+      "he": "קודם אנחנו חותכים את הירקות, ואז מוסיפים אותם לסיר."
+    },
+    {
+      "id": "foo-l7-008",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the recipe looked difficult, the soup turned out delicious.",
+      "he": "למרות שהמתכון נראה מסובך, המרק יצא טעים."
+    },
+    {
+      "id": "foo-l7-009",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, we followed the recipe and the pasta was perfect.",
+      "he": "בקיצור, עקבנו אחרי המתכון והפסטה יצאה מושלמת."
+    },
+    {
+      "id": "foo-l7-010",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been tasting the sauce every few minutes.",
+      "he": "אנחנו טועמים את הרוטב כל כמה דקות."
+    },
+    {
+      "id": "foo-l7-011",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the timer had not rung, we would have burned the rice.",
+      "he": "אם הטיימר לא היה מצלצל, היינו שורפים את האורז."
+    },
+    {
+      "id": "foo-l7-012",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the bread was done, we had been baking for two hours.",
+      "he": "עד שהלחם היה מוכן, כבר אפינו במשך שעתיים."
+    }
+  ]
+}

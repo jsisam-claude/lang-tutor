@@ -1,0 +1,1437 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "forest-and-trees",
+  "title": {
+    "en": "Forest and trees",
+    "he": "יער ועצים"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "fst-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A squirrel!",
+      "he": "סנאי!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The tree is tall.",
+      "he": "העץ גבוה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a bird.",
+      "he": "אני רואה ציפור.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The leaves are green.",
+      "he": "העלים ירוקים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A big forest.",
+      "he": "יער גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like the forest.",
+      "he": "אני אוהב את היער.",
+      "he_f": "אני אוהבת את היער.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The nest is small.",
+      "he": "הקן קטן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Three pinecones.",
+      "he": "שלושה אצטרובלים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The pinecone is brown.",
+      "he": "האצטרובל חום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the path.",
+      "he": "אני רואה את השביל.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The squirrel is happy.",
+      "he": "הסנאי שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-X",
+      "en": "I love the trees.",
+      "he": "אני אוהב את העצים.",
+      "he_f": "אני אוהבת את העצים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The squirrel is climbing the tree.",
+      "he": "הסנאי מטפס על העץ.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "Xs-are-Ving",
+      "en": "The birds are singing in the trees.",
+      "he": "הציפורים שרות בעצים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to walk in the woods.",
+      "he": "אני רוצה לטייל ביער.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you see the nest?",
+      "he": "אתה יכול לראות את הקן?",
+      "he_f": "את יכולה לראות את הקן?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can hear the wind in the trees.",
+      "he": "אני יכול לשמוע את הרוח בעצים.",
+      "he_f": "אני יכולה לשמוע את הרוח בעצים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            5,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-006",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my pinecone.",
+      "he": "אני לא מוצא את האצטרובל שלי.",
+      "he_f": "אני לא מוצאת את האצטרובל שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the squirrel?",
+      "he": "איפה הסנאי?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why is the forest so quiet?",
+      "he": "למה היער כל כך שקט?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the forest is quiet.",
+      "he": "אני שמח כי היער שקט.",
+      "he_f": "אני שמחה כי היער שקט.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The squirrel is running because it is scared.",
+      "he": "הסנאי רץ כי הוא מפוחד.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you listening to the birds?",
+      "he": "אתה מקשיב לציפורים?",
+      "he_f": "את מקשיבה לציפורים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My sister wants to pick up pinecones.",
+      "he": "אחותי רוצה להרים אצטרובלים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fst-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We walked in the woods yesterday.",
+      "he": "הלכנו ביער אתמול."
+    },
+    {
+      "id": "fst-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I found a bird's nest in the tree.",
+      "he": "מצאתי קן ציפורים בעץ."
+    },
+    {
+      "id": "fst-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you see the squirrel?",
+      "he": "ראית את הסנאי?"
+    },
+    {
+      "id": "fst-l3-004",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The leaves are on the path.",
+      "he": "העלים על השביל."
+    },
+    {
+      "id": "fst-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "The squirrel's tail is long.",
+      "he": "הזנב של הסנאי ארוך."
+    },
+    {
+      "id": "fst-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The wind moved the branches.",
+      "he": "הרוח הזיזה את הענפים."
+    },
+    {
+      "id": "fst-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the birds build a nest?",
+      "he": "הציפורים בנו קן?"
+    },
+    {
+      "id": "fst-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We listened to the forest for a long time.",
+      "he": "הקשבנו ליער הרבה זמן."
+    },
+    {
+      "id": "fst-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I climbed a tall tree.",
+      "he": "טיפסתי על עץ גבוה."
+    },
+    {
+      "id": "fst-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "The bird's wings are brown.",
+      "he": "הכנפיים של הציפור חומות."
+    },
+    {
+      "id": "fst-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The children collected pinecones in a basket.",
+      "he": "הילדים אספו אצטרובלים בסל."
+    },
+    {
+      "id": "fst-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The squirrel jumped from branch to branch.",
+      "he": "הסנאי קפץ מענף לענף."
+    },
+    {
+      "id": "fst-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to walk in the woods this afternoon.",
+      "he": "אנחנו עומדים לטייל ביער היום אחר הצהריים."
+    },
+    {
+      "id": "fst-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to pick up pinecones in the forest.",
+      "he": "אני עומד להרים אצטרובלים ביער.",
+      "he_f": "אני עומדת להרים אצטרובלים ביער."
+    },
+    {
+      "id": "fst-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "The squirrel is going to climb the tall tree.",
+      "he": "הסנאי עומד לטפס על העץ הגבוה."
+    },
+    {
+      "id": "fst-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This tree is taller than that one.",
+      "he": "העץ הזה גבוה יותר מההוא."
+    },
+    {
+      "id": "fst-l4-005",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This pinecone is bigger than that one.",
+      "he": "האצטרובל הזה גדול יותר מההוא."
+    },
+    {
+      "id": "fst-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the tallest tree in the forest.",
+      "he": "זה העץ הגבוה ביותר ביער."
+    },
+    {
+      "id": "fst-l4-007",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must stay on the path.",
+      "he": "אתה חייב להישאר בשביל.",
+      "he_f": "את חייבת להישאר בשביל."
+    },
+    {
+      "id": "fst-l4-008",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should listen to the sounds of the forest.",
+      "he": "כדאי שתקשיב לקולות היער.",
+      "he_f": "כדאי שתקשיבי לקולות היער."
+    },
+    {
+      "id": "fst-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the wind blows, the leaves fall.",
+      "he": "אם הרוח נושבת, העלים נופלים."
+    },
+    {
+      "id": "fst-l4-010",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you shake the tree, pinecones fall.",
+      "he": "אם מנערים את העץ, אצטרובלים נופלים."
+    },
+    {
+      "id": "fst-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The forest will be quiet at night.",
+      "he": "היער יהיה שקט בלילה."
+    },
+    {
+      "id": "fst-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you come for a walk in the woods?",
+      "he": "תבוא לטיול ביער?",
+      "he_f": "תבואי לטיול ביער?"
+    },
+    {
+      "id": "fst-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already picked up ten pinecones.",
+      "he": "כבר הרמתי עשרה אצטרובלים."
+    },
+    {
+      "id": "fst-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "This tree has stood here for a hundred years.",
+      "he": "העץ הזה עומד כאן מאה שנה."
+    },
+    {
+      "id": "fst-l5-003",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen the birds' nest in that tree?",
+      "he": "ראית את קן הציפורים בעץ ההוא?"
+    },
+    {
+      "id": "fst-l5-004",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The squirrel has just climbed up the tree.",
+      "he": "הסנאי בדיוק טיפס על העץ."
+    },
+    {
+      "id": "fst-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never seen such a tall tree.",
+      "he": "מעולם לא ראיתי עץ כל כך גבוה."
+    },
+    {
+      "id": "fst-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The squirrels have lived in this forest since last year.",
+      "he": "הסנאים גרים ביער הזה מאז השנה שעברה."
+    },
+    {
+      "id": "fst-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "A bird may build a nest in this tree.",
+      "he": "אולי ציפור תבנה קן בעץ הזה."
+    },
+    {
+      "id": "fst-l5-008",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might find more pinecones near the old tree.",
+      "he": "אולי נמצא עוד אצטרובלים ליד העץ הזקן."
+    },
+    {
+      "id": "fst-l5-009",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we walk quietly, we will hear the birds.",
+      "he": "אם נלך בשקט, נשמע את הציפורים."
+    },
+    {
+      "id": "fst-l5-010",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you climb that tree, you will see the whole forest.",
+      "he": "אם תטפס על העץ ההוא, תראה את כל היער.",
+      "he_f": "אם תטפסי על העץ ההוא, תראי את כל היער."
+    },
+    {
+      "id": "fst-l5-011",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If it is quiet, we will hear the wind in the leaves.",
+      "he": "אם יהיה שקט, נשמע את הרוח בעלים."
+    },
+    {
+      "id": "fst-l5-012",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The nest might be empty now.",
+      "he": "אולי הקן ריק עכשיו."
+    },
+    {
+      "id": "fst-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "The squirrel was climbing while the birds were singing.",
+      "he": "הסנאי טיפס בזמן שהציפורים שרו."
+    },
+    {
+      "id": "fst-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The nest was built high on a branch.",
+      "he": "הקן נבנה גבוה על ענף."
+    },
+    {
+      "id": "fst-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I lived in the forest, I would listen to the birds every morning.",
+      "he": "אם הייתי גר ביער, הייתי מקשיב לציפורים כל בוקר.",
+      "he_f": "אם הייתי גרה ביער, הייתי מקשיבה לציפורים כל בוקר."
+    },
+    {
+      "id": "fst-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "The leaves had already fallen when we arrived at the forest.",
+      "he": "העלים כבר נשרו כשהגענו ליער."
+    },
+    {
+      "id": "fst-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The pinecones were collected by the children.",
+      "he": "האצטרובלים נאספו על ידי הילדים."
+    },
+    {
+      "id": "fst-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "We were walking on the path when we saw the squirrel.",
+      "he": "הלכנו בשביל כשראינו את הסנאי."
+    },
+    {
+      "id": "fst-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If the forest were quieter, we would hear every bird.",
+      "he": "אם היער היה שקט יותר, היינו שומעים כל ציפור."
+    },
+    {
+      "id": "fst-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The path was covered with leaves.",
+      "he": "השביל היה מכוסה בעלים."
+    },
+    {
+      "id": "fst-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The wind was blowing through the branches.",
+      "he": "הרוח נשבה בין הענפים."
+    },
+    {
+      "id": "fst-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "I had never picked up so many pinecones before.",
+      "he": "מעולם לא הרמתי כל כך הרבה אצטרובלים לפני כן."
+    },
+    {
+      "id": "fst-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were a bird, I would fly above the trees.",
+      "he": "אם הייתי ציפור, הייתי עף מעל העצים.",
+      "he_f": "אם הייתי ציפור, הייתי עפה מעל העצים."
+    },
+    {
+      "id": "fst-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Pinecones are found under every tree.",
+      "he": "אצטרובלים נמצאים מתחת לכל עץ."
+    },
+    {
+      "id": "fst-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been listening to the birds all morning.",
+      "he": "אני מקשיב לציפורים כל הבוקר.",
+      "he_f": "אני מקשיבה לציפורים כל הבוקר."
+    },
+    {
+      "id": "fst-l7-002",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The squirrels have been collecting nuts all week.",
+      "he": "הסנאים אוספים אגוזים כל השבוע."
+    },
+    {
+      "id": "fst-l7-003",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been walking in the forest for two hours.",
+      "he": "אנחנו מטיילים ביער כבר שעתיים."
+    },
+    {
+      "id": "fst-l7-004",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the forest was very quiet.",
+      "he": "אבא אמר שהיער היה מאוד שקט."
+    },
+    {
+      "id": "fst-l7-005",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had found a bird's nest.",
+      "he": "אמא סיפרה לנו שהיא מצאה קן ציפורים."
+    },
+    {
+      "id": "fst-l7-006",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had walked faster, we would have reached the old tree before dark.",
+      "he": "אם היינו הולכים מהר יותר, היינו מגיעים לעץ הזקן לפני החושך."
+    },
+    {
+      "id": "fst-l7-007",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had picked up the pinecone, I would have shown you the squirrel.",
+      "he": "אם היית מרים את האצטרובל, הייתי מראה לך את הסנאי.",
+      "he_f": "אם היית מרימה את האצטרובל, הייתי מראה לך את הסנאי."
+    },
+    {
+      "id": "fst-l7-008",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My friend asked whether we could visit the forest again.",
+      "he": "החבר שלי שאל אם אנחנו יכולים לבקר שוב ביער."
+    },
+    {
+      "id": "fst-l7-009",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we walk through the forest, then we look for pinecones.",
+      "he": "קודם אנחנו הולכים ביער, ואז אנחנו מחפשים אצטרובלים."
+    },
+    {
+      "id": "fst-l7-010",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the forest was quiet, we could hear birds singing.",
+      "he": "למרות שהיער היה שקט, יכולנו לשמוע ציפורים שרות."
+    },
+    {
+      "id": "fst-l7-011",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we left, we had been walking for three hours.",
+      "he": "עד שיצאנו, כבר הלכנו שלוש שעות."
+    },
+    {
+      "id": "fst-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, we walked far, listened to the birds, and picked up many pinecones.",
+      "he": "בקיצור, הלכנו רחוק, הקשבנו לציפורים, ואספנו הרבה אצטרובלים."
+    }
+  ]
+}

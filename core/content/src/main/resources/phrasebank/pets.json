@@ -1,0 +1,1450 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "pets",
+  "title": {
+    "en": "Pets",
+    "he": "חיות מחמד"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "pet-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A dog!",
+      "he": "כלב!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my cat.",
+      "he": "זה החתול שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a parrot.",
+      "he": "אני רואה תוכי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The dog is big.",
+      "he": "הכלב גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The goldfish is orange.",
+      "he": "דג הזהב כתום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my hamster.",
+      "he": "אני אוהב את האוגר שלי.",
+      "he_f": "אני אוהבת את האוגר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The hamster is small.",
+      "he": "האוגר קטן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two cats.",
+      "he": "שני חתולים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The parrot is here.",
+      "he": "התוכי כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I love my dog.",
+      "he": "אני אוהב את הכלב שלי.",
+      "he_f": "אני אוהבת את הכלב שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The parrot is green.",
+      "he": "התוכי ירוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The cat is happy.",
+      "he": "החתול שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am feeding the dog.",
+      "he": "אני מאכיל את הכלב.",
+      "he_f": "אני מאכילה את הכלב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My cat is playing with a ball.",
+      "he": "החתול שלי משחק עם כדור.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to feed the fish.",
+      "he": "אני רוצה להאכיל את הדג.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you walk the dog?",
+      "he": "אתה יכול להוציא את הכלב לטיול?",
+      "he_f": "את יכולה להוציא את הכלב לטיול?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            2,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can clean the cage.",
+      "he": "אני יכול לנקות את הכלוב.",
+      "he_f": "אני יכולה לנקות את הכלוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my hamster?",
+      "he": "איפה האוגר שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The parrot is singing because it is happy.",
+      "he": "התוכי שר כי הוא שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because my dog is here.",
+      "he": "אני שמח כי הכלב שלי כאן.",
+      "he_f": "אני שמחה כי הכלב שלי כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you feeding the goldfish?",
+      "he": "אתה מאכיל את דג הזהב?",
+      "he_f": "את מאכילה את דג הזהב?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My sister wants to hold the hamster.",
+      "he": "אחותי רוצה להחזיק את האוגר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are walking the dog together.",
+      "he": "אנחנו מוציאים את הכלב לטיול ביחד.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            1,
+            4
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find the leash.",
+      "he": "אני לא מוצא את הרצועה.",
+      "he_f": "אני לא מוצאת את הרצועה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pet-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We fed the cats this morning.",
+      "he": "האכלנו את החתולים הבוקר."
+    },
+    {
+      "id": "pet-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad walked the dog before breakfast.",
+      "he": "אבא הוציא את הכלב לטיול לפני ארוחת הבוקר."
+    },
+    {
+      "id": "pet-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My cat's tail is long.",
+      "he": "הזנב של החתול שלי ארוך."
+    },
+    {
+      "id": "pet-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you feed the parrot?",
+      "he": "האכלת את התוכי?"
+    },
+    {
+      "id": "pet-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The hamsters are in the cage.",
+      "he": "האוגרים בכלוב."
+    },
+    {
+      "id": "pet-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I brushed my dog this afternoon.",
+      "he": "הברשתי את הכלב שלי אחר הצהריים."
+    },
+    {
+      "id": "pet-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents played with the dog in the yard.",
+      "he": "ההורים שלי שיחקו עם הכלב בחצר."
+    },
+    {
+      "id": "pet-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the cat drink her milk?",
+      "he": "החתולה שתתה את החלב שלה?"
+    },
+    {
+      "id": "pet-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We cleaned the fish tank yesterday.",
+      "he": "ניקינו את האקווריום אתמול."
+    },
+    {
+      "id": "pet-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My hamster's cheeks are full.",
+      "he": "הלחיים של האוגר שלי מלאות."
+    },
+    {
+      "id": "pet-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The parrot learned a new word.",
+      "he": "התוכי למד מילה חדשה."
+    },
+    {
+      "id": "pet-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The dogs ran in the park.",
+      "he": "הכלבים רצו בפארק."
+    },
+    {
+      "id": "pet-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to feed the cats.",
+      "he": "אנחנו עומדים להאכיל את החתולים."
+    },
+    {
+      "id": "pet-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My dog is bigger than your cat.",
+      "he": "הכלב שלי גדול יותר מהחתול שלך."
+    },
+    {
+      "id": "pet-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the smallest hamster in the shop.",
+      "he": "זה האוגר הקטן ביותר בחנות."
+    },
+    {
+      "id": "pet-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must clean the fish tank every week.",
+      "he": "אתה חייב לנקות את האקווריום כל שבוע.",
+      "he_f": "את חייבת לנקות את האקווריום כל שבוע."
+    },
+    {
+      "id": "pet-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should walk the dog every day.",
+      "he": "כדאי שתוציא את הכלב לטיול כל יום.",
+      "he_f": "כדאי שתוציאי את הכלב לטיול כל יום."
+    },
+    {
+      "id": "pet-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the parrot is hungry, it chirps loudly.",
+      "he": "אם התוכי רעב, הוא מצייץ בקול רם."
+    },
+    {
+      "id": "pet-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to visit the pet shop on Saturday.",
+      "he": "אנחנו עומדים לבקר בחנות החיות ביום שבת."
+    },
+    {
+      "id": "pet-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Mom will buy hamster food tomorrow.",
+      "he": "אמא תקנה אוכל לאוגר מחר."
+    },
+    {
+      "id": "pet-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to clean the cage after lunch.",
+      "he": "אני עומד לנקות את הכלוב אחרי ארוחת הצהריים.",
+      "he_f": "אני עומדת לנקות את הכלוב אחרי ארוחת הצהריים."
+    },
+    {
+      "id": "pet-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The goldfish is faster than the hamster.",
+      "he": "דג הזהב מהיר יותר מהאוגר."
+    },
+    {
+      "id": "pet-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you feed a hamster too much, it gets fat.",
+      "he": "אם מאכילים אוגר יותר מדי, הוא משמין."
+    },
+    {
+      "id": "pet-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you feed the fish tonight?",
+      "he": "תאכיל את הדג הערב?",
+      "he_f": "תאכילי את הדג הערב?"
+    },
+    {
+      "id": "pet-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have fed the cats already.",
+      "he": "כבר האכלתי את החתולים."
+    },
+    {
+      "id": "pet-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "Our dog has lived with us for five years.",
+      "he": "הכלב שלנו גר איתנו כבר חמש שנים."
+    },
+    {
+      "id": "pet-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might get a new fish tomorrow.",
+      "he": "אולי נקנה דג חדש מחר."
+    },
+    {
+      "id": "pet-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you walk the dog, he will be happy.",
+      "he": "אם תוציא את הכלב לטיול, הוא יהיה שמח.",
+      "he_f": "אם תוציאי את הכלב לטיול, הוא יהיה שמח."
+    },
+    {
+      "id": "pet-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my cat?",
+      "he": "ראית את החתול שלי?"
+    },
+    {
+      "id": "pet-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The parrot has just said a new word.",
+      "he": "התוכי בדיוק אמר מילה חדשה."
+    },
+    {
+      "id": "pet-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "The hamster may sleep all day.",
+      "he": "אולי האוגר יישן כל היום."
+    },
+    {
+      "id": "pet-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we clean the cage today, it will smell better.",
+      "he": "אם ננקה את הכלוב היום, הוא יריח טוב יותר."
+    },
+    {
+      "id": "pet-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never fed a hamster before.",
+      "he": "מעולם לא האכלתי אוגר לפני כן."
+    },
+    {
+      "id": "pet-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "Our goldfish has lived in this tank since last summer.",
+      "he": "דג הזהב שלנו חי באקווריום הזה מאז הקיץ שעבר."
+    },
+    {
+      "id": "pet-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The cat might be hungry, so check her bowl.",
+      "he": "אולי החתולה רעבה, אז תבדוק את הקערה שלה.",
+      "he_f": "אולי החתולה רעבה, אז תבדקי את הקערה שלה."
+    },
+    {
+      "id": "pet-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me walk the dogs, we will finish faster.",
+      "he": "אם תעזור לי להוציא את הכלבים לטיול, נגמור מהר יותר.",
+      "he_f": "אם תעזרי לי להוציא את הכלבים לטיול, נגמור מהר יותר."
+    },
+    {
+      "id": "pet-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was feeding the fish while the parrot was singing.",
+      "he": "אמא האכילה את הדג בזמן שהתוכי שר."
+    },
+    {
+      "id": "pet-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The cage was cleaned before the guests came.",
+      "he": "הכלוב היה מנוקה לפני שהאורחים הגיעו."
+    },
+    {
+      "id": "pet-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bigger cage, I would get another hamster.",
+      "he": "אם היה לי כלוב גדול יותר, הייתי מביא עוד אוגר.",
+      "he_f": "אם היה לי כלוב גדול יותר, הייתי מביאה עוד אוגר."
+    },
+    {
+      "id": "pet-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already fed the cats when Dad got home.",
+      "he": "כבר האכלנו את החתולים כשאבא הגיע הביתה."
+    },
+    {
+      "id": "pet-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The parrot's cage was built by Grandpa.",
+      "he": "הכלוב של התוכי נבנה על ידי סבא."
+    },
+    {
+      "id": "pet-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was walking the dog when it started to rain.",
+      "he": "הוצאתי את הכלב לטיול כשהתחיל לרדת גשם."
+    },
+    {
+      "id": "pet-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had a yard, the dog would run more.",
+      "he": "אם הייתה לנו חצר, הכלב היה רץ יותר."
+    },
+    {
+      "id": "pet-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The doghouse was built many years ago.",
+      "he": "מלונת הכלב נבנתה לפני הרבה שנים."
+    },
+    {
+      "id": "pet-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My parents were talking quietly near the fish tank.",
+      "he": "ההורים שלי דיברו בשקט ליד האקווריום."
+    },
+    {
+      "id": "pet-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "The hamster had never seen a cat before.",
+      "he": "האוגר מעולם לא ראה חתול לפני כן."
+    },
+    {
+      "id": "pet-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were a parrot, I would fly all day.",
+      "he": "אילו הייתי תוכי, הייתי עף כל היום.",
+      "he_f": "אילו הייתי תוכי, הייתי עפה כל היום."
+    },
+    {
+      "id": "pet-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "The pets are fed at six every evening.",
+      "he": "חיות המחמד מואכלות בשש כל ערב."
+    },
+    {
+      "id": "pet-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been playing with the cat all afternoon.",
+      "he": "אני משחק עם החתול כל אחר הצהריים.",
+      "he_f": "אני משחקת עם החתול כל אחר הצהריים."
+    },
+    {
+      "id": "pet-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the dog was hungry.",
+      "he": "אבא אמר שהכלב רעב."
+    },
+    {
+      "id": "pet-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had told me the hamster was sick, I would have called the vet.",
+      "he": "אם היית אומר לי שהאוגר חולה, הייתי מתקשר לוטרינר.",
+      "he_f": "אם היית אומרת לי שהאוגר חולה, הייתי מתקשרת לוטרינר."
+    },
+    {
+      "id": "pet-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The parrot has been talking all morning.",
+      "he": "התוכי מדבר כל הבוקר."
+    },
+    {
+      "id": "pet-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could keep the hamster in her room.",
+      "he": "אחותי שאלה אם היא יכולה להשאיר את האוגר בחדר שלה."
+    },
+    {
+      "id": "pet-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we feed the animals, then we clean their cages.",
+      "he": "קודם אנחנו מאכילים את בעלי החיים, ואז אנחנו מנקים את הכלובים שלהם."
+    },
+    {
+      "id": "pet-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the hamster was small, it was very loud at night.",
+      "he": "למרות שהאוגר היה קטן, הוא היה מאוד רועש בלילה."
+    },
+    {
+      "id": "pet-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the vet arrived, we had been waiting for an hour.",
+      "he": "עד שהוטרינר הגיע, כבר חיכינו שעה."
+    },
+    {
+      "id": "pet-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the cage door had been open, the parrot would have flown away.",
+      "he": "אם דלת הכלוב הייתה פתוחה, התוכי היה עף משם."
+    },
+    {
+      "id": "pet-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had taken the dog to the vet.",
+      "he": "אמא סיפרה לנו שהיא לקחה את הכלב לוטרינר."
+    },
+    {
+      "id": "pet-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been training the dog for weeks.",
+      "he": "אנחנו מאמנים את הכלב כבר שבועות."
+    },
+    {
+      "id": "pet-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone helped, so the pets were happy and healthy.",
+      "he": "בקיצור, כולם עזרו, ולכן חיות המחמד היו שמחות ובריאות."
+    }
+  ]
+}

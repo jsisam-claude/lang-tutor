@@ -1,0 +1,1415 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "fruits-and-vegetables",
+  "title": {
+    "en": "Fruits and vegetables",
+    "he": "פירות וירקות"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "frt-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A watermelon!",
+      "he": "אבטיח!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The watermelon is red.",
+      "he": "האבטיח אדום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a carrot.",
+      "he": "אני רואה גזר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The carrot is orange.",
+      "he": "הגזר כתום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Three strawberries.",
+      "he": "שלושה תותים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like cucumbers.",
+      "he": "אני אוהב מלפפונים.",
+      "he_f": "אני אוהבת מלפפונים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The peach is soft.",
+      "he": "האפרסק רך.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "Corn!",
+      "he": "תירס!",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The lemon is sour.",
+      "he": "הלימון חמוץ.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-X",
+      "en": "I love strawberries.",
+      "he": "אני אוהב תותים.",
+      "he_f": "אני אוהבת תותים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A sweet peach.",
+      "he": "אפרסק מתוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The pepper is green.",
+      "he": "הפלפל ירוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Dad is slicing the watermelon.",
+      "he": "אבא פורס את האבטיח.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Grandpa is watering the garden bed.",
+      "he": "סבא משקה את הערוגה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to plant carrots.",
+      "he": "אני רוצה לשתול גזרים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you peel the cucumber?",
+      "he": "אתה יכול לקלף את המלפפון?",
+      "he_f": "את יכולה לקלף את המלפפון?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can wash the strawberries.",
+      "he": "אני יכול לשטוף את התותים.",
+      "he_f": "אני יכולה לשטוף את התותים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-006",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find the corn.",
+      "he": "אני לא מוצא את התירס.",
+      "he_f": "אני לא מוצאת את התירס.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where are the seeds?",
+      "he": "איפה הזרעים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why is the watermelon so sweet?",
+      "he": "למה האבטיח כל כך מתוק?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the strawberries are sweet.",
+      "he": "אני שמח כי התותים מתוקים.",
+      "he_f": "אני שמחה כי התותים מתוקים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The vegetables are growing because Dad is watering them.",
+      "he": "הירקות גדלים כי אבא משקה אותם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            8,
+            8
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you picking strawberries?",
+      "he": "אתה קוטף תותים?",
+      "he_f": "את קוטפת תותים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My sister wants to plant peppers.",
+      "he": "אחותי רוצה לשתול פלפלים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frt-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We planted carrots in the garden bed.",
+      "he": "שתלנו גזרים בערוגה."
+    },
+    {
+      "id": "frt-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma peeled the peaches for us.",
+      "he": "סבתא קילפה לנו את האפרסקים."
+    },
+    {
+      "id": "frt-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you slice the watermelon?",
+      "he": "פרסת את האבטיח?"
+    },
+    {
+      "id": "frt-l3-004",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My grandpa's garden bed is full of vegetables.",
+      "he": "הערוגה של סבא שלי מלאה בירקות."
+    },
+    {
+      "id": "frt-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The vegetables grew all summer.",
+      "he": "הירקות גדלו כל הקיץ."
+    },
+    {
+      "id": "frt-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We ate watermelon all summer.",
+      "he": "אכלנו אבטיח כל הקיץ."
+    },
+    {
+      "id": "frt-l3-007",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The strawberries are in the basket.",
+      "he": "התותים בסל."
+    },
+    {
+      "id": "frt-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the corn grow tall this year?",
+      "he": "התירס גדל גבוה השנה?"
+    },
+    {
+      "id": "frt-l3-009",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My sister's strawberries are red and sweet.",
+      "he": "התותים של אחותי אדומים ומתוקים."
+    },
+    {
+      "id": "frt-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad cut the watermelon into slices.",
+      "he": "אבא חתך את האבטיח לפרוסות."
+    },
+    {
+      "id": "frt-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We picked cucumbers from the garden bed.",
+      "he": "קטפנו מלפפונים מהערוגה."
+    },
+    {
+      "id": "frt-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did Grandpa water the seeds this morning?",
+      "he": "סבא השקה את הזרעים הבוקר?"
+    },
+    {
+      "id": "frt-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to plant corn in the garden bed this spring.",
+      "he": "אנחנו עומדים לשתול תירס בערוגה באביב הזה."
+    },
+    {
+      "id": "frt-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to peel the peach myself.",
+      "he": "אני עומד לקלף את האפרסק בעצמי.",
+      "he_f": "אני עומדת לקלף את האפרסק בעצמי."
+    },
+    {
+      "id": "frt-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This watermelon is sweeter than that one.",
+      "he": "האבטיח הזה מתוק יותר מההוא."
+    },
+    {
+      "id": "frt-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the juiciest peach in the basket.",
+      "he": "זה האפרסק העסיסי ביותר בסל."
+    },
+    {
+      "id": "frt-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must ask a grown-up before you cut the watermelon.",
+      "he": "אתה חייב לבקש ממבוגר לפני שאתה חותך את האבטיח.",
+      "he_f": "את חייבת לבקש ממבוגר לפני שאת חותכת את האבטיח."
+    },
+    {
+      "id": "frt-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should wash the strawberries before you eat them.",
+      "he": "כדאי שתשטוף את התותים לפני שאתה אוכל אותם.",
+      "he_f": "כדאי שתשטפי את התותים לפני שאת אוכלת אותם."
+    },
+    {
+      "id": "frt-l4-007",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you water the seeds every day, they grow.",
+      "he": "אם משקים את הזרעים כל יום, הם גדלים."
+    },
+    {
+      "id": "frt-l4-008",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to pick strawberries in the garden bed tomorrow.",
+      "he": "אנחנו עומדים לקטוף תותים בערוגה מחר."
+    },
+    {
+      "id": "frt-l4-009",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The corn will be ready by summer.",
+      "he": "התירס יהיה מוכן עד הקיץ."
+    },
+    {
+      "id": "frt-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "Carrots are crunchier than cucumbers.",
+      "he": "גזרים פריכים יותר ממלפפונים."
+    },
+    {
+      "id": "frt-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you help me pick the corn?",
+      "he": "תעזור לי לקטוף את התירס?",
+      "he_f": "תעזרי לי לקטוף את התירס?"
+    },
+    {
+      "id": "frt-l4-012",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the peach is ripe, it is sweet.",
+      "he": "אם האפרסק בשל, הוא מתוק."
+    },
+    {
+      "id": "frt-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already washed the cucumbers.",
+      "he": "כבר שטפתי את המלפפונים."
+    },
+    {
+      "id": "frt-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never tasted such sweet peaches.",
+      "he": "מעולם לא טעמתי אפרסקים כל כך מתוקים."
+    },
+    {
+      "id": "frt-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The peaches might be ready this week.",
+      "he": "אולי האפרסקים יהיו מוכנים השבוע."
+    },
+    {
+      "id": "frt-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you plant carrots in spring, you will pick them in summer.",
+      "he": "אם תשתול גזרים באביב, תקטוף אותם בקיץ.",
+      "he_f": "אם תשתלי גזרים באביב, תקטפי אותם בקיץ."
+    },
+    {
+      "id": "frt-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you tasted the watermelon yet?",
+      "he": "טעמת כבר את האבטיח?"
+    },
+    {
+      "id": "frt-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "Grandma has just peeled the peaches.",
+      "he": "סבתא בדיוק קילפה את האפרסקים."
+    },
+    {
+      "id": "frt-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "You may cut the watermelon if a grown-up helps you.",
+      "he": "מותר לך לחתוך את האבטיח אם מבוגר עוזר לך."
+    },
+    {
+      "id": "frt-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If the strawberries are ripe, we will pick them today.",
+      "he": "אם התותים בשלים, נקטוף אותם היום."
+    },
+    {
+      "id": "frt-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The vegetables have grown a lot since spring.",
+      "he": "הירקות גדלו הרבה מאז האביב."
+    },
+    {
+      "id": "frt-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "Grandpa has grown vegetables in this garden bed for many years.",
+      "he": "סבא מגדל ירקות בערוגה הזאת הרבה שנים."
+    },
+    {
+      "id": "frt-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might get cold tonight, so we should cover the young plants.",
+      "he": "אולי יהיה קר הלילה, אז כדאי לכסות את השתילים הצעירים."
+    },
+    {
+      "id": "frt-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we pick the corn today, it will be sweeter.",
+      "he": "אם נקטוף את התירס היום, הוא יהיה מתוק יותר."
+    },
+    {
+      "id": "frt-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "We were picking strawberries while Grandma was washing them.",
+      "he": "קטפנו תותים בזמן שסבתא שטפה אותם."
+    },
+    {
+      "id": "frt-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The garden bed was watered every morning.",
+      "he": "הערוגה הושקתה כל בוקר."
+    },
+    {
+      "id": "frt-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a garden bed, I would grow watermelons.",
+      "he": "אם הייתה לי ערוגה, הייתי מגדל אבטיחים.",
+      "he_f": "אם הייתה לי ערוגה, הייתי מגדלת אבטיחים."
+    },
+    {
+      "id": "frt-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "The peaches had already ripened when we picked them.",
+      "he": "האפרסקים כבר הבשילו כשקטפנו אותם."
+    },
+    {
+      "id": "frt-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The vegetables were grown by my grandfather.",
+      "he": "הירקות גודלו על ידי סבא שלי."
+    },
+    {
+      "id": "frt-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was slicing the cucumber when the knife slipped.",
+      "he": "פרסתי את המלפפון כשהסכין החליקה."
+    },
+    {
+      "id": "frt-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we grew our own vegetables, we would save money.",
+      "he": "אם היינו מגדלים ירקות בעצמנו, היינו חוסכים כסף."
+    },
+    {
+      "id": "frt-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The strawberries were picked before breakfast.",
+      "he": "התותים נקטפו לפני ארוחת הבוקר."
+    },
+    {
+      "id": "frt-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The corn was growing quickly in the warm sun.",
+      "he": "התירס גדל מהר בשמש החמה."
+    },
+    {
+      "id": "frt-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never grown vegetables before this year.",
+      "he": "היא מעולם לא גידלה ירקות לפני השנה הזאת."
+    },
+    {
+      "id": "frt-l6-011",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Vegetables are grown in this garden bed every year.",
+      "he": "ירקות מגודלים בערוגה הזאת כל שנה."
+    },
+    {
+      "id": "frt-l6-012",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If the garden bed were bigger, we would plant more corn.",
+      "he": "אם הערוגה הייתה גדולה יותר, היינו שותלים יותר תירס."
+    },
+    {
+      "id": "frt-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been growing vegetables in this garden bed since spring.",
+      "he": "אנחנו מגדלים ירקות בערוגה הזאת מאז האביב."
+    },
+    {
+      "id": "frt-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Mom said that the watermelon was ready to eat.",
+      "he": "אמא אמרה שהאבטיח מוכן לאכילה."
+    },
+    {
+      "id": "frt-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had watered the seeds, they would have grown faster.",
+      "he": "אם היינו משקים את הזרעים, הם היו גדלים מהר יותר."
+    },
+    {
+      "id": "frt-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandma has been slicing peaches all morning.",
+      "he": "סבתא פורסת אפרסקים כל הבוקר."
+    },
+    {
+      "id": "frt-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could plant strawberries this year.",
+      "he": "אחותי שאלה אם היא יכולה לשתול תותים השנה."
+    },
+    {
+      "id": "frt-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we dig the garden bed, then we plant the seeds.",
+      "he": "קודם אנחנו חופרים את הערוגה, ואז אנחנו שותלים את הזרעים."
+    },
+    {
+      "id": "frt-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the peach looked small, it was very sweet.",
+      "he": "למרות שהאפרסק נראה קטן, הוא היה מתוק מאוד."
+    },
+    {
+      "id": "frt-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the corn was ready, we had been watering it for months.",
+      "he": "עד שהתירס היה מוכן, כבר השקינו אותו חודשים."
+    },
+    {
+      "id": "frt-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the sun had been stronger, the watermelon would have grown faster.",
+      "he": "אם השמש הייתה חזקה יותר, האבטיח היה גדל מהר יותר."
+    },
+    {
+      "id": "frt-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Grandpa told us that he had grown these carrots himself.",
+      "he": "סבא סיפר לנו שהוא גידל את הגזרים האלה בעצמו."
+    },
+    {
+      "id": "frt-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been helping in the garden bed all summer.",
+      "he": "אני עוזר בערוגה כל הקיץ.",
+      "he_f": "אני עוזרת בערוגה כל הקיץ."
+    },
+    {
+      "id": "frt-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, we planted, we watered, and we picked a sweet watermelon.",
+      "he": "בקיצור, שתלנו, השקינו, וקטפנו אבטיח מתוק."
+    }
+  ]
+}
