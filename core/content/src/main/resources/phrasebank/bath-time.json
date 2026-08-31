@@ -587,7 +587,7 @@
       "level": 2,
       "tense": "modal",
       "frame": "i-can-X",
-      "en": "I can wash my hands alone.",
+      "en": "I can wash my hands by myself.",
       "he": "אני יכול לרחוץ ידיים לבד.",
       "he_f": "אני יכולה לרחוץ ידיים לבד.",
       "align": [
@@ -634,7 +634,7 @@
         {
           "en": [
             5,
-            5
+            6
           ],
           "he": [
             4,
@@ -1327,7 +1327,7 @@
       "level": 6,
       "tense": "past-progressive",
       "frame": "when",
-      "en": "I was rinsing the shampoo when the water got cold.",
+      "en": "I was rinsing the shampoo out of my hair when the water got cold.",
       "he": "שטפתי את השמפו מהשיער כשהמים התקררו."
     },
     {

@@ -577,7 +577,7 @@
       "level": 2,
       "tense": "modal",
       "frame": "i-can-X",
-      "en": "I can brush my teeth alone.",
+      "en": "I can brush my teeth by myself.",
       "he": "אני יכול לצחצח שיניים לבד.",
       "he_f": "אני יכולה לצחצח שיניים לבד.",
       "align": [
@@ -624,7 +624,7 @@
         {
           "en": [
             5,
-            5
+            6
           ],
           "he": [
             4,
@@ -1435,7 +1435,7 @@
       "tense": "past-simple",
       "frame": "discourse-although",
       "en": "Although the room was dark, it felt safe and warm.",
-      "he": "למרות שהחדר היה חשוך, הייתה בו תחושה בטוחה וחמימה."
+      "he": "למרות שהחדר היה חשוך, הייתה בו תחושה של ביטחון וחום."
     },
     {
       "id": "bed-l7-008",
