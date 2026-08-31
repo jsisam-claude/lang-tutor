@@ -1077,7 +1077,7 @@
       "tense": "modal",
       "frame": "should",
       "en": "You should ask someone for directions.",
-      "he": "כדאי לשאול מישהו את הדרך."
+      "he": "כדאי לשאול מישהו איך מגיעים."
     },
     {
       "id": "cty-l4-007",
@@ -1142,7 +1142,7 @@
       "tense": "present-perfect",
       "frame": "perfect-for",
       "en": "This shop has been here for many years.",
-      "he": "החנות הזאת נמצאת כאן כבר שנים רבות."
+      "he": "החנות הזאת נמצאת כאן כבר הרבה שנים."
     },
     {
       "id": "cty-l5-003",
@@ -1222,9 +1222,9 @@
       "level": 5,
       "tense": "conditional-first",
       "frame": "if-first",
-      "en": "If you ask the woman in the shop, she will tell you the way.",
-      "he": "אם תשאל את האישה בחנות, היא תגיד לך את הדרך.",
-      "he_f": "אם תשאלי את האישה בחנות, היא תגיד לך את הדרך."
+      "en": "If you ask the woman in the shop, she will tell you how to get there.",
+      "he": "אם תשאל את האישה בחנות, היא תגיד לך איך להגיע.",
+      "he_f": "אם תשאלי את האישה בחנות, היא תגיד לך איך להגיע."
     },
     {
       "id": "cty-l6-001",
