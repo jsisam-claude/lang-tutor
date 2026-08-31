@@ -33,7 +33,7 @@
       "tense": "present-simple",
       "frame": "this-is-my-X",
       "en": "This is my guitar.",
-      "he": "זה הגיטרה שלי.",
+      "he": "זו הגיטרה שלי.",
       "align": [
         {
           "en": [
@@ -1244,7 +1244,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "The drum was played before the party started.",
-      "he": "התוף היה מנוגן לפני שהמסיבה התחילה."
+      "he": "ניגנו בתוף לפני שהמסיבה התחילה."
     },
     {
       "id": "mus-l6-003",
@@ -1351,8 +1351,8 @@
       "tense": "conditional-third",
       "frame": "if-third",
       "en": "If you had told me about the party, I would have brought my guitar.",
-      "he": "אם היית אומר לי על המסיבה, הייתי מביא את הגיטרה שלי.",
-      "he_f": "אם היית אומרת לי על המסיבה, הייתי מביאה את הגיטרה שלי."
+      "he": "אם היית מספר לי על המסיבה, הייתי מביא את הגיטרה שלי.",
+      "he_f": "אם היית מספרת לי על המסיבה, הייתי מביאה את הגיטרה שלי."
     },
     {
       "id": "mus-l7-004",

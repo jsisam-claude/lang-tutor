@@ -366,9 +366,9 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "i-love-Ving",
-      "en": "I love playing.",
-      "he": "אני אוהב לשחק.",
-      "he_f": "אני אוהבת לשחק.",
+      "en": "I love games.",
+      "he": "אני אוהב משחקים.",
+      "he_f": "אני אוהבת משחקים.",
       "align": [
         {
           "en": [
@@ -1008,7 +1008,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "X-Ved",
-      "en": "We had a small quarrel.",
+      "en": "We had a small argument.",
       "he": "היה לנו ריב קטן."
     },
     {
@@ -1057,14 +1057,14 @@
       "tense": "past-simple",
       "frame": "X-Ved",
       "en": "The children shared their toys.",
-      "he": "הילדים חילקו את הצעצועים שלהם."
+      "he": "הילדים חלקו את הצעצועים שלהם."
     },
     {
       "id": "frd-l3-011",
       "level": 3,
       "tense": "past-simple",
       "frame": "emotion-because",
-      "en": "I was sad because we had a small quarrel.",
+      "en": "I was sad because we had a small argument.",
       "he": "הייתי עצוב כי היה לנו ריב קטן.",
       "he_f": "הייתי עצובה כי היה לנו ריב קטן."
     },
@@ -1073,7 +1073,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "we-Ved",
-      "en": "We made up after the quarrel.",
+      "en": "We made up after the argument.",
       "he": "השלמנו אחרי הריב."
     },
     {
@@ -1217,7 +1217,7 @@
       "tense": "present-perfect",
       "frame": "perfect-question",
       "en": "Have you made any new friends?",
-      "he": "עשית חברים חדשים?"
+      "he": "הכרת חברים חדשים?"
     },
     {
       "id": "frd-l5-006",
@@ -1266,7 +1266,7 @@
       "level": 5,
       "tense": "modal",
       "frame": "might",
-      "en": "My friend might feel embarrassed after our quarrel.",
+      "en": "My friend might feel embarrassed after our argument.",
       "he": "החבר שלי אולי ירגיש נבוך אחרי הריב שלנו."
     },
     {
@@ -1322,7 +1322,7 @@
       "level": 6,
       "tense": "conditional-second",
       "frame": "if-second",
-      "en": "If I hurt my friend's feelings, I would apologize right away.",
+      "en": "If I broke my friend's toy, I would apologize right away.",
       "he": "אם הייתי פוגע ברגשות של החבר שלי, הייתי מתנצל מיד.",
       "he_f": "אם הייתי פוגעת ברגשות של החבר שלי, הייתי מתנצלת מיד."
     },
@@ -1348,7 +1348,7 @@
       "level": 6,
       "tense": "past-simple",
       "frame": "passive",
-      "en": "The quarrel was forgotten quickly.",
+      "en": "The argument was forgotten quickly.",
       "he": "הריב נשכח מהר."
     },
     {
@@ -1364,7 +1364,7 @@
       "level": 6,
       "tense": "present-simple",
       "frame": "passive",
-      "en": "A small quarrel is forgotten fast between good friends.",
+      "en": "A small argument is forgotten fast between good friends.",
       "he": "ריב קטן נשכח מהר בין חברים טובים."
     },
     {
@@ -1389,8 +1389,8 @@
       "level": 7,
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
-      "en": "My friend has been teaching me to ride a bike.",
-      "he": "החבר שלי מלמד אותי לרכוב על אופניים כבר כמה שבועות."
+      "en": "My friend has been teaching me to ride a bike for a few weeks.",
+      "he": "החבר שלי מלמד אותי לרכוב על אופניים."
     },
     {
       "id": "frd-l7-003",
@@ -1447,15 +1447,15 @@
       "level": 7,
       "tense": "past-perfect-progressive",
       "frame": "by-the-time",
-      "en": "By the time we made up, we had been angry for a whole week.",
-      "he": "עד שהשלמנו, כבר היינו כועסים במשך שבוע שלם."
+      "en": "By the time we made up, we had been arguing for a whole week.",
+      "he": "עד שהשלמנו, כבר התווכחנו במשך שבוע שלם."
     },
     {
       "id": "frd-l7-010",
       "level": 7,
       "tense": "past-simple",
       "frame": "discourse-sequence",
-      "en": "First we had a small quarrel, then we talked, and now we are friends again.",
+      "en": "First we had a small argument, then we talked, and now we are friends again.",
       "he": "קודם היה לנו ריב קטן, ואז דיברנו, ועכשיו אנחנו שוב חברים."
     },
     {
@@ -1463,7 +1463,7 @@
       "level": 7,
       "tense": "past-simple",
       "frame": "discourse-although",
-      "en": "Although we had a small quarrel, we are still best friends.",
+      "en": "Although we had a small argument, we are still best friends.",
       "he": "למרות שהיה לנו ריב קטן, אנחנו עדיין חברים הכי טובים."
     },
     {

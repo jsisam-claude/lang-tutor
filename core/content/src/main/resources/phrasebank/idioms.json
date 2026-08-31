@@ -669,7 +669,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "hands-full",
-      "en": "My hands were full all day.",
+      "en": "I had my hands full all day.",
       "he": "הייתי עסוק מאוד כל היום.",
       "he_f": "הייתי עסוקה מאוד כל היום."
     },
@@ -794,7 +794,7 @@
       "tense": "present-simple",
       "frame": "best-of-both-worlds",
       "en": "This is the best of both worlds.",
-      "he": "זה הכי טוב משני העולמות."
+      "he": "זה הטוב שבשני העולמות."
     },
     {
       "id": "idm-l4-010",
@@ -1035,7 +1035,7 @@
       "tense": "past-simple",
       "frame": "keep-an-eye-on",
       "en": "She told me to keep an eye on the soup.",
-      "he": "היא אמרה לי לשמור עין על המרק."
+      "he": "היא אמרה לי לשים עין על המרק."
     },
     {
       "id": "idm-l7-003",

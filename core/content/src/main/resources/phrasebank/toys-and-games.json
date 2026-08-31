@@ -1235,7 +1235,7 @@
       "tense": "modal",
       "frame": "may",
       "en": "My brother may want to play too.",
-      "he": "אולי אחי ירצה לשחק גם."
+      "he": "אולי גם אחי ירצה לשחק."
     },
     {
       "id": "toy-l5-008",
@@ -1243,7 +1243,7 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If we finish the puzzle today, we will start a new one.",
-      "he": "אם נסיים את הפאזל היום, נתחיל אחד חדש."
+      "he": "אם נסיים את הפאזל היום, נתחיל פאזל חדש."
     },
     {
       "id": "toy-l5-009",
@@ -1258,7 +1258,7 @@
       "level": 5,
       "tense": "present-perfect",
       "frame": "perfect-since",
-      "en": "We have played with this toy box since spring.",
+      "en": "We have played with these toys since spring.",
       "he": "אנחנו משחקים בארגז הצעצועים הזה מאז האביב."
     },
     {
@@ -1293,7 +1293,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "The toys were tidied up before the guests arrived.",
-      "he": "הצעצועים היו מסודרים לפני שהאורחים הגיעו."
+      "he": "הצעצועים סודרו לפני שהאורחים הגיעו."
     },
     {
       "id": "toy-l6-003",

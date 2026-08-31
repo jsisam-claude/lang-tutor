@@ -1021,7 +1021,7 @@
       "tense": "past-simple",
       "frame": "X-Ved-Y",
       "en": "Grandpa pushed me on the swing.",
-      "he": "סבא דחף אותי על הנדנדה."
+      "he": "סבא דחף אותי בנדנדה."
     },
     {
       "id": "ply-l3-012",
@@ -1242,7 +1242,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "The sandbox was cleaned before we arrived.",
-      "he": "ארגז החול היה מנוקה לפני שהגענו."
+      "he": "ארגז החול נוקה לפני שהגענו."
     },
     {
       "id": "ply-l6-003",
@@ -1341,7 +1341,7 @@
       "tense": "past-simple",
       "frame": "reported-speech",
       "en": "My friend said that the swings were free.",
-      "he": "החבר שלי אמר שהנדנדות היו פנויות."
+      "he": "החבר שלי אמר שהנדנדות פנויות."
     },
     {
       "id": "ply-l7-003",

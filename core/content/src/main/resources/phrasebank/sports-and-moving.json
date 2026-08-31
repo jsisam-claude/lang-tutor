@@ -1030,7 +1030,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "did-question",
-      "en": "Did the race start yet?",
+      "en": "Did the race start on time?",
       "he": "המרוץ כבר התחיל?"
     },
     {
@@ -1195,7 +1195,7 @@
       "level": 5,
       "tense": "present-perfect",
       "frame": "perfect-for",
-      "en": "My brother has ridden his bike for an hour.",
+      "en": "My brother has been on his bike for an hour.",
       "he": "אחי רוכב על האופניים שלו כבר שעה."
     },
     {
@@ -1351,7 +1351,7 @@
       "tense": "past-progressive",
       "frame": "X-was-Ving",
       "en": "My teammates were cheering for me.",
-      "he": "חברי לקבוצה עודדו אותי."
+      "he": "חבריי לקבוצה עודדו אותי."
     },
     {
       "id": "spo-l6-010",
