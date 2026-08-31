@@ -1,0 +1,1426 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "kitchen-and-baking",
+  "title": {
+    "en": "Baking day",
+    "he": "יום אפייה"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "kit-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A cookie!",
+      "he": "עוגייה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "Soft dough!",
+      "he": "בצק רך!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "White flour!",
+      "he": "קמח לבן!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The oven is hot.",
+      "he": "התנור חם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bowl is big.",
+      "he": "הקערה גדולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The apron is blue.",
+      "he": "הסינר כחול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The cookie is small.",
+      "he": "העוגייה קטנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-a-X",
+      "en": "I see a cake.",
+      "he": "אני רואה עוגה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-the-X",
+      "en": "I see the oven.",
+      "he": "אני רואה את התנור.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like cookies.",
+      "he": "אני אוהב עוגיות.",
+      "he_f": "אני אוהבת עוגיות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-X",
+      "en": "I love vanilla.",
+      "he": "אני אוהב וניל.",
+      "he_f": "אני אוהבת וניל.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Three cookies.",
+      "he": "שלוש עוגיות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Mom is mixing the dough.",
+      "he": "אמא מערבבת את הבצק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "i-am-Ving-X",
+      "en": "I am rolling the dough.",
+      "he": "אני מגלגל את הבצק.",
+      "he_f": "אני מגלגלת את הבצק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-003",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "we-are-Ving-X",
+      "en": "We are cutting out stars.",
+      "he": "אנחנו חותכים כוכבים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-004",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "what-are-you-Ving",
+      "en": "What are you baking?",
+      "he": "מה אתה אופה?",
+      "he_f": "מה את אופה?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the rolling pin?",
+      "he": "איפה המערוך?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            4
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to bake cookies.",
+      "he": "אני רוצה לאפות עוגיות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "She wants to decorate the cake.",
+      "he": "היא רוצה לקשט את העוגה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-008",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you measure the flour?",
+      "he": "אתה יכול למדוד את הקמח?",
+      "he_f": "את יכולה למדוד את הקמח?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-009",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find the measuring cup.",
+      "he": "אני לא מוצא את כוס המדידה.",
+      "he_f": "אני לא מוצאת את כוס המדידה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-010",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can knead the dough.",
+      "he": "אני יכול ללוש את הבצק.",
+      "he_f": "אני יכולה ללוש את הבצק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the kitchen smells like cookies.",
+      "he": "אני שמח כי המטבח מריח כמו עוגיות.",
+      "he_f": "אני שמחה כי המטבח מריח כמו עוגיות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-is-X",
+      "en": "Why is the timer so loud?",
+      "he": "למה הטיימר כל כך רועש?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kit-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We baked cookies yesterday.",
+      "he": "אפינו עוגיות אתמול."
+    },
+    {
+      "id": "kit-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma made a cake for the party.",
+      "he": "סבתא הכינה עוגה למסיבה."
+    },
+    {
+      "id": "kit-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I measured the sugar carefully.",
+      "he": "מדדתי את הסוכר בזהירות."
+    },
+    {
+      "id": "kit-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-for-time",
+      "en": "The cookies baked for ten minutes.",
+      "he": "העוגיות נאפו עשר דקות."
+    },
+    {
+      "id": "kit-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "the-Xs-were-adj",
+      "en": "The cupcakes were delicious.",
+      "he": "הקפקייקים היו טעימים."
+    },
+    {
+      "id": "kit-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "My mom's cookies were sweet.",
+      "he": "העוגיות של אמא שלי היו מתוקות."
+    },
+    {
+      "id": "kit-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you wash the mixing bowl?",
+      "he": "שטפת את הקערה?"
+    },
+    {
+      "id": "kit-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the timer ring?",
+      "he": "הטיימר צלצל?"
+    },
+    {
+      "id": "kit-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved-X-and-Y",
+      "en": "I mixed the flour and the sugar.",
+      "he": "ערבבתי את הקמח ואת הסוכר."
+    },
+    {
+      "id": "kit-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-was-adj-in-time",
+      "en": "The dough was ready in one hour.",
+      "he": "הבצק היה מוכן תוך שעה."
+    },
+    {
+      "id": "kit-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive-plural",
+      "en": "My brother's cookies were burnt.",
+      "he": "העוגיות של אחי היו שרופות."
+    },
+    {
+      "id": "kit-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved-X-into-Y",
+      "en": "We poured the batter into the pan.",
+      "he": "יצקנו את הבלילה לתבנית."
+    },
+    {
+      "id": "kit-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to bake a cake for the party.",
+      "he": "אנחנו עומדים לאפות עוגה למסיבה."
+    },
+    {
+      "id": "kit-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to measure the flour first.",
+      "he": "אני עומד למדוד את הקמח קודם.",
+      "he_f": "אני עומדת למדוד את הקמח קודם."
+    },
+    {
+      "id": "kit-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "She is going to roll out the dough.",
+      "he": "היא עומדת לרדד את הבצק."
+    },
+    {
+      "id": "kit-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The cookies bake faster than the cake.",
+      "he": "העוגיות נאפות מהר יותר מהעוגה."
+    },
+    {
+      "id": "kit-l4-005",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the tallest cake on the table.",
+      "he": "זאת העוגה הגבוהה ביותר על השולחן."
+    },
+    {
+      "id": "kit-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must ask a grown-up before you open the oven.",
+      "he": "אתה חייב לבקש ממבוגר לפני שאתה פותח את התנור.",
+      "he_f": "את חייבת לבקש ממבוגר לפני שאת פותחת את התנור."
+    },
+    {
+      "id": "kit-l4-007",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should let the cookies cool on the rack.",
+      "he": "כדאי לך לתת לעוגיות להתקרר על הרשת."
+    },
+    {
+      "id": "kit-l4-008",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you mix flour and butter, you get dough.",
+      "he": "אם מערבבים קמח וחמאה, מקבלים בצק."
+    },
+    {
+      "id": "kit-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the oven is too hot, the cookies burn.",
+      "he": "אם התנור חם מדי, העוגיות נשרפות."
+    },
+    {
+      "id": "kit-l4-010",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to decorate cupcakes this weekend.",
+      "he": "אנחנו עומדים לקשט קפקייקים בסוף השבוע."
+    },
+    {
+      "id": "kit-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The cake will be ready in an hour.",
+      "he": "העוגה תהיה מוכנה בעוד שעה."
+    },
+    {
+      "id": "kit-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will the cookies be ready by five?",
+      "he": "העוגיות יהיו מוכנות עד חמש?"
+    },
+    {
+      "id": "kit-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already mixed the batter.",
+      "he": "כבר ערבבתי את הבלילה."
+    },
+    {
+      "id": "kit-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-many-times",
+      "en": "We have made this recipe many times.",
+      "he": "הכנו את המתכון הזה הרבה פעמים."
+    },
+    {
+      "id": "kit-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might add more sugar.",
+      "he": "אולי נוסיף עוד סוכר."
+    },
+    {
+      "id": "kit-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you mix the batter well, the cake will be fluffy.",
+      "he": "אם תערבב את הבלילה היטב, העוגה תהיה תפוחה.",
+      "he_f": "אם תערבבי את הבלילה היטב, העוגה תהיה תפוחה."
+    },
+    {
+      "id": "kit-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my apron?",
+      "he": "ראית את הסינר שלי?"
+    },
+    {
+      "id": "kit-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The cookies have just come out of the oven.",
+      "he": "העוגיות בדיוק יצאו מהתנור."
+    },
+    {
+      "id": "kit-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "The dough may need more flour.",
+      "he": "אולי הבצק צריך עוד קמח."
+    },
+    {
+      "id": "kit-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we mix faster, the dough will be ready sooner.",
+      "he": "אם נערבב מהר יותר, הבצק יהיה מוכן מוקדם יותר."
+    },
+    {
+      "id": "kit-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never baked bread from scratch.",
+      "he": "מעולם לא אפיתי לחם תוצרת בית."
+    },
+    {
+      "id": "kit-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The house has smelled like vanilla since this morning.",
+      "he": "הבית מריח כמו וניל מאז הבוקר."
+    },
+    {
+      "id": "kit-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might taste better with cinnamon.",
+      "he": "אולי זה יהיה טעים יותר עם קינמון."
+    },
+    {
+      "id": "kit-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If the timer rings, the cookies will be ready.",
+      "he": "אם הטיימר מצלצל, העוגיות יהיו מוכנות."
+    },
+    {
+      "id": "kit-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was rolling out dough while I was cutting out shapes.",
+      "he": "אמא רידדה בצק בזמן שחתכתי צורות."
+    },
+    {
+      "id": "kit-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The cookie shapes were cut out before we baked them.",
+      "he": "הצורות נחתכו לפני שאפינו אותן."
+    },
+    {
+      "id": "kit-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bigger oven, I would bake two trays at once.",
+      "he": "אם היה לי תנור גדול יותר, הייתי אופה שתי תבניות בבת אחת."
+    },
+    {
+      "id": "kit-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already cooled the cookies when Dad came home.",
+      "he": "כבר קיררנו את העוגיות כשאבא הגיע הביתה."
+    },
+    {
+      "id": "kit-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The bread was baked by Grandpa.",
+      "he": "הלחם נאפה על ידי סבא."
+    },
+    {
+      "id": "kit-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was watching the oven light when the timer rang.",
+      "he": "הסתכלתי על אור התנור כשהטיימר צלצל."
+    },
+    {
+      "id": "kit-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had more sugar, we would make more cookies.",
+      "he": "אם היה לנו יותר סוכר, היינו מכינים עוד עוגיות."
+    },
+    {
+      "id": "kit-l6-008",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The smell of fresh bread was filling the whole house.",
+      "he": "ריח הלחם הטרי מילא את כל הבית."
+    },
+    {
+      "id": "kit-l6-009",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never baked a pie before.",
+      "he": "היא מעולם לא אפתה פאי לפני כן."
+    },
+    {
+      "id": "kit-l6-010",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were the baker, I would add more cinnamon.",
+      "he": "אם הייתי האופה, הייתי מוסיף עוד קינמון.",
+      "he_f": "אם הייתי האופה, הייתי מוסיפה עוד קינמון."
+    },
+    {
+      "id": "kit-l6-011",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "This bread is baked with honey.",
+      "he": "הלחם הזה נאפה עם דבש."
+    },
+    {
+      "id": "kit-l6-012",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "by-time",
+      "en": "By the time the cake was ready, we had already washed all the bowls.",
+      "he": "עד שהעוגה הייתה מוכנה, כבר שטפנו את כל הקערות."
+    },
+    {
+      "id": "kit-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been rolling out dough all afternoon.",
+      "he": "אני מרדד בצק כל אחר הצהריים.",
+      "he_f": "אני מרדדת בצק כל אחר הצהריים."
+    },
+    {
+      "id": "kit-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Mom said that the cake was almost ready.",
+      "he": "אמא אמרה שהעוגה כמעט מוכנה."
+    },
+    {
+      "id": "kit-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had told me, I would have saved you a cookie.",
+      "he": "אם היית אומר לי, הייתי שומר לך עוגייה.",
+      "he_f": "אם היית אומרת לי, הייתי שומרת לך עוגייה."
+    },
+    {
+      "id": "kit-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Dad has been rolling out pie dough all morning.",
+      "he": "אבא מרדד בצק לפאי כל הבוקר."
+    },
+    {
+      "id": "kit-l7-005",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had already decorated the cake.",
+      "he": "אמא סיפרה לנו שהיא כבר קישטה את העוגה."
+    },
+    {
+      "id": "kit-l7-006",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-question",
+      "en": "My brother asked whether the cookies would be ready soon.",
+      "he": "אחי שאל אם העוגיות יהיו מוכנות בקרוב."
+    },
+    {
+      "id": "kit-l7-007",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we measure the flour, then we mix it with the butter.",
+      "he": "קודם אנחנו מודדים את הקמח, ואז מערבבים אותו עם החמאה."
+    },
+    {
+      "id": "kit-l7-008",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the dough looked too sticky, the cookies turned out perfect.",
+      "he": "למרות שהבצק נראה דביק מדי, העוגיות יצאו מושלמות."
+    },
+    {
+      "id": "kit-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the mixer had worked, I would have made the batter faster.",
+      "he": "אם המיקסר היה עובד, הייתי מכין את הבלילה מהר יותר.",
+      "he_f": "אם המיקסר היה עובד, הייתי מכינה את הבלילה מהר יותר."
+    },
+    {
+      "id": "kit-l7-010",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been decorating cupcakes for an hour.",
+      "he": "אנחנו מקשטים קפקייקים כבר שעה."
+    },
+    {
+      "id": "kit-l7-011",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone helped, so the cookies were ready on time.",
+      "he": "בקיצור, כולם עזרו, ולכן העוגיות היו מוכנות בזמן."
+    },
+    {
+      "id": "kit-l7-012",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the last tray came out of the oven, we had been baking for four hours.",
+      "he": "עד שהמגש האחרון יצא מהתנור, כבר אפינו במשך ארבע שעות."
+    }
+  ]
+}
