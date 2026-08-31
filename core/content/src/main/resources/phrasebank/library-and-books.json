@@ -1164,7 +1164,7 @@
       "tense": "present-simple",
       "frame": "comparative",
       "en": "My book is more interesting than the movie.",
-      "he": "הספר שלי יותר מעניין מהסרט."
+      "he": "הספר שלי מעניין יותר מהסרט."
     },
     {
       "id": "lib-l4-011",
@@ -1262,7 +1262,7 @@
       "tense": "present-perfect",
       "frame": "perfect-since",
       "en": "I have had this library card since last summer.",
-      "he": "יש לי את כרטיס הספרייה הזה מאז הקיץ שעבר."
+      "he": "כרטיס הספרייה הזה אצלי מאז הקיץ שעבר."
     },
     {
       "id": "lib-l5-011",
@@ -1344,7 +1344,7 @@
       "level": 6,
       "tense": "present-simple",
       "frame": "passive",
-      "en": "This book is borrowed often.",
+      "en": "This book is often borrowed.",
       "he": "הספר הזה מושאל לעתים קרובות."
     },
     {
