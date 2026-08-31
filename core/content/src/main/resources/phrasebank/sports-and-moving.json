@@ -1,0 +1,1480 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "sports-and-moving",
+  "title": {
+    "en": "Sports and moving",
+    "he": "ספורט ותנועה"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "spo-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A ball!",
+      "he": "כדור!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my ball.",
+      "he": "זה הכדור שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a bike.",
+      "he": "אני רואה אופניים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The ball is big.",
+      "he": "הכדור גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The shoes are white.",
+      "he": "הנעליים לבנות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my bike.",
+      "he": "אני אוהב את האופניים שלי.",
+      "he_f": "אני אוהבת את האופניים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The bike is green.",
+      "he": "האופניים ירוקים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two balls.",
+      "he": "שני כדורים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The ball is here.",
+      "he": "הכדור כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I love my team.",
+      "he": "אני אוהב את הקבוצה שלי.",
+      "he_f": "אני אוהבת את הקבוצה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The park is big.",
+      "he": "הפארק גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The team is happy.",
+      "he": "הקבוצה שמחה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My brother is running in the park.",
+      "he": "אחי רץ בפארק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My sister is jumping in the yard.",
+      "he": "אחותי קופצת בחצר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-003",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can ride a bike.",
+      "he": "אני יכול לרכוב על אופניים.",
+      "he_f": "אני יכולה לרכוב על אופניים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my water bottle.",
+      "he": "אני לא מוצא את בקבוק המים שלי.",
+      "he_f": "אני לא מוצאת את בקבוק המים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            4,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My friend wants to kick the ball with me.",
+      "he": "החבר שלי רוצה לבעוט בכדור איתי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to ride my bike in the park.",
+      "he": "אני רוצה לרכוב על האופניים שלי בפארק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            5
+          ]
+        },
+        {
+          "en": [
+            6,
+            8
+          ],
+          "he": [
+            6,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my ball?",
+      "he": "איפה הכדור שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-008",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "what-are-you-Ving",
+      "en": "What are you throwing?",
+      "he": "מה אתה זורק?",
+      "he_f": "מה את זורקת?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "why-are-you-Ving",
+      "en": "Why are you stretching?",
+      "he": "למה אתה עושה מתיחות?",
+      "he_f": "למה את עושה מתיחות?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because I love to play.",
+      "he": "אני שמח כי אני אוהב לשחק.",
+      "he_f": "אני שמחה כי אני אוהבת לשחק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "emotion-because",
+      "en": "My brother is tired because he is running a lot.",
+      "he": "אחי עייף כי הוא רץ הרבה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            8,
+            9
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l2-012",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you drinking water?",
+      "he": "אתה שותה מים?",
+      "he_f": "את שותה מים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spo-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We ran in the park yesterday.",
+      "he": "רצנו בפארק אתמול."
+    },
+    {
+      "id": "spo-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My sister jumped over the rope.",
+      "he": "אחותי קפצה מעל החבל."
+    },
+    {
+      "id": "spo-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "I kicked the ball to my friend.",
+      "he": "בעטתי בכדור לחבר שלי."
+    },
+    {
+      "id": "spo-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "She threw the ball to her team.",
+      "he": "היא זרקה את הכדור לקבוצה שלה."
+    },
+    {
+      "id": "spo-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you ride your bike today?",
+      "he": "רכבת על האופניים שלך היום?"
+    },
+    {
+      "id": "spo-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the race start yet?",
+      "he": "המרוץ כבר התחיל?"
+    },
+    {
+      "id": "spo-l3-007",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My friend's bike is blue.",
+      "he": "האופניים של החבר שלי כחולים."
+    },
+    {
+      "id": "spo-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I drank water after I played.",
+      "he": "שתיתי מים אחרי ששיחקתי."
+    },
+    {
+      "id": "spo-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We stretched before the race.",
+      "he": "עשינו מתיחות לפני המרוץ."
+    },
+    {
+      "id": "spo-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "Everyone tried their best in the race.",
+      "he": "כולם ניסו הכי טוב שיכלו במרוץ."
+    },
+    {
+      "id": "spo-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "plural-past",
+      "en": "My shoes got dirty at practice.",
+      "he": "הנעליים שלי התלכלכו באימון."
+    },
+    {
+      "id": "spo-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-but",
+      "en": "We didn't win, but we had fun.",
+      "he": "לא ניצחנו, אבל נהנינו."
+    },
+    {
+      "id": "spo-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to play soccer in the park.",
+      "he": "אנחנו עומדים לשחק כדורגל בפארק."
+    },
+    {
+      "id": "spo-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This ball is bigger than that one.",
+      "he": "הכדור הזה גדול יותר מההוא."
+    },
+    {
+      "id": "spo-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the most fun part of practice.",
+      "he": "זה החלק הכי כיף באימון."
+    },
+    {
+      "id": "spo-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must drink water after you play.",
+      "he": "אתה חייב לשתות מים אחרי שאתה משחק.",
+      "he_f": "את חייבת לשתות מים אחרי שאת משחקת."
+    },
+    {
+      "id": "spo-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should do some stretches before you run.",
+      "he": "כדאי שתעשה מתיחות לפני שאתה רץ.",
+      "he_f": "כדאי שתעשי מתיחות לפני שאת רצה."
+    },
+    {
+      "id": "spo-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you try hard, you feel proud.",
+      "he": "אם אתה מתאמץ, אתה מרגיש גאה.",
+      "he_f": "אם את מתאמצת, את מרגישה גאה."
+    },
+    {
+      "id": "spo-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to ride my bike after lunch.",
+      "he": "אני עומד לרכוב על האופניים שלי אחרי ארוחת הצהריים.",
+      "he_f": "אני עומדת לרכוב על האופניים שלי אחרי ארוחת הצהריים."
+    },
+    {
+      "id": "spo-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will throw the ball to me in the yard.",
+      "he": "אבא יזרוק לי את הכדור בחצר."
+    },
+    {
+      "id": "spo-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to race to the tree, just for fun.",
+      "he": "אנחנו עומדים להתחרות עד העץ, סתם בשביל הכיף."
+    },
+    {
+      "id": "spo-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My bike ride today is longer than yesterday's.",
+      "he": "הרכיבה שלי היום ארוכה יותר מאתמול."
+    },
+    {
+      "id": "spo-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If we drink water after we play, we feel better.",
+      "he": "אם אנחנו שותים מים אחרי שאנחנו משחקים, אנחנו מרגישים טוב יותר."
+    },
+    {
+      "id": "spo-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you have a race with me to the fence?",
+      "he": "תעשה איתי מרוץ עד הגדר?",
+      "he_f": "תעשי איתי מרוץ עד הגדר?"
+    },
+    {
+      "id": "spo-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have done my stretches already.",
+      "he": "כבר עשיתי מתיחות."
+    },
+    {
+      "id": "spo-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "My brother has ridden his bike for an hour.",
+      "he": "אחי רוכב על האופניים שלו כבר שעה."
+    },
+    {
+      "id": "spo-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might have a race after lunch.",
+      "he": "אולי נעשה מרוץ אחרי ארוחת הצהריים."
+    },
+    {
+      "id": "spo-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you drink water now, you will feel better later.",
+      "he": "אם תשתה מים עכשיו, תרגיש טוב יותר אחר כך.",
+      "he_f": "אם תשתי מים עכשיו, תרגישי טוב יותר אחר כך."
+    },
+    {
+      "id": "spo-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my water bottle?",
+      "he": "ראית את בקבוק המים שלי?"
+    },
+    {
+      "id": "spo-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "I have just finished my race.",
+      "he": "בדיוק סיימתי את המרוץ שלי."
+    },
+    {
+      "id": "spo-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My friend may join us for the race.",
+      "he": "אולי החבר שלי יצטרף אלינו למרוץ."
+    },
+    {
+      "id": "spo-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we practice together, we will have more fun.",
+      "he": "אם נתאמן ביחד, יהיה לנו יותר כיף."
+    },
+    {
+      "id": "spo-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never given up during a race.",
+      "he": "מעולם לא ויתרתי באמצע מרוץ."
+    },
+    {
+      "id": "spo-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "I have played outside since this morning.",
+      "he": "אני משחק בחוץ מאז הבוקר.",
+      "he_f": "אני משחקת בחוץ מאז הבוקר."
+    },
+    {
+      "id": "spo-l5-011",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If it doesn't rain, we will play outside.",
+      "he": "אם לא יירד גשם, נשחק בחוץ."
+    },
+    {
+      "id": "spo-l5-012",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might race to the big tree.",
+      "he": "אולי נתחרה עד העץ הגדול."
+    },
+    {
+      "id": "spo-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was doing stretches while my friend was warming up.",
+      "he": "עשיתי מתיחות בזמן שהחבר שלי התחמם."
+    },
+    {
+      "id": "spo-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The ball was thrown over the fence.",
+      "he": "הכדור נזרק מעל הגדר."
+    },
+    {
+      "id": "spo-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more time, I would practice every day.",
+      "he": "אם היה לי יותר זמן, הייתי מתאמן כל יום.",
+      "he_f": "אם היה לי יותר זמן, הייתי מתאמנת כל יום."
+    },
+    {
+      "id": "spo-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already stretched when the race began.",
+      "he": "כבר עשינו מתיחות כשהמרוץ התחיל."
+    },
+    {
+      "id": "spo-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The game was organized by our coach.",
+      "he": "המשחק אורגן על ידי המאמן שלנו."
+    },
+    {
+      "id": "spo-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was running when I saw my friend.",
+      "he": "רצתי כשראיתי את החבר שלי."
+    },
+    {
+      "id": "spo-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we lost the race, we would still be proud that we tried.",
+      "he": "אם היינו מפסידים במרוץ, היינו עדיין גאים שניסינו."
+    },
+    {
+      "id": "spo-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The water bottles were filled before the game.",
+      "he": "בקבוקי המים מולאו לפני המשחק."
+    },
+    {
+      "id": "spo-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My teammates were cheering for me.",
+      "he": "חברי לקבוצה עודדו אותי."
+    },
+    {
+      "id": "spo-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never ridden a bike before that day.",
+      "he": "היא מעולם לא רכבה על אופניים לפני היום ההוא."
+    },
+    {
+      "id": "spo-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would try again next time.",
+      "he": "במקומך הייתי מנסה שוב בפעם הבאה."
+    },
+    {
+      "id": "spo-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "The rules are explained before every game.",
+      "he": "החוקים מוסברים לפני כל משחק."
+    },
+    {
+      "id": "spo-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been practicing my throw all week.",
+      "he": "אני מתאמן בזריקת כדור כל השבוע.",
+      "he_f": "אני מתאמנת בזריקת כדור כל השבוע."
+    },
+    {
+      "id": "spo-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The coach said that the game was about to start.",
+      "he": "המאמן אמר שהמשחק עומד להתחיל."
+    },
+    {
+      "id": "spo-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If I had practiced more, I would have jumped farther.",
+      "he": "אם הייתי מתאמן יותר, הייתי קופץ רחוק יותר.",
+      "he_f": "אם הייתי מתאמנת יותר, הייתי קופצת רחוק יותר."
+    },
+    {
+      "id": "spo-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been jumping rope all afternoon.",
+      "he": "אני מדלג בחבל כל אחר הצהריים.",
+      "he_f": "אני מדלגת בחבל כל אחר הצהריים."
+    },
+    {
+      "id": "spo-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My friend asked whether he could join the team.",
+      "he": "החבר שלי שאל אם הוא יכול להצטרף לקבוצה."
+    },
+    {
+      "id": "spo-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we stretch, then we run around the field.",
+      "he": "קודם אנחנו עושים מתיחות, ואז אנחנו רצים סביב המגרש."
+    },
+    {
+      "id": "spo-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although we lost the game, we had a great time.",
+      "he": "למרות שהפסדנו במשחק, נהנינו מאוד."
+    },
+    {
+      "id": "spo-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the race started, we had been warming up for twenty minutes.",
+      "he": "עד שהמרוץ התחיל, כבר התחממנו במשך עשרים דקות."
+    },
+    {
+      "id": "spo-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the weather had been better, we would have had the race outside.",
+      "he": "אם מזג האוויר היה טוב יותר, היינו עושים את המרוץ בחוץ."
+    },
+    {
+      "id": "spo-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "My friend told us that she had finished the race.",
+      "he": "החברה שלי סיפרה לנו שהיא סיימה את המרוץ."
+    },
+    {
+      "id": "spo-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been riding our bikes together all summer.",
+      "he": "אנחנו רוכבים על האופניים ביחד כל הקיץ."
+    },
+    {
+      "id": "spo-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone tried their best and had a wonderful day.",
+      "he": "בקיצור, כולם ניסו הכי טוב שיכלו ונהנו מיום נהדר."
+    }
+  ]
+}

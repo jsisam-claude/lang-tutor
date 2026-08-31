@@ -1,0 +1,1430 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "music-and-dancing",
+  "title": {
+    "en": "Music and dancing",
+    "he": "מוזיקה וריקוד"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "mus-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A drum!",
+      "he": "תוף!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my guitar.",
+      "he": "זה הגיטרה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a recorder.",
+      "he": "אני רואה חלילית.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The drum is loud.",
+      "he": "התוף חזק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The music is quiet.",
+      "he": "המוזיקה שקטה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The guitar is brown.",
+      "he": "הגיטרה חומה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The recorder is yellow.",
+      "he": "החלילית צהובה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my drum.",
+      "he": "אני אוהב את התוף שלי.",
+      "he_f": "אני אוהבת את התוף שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I love my guitar.",
+      "he": "אני אוהב את הגיטרה שלי.",
+      "he_f": "אני אוהבת את הגיטרה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two drums.",
+      "he": "שני תופים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The guitar is here.",
+      "he": "הגיטרה כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The dancer is happy.",
+      "he": "הרקדן שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am playing the drum.",
+      "he": "אני מנגן בתוף.",
+      "he_f": "אני מנגנת בתוף.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My sister is singing a song.",
+      "he": "אחותי שרה שיר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to play the guitar.",
+      "he": "אני רוצה לנגן בגיטרה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you clap your hands?",
+      "he": "אתה יכול למחוא כפיים?",
+      "he_f": "את יכולה למחוא כפיים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can play the recorder.",
+      "he": "אני יכול לנגן בחלילית.",
+      "he_f": "אני יכולה לנגן בחלילית.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my recorder?",
+      "he": "איפה החלילית שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "My brother is dancing because he is happy.",
+      "he": "אחי רוקד כי הוא שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the music is loud.",
+      "he": "אני שמח כי המוזיקה חזקה.",
+      "he_f": "אני שמחה כי המוזיקה חזקה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you playing the guitar?",
+      "he": "אתה מנגן בגיטרה?",
+      "he_f": "את מנגנת בגיטרה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My sister wants to sing.",
+      "he": "אחותי רוצה לשיר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are dancing in the living room.",
+      "he": "אנחנו רוקדים בסלון.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            6
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my drum.",
+      "he": "אני לא מוצא את התוף שלי.",
+      "he_f": "אני לא מוצאת את התוף שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mus-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We sang songs together yesterday.",
+      "he": "שרנו שירים ביחד אתמול."
+    },
+    {
+      "id": "mus-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad taught me a new song.",
+      "he": "אבא לימד אותי שיר חדש."
+    },
+    {
+      "id": "mus-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My sister's guitar is old.",
+      "he": "הגיטרה של אחותי ישנה."
+    },
+    {
+      "id": "mus-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you clap to the beat?",
+      "he": "מחאת כפיים לפי הקצב?"
+    },
+    {
+      "id": "mus-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The drums are in the living room.",
+      "he": "התופים בסלון."
+    },
+    {
+      "id": "mus-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I danced at the party last night.",
+      "he": "רקדתי במסיבה אתמול בלילה."
+    },
+    {
+      "id": "mus-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents danced in the living room.",
+      "he": "ההורים שלי רקדו בסלון."
+    },
+    {
+      "id": "mus-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did Dad play the drum?",
+      "he": "אבא ניגן בתוף?"
+    },
+    {
+      "id": "mus-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We listened to quiet music before bed.",
+      "he": "הקשבנו למוזיקה שקטה לפני השינה."
+    },
+    {
+      "id": "mus-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My brother's drums are loud.",
+      "he": "התופים של אחי חזקים."
+    },
+    {
+      "id": "mus-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma sang us a lullaby yesterday.",
+      "he": "אתמול סבתא שרה לנו שיר ערש."
+    },
+    {
+      "id": "mus-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children clapped and sang at the party.",
+      "he": "הילדים מחאו כפיים ושרו במסיבה."
+    },
+    {
+      "id": "mus-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to dance at the party.",
+      "he": "אנחנו עומדים לרקוד במסיבה."
+    },
+    {
+      "id": "mus-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The guitar is louder than the recorder.",
+      "he": "הגיטרה חזקה יותר מהחלילית."
+    },
+    {
+      "id": "mus-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the loudest song at the party.",
+      "he": "זה השיר החזק ביותר במסיבה."
+    },
+    {
+      "id": "mus-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must practice the drum every day.",
+      "he": "אתה חייב לתרגל את התוף כל יום.",
+      "he_f": "את חייבת לתרגל את התוף כל יום."
+    },
+    {
+      "id": "mus-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should learn to play the guitar.",
+      "he": "כדאי שתלמד לנגן בגיטרה.",
+      "he_f": "כדאי שתלמדי לנגן בגיטרה."
+    },
+    {
+      "id": "mus-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the music is quiet, the baby falls asleep.",
+      "he": "אם המוזיקה שקטה, התינוק נרדם."
+    },
+    {
+      "id": "mus-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to sing a song together.",
+      "he": "אנחנו עומדים לשיר שיר ביחד."
+    },
+    {
+      "id": "mus-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will teach me the guitar tomorrow.",
+      "he": "אבא ילמד אותי לנגן בגיטרה מחר."
+    },
+    {
+      "id": "mus-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to practice the recorder after lunch.",
+      "he": "אני עומד לתרגל את החלילית אחרי ארוחת הצהריים.",
+      "he_f": "אני עומדת לתרגל את החלילית אחרי ארוחת הצהריים."
+    },
+    {
+      "id": "mus-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My favorite song is longer than yours.",
+      "he": "השיר האהוב עלי ארוך יותר משלך."
+    },
+    {
+      "id": "mus-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you practice every day, you get better.",
+      "he": "אם מתרגלים כל יום, משתפרים."
+    },
+    {
+      "id": "mus-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you dance with me at the party?",
+      "he": "תרקוד איתי במסיבה?",
+      "he_f": "תרקדי איתי במסיבה?"
+    },
+    {
+      "id": "mus-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have practiced the guitar already.",
+      "he": "כבר תרגלתי את הגיטרה."
+    },
+    {
+      "id": "mus-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "My brother has played the drum for two years.",
+      "he": "אחי מנגן בתוף כבר שנתיים."
+    },
+    {
+      "id": "mus-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might dance at the party tonight.",
+      "he": "אולי נרקוד במסיבה הערב."
+    },
+    {
+      "id": "mus-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you play the guitar, I will sing.",
+      "he": "אם תנגן בגיטרה, אני אשיר.",
+      "he_f": "אם תנגני בגיטרה, אני אשיר."
+    },
+    {
+      "id": "mus-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my recorder?",
+      "he": "ראית את החלילית שלי?"
+    },
+    {
+      "id": "mus-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "My sister has just learned a new song.",
+      "he": "אחותי בדיוק למדה שיר חדש."
+    },
+    {
+      "id": "mus-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may play the drum after dinner.",
+      "he": "אולי אחי ינגן בתוף אחרי ארוחת הערב."
+    },
+    {
+      "id": "mus-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we practice today, we will play well at the party.",
+      "he": "אם נתרגל היום, ננגן טוב במסיבה."
+    },
+    {
+      "id": "mus-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never played the drum before.",
+      "he": "מעולם לא ניגנתי בתוף לפני כן."
+    },
+    {
+      "id": "mus-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have danced in the living room since this morning.",
+      "he": "אנחנו רוקדים בסלון מאז הבוקר."
+    },
+    {
+      "id": "mus-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might be too loud, so turn down the music.",
+      "he": "אולי זה חזק מדי, אז תנמיך את המוזיקה.",
+      "he_f": "אולי זה חזק מדי, אז תנמיכי את המוזיקה."
+    },
+    {
+      "id": "mus-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me practice, I will play better.",
+      "he": "אם תעזור לי לתרגל, אני אנגן טוב יותר.",
+      "he_f": "אם תעזרי לי לתרגל, אני אנגן טוב יותר."
+    },
+    {
+      "id": "mus-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was playing the guitar while I was dancing.",
+      "he": "אמא ניגנה בגיטרה בזמן שרקדתי."
+    },
+    {
+      "id": "mus-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The drum was played before the party started.",
+      "he": "התוף היה מנוגן לפני שהמסיבה התחילה."
+    },
+    {
+      "id": "mus-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a guitar, I would play every day.",
+      "he": "אם הייתה לי גיטרה, הייתי מנגן כל יום.",
+      "he_f": "אם הייתה לי גיטרה, הייתי מנגנת כל יום."
+    },
+    {
+      "id": "mus-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already sung three songs when Grandma arrived.",
+      "he": "כבר שרנו שלושה שירים כשסבתא הגיעה."
+    },
+    {
+      "id": "mus-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The song was written by my grandfather.",
+      "he": "השיר נכתב על ידי סבא שלי."
+    },
+    {
+      "id": "mus-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was singing when the phone rang.",
+      "he": "שרתי כשהטלפון צלצל."
+    },
+    {
+      "id": "mus-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had a drum, we would play every day.",
+      "he": "אם היה לנו תוף, היינו מנגנים כל יום."
+    },
+    {
+      "id": "mus-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The recorder was bought last year.",
+      "he": "החלילית נקנתה בשנה שעברה."
+    },
+    {
+      "id": "mus-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My parents were dancing quietly in the living room.",
+      "he": "ההורים שלי רקדו בשקט בסלון."
+    },
+    {
+      "id": "mus-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never played the drum before.",
+      "he": "היא מעולם לא ניגנה בתוף לפני כן."
+    },
+    {
+      "id": "mus-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were a singer, I would sing every day.",
+      "he": "אילו הייתי זמר, הייתי שר כל יום.",
+      "he_f": "אילו הייתי זמרת, הייתי שרה כל יום."
+    },
+    {
+      "id": "mus-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Music is played at every party.",
+      "he": "מוזיקה מנוגנת בכל מסיבה."
+    },
+    {
+      "id": "mus-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been practicing the guitar all afternoon.",
+      "he": "אני מתרגל גיטרה כל אחר הצהריים.",
+      "he_f": "אני מתרגלת גיטרה כל אחר הצהריים."
+    },
+    {
+      "id": "mus-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the music was too loud.",
+      "he": "אבא אמר שהמוזיקה חזקה מדי."
+    },
+    {
+      "id": "mus-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had told me about the party, I would have brought my guitar.",
+      "he": "אם היית אומר לי על המסיבה, הייתי מביא את הגיטרה שלי.",
+      "he_f": "אם היית אומרת לי על המסיבה, הייתי מביאה את הגיטרה שלי."
+    },
+    {
+      "id": "mus-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "My sister has been dancing all evening.",
+      "he": "אחותי רוקדת כל הערב."
+    },
+    {
+      "id": "mus-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My brother asked whether he could play the drum.",
+      "he": "אחי שאל אם הוא יכול לנגן בתוף."
+    },
+    {
+      "id": "mus-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we clap the rhythm, then we sing the song.",
+      "he": "קודם אנחנו מוחאים כפיים לפי הקצב, ואז אנחנו שרים את השיר."
+    },
+    {
+      "id": "mus-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the party was loud, the baby slept quietly.",
+      "he": "למרות שהמסיבה הייתה רועשת, התינוק ישן בשקט."
+    },
+    {
+      "id": "mus-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the party started, we had been dancing for an hour.",
+      "he": "עד שהמסיבה התחילה, כבר רקדנו שעה."
+    },
+    {
+      "id": "mus-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the guitar had been in tune, the song would have sounded better.",
+      "he": "אם הגיטרה הייתה מכוונת, השיר היה נשמע טוב יותר."
+    },
+    {
+      "id": "mus-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had found her old guitar.",
+      "he": "אמא סיפרה לנו שהיא מצאה את הגיטרה הישנה שלה."
+    },
+    {
+      "id": "mus-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been learning to dance for weeks.",
+      "he": "אנחנו לומדים לרקוד כבר שבועות."
+    },
+    {
+      "id": "mus-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone sang and danced, so the party was a lot of fun.",
+      "he": "בקיצור, כולם שרו ורקדו, ולכן המסיבה הייתה כיפית מאוד."
+    }
+  ]
+}
