@@ -1,0 +1,1478 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "friends-and-feelings",
+  "title": {
+    "en": "Friends and feelings",
+    "he": "חברים ורגשות"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "frd-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A friend!",
+      "he": "חבר!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my friend.",
+      "he": "זה החבר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a friend.",
+      "he": "אני רואה חבר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The game is fun.",
+      "he": "המשחק כיף.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The ball is red.",
+      "he": "הכדור אדום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two friends.",
+      "he": "שני חברים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my friend.",
+      "he": "אני אוהב את החבר שלי.",
+      "he_f": "אני אוהבת את החבר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "My friend is here.",
+      "he": "החבר שלי כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-am-emotion",
+      "en": "I am happy.",
+      "he": "אני שמח.",
+      "he_f": "אני שמחה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-am-emotion",
+      "en": "I am sad.",
+      "he": "אני עצוב.",
+      "he_f": "אני עצובה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-am-emotion",
+      "en": "I am excited!",
+      "he": "אני נרגש!",
+      "he_f": "אני נרגשת!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-Ving",
+      "en": "I love playing.",
+      "he": "אני אוהב לשחק.",
+      "he_f": "אני אוהבת לשחק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "we-are-Ving",
+      "en": "We are playing together.",
+      "he": "אנחנו משחקים ביחד.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My friend is sharing her candy.",
+      "he": "החברה שלי חולקת את הממתקים שלה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to invite my friend.",
+      "he": "אני רוצה להזמין את החבר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you play with me?",
+      "he": "אתה יכול לשחק איתי?",
+      "he_f": "את יכולה לשחק איתי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my friend.",
+      "he": "אני לא מוצא את החבר שלי.",
+      "he_f": "אני לא מוצאת את החבר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my friend?",
+      "he": "איפה החבר שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "what-question",
+      "en": "What are you playing?",
+      "he": "במה אתה משחק?",
+      "he_f": "במה את משחקת?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why are you angry with me?",
+      "he": "למה אתה כועס עליי?",
+      "he_f": "למה את כועסת עליי?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am excited because I have a new friend.",
+      "he": "אני נרגש כי יש לי חבר חדש.",
+      "he_f": "אני נרגשת כי יש לי חבר חדש.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            8
+          ],
+          "he": [
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-010",
+      "level": 2,
+      "tense": "modal",
+      "frame": "emotion-because",
+      "en": "My friend is proud because she can ride a bike.",
+      "he": "החברה שלי גאה כי היא יכולה לרכוב על אופניים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            6
+          ]
+        },
+        {
+          "en": [
+            8,
+            9
+          ],
+          "he": [
+            7,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "i-always-X",
+      "en": "I always say sorry to my friend.",
+      "he": "אני תמיד מבקש סליחה מהחבר שלי.",
+      "he_f": "אני תמיד מבקשת סליחה מהחבר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l2-012",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am helping my friend up.",
+      "he": "אני עוזר לחבר שלי לקום.",
+      "he_f": "אני עוזרת לחבר שלי לקום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frd-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We played in the yard yesterday.",
+      "he": "שיחקנו בחצר אתמול."
+    },
+    {
+      "id": "frd-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My friend fell down.",
+      "he": "החבר שלי נפל."
+    },
+    {
+      "id": "frd-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved-Y",
+      "en": "I helped him get up.",
+      "he": "עזרתי לו לקום."
+    },
+    {
+      "id": "frd-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "We had a small quarrel.",
+      "he": "היה לנו ריב קטן."
+    },
+    {
+      "id": "frd-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved-Y",
+      "en": "I said sorry to my friend.",
+      "he": "ביקשתי סליחה מהחבר שלי."
+    },
+    {
+      "id": "frd-l3-006",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My friend's ball is under the table.",
+      "he": "הכדור של החבר שלי מתחת לשולחן."
+    },
+    {
+      "id": "frd-l3-007",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My friend's shoes are wet.",
+      "he": "הנעליים של החבר שלי רטובות."
+    },
+    {
+      "id": "frd-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you invite your friend?",
+      "he": "הזמנת את החבר שלך?"
+    },
+    {
+      "id": "frd-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did your friend forgive you?",
+      "he": "החבר שלך סלח לך?"
+    },
+    {
+      "id": "frd-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children shared their toys.",
+      "he": "הילדים חילקו את הצעצועים שלהם."
+    },
+    {
+      "id": "frd-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "emotion-because",
+      "en": "I was sad because we had a small quarrel.",
+      "he": "הייתי עצוב כי היה לנו ריב קטן.",
+      "he_f": "הייתי עצובה כי היה לנו ריב קטן."
+    },
+    {
+      "id": "frd-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We made up after the quarrel.",
+      "he": "השלמנו אחרי הריב."
+    },
+    {
+      "id": "frd-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to invite my friend to play.",
+      "he": "אני עומד להזמין את החבר שלי לשחק.",
+      "he_f": "אני עומדת להזמין את החבר שלי לשחק."
+    },
+    {
+      "id": "frd-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to make a new friend at the park.",
+      "he": "אנחנו עומדים להכיר חבר חדש בפארק."
+    },
+    {
+      "id": "frd-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "My friend is going to help me carry my bag.",
+      "he": "החבר שלי עומד לעזור לי לשאת את התיק שלי."
+    },
+    {
+      "id": "frd-l4-004",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "I will say sorry to my friend.",
+      "he": "אני אבקש סליחה מהחבר שלי."
+    },
+    {
+      "id": "frd-l4-005",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you play with me tomorrow?",
+      "he": "תשחק איתי מחר?",
+      "he_f": "תשחקי איתי מחר?"
+    },
+    {
+      "id": "frd-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This game is more fun than that one.",
+      "he": "המשחק הזה יותר כיפי מההוא."
+    },
+    {
+      "id": "frd-l4-007",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "I am happier when my friends are with me.",
+      "he": "אני שמח יותר כשהחברים שלי איתי.",
+      "he_f": "אני שמחה יותר כשהחברים שלי איתי."
+    },
+    {
+      "id": "frd-l4-008",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "My friend is the kindest person I know.",
+      "he": "החבר שלי הוא האדם הכי אדיב שאני מכיר.",
+      "he_f": "החבר שלי הוא האדם הכי אדיב שאני מכירה."
+    },
+    {
+      "id": "frd-l4-009",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must be kind to your friends.",
+      "he": "אתה חייב להיות נחמד לחברים שלך.",
+      "he_f": "את חייבת להיות נחמדה לחברים שלך."
+    },
+    {
+      "id": "frd-l4-010",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should say sorry when you make a mistake.",
+      "he": "כדאי שתגיד סליחה כשאתה טועה.",
+      "he_f": "כדאי שתגידי סליחה כשאת טועה."
+    },
+    {
+      "id": "frd-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you share your toys, your friends feel happy.",
+      "he": "אם חולקים את הצעצועים, החברים מרגישים שמחים."
+    },
+    {
+      "id": "frd-l4-012",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you say sorry, your friend forgives you.",
+      "he": "אם מבקשים סליחה, סולחים לך."
+    },
+    {
+      "id": "frd-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already said sorry.",
+      "he": "כבר ביקשתי סליחה."
+    },
+    {
+      "id": "frd-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "We have been friends for two years.",
+      "he": "אנחנו חברים כבר שנתיים."
+    },
+    {
+      "id": "frd-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "My friend might come to my house later.",
+      "he": "אולי החבר שלי יבוא אליי הביתה מאוחר יותר."
+    },
+    {
+      "id": "frd-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you invite her, she will come.",
+      "he": "אם תזמין אותה, היא תבוא.",
+      "he_f": "אם תזמיני אותה, היא תבוא."
+    },
+    {
+      "id": "frd-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you made any new friends?",
+      "he": "עשית חברים חדשים?"
+    },
+    {
+      "id": "frd-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "My friend has just forgiven me.",
+      "he": "החבר שלי בדיוק סלח לי."
+    },
+    {
+      "id": "frd-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My friend may need help with her bag.",
+      "he": "אולי החברה שלי תצטרך עזרה עם התיק שלה."
+    },
+    {
+      "id": "frd-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help her, she will thank you.",
+      "he": "אם תעזור לה, היא תודה לך.",
+      "he_f": "אם תעזרי לה, היא תודה לך."
+    },
+    {
+      "id": "frd-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never had such a good friend.",
+      "he": "מעולם לא היה לי חבר טוב כזה."
+    },
+    {
+      "id": "frd-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "I have felt happy since we made up.",
+      "he": "אני מרגיש שמח מאז שהשלמנו.",
+      "he_f": "אני מרגישה שמחה מאז שהשלמנו."
+    },
+    {
+      "id": "frd-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "My friend might feel embarrassed after our quarrel.",
+      "he": "החבר שלי אולי ירגיש נבוך אחרי הריב שלנו."
+    },
+    {
+      "id": "frd-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we talk about it, we will feel better.",
+      "he": "אם נדבר על זה, נרגיש יותר טוב."
+    },
+    {
+      "id": "frd-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was crying while my friend was comforting me.",
+      "he": "בכיתי בזמן שהחבר שלי ניחם אותי."
+    },
+    {
+      "id": "frd-l6-002",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was playing outside when my friend fell.",
+      "he": "שיחקתי בחוץ כשהחבר שלי נפל."
+    },
+    {
+      "id": "frd-l6-003",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "emotion-because",
+      "en": "My friend was crying because she felt embarrassed.",
+      "he": "החברה שלי בכתה כי היא הרגישה נבוכה."
+    },
+    {
+      "id": "frd-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already made up when he called me.",
+      "he": "כבר השלמנו כשהוא התקשר אליי."
+    },
+    {
+      "id": "frd-l6-005",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never said sorry before that day.",
+      "he": "היא מעולם לא ביקשה סליחה לפני היום ההוא."
+    },
+    {
+      "id": "frd-l6-006",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I hurt my friend's feelings, I would apologize right away.",
+      "he": "אם הייתי פוגע ברגשות של החבר שלי, הייתי מתנצל מיד.",
+      "he_f": "אם הייתי פוגעת ברגשות של החבר שלי, הייתי מתנצלת מיד."
+    },
+    {
+      "id": "frd-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had more time, we would play together every day.",
+      "he": "אם היה לנו יותר זמן, היינו משחקים ביחד כל יום."
+    },
+    {
+      "id": "frd-l6-008",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would say sorry first.",
+      "he": "במקומך הייתי מבקש סליחה קודם.",
+      "he_f": "במקומך הייתי מבקשת סליחה קודם."
+    },
+    {
+      "id": "frd-l6-009",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The quarrel was forgotten quickly.",
+      "he": "הריב נשכח מהר."
+    },
+    {
+      "id": "frd-l6-010",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The picture was drawn by my friend for me.",
+      "he": "הציור צויר על ידי החבר שלי בשבילי."
+    },
+    {
+      "id": "frd-l6-011",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "A small quarrel is forgotten fast between good friends.",
+      "he": "ריב קטן נשכח מהר בין חברים טובים."
+    },
+    {
+      "id": "frd-l6-012",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "Her apology was accepted with a smile.",
+      "he": "ההתנצלות שלה התקבלה בחיוך."
+    },
+    {
+      "id": "frd-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "emotion-because",
+      "en": "I have been feeling happy for days because we made up.",
+      "he": "אני מרגיש שמח כבר כמה ימים כי השלמנו.",
+      "he_f": "אני מרגישה שמחה כבר כמה ימים כי השלמנו."
+    },
+    {
+      "id": "frd-l7-002",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "My friend has been teaching me to ride a bike.",
+      "he": "החבר שלי מלמד אותי לרכוב על אופניים כבר כמה שבועות."
+    },
+    {
+      "id": "frd-l7-003",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been playing together since we made up.",
+      "he": "אנחנו משחקים ביחד מאז שהשלמנו."
+    },
+    {
+      "id": "frd-l7-004",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "My friend said that he was sorry.",
+      "he": "החבר שלי אמר שהוא מצטער."
+    },
+    {
+      "id": "frd-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "She asked whether I could forgive her.",
+      "he": "היא שאלה אם אני יכול לסלוח לה.",
+      "he_f": "היא שאלה אם אני יכולה לסלוח לה."
+    },
+    {
+      "id": "frd-l7-006",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "My friend told me that she had felt sad too.",
+      "he": "החברה שלי סיפרה לי שגם היא הרגישה עצובה."
+    },
+    {
+      "id": "frd-l7-007",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If I had said sorry sooner, we would not have stayed angry so long.",
+      "he": "אם הייתי מבקש סליחה מוקדם יותר, לא היינו נשארים כועסים כל כך הרבה זמן.",
+      "he_f": "אם הייתי מבקשת סליחה מוקדם יותר, לא היינו נשארים כועסים כל כך הרבה זמן."
+    },
+    {
+      "id": "frd-l7-008",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If my friend hadn't helped me up, I would have cried.",
+      "he": "אם החבר שלי לא היה עוזר לי לקום, הייתי בוכה."
+    },
+    {
+      "id": "frd-l7-009",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we made up, we had been angry for a whole week.",
+      "he": "עד שהשלמנו, כבר היינו כועסים במשך שבוע שלם."
+    },
+    {
+      "id": "frd-l7-010",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-sequence",
+      "en": "First we had a small quarrel, then we talked, and now we are friends again.",
+      "he": "קודם היה לנו ריב קטן, ואז דיברנו, ועכשיו אנחנו שוב חברים."
+    },
+    {
+      "id": "frd-l7-011",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although we had a small quarrel, we are still best friends.",
+      "he": "למרות שהיה לנו ריב קטן, אנחנו עדיין חברים הכי טובים."
+    },
+    {
+      "id": "frd-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, we said sorry, we forgave each other, and we are happy again.",
+      "he": "בקיצור, ביקשנו סליחה, סלחנו אחד לשני, ושוב אנחנו שמחים."
+    }
+  ]
+}
