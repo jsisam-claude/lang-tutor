@@ -878,9 +878,9 @@
     {
       "id": "bdy-l2-011",
       "level": 2,
-      "tense": "present-progressive",
+      "tense": "present-simple",
       "frame": "X-is-Ving",
-      "en": "We are stretching every morning.",
+      "en": "We stretch every morning.",
       "he": "אנחנו מתמתחים כל בוקר.",
       "align": [
         {
@@ -896,7 +896,7 @@
         {
           "en": [
             1,
-            2
+            1
           ],
           "he": [
             1,
@@ -905,8 +905,8 @@
         },
         {
           "en": [
-            3,
-            3
+            2,
+            2
           ],
           "he": [
             2,
@@ -915,8 +915,8 @@
         },
         {
           "en": [
-            4,
-            4
+            3,
+            3
           ],
           "he": [
             3,
@@ -1151,7 +1151,7 @@
       "level": 4,
       "tense": "present-simple",
       "frame": "comparative",
-      "en": "Sleeping early is better than sleeping late.",
+      "en": "Going to bed early is better than going to bed late.",
       "he": "ללכת לישון מוקדם עדיף מללכת לישון מאוחר."
     },
     {
@@ -1308,7 +1308,7 @@
       "tense": "past-simple",
       "frame": "passive-by",
       "en": "The water was poured by my brother.",
-      "he": "המים נשפכו על ידי אחי."
+      "he": "המים נמזגו על ידי אחי."
     },
     {
       "id": "bdy-l6-006",
@@ -1333,7 +1333,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "Fresh water was poured into every cup.",
-      "he": "מים טריים נשפכו לתוך כל כוס."
+      "he": "מים טריים נמזגו לתוך כל כוס."
     },
     {
       "id": "bdy-l6-009",
@@ -1349,7 +1349,7 @@
       "tense": "past-perfect",
       "frame": "never-before",
       "en": "I had never sneezed so loudly before that day.",
-      "he": "מעולם לא התעטשתי כל כך בקול לפני היום ההוא."
+      "he": "מעולם לא התעטשתי כל כך חזק לפני היום ההוא."
     },
     {
       "id": "bdy-l6-011",

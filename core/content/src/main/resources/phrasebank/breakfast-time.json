@@ -910,8 +910,8 @@
       "tense": "modal",
       "frame": "cant-X",
       "en": "I can't finish my toast.",
-      "he": "אני לא מסיים את הטוסט שלי.",
-      "he_f": "אני לא מסיימת את הטוסט שלי.",
+      "he": "אני לא מצליח לסיים את הטוסט שלי.",
+      "he_f": "אני לא מצליחה לסיים את הטוסט שלי.",
       "align": [
         {
           "en": [
@@ -926,7 +926,7 @@
         {
           "en": [
             1,
-            2
+            1
           ],
           "he": [
             1,
@@ -935,12 +935,22 @@
         },
         {
           "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
             3,
             4
           ],
           "he": [
-            4,
-            5
+            5,
+            6
           ]
         }
       ]
@@ -1154,7 +1164,7 @@
       "level": 5,
       "tense": "present-perfect",
       "frame": "perfect-for",
-      "en": "Grandma has made breakfast for us for many years.",
+      "en": "Grandma has made us breakfast for many years.",
       "he": "סבתא מכינה לנו ארוחת בוקר הרבה שנים."
     },
     {
@@ -1353,7 +1363,7 @@
       "tense": "past-simple",
       "frame": "reported-speech",
       "en": "Dad said that the juice was fresh.",
-      "he": "אבא אמר שהמיץ היה טרי."
+      "he": "אבא אמר שהמיץ טרי."
     },
     {
       "id": "brk-l7-003",
@@ -1386,7 +1396,7 @@
       "tense": "present-simple",
       "frame": "discourse-sequence",
       "en": "First we pour the cereal, then we add the milk.",
-      "he": "קודם אנחנו מוזגים את דגני הבוקר, ואז אנחנו מוסיפים את החלב."
+      "he": "קודם אנחנו שמים את דגני הבוקר בקערה, ואז אנחנו מוסיפים את החלב."
     },
     {
       "id": "brk-l7-007",

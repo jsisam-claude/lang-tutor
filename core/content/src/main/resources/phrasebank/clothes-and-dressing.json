@@ -839,7 +839,7 @@
       "level": 2,
       "tense": "present-progressive",
       "frame": "X-is-Ving",
-      "en": "She is choosing what to wear.",
+      "en": "She is choosing her clothes.",
       "he": "היא בוחרת מה ללבוש.",
       "align": [
         {
@@ -865,20 +865,10 @@
         {
           "en": [
             3,
-            3
+            4
           ],
           "he": [
             2,
-            2
-          ]
-        },
-        {
-          "en": [
-            4,
-            5
-          ],
-          "he": [
-            3,
             3
           ]
         }
@@ -1144,7 +1134,7 @@
       "level": 4,
       "tense": "modal",
       "frame": "should",
-      "en": "You should zip your coat; it's cold outside.",
+      "en": "You should zip your coat because it's cold outside.",
       "he": "כדאי שתרכוס את המעיל, קר בחוץ.",
       "he_f": "כדאי שתרכסי את המעיל, קר בחוץ."
     },
@@ -1404,8 +1394,8 @@
       "tense": "conditional-third",
       "frame": "if-third",
       "en": "If you had zipped your coat, you wouldn't have been cold.",
-      "he": "אם היית רוכס את המעיל שלך, לא היית קר.",
-      "he_f": "אם היית רוכסת את המעיל שלך, לא היית קרה."
+      "he": "אם היית רוכס את המעיל שלך, לא היה לך קר.",
+      "he_f": "אם היית רוכסת את המעיל שלך, לא היה לך קר."
     },
     {
       "id": "clo-l7-004",

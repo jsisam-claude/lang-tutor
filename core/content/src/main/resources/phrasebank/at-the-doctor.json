@@ -183,7 +183,7 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "the-X-is-adj",
-      "en": "The band-aid is small.",
+      "en": "The bandage is small.",
       "he": "הפלסטר קטן.",
       "align": [
         {
@@ -273,7 +273,7 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "the-X-is-color",
-      "en": "The band-aid is blue.",
+      "en": "The bandage is blue.",
       "he": "הפלסטר כחול.",
       "align": [
         {
@@ -1005,7 +1005,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "we-Ved",
-      "en": "We got band-aids after the checkup.",
+      "en": "We got bandages after the checkup.",
       "he": "קיבלנו פלסטרים אחרי הבדיקה."
     },
     {
@@ -1038,14 +1038,14 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "We are going to visit the doctor today.",
-      "he": "אנחנו עומדים לבקר את הרופא היום."
+      "he": "אנחנו עומדים לבקר אצל הרופא היום."
     },
     {
       "id": "doc-l4-002",
       "level": 4,
       "tense": "present-simple",
       "frame": "comparative",
-      "en": "This band-aid is bigger than that one.",
+      "en": "This bandage is bigger than that one.",
       "he": "הפלסטר הזה גדול יותר מההוא."
     },
     {
@@ -1071,7 +1071,7 @@
       "tense": "modal",
       "frame": "should",
       "en": "You should visit the doctor for your cold.",
-      "he": "כדאי שתבקר את הרופאה בגלל ההצטננות שלך.",
+      "he": "כדאי שתבקר אצל הרופאה בגלל ההצטננות שלך.",
       "he_f": "כדאי שתבקרי את הרופאה בגלל ההצטננות שלך."
     },
     {
@@ -1121,7 +1121,7 @@
       "level": 4,
       "tense": "conditional-zero",
       "frame": "if-zero",
-      "en": "If you fall down, a band-aid helps.",
+      "en": "If you fall down, a bandage helps.",
       "he": "אם אתה נופל, פלסטר עוזר.",
       "he_f": "אם את נופלת, פלסטר עוזר."
     },
@@ -1293,7 +1293,7 @@
       "level": 6,
       "tense": "present-simple",
       "frame": "passive",
-      "en": "Band-aids are kept in a small box.",
+      "en": "Bandages are kept in a small box.",
       "he": "הפלסטרים נשמרים בקופסה קטנה."
     },
     {
