@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Explicit, not implied: targetSdk 35+ already forces edge-to-edge,
+        // but opting in makes inset dispatch deterministic across OEM skins —
+        // and the root safeDrawingPadding below relies on those insets.
+        enableEdgeToEdge()
         val container = AppContainer.get(applicationContext)
         // Start warming every engine NOW, before any frame renders: the splash
         // below buys the loaders a ~4s head start, and by the time a child
