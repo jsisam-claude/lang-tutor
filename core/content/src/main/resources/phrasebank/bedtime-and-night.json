@@ -1,0 +1,1481 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "bedtime-and-night",
+  "title": {
+    "en": "Bedtime",
+    "he": "לילה טוב"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "bed-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A star!",
+      "he": "כוכב!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my pillow.",
+      "he": "זו הכרית שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the stars.",
+      "he": "אני רואה את הכוכבים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bed is soft.",
+      "he": "המיטה רכה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my pajamas.",
+      "he": "אני אוהב את הפיג'מה שלי.",
+      "he_f": "אני אוהבת את הפיג'מה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The room is dark.",
+      "he": "החדר חשוך.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two stars.",
+      "he": "שני כוכבים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "good-night",
+      "en": "Good night, Mom!",
+      "he": "לילה טוב, אמא!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The blanket is blue.",
+      "he": "השמיכה כחולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-the-X",
+      "en": "I love the night.",
+      "he": "אני אוהב את הלילה.",
+      "he_f": "אני אוהבת את הלילה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The moon is white.",
+      "he": "הירח לבן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "I am sleepy.",
+      "he": "אני מנומנם.",
+      "he_f": "אני מנומנמת.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am putting on my pajamas.",
+      "he": "אני לובש את הפיג'מה שלי.",
+      "he_f": "אני לובשת את הפיג'מה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Dad is reading a bedtime story.",
+      "he": "אבא מקריא סיפור לפני השינה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to hear one more story.",
+      "he": "אני רוצה לשמוע עוד סיפור אחד.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you turn off the light?",
+      "he": "אתה יכול לכבות את האור?",
+      "he_f": "את יכולה לכבות את האור?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can brush my teeth alone.",
+      "he": "אני יכול לצחצח שיניים לבד.",
+      "he_f": "אני יכולה לצחצח שיניים לבד.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my blanket?",
+      "he": "איפה השמיכה שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The baby is yawning because he is tired.",
+      "he": "התינוק מפהק כי הוא עייף.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because Mom reads to me.",
+      "he": "אני שמח כי אמא מקריאה לי.",
+      "he_f": "אני שמחה כי אמא מקריאה לי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you brushing your teeth?",
+      "he": "אתה מצחצח שיניים?",
+      "he_f": "את מצחצחת שיניים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My sister wants to sleep now.",
+      "he": "אחותי רוצה לישון עכשיו.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are looking at the stars.",
+      "he": "אנחנו מסתכלים על הכוכבים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my pillow.",
+      "he": "אני לא מוצא את הכרית שלי.",
+      "he_f": "אני לא מוצאת את הכרית שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bed-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We read a story before bed.",
+      "he": "קראנו סיפור לפני השינה."
+    },
+    {
+      "id": "bed-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma gave me a goodnight hug.",
+      "he": "סבתא נתנה לי חיבוק לילה טוב."
+    },
+    {
+      "id": "bed-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My brother's pajamas are green.",
+      "he": "הפיג'מה של אחי ירוקה."
+    },
+    {
+      "id": "bed-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you brush your teeth before bed?",
+      "he": "צחצחת שיניים לפני השינה?"
+    },
+    {
+      "id": "bed-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "My slippers are under the bed.",
+      "he": "נעלי הבית שלי מתחת למיטה."
+    },
+    {
+      "id": "bed-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I fell asleep quickly last night.",
+      "he": "נרדמתי מהר אתמול בלילה."
+    },
+    {
+      "id": "bed-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents turned off the lights.",
+      "he": "ההורים שלי כיבו את האורות."
+    },
+    {
+      "id": "bed-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did Dad read you a story?",
+      "he": "אבא הקריא לך סיפור?"
+    },
+    {
+      "id": "bed-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We watched the moon from the window.",
+      "he": "צפינו בירח מהחלון."
+    },
+    {
+      "id": "bed-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive-plural",
+      "en": "My sister's dreams were funny.",
+      "he": "החלומות של אחותי היו מצחיקים."
+    },
+    {
+      "id": "bed-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandpa sang me a quiet song.",
+      "he": "סבא שר לי שיר שקט."
+    },
+    {
+      "id": "bed-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children slept all night.",
+      "he": "הילדים ישנו כל הלילה."
+    },
+    {
+      "id": "bed-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to put on my pajamas.",
+      "he": "אני עומד ללבוש את הפיג'מה שלי.",
+      "he_f": "אני עומדת ללבוש את הפיג'מה שלי."
+    },
+    {
+      "id": "bed-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to read two stories tonight.",
+      "he": "אנחנו עומדים לקרוא שני סיפורים הערב."
+    },
+    {
+      "id": "bed-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "Dad is going to turn off the light in a minute.",
+      "he": "אבא עומד לכבות את האור עוד רגע."
+    },
+    {
+      "id": "bed-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The moon is brighter than the stars.",
+      "he": "הירח בהיר יותר מהכוכבים."
+    },
+    {
+      "id": "bed-l4-005",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My blanket is warmer than yours.",
+      "he": "השמיכה שלי חמה יותר משלך."
+    },
+    {
+      "id": "bed-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the softest pillow in the house.",
+      "he": "זו הכרית הרכה ביותר בבית."
+    },
+    {
+      "id": "bed-l4-007",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must turn off the light now.",
+      "he": "אתה חייב לכבות את האור עכשיו.",
+      "he_f": "את חייבת לכבות את האור עכשיו."
+    },
+    {
+      "id": "bed-l4-008",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should go to sleep early tonight.",
+      "he": "כדאי שתלך לישון מוקדם הערב.",
+      "he_f": "כדאי שתלכי לישון מוקדם הערב."
+    },
+    {
+      "id": "bed-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the room is dark, I sleep better.",
+      "he": "אם החדר חשוך, אני ישן טוב יותר.",
+      "he_f": "אם החדר חשוך, אני ישנה טוב יותר."
+    },
+    {
+      "id": "bed-l4-010",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you read before bed, you fall asleep faster.",
+      "he": "אם קוראים לפני השינה, נרדמים מהר יותר."
+    },
+    {
+      "id": "bed-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Mom will sing us a lullaby.",
+      "he": "אמא תשיר לנו שיר ערש."
+    },
+    {
+      "id": "bed-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you tell me a story?",
+      "he": "תספר לי סיפור?",
+      "he_f": "תספרי לי סיפור?"
+    },
+    {
+      "id": "bed-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have brushed my teeth already.",
+      "he": "כבר צחצחתי שיניים."
+    },
+    {
+      "id": "bed-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "The baby has slept for three hours.",
+      "he": "התינוק ישן כבר שלוש שעות."
+    },
+    {
+      "id": "bed-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might see stars from the window tonight.",
+      "he": "אולי נראה כוכבים מהחלון הערב."
+    },
+    {
+      "id": "bed-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you close your eyes, you will fall asleep.",
+      "he": "אם תעצום עיניים, תירדם.",
+      "he_f": "אם תעצמי עיניים, תירדמי."
+    },
+    {
+      "id": "bed-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you said good night to Grandpa?",
+      "he": "אמרת לילה טוב לסבא?"
+    },
+    {
+      "id": "bed-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "Dad has just finished the story.",
+      "he": "אבא בדיוק סיים את הסיפור."
+    },
+    {
+      "id": "bed-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My sister may sleep in my room tonight.",
+      "he": "אולי אחותי תישן בחדר שלי הערב."
+    },
+    {
+      "id": "bed-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we go to bed early, we will not be tired tomorrow.",
+      "he": "אם נלך לישון מוקדם, לא נהיה עייפים מחר."
+    },
+    {
+      "id": "bed-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never had such a good dream.",
+      "he": "מעולם לא חלמתי חלום כל כך טוב."
+    },
+    {
+      "id": "bed-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The house has been quiet since ten o'clock.",
+      "he": "בבית שקט מאז עשר."
+    },
+    {
+      "id": "bed-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might be cold tonight, so take another blanket.",
+      "he": "אולי יהיה קר הלילה, אז קח עוד שמיכה.",
+      "he_f": "אולי יהיה קר הלילה, אז קחי עוד שמיכה."
+    },
+    {
+      "id": "bed-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you tell me a story, I will close my eyes right away.",
+      "he": "אם תספר לי סיפור, אעצום עיניים מיד.",
+      "he_f": "אם תספרי לי סיפור, אעצום עיניים מיד."
+    },
+    {
+      "id": "bed-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was singing while I was falling asleep.",
+      "he": "אמא שרה בזמן שנרדמתי."
+    },
+    {
+      "id": "bed-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The lights were turned off at nine.",
+      "he": "האורות כובו בתשע."
+    },
+    {
+      "id": "bed-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bigger window, I would see more stars.",
+      "he": "אם היה לי חלון גדול יותר, הייתי רואה יותר כוכבים."
+    },
+    {
+      "id": "bed-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "I had already fallen asleep when Dad came in.",
+      "he": "כבר נרדמתי כשאבא נכנס."
+    },
+    {
+      "id": "bed-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The blanket was folded by Mom.",
+      "he": "השמיכה קופלה על ידי אמא."
+    },
+    {
+      "id": "bed-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was reading in bed when the light went out.",
+      "he": "קראתי במיטה כשהאור כבה."
+    },
+    {
+      "id": "bed-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we lived in the country, we would see many more stars.",
+      "he": "אם היינו גרים בכפר, היינו רואים הרבה יותר כוכבים."
+    },
+    {
+      "id": "bed-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "This lamp was bought many years ago.",
+      "he": "המנורה הזאת נקנתה לפני הרבה שנים."
+    },
+    {
+      "id": "bed-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The baby was breathing quietly in his crib.",
+      "he": "התינוק נשם בשקט בעריסה שלו."
+    },
+    {
+      "id": "bed-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never slept in this room before.",
+      "he": "היא מעולם לא ישנה בחדר הזה לפני כן."
+    },
+    {
+      "id": "bed-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would go to bed now.",
+      "he": "במקומך הייתי הולך לישון עכשיו.",
+      "he_f": "במקומך הייתי הולכת לישון עכשיו."
+    },
+    {
+      "id": "bed-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "The curtains are closed every night.",
+      "he": "הווילונות נסגרים כל ערב."
+    },
+    {
+      "id": "bed-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been lying in bed for an hour.",
+      "he": "אני שוכב במיטה כבר שעה.",
+      "he_f": "אני שוכבת במיטה כבר שעה."
+    },
+    {
+      "id": "bed-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the story was almost over.",
+      "he": "אבא אמר שהסיפור כמעט נגמר."
+    },
+    {
+      "id": "bed-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had asked me, I would have read you another story.",
+      "he": "אם היית מבקש ממני, הייתי מקריא לך עוד סיפור.",
+      "he_f": "אם היית מבקשת ממני, הייתי מקריאה לך עוד סיפור."
+    },
+    {
+      "id": "bed-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandma has been telling us stories all evening.",
+      "he": "סבתא מספרת לנו סיפורים כל הערב."
+    },
+    {
+      "id": "bed-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My brother asked whether he could sleep with the light on.",
+      "he": "אחי שאל אם הוא יכול לישון עם האור דולק."
+    },
+    {
+      "id": "bed-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we brush our teeth, then we choose a story.",
+      "he": "קודם אנחנו מצחצחים שיניים, ואז אנחנו בוחרים סיפור."
+    },
+    {
+      "id": "bed-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the room was dark, it felt safe and warm.",
+      "he": "למרות שהחדר היה חשוך, הייתה בו תחושה בטוחה וחמימה."
+    },
+    {
+      "id": "bed-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time Mom came in, we had been whispering for an hour.",
+      "he": "עד שאמא נכנסה, כבר לחשנו שעה."
+    },
+    {
+      "id": "bed-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If there had been no clouds, we would have seen the stars.",
+      "he": "אם לא היו עננים, היינו רואים את הכוכבים."
+    },
+    {
+      "id": "bed-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had already turned off the lights.",
+      "he": "אמא אמרה לנו שהיא כבר כיבתה את האורות."
+    },
+    {
+      "id": "bed-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been going to bed earlier all week.",
+      "he": "אנחנו הולכים לישון מוקדם יותר כל השבוע."
+    },
+    {
+      "id": "bed-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone was tired, so the house was quiet by nine.",
+      "he": "בקיצור, כולם היו עייפים, ולכן בבית היה שקט כבר בתשע."
+    }
+  ]
+}
