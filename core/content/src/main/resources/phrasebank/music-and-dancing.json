@@ -1087,7 +1087,7 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "We are going to sing a song together.",
-      "he": "אנחנו עומדים לשיר שיר ביחד."
+      "he": "אנחנו עומדים לשיר ביחד."
     },
     {
       "id": "mus-l4-008",
@@ -1217,9 +1217,9 @@
       "level": 5,
       "tense": "modal",
       "frame": "might",
-      "en": "It might be too loud, so turn down the music.",
-      "he": "אולי זה חזק מדי, אז תנמיך את המוזיקה.",
-      "he_f": "אולי זה חזק מדי, אז תנמיכי את המוזיקה."
+      "en": "The music might be too loud, so turn it down.",
+      "he": "אולי המוזיקה חזקה מדי, אז תנמיך אותה.",
+      "he_f": "אולי המוזיקה חזקה מדי, אז תנמיכי אותה."
     },
     {
       "id": "mus-l5-012",
