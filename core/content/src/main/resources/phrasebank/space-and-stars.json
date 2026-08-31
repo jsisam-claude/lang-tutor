@@ -1,0 +1,1487 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "space-and-stars",
+  "title": {
+    "en": "Space and stars",
+    "he": "חלל וכוכבים"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "spc-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A rocket!",
+      "he": "חללית!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my telescope.",
+      "he": "זה הטלסקופ שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the moon.",
+      "he": "אני רואה את הירח.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The rocket is big.",
+      "he": "החללית גדולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like the planets.",
+      "he": "אני אוהב את כוכבי הלכת.",
+      "he_f": "אני אוהבת את כוכבי הלכת.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The star is white.",
+      "he": "הכוכב לבן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Three planets.",
+      "he": "שלושה כוכבי לכת.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The astronaut is here.",
+      "he": "האסטרונאוט כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "Mars is red.",
+      "he": "מאדים אדום.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-X",
+      "en": "I love space.",
+      "he": "אני אוהב את החלל.",
+      "he_f": "אני אוהבת את החלל.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The sun is hot.",
+      "he": "השמש חמה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The astronaut is happy.",
+      "he": "האסטרונאוט שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The rocket is flying to the moon.",
+      "he": "החללית טסה לירח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The astronaut is floating.",
+      "he": "האסטרונאוט מרחף.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to be an astronaut.",
+      "he": "אני רוצה להיות אסטרונאוט.",
+      "he_f": "אני רוצה להיות אסטרונאוטית.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you see Mars?",
+      "he": "אתה יכול לראות את מאדים?",
+      "he_f": "את יכולה לראות את מאדים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can see the moon with my telescope.",
+      "he": "אני יכול לראות את הירח עם הטלסקופ שלי.",
+      "he_f": "אני יכולה לראות את הירח עם הטלסקופ שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            5,
+            5
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            6,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the space station?",
+      "he": "איפה תחנת החלל?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The astronaut is smiling because he is in space.",
+      "he": "האסטרונאוט מחייך כי הוא בחלל.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            8
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the sky is clear.",
+      "he": "אני שמח כי השמיים צלולים.",
+      "he_f": "אני שמחה כי השמיים צלולים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you looking at the stars?",
+      "he": "אתה מסתכל על הכוכבים?",
+      "he_f": "את מסתכלת על הכוכבים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My sister wants to fly to Mars.",
+      "he": "אחותי רוצה לטוס למאדים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why is the sun so bright?",
+      "he": "למה השמש כל כך בוהקת?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't count all the stars.",
+      "he": "אני לא יכול לספור את כל הכוכבים.",
+      "he_f": "אני לא יכולה לספור את כל הכוכבים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            5,
+            5
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            6,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spc-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We visited the space museum yesterday.",
+      "he": "ביקרנו במוזיאון החלל אתמול."
+    },
+    {
+      "id": "spc-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad showed me the planets in a book.",
+      "he": "אבא הראה לי את כוכבי הלכת בספר."
+    },
+    {
+      "id": "spc-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My brother's telescope is new.",
+      "he": "הטלסקופ של אחי חדש."
+    },
+    {
+      "id": "spc-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you look through the telescope?",
+      "he": "הסתכלת דרך הטלסקופ?"
+    },
+    {
+      "id": "spc-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The astronauts are inside the space station.",
+      "he": "האסטרונאוטים בתוך תחנת החלל."
+    },
+    {
+      "id": "spc-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I drew a rocket this morning.",
+      "he": "ציירתי חללית הבוקר."
+    },
+    {
+      "id": "spc-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The astronauts landed on the moon.",
+      "he": "האסטרונאוטים נחתו על הירח."
+    },
+    {
+      "id": "spc-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the rocket take off on time?",
+      "he": "החללית המריאה בזמן?"
+    },
+    {
+      "id": "spc-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We learned the names of the planets at school.",
+      "he": "למדנו את השמות של כוכבי הלכת בבית הספר."
+    },
+    {
+      "id": "spc-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "The astronaut's gloves are white.",
+      "he": "הכפפות של האסטרונאוט לבנות."
+    },
+    {
+      "id": "spc-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandpa told us about the stars.",
+      "he": "סבא סיפר לנו על הכוכבים."
+    },
+    {
+      "id": "spc-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children built a rocket from boxes.",
+      "he": "הילדים בנו חללית מקופסאות."
+    },
+    {
+      "id": "spc-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to visit the planetarium on Sunday.",
+      "he": "אנחנו עומדים לבקר בפלנטריום ביום ראשון."
+    },
+    {
+      "id": "spc-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to draw the solar system.",
+      "he": "אני עומד לצייר את מערכת השמש.",
+      "he_f": "אני עומדת לצייר את מערכת השמש."
+    },
+    {
+      "id": "spc-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "The rocket is going to take off in a minute.",
+      "he": "החללית עומדת להמריא עוד רגע."
+    },
+    {
+      "id": "spc-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The sun is bigger than the moon.",
+      "he": "השמש גדולה יותר מהירח."
+    },
+    {
+      "id": "spc-l4-005",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The sun is closer to us than the other stars.",
+      "he": "השמש קרובה אלינו יותר משאר הכוכבים."
+    },
+    {
+      "id": "spc-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "Jupiter is the biggest planet in our solar system.",
+      "he": "צדק הוא כוכב הלכת הגדול ביותר במערכת השמש."
+    },
+    {
+      "id": "spc-l4-007",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must-not",
+      "en": "You must never look at the sun through a telescope.",
+      "he": "אסור להסתכל על השמש דרך טלסקופ."
+    },
+    {
+      "id": "spc-l4-008",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should watch the sky far from the city lights.",
+      "he": "כדאי שתסתכל על השמיים רחוק מאורות העיר.",
+      "he_f": "כדאי שתסתכלי על השמיים רחוק מאורות העיר."
+    },
+    {
+      "id": "spc-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the sky is clear, we see many stars.",
+      "he": "אם השמיים צלולים, אנחנו רואים הרבה כוכבים."
+    },
+    {
+      "id": "spc-l4-010",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you look through a telescope, the moon looks bigger.",
+      "he": "אם מסתכלים דרך טלסקופ, הירח נראה גדול יותר."
+    },
+    {
+      "id": "spc-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The astronauts will come back next week.",
+      "he": "האסטרונאוטים יחזרו בשבוע הבא."
+    },
+    {
+      "id": "spc-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you come to the planetarium with me?",
+      "he": "תבוא איתי לפלנטריום?",
+      "he_f": "תבואי איתי לפלנטריום?"
+    },
+    {
+      "id": "spc-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already looked through the new telescope.",
+      "he": "כבר הסתכלתי דרך הטלסקופ החדש."
+    },
+    {
+      "id": "spc-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "The space station has circled the Earth for many years.",
+      "he": "תחנת החלל מקיפה את כדור הארץ כבר הרבה שנים."
+    },
+    {
+      "id": "spc-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might see Saturn tonight.",
+      "he": "אולי נראה את שבתאי הערב."
+    },
+    {
+      "id": "spc-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If the rocket takes off on time, we will watch it from the hill.",
+      "he": "אם החללית תמריא בזמן, נצפה בה מהגבעה."
+    },
+    {
+      "id": "spc-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen the photos from the space station?",
+      "he": "ראית את התמונות מתחנת החלל?"
+    },
+    {
+      "id": "spc-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The rocket has just landed.",
+      "he": "החללית בדיוק נחתה."
+    },
+    {
+      "id": "spc-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may join the space club at school.",
+      "he": "אולי אחי יצטרף לחוג החלל בבית הספר."
+    },
+    {
+      "id": "spc-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we get up early, we will see Venus in the morning sky.",
+      "he": "אם נקום מוקדם, נראה את נוגה בשמי הבוקר."
+    },
+    {
+      "id": "spc-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never seen the rings of Saturn.",
+      "he": "מעולם לא ראיתי את הטבעות של שבתאי."
+    },
+    {
+      "id": "spc-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have had this telescope since the summer.",
+      "he": "הטלסקופ הזה אצלנו מאז הקיץ."
+    },
+    {
+      "id": "spc-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain later, so put the telescope away.",
+      "he": "אולי יירד גשם אחר כך, אז תכניס את הטלסקופ פנימה.",
+      "he_f": "אולי יירד גשם אחר כך, אז תכניסי את הטלסקופ פנימה."
+    },
+    {
+      "id": "spc-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me set up the telescope, we will be ready before dark.",
+      "he": "אם תעזור לי להקים את הטלסקופ, נהיה מוכנים לפני החושך.",
+      "he_f": "אם תעזרי לי להקים את הטלסקופ, נהיה מוכנים לפני החושך."
+    },
+    {
+      "id": "spc-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was reading about Mars while I was drawing a rocket.",
+      "he": "אמא קראה על מאדים בזמן שציירתי חללית."
+    },
+    {
+      "id": "spc-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The telescope was invented a long time ago.",
+      "he": "הטלסקופ הומצא לפני הרבה זמן."
+    },
+    {
+      "id": "spc-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I were an astronaut, I would fly around the Earth.",
+      "he": "אם הייתי אסטרונאוט, הייתי טס מסביב לכדור הארץ.",
+      "he_f": "אם הייתי אסטרונאוטית, הייתי טסה מסביב לכדור הארץ."
+    },
+    {
+      "id": "spc-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "The rocket had already taken off when we arrived.",
+      "he": "החללית כבר המריאה כשהגענו."
+    },
+    {
+      "id": "spc-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "This picture was taken by a telescope in space.",
+      "he": "התמונה הזאת צולמה על ידי טלסקופ בחלל."
+    },
+    {
+      "id": "spc-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was looking through the telescope when a cloud covered the moon.",
+      "he": "הסתכלתי דרך הטלסקופ כשענן כיסה את הירח."
+    },
+    {
+      "id": "spc-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we lived on the moon, we would jump very high.",
+      "he": "אם היינו גרים על הירח, היינו קופצים גבוה מאוד."
+    },
+    {
+      "id": "spc-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The rocket was launched early in the morning.",
+      "he": "החללית שוגרה מוקדם בבוקר."
+    },
+    {
+      "id": "spc-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The astronauts were floating inside the station.",
+      "he": "האסטרונאוטים ריחפו בתוך התחנה."
+    },
+    {
+      "id": "spc-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "He had never looked through a real telescope before.",
+      "he": "הוא מעולם לא הסתכל דרך טלסקופ אמיתי לפני כן."
+    },
+    {
+      "id": "spc-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would look at Jupiter first.",
+      "he": "במקומך הייתי מסתכל על צדק קודם.",
+      "he_f": "במקומך הייתי מסתכלת על צדק קודם."
+    },
+    {
+      "id": "spc-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "New planets are discovered every year.",
+      "he": "כוכבי לכת חדשים מתגלים כל שנה."
+    },
+    {
+      "id": "spc-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been looking through the telescope for an hour.",
+      "he": "אני מסתכל דרך הטלסקופ כבר שעה.",
+      "he_f": "אני מסתכלת דרך הטלסקופ כבר שעה."
+    },
+    {
+      "id": "spc-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the launch was at seven in the morning.",
+      "he": "אבא אמר שהשיגור בשבע בבוקר."
+    },
+    {
+      "id": "spc-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had left the city, we would have seen many more stars.",
+      "he": "אם היינו יוצאים מהעיר, היינו רואים הרבה יותר כוכבים."
+    },
+    {
+      "id": "spc-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The astronauts have been working in space for six months.",
+      "he": "האסטרונאוטים עובדים בחלל כבר שישה חודשים."
+    },
+    {
+      "id": "spc-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could look through the telescope.",
+      "he": "אחותי שאלה אם היא יכולה להסתכל דרך הטלסקופ."
+    },
+    {
+      "id": "spc-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we point the telescope at the moon, then we look for the craters.",
+      "he": "קודם אנחנו מכוונים את הטלסקופ לירח, ואז אנחנו מחפשים את המכתשים."
+    },
+    {
+      "id": "spc-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the sky was cloudy, we could still see the moon.",
+      "he": "למרות שהשמיים היו מעוננים, עדיין יכולנו לראות את הירח."
+    },
+    {
+      "id": "spc-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the rocket took off, we had been waiting for three hours.",
+      "he": "עד שהחללית המריאה, כבר חיכינו שלוש שעות."
+    },
+    {
+      "id": "spc-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the sky had been clear, we would have seen Jupiter.",
+      "he": "אם השמיים היו צלולים, היינו רואים את צדק."
+    },
+    {
+      "id": "spc-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had visited the space center.",
+      "he": "אמא סיפרה לנו שהיא ביקרה במרכז החלל."
+    },
+    {
+      "id": "spc-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been reading about the planets all week.",
+      "he": "אנחנו קוראים על כוכבי הלכת כל השבוע."
+    },
+    {
+      "id": "spc-l7-012",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-summary",
+      "en": "In short, the sun is a star, but it is much closer than all the others.",
+      "he": "בקיצור, השמש היא כוכב, אבל היא הרבה יותר קרובה מכל שאר הכוכבים."
+    }
+  ]
+}
