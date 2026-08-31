@@ -72,8 +72,8 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "i-see-X",
-      "en": "I see the moon.",
-      "he": "אני רואה את הירח.",
+      "en": "I see a star.",
+      "he": "אני רואה כוכב.",
       "align": [
         {
           "en": [
@@ -101,8 +101,8 @@
             3
           ],
           "he": [
-            3,
-            3
+            2,
+            2
           ]
         }
       ]
@@ -183,8 +183,8 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "the-X-is-color",
-      "en": "The star is white.",
-      "he": "הכוכב לבן.",
+      "en": "The moon is gray.",
+      "he": "הירח אפור.",
       "align": [
         {
           "en": [
@@ -344,8 +344,8 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "the-X-is-adj",
-      "en": "The sun is hot.",
-      "he": "השמש חמה.",
+      "en": "The sun is bright.",
+      "he": "השמש בוהקת.",
       "align": [
         {
           "en": [
@@ -1153,7 +1153,7 @@
       "level": 4,
       "tense": "modal",
       "frame": "should",
-      "en": "You should watch the sky far from the city lights.",
+      "en": "You should look at the sky far from the city lights.",
       "he": "כדאי שתסתכל על השמיים רחוק מאורות העיר.",
       "he_f": "כדאי שתסתכלי על השמיים רחוק מאורות העיר."
     },
