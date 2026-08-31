@@ -1,0 +1,1430 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "at-the-doctor",
+  "title": {
+    "en": "At the doctor",
+    "he": "אצל הרופא"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "doc-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A doctor!",
+      "he": "רופא!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my doctor.",
+      "he": "זה הרופא שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the nurse.",
+      "he": "אני רואה את האחות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The doctor is kind.",
+      "he": "הרופאה נחמדה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my doctor.",
+      "he": "אני אוהב את הרופא שלי.",
+      "he_f": "אני אוהבת את הרופא שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The band-aid is small.",
+      "he": "הפלסטר קטן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two ears.",
+      "he": "שתי אוזניים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The doctor is here.",
+      "he": "הרופאה כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The band-aid is blue.",
+      "he": "הפלסטר כחול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I love my sticker.",
+      "he": "אני אוהב את המדבקה שלי.",
+      "he_f": "אני אוהבת את המדבקה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The room is quiet.",
+      "he": "החדר שקט.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "I am brave.",
+      "he": "אני אמיץ.",
+      "he_f": "אני אמיצה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The doctor is listening to my heart.",
+      "he": "הרופא מקשיב ללב שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The nurse is looking in my ears.",
+      "he": "האחות מסתכלת באוזניים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to see the doctor.",
+      "he": "אני רוצה לראות את הרופאה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you open your mouth?",
+      "he": "אתה יכול לפתוח את הפה שלך?",
+      "he_f": "את יכולה לפתוח את הפה שלך?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can say aah.",
+      "he": "אני יכול להגיד אאה.",
+      "he_f": "אני יכולה להגיד אאה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the doctor?",
+      "he": "איפה הרופא?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "what-is-X",
+      "en": "What color is the sticker?",
+      "he": "מה הצבע של המדבקה?",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-008",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you feeling better?",
+      "he": "אתה מרגיש טוב יותר?",
+      "he_f": "את מרגישה טוב יותר?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am not afraid because Mom is with me.",
+      "he": "אני לא מפחד כי אמא איתי.",
+      "he_f": "אני לא מפחדת כי אמא איתי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            8
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The doctor is smiling because I am brave.",
+      "he": "הרופאה מחייכת כי אני אמיץ.",
+      "he_f": "הרופאה מחייכת כי אני אמיצה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "The nurse wants to weigh me.",
+      "he": "האחות רוצה לשקול אותי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't stop smiling.",
+      "he": "אני לא מפסיק לחייך.",
+      "he_f": "אני לא מפסיקה לחייך.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doc-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We visited the doctor yesterday.",
+      "he": "ביקרנו אצל הרופא אתמול."
+    },
+    {
+      "id": "doc-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The doctor listened to my heart.",
+      "he": "הרופאה הקשיבה ללב שלי."
+    },
+    {
+      "id": "doc-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "The doctor's coat is white.",
+      "he": "החלוק של הרופא לבן."
+    },
+    {
+      "id": "doc-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the nurse look in your ears?",
+      "he": "האחות הסתכלה באוזניים שלך?"
+    },
+    {
+      "id": "doc-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The stickers are on the table.",
+      "he": "המדבקות על השולחן."
+    },
+    {
+      "id": "doc-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I got a sticker this morning.",
+      "he": "קיבלתי מדבקה הבוקר."
+    },
+    {
+      "id": "doc-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My mom waited in the waiting room.",
+      "he": "אמא שלי חיכתה בחדר ההמתנה."
+    },
+    {
+      "id": "doc-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the doctor listen to your heart?",
+      "he": "הרופאה הקשיבה ללב שלך?"
+    },
+    {
+      "id": "doc-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We got band-aids after the checkup.",
+      "he": "קיבלנו פלסטרים אחרי הבדיקה."
+    },
+    {
+      "id": "doc-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "The doctor's stickers are colorful.",
+      "he": "המדבקות של הרופאה צבעוניות."
+    },
+    {
+      "id": "doc-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The nurse gave me a sticker.",
+      "he": "האחות נתנה לי מדבקה."
+    },
+    {
+      "id": "doc-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children waited quietly in the clinic.",
+      "he": "הילדים חיכו בשקט במרפאה."
+    },
+    {
+      "id": "doc-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to visit the doctor today.",
+      "he": "אנחנו עומדים לבקר את הרופא היום."
+    },
+    {
+      "id": "doc-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This band-aid is bigger than that one.",
+      "he": "הפלסטר הזה גדול יותר מההוא."
+    },
+    {
+      "id": "doc-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the kindest doctor in the clinic.",
+      "he": "זאת הרופאה הכי נחמדה במרפאה."
+    },
+    {
+      "id": "doc-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must sit still for the checkup.",
+      "he": "אתה חייב לשבת בשקט לבדיקה.",
+      "he_f": "את חייבת לשבת בשקט לבדיקה."
+    },
+    {
+      "id": "doc-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should visit the doctor for your cold.",
+      "he": "כדאי שתבקר את הרופאה בגלל ההצטננות שלך.",
+      "he_f": "כדאי שתבקרי את הרופאה בגלל ההצטננות שלך."
+    },
+    {
+      "id": "doc-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you have a cold, you rest at home.",
+      "he": "אם אתה מצונן, אתה נח בבית.",
+      "he_f": "אם את מצוננת, את נחה בבית."
+    },
+    {
+      "id": "doc-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "The doctor is going to look in your ears.",
+      "he": "הרופאה עומדת להסתכל באוזניים שלך."
+    },
+    {
+      "id": "doc-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The doctor will listen to your heart.",
+      "he": "הרופא יקשיב ללב שלך."
+    },
+    {
+      "id": "doc-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to be very brave.",
+      "he": "אני עומד להיות אמיץ מאוד.",
+      "he_f": "אני עומדת להיות אמיצה מאוד."
+    },
+    {
+      "id": "doc-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My knee is better than yesterday.",
+      "he": "הברך שלי טובה יותר מאתמול."
+    },
+    {
+      "id": "doc-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you fall down, a band-aid helps.",
+      "he": "אם אתה נופל, פלסטר עוזר.",
+      "he_f": "אם את נופלת, פלסטר עוזר."
+    },
+    {
+      "id": "doc-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will I get a sticker today?",
+      "he": "אקבל מדבקה היום?"
+    },
+    {
+      "id": "doc-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "The doctor has already checked my heart.",
+      "he": "הרופא כבר בדק לי את הלב."
+    },
+    {
+      "id": "doc-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "This doctor has worked here for many years.",
+      "he": "הרופאה הזאת עובדת כאן הרבה שנים."
+    },
+    {
+      "id": "doc-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might get stickers after the checkup.",
+      "he": "אולי נקבל מדבקות אחרי הבדיקה."
+    },
+    {
+      "id": "doc-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you don't feel well, the doctor will help you.",
+      "he": "אם אתה לא מרגיש טוב, הרופא יעזור לך.",
+      "he_f": "אם את לא מרגישה טוב, הרופא יעזור לך."
+    },
+    {
+      "id": "doc-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen the new doctor?",
+      "he": "ראית את הרופא החדש?"
+    },
+    {
+      "id": "doc-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The nurse has just called us.",
+      "he": "האחות בדיוק קראה לנו."
+    },
+    {
+      "id": "doc-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "The doctor may look in your throat too.",
+      "he": "אולי הרופאה תסתכל גם בגרון שלך."
+    },
+    {
+      "id": "doc-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we get to the clinic early, we will see the doctor sooner.",
+      "he": "אם נגיע למרפאה מוקדם, נראה את הרופאה מוקדם יותר."
+    },
+    {
+      "id": "doc-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never been afraid of the doctor.",
+      "he": "מעולם לא פחדתי מהרופאה."
+    },
+    {
+      "id": "doc-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "Grandma has felt better since her checkup.",
+      "he": "סבתא מרגישה טוב יותר מאז הבדיקה שלה."
+    },
+    {
+      "id": "doc-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The doctor might listen to your back too.",
+      "he": "אולי הרופא יקשיב גם לגב שלך."
+    },
+    {
+      "id": "doc-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you are brave, you will get a sticker.",
+      "he": "אם אתה אמיץ, תקבל מדבקה.",
+      "he_f": "אם את אמיצה, תקבלי מדבקה."
+    },
+    {
+      "id": "doc-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "The doctor was talking while the nurse was writing notes.",
+      "he": "הרופאה דיברה בזמן שהאחות כתבה הערות."
+    },
+    {
+      "id": "doc-l6-002",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Your temperature is checked first.",
+      "he": "החום שלך נבדק קודם."
+    },
+    {
+      "id": "doc-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I were the doctor, I would give everyone stickers.",
+      "he": "אם הייתי הרופא, הייתי נותן לכולם מדבקות.",
+      "he_f": "אם הייתי הרופאה, הייתי נותנת לכולם מדבקות."
+    },
+    {
+      "id": "doc-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "The doctor had already listened to my heart when I started laughing.",
+      "he": "הרופא כבר הקשיב ללב שלי כשהתחלתי לצחוק."
+    },
+    {
+      "id": "doc-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "My ears were checked by the doctor.",
+      "he": "האוזניים שלי נבדקו על ידי הרופאה."
+    },
+    {
+      "id": "doc-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was sitting quietly when the doctor came in.",
+      "he": "ישבתי בשקט כשהרופא נכנס."
+    },
+    {
+      "id": "doc-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If the clinic were closer, we would visit more often.",
+      "he": "אם המרפאה הייתה קרובה יותר, היינו מבקרים בה יותר."
+    },
+    {
+      "id": "doc-l6-008",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Band-aids are kept in a small box.",
+      "he": "הפלסטרים נשמרים בקופסה קטנה."
+    },
+    {
+      "id": "doc-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The doctor was washing her hands before the checkup.",
+      "he": "הרופאה שטפה ידיים לפני הבדיקה."
+    },
+    {
+      "id": "doc-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "He had never visited a doctor's office before.",
+      "he": "הוא מעולם לא ביקר במרפאה לפני כן."
+    },
+    {
+      "id": "doc-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-had",
+      "en": "If I had a stethoscope, I would listen to my own heart.",
+      "he": "אם היה לי סטטוסקופ, הייתי מקשיב ללב שלי.",
+      "he_f": "אם היה לי סטטוסקופ, הייתי מקשיבה ללב שלי."
+    },
+    {
+      "id": "doc-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "A sticker is given at the end of every checkup.",
+      "he": "מדבקה ניתנת בסוף כל בדיקה."
+    },
+    {
+      "id": "doc-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been feeling better since the checkup.",
+      "he": "אני מרגיש טוב יותר מאז הבדיקה.",
+      "he_f": "אני מרגישה טוב יותר מאז הבדיקה."
+    },
+    {
+      "id": "doc-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The doctor said that my heart sounded strong.",
+      "he": "הרופאה אמרה שהלב שלי נשמע חזק."
+    },
+    {
+      "id": "doc-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the visit had taken longer, we would have missed lunch.",
+      "he": "אם הביקור היה נמשך יותר זמן, היינו מפספסים את ארוחת הצהריים."
+    },
+    {
+      "id": "doc-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The doctor has been working at this clinic for many years.",
+      "he": "הרופא עובד במרפאה הזאת הרבה שנים."
+    },
+    {
+      "id": "doc-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "I asked whether the doctor could look in my ears.",
+      "he": "שאלתי אם הרופאה יכולה להסתכל באוזניים שלי."
+    },
+    {
+      "id": "doc-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First the nurse checks your height, then the doctor listens to your heart.",
+      "he": "קודם האחות בודקת את הגובה שלך, ואז הרופא מקשיב ללב שלך."
+    },
+    {
+      "id": "doc-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the waiting room was full, we did not wait long.",
+      "he": "למרות שחדר ההמתנה היה מלא, לא חיכינו הרבה זמן."
+    },
+    {
+      "id": "doc-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the doctor called us in, we had been waiting for ten minutes.",
+      "he": "עד שהרופאה קראה לנו, כבר חיכינו עשר דקות."
+    },
+    {
+      "id": "doc-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If I had cried, the doctor would have waited patiently.",
+      "he": "אם הייתי בוכה, הרופא היה מחכה בסבלנות."
+    },
+    {
+      "id": "doc-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "The doctor told us that she had already spoken with Mom.",
+      "he": "הרופאה סיפרה לנו שהיא כבר דיברה עם אמא."
+    },
+    {
+      "id": "doc-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been sitting in the waiting room for a few minutes.",
+      "he": "אנחנו יושבים בחדר ההמתנה כבר כמה דקות."
+    },
+    {
+      "id": "doc-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, the checkup went well, and I felt great afterward.",
+      "he": "בקיצור, הבדיקה עברה בהצלחה, והרגשתי מצוין אחר כך."
+    }
+  ]
+}
