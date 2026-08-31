@@ -51,6 +51,13 @@ class PcmPlayer(private val sampleRate: Int) {
     }
 
     private fun playAt(audio: FloatArray, onProgress: ((Int) -> Unit)?) {
+        // The one place sound becomes real — logged so a transcript can tell
+        // "synthesized but never played" from "played but not heard". A drill
+        // report of exactly that ambiguity is why these lines exist.
+        if (interrupted) {
+            android.util.Log.i(TAG, "SKIP ${audio.size * 1000L / sampleRate}ms clip (interrupted before write)")
+            return
+        }
         val t = track ?: AudioTrack.Builder()
             .setAudioAttributes(
                 AudioAttributes.Builder()
@@ -93,6 +100,12 @@ class PcmPlayer(private val sampleRate: Int) {
         // position, and a final report here would resurrect it as a stale
         // highlight after the voice went quiet.
         if (!interrupted) onProgress?.invoke(audio.size)
+        android.util.Log.i(
+            TAG,
+            "played ${audio.size * 1000L / sampleRate}ms clip: wrote=$offset/${audio.size} " +
+                "head=${t.playbackHeadPosition - base} state=${t.playState}" +
+                (if (interrupted) " INTERRUPTED" else ""),
+        )
     }
 
     fun release() {
@@ -105,6 +118,7 @@ class PcmPlayer(private val sampleRate: Int) {
     }
 
     private companion object {
+        const val TAG = "TukiAudio"
         const val DRAIN_GRACE_MS = 700L
     }
 }
