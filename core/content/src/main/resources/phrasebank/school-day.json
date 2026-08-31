@@ -262,9 +262,9 @@
       "id": "sch-l1-009",
       "level": 1,
       "tense": "present-simple",
-      "frame": "i-have-X",
-      "en": "I have a red pen.",
-      "he": "יש לי עט אדום.",
+      "frame": "the-X-is-color",
+      "en": "The pen is red.",
+      "he": "העט אדום.",
       "align": [
         {
           "en": [
@@ -273,17 +273,17 @@
           ],
           "he": [
             0,
-            1
+            0
           ]
         },
         {
           "en": [
             2,
-            4
+            3
           ],
           "he": [
-            2,
-            3
+            1,
+            1
           ]
         }
       ]
@@ -1035,7 +1035,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "i-Ved",
-      "en": "I forgot my notebook at home.",
+      "en": "I left my notebook at home.",
       "he": "שכחתי את המחברת שלי בבית."
     },
     {
@@ -1067,7 +1067,7 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "we-Ved",
-      "en": "We counted all the chairs in the class.",
+      "en": "We counted all the chairs in the classroom.",
       "he": "ספרנו את כל הכיסאות בכיתה."
     },
     {
@@ -1125,7 +1125,7 @@
       "tense": "conditional-zero",
       "frame": "if-zero",
       "en": "If the bell rings, the lesson ends.",
-      "he": "אם הצלצול מצלצל, השיעור נגמר."
+      "he": "אם יש צלצול, השיעור נגמר."
     },
     {
       "id": "sch-l4-008",
@@ -1425,7 +1425,7 @@
     {
       "id": "sch-l7-008",
       "level": 7,
-      "tense": "past-perfect",
+      "tense": "past-perfect-progressive",
       "frame": "by-the-time",
       "en": "By the time the bell rang, we had been writing for an hour.",
       "he": "עד שהצלצול נשמע, כבר כתבנו שעה."

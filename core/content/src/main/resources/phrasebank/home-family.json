@@ -1112,8 +1112,8 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "I am going to tidy my room after lunch.",
-      "he": "אני עומד לסדר את החדר שלי אחרי הצהריים.",
-      "he_f": "אני עומדת לסדר את החדר שלי אחרי הצהריים."
+      "he": "אני עומד לסדר את החדר שלי אחרי ארוחת הצהריים.",
+      "he_f": "אני עומדת לסדר את החדר שלי אחרי ארוחת הצהריים."
     },
     {
       "id": "hom-l4-010",
@@ -1227,8 +1227,8 @@
       "tense": "modal",
       "frame": "might",
       "en": "It might rain, so close the windows.",
-      "he": "אולי ירד גשם, אז תסגור את החלונות.",
-      "he_f": "אולי ירד גשם, אז תסגרי את החלונות."
+      "he": "אולי יירד גשם, אז תסגור את החלונות.",
+      "he_f": "אולי יירד גשם, אז תסגרי את החלונות."
     },
     {
       "id": "hom-l5-012",
@@ -1398,7 +1398,7 @@
     {
       "id": "hom-l7-008",
       "level": 7,
-      "tense": "past-perfect",
+      "tense": "past-perfect-progressive",
       "frame": "by-the-time",
       "en": "By the time Dad arrived, we had been waiting for an hour.",
       "he": "עד שאבא הגיע, כבר חיכינו שעה."

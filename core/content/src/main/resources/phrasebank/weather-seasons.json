@@ -533,7 +533,7 @@
       "level": 2,
       "tense": "present-simple",
       "frame": "why-question",
-      "en": "Why is the sky grey?",
+      "en": "Why is the sky gray?",
       "he": "למה השמיים אפורים?",
       "align": [
         {
@@ -1065,7 +1065,7 @@
       "tense": "future-simple",
       "frame": "will-question",
       "en": "Will it snow this winter?",
-      "he": "ירד שלג החורף?"
+      "he": "יירד שלג החורף?"
     },
     {
       "id": "wea-l4-012",
@@ -1097,8 +1097,8 @@
       "tense": "modal",
       "frame": "might",
       "en": "It might rain, so take an umbrella.",
-      "he": "אולי ירד גשם, אז קח מטרייה.",
-      "he_f": "אולי ירד גשם, אז קחי מטרייה."
+      "he": "אולי יירד גשם, אז קח מטרייה.",
+      "he_f": "אולי יירד גשם, אז קחי מטרייה."
     },
     {
       "id": "wea-l5-004",
@@ -1137,7 +1137,7 @@
       "level": 5,
       "tense": "present-perfect",
       "frame": "perfect-since",
-      "en": "The weather has changed since the morning.",
+      "en": "The weather has changed since this morning.",
       "he": "מזג האוויר השתנה מאז הבוקר."
     },
     {
@@ -1236,7 +1236,7 @@
       "tense": "past-perfect",
       "frame": "never",
       "en": "We had never seen such a big storm.",
-      "he": "מעולם לא ראינו סערה כזאת גדולה."
+      "he": "מעולם לא ראינו סערה גדולה כזאת."
     },
     {
       "id": "wea-l6-009",
@@ -1329,7 +1329,7 @@
     {
       "id": "wea-l7-008",
       "level": 7,
-      "tense": "past-perfect",
+      "tense": "past-perfect-progressive",
       "frame": "by-noon",
       "en": "By noon, the sun had been shining for hours.",
       "he": "עד הצהריים השמש כבר זרחה שעות."

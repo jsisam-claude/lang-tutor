@@ -17,7 +17,8 @@ LEVELS = range(1, 8)
 TENSES = {
     "present-simple", "present-progressive", "past-simple",
     "past-progressive", "present-perfect", "present-perfect-progressive",
-    "past-perfect", "future-simple", "future-going-to", "future-perfect",
+    "past-perfect", "past-perfect-progressive",
+    "future-simple", "future-going-to", "future-perfect",
     "conditional-zero", "conditional-first", "conditional-second",
     "conditional-third", "modal", "imperative", "mixed",
 }

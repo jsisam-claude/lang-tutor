@@ -1312,7 +1312,7 @@
       "tense": "past-simple",
       "frame": "reported-speech",
       "en": "The driver said that the next stop was ours.",
-      "he": "הנהג אמר שהתחנה הבאה שלנו."
+      "he": "הנהג אמר שהתחנה הבאה היא שלנו."
     },
     {
       "id": "get-l7-003",
@@ -1357,7 +1357,7 @@
     {
       "id": "get-l7-008",
       "level": 7,
-      "tense": "past-perfect",
+      "tense": "past-perfect-progressive",
       "frame": "by-the-time",
       "en": "By the time we arrived, the ship had been sailing for hours.",
       "he": "עד שהגענו, האונייה כבר הפליגה שעות."
