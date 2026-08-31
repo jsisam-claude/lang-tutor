@@ -88,6 +88,29 @@ gave. The 250/700 pair shipped on our own reasoning and stays on it.
 
 Do not "fix" the 700 ms number for snappiness again without re-reading this.
 
+### Streaming ASR — weights chosen and pinned (2026-08-31)
+
+The next step past speculation is decoding DURING speech. Approved with a
+bundling constraint (the weights must ship inside the APK/assets, no
+download step), and the artifact is chosen:
+
+- **k2/icefall streaming Zipformer transducer**, sherpa-onnx export
+  `csukuangfj/sherpa-onnx-streaming-zipformer-en-2023-06-26`, Apache-2.0.
+  Int8 encoder + fp32 decoder + int8 joiner ≈ **73 MB** (the fp32 encoder is
+  262 MB — not bundleable). Chunk-16/left-128 variant: explicit cached-state
+  tensors, so our existing ONNX Runtime drives it with no sherpa native lib.
+- `scripts/fetch-asr-stream-assets.sh` fetches it SHA-256-pinned into
+  `app/src/main/assets/asr-stream/` (gitignored, like kokoro/ and vad/).
+  **Deliberately not wired into CI yet** — that happens with the engine, so
+  no dead 73 MB rides the APK meanwhile.
+- Division of labor when built: the streaming model feeds the heard-so-far
+  preview, endpointing, and drill early-close with REAL partials every
+  ~300–500 ms; **Whisper stays the judged-transcript engine** until child/
+  accent accuracy is measured. Open questions sent to consultation round 4:
+  child+accented robustness of LibriSpeech-trained zipformers, hotword
+  biasing for `ConstrainedVocab`, kaldi-fbank feature parity details, int8
+  RTF on big.LITTLE, and the two-ASRs-resident memory question.
+
 ## Dead ends, so they are not retried
 
 - **Speculative LLM prefill from partial ASR** — Conversation API has no
