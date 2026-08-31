@@ -374,8 +374,8 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "X-is-emotion",
-      "en": "Grandma is happy.",
-      "he": "סבתא שמחה.",
+      "en": "Grandma is excited!",
+      "he": "סבתא מתרגשת!",
       "align": [
         {
           "en": [
@@ -1068,8 +1068,8 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "X-Ved",
-      "en": "The children put their phones away at dinner.",
-      "he": "הילדים שמו את הטלפונים בצד בארוחת הערב."
+      "en": "The children left their phones on the shelf during dinner.",
+      "he": "הילדים השאירו את הטלפונים על המדף בזמן ארוחת הערב."
     },
     {
       "id": "cmp-l4-001",
@@ -1340,8 +1340,8 @@
       "level": 6,
       "tense": "past-progressive",
       "frame": "X-was-Ving",
-      "en": "The cat was sleeping on the keyboard.",
-      "he": "החתול ישן על המקלדת."
+      "en": "The cat was lying on the keyboard.",
+      "he": "החתול שכב על המקלדת."
     },
     {
       "id": "cmp-l6-010",
