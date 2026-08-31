@@ -5,7 +5,7 @@
     "en": "Weather and seasons",
     "he": "מזג אוויר ועונות"
   },
-  "notes": "Batch 3. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "notes": "Batch 3. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-3 in this batch.",
   "sentences": [
     {
       "id": "wea-l1-001",
@@ -888,7 +888,29 @@
       "tense": "past-simple",
       "frame": "it-Ved",
       "en": "It rained all night.",
-      "he": "ירד גשם כל הלילה."
+      "he": "ירד גשם כל הלילה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-002",
@@ -896,7 +918,39 @@
       "tense": "past-simple",
       "frame": "we-Ved",
       "en": "We made a snowman in the yard.",
-      "he": "בנינו איש שלג בחצר."
+      "he": "בנינו איש שלג בחצר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-003",
@@ -904,7 +958,29 @@
       "tense": "past-simple",
       "frame": "did-question",
       "en": "Did you see the lightning?",
-      "he": "ראית את הברק?"
+      "he": "ראית את הברק?",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-004",
@@ -912,7 +988,39 @@
       "tense": "past-simple",
       "frame": "possessive-plural",
       "en": "The children's boots were wet.",
-      "he": "המגפיים של הילדים היו רטובים."
+      "he": "המגפיים של הילדים היו רטובים.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-005",
@@ -920,7 +1028,39 @@
       "tense": "past-simple",
       "frame": "X-Ved",
       "en": "The leaves fell from the trees.",
-      "he": "העלים נשרו מהעצים."
+      "he": "העלים נשרו מהעצים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-006",
@@ -928,7 +1068,39 @@
       "tense": "past-simple",
       "frame": "we-Ved",
       "en": "We picked flowers in the spring.",
-      "he": "קטפנו פרחים באביב."
+      "he": "קטפנו פרחים באביב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-007",
@@ -936,7 +1108,29 @@
       "tense": "past-simple",
       "frame": "did-question",
       "en": "Did it snow in the mountains?",
-      "he": "ירד שלג בהרים?"
+      "he": "ירד שלג בהרים?",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-008",
@@ -944,7 +1138,49 @@
       "tense": "past-simple",
       "frame": "X-Ved-Y",
       "en": "The sun dried our towels quickly.",
-      "he": "השמש ייבשה לנו את המגבות מהר."
+      "he": "השמש ייבשה לנו את המגבות מהר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            4
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-009",
@@ -952,7 +1188,39 @@
       "tense": "past-simple",
       "frame": "X-was-adj",
       "en": "Last summer was very hot.",
-      "he": "הקיץ שעבר היה חם מאוד."
+      "he": "הקיץ שעבר היה חם מאוד.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-010",
@@ -960,7 +1228,49 @@
       "tense": "past-simple",
       "frame": "plural",
       "en": "The puddles were deep after the rain.",
-      "he": "השלוליות היו עמוקות אחרי הגשם."
+      "he": "השלוליות היו עמוקות אחרי הגשם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-011",
@@ -968,7 +1278,49 @@
       "tense": "past-simple",
       "frame": "possessive",
       "en": "Dana's kite flew high in the wind.",
-      "he": "העפיפון של דנה עף גבוה ברוח."
+      "he": "העפיפון של דנה עף גבוה ברוח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            2
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l3-012",
@@ -976,7 +1328,39 @@
       "tense": "past-simple",
       "frame": "we-Ved",
       "en": "We watched the storm from the window.",
-      "he": "צפינו בסערה מהחלון."
+      "he": "צפינו בסערה מהחלון.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
     },
     {
       "id": "wea-l4-001",
