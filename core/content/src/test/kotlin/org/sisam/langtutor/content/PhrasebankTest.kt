@@ -16,7 +16,7 @@ class PhrasebankTest {
         // 84 per theme; grows with the index — per-level balance is the
         // invariant that matters, so the total is derived, not hardcoded.
         assertEquals(0, sentences.size % 84)
-        assertEquals(21 * 84, sentences.size)
+        assertEquals(22 * 84, sentences.size)
         for (level in 1..7) {
             assertEquals("level $level", sentences.size / 7, sentences.count { it.level == level })
         }

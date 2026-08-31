@@ -1,0 +1,1122 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "idioms",
+  "title": {
+    "en": "Sayings and idioms",
+    "he": "ביטויים"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "idm-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "good-luck",
+      "en": "Good luck!",
+      "he": "בהצלחה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "well-done",
+      "en": "Well done!",
+      "he": "כל הכבוד!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "happy-birthday",
+      "en": "Happy birthday!",
+      "he": "יום הולדת שמח!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "good-morning",
+      "en": "Good morning!",
+      "he": "בוקר טוב!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "good-night",
+      "en": "Good night!",
+      "he": "לילה טוב!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "congratulations",
+      "en": "Congratulations!",
+      "he": "מזל טוב!",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "welcome",
+      "en": "Welcome!",
+      "he": "ברוך הבא!",
+      "he_f": "ברוכה הבאה!",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "on-my-way",
+      "en": "I'm on my way.",
+      "he": "אני בדרך.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "see-you-soon",
+      "en": "See you soon.",
+      "he": "נתראה בקרוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "happy-new-year",
+      "en": "Happy new year!",
+      "he": "שנה טובה!",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "nice-to-meet-you",
+      "en": "Nice to meet you.",
+      "he": "נעים מאוד.",
+      "align": [
+        {
+          "en": [
+            0,
+            3
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "no-problem",
+      "en": "No problem!",
+      "he": "אין בעיה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-001",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "how-are-you",
+      "en": "How are you?",
+      "he": "מה שלומך?",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-002",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "whats-up",
+      "en": "What's up?",
+      "he": "מה קורה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "whats-wrong",
+      "en": "What's wrong?",
+      "he": "מה קרה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-004",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "just-kidding",
+      "en": "I'm just kidding.",
+      "he": "אני סתם צוחק.",
+      "he_f": "אני סתם צוחקת.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-wait",
+      "en": "I can't wait!",
+      "he": "אני לא יכול לחכות!",
+      "he_f": "אני לא יכולה לחכות!",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-006",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-believe-it",
+      "en": "I can't believe it!",
+      "he": "אני לא מאמין!",
+      "he_f": "אני לא מאמינה!",
+      "align": [
+        {
+          "en": [
+            0,
+            3
+          ],
+          "he": [
+            0,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "just-want-to-say",
+      "en": "I just want to say thanks.",
+      "he": "אני רק רוצה להגיד תודה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-008",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "kidding-me",
+      "en": "Are you kidding me?",
+      "he": "אתה צוחק עליי?",
+      "he_f": "את צוחקת עליי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "looking-forward-to-it",
+      "en": "I'm looking forward to it.",
+      "he": "אני מצפה לזה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            4
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "so-happy-for-you",
+      "en": "I'm so happy for you!",
+      "he": "אני כל כך שמח בשבילך!",
+      "he_f": "אני כל כך שמחה בשבילך!",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-011",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-i-help-you",
+      "en": "Can I help you?",
+      "he": "אפשר לעזור?",
+      "align": [
+        {
+          "en": [
+            0,
+            3
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "are-you-ok",
+      "en": "Are you OK?",
+      "he": "אתה בסדר?",
+      "he_f": "את בסדר?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "idm-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "piece-of-cake",
+      "en": "The test was a piece of cake.",
+      "he": "המבחן היה משחק ילדים."
+    },
+    {
+      "id": "idm-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "same-boat",
+      "en": "We were in the same boat.",
+      "he": "היינו באותה סירה."
+    },
+    {
+      "id": "idm-l3-003",
+      "level": 3,
+      "tense": "imperative",
+      "frame": "break-a-leg",
+      "en": "Break a leg!",
+      "he": "בהצלחה!"
+    },
+    {
+      "id": "idm-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "raining-cats-and-dogs",
+      "en": "It rained cats and dogs yesterday.",
+      "he": "ירד גשם חזק מאוד אתמול."
+    },
+    {
+      "id": "idm-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "not-my-cup-of-tea",
+      "en": "The movie wasn't my cup of tea.",
+      "he": "הסרט לא היה בטעם שלי."
+    },
+    {
+      "id": "idm-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "hands-full",
+      "en": "My hands were full all day.",
+      "he": "הייתי עסוק מאוד כל היום.",
+      "he_f": "הייתי עסוקה מאוד כל היום."
+    },
+    {
+      "id": "idm-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "break-the-ice",
+      "en": "Did you break the ice at the party?",
+      "he": "שברת את הקרח במסיבה?"
+    },
+    {
+      "id": "idm-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "tip-of-my-tongue",
+      "en": "The answer was on the tip of my tongue.",
+      "he": "התשובה הייתה לי על קצה הלשון."
+    },
+    {
+      "id": "idm-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "music-to-my-ears",
+      "en": "Grandpa's stories were music to my ears.",
+      "he": "הסיפורים של סבא היו כמו מוזיקה לאוזניים."
+    },
+    {
+      "id": "idm-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "two-peas-in-a-pod",
+      "en": "The twins were like two peas in a pod.",
+      "he": "התאומים היו כמו שתי טיפות מים."
+    },
+    {
+      "id": "idm-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "spill-the-beans",
+      "en": "Did you spill the beans about the party?",
+      "he": "גילית את הסוד על המסיבה?"
+    },
+    {
+      "id": "idm-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "over-the-moon",
+      "en": "The kids were over the moon about the trip.",
+      "he": "הילדים עפו באוויר משמחה על הטיול."
+    },
+    {
+      "id": "idm-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "hit-the-road",
+      "en": "We are going to hit the road soon.",
+      "he": "אנחנו עומדים לצאת לדרך בקרוב."
+    },
+    {
+      "id": "idm-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "fingers-crossed",
+      "en": "I'm going to keep my fingers crossed for you.",
+      "he": "אני עומד להחזיק לך אצבעות.",
+      "he_f": "אני עומדת להחזיק לך אצבעות."
+    },
+    {
+      "id": "idm-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "in-no-time",
+      "en": "You're going to feel better in no time.",
+      "he": "אתה עומד להרגיש יותר טוב תוך זמן קצר.",
+      "he_f": "את עומדת להרגיש יותר טוב תוך זמן קצר."
+    },
+    {
+      "id": "idm-l4-004",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "hit-the-sack",
+      "en": "Grandpa is going to hit the sack early tonight.",
+      "he": "סבא עומד ללכת לישון מוקדם הערב."
+    },
+    {
+      "id": "idm-l4-005",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "time-will-tell",
+      "en": "Time will tell.",
+      "he": "הזמן יגיד."
+    },
+    {
+      "id": "idm-l4-006",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "keep-a-promise",
+      "en": "Will you keep your promise this time?",
+      "he": "תעמוד בהבטחה שלך הפעם?",
+      "he_f": "תעמדי בהבטחה שלך הפעם?"
+    },
+    {
+      "id": "idm-l4-007",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "easier-said-than-done",
+      "en": "It's easier said than done.",
+      "he": "קל יותר להגיד מאשר לעשות."
+    },
+    {
+      "id": "idm-l4-008",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "actions-speak-louder",
+      "en": "Actions speak louder than words.",
+      "he": "מעשים חשובים יותר ממילים."
+    },
+    {
+      "id": "idm-l4-009",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "best-of-both-worlds",
+      "en": "This is the best of both worlds.",
+      "he": "זה הכי טוב משני העולמות."
+    },
+    {
+      "id": "idm-l4-010",
+      "level": 4,
+      "tense": "modal",
+      "frame": "chin-up",
+      "en": "You must keep your chin up.",
+      "he": "אתה חייב להרים את הראש.",
+      "he_f": "את חייבת להרים את הראש."
+    },
+    {
+      "id": "idm-l4-011",
+      "level": 4,
+      "tense": "modal",
+      "frame": "grain-of-salt",
+      "en": "You should take it with a grain of salt.",
+      "he": "כדאי שלא תיקח את זה יותר מדי ברצינות.",
+      "he_f": "כדאי שלא תיקחי את זה יותר מדי ברצינות."
+    },
+    {
+      "id": "idm-l4-012",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "use-it-or-lose-it",
+      "en": "If you don't use it, you lose it.",
+      "he": "אם לא משתמשים בזה, מאבדים את זה."
+    },
+    {
+      "id": "idm-l5-001",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "lend-a-hand",
+      "en": "If you lend a hand, we will finish faster.",
+      "he": "אם תיתן יד, נגמור מהר יותר.",
+      "he_f": "אם תיתני יד, נגמור מהר יותר."
+    },
+    {
+      "id": "idm-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "nail-on-the-head",
+      "en": "I have hit the nail on the head.",
+      "he": "קלעתי בול."
+    },
+    {
+      "id": "idm-l5-003",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "new-leaf",
+      "en": "We have turned over a new leaf this year.",
+      "he": "פתחנו דף חדש השנה."
+    },
+    {
+      "id": "idm-l5-004",
+      "level": 5,
+      "tense": "modal",
+      "frame": "fall-through",
+      "en": "The plan might fall through if it rains.",
+      "he": "אולי התוכנית לא תצא לפועל אם ירד גשם."
+    },
+    {
+      "id": "idm-l5-005",
+      "level": 5,
+      "tense": "modal",
+      "frame": "outside-the-box",
+      "en": "For this problem, you may need to think outside the box.",
+      "he": "בבעיה הזאת, אולי תצטרך לחשוב מחוץ לקופסה.",
+      "he_f": "בבעיה הזאת, אולי תצטרכי לחשוב מחוץ לקופסה."
+    },
+    {
+      "id": "idm-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "black-sheep",
+      "en": "She has always been the black sheep of the family.",
+      "he": "היא תמיד הייתה הכבשה השחורה של המשפחה."
+    },
+    {
+      "id": "idm-l5-007",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "bite-off-more",
+      "en": "He has bitten off more than he can chew with all his plans.",
+      "he": "הוא לקח על עצמו יותר מדי עם כל התוכניות שלו."
+    },
+    {
+      "id": "idm-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "eyes-peeled",
+      "en": "If you keep your eyes peeled, you will find it.",
+      "he": "אם תשמור על עיניים פקוחות, תמצא את זה.",
+      "he_f": "אם תשמרי על עיניים פקוחות, תמצאי את זה."
+    },
+    {
+      "id": "idm-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "butterflies-in-stomach",
+      "en": "I have had butterflies in my stomach all morning.",
+      "he": "היו לי פרפרים בבטן כל הבוקר."
+    },
+    {
+      "id": "idm-l5-010",
+      "level": 5,
+      "tense": "modal",
+      "frame": "arm-and-a-leg",
+      "en": "It might cost an arm and a leg, so let's check the price first.",
+      "he": "זה אולי יעלה הון תועפות, אז בואו נבדוק את המחיר קודם."
+    },
+    {
+      "id": "idm-l5-011",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "cat-out-of-the-bag",
+      "en": "If you let the cat out of the bag, everyone will know the secret.",
+      "he": "אם תוציא את החתול מהשק, כולם ידעו את הסוד.",
+      "he_f": "אם תוציאי את החתול מהשק, כולם ידעו את הסוד."
+    },
+    {
+      "id": "idm-l5-012",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "hit-the-jackpot",
+      "en": "We have hit the jackpot with this new apartment.",
+      "he": "היה לנו מזל ענק עם הדירה החדשה הזאת."
+    },
+    {
+      "id": "idm-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "walking-on-eggshells",
+      "en": "I was walking on eggshells around him all evening.",
+      "he": "הלכתי על ביצים כל הערב לידו."
+    },
+    {
+      "id": "idm-l6-002",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "eye-to-eye",
+      "en": "I had never seen eye to eye with my brother until that day.",
+      "he": "מעולם לא ראיתי עין בעין עם אחי עד היום ההוא."
+    },
+    {
+      "id": "idm-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "sleeping-dogs-lie",
+      "en": "If I were you, I would let sleeping dogs lie.",
+      "he": "במקומך, לא הייתי פותח את הנושא הזה מחדש.",
+      "he_f": "במקומך, לא הייתי פותחת את הנושא הזה מחדש."
+    },
+    {
+      "id": "idm-l6-004",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "under-wraps",
+      "en": "The news was kept under wraps until Friday.",
+      "he": "החדשות נשמרו בסוד עד יום שישי."
+    },
+    {
+      "id": "idm-l6-005",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "beat-around-the-bush",
+      "en": "We were beating around the bush instead of just asking directly.",
+      "he": "דיברנו סחור סחור במקום פשוט לשאול ישירות."
+    },
+    {
+      "id": "idm-l6-006",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "burn-bridges",
+      "en": "He had already burned his bridges with that company before I met him.",
+      "he": "הוא כבר שרף גשרים עם החברה ההיא לפני שפגשתי אותו."
+    },
+    {
+      "id": "idm-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "in-my-shoes",
+      "en": "If you were in my shoes, you would understand my decision.",
+      "he": "אם היית במקומי, היית מבין את ההחלטה שלי.",
+      "he_f": "אם היית במקומי, היית מבינה את ההחלטה שלי."
+    },
+    {
+      "id": "idm-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "blown-cover",
+      "en": "His cover was blown at the surprise party.",
+      "he": "הזהות הסודית שלו נחשפה במסיבת ההפתעה."
+    },
+    {
+      "id": "idm-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "sitting-on-the-fence",
+      "en": "They were sitting on the fence about the decision all week.",
+      "he": "הם התלבטו לגבי ההחלטה כל השבוע."
+    },
+    {
+      "id": "idm-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "made-up-our-minds",
+      "en": "We had already made up our minds before the movie even started.",
+      "he": "כבר החלטנו סופית לפני שהסרט בכלל התחיל."
+    },
+    {
+      "id": "idm-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "shoe-on-other-foot",
+      "en": "If the shoe were on the other foot, you would feel differently.",
+      "he": "אם המצב היה הפוך, היית מרגיש אחרת.",
+      "he_f": "אם המצב היה הפוך, היית מרגישה אחרת."
+    },
+    {
+      "id": "idm-l6-012",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "bells-and-whistles",
+      "en": "Dinner was served with all the bells and whistles this time.",
+      "he": "ארוחת הערב הוגשה עם כל התוספות המיוחדות הפעם."
+    },
+    {
+      "id": "idm-l7-001",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "piece-of-cake",
+      "en": "He said that the test was a piece of cake.",
+      "he": "הוא אמר שהמבחן היה משחק ילדים."
+    },
+    {
+      "id": "idm-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "keep-an-eye-on",
+      "en": "She told me to keep an eye on the soup.",
+      "he": "היא אמרה לי לשמור עין על המרק."
+    },
+    {
+      "id": "idm-l7-003",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "rack-my-brain",
+      "en": "I have been racking my brain all day trying to remember his name.",
+      "he": "אני שובר את הראש כל היום בניסיון לזכור את השם שלו.",
+      "he_f": "אני שוברת את הראש כל היום בניסיון לזכור את השם שלו."
+    },
+    {
+      "id": "idm-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "midnight-oil",
+      "en": "We have been burning the midnight oil to finish everything on time.",
+      "he": "אנחנו עובדים עד השעות הקטנות של הלילה כדי לסיים הכל בזמן."
+    },
+    {
+      "id": "idm-l7-005",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "heads-together",
+      "en": "If we had put our heads together sooner, we would have solved the problem faster.",
+      "he": "אם היינו יושבים לחשוב ביחד מוקדם יותר, היינו פותרים את הבעיה מהר יותר."
+    },
+    {
+      "id": "idm-l7-006",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "foot-in-mouth",
+      "en": "If she hadn't put her foot in her mouth, the meeting would have gone smoothly.",
+      "he": "אם היא לא הייתה אומרת משהו לא במקום, הפגישה הייתה עוברת חלק."
+    },
+    {
+      "id": "idm-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "break-the-ice",
+      "en": "First we broke the ice, then the whole evening went smoothly.",
+      "he": "קודם שברנו את הקרח, ואז כל הערב עבר חלק."
+    },
+    {
+      "id": "idm-l7-008",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "out-of-the-blue",
+      "en": "Although the news came out of the blue, we all stayed calm.",
+      "he": "למרות שהחדשות הגיעו כרעם ביום בהיר, כולנו נשארנו רגועים."
+    },
+    {
+      "id": "idm-l7-009",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "bumps-in-the-road",
+      "en": "In short, we hit a few bumps in the road, but we made it in the end.",
+      "he": "בקיצור, נתקלנו בכמה מהמורות בדרך, אבל הצלחנו בסוף."
+    },
+    {
+      "id": "idm-l7-010",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "extra-mile",
+      "en": "The team has been going the extra mile to meet the deadline.",
+      "he": "הצוות עושה מאמץ נוסף כדי לעמוד בלוח הזמנים."
+    },
+    {
+      "id": "idm-l7-011",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "bite-off-more",
+      "en": "My friend told me that she had bitten off more than she could chew.",
+      "he": "החברה שלי סיפרה לי שהיא לקחה על עצמה יותר מדי."
+    },
+    {
+      "id": "idm-l7-012",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "bite-the-bullet",
+      "en": "If we had bitten the bullet earlier, we would have saved a lot of trouble.",
+      "he": "אם היינו מתמודדים עם זה מוקדם יותר, היינו חוסכים הרבה צרות."
+    }
+  ]
+}
