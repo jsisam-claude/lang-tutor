@@ -19,8 +19,8 @@ concurrency:
 #
 # All three actions sit at v5, the majors that declare `using: node24` and
 # silence the Node.js-20 deprecation warning every green v4 run carried.
-# The bump was attempted on 2026-08-27 (#130-#131) and could not be judged —
-# see below — so THIS commit is the clean retry the note asked for.
+# PROVEN: the clean retry on its own commit (run #145, 2026-08-31) came back
+# green, so the 2026-08-27 failures below were never about the version.
 #
 # The 2026-08-27 startup failures, for the record:
 # RESOLVED (as a mystery, not a diagnosis): every run from #136 onward is
@@ -34,8 +34,8 @@ concurrency:
 # a GitHub-side transient — runner pool or scheduling outage. If this
 # signature recurs (instant failure, jobs created, zero steps, no runner,
 # no logs): first check githubstatus.com and simply wait; do not churn the
-# workflow file, it has been proven innocent. The v5 bump above remains
-# unproven — retry it on its own commit some quiet day and read the result.
+# workflow file, it has been proven innocent — and the v5 bump is now
+# proven green too (see above), so there is nothing left to retry.
 
 permissions:
   contents: read
