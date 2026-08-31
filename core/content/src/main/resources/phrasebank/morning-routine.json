@@ -1,0 +1,1419 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "morning-routine",
+  "title": {
+    "en": "Good morning!",
+    "he": "בוקר טוב!"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "mor-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A clock!",
+      "he": "שעון!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my bed.",
+      "he": "זאת המיטה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the sun.",
+      "he": "אני רואה את השמש.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The clock is loud.",
+      "he": "השעון רועש.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my blanket.",
+      "he": "אני אוהב את השמיכה שלי.",
+      "he_f": "אני אוהבת את השמיכה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two shoes.",
+      "he": "שתי נעליים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-am-ready",
+      "en": "I am ready!",
+      "he": "אני מוכן!",
+      "he_f": "אני מוכנה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bed is warm.",
+      "he": "המיטה חמה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The sun is yellow.",
+      "he": "השמש צהובה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-my-X",
+      "en": "I love my bag.",
+      "he": "אני אוהב את התיק שלי.",
+      "he_f": "אני אוהבת את התיק שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bag is heavy.",
+      "he": "התיק כבד.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "Mom is sleepy.",
+      "he": "אמא מנומנמת.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am waking up.",
+      "he": "אני מתעורר.",
+      "he_f": "אני מתעוררת.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Dad is stretching.",
+      "he": "אבא מתמתח.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-003",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am washing my face.",
+      "he": "אני רוחץ את הפנים שלי.",
+      "he_f": "אני רוחצת את הפנים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-004",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to get dressed fast.",
+      "he": "אני רוצה להתלבש מהר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you find my shoes?",
+      "he": "אתה יכול למצוא את הנעליים שלי?",
+      "he_f": "את יכולה למצוא את הנעליים שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-006",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can get dressed fast.",
+      "he": "אני יכול להתלבש מהר.",
+      "he_f": "אני יכולה להתלבש מהר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where are my shoes?",
+      "he": "איפה הנעליים שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-008",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "I am hurrying because I am late.",
+      "he": "אני ממהר כי אני מאחר.",
+      "he_f": "אני ממהרת כי אני מאחרת.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because I am ready.",
+      "he": "אני שמח כי אני מוכן.",
+      "he_f": "אני שמחה כי אני מוכנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you getting dressed?",
+      "he": "אתה מתלבש?",
+      "he_f": "את מתלבשת?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are checking the clock.",
+      "he": "אנחנו בודקים את השעון.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my shoes.",
+      "he": "אני לא מוצא את הנעליים שלי.",
+      "he_f": "אני לא מוצאת את הנעליים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mor-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We woke up early today.",
+      "he": "התעוררנו מוקדם היום."
+    },
+    {
+      "id": "mor-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The alarm clock woke me up at seven.",
+      "he": "השעון המעורר העיר אותי בשבע."
+    },
+    {
+      "id": "mor-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive-plural",
+      "en": "My brother's shoes were by the door.",
+      "he": "הנעליים של אחי היו ליד הדלת."
+    },
+    {
+      "id": "mor-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you find your shoes?",
+      "he": "מצאת את הנעליים שלך?"
+    },
+    {
+      "id": "mor-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "My things are on the chair.",
+      "he": "הדברים שלי על הכיסא."
+    },
+    {
+      "id": "mor-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I stretched for two minutes this morning.",
+      "he": "התמתחתי שתי דקות הבוקר."
+    },
+    {
+      "id": "mor-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My little brother put on his shoes by himself.",
+      "he": "אחי הקטן נעל את הנעליים שלו לבד."
+    },
+    {
+      "id": "mor-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the alarm clock ring on time?",
+      "he": "השעון המעורר צלצל בזמן?"
+    },
+    {
+      "id": "mor-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We ate a quick breakfast.",
+      "he": "אכלנו ארוחת בוקר מהירה."
+    },
+    {
+      "id": "mor-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "My sister's bag was by the door.",
+      "he": "התיק של אחותי היה ליד הדלת."
+    },
+    {
+      "id": "mor-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Mom helped me tie my shoes.",
+      "he": "אמא עזרה לי לקשור את הנעליים שלי."
+    },
+    {
+      "id": "mor-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "We left the house on time.",
+      "he": "יצאנו מהבית בזמן."
+    },
+    {
+      "id": "mor-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to wake up early tomorrow.",
+      "he": "אני עומד להתעורר מוקדם מחר.",
+      "he_f": "אני עומדת להתעורר מוקדם מחר."
+    },
+    {
+      "id": "mor-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to leave the house at eight.",
+      "he": "אנחנו עומדים לצאת מהבית בשמונה."
+    },
+    {
+      "id": "mor-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "Dad is going to make breakfast fast.",
+      "he": "אבא עומד להכין ארוחת בוקר מהר."
+    },
+    {
+      "id": "mor-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "I am faster than my brother in the morning.",
+      "he": "אני מהיר יותר מאחי בבוקר.",
+      "he_f": "אני מהירה יותר מאחי בבוקר."
+    },
+    {
+      "id": "mor-l4-005",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The clock moves faster than me.",
+      "he": "השעון זז מהר יותר ממני."
+    },
+    {
+      "id": "mor-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the fastest morning in our house.",
+      "he": "זה הבוקר המהיר ביותר בבית שלנו."
+    },
+    {
+      "id": "mor-l4-007",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must get out of bed now.",
+      "he": "אתה חייב לקום עכשיו.",
+      "he_f": "את חייבת לקום עכשיו."
+    },
+    {
+      "id": "mor-l4-008",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should check the clock.",
+      "he": "כדאי שתבדוק את השעון.",
+      "he_f": "כדאי שתבדקי את השעון."
+    },
+    {
+      "id": "mor-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If I wake up late, I hurry.",
+      "he": "אם אני מתעורר מאוחר, אני ממהר.",
+      "he_f": "אם אני מתעוררת מאוחר, אני ממהרת."
+    },
+    {
+      "id": "mor-l4-010",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If we hurry, we are ready on time.",
+      "he": "אם אנחנו ממהרים, אנחנו מוכנים בזמן."
+    },
+    {
+      "id": "mor-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will leave for work early.",
+      "he": "אבא ייצא לעבודה מוקדם."
+    },
+    {
+      "id": "mor-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you be ready in five minutes?",
+      "he": "תהיה מוכן בעוד חמש דקות?",
+      "he_f": "תהיי מוכנה בעוד חמש דקות?"
+    },
+    {
+      "id": "mor-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have gotten dressed already.",
+      "he": "כבר התלבשתי."
+    },
+    {
+      "id": "mor-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "I have been ready for five minutes.",
+      "he": "אני מוכן כבר חמש דקות.",
+      "he_f": "אני מוכנה כבר חמש דקות."
+    },
+    {
+      "id": "mor-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might be late.",
+      "he": "אולי נאחר."
+    },
+    {
+      "id": "mor-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you hurry, you will be ready on time.",
+      "he": "אם תמהר, תהיה מוכן בזמן.",
+      "he_f": "אם תמהרי, תהיי מוכנה בזמן."
+    },
+    {
+      "id": "mor-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my bag?",
+      "he": "ראית את התיק שלי?"
+    },
+    {
+      "id": "mor-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "Mom has just woken up.",
+      "he": "אמא בדיוק התעוררה."
+    },
+    {
+      "id": "mor-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My sister may be ready soon.",
+      "he": "אולי אחותי תהיה מוכנה בקרוב."
+    },
+    {
+      "id": "mor-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we leave now, we will be on time.",
+      "he": "אם נצא עכשיו, נהיה בזמן."
+    },
+    {
+      "id": "mor-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never gotten dressed so fast.",
+      "he": "מעולם לא התלבשתי כל כך מהר."
+    },
+    {
+      "id": "mor-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "I have been awake since six.",
+      "he": "אני ער מאז שש.",
+      "he_f": "אני ערה מאז שש."
+    },
+    {
+      "id": "mor-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might be seven already, so get up!",
+      "he": "אולי כבר השעה שבע, אז תקום!",
+      "he_f": "אולי כבר השעה שבע, אז תקומי!"
+    },
+    {
+      "id": "mor-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you get ready fast, we won't be late.",
+      "he": "אם תתכונן מהר, לא נאחר.",
+      "he_f": "אם תתכונני מהר, לא נאחר."
+    },
+    {
+      "id": "mor-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was stretching while Dad was making breakfast.",
+      "he": "התמתחתי בזמן שאבא הכין ארוחת בוקר."
+    },
+    {
+      "id": "mor-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "My shoes were found under the bed.",
+      "he": "הנעליים שלי נמצאו מתחת למיטה."
+    },
+    {
+      "id": "mor-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I woke up earlier, I would not hurry.",
+      "he": "אם הייתי מתעורר מוקדם יותר, לא הייתי ממהר.",
+      "he_f": "אם הייתי מתעוררת מוקדם יותר, לא הייתי ממהרת."
+    },
+    {
+      "id": "mor-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "I had already gotten dressed when the alarm rang again.",
+      "he": "כבר התלבשתי כשהשעון המעורר צלצל שוב."
+    },
+    {
+      "id": "mor-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "Breakfast was made by Dad in five minutes.",
+      "he": "ארוחת הבוקר הוכנה על ידי אבא בחמש דקות."
+    },
+    {
+      "id": "mor-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was washing my face when the phone rang.",
+      "he": "רחצתי את הפנים שלי כשהטלפון צלצל."
+    },
+    {
+      "id": "mor-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we got ready faster, we would never be late.",
+      "he": "אם היינו מתכוננים מהר יותר, לא היינו מאחרים אף פעם."
+    },
+    {
+      "id": "mor-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The door was closed before I woke up.",
+      "he": "הדלת הייתה סגורה לפני שהתעוררתי."
+    },
+    {
+      "id": "mor-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My brother was still looking for his shoes.",
+      "he": "אחי עדיין חיפש את הנעליים שלו."
+    },
+    {
+      "id": "mor-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "I had never gotten ready so quickly before.",
+      "he": "מעולם לא התכוננתי כל כך מהר לפני כן."
+    },
+    {
+      "id": "mor-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would wake up earlier.",
+      "he": "במקומך הייתי מתעורר מוקדם יותר.",
+      "he_f": "במקומך הייתי מתעוררת מוקדם יותר."
+    },
+    {
+      "id": "mor-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Breakfast is eaten fast in our house.",
+      "he": "ארוחת הבוקר נאכלת מהר בבית שלנו."
+    },
+    {
+      "id": "mor-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been getting ready for twenty minutes.",
+      "he": "אני מתכונן כבר עשרים דקות.",
+      "he_f": "אני מתכוננת כבר עשרים דקות."
+    },
+    {
+      "id": "mor-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Mom said that breakfast was ready.",
+      "he": "אמא אמרה שארוחת הבוקר מוכנה."
+    },
+    {
+      "id": "mor-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If I had woken up earlier, I would have found my shoes faster.",
+      "he": "אם הייתי מתעורר מוקדם יותר, הייתי מוצא את הנעליים שלי מהר יותר.",
+      "he_f": "אם הייתי מתעוררת מוקדם יותר, הייתי מוצאת את הנעליים שלי מהר יותר."
+    },
+    {
+      "id": "mor-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandma has been getting up early all week.",
+      "he": "סבתא קמה מוקדם כל השבוע."
+    },
+    {
+      "id": "mor-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My brother asked whether he could find his shoes.",
+      "he": "אחי שאל אם הוא יכול למצוא את הנעליים שלו."
+    },
+    {
+      "id": "mor-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First I wash my face, then I get dressed.",
+      "he": "קודם אני רוחץ פנים, ואז אני מתלבש.",
+      "he_f": "קודם אני רוחצת פנים, ואז אני מתלבשת."
+    },
+    {
+      "id": "mor-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although we woke up late, we still arrived on time.",
+      "he": "למרות שהתעוררנו מאוחר, עדיין הגענו בזמן."
+    },
+    {
+      "id": "mor-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we left, I had been looking for my shoes for ten minutes.",
+      "he": "עד שיצאנו, כבר חיפשתי את הנעליים שלי עשר דקות."
+    },
+    {
+      "id": "mor-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the alarm had rung on time, I would not have been late.",
+      "he": "אם השעון המעורר היה מצלצל בזמן, לא הייתי מאחר.",
+      "he_f": "אם השעון המעורר היה מצלצל בזמן, לא הייתי מאחרת."
+    },
+    {
+      "id": "mor-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Dad told us that he had already left.",
+      "he": "אבא סיפר לנו שהוא כבר יצא."
+    },
+    {
+      "id": "mor-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been rushing every morning this week.",
+      "he": "השבוע אנחנו ממהרים כל בוקר."
+    },
+    {
+      "id": "mor-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone was ready on time, so we left the house together.",
+      "he": "בקיצור, כולם היו מוכנים בזמן, ולכן יצאנו מהבית ביחד."
+    }
+  ]
+}

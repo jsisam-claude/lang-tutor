@@ -1,0 +1,810 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "travel-and-holiday",
+  "title": { "en": "A family trip", "he": "טיול משפחתי" },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "trv-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A map!",
+      "he": "מפה!",
+      "align": [ { "en": [0, 1], "he": [0, 0] } ]
+    },
+    {
+      "id": "trv-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my bag.",
+      "he": "זה התיק שלי.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [2, 2] },
+        { "en": [3, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "trv-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a tent.",
+      "he": "אני רואה אוהל.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "trv-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bag is heavy.",
+      "he": "התיק כבד.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "trv-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my backpack.",
+      "he": "אני אוהב את התרמיל שלי.",
+      "he_f": "אני אוהבת את התרמיל שלי.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [3, 4] }
+      ]
+    },
+    {
+      "id": "trv-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The tent is green.",
+      "he": "האוהל ירוק.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "trv-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two sandwiches.",
+      "he": "שני כריכים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "trv-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The flashlight is here.",
+      "he": "הפנס כאן.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "trv-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The postcard is small.",
+      "he": "הגלויה קטנה.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "trv-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I love my camera.",
+      "he": "אני אוהב את המצלמה שלי.",
+      "he_f": "אני אוהבת את המצלמה שלי.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [3, 4] }
+      ]
+    },
+    {
+      "id": "trv-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The suitcase is purple.",
+      "he": "המזוודה סגולה.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "trv-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The kids are excited.",
+      "he": "הילדים נרגשים.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "trv-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Mom is packing the suitcase.",
+      "he": "אמא אורזת את המזוודה.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "trv-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Dad is folding the tent.",
+      "he": "אבא מקפל את האוהל.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "trv-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to see the mountains.",
+      "he": "אני רוצה לראות את ההרים.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 3], "he": [2, 2] },
+        { "en": [4, 5], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "trv-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-i-X",
+      "en": "Can I bring my camera?",
+      "he": "אפשר לקחת את המצלמה שלי?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [3, 4] }
+      ]
+    },
+    {
+      "id": "trv-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find the map.",
+      "he": "אני לא מוצא את המפה.",
+      "he_f": "אני לא מוצאת את המפה.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 2], "he": [1, 2] },
+        { "en": [3, 4], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "trv-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the campsite?",
+      "he": "איפה הקמפינג?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] }
+      ]
+    },
+    {
+      "id": "trv-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "emotion-because",
+      "en": "I am excited because we are leaving today.",
+      "he": "אני נרגש כי אנחנו יוצאים היום.",
+      "he_f": "אני נרגשת כי אנחנו יוצאים היום.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 3], "he": [2, 2] },
+        { "en": [4, 4], "he": [3, 3] },
+        { "en": [5, 6], "he": [4, 4] },
+        { "en": [7, 7], "he": [5, 5] }
+      ]
+    },
+    {
+      "id": "trv-l2-008",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you taking pictures?",
+      "he": "אתה מצלם תמונות?",
+      "he_f": "את מצלמת תמונות?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 3], "he": [2, 2] }
+      ]
+    },
+    {
+      "id": "trv-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My brother wants to send a postcard.",
+      "he": "אחי רוצה לשלוח גלויה.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 2], "he": [1, 1] },
+        { "en": [3, 4], "he": [2, 2] },
+        { "en": [5, 6], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "trv-l2-010",
+      "level": 2,
+      "tense": "modal",
+      "frame": "we-can-X",
+      "en": "We can walk to the lake.",
+      "he": "אנחנו יכולים ללכת ברגל לאגם.",
+      "align": [
+        { "en": [0, 0], "he": [0, 0] },
+        { "en": [1, 1], "he": [1, 1] },
+        { "en": [2, 2], "he": [2, 3] },
+        { "en": [3, 5], "he": [4, 4] }
+      ]
+    },
+    {
+      "id": "trv-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The kids are eating snacks on the way.",
+      "he": "הילדים אוכלים חטיפים בדרך.",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] },
+        { "en": [4, 4], "he": [2, 2] },
+        { "en": [5, 7], "he": [3, 3] }
+      ]
+    },
+    {
+      "id": "trv-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why is the bag so heavy?",
+      "he": "למה התיק כל כך כבד?",
+      "align": [
+        { "en": [0, 1], "he": [0, 0] },
+        { "en": [2, 3], "he": [1, 1] },
+        { "en": [4, 5], "he": [2, 4] }
+      ]
+    },
+    {
+      "id": "trv-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We packed our bags last night.",
+      "he": "ארזנו את התיקים שלנו אתמול בלילה."
+    },
+    {
+      "id": "trv-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad drew us a map.",
+      "he": "אבא צייר לנו מפה."
+    },
+    {
+      "id": "trv-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My sister's backpack is pink.",
+      "he": "התרמיל של אחותי ורוד."
+    },
+    {
+      "id": "trv-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you bring the map?",
+      "he": "הבאת את המפה?"
+    },
+    {
+      "id": "trv-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The postcards are in my bag.",
+      "he": "הגלויות בתיק שלי."
+    },
+    {
+      "id": "trv-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I lost my hat on the trail.",
+      "he": "איבדתי את הכובע שלי בשביל."
+    },
+    {
+      "id": "trv-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents hiked to the lake.",
+      "he": "ההורים שלי טיילו עד האגם."
+    },
+    {
+      "id": "trv-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the tent stay dry in the rain?",
+      "he": "האוהל נשאר יבש בגשם?"
+    },
+    {
+      "id": "trv-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We took a hundred photos.",
+      "he": "צילמנו מאה תמונות."
+    },
+    {
+      "id": "trv-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My brother's postcards are funny.",
+      "he": "הגלויות של אחי מצחיקות."
+    },
+    {
+      "id": "trv-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma told us about her old trips.",
+      "he": "סבתא סיפרה לנו על הטיולים הישנים שלה."
+    },
+    {
+      "id": "trv-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We got home happy and tired.",
+      "he": "הגענו הביתה שמחים ועייפים."
+    },
+    {
+      "id": "trv-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to pack our bags tonight.",
+      "he": "אנחנו עומדים לארוז את התיקים הערב."
+    },
+    {
+      "id": "trv-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to bring my camera on the trip.",
+      "he": "אני עומד לקחת את המצלמה שלי לטיול.",
+      "he_f": "אני עומדת לקחת את המצלמה שלי לטיול."
+    },
+    {
+      "id": "trv-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This backpack is lighter than my old one.",
+      "he": "התרמיל הזה קל יותר מהישן שלי."
+    },
+    {
+      "id": "trv-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the tallest mountain near our campsite.",
+      "he": "זה ההר הגבוה ביותר ליד הקמפינג שלנו."
+    },
+    {
+      "id": "trv-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must pack a flashlight for the tent.",
+      "he": "אתה חייב לארוז פנס לאוהל.",
+      "he_f": "את חייבת לארוז פנס לאוהל."
+    },
+    {
+      "id": "trv-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should bring snacks for the road.",
+      "he": "כדאי שתביא חטיפים לדרך.",
+      "he_f": "כדאי שתביאי חטיפים לדרך."
+    },
+    {
+      "id": "trv-l4-007",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If we bring a map, we don't get lost.",
+      "he": "אם אנחנו מביאים מפה, אנחנו לא הולכים לאיבוד."
+    },
+    {
+      "id": "trv-l4-008",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to visit a small guesthouse this weekend.",
+      "he": "אנחנו עומדים לבקר בצימר קטן בסוף השבוע."
+    },
+    {
+      "id": "trv-l4-009",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will read the map tomorrow morning.",
+      "he": "אבא יקרא את המפה מחר בבוקר."
+    },
+    {
+      "id": "trv-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The guesthouse is more comfortable than the tent.",
+      "he": "הצימר נוח יותר מהאוהל."
+    },
+    {
+      "id": "trv-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If it rains, we sleep in the guesthouse instead of the tent.",
+      "he": "אם יורד גשם, אנחנו ישנים בצימר במקום באוהל."
+    },
+    {
+      "id": "trv-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you help me carry the suitcase?",
+      "he": "תעזור לי לסחוב את המזוודה?",
+      "he_f": "תעזרי לי לסחוב את המזוודה?"
+    },
+    {
+      "id": "trv-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have packed my bag already.",
+      "he": "כבר ארזתי את התיק שלי."
+    },
+    {
+      "id": "trv-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "Grandma has come to this guesthouse for many years.",
+      "he": "סבתא מגיעה לצימר הזה הרבה שנים."
+    },
+    {
+      "id": "trv-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might stay one more night.",
+      "he": "אולי נישאר עוד לילה אחד."
+    },
+    {
+      "id": "trv-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you pack tonight, you will sleep later tomorrow.",
+      "he": "אם תארוז הערב, תישן יותר מחר.",
+      "he_f": "אם תארזי הערב, תישני יותר מחר."
+    },
+    {
+      "id": "trv-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen the new guesthouse?",
+      "he": "ראית את הצימר החדש?"
+    },
+    {
+      "id": "trv-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "We have just arrived at the campsite.",
+      "he": "אנחנו בדיוק הגענו לקמפינג."
+    },
+    {
+      "id": "trv-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may bring his own tent.",
+      "he": "אולי אחי יביא אוהל משלו."
+    },
+    {
+      "id": "trv-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we find a good campsite, we will stay two nights.",
+      "he": "אם נמצא קמפינג טוב, נישאר שני לילות."
+    },
+    {
+      "id": "trv-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never slept in a tent before.",
+      "he": "מעולם לא ישנתי באוהל לפני כן."
+    },
+    {
+      "id": "trv-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have taken photos since breakfast.",
+      "he": "אנחנו מצלמים תמונות מאז ארוחת הבוקר."
+    },
+    {
+      "id": "trv-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might get cold at night, so pack a sweater.",
+      "he": "יכול להיות שיהיה קר בלילה, אז תארוז סוודר.",
+      "he_f": "יכול להיות שיהיה קר בלילה, אז תארזי סוודר."
+    },
+    {
+      "id": "trv-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me carry the tent, we will find a good spot before dark.",
+      "he": "אם תעזור לי לסחוב את האוהל, נמצא מקום טוב לפני החושך.",
+      "he_f": "אם תעזרי לי לסחוב את האוהל, נמצא מקום טוב לפני החושך."
+    },
+    {
+      "id": "trv-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Dad was reading the map while we were loading the bags.",
+      "he": "אבא קרא את המפה בזמן שטענו את התיקים."
+    },
+    {
+      "id": "trv-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The tent was packed before we left.",
+      "he": "האוהל היה ארוז לפני שיצאנו."
+    },
+    {
+      "id": "trv-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bigger tent, I would invite more friends.",
+      "he": "אם היה לי אוהל גדול יותר, הייתי מזמין יותר חברים.",
+      "he_f": "אם היה לי אוהל גדול יותר, הייתי מזמינה יותר חברים."
+    },
+    {
+      "id": "trv-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already set up the tent when it started to rain.",
+      "he": "כבר הקמנו את האוהל כשהתחיל לרדת גשם."
+    },
+    {
+      "id": "trv-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The postcards were written by the whole family.",
+      "he": "הגלויות נכתבו על ידי כל המשפחה."
+    },
+    {
+      "id": "trv-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was taking pictures when the rain started.",
+      "he": "צילמתי תמונות כשהגשם התחיל."
+    },
+    {
+      "id": "trv-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If the weather were nicer, we would sleep outside the tent.",
+      "he": "אם מזג האוויר היה נעים יותר, היינו ישנים מחוץ לאוהל."
+    },
+    {
+      "id": "trv-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The bags were loaded before sunrise.",
+      "he": "התיקים נטענו לפני הזריחה."
+    },
+    {
+      "id": "trv-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The kids were singing songs during the whole trip.",
+      "he": "הילדים שרו שירים לאורך כל הטיול."
+    },
+    {
+      "id": "trv-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never packed a suitcase alone before.",
+      "he": "היא מעולם לא ארזה מזוודה לבד לפני כן."
+    },
+    {
+      "id": "trv-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would bring a warmer sweater.",
+      "he": "במקומך הייתי מביא סוודר חם יותר.",
+      "he_f": "במקומך הייתי מביאה סוודר חם יותר."
+    },
+    {
+      "id": "trv-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Postcards are sold at every guesthouse along the way.",
+      "he": "גלויות נמכרות בכל צימר לאורך הדרך."
+    },
+    {
+      "id": "trv-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been taking photos all day.",
+      "he": "אני מצלם כל היום.",
+      "he_f": "אני מצלמת כל היום."
+    },
+    {
+      "id": "trv-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the guesthouse was full.",
+      "he": "אבא אמר שהצימר מלא."
+    },
+    {
+      "id": "trv-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had left earlier, we would have found a better campsite.",
+      "he": "אם היינו יוצאים מוקדם יותר, היינו מוצאים קמפינג טוב יותר."
+    },
+    {
+      "id": "trv-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandpa has been telling us stories about his trips all evening.",
+      "he": "סבא מספר לנו סיפורים על הטיולים שלו כל הערב."
+    },
+    {
+      "id": "trv-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could bring her own tent.",
+      "he": "אחותי שאלה אם היא יכולה להביא את האוהל שלה."
+    },
+    {
+      "id": "trv-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we pack our bags, then we check the map one more time.",
+      "he": "קודם אנחנו אורזים את התיקים, ואז אנחנו בודקים את המפה עוד פעם."
+    },
+    {
+      "id": "trv-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the tent was small, we slept very well.",
+      "he": "למרות שהאוהל היה קטן, ישנו מצוין."
+    },
+    {
+      "id": "trv-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we reached the guesthouse, we had been walking for hours.",
+      "he": "עד שהגענו לצימר, כבר הלכנו שעות."
+    },
+    {
+      "id": "trv-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the weather had been better, we would have hiked to the top.",
+      "he": "אם מזג האוויר היה טוב יותר, היינו מטפסים עד הפסגה."
+    },
+    {
+      "id": "trv-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had found the perfect campsite.",
+      "he": "אמא סיפרה לנו שהיא מצאה את הקמפינג המושלם."
+    },
+    {
+      "id": "trv-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been planning this trip for months.",
+      "he": "אנחנו מתכננים את הטיול הזה כבר חודשים."
+    },
+    {
+      "id": "trv-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, the trip was long, but we came home happy and tired.",
+      "he": "בקיצור, הטיול היה ארוך, אבל חזרנו הביתה שמחים ועייפים."
+    }
+  ]
+}
