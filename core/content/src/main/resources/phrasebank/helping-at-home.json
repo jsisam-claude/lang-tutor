@@ -1043,7 +1043,7 @@
       "tense": "present-simple",
       "frame": "possessive-plural",
       "en": "My brother's chores are finished.",
-      "he": "המטלות של אחי גמורות."
+      "he": "המטלות של אחי הסתיימו."
     },
     {
       "id": "hlp-l3-011",
@@ -1191,8 +1191,8 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If you feed the cat now, she will be happy.",
-      "he": "אם תאכיל את החתול עכשיו, היא תהיה שמחה.",
-      "he_f": "אם תאכילי את החתול עכשיו, היא תהיה שמחה."
+      "he": "אם תאכיל את החתולה עכשיו, היא תהיה שמחה.",
+      "he_f": "אם תאכילי את החתולה עכשיו, היא תהיה שמחה."
     },
     {
       "id": "hlp-l5-005",

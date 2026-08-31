@@ -291,7 +291,7 @@
     {
       "id": "rst-l1-010",
       "level": 1,
-      "tense": "imperative",
+      "tense": "present-simple",
       "frame": "thank-you",
       "en": "Thank you!",
       "he": "תודה!",
@@ -987,7 +987,7 @@
       "tense": "past-simple",
       "frame": "X-Ved",
       "en": "My parents shared a dessert.",
-      "he": "ההורים שלי חלקו קינוח."
+      "he": "ההורים שלי התחלקו בקינוח."
     },
     {
       "id": "rst-l3-008",
@@ -1339,7 +1339,7 @@
       "tense": "past-simple",
       "frame": "reported-speech",
       "en": "The waiter said that the soup was fresh.",
-      "he": "המלצר אמר שהמרק היה טרי."
+      "he": "המלצר אמר שהמרק טרי."
     },
     {
       "id": "rst-l7-003",
@@ -1395,7 +1395,7 @@
       "tense": "conditional-third",
       "frame": "if-third",
       "en": "If the waiter had forgotten our order, we would have asked again politely.",
-      "he": "אם המלצר היה שוכח את ההזמנה שלנו, היינו שואלים שוב בנימוס."
+      "he": "אם המלצר היה שוכח את ההזמנה שלנו, היינו מבקשים שוב בנימוס."
     },
     {
       "id": "rst-l7-010",

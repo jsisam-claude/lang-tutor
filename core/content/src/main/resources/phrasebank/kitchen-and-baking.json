@@ -1078,8 +1078,8 @@
       "tense": "modal",
       "frame": "must",
       "en": "You must ask a grown-up before you open the oven.",
-      "he": "אתה חייב לבקש ממבוגר לפני שאתה פותח את התנור.",
-      "he_f": "את חייבת לבקש ממבוגר לפני שאת פותחת את התנור."
+      "he": "אתה חייב לבקש רשות ממבוגר לפני שאתה פותח את התנור.",
+      "he_f": "את חייבת לבקש רשות ממבוגר לפני שאת פותחת את התנור."
     },
     {
       "id": "kit-l4-007",
@@ -1200,7 +1200,7 @@
       "tense": "present-perfect",
       "frame": "perfect-never",
       "en": "I have never baked bread from scratch.",
-      "he": "מעולם לא אפיתי לחם תוצרת בית."
+      "he": "מעולם לא אפיתי לחם מאפס."
     },
     {
       "id": "kit-l5-010",
@@ -1224,7 +1224,7 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If the timer rings, the cookies will be ready.",
-      "he": "אם הטיימר מצלצל, העוגיות יהיו מוכנות."
+      "he": "אם הטיימר יצלצל, העוגיות יהיו מוכנות."
     },
     {
       "id": "kit-l6-001",
@@ -1354,8 +1354,8 @@
       "level": 7,
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
-      "en": "Dad has been rolling out pie dough all morning.",
-      "he": "אבא מרדד בצק לפאי כל הבוקר."
+      "en": "Dad has been kneading dough all morning.",
+      "he": "אבא לש בצק כל הבוקר."
     },
     {
       "id": "kit-l7-005",
@@ -1368,7 +1368,7 @@
     {
       "id": "kit-l7-006",
       "level": 7,
-      "tense": "future-simple",
+      "tense": "modal",
       "frame": "reported-question",
       "en": "My brother asked whether the cookies would be ready soon.",
       "he": "אחי שאל אם העוגיות יהיו מוכנות בקרוב."
@@ -1420,7 +1420,7 @@
       "tense": "past-perfect-progressive",
       "frame": "by-the-time",
       "en": "By the time the last tray came out of the oven, we had been baking for four hours.",
-      "he": "עד שהמגש האחרון יצא מהתנור, כבר אפינו במשך ארבע שעות."
+      "he": "עד שהתבנית האחרונה יצאה מהתנור, כבר אפינו במשך ארבע שעות."
     }
   ]
 }
