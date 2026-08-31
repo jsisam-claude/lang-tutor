@@ -104,12 +104,48 @@ download step), and the artifact is chosen:
   **Deliberately not wired into CI yet** — that happens with the engine, so
   no dead 73 MB rides the APK meanwhile.
 - Division of labor when built: the streaming model feeds the heard-so-far
-  preview, endpointing, and drill early-close with REAL partials every
-  ~300–500 ms; **Whisper stays the judged-transcript engine** until child/
-  accent accuracy is measured. Open questions sent to consultation round 4:
-  child+accented robustness of LibriSpeech-trained zipformers, hotword
-  biasing for `ConstrainedVocab`, kaldi-fbank feature parity details, int8
-  RTF on big.LITTLE, and the two-ASRs-resident memory question.
+  preview, endpointing, and drill early-close with REAL partials; **Whisper
+  stays the judged-transcript engine** until child/accent accuracy is
+  measured.
+
+Consultation round 4 (2026-08-31), validated against the actual encoder
+graph before adoption — two of its central claims were wrong and one model
+it recommended does not exist, so these are the checked facts:
+
+- **Graph truth beats notes**: the int8 encoder has **99 inputs — `x`
+  [N,45,80] plus 98 cached-state tensors** (consultation said "7–9"), and
+  metadata `T=45`, `decode_chunk_len=32`: every call feeds a 45-frame fbank
+  window and advances **32 frames = 320 ms = 5,120 new samples** at 16 kHz
+  (consultation's 160 ms/2,560 was wrong for this export). The engine must
+  read input names/shapes from the session at load, never hardcode them.
+- **Features** (agrees with kaldi-native-fbank defaults; verify snip_edges
+  against sherpa-onnx source when coding): 80 mel, 25/10 ms, povey window,
+  dither 0 at inference, pre-emphasis 0.97, remove_dc_offset true. Keep a
+  240-sample tail so chunk N+1's first frame windows correctly.
+- **Hotword biasing is runtime-side, not in the graph** (confirmed: no such
+  inputs). Greedy search cannot bias; sherpa does it with modified beam
+  search + an Aho-Corasick trie over BPE tokens. v1 ships greedy without
+  biasing — drills judge on Whisper anyway — and beam+trie is the later
+  upgrade if constrained-vocab hit-rate wants it.
+- **Endpointing**: sherpa's real defaults are 2.4 s trailing silence (rule
+  1) and 1.2 s after any decoded token (rule 2); the consultation's "rule 3
+  drill fast-cut" is not a sherpa rule. Irrelevant either way: our VadGate
+  (250 ms soft / 700 ms firm) remains the endpointer; the streamer only
+  feeds it.
+- **Accuracy expectation**: LibriSpeech training means degraded WER on
+  child and Hebrew-accented speech (direction credible, its numbers are
+  guesses). The recommended "gigaspeech-2023-04-16" streaming export is
+  **phantom** — no such public repo; the real alternatives are en-2023-02-21
+  (127 MB int8 encoder — over the bundle budget) and a 20M-param small
+  (43 MB, weaker). The 2023-06-26 pick stands; Whisper-as-judge is the
+  accuracy hedge, and an icefall fine-tune on child corpora is the far
+  option if the probe disappoints.
+- **Co-residency**: dual-ASR residence is fine — Zipformer int8 ~85 MB +
+  Whisper small.en ~240 MB beside the LLM (the consultation's table put
+  E4B on the 8 GB tier; our policy runs E2B there, so headroom is better
+  than its arithmetic). PCM crosses from the audio thread over a queue;
+  inference on 2 XNNPACK threads at default priority; expected RTF well
+  under 0.1. Drop Whisper only after measured parity.
 
 ## Dead ends, so they are not retried
 
