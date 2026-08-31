@@ -1,0 +1,1428 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "playground-and-park",
+  "title": {
+    "en": "At the playground",
+    "he": "בגן השעשועים"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "ply-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A swing!",
+      "he": "נדנדה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-the-X",
+      "en": "This is the slide.",
+      "he": "זאת המגלשה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a ball.",
+      "he": "אני רואה כדור.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The slide is tall.",
+      "he": "המגלשה גבוהה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The ball is yellow.",
+      "he": "הכדור צהוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-the-X",
+      "en": "I like the slide.",
+      "he": "אני אוהב את המגלשה.",
+      "he_f": "אני אוהבת את המגלשה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The sandbox is big.",
+      "he": "ארגז החול גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two swings.",
+      "he": "שתי נדנדות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "My friend is here.",
+      "he": "החבר שלי כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-the-X",
+      "en": "I love the park.",
+      "he": "אני אוהב את הפארק.",
+      "he_f": "אני אוהבת את הפארק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The bucket is blue.",
+      "he": "הדלי כחול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "My friend is happy.",
+      "he": "החבר שלי שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am climbing the ladder.",
+      "he": "אני מטפס על הסולם.",
+      "he_f": "אני מטפסת על הסולם.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-002",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "being-gentle",
+      "en": "We are gentle with the little kids.",
+      "he": "אנחנו עדינים עם הילדים הקטנים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            6
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to go down the slide.",
+      "he": "אני רוצה לרדת במגלשה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you push me on the swing?",
+      "he": "אתה יכול לדחוף אותי בנדנדה?",
+      "he_f": "את יכולה לדחוף אותי בנדנדה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can wait for my turn.",
+      "he": "אני יכול לחכות לתור שלי.",
+      "he_f": "אני יכולה לחכות לתור שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the sandbox?",
+      "he": "איפה ארגז החול?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The baby is laughing because he likes the swing.",
+      "he": "התינוק צוחק כי הוא אוהב את הנדנדה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because my friends are here.",
+      "he": "אני שמח כי החברים שלי כאן.",
+      "he_f": "אני שמחה כי החברים שלי כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you playing in the sandbox?",
+      "he": "אתה משחק בארגז החול?",
+      "he_f": "את משחקת בארגז החול?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My friend wants to go first.",
+      "he": "החבר שלי רוצה להיות ראשון.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are sitting on the picnic blanket.",
+      "he": "אנחנו יושבים על שמיכת הפיקניק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            6
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my shovel.",
+      "he": "אני לא מוצא את היעה שלי.",
+      "he_f": "אני לא מוצאת את היעה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ply-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We went to the park this morning.",
+      "he": "הלכנו לפארק הבוקר."
+    },
+    {
+      "id": "ply-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "My friend gave me the ball.",
+      "he": "החבר שלי נתן לי את הכדור."
+    },
+    {
+      "id": "ply-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My friend's ball is red.",
+      "he": "הכדור של החבר שלי אדום."
+    },
+    {
+      "id": "ply-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you go down the slide?",
+      "he": "ירדת במגלשה?"
+    },
+    {
+      "id": "ply-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The children are in the sandbox.",
+      "he": "הילדים בארגז החול."
+    },
+    {
+      "id": "ply-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I climbed to the top this afternoon.",
+      "he": "טיפסתי עד למעלה אחר הצהריים."
+    },
+    {
+      "id": "ply-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My friends waited for their turn.",
+      "he": "החברים שלי חיכו לתור שלהם."
+    },
+    {
+      "id": "ply-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the kids share the swing?",
+      "he": "הילדים חלקו את הנדנדה?"
+    },
+    {
+      "id": "ply-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We spread the picnic blanket on the grass.",
+      "he": "פרשנו את שמיכת הפיקניק על הדשא."
+    },
+    {
+      "id": "ply-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My friend's shoes are dirty from the sandbox.",
+      "he": "הנעליים של החבר שלי מלוכלכות מארגז החול."
+    },
+    {
+      "id": "ply-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandpa pushed me on the swing.",
+      "he": "סבא דחף אותי על הנדנדה."
+    },
+    {
+      "id": "ply-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children climbed the ladder one by one.",
+      "he": "הילדים טיפסו על הסולם אחד אחד."
+    },
+    {
+      "id": "ply-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to play in the sandbox.",
+      "he": "אנחנו עומדים לשחק בארגז החול."
+    },
+    {
+      "id": "ply-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The big slide is faster than the small slide.",
+      "he": "המגלשה הגדולה מהירה יותר מהמגלשה הקטנה."
+    },
+    {
+      "id": "ply-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the tallest slide in the park.",
+      "he": "זאת המגלשה הגבוהה ביותר בפארק."
+    },
+    {
+      "id": "ply-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must not feed the pigeons in the park.",
+      "he": "אסור לך להאכיל את היונים בפארק."
+    },
+    {
+      "id": "ply-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should wait for your turn.",
+      "he": "כדאי שתחכה לתור שלך.",
+      "he_f": "כדאי שתחכי לתור שלך."
+    },
+    {
+      "id": "ply-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you push the swing, it goes higher.",
+      "he": "אם דוחפים את הנדנדה, היא עולה גבוה יותר."
+    },
+    {
+      "id": "ply-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to meet our friends at the park.",
+      "he": "אנחנו עומדים לפגוש את החברים שלנו בפארק."
+    },
+    {
+      "id": "ply-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will push me on the swing tomorrow.",
+      "he": "אבא ידחוף אותי על הנדנדה מחר."
+    },
+    {
+      "id": "ply-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to climb the ladder after lunch.",
+      "he": "אני עומד לטפס על הסולם אחרי ארוחת הצהריים.",
+      "he_f": "אני עומדת לטפס על הסולם אחרי ארוחת הצהריים."
+    },
+    {
+      "id": "ply-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The sandbox is more fun than the bench.",
+      "he": "ארגז החול יותר כיף מהספסל."
+    },
+    {
+      "id": "ply-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If two kids want the same swing, they take turns.",
+      "he": "אם שני ילדים רוצים את אותה נדנדה, הם מתחלפים."
+    },
+    {
+      "id": "ply-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you share the sandbox with me?",
+      "he": "תחלוק איתי את ארגז החול?",
+      "he_f": "תחלקי איתי את ארגז החול?"
+    },
+    {
+      "id": "ply-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have gone down the slide already.",
+      "he": "כבר ירדתי במגלשה."
+    },
+    {
+      "id": "ply-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "My friend has waited for his turn for ten minutes.",
+      "he": "החבר שלי מחכה לתור שלו כבר עשר דקות."
+    },
+    {
+      "id": "ply-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might stay at the park a bit longer.",
+      "he": "אולי נישאר בפארק עוד קצת."
+    },
+    {
+      "id": "ply-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you climb carefully, you won't fall.",
+      "he": "אם תטפס בזהירות, לא תיפול.",
+      "he_f": "אם תטפסי בזהירות, לא תיפלי."
+    },
+    {
+      "id": "ply-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you tried the new slide?",
+      "he": "ניסית את המגלשה החדשה?"
+    },
+    {
+      "id": "ply-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "My friend has just gone down the slide.",
+      "he": "החבר שלי בדיוק ירד במגלשה."
+    },
+    {
+      "id": "ply-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My friend may join us at the park later.",
+      "he": "אולי החבר שלי יצטרף אלינו בפארק מאוחר יותר."
+    },
+    {
+      "id": "ply-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we get to the park early, we will find an empty swing.",
+      "he": "אם נגיע לפארק מוקדם, נמצא נדנדה פנויה."
+    },
+    {
+      "id": "ply-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never climbed so high before.",
+      "he": "מעולם לא טיפסתי כל כך גבוה לפני כן."
+    },
+    {
+      "id": "ply-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have played at this park since this morning.",
+      "he": "אנחנו משחקים בפארק הזה מאז הבוקר."
+    },
+    {
+      "id": "ply-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so let's leave the park now.",
+      "he": "אולי יירד גשם, אז בואו נעזוב את הפארק עכשיו."
+    },
+    {
+      "id": "ply-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me carry the blanket, we'll find a good spot faster.",
+      "he": "אם תעזור לי לשאת את השמיכה, נמצא מקום טוב מהר יותר.",
+      "he_f": "אם תעזרי לי לשאת את השמיכה, נמצא מקום טוב מהר יותר."
+    },
+    {
+      "id": "ply-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was climbing the ladder while my friend was waiting.",
+      "he": "טיפסתי על הסולם בזמן שהחבר שלי חיכה."
+    },
+    {
+      "id": "ply-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The sandbox was cleaned before we arrived.",
+      "he": "ארגז החול היה מנוקה לפני שהגענו."
+    },
+    {
+      "id": "ply-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bigger swing, I would let everyone try it.",
+      "he": "אם הייתה לי נדנדה גדולה יותר, הייתי נותן לכולם לנסות אותה.",
+      "he_f": "אם הייתה לי נדנדה גדולה יותר, הייתי נותנת לכולם לנסות אותה."
+    },
+    {
+      "id": "ply-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already gone down the slide when it started to rain.",
+      "he": "כבר ירדנו במגלשה כשהתחיל לרדת גשם."
+    },
+    {
+      "id": "ply-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The climbing frame was built by the city.",
+      "he": "מתקן הטיפוס נבנה על ידי העירייה."
+    },
+    {
+      "id": "ply-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was sitting on the picnic blanket when it started to rain.",
+      "he": "ישבתי על שמיכת הפיקניק כשהתחיל לרדת גשם."
+    },
+    {
+      "id": "ply-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we lived near this park, we would come every day.",
+      "he": "אם היינו גרים ליד הפארק הזה, היינו באים כל יום."
+    },
+    {
+      "id": "ply-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "This playground was built many years ago.",
+      "he": "גן השעשועים הזה נבנה לפני הרבה שנים."
+    },
+    {
+      "id": "ply-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My friends were waiting quietly near the gate.",
+      "he": "החברים שלי חיכו בשקט ליד השער."
+    },
+    {
+      "id": "ply-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "My friend had never used the big slide before.",
+      "he": "החבר שלי מעולם לא השתמש במגלשה הגדולה לפני כן."
+    },
+    {
+      "id": "ply-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were in charge, everyone would get a turn.",
+      "he": "אילו הייתי אחראי, כולם היו מקבלים תור.",
+      "he_f": "אילו הייתי אחראית, כולם היו מקבלים תור."
+    },
+    {
+      "id": "ply-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "The playground is cleaned every morning.",
+      "he": "גן השעשועים מנוקה כל בוקר."
+    },
+    {
+      "id": "ply-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been climbing all afternoon.",
+      "he": "אני מטפס כל אחר הצהריים.",
+      "he_f": "אני מטפסת כל אחר הצהריים."
+    },
+    {
+      "id": "ply-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "My friend said that the swings were free.",
+      "he": "החבר שלי אמר שהנדנדות היו פנויות."
+    },
+    {
+      "id": "ply-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had waited for your turn, you wouldn't have fallen off the swing.",
+      "he": "אם היית מחכה לתור שלך, לא היית נופל מהנדנדה.",
+      "he_f": "אם היית מחכה לתור שלך, לא היית נופלת מהנדנדה."
+    },
+    {
+      "id": "ply-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "My friend has been swinging for twenty minutes.",
+      "he": "החבר שלי מתנדנד כבר עשרים דקות."
+    },
+    {
+      "id": "ply-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My friend asked whether he could go down the slide first.",
+      "he": "החבר שלי שאל אם הוא יכול לרדת במגלשה קודם."
+    },
+    {
+      "id": "ply-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we wait for our turn, then we climb the ladder.",
+      "he": "קודם אנחנו מחכים לתור שלנו, ואז אנחנו מטפסים על הסולם."
+    },
+    {
+      "id": "ply-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the line for the slide was long, it moved quickly.",
+      "he": "למרות שהתור למגלשה היה ארוך, הוא זז מהר."
+    },
+    {
+      "id": "ply-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time it was our turn, we had been waiting for twenty minutes.",
+      "he": "עד שהגיע התור שלנו, כבר חיכינו עשרים דקות."
+    },
+    {
+      "id": "ply-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If it hadn't started raining, we would have stayed at the park longer.",
+      "he": "אם לא היה מתחיל לרדת גשם, היינו נשארים בפארק יותר זמן."
+    },
+    {
+      "id": "ply-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "My friend told me that he had found a better spot for the picnic blanket.",
+      "he": "החבר שלי סיפר לי שהוא מצא מקום טוב יותר לשמיכת הפיקניק."
+    },
+    {
+      "id": "ply-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been meeting at this park every Friday for months.",
+      "he": "אנחנו נפגשים בפארק הזה כל יום שישי כבר חודשים."
+    },
+    {
+      "id": "ply-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone took turns, so the afternoon at the park was fun for everyone.",
+      "he": "בקיצור, כולם התחלפו, ולכן אחר הצהריים בפארק היה כיף לכולם."
+    }
+  ]
+}

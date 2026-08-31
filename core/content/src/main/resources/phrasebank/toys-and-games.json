@@ -1,0 +1,1478 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "toys-and-games",
+  "title": {
+    "en": "Toys and games",
+    "he": "צעצועים ומשחקים"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "toy-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A ball!",
+      "he": "כדור!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my teddy bear.",
+      "he": "זה הדובון שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a doll.",
+      "he": "אני רואה בובה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The puzzle is big.",
+      "he": "הפאזל גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The kite is yellow.",
+      "he": "העפיפון צהוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my blocks.",
+      "he": "אני אוהב את הקוביות שלי.",
+      "he_f": "אני אוהבת את הקוביות שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The teddy bear is soft.",
+      "he": "הדובון רך.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Three dolls.",
+      "he": "שלוש בובות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The ball is here.",
+      "he": "הכדור כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I love my kite.",
+      "he": "אני אוהב את העפיפון שלי.",
+      "he_f": "אני אוהבת את העפיפון שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The puzzle is green.",
+      "he": "הפאזל ירוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The doll is happy.",
+      "he": "הבובה שמחה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am building a tower.",
+      "he": "אני בונה מגדל.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My sister is playing with dolls.",
+      "he": "אחותי משחקת עם בובות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to play hide-and-seek.",
+      "he": "אני רוצה לשחק מחבואים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you find my ball?",
+      "he": "אתה יכול למצוא את הכדור שלי?",
+      "he_f": "את יכולה למצוא את הכדור שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can build a tower.",
+      "he": "אני יכול לבנות מגדל.",
+      "he_f": "אני יכולה לבנות מגדל.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my teddy bear?",
+      "he": "איפה הדובון שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "My sister is smiling because she is winning.",
+      "he": "אחותי מחייכת כי היא מנצחת.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because it is my turn.",
+      "he": "אני שמח כי זה התור שלי.",
+      "he_f": "אני שמחה כי זה התור שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you playing with the blocks?",
+      "he": "אתה משחק עם הקוביות?",
+      "he_f": "את משחקת עם הקוביות?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My friend wants to play a board game.",
+      "he": "החבר שלי רוצה לשחק במשחק קופסה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            7
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are sharing the blocks together.",
+      "he": "אנחנו חולקים את הקוביות ביחד.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my toy car.",
+      "he": "אני לא מוצא את מכונית הצעצוע שלי.",
+      "he_f": "אני לא מוצאת את מכונית הצעצוע שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            4,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toy-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We built a tower yesterday.",
+      "he": "בנינו מגדל אתמול."
+    },
+    {
+      "id": "toy-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad gave me a new puzzle.",
+      "he": "אבא נתן לי פאזל חדש."
+    },
+    {
+      "id": "toy-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My sister's doll is new.",
+      "he": "הבובה של אחותי חדשה."
+    },
+    {
+      "id": "toy-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you find your teddy bear?",
+      "he": "מצאת את הדובון שלך?"
+    },
+    {
+      "id": "toy-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The blocks are in the toy box.",
+      "he": "הקוביות בארגז הצעצועים."
+    },
+    {
+      "id": "toy-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I hid behind the tree this morning.",
+      "he": "התחבאתי מאחורי העץ הבוקר."
+    },
+    {
+      "id": "toy-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My friends played hide-and-seek in the yard.",
+      "he": "החברים שלי שיחקו מחבואים בחצר."
+    },
+    {
+      "id": "toy-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you win the game?",
+      "he": "ניצחת במשחק?"
+    },
+    {
+      "id": "toy-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We tidied up the toys before dinner.",
+      "he": "סידרנו את הצעצועים לפני ארוחת הערב."
+    },
+    {
+      "id": "toy-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My brother's blocks are missing.",
+      "he": "הקוביות של אחי חסרות."
+    },
+    {
+      "id": "toy-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandpa taught us a new game.",
+      "he": "סבא לימד אותנו משחק חדש."
+    },
+    {
+      "id": "toy-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children shared the toys happily.",
+      "he": "הילדים חלקו את הצעצועים בשמחה."
+    },
+    {
+      "id": "toy-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to play a board game.",
+      "he": "אנחנו עומדים לשחק במשחק קופסה."
+    },
+    {
+      "id": "toy-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My puzzle is harder than yours.",
+      "he": "הפאזל שלי קשה יותר משלך."
+    },
+    {
+      "id": "toy-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the biggest tower in the room.",
+      "he": "זה המגדל הגדול ביותר בחדר."
+    },
+    {
+      "id": "toy-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must share your toys with your sister.",
+      "he": "אתה חייב לחלוק את הצעצועים שלך עם אחותך.",
+      "he_f": "את חייבת לחלוק את הצעצועים שלך עם אחותך."
+    },
+    {
+      "id": "toy-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should tidy up your toys today.",
+      "he": "כדאי שתסדר את הצעצועים שלך היום.",
+      "he_f": "כדאי שתסדרי את הצעצועים שלך היום."
+    },
+    {
+      "id": "toy-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you build a tall tower, it falls down.",
+      "he": "אם בונים מגדל גבוה, הוא נופל."
+    },
+    {
+      "id": "toy-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to do a puzzle together.",
+      "he": "אנחנו עומדים להרכיב פאזל ביחד."
+    },
+    {
+      "id": "toy-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will fix my broken toy tomorrow.",
+      "he": "אבא יתקן את הצעצוע השבור שלי מחר."
+    },
+    {
+      "id": "toy-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to tidy my toys after lunch.",
+      "he": "אני עומד לסדר את הצעצועים שלי אחרי ארוחת הצהריים.",
+      "he_f": "אני עומדת לסדר את הצעצועים שלי אחרי ארוחת הצהריים."
+    },
+    {
+      "id": "toy-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This board game is more fun than that puzzle.",
+      "he": "משחק הקופסה הזה כיף יותר מהפאזל ההוא."
+    },
+    {
+      "id": "toy-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you finish the puzzle, you feel proud.",
+      "he": "אם מסיימים את הפאזל, מרגישים גאים."
+    },
+    {
+      "id": "toy-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you play a game with me?",
+      "he": "תשחק איתי משחק?",
+      "he_f": "תשחקי איתי משחק?"
+    },
+    {
+      "id": "toy-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have built the tower already.",
+      "he": "כבר בניתי את המגדל."
+    },
+    {
+      "id": "toy-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "We have played this board game for two years.",
+      "he": "אנחנו משחקים במשחק הקופסה הזה כבר שנתיים."
+    },
+    {
+      "id": "toy-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might play a new game tonight.",
+      "he": "אולי נשחק במשחק חדש הערב."
+    },
+    {
+      "id": "toy-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you share your toys, your friends will be happy.",
+      "he": "אם תחלוק את הצעצועים שלך, החברים שלך יהיו שמחים.",
+      "he_f": "אם תחלקי את הצעצועים שלך, החברים שלך יהיו שמחים."
+    },
+    {
+      "id": "toy-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my teddy bear?",
+      "he": "ראית את הדובון שלי?"
+    },
+    {
+      "id": "toy-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "My friend has just finished the puzzle.",
+      "he": "החבר שלי בדיוק סיים את הפאזל."
+    },
+    {
+      "id": "toy-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may want to play too.",
+      "he": "אולי אחי ירצה לשחק גם."
+    },
+    {
+      "id": "toy-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we finish the puzzle today, we will start a new one.",
+      "he": "אם נסיים את הפאזל היום, נתחיל אחד חדש."
+    },
+    {
+      "id": "toy-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never broken a toy.",
+      "he": "מעולם לא שברתי צעצוע."
+    },
+    {
+      "id": "toy-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have played with this toy box since spring.",
+      "he": "אנחנו משחקים בארגז הצעצועים הזה מאז האביב."
+    },
+    {
+      "id": "toy-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so bring the toys inside.",
+      "he": "אולי יירד גשם, אז תכניס את הצעצועים פנימה.",
+      "he_f": "אולי יירד גשם, אז תכניסי את הצעצועים פנימה."
+    },
+    {
+      "id": "toy-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me build the tower, we will finish faster.",
+      "he": "אם תעזור לי לבנות את המגדל, נגמור מהר יותר.",
+      "he_f": "אם תעזרי לי לבנות את המגדל, נגמור מהר יותר."
+    },
+    {
+      "id": "toy-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was playing with blocks while my sister was reading.",
+      "he": "שיחקתי בקוביות בזמן שאחותי קראה."
+    },
+    {
+      "id": "toy-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The toys were tidied up before the guests arrived.",
+      "he": "הצעצועים היו מסודרים לפני שהאורחים הגיעו."
+    },
+    {
+      "id": "toy-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more blocks, I would build a bigger tower.",
+      "he": "אם היו לי יותר קוביות, הייתי בונה מגדל גדול יותר."
+    },
+    {
+      "id": "toy-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already tidied the toys when Mom got home.",
+      "he": "כבר סידרנו את הצעצועים כשאמא הגיעה הביתה."
+    },
+    {
+      "id": "toy-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The puzzle was finished by my whole family.",
+      "he": "הפאזל הושלם על ידי כל המשפחה שלי."
+    },
+    {
+      "id": "toy-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was doing the puzzle when the pieces fell on the floor.",
+      "he": "הרכבתי את הפאזל כשהחלקים נפלו על הרצפה."
+    },
+    {
+      "id": "toy-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had a bigger yard, we would play outside more.",
+      "he": "אם הייתה לנו חצר גדולה יותר, היינו משחקים בחוץ יותר."
+    },
+    {
+      "id": "toy-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The board game was invented many years ago.",
+      "he": "משחק הקופסה הומצא לפני הרבה שנים."
+    },
+    {
+      "id": "toy-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My friends were laughing quietly during the game.",
+      "he": "החברים שלי צחקו בשקט במהלך המשחק."
+    },
+    {
+      "id": "toy-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never played this board game before.",
+      "he": "היא מעולם לא שיחקה במשחק הקופסה הזה לפני כן."
+    },
+    {
+      "id": "toy-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were a doll, I would never get tired.",
+      "he": "אילו הייתי בובה, אף פעם לא הייתי מתעייף.",
+      "he_f": "אילו הייתי בובה, אף פעם לא הייתי מתעייפת."
+    },
+    {
+      "id": "toy-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Board games are kept in the closet in our house.",
+      "he": "משחקי הקופסה נשמרים בארון בבית שלנו."
+    },
+    {
+      "id": "toy-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been playing with my blocks all afternoon.",
+      "he": "אני משחק עם הקוביות שלי כל אחר הצהריים.",
+      "he_f": "אני משחקת עם הקוביות שלי כל אחר הצהריים."
+    },
+    {
+      "id": "toy-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Mom said that the game was almost over.",
+      "he": "אמא אמרה שהמשחק כמעט נגמר."
+    },
+    {
+      "id": "toy-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had asked me, I would have helped you build the tower.",
+      "he": "אם היית מבקש ממני, הייתי עוזר לך לבנות את המגדל.",
+      "he_f": "אם היית מבקשת ממני, הייתי עוזרת לך לבנות את המגדל."
+    },
+    {
+      "id": "toy-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "My friend has been working on this puzzle all morning.",
+      "he": "החבר שלי מרכיב את הפאזל הזה כל הבוקר."
+    },
+    {
+      "id": "toy-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could play with my blocks.",
+      "he": "אחותי שאלה אם היא יכולה לשחק בקוביות שלי."
+    },
+    {
+      "id": "toy-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we choose a game, then we set up the board.",
+      "he": "קודם אנחנו בוחרים משחק, ואז אנחנו מסדרים את הלוח."
+    },
+    {
+      "id": "toy-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the puzzle was hard, we finished it together.",
+      "he": "למרות שהפאזל היה קשה, סיימנו אותו ביחד."
+    },
+    {
+      "id": "toy-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time it got dark, we had been playing hide-and-seek for an hour.",
+      "he": "עד שהחשיך, כבר שיחקנו מחבואים שעה."
+    },
+    {
+      "id": "toy-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the puzzle had been easier, we would have finished it faster.",
+      "he": "אם הפאזל היה קל יותר, היינו מסיימים אותו מהר יותר."
+    },
+    {
+      "id": "toy-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Dad told us that he had found the puzzle piece.",
+      "he": "אבא סיפר לנו שהוא מצא את החלק של הפאזל."
+    },
+    {
+      "id": "toy-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been planning this game night for weeks.",
+      "he": "אנחנו מתכננים את ערב המשחקים הזה כבר שבועות."
+    },
+    {
+      "id": "toy-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone helped, so the game was fun for everyone.",
+      "he": "בקיצור, כולם עזרו, ולכן המשחק היה כיף לכולם."
+    }
+  ]
+}
