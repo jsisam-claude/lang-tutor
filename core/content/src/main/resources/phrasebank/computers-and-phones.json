@@ -1,0 +1,1470 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "computers-and-phones",
+  "title": {
+    "en": "Screens and calls",
+    "he": "מסכים ושיחות"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "cmp-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A phone!",
+      "he": "טלפון!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my tablet.",
+      "he": "זה הטאבלט שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see Grandma.",
+      "he": "אני רואה את סבתא.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The screen is bright.",
+      "he": "המסך בהיר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my headphones.",
+      "he": "אני אוהב את האוזניות שלי.",
+      "he_f": "אני אוהבת את האוזניות שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The computer is old.",
+      "he": "המחשב ישן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two phones.",
+      "he": "שני טלפונים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The tablet is off.",
+      "he": "הטאבלט כבוי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The phone is black.",
+      "he": "הטלפון שחור.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-the-X",
+      "en": "I love this photo.",
+      "he": "אני אוהב את התמונה הזאת.",
+      "he_f": "אני אוהבת את התמונה הזאת.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The camera is small.",
+      "he": "המצלמה קטנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "Grandma is happy.",
+      "he": "סבתא שמחה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Dad is charging the tablet.",
+      "he": "אבא טוען את הטאבלט.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am taking a photo of the cat.",
+      "he": "אני מצלם את החתול.",
+      "he_f": "אני מצלמת את החתול.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            4
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            5,
+            7
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to call Grandma.",
+      "he": "אני רוצה להתקשר לסבתא.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-i-X",
+      "en": "Can I use the tablet, please?",
+      "he": "אני יכול להשתמש בטאבלט, בבקשה?",
+      "he_f": "אני יכולה להשתמש בטאבלט, בבקשה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you turn off the screen?",
+      "he": "אתה יכול לכבות את המסך?",
+      "he_f": "את יכולה לכבות את המסך?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my charger?",
+      "he": "איפה המטען שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The phone is ringing because Grandma is calling.",
+      "he": "הטלפון מצלצל כי סבתא מתקשרת.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because Grandma is on the screen.",
+      "he": "אני שמח כי סבתא על המסך.",
+      "he_f": "אני שמחה כי סבתא על המסך.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you watching a video?",
+      "he": "אתה צופה בסרטון?",
+      "he_f": "את צופה בסרטון?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "what-question",
+      "en": "What is on the screen?",
+      "he": "מה יש על המסך?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are turning off the screens for dinner.",
+      "he": "אנחנו מכבים את המסכים לארוחת ערב.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my headphones.",
+      "he": "אני לא מוצא את האוזניות שלי.",
+      "he_f": "אני לא מוצאת את האוזניות שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmp-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We called Grandma last night.",
+      "he": "התקשרנו לסבתא אתמול בערב."
+    },
+    {
+      "id": "cmp-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma sent us a photo of her garden.",
+      "he": "סבתא שלחה לנו תמונה של הגינה שלה."
+    },
+    {
+      "id": "cmp-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My brother's tablet is broken.",
+      "he": "הטאבלט של אחי שבור."
+    },
+    {
+      "id": "cmp-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you ask before you took the tablet?",
+      "he": "ביקשת רשות לפני שלקחת את הטאבלט?"
+    },
+    {
+      "id": "cmp-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The chargers are in the drawer.",
+      "he": "המטענים במגירה."
+    },
+    {
+      "id": "cmp-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I charged my tablet this morning.",
+      "he": "טענתי את הטאבלט שלי הבוקר."
+    },
+    {
+      "id": "cmp-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents turned off the computer.",
+      "he": "ההורים שלי כיבו את המחשב."
+    },
+    {
+      "id": "cmp-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did Dad answer the phone?",
+      "he": "אבא ענה לטלפון?"
+    },
+    {
+      "id": "cmp-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We watched a video together after dinner.",
+      "he": "צפינו בסרטון ביחד אחרי ארוחת הערב."
+    },
+    {
+      "id": "cmp-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My sister's photos are on the computer.",
+      "he": "התמונות של אחותי במחשב."
+    },
+    {
+      "id": "cmp-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandpa showed me an old picture.",
+      "he": "סבא הראה לי תמונה ישנה."
+    },
+    {
+      "id": "cmp-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children put their phones away at dinner.",
+      "he": "הילדים שמו את הטלפונים בצד בארוחת הערב."
+    },
+    {
+      "id": "cmp-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to call Grandma after dinner.",
+      "he": "אני עומד להתקשר לסבתא אחרי ארוחת הערב.",
+      "he_f": "אני עומדת להתקשר לסבתא אחרי ארוחת הערב."
+    },
+    {
+      "id": "cmp-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to take a photo of the cat.",
+      "he": "אנחנו עומדים לצלם את החתול."
+    },
+    {
+      "id": "cmp-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "Dad is going to charge the tablet tonight.",
+      "he": "אבא עומד לטעון את הטאבלט הערב."
+    },
+    {
+      "id": "cmp-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This screen is bigger than my phone.",
+      "he": "המסך הזה גדול יותר מהטלפון שלי."
+    },
+    {
+      "id": "cmp-l4-005",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The new computer is faster than the old one.",
+      "he": "המחשב החדש מהיר יותר מהישן."
+    },
+    {
+      "id": "cmp-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the clearest photo of the cat.",
+      "he": "זו התמונה הברורה ביותר של החתול."
+    },
+    {
+      "id": "cmp-l4-007",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must ask before you use the computer.",
+      "he": "אתה חייב לבקש רשות לפני שאתה משתמש במחשב.",
+      "he_f": "את חייבת לבקש רשות לפני שאת משתמשת במחשב."
+    },
+    {
+      "id": "cmp-l4-008",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should ask Mom before you take her phone.",
+      "he": "כדאי שתשאל את אמא לפני שאתה לוקח את הטלפון שלה.",
+      "he_f": "כדאי שתשאלי את אמא לפני שאת לוקחת את הטלפון שלה."
+    },
+    {
+      "id": "cmp-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the battery is empty, the tablet turns off.",
+      "he": "אם הסוללה ריקה, הטאבלט נכבה."
+    },
+    {
+      "id": "cmp-l4-010",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the timer rings, we turn off the screen.",
+      "he": "אם הטיימר מצלצל, אנחנו מכבים את המסך."
+    },
+    {
+      "id": "cmp-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Mom will show us the pictures tomorrow.",
+      "he": "אמא תראה לנו את התמונות מחר."
+    },
+    {
+      "id": "cmp-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you help me set the timer?",
+      "he": "תעזור לי לכוון את הטיימר?",
+      "he_f": "תעזרי לי לכוון את הטיימר?"
+    },
+    {
+      "id": "cmp-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have charged the tablet already.",
+      "he": "כבר טענתי את הטאבלט."
+    },
+    {
+      "id": "cmp-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "The computer has been on for three hours.",
+      "he": "המחשב דלוק כבר שלוש שעות."
+    },
+    {
+      "id": "cmp-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might call Grandma tonight.",
+      "he": "אולי נתקשר לסבתא הערב."
+    },
+    {
+      "id": "cmp-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you set a timer, you will know when to stop.",
+      "he": "אם תכוון טיימר, תדע מתי להפסיק.",
+      "he_f": "אם תכווני טיימר, תדעי מתי להפסיק."
+    },
+    {
+      "id": "cmp-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen the photo of the cat?",
+      "he": "ראית את התמונה של החתול?"
+    },
+    {
+      "id": "cmp-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "Dad has just answered the phone.",
+      "he": "אבא בדיוק ענה לטלפון."
+    },
+    {
+      "id": "cmp-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My sister may use the computer after her homework.",
+      "he": "אולי אחותי תשתמש במחשב אחרי שיעורי הבית."
+    },
+    {
+      "id": "cmp-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we finish our homework, we will watch a video.",
+      "he": "אם נסיים את שיעורי הבית, נצפה בסרטון."
+    },
+    {
+      "id": "cmp-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never broken a screen.",
+      "he": "מעולם לא שברתי מסך."
+    },
+    {
+      "id": "cmp-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The phone has been quiet since this morning.",
+      "he": "הטלפון שקט מאז הבוקר."
+    },
+    {
+      "id": "cmp-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The battery might die, so take the charger.",
+      "he": "אולי הסוללה תיגמר, אז קח את המטען.",
+      "he_f": "אולי הסוללה תיגמר, אז קחי את המטען."
+    },
+    {
+      "id": "cmp-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you ask politely, Mom will let you use her phone.",
+      "he": "אם תבקש יפה, אמא תיתן לך להשתמש בטלפון שלה.",
+      "he_f": "אם תבקשי יפה, אמא תיתן לך להשתמש בטלפון שלה."
+    },
+    {
+      "id": "cmp-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was cooking while we were talking to Grandma.",
+      "he": "אמא בישלה בזמן שדיברנו עם סבתא."
+    },
+    {
+      "id": "cmp-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The screens were turned off before dinner.",
+      "he": "המסכים כובו לפני ארוחת הערב."
+    },
+    {
+      "id": "cmp-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a camera, I would take better photos.",
+      "he": "אם הייתה לי מצלמה, הייתי מצלם תמונות טובות יותר.",
+      "he_f": "אם הייתה לי מצלמה, הייתי מצלמת תמונות טובות יותר."
+    },
+    {
+      "id": "cmp-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "I had already turned off the tablet when Mom called me.",
+      "he": "כבר כיביתי את הטאבלט כשאמא קראה לי."
+    },
+    {
+      "id": "cmp-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The photo was taken by my brother.",
+      "he": "התמונה צולמה על ידי אחי."
+    },
+    {
+      "id": "cmp-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was charging my phone when the power went out.",
+      "he": "טענתי את הטלפון כשהחשמל נפל."
+    },
+    {
+      "id": "cmp-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we lived closer, we would visit Grandma instead of calling.",
+      "he": "אם היינו גרים קרוב יותר, היינו מבקרים אצל סבתא במקום להתקשר."
+    },
+    {
+      "id": "cmp-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "This computer was bought many years ago.",
+      "he": "המחשב הזה נקנה לפני הרבה שנים."
+    },
+    {
+      "id": "cmp-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The cat was sleeping on the keyboard.",
+      "he": "החתול ישן על המקלדת."
+    },
+    {
+      "id": "cmp-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never made a video call before.",
+      "he": "היא מעולם לא עשתה שיחת וידאו לפני כן."
+    },
+    {
+      "id": "cmp-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would ask Mom first.",
+      "he": "במקומך הייתי שואל את אמא קודם.",
+      "he_f": "במקומך הייתי שואלת את אמא קודם."
+    },
+    {
+      "id": "cmp-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "The tablet is charged every night.",
+      "he": "הטאבלט נטען כל לילה."
+    },
+    {
+      "id": "cmp-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been looking at the screen for an hour.",
+      "he": "אני מסתכל על המסך כבר שעה.",
+      "he_f": "אני מסתכלת על המסך כבר שעה."
+    },
+    {
+      "id": "cmp-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the battery was almost empty.",
+      "he": "אבא אמר שהסוללה כמעט ריקה."
+    },
+    {
+      "id": "cmp-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had asked me, I would have let you use the tablet.",
+      "he": "אם היית מבקש ממני, הייתי נותן לך להשתמש בטאבלט.",
+      "he_f": "אם היית מבקשת ממני, הייתי נותנת לך להשתמש בטאבלט."
+    },
+    {
+      "id": "cmp-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandma has been talking to us on a video call all evening.",
+      "he": "סבתא מדברת איתנו בשיחת וידאו כל הערב."
+    },
+    {
+      "id": "cmp-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My brother asked whether he could use the computer.",
+      "he": "אחי שאל אם הוא יכול להשתמש במחשב."
+    },
+    {
+      "id": "cmp-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we ask for permission, then we set a timer for our screen time.",
+      "he": "קודם אנחנו מבקשים רשות, ואז מכוונים טיימר לזמן המסך שלנו."
+    },
+    {
+      "id": "cmp-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the call was short, Grandma looked very happy.",
+      "he": "למרות שהשיחה הייתה קצרה, סבתא נראתה מאוד שמחה."
+    },
+    {
+      "id": "cmp-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the video call ended, we had been talking for an hour.",
+      "he": "עד שהסתיימה שיחת הווידאו, כבר דיברנו שעה."
+    },
+    {
+      "id": "cmp-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the battery had not died, we would have finished the call.",
+      "he": "אם הסוללה לא הייתה נגמרת, היינו מסיימים את השיחה."
+    },
+    {
+      "id": "cmp-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had sent Grandma the photos.",
+      "he": "אמא אמרה לנו שהיא שלחה לסבתא את התמונות."
+    },
+    {
+      "id": "cmp-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been calling Grandma every Friday for a year.",
+      "he": "אנחנו מתקשרים לסבתא כל יום שישי כבר שנה."
+    },
+    {
+      "id": "cmp-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, we set a timer, turned off the screens, and ate dinner together.",
+      "he": "בקיצור, כיוונו טיימר, כיבינו את המסכים, ואכלנו ארוחת ערב ביחד."
+    }
+  ]
+}

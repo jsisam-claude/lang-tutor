@@ -1,0 +1,1426 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "city-and-places",
+  "title": {
+    "en": "In the city",
+    "he": "בעיר"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "cty-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A city!",
+      "he": "עיר!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The street is long.",
+      "he": "הרחוב ארוך.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The building is tall.",
+      "he": "הבניין גבוה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my street.",
+      "he": "זה הרחוב שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two shops.",
+      "he": "שתי חנויות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The mailbox is red.",
+      "he": "תיבת הדואר אדומה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my city.",
+      "he": "אני אוהב את העיר שלי.",
+      "he_f": "אני אוהבת את העיר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The fountain is here.",
+      "he": "המזרקה כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The square is big.",
+      "he": "הכיכר גדולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the post office.",
+      "he": "אני רואה את הדואר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The bench is green.",
+      "he": "הספסל ירוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-am-emotion",
+      "en": "I am happy here.",
+      "he": "אני שמח כאן.",
+      "he_f": "אני שמחה כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-001",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the post office?",
+      "he": "איפה הדואר?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are walking down the street.",
+      "he": "אנחנו הולכים ברחוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to see the fountain.",
+      "he": "אני רוצה לראות את המזרקה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you show me the way?",
+      "he": "אתה יכול להראות לי את הדרך?",
+      "he_f": "את יכולה להראות לי את הדרך?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-are-the-Xs",
+      "en": "Where are the shops?",
+      "he": "איפה החנויות?",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-006",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can cross at the crosswalk.",
+      "he": "אני יכול לחצות במעבר החצייה.",
+      "he_f": "אני יכולה לחצות במעבר החצייה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The shop is closing now.",
+      "he": "החנות נסגרת עכשיו.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because we are near the fountain.",
+      "he": "אני שמח כי אנחנו ליד המזרקה.",
+      "he_f": "אני שמחה כי אנחנו ליד המזרקה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            8
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why is the street so busy?",
+      "he": "למה הרחוב כל כך עמוס?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-010",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't read the street sign.",
+      "he": "אני לא מצליח לקרוא את שלט הרחוב.",
+      "he_f": "אני לא מצליחה לקרוא את שלט הרחוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you looking for the bank?",
+      "he": "אתה מחפש את הבנק?",
+      "he_f": "את מחפשת את הבנק?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "what-question",
+      "en": "What is that tall building?",
+      "he": "מה הבניין הגבוה הזה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cty-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We walked around the old square.",
+      "he": "הסתובבנו בכיכר העתיקה."
+    },
+    {
+      "id": "cty-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you go to the post office?",
+      "he": "הלכת לדואר?"
+    },
+    {
+      "id": "cty-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Mom mailed a letter at the post office.",
+      "he": "אמא שלחה מכתב בדואר."
+    },
+    {
+      "id": "cty-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "The baker's shop was closed.",
+      "he": "החנות של האופה הייתה סגורה."
+    },
+    {
+      "id": "cty-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We threw a coin into the fountain.",
+      "he": "זרקנו מטבע למזרקה."
+    },
+    {
+      "id": "cty-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "plural",
+      "en": "The streets were full of people.",
+      "he": "הרחובות היו מלאים באנשים."
+    },
+    {
+      "id": "cty-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "where-did-question",
+      "en": "Where did you find this shop?",
+      "he": "איפה מצאת את החנות הזאת?"
+    },
+    {
+      "id": "cty-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I waited near the crosswalk.",
+      "he": "חיכיתי ליד מעבר החצייה."
+    },
+    {
+      "id": "cty-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive-plural",
+      "en": "The city's parks were quiet in the morning.",
+      "he": "הפארקים של העיר היו שקטים בבוקר."
+    },
+    {
+      "id": "cty-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandpa showed us the old street.",
+      "he": "סבא הראה לנו את הרחוב הישן."
+    },
+    {
+      "id": "cty-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did they open a new library on our street?",
+      "he": "פתחו ספרייה חדשה ברחוב שלנו?"
+    },
+    {
+      "id": "cty-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The lights came on in the square.",
+      "he": "האורות נדלקו בכיכר."
+    },
+    {
+      "id": "cty-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to meet at the fountain.",
+      "he": "אנחנו עומדים להיפגש ליד המזרקה."
+    },
+    {
+      "id": "cty-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to mail this letter today.",
+      "he": "אני עומד לשלוח את המכתב הזה היום.",
+      "he_f": "אני עומדת לשלוח את המכתב הזה היום."
+    },
+    {
+      "id": "cty-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This street is quieter than the main road.",
+      "he": "הרחוב הזה שקט יותר מהכביש הראשי."
+    },
+    {
+      "id": "cty-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "That is the tallest building in the city.",
+      "he": "זה הבניין הגבוה ביותר בעיר."
+    },
+    {
+      "id": "cty-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must look both ways before you cross.",
+      "he": "חייבים להסתכל לשני הכיוונים לפני שחוצים."
+    },
+    {
+      "id": "cty-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should ask someone for directions.",
+      "he": "כדאי לשאול מישהו את הדרך."
+    },
+    {
+      "id": "cty-l4-007",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you walk straight, you reach the square.",
+      "he": "אם הולכים ישר, מגיעים לכיכר."
+    },
+    {
+      "id": "cty-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The new shop will open next week.",
+      "he": "החנות החדשה תיפתח בשבוע הבא."
+    },
+    {
+      "id": "cty-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "They are going to build a park near the square.",
+      "he": "הם עומדים לבנות פארק ליד הכיכר."
+    },
+    {
+      "id": "cty-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The square is busier in the evening than in the morning.",
+      "he": "הכיכר עמוסה יותר בערב מאשר בבוקר."
+    },
+    {
+      "id": "cty-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you wait for me by the post office?",
+      "he": "תחכה לי ליד הדואר?",
+      "he_f": "תחכי לי ליד הדואר?"
+    },
+    {
+      "id": "cty-l4-012",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the fountain is on, the children play around it.",
+      "he": "אם המזרקה פועלת, הילדים משחקים סביבה."
+    },
+    {
+      "id": "cty-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already been to the new library.",
+      "he": "כבר הייתי בספרייה החדשה."
+    },
+    {
+      "id": "cty-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "This shop has been here for many years.",
+      "he": "החנות הזאת נמצאת כאן כבר שנים רבות."
+    },
+    {
+      "id": "cty-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The post office might be closed at noon.",
+      "he": "יכול להיות שהדואר סגור בצהריים."
+    },
+    {
+      "id": "cty-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we walk fast, we will get there before it closes.",
+      "he": "אם נלך מהר, נגיע לשם לפני שייסגר."
+    },
+    {
+      "id": "cty-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen the new fountain in the square?",
+      "he": "ראית את המזרקה החדשה בכיכר?"
+    },
+    {
+      "id": "cty-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The shop has just opened.",
+      "he": "החנות בדיוק נפתחה."
+    },
+    {
+      "id": "cty-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "We may visit the museum tomorrow.",
+      "he": "אולי נבקר במוזיאון מחר."
+    },
+    {
+      "id": "cty-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you get lost, I will come and find you.",
+      "he": "אם תלך לאיבוד, אני אבוא למצוא אותך.",
+      "he_f": "אם תלכי לאיבוד, אני אבוא למצוא אותך."
+    },
+    {
+      "id": "cty-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never walked down this street before.",
+      "he": "מעולם לא הלכתי ברחוב הזה."
+    },
+    {
+      "id": "cty-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The square has been quiet since the shops closed.",
+      "he": "הכיכר שקטה מאז שהחנויות נסגרו."
+    },
+    {
+      "id": "cty-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The bank might still be open.",
+      "he": "יכול להיות שהבנק עדיין פתוח."
+    },
+    {
+      "id": "cty-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you ask the woman in the shop, she will tell you the way.",
+      "he": "אם תשאל את האישה בחנות, היא תגיד לך את הדרך.",
+      "he_f": "אם תשאלי את האישה בחנות, היא תגיד לך את הדרך."
+    },
+    {
+      "id": "cty-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "We were waiting at the crosswalk while the cars went by.",
+      "he": "חיכינו במעבר החצייה בזמן שהמכוניות עברו."
+    },
+    {
+      "id": "cty-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The old post office was built a hundred years ago.",
+      "he": "בניין הדואר הישן נבנה לפני מאה שנה."
+    },
+    {
+      "id": "cty-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I lived in the city, I would walk everywhere.",
+      "he": "אם הייתי גר בעיר, הייתי הולך לכל מקום ברגל.",
+      "he_f": "אם הייתי גרה בעיר, הייתי הולכת לכל מקום ברגל."
+    },
+    {
+      "id": "cty-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "The shop had already closed when we arrived.",
+      "he": "החנות כבר נסגרה כשהגענו."
+    },
+    {
+      "id": "cty-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The fountain was cleaned by the city workers.",
+      "he": "המזרקה נוקתה על ידי עובדי העירייה."
+    },
+    {
+      "id": "cty-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was crossing the street when the light changed.",
+      "he": "חציתי את הכביש כשהאור התחלף."
+    },
+    {
+      "id": "cty-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If our street had more trees, it would be cooler in summer.",
+      "he": "אם היו ברחוב שלנו יותר עצים, היה קריר יותר בקיץ."
+    },
+    {
+      "id": "cty-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The new library was opened last spring.",
+      "he": "הספרייה החדשה נפתחה באביב שעבר."
+    },
+    {
+      "id": "cty-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "People were sitting around the fountain all afternoon.",
+      "he": "אנשים ישבו סביב המזרקה כל אחר הצהריים."
+    },
+    {
+      "id": "cty-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "We had never seen such a tall building.",
+      "he": "מעולם לא ראינו בניין כל כך גבוה."
+    },
+    {
+      "id": "cty-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would ask at the post office.",
+      "he": "במקומך הייתי שואל בדואר.",
+      "he_f": "במקומך הייתי שואלת בדואר."
+    },
+    {
+      "id": "cty-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "The market is held in the square every Friday.",
+      "he": "השוק מתקיים בכיכר בכל יום שישי."
+    },
+    {
+      "id": "cty-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been looking for this address for half an hour.",
+      "he": "אנחנו מחפשים את הכתובת הזאת כבר חצי שעה."
+    },
+    {
+      "id": "cty-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The woman at the desk said that the museum was closed on Mondays.",
+      "he": "האישה בדלפק אמרה שהמוזיאון סגור בימי שני."
+    },
+    {
+      "id": "cty-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had taken the other street, we would have arrived sooner.",
+      "he": "אם היינו הולכים ברחוב השני, היינו מגיעים מוקדם יותר."
+    },
+    {
+      "id": "cty-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "They have been building that tower for two years.",
+      "he": "הם בונים את המגדל הזה כבר שנתיים."
+    },
+    {
+      "id": "cty-l7-005",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-question",
+      "en": "Dad asked whether the post office would still be open.",
+      "he": "אבא שאל אם הדואר עוד יהיה פתוח."
+    },
+    {
+      "id": "cty-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First you cross at the crosswalk, then you turn right at the bank.",
+      "he": "קודם חוצים במעבר החצייה, ואז פונים ימינה ליד הבנק."
+    },
+    {
+      "id": "cty-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the shop looked small, it had everything we needed.",
+      "he": "למרות שהחנות נראתה קטנה, היה בה כל מה שהיינו צריכים."
+    },
+    {
+      "id": "cty-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we found the square, we had been walking for an hour.",
+      "he": "עד שמצאנו את הכיכר, כבר הלכנו שעה שלמה."
+    },
+    {
+      "id": "cty-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If I had known the address, I would not have gotten lost.",
+      "he": "אם הייתי יודע את הכתובת, לא הייתי הולך לאיבוד.",
+      "he_f": "אם הייתי יודעת את הכתובת, לא הייתי הולכת לאיבוד."
+    },
+    {
+      "id": "cty-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "She told us that she had left her bag in the shop.",
+      "he": "היא סיפרה לנו שהיא השאירה את התיק שלה בחנות."
+    },
+    {
+      "id": "cty-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been coming to this bakery for years.",
+      "he": "אני מגיע למאפייה הזאת כבר שנים.",
+      "he_f": "אני מגיעה למאפייה הזאת כבר שנים."
+    },
+    {
+      "id": "cty-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, we asked three people, and in the end we found the street.",
+      "he": "בקיצור, שאלנו שלושה אנשים, ובסוף מצאנו את הרחוב."
+    }
+  ]
+}

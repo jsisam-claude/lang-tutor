@@ -1,0 +1,1482 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "bath-time",
+  "title": {
+    "en": "Bath time",
+    "he": "אמבטיה"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "bth-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A duck!",
+      "he": "ברווז!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my towel.",
+      "he": "זו המגבת שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see bubbles.",
+      "he": "אני רואה בועות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The water is warm.",
+      "he": "המים חמים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my duck.",
+      "he": "אני אוהב את הברווז שלי.",
+      "he_f": "אני אוהבת את הברווז שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The towel is big.",
+      "he": "המגבת גדולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two ducks.",
+      "he": "שני ברווזים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-am-adj",
+      "en": "I am wet!",
+      "he": "אני רטוב!",
+      "he_f": "אני רטובה!",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The duck is yellow.",
+      "he": "הברווז צהוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-the-X",
+      "en": "I love the water.",
+      "he": "אני אוהב את המים.",
+      "he_f": "אני אוהבת את המים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The soap is white.",
+      "he": "הסבון לבן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "The baby is happy.",
+      "he": "התינוק שמח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am washing my hair.",
+      "he": "אני חופף את השיער שלי.",
+      "he_f": "אני חופפת את השיער שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My duck is floating in the water.",
+      "he": "הברווז שלי צף במים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to play with the bubbles.",
+      "he": "אני רוצה לשחק עם הבועות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you turn on the water?",
+      "he": "אתה יכול לפתוח את הברז?",
+      "he_f": "את יכולה לפתוח את הברז?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can wash my hands alone.",
+      "he": "אני יכול לרחוץ ידיים לבד.",
+      "he_f": "אני יכולה לרחוץ ידיים לבד.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my rubber duck?",
+      "he": "איפה ברווז הגומי שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The baby is laughing because the water is warm.",
+      "he": "התינוק צוחק כי המים חמים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the bath is warm.",
+      "he": "אני שמח כי האמבטיה חמה.",
+      "he_f": "אני שמחה כי האמבטיה חמה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you washing your hair?",
+      "he": "אתה חופף את השיער?",
+      "he_f": "את חופפת את השיער?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My sister wants to stay in the bath.",
+      "he": "אחותי רוצה להישאר באמבטיה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            7
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are making a lot of bubbles.",
+      "he": "אנחנו עושים המון בועות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find the soap.",
+      "he": "אני לא מוצא את הסבון.",
+      "he_f": "אני לא מוצאת את הסבון.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bth-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We filled the bathtub with warm water.",
+      "he": "מילאנו את האמבטיה במים חמים."
+    },
+    {
+      "id": "bth-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Mom washed my hair with shampoo.",
+      "he": "אמא חפפה לי את השיער עם שמפו."
+    },
+    {
+      "id": "bth-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My brother's towel is blue.",
+      "he": "המגבת של אחי כחולה."
+    },
+    {
+      "id": "bth-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you wash your hair?",
+      "he": "חפפת את השיער?"
+    },
+    {
+      "id": "bth-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The towels are on the shelf.",
+      "he": "המגבות על המדף."
+    },
+    {
+      "id": "bth-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I splashed a little water on the floor.",
+      "he": "התזתי קצת מים על הרצפה."
+    },
+    {
+      "id": "bth-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The bubbles disappeared quickly.",
+      "he": "הבועות נעלמו מהר."
+    },
+    {
+      "id": "bth-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the duck fall in the water?",
+      "he": "הברווז נפל למים?"
+    },
+    {
+      "id": "bth-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We played with the boat in the tub.",
+      "he": "שיחקנו עם הסירה באמבטיה."
+    },
+    {
+      "id": "bth-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My sister's slippers are pink.",
+      "he": "נעלי הבית של אחותי ורודות."
+    },
+    {
+      "id": "bth-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma wrapped me in a big towel.",
+      "he": "סבתא עטפה אותי במגבת גדולה."
+    },
+    {
+      "id": "bth-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children sang in the bath.",
+      "he": "הילדים שרו באמבטיה."
+    },
+    {
+      "id": "bth-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to take a bath now.",
+      "he": "אני עומד להתרחץ באמבטיה עכשיו.",
+      "he_f": "אני עומדת להתרחץ באמבטיה עכשיו."
+    },
+    {
+      "id": "bth-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to wash your hair tonight.",
+      "he": "אנחנו עומדים לחפוף לך את השיער הערב."
+    },
+    {
+      "id": "bth-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "Dad is going to bring a big towel.",
+      "he": "אבא עומד להביא מגבת גדולה."
+    },
+    {
+      "id": "bth-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The water is warmer than before.",
+      "he": "המים חמים יותר מקודם."
+    },
+    {
+      "id": "bth-l4-005",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My towel is bigger than yours.",
+      "he": "המגבת שלי גדולה יותר משלך."
+    },
+    {
+      "id": "bth-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the softest towel in the house.",
+      "he": "זו המגבת הרכה ביותר בבית."
+    },
+    {
+      "id": "bth-l4-007",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must rinse the soap out of your hair.",
+      "he": "אתה חייב לשטוף את הסבון מהשיער.",
+      "he_f": "את חייבת לשטוף את הסבון מהשיער."
+    },
+    {
+      "id": "bth-l4-008",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should dry your hair well.",
+      "he": "כדאי שתייבש את השיער טוב.",
+      "he_f": "כדאי שתייבשי את השיער טוב."
+    },
+    {
+      "id": "bth-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the water is too hot, I add cold water.",
+      "he": "אם המים חמים מדי, אני מוסיף מים קרים.",
+      "he_f": "אם המים חמים מדי, אני מוסיפה מים קרים."
+    },
+    {
+      "id": "bth-l4-010",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you splash, the floor gets wet.",
+      "he": "אם מתיזים מים, הרצפה נרטבת."
+    },
+    {
+      "id": "bth-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Mom will bring the shampoo.",
+      "he": "אמא תביא את השמפו."
+    },
+    {
+      "id": "bth-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you hand me the towel?",
+      "he": "תיתן לי את המגבת?",
+      "he_f": "תיתני לי את המגבת?"
+    },
+    {
+      "id": "bth-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have washed my hair already.",
+      "he": "כבר חפפתי את השיער."
+    },
+    {
+      "id": "bth-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "The baby has been in the bath for ten minutes.",
+      "he": "התינוק באמבטיה כבר עשר דקות."
+    },
+    {
+      "id": "bth-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might use the new soap tonight.",
+      "he": "אולי נשתמש בסבון החדש הערב."
+    },
+    {
+      "id": "bth-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you close your eyes, the shampoo will not sting.",
+      "he": "אם תעצום עיניים, השמפו לא יצרוב.",
+      "he_f": "אם תעצמי עיניים, השמפו לא יצרוב."
+    },
+    {
+      "id": "bth-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my rubber duck?",
+      "he": "ראית את ברווז הגומי שלי?"
+    },
+    {
+      "id": "bth-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "Dad has just turned off the water.",
+      "he": "אבא בדיוק סגר את הברז."
+    },
+    {
+      "id": "bth-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My sister may take a bath after me.",
+      "he": "אולי אחותי תתרחץ אחריי."
+    },
+    {
+      "id": "bth-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we hurry, we will have time for bubbles.",
+      "he": "אם נזדרז, יהיה לנו זמן לבועות."
+    },
+    {
+      "id": "bth-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never seen so much foam.",
+      "he": "מעולם לא ראיתי כל כך הרבה קצף."
+    },
+    {
+      "id": "bth-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The towels have been on the shelf since this morning.",
+      "he": "המגבות נמצאות על המדף מהבוקר."
+    },
+    {
+      "id": "bth-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The water might get cold, so let's finish.",
+      "he": "אולי המים יתקררו, אז בוא נסיים.",
+      "he_f": "אולי המים יתקררו, אז בואי נסיים."
+    },
+    {
+      "id": "bth-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you give me the towel, I will dry your hair.",
+      "he": "אם תיתן לי את המגבת, אייבש לך את השיער.",
+      "he_f": "אם תיתני לי את המגבת, אייבש לך את השיער."
+    },
+    {
+      "id": "bth-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was playing with the duck while Mom was washing my hair.",
+      "he": "שיחקתי עם הברווז בזמן שאמא חפפה לי את השיער."
+    },
+    {
+      "id": "bth-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The tub was filled with warm water.",
+      "he": "האמבטיה מולאה במים חמים."
+    },
+    {
+      "id": "bth-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bigger tub, I would swim in it.",
+      "he": "אם הייתה לי אמבטיה גדולה יותר, הייתי שוחה בה."
+    },
+    {
+      "id": "bth-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "I had already dried my hair when the phone rang.",
+      "he": "כבר ייבשתי את השיער כשהטלפון צלצל."
+    },
+    {
+      "id": "bth-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The towels were folded by Grandma.",
+      "he": "המגבות קופלו על ידי סבתא."
+    },
+    {
+      "id": "bth-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was rinsing the shampoo when the water got cold.",
+      "he": "שטפתי את השמפו מהשיער כשהמים התקררו."
+    },
+    {
+      "id": "bth-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If the water were colder, I would not stay in the bath.",
+      "he": "אם המים היו קרים יותר, לא הייתי נשאר באמבטיה.",
+      "he_f": "אם המים היו קרים יותר, לא הייתי נשארת באמבטיה."
+    },
+    {
+      "id": "bth-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The bathroom was cleaned this morning.",
+      "he": "חדר האמבטיה נוקה הבוקר."
+    },
+    {
+      "id": "bth-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The duck was floating quietly in the corner.",
+      "he": "הברווז צף בשקט בפינה."
+    },
+    {
+      "id": "bth-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never used bubble bath before.",
+      "he": "היא מעולם לא השתמשה בקצף אמבטיה לפני כן."
+    },
+    {
+      "id": "bth-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would add more warm water.",
+      "he": "במקומך הייתי מוסיף עוד מים חמים.",
+      "he_f": "במקומך הייתי מוסיפה עוד מים חמים."
+    },
+    {
+      "id": "bth-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "The towels are washed every week.",
+      "he": "המגבות מכובסות כל שבוע."
+    },
+    {
+      "id": "bth-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been sitting in the warm water for half an hour.",
+      "he": "אני יושב במים החמים כבר חצי שעה.",
+      "he_f": "אני יושבת במים החמים כבר חצי שעה."
+    },
+    {
+      "id": "bth-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Mom said that the water was ready.",
+      "he": "אמא אמרה שהמים מוכנים."
+    },
+    {
+      "id": "bth-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had told me, I would have warmed the towel.",
+      "he": "אם היית אומר לי, הייתי מחמם את המגבת.",
+      "he_f": "אם היית אומרת לי, הייתי מחממת את המגבת."
+    },
+    {
+      "id": "bth-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The baby has been splashing for ten minutes.",
+      "he": "התינוק מתיז מים כבר עשר דקות."
+    },
+    {
+      "id": "bth-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My brother asked whether he could bring his boat into the tub.",
+      "he": "אחי שאל אם הוא יכול להכניס את הסירה שלו לאמבטיה."
+    },
+    {
+      "id": "bth-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we wash our hair, then we rinse it with clean water.",
+      "he": "קודם אנחנו חופפים את השיער, ואז שוטפים אותו במים נקיים."
+    },
+    {
+      "id": "bth-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the water was cold at first, we still had fun.",
+      "he": "למרות שהמים היו קרים בהתחלה, עדיין נהנינו."
+    },
+    {
+      "id": "bth-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time Dad came in, we had been playing with the bubbles for an hour.",
+      "he": "עד שאבא נכנס, כבר שיחקנו עם הבועות שעה."
+    },
+    {
+      "id": "bth-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the towel had been dry, I would not have been cold.",
+      "he": "אם המגבת הייתה יבשה, לא היה לי קר."
+    },
+    {
+      "id": "bth-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Grandma told us that she had already filled the tub.",
+      "he": "סבתא סיפרה לנו שהיא כבר מילאה את האמבטיה."
+    },
+    {
+      "id": "bth-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been using the same shampoo for months.",
+      "he": "אנחנו משתמשים באותו שמפו כבר חודשים."
+    },
+    {
+      "id": "bth-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone got clean, and we sat wrapped in big towels.",
+      "he": "בקיצור, כולם יצאו נקיים, וישבנו עטופים במגבות גדולות."
+    }
+  ]
+}

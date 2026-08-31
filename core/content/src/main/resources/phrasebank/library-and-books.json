@@ -1,0 +1,1481 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "library-and-books",
+  "title": {
+    "en": "At the library",
+    "he": "בספרייה"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "lib-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A book!",
+      "he": "ספר!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my book.",
+      "he": "זה הספר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the books.",
+      "he": "אני רואה את הספרים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The library is quiet.",
+      "he": "הספרייה שקטה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like this story.",
+      "he": "אני אוהב את הסיפור הזה.",
+      "he_f": "אני אוהבת את הסיפור הזה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The book is big.",
+      "he": "הספר גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two books.",
+      "he": "שני ספרים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "The librarian is here.",
+      "he": "הספרן כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The shelf is tall.",
+      "he": "המדף גבוה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-X",
+      "en": "I love stories.",
+      "he": "אני אוהב סיפורים.",
+      "he_f": "אני אוהבת סיפורים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The card is blue.",
+      "he": "הכרטיס כחול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-am-emotion",
+      "en": "I am happy here.",
+      "he": "אני שמח כאן.",
+      "he_f": "אני שמחה כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am choosing a book.",
+      "he": "אני בוחר ספר.",
+      "he_f": "אני בוחרת ספר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My sister is reading quietly.",
+      "he": "אחותי קוראת בשקט.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to borrow this book.",
+      "he": "אני רוצה לקחת בהשאלה את הספר הזה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you help me find a book?",
+      "he": "אתה יכול לעזור לי למצוא ספר?",
+      "he_f": "את יכולה לעזור לי למצוא ספר?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can read this story.",
+      "he": "אני יכול לקרוא את הסיפור הזה.",
+      "he_f": "אני יכולה לקרוא את הסיפור הזה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the story hour?",
+      "he": "איפה שעת הסיפור?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The boy is smiling because the story is funny.",
+      "he": "הילד מחייך כי הסיפור מצחיק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the library is open.",
+      "he": "אני שמח כי הספרייה פתוחה.",
+      "he_f": "אני שמחה כי הספרייה פתוחה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why do you like this book?",
+      "he": "למה אתה אוהב את הספר הזה?",
+      "he_f": "למה את אוהבת את הספר הזה?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My brother wants to hear the story.",
+      "he": "אחי רוצה לשמוע את הסיפור.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are listening to the story.",
+      "he": "אנחנו מקשיבים לסיפור.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my library card.",
+      "he": "אני לא מוצא את כרטיס הספרייה שלי.",
+      "he_f": "אני לא מוצאת את כרטיס הספרייה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            4,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lib-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We went to the library yesterday.",
+      "he": "הלכנו לספרייה אתמול."
+    },
+    {
+      "id": "lib-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I borrowed three books.",
+      "he": "לקחתי שלושה ספרים בהשאלה."
+    },
+    {
+      "id": "lib-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My sister's book is on the shelf.",
+      "he": "הספר של אחותי על המדף."
+    },
+    {
+      "id": "lib-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you return the book on time?",
+      "he": "החזרת את הספר בזמן?"
+    },
+    {
+      "id": "lib-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The librarian read us a story.",
+      "he": "הספרן הקריא לנו סיפור."
+    },
+    {
+      "id": "lib-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I lost my library card last week.",
+      "he": "איבדתי את כרטיס הספרייה שלי בשבוע שעבר."
+    },
+    {
+      "id": "lib-l3-007",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The books are on the top shelf.",
+      "he": "הספרים על המדף העליון."
+    },
+    {
+      "id": "lib-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the children like the story?",
+      "he": "הילדים אהבו את הסיפור?"
+    },
+    {
+      "id": "lib-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We sat on the floor and listened.",
+      "he": "ישבנו על הרצפה והקשבנו."
+    },
+    {
+      "id": "lib-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My brother's favorite character is a dragon.",
+      "he": "הדמות האהובה על אחי היא דרקון."
+    },
+    {
+      "id": "lib-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-had-Y",
+      "en": "The story had a happy ending.",
+      "he": "לסיפור היה סוף טוב."
+    },
+    {
+      "id": "lib-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I picked a book about animals.",
+      "he": "בחרתי ספר על חיות."
+    },
+    {
+      "id": "lib-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to visit the library after school.",
+      "he": "אנחנו עומדים לבקר בספרייה אחרי הלימודים."
+    },
+    {
+      "id": "lib-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to return this book tomorrow.",
+      "he": "אני עומד להחזיר את הספר הזה מחר.",
+      "he_f": "אני עומדת להחזיר את הספר הזה מחר."
+    },
+    {
+      "id": "lib-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This book is thicker than that one.",
+      "he": "הספר הזה עבה יותר מההוא."
+    },
+    {
+      "id": "lib-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the longest story in the book.",
+      "he": "זה הסיפור הארוך ביותר בספר."
+    },
+    {
+      "id": "lib-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must be quiet in the reading room.",
+      "he": "אתה חייב לשמור על שקט בחדר הקריאה.",
+      "he_f": "את חייבת לשמור על שקט בחדר הקריאה."
+    },
+    {
+      "id": "lib-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should return the book on time.",
+      "he": "כדאי שתחזיר את הספר בזמן.",
+      "he_f": "כדאי שתחזירי את הספר בזמן."
+    },
+    {
+      "id": "lib-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "The librarian is going to read a new story today.",
+      "he": "הספרן עומד להקריא סיפור חדש היום."
+    },
+    {
+      "id": "lib-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "I will bring my library card next time.",
+      "he": "אביא את כרטיס הספרייה שלי בפעם הבאה."
+    },
+    {
+      "id": "lib-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If a book is too hard, I choose an easier one.",
+      "he": "אם ספר קשה מדי, אני בוחר ספר קל יותר.",
+      "he_f": "אם ספר קשה מדי, אני בוחרת ספר קל יותר."
+    },
+    {
+      "id": "lib-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My book is more interesting than the movie.",
+      "he": "הספר שלי יותר מעניין מהסרט."
+    },
+    {
+      "id": "lib-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the library is closed, we read at home.",
+      "he": "אם הספרייה סגורה, אנחנו קוראים בבית."
+    },
+    {
+      "id": "lib-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you come with me to the library?",
+      "he": "תבוא איתי לספרייה?",
+      "he_f": "תבואי איתי לספרייה?"
+    },
+    {
+      "id": "lib-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already read this book.",
+      "he": "כבר קראתי את הספר הזה."
+    },
+    {
+      "id": "lib-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "The library has been here for many years.",
+      "he": "הספרייה נמצאת כאן כבר הרבה שנים."
+    },
+    {
+      "id": "lib-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might go to story hour this week.",
+      "he": "אולי נלך לשעת הסיפור השבוע."
+    },
+    {
+      "id": "lib-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you finish the book tonight, you can return it tomorrow.",
+      "he": "אם תסיים את הספר הערב, תוכל להחזיר אותו מחר.",
+      "he_f": "אם תסיימי את הספר הערב, תוכלי להחזיר אותו מחר."
+    },
+    {
+      "id": "lib-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you found the book you wanted?",
+      "he": "מצאת את הספר שרצית?"
+    },
+    {
+      "id": "lib-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The librarian has just put the new books on the shelf.",
+      "he": "הספרן בדיוק הניח את הספרים החדשים על המדף."
+    },
+    {
+      "id": "lib-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may join the reading club.",
+      "he": "אולי אחי יצטרף למועדון הקריאה."
+    },
+    {
+      "id": "lib-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we hurry, we will get to story hour on time.",
+      "he": "אם נמהר, נגיע לשעת הסיפור בזמן."
+    },
+    {
+      "id": "lib-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never missed a story hour.",
+      "he": "מעולם לא פספסתי שעת סיפור."
+    },
+    {
+      "id": "lib-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "I have had this library card since last summer.",
+      "he": "יש לי את כרטיס הספרייה הזה מאז הקיץ שעבר."
+    },
+    {
+      "id": "lib-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The library might close early today.",
+      "he": "אולי הספרייה תיסגר מוקדם היום."
+    },
+    {
+      "id": "lib-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you like this author, you will love her new book.",
+      "he": "אם אתה אוהב את הסופרת הזאת, תאהב את הספר החדש שלה.",
+      "he_f": "אם את אוהבת את הסופרת הזאת, תאהבי את הספר החדש שלה."
+    },
+    {
+      "id": "lib-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was reading when the library closed.",
+      "he": "קראתי כשהספרייה נסגרה."
+    },
+    {
+      "id": "lib-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The books were returned on time.",
+      "he": "הספרים הוחזרו בזמן."
+    },
+    {
+      "id": "lib-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more time, I would read every day.",
+      "he": "אם היה לי יותר זמן, הייתי קורא כל יום.",
+      "he_f": "אם היה לי יותר זמן, הייתי קוראת כל יום."
+    },
+    {
+      "id": "lib-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already chosen our books when the librarian arrived.",
+      "he": "כבר בחרנו את הספרים שלנו כשהספרן הגיע."
+    },
+    {
+      "id": "lib-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The story was written by a famous author.",
+      "he": "הסיפור נכתב על ידי סופר מפורסם."
+    },
+    {
+      "id": "lib-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "The children were listening while the librarian was reading.",
+      "he": "הילדים הקשיבו בזמן שהספרן הקריא."
+    },
+    {
+      "id": "lib-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were a librarian, I would read all day.",
+      "he": "אם הייתי ספרן, הייתי קורא כל היום.",
+      "he_f": "אם הייתי ספרנית, הייתי קוראת כל היום."
+    },
+    {
+      "id": "lib-l6-008",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "This book is borrowed often.",
+      "he": "הספר הזה מושאל לעתים קרובות."
+    },
+    {
+      "id": "lib-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My sister was looking for a book about horses.",
+      "he": "אחותי חיפשה ספר על סוסים."
+    },
+    {
+      "id": "lib-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "He had never been to the library before.",
+      "he": "הוא מעולם לא היה בספרייה לפני כן."
+    },
+    {
+      "id": "lib-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we lived closer, we would come every week.",
+      "he": "אם היינו גרים קרוב יותר, היינו באים כל שבוע."
+    },
+    {
+      "id": "lib-l6-012",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The library was built fifty years ago.",
+      "he": "הספרייה נבנתה לפני חמישים שנה."
+    },
+    {
+      "id": "lib-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been reading this book all week.",
+      "he": "אני קורא את הספר הזה כל השבוע.",
+      "he_f": "אני קוראת את הספר הזה כל השבוע."
+    },
+    {
+      "id": "lib-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The librarian said that the book was already on loan.",
+      "he": "הספרן אמר שהספר כבר מושאל."
+    },
+    {
+      "id": "lib-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If I had brought my card, I could have borrowed the book.",
+      "he": "אם הייתי מביא את הכרטיס שלי, הייתי יכול לקחת את הספר בהשאלה.",
+      "he_f": "אם הייתי מביאה את הכרטיס שלי, הייתי יכולה לקחת את הספר בהשאלה."
+    },
+    {
+      "id": "lib-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The children have been waiting for story hour since this morning.",
+      "he": "הילדים מחכים לשעת הסיפור מהבוקר."
+    },
+    {
+      "id": "lib-l7-005",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-question",
+      "en": "My friend asked whether the library would open on Sunday.",
+      "he": "החבר שלי שאל אם הספרייה תיפתח ביום ראשון."
+    },
+    {
+      "id": "lib-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we choose a book, then we sit down and read.",
+      "he": "קודם אנחנו בוחרים ספר, ואז מתיישבים וקוראים."
+    },
+    {
+      "id": "lib-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the book was long, I finished it in two days.",
+      "he": "למרות שהספר היה ארוך, סיימתי אותו בתוך יומיים."
+    },
+    {
+      "id": "lib-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the library closed, we had been reading for three hours.",
+      "he": "עד שהספרייה נסגרה, כבר קראנו שלוש שעות."
+    },
+    {
+      "id": "lib-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If she had returned the book, she could have borrowed another one.",
+      "he": "אם היא הייתה מחזירה את הספר, היא הייתה יכולה לקחת ספר אחר בהשאלה."
+    },
+    {
+      "id": "lib-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "My sister told us that she had finished the whole series.",
+      "he": "אחותי סיפרה לנו שהיא סיימה את כל הסדרה."
+    },
+    {
+      "id": "lib-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been coming to this library for years.",
+      "he": "אנחנו באים לספרייה הזאת כבר שנים."
+    },
+    {
+      "id": "lib-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, we picked three books and walked home happy.",
+      "he": "בקיצור, בחרנו שלושה ספרים והלכנו הביתה מרוצים."
+    }
+  ]
+}
