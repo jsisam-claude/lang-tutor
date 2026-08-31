@@ -1,0 +1,1440 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "breakfast-time",
+  "title": {
+    "en": "Breakfast time",
+    "he": "ארוחת בוקר"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "brk-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "Toast!",
+      "he": "טוסט!",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my breakfast.",
+      "he": "זאת ארוחת הבוקר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see cereal.",
+      "he": "אני רואה דגני בוקר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The toast is warm.",
+      "he": "הטוסט חם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like cocoa.",
+      "he": "אני אוהב קקאו.",
+      "he_f": "אני אוהבת קקאו.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The juice is orange.",
+      "he": "המיץ כתום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two eggs.",
+      "he": "שתי ביצים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-ready",
+      "en": "Breakfast is ready.",
+      "he": "ארוחת הבוקר מוכנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The eggs are hot.",
+      "he": "הביצים חמות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my honey.",
+      "he": "אני אוהב את הדבש שלי.",
+      "he_f": "אני אוהבת את הדבש שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "Warm cocoa.",
+      "he": "קקאו חם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "Dad is sleepy.",
+      "he": "אבא מנומנם.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Mom is making toast.",
+      "he": "אמא מכינה טוסט.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am pouring juice.",
+      "he": "אני מוזג מיץ.",
+      "he_f": "אני מוזגת מיץ.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to eat cereal.",
+      "he": "אני רוצה לאכול דגני בוקר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you pass the honey?",
+      "he": "אתה יכול להעביר את הדבש?",
+      "he_f": "את יכולה להעביר את הדבש?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can make cocoa.",
+      "he": "אני יכול להכין קקאו.",
+      "he_f": "אני יכולה להכין קקאו.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my spoon?",
+      "he": "איפה הכפית שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "Dad is yawning because he is tired.",
+      "he": "אבא מפהק כי הוא עייף.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because breakfast is ready.",
+      "he": "אני שמח כי ארוחת הבוקר מוכנה.",
+      "he_f": "אני שמחה כי ארוחת הבוקר מוכנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            4
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you drinking cocoa?",
+      "he": "אתה שותה קקאו?",
+      "he_f": "את שותה קקאו?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My sister wants to eat eggs.",
+      "he": "אחותי רוצה לאכול ביצים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are packing snacks.",
+      "he": "אנחנו אורזים חטיפים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't finish my toast.",
+      "he": "אני לא מסיים את הטוסט שלי.",
+      "he_f": "אני לא מסיימת את הטוסט שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brk-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We made toast this morning.",
+      "he": "הכנו טוסט הבוקר."
+    },
+    {
+      "id": "brk-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Mom poured juice for everyone.",
+      "he": "אמא מזגה מיץ לכולם."
+    },
+    {
+      "id": "brk-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My brother's toast is cold.",
+      "he": "הטוסט של אחי קר."
+    },
+    {
+      "id": "brk-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you eat your eggs?",
+      "he": "אכלת את הביצים שלך?"
+    },
+    {
+      "id": "brk-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The bowls are next to the cereal.",
+      "he": "הקערות ליד דגני הבוקר."
+    },
+    {
+      "id": "brk-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I spread honey on my bread.",
+      "he": "מרחתי דבש על הלחם שלי."
+    },
+    {
+      "id": "brk-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents drank cocoa slowly.",
+      "he": "ההורים שלי שתו קקאו לאט."
+    },
+    {
+      "id": "brk-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did Dad make eggs today?",
+      "he": "אבא הכין ביצים היום?"
+    },
+    {
+      "id": "brk-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We packed a snack for later.",
+      "he": "ארזנו חטיף למאוחר יותר."
+    },
+    {
+      "id": "brk-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My sister's spoons are clean.",
+      "he": "הכפיות של אחותי נקיות."
+    },
+    {
+      "id": "brk-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma gave me warm cocoa.",
+      "he": "סבתא נתנה לי קקאו חם."
+    },
+    {
+      "id": "brk-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children finished their cereal quickly.",
+      "he": "הילדים סיימו את דגני הבוקר שלהם מהר."
+    },
+    {
+      "id": "brk-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to make eggs for breakfast.",
+      "he": "אנחנו עומדים להכין ביצים לארוחת הבוקר."
+    },
+    {
+      "id": "brk-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to pack my snack now.",
+      "he": "אני עומד לארוז את החטיף שלי עכשיו.",
+      "he_f": "אני עומדת לארוז את החטיף שלי עכשיו."
+    },
+    {
+      "id": "brk-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My cereal is sweeter than yours.",
+      "he": "דגני הבוקר שלי מתוקים יותר משלך."
+    },
+    {
+      "id": "brk-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the tastiest breakfast in our house.",
+      "he": "זאת ארוחת הבוקר הטעימה ביותר בבית שלנו."
+    },
+    {
+      "id": "brk-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must finish breakfast before you go.",
+      "he": "אתה חייב לגמור את ארוחת הבוקר לפני היציאה.",
+      "he_f": "את חייבת לגמור את ארוחת הבוקר לפני היציאה."
+    },
+    {
+      "id": "brk-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should drink your juice.",
+      "he": "כדאי שתשתה את המיץ שלך.",
+      "he_f": "כדאי שתשתי את המיץ שלך."
+    },
+    {
+      "id": "brk-l4-007",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you leave toast too long, it gets cold.",
+      "he": "אם משאירים טוסט יותר מדי זמן, הוא מתקרר."
+    },
+    {
+      "id": "brk-l4-008",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "Dad is going to fry the eggs.",
+      "he": "אבא עומד לטגן את הביצים."
+    },
+    {
+      "id": "brk-l4-009",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The juice will be cold soon.",
+      "he": "המיץ יהיה קר בקרוב."
+    },
+    {
+      "id": "brk-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This honey is sweeter than sugar.",
+      "he": "הדבש הזה מתוק יותר מסוכר."
+    },
+    {
+      "id": "brk-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the milk is warm, the cocoa tastes better.",
+      "he": "אם החלב חם, הקקאו טעים יותר."
+    },
+    {
+      "id": "brk-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you finish your toast?",
+      "he": "תגמור את הטוסט שלך?",
+      "he_f": "תגמרי את הטוסט שלך?"
+    },
+    {
+      "id": "brk-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have eaten my cereal already.",
+      "he": "כבר אכלתי את דגני הבוקר שלי."
+    },
+    {
+      "id": "brk-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "Grandma has made breakfast for us for many years.",
+      "he": "סבתא מכינה לנו ארוחת בוקר הרבה שנים."
+    },
+    {
+      "id": "brk-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might have toast for breakfast.",
+      "he": "אולי נאכל טוסט לארוחת הבוקר."
+    },
+    {
+      "id": "brk-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you pour the milk, I will make the cocoa.",
+      "he": "אם תמזוג את החלב, אני אכין את הקקאו.",
+      "he_f": "אם תמזגי את החלב, אני אכין את הקקאו."
+    },
+    {
+      "id": "brk-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you tried this honey?",
+      "he": "ניסית את הדבש הזה?"
+    },
+    {
+      "id": "brk-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "Mom has just finished making breakfast.",
+      "he": "אמא בדיוק סיימה להכין ארוחת בוקר."
+    },
+    {
+      "id": "brk-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may want more juice.",
+      "he": "אולי אחי ירצה עוד מיץ."
+    },
+    {
+      "id": "brk-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we hurry, breakfast will be ready in time.",
+      "he": "אם נזדרז, ארוחת הבוקר תהיה מוכנה בזמן."
+    },
+    {
+      "id": "brk-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never burned the toast.",
+      "he": "מעולם לא שרפתי את הטוסט."
+    },
+    {
+      "id": "brk-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have eaten breakfast together since Monday.",
+      "he": "אנחנו אוכלים ארוחת בוקר ביחד מאז יום שני."
+    },
+    {
+      "id": "brk-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might get cold, so drink your cocoa now.",
+      "he": "אולי זה יתקרר, אז תשתה את הקקאו שלך עכשיו.",
+      "he_f": "אולי זה יתקרר, אז תשתי את הקקאו שלך עכשיו."
+    },
+    {
+      "id": "brk-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me set the table, breakfast will be ready sooner.",
+      "he": "אם תעזור לי לערוך את השולחן, ארוחת הבוקר תהיה מוכנה מהר יותר.",
+      "he_f": "אם תעזרי לי לערוך את השולחן, ארוחת הבוקר תהיה מוכנה מהר יותר."
+    },
+    {
+      "id": "brk-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was making toast while the eggs were cooking.",
+      "he": "אמא הכינה טוסט בזמן שהביצים התבשלו."
+    },
+    {
+      "id": "brk-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The toast was buttered before we sat down.",
+      "he": "הטוסט היה מרוח בחמאה לפני שישבנו."
+    },
+    {
+      "id": "brk-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more time, I would eat breakfast slowly.",
+      "he": "אם היה לי יותר זמן, הייתי אוכל ארוחת בוקר לאט.",
+      "he_f": "אם היה לי יותר זמן, הייתי אוכלת ארוחת בוקר לאט."
+    },
+    {
+      "id": "brk-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already made toast when Mom came into the kitchen.",
+      "he": "כבר הכנו טוסט כשאמא נכנסה למטבח."
+    },
+    {
+      "id": "brk-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The eggs were cooked by Dad.",
+      "he": "הביצים בושלו על ידי אבא."
+    },
+    {
+      "id": "brk-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was pouring the juice when the phone rang.",
+      "he": "מזגתי את המיץ כשהטלפון צלצל."
+    },
+    {
+      "id": "brk-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had more eggs, we would make a bigger breakfast.",
+      "he": "אם היו לנו יותר ביצים, היינו מכינים ארוחת בוקר גדולה יותר."
+    },
+    {
+      "id": "brk-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "Breakfast was cooked early that day.",
+      "he": "ארוחת הבוקר בושלה מוקדם באותו יום."
+    },
+    {
+      "id": "brk-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My little sister was still rubbing her eyes at the table.",
+      "he": "אחותי הקטנה עדיין שפשפה את העיניים שלה ליד השולחן."
+    },
+    {
+      "id": "brk-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "The children had never packed their own snacks before.",
+      "he": "הילדים מעולם לא ארזו לבד את החטיפים שלהם לפני כן."
+    },
+    {
+      "id": "brk-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would eat breakfast every morning.",
+      "he": "במקומך הייתי אוכל ארוחת בוקר כל בוקר.",
+      "he_f": "במקומך הייתי אוכלת ארוחת בוקר כל בוקר."
+    },
+    {
+      "id": "brk-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Breakfast is served early in our house.",
+      "he": "ארוחת הבוקר מוגשת מוקדם בבית שלנו."
+    },
+    {
+      "id": "brk-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been packing my snack all morning.",
+      "he": "אני אורז את החטיף שלי כל הבוקר.",
+      "he_f": "אני אורזת את החטיף שלי כל הבוקר."
+    },
+    {
+      "id": "brk-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that the juice was fresh.",
+      "he": "אבא אמר שהמיץ היה טרי."
+    },
+    {
+      "id": "brk-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had woken up earlier, you would have eaten breakfast with us.",
+      "he": "אם היית מתעורר מוקדם יותר, היית אוכל איתנו ארוחת בוקר.",
+      "he_f": "אם היית מתעוררת מוקדם יותר, היית אוכלת איתנו ארוחת בוקר."
+    },
+    {
+      "id": "brk-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandma has been making eggs all morning.",
+      "he": "סבתא מכינה ביצים כל הבוקר."
+    },
+    {
+      "id": "brk-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My sister asked whether she could have more cocoa.",
+      "he": "אחותי שאלה אם היא יכולה לקבל עוד קקאו."
+    },
+    {
+      "id": "brk-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we pour the cereal, then we add the milk.",
+      "he": "קודם אנחנו מוזגים את דגני הבוקר, ואז אנחנו מוסיפים את החלב."
+    },
+    {
+      "id": "brk-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although breakfast was quick, everyone left happy.",
+      "he": "למרות שארוחת הבוקר הייתה מהירה, כולם יצאו שמחים."
+    },
+    {
+      "id": "brk-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we sat down, Grandma had been cooking eggs for an hour.",
+      "he": "עד שהתיישבנו, סבתא כבר בישלה ביצים במשך שעה."
+    },
+    {
+      "id": "brk-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the toast had not burned, we would have eaten it with honey.",
+      "he": "אם הטוסט לא היה נשרף, היינו אוכלים אותו עם דבש."
+    },
+    {
+      "id": "brk-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Dad told us that he had already made the cocoa.",
+      "he": "אבא סיפר לנו שהוא כבר הכין את הקקאו."
+    },
+    {
+      "id": "brk-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been talking around the breakfast table for an hour.",
+      "he": "אנחנו מדברים ליד שולחן ארוחת הבוקר כבר שעה."
+    },
+    {
+      "id": "brk-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone woke up late, so breakfast was quick.",
+      "he": "בקיצור, כולם התעוררו מאוחר, ולכן ארוחת הבוקר הייתה מהירה."
+    }
+  ]
+}
