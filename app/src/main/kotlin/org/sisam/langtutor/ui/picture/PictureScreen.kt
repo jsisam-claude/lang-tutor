@@ -1,5 +1,6 @@
 package org.sisam.langtutor.ui.picture
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,8 +22,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
@@ -139,9 +143,11 @@ fun PictureScreen(container: AppContainer) {
                     verticalArrangement = Arrangement.Center,
                 ) {
                     // Tapping the picture says the word again — free, always.
-                    Text(
-                        text = card.emoji,
-                        fontSize = 96.sp,
+                    PictureArtView(
+                        word = card.word,
+                        emoji = card.emoji,
+                        artSize = 132.dp,
+                        emojiSize = 96.sp,
                         modifier = Modifier.clickable { viewModel.onCardTapped(s.index) },
                     )
                     Text(text = card.word, style = MaterialTheme.typography.displaySmall)
@@ -190,7 +196,12 @@ fun PictureScreen(container: AppContainer) {
                                 modifier = Modifier.fillMaxSize(),
                                 contentAlignment = Alignment.Center,
                             ) {
-                                Text(text = card.emoji, fontSize = 56.sp)
+                                PictureArtView(
+                                    word = card.word,
+                                    emoji = card.emoji,
+                                    artSize = 76.dp,
+                                    emojiSize = 56.sp,
+                                )
                             }
                         }
                     }
@@ -214,5 +225,31 @@ fun PictureScreen(container: AppContainer) {
                 }
             }
         }
+    }
+}
+
+/**
+ * One card's picture: the curated vector icon when the word has one, the
+ * emoji fallback otherwise ([PictureArt]'s two tiers). contentDescription is
+ * null on purpose — the word is always printed or spoken right beside the
+ * picture, and reading it twice teaches TalkBack users to stop listening.
+ */
+@Composable
+private fun PictureArtView(
+    word: String,
+    emoji: String,
+    artSize: Dp,
+    emojiSize: TextUnit,
+    modifier: Modifier = Modifier,
+) {
+    val drawable = PictureArt.drawableFor(word)
+    if (drawable != null) {
+        Image(
+            painter = painterResource(drawable),
+            contentDescription = null,
+            modifier = modifier.size(artSize),
+        )
+    } else {
+        Text(text = emoji, fontSize = emojiSize, modifier = modifier)
     }
 }

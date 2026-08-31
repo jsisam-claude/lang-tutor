@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <path d="M 24 40 Q 20 48 24 56" fill="none" stroke="#33322E" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 106 60 Q 110 68 106 76" fill="none" stroke="#33322E" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 52.65 74.85 Q 46.45 89.31 42.31 103.8 C 41.09 108.05 43.55 112.48 47.8 113.69 C 52.05 114.91 56.48 112.45 57.69 108.2 Q 61.55 94.69 67.35 81.15 C 69.09 77.09 67.21 72.39 63.15 70.65 C 59.09 68.91 54.39 70.79 52.65 74.85 Z" fill="#F2C9A0" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 65.35 84.51 Q 77.92 93.49 85.05 105.97 C 87.25 109.81 92.13 111.14 95.97 108.95 C 99.81 106.75 101.14 101.87 98.95 98.03 Q 90.08 82.51 74.65 71.49 C 71.05 68.92 66.06 69.75 63.49 73.35 C 60.92 76.95 61.75 81.94 65.35 84.51 Z" fill="#F2C9A0" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 73.71 57.94 Q 91.38 46.89 100.26 29.13 C 101.99 25.67 100.59 21.47 97.13 19.74 C 93.67 18.01 89.47 19.41 87.74 22.87 Q 80.62 37.11 66.29 46.06 C 63.01 48.11 62.02 52.43 64.06 55.71 C 66.11 58.99 70.43 59.98 73.71 57.94 Z" fill="#F2C9A0" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 52.87 47.74 Q 35.56 56.39 24.62 69.52 C 22.15 72.49 22.55 76.9 25.52 79.38 C 28.49 81.85 32.9 81.45 35.38 78.48 Q 44.44 67.61 59.13 60.26 C 62.59 58.53 63.99 54.33 62.26 50.87 C 60.53 47.41 56.33 46.01 52.87 47.74 Z" fill="#F2C9A0" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 45.26 48.76 Q 48.26 64.76 51.26 80.76 C 52.78 88.91 60.62 94.27 68.76 92.74 C 76.91 91.22 82.27 83.38 80.74 75.24 Q 77.74 59.24 74.74 43.24 C 73.22 35.09 65.38 29.73 57.24 31.26 C 49.09 32.78 43.73 40.62 45.26 48.76 Z" fill="#AB47BC" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="58" cy="30" r="15" fill="#F2C9A0" stroke="#33322E" stroke-width="4"/>
+  <circle cx="52" cy="28" r="2.8" fill="#33322E"/>
+  <circle cx="64" cy="28" r="2.8" fill="#33322E"/>
+  <path d="M 52 36 Q 58 41 64 36" fill="none" stroke="#33322E" stroke-width="4" stroke-linecap="round"/>
+</svg>

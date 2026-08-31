@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:fillColor="#42A5F5"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 14 36 A 22 22 0 1 0 58 36 A 22 22 0 1 0 14 36 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 23 28 A 6 4 0 1 0 35 28 A 6 4 0 1 0 23 28 Z"/>
+    <path
+        android:fillColor="#42A5F5"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 70 36 A 22 22 0 1 0 114 36 A 22 22 0 1 0 70 36 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 79 28 A 6 4 0 1 0 91 28 A 6 4 0 1 0 79 28 Z"/>
+    <path
+        android:fillColor="#42A5F5"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 14 92 A 22 22 0 1 0 58 92 A 22 22 0 1 0 14 92 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 23 84 A 6 4 0 1 0 35 84 A 6 4 0 1 0 23 84 Z"/>
+    <path
+        android:fillColor="#42A5F5"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 70 92 A 22 22 0 1 0 114 92 A 22 22 0 1 0 70 92 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 79 84 A 6 4 0 1 0 91 84 A 6 4 0 1 0 79 84 Z"/>
+</vector>

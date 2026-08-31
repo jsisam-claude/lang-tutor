@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 44 27 A 8 8.5 0 1 0 60 27 A 8 8.5 0 1 0 44 27 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 31.5 24 A 6.5 7 0 1 0 44.5 24 A 6.5 7 0 1 0 31.5 24 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 21 26 A 6 6.5 0 1 0 33 26 A 6 6.5 0 1 0 21 26 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 13.5 31 A 5.5 6 0 1 0 24.5 31 A 5.5 6 0 1 0 13.5 31 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 10 39 A 5 5.5 0 1 0 20 39 A 5 5.5 0 1 0 10 39 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:pathData="M 36 38 C 23 38 14 46 14 56 C 14 65 21 70 22 78 C 23 86 18 94 20 100 C 23 108 49 108 52 100 C 54 94 49 86 50 78 C 51 70 58 65 58 56 C 58 46 49 38 36 38 Z"/>
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M 20 56 A 16 7 0 1 0 52 56 A 16 7 0 1 0 20 56 Z"/>
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M 24 95 A 12 8 0 1 0 48 95 A 12 8 0 1 0 24 95 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 68 27 A 8 8.5 0 1 0 84 27 A 8 8.5 0 1 0 68 27 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 83.5 24 A 6.5 7 0 1 0 96.5 24 A 6.5 7 0 1 0 83.5 24 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 95 26 A 6 6.5 0 1 0 107 26 A 6 6.5 0 1 0 95 26 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 103.5 31 A 5.5 6 0 1 0 114.5 31 A 5.5 6 0 1 0 103.5 31 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineJoin="round"
+        android:pathData="M 108 39 A 5 5.5 0 1 0 118 39 A 5 5.5 0 1 0 108 39 Z"/>
+    <path
+        android:fillColor="#F2C9A0"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:pathData="M 92 38 C 105 38 114 46 114 56 C 114 65 107 70 106 78 C 105 86 110 94 108 100 C 105 108 79 108 76 100 C 74 94 79 86 78 78 C 77 70 70 65 70 56 C 70 46 79 38 92 38 Z"/>
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M 76 56 A 16 7 0 1 0 108 56 A 16 7 0 1 0 76 56 Z"/>
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M 80 95 A 12 8 0 1 0 104 95 A 12 8 0 1 0 80 95 Z"/>
+</vector>

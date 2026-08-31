@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:fillColor="#26A69A"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 25.36 59.65 L 22 14 L 53.65 31.36 A 40 40 0 0 1 74.35 31.36 L 106 14 L 102.64 59.65 A 40 40 0 1 1 25.36 59.65 Z"/>
+    <path
+        android:fillColor="#EC407A"
+        android:pathData="M 28.7 49.8 L 26.7 22.4 L 45.7 32.8 Z"/>
+    <path
+        android:fillColor="#EC407A"
+        android:pathData="M 99.3 49.8 L 101.3 22.4 L 82.3 32.8 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 41.5 64 A 6.5 6.5 0 1 0 54.5 64 A 6.5 6.5 0 1 0 41.5 64 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 73.5 64 A 6.5 6.5 0 1 0 86.5 64 A 6.5 6.5 0 1 0 73.5 64 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 47.6 61.5 A 2.4 2.4 0 1 0 52.4 61.5 A 2.4 2.4 0 1 0 47.6 61.5 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 79.6 61.5 A 2.4 2.4 0 1 0 84.4 61.5 A 2.4 2.4 0 1 0 79.6 61.5 Z"/>
+    <path
+        android:fillColor="#EC407A"
+        android:pathData="M 57 80 L 71 80 L 64 88 Z"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="3.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 64 88 L 64 92 M 64 92 C 60 97 54 97 52 93 M 64 92 C 68 97 74 97 76 93"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M 46 84 L 20 78 M 46 90 L 20 94 M 82 84 L 108 78 M 82 90 L 108 94"/>
+</vector>
