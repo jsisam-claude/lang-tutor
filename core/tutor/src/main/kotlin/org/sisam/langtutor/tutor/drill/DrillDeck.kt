@@ -2,6 +2,7 @@ package org.sisam.langtutor.tutor.drill
 
 import kotlin.random.Random
 import org.sisam.langtutor.content.Activity
+import org.sisam.langtutor.content.AlignCue
 import org.sisam.langtutor.content.CurriculumUnit
 import org.sisam.langtutor.content.PhraseSentence
 
@@ -21,6 +22,14 @@ data class DrillItem(
     val text: String,
     val level: DrillLevel,
     val hebrew: String? = null,
+    /**
+     * Phrasebank alignment cues (docs/phrasebank.md), when the line came from
+     * the bank and its batch authored them. They power the meaning row's
+     * synchronized highlight — the Hebrew words that MEAN the English word
+     * being spoken light up with it. Null (curriculum and generated lines)
+     * renders the meaning row unlit, which is the honest outcome.
+     */
+    val align: List<AlignCue>? = null,
 )
 
 /**
@@ -87,7 +96,7 @@ object DrillDeck {
         return sentences
             .filter { it.level in floor..learnerLevel }
             .filter { classify(it.en) == level }
-            .map { DrillItem(it.en, level, it.he) }
+            .map { DrillItem(it.en, level, it.he, it.align) }
     }
 
     fun phraseRound(

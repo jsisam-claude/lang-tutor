@@ -13,12 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import org.sisam.langtutor.content.AlignCue
 import org.sisam.langtutor.speech.HebrewTransliteration.GlossWord
+import org.sisam.langtutor.tutor.drill.AlignHighlight
 
 /**
  * An English line with its Hebrew-letter pronunciation stacked underneath,
@@ -65,6 +69,13 @@ fun GlossedText(
     /** Post-attempt karaoke: indices the last attempt missed, marked in the
      *  error colour so a retry has somewhere to aim. */
     missedWords: Set<Int> = emptySet(),
+    /**
+     * Phrasebank alignment for [translation] (docs/phrasebank.md): while
+     * karaoke bolds an English word, the Hebrew words that MEAN it bold too —
+     * inside the naturally-ordered Hebrew line, nothing rearranged. Null (no
+     * cues authored for this line) leaves the meaning row unlit.
+     */
+    translationCues: List<AlignCue>? = null,
 ) {
     Column(
         modifier = modifier,
@@ -120,9 +131,36 @@ fun GlossedText(
         if (!translation.isNullOrBlank()) {
             // Natural Hebrew, not a column: RTL for the whole line, and its
             // own direction scope so it is unaffected by the LTR row above.
+            // With cues, the words MEANING the currently-sounding English
+            // word bold in place — emphasis moves, order never does.
+            val lit = if (translationCues != null && highlightWordIndex != null) {
+                AlignHighlight.hebrewWordsFor(highlightWordIndex, translationCues)
+            } else {
+                emptySet()
+            }
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 Text(
-                    text = translation,
+                    text = buildAnnotatedString {
+                        append(translation)
+                        if (lit.isNotEmpty()) {
+                            // Word char-offsets by the same split(" ") rule the
+                            // cues were authored against; an index past the
+                            // actual word count is dropped, never shifted.
+                            var start = 0
+                            translation.split(" ").forEachIndexed { i, w ->
+                                if (i in lit) {
+                                    addStyle(
+                                        SpanStyle(
+                                            fontWeight = FontWeight.Bold,
+                                            color = MaterialTheme.colorScheme.primary,
+                                        ),
+                                        start, start + w.length,
+                                    )
+                                }
+                                start += w.length + 1
+                            }
+                        }
+                    },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 2.dp),

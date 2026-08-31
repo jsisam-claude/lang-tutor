@@ -457,6 +457,9 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
                             translation = meaning,
                             highlightWordIndex = highlightIndex.takeIf { aligned },
                             missedWords = if (aligned) missed else emptySet(),
+                            // Meaning-row karaoke: only a phrasebank line has
+                            // cues, and only its own Hebrew matches them.
+                            translationCues = s.item.align.takeIf { meaning == s.item.hebrew },
                         )
                     }
                 }
