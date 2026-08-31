@@ -1,0 +1,1467 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "birthday-party",
+  "title": {
+    "en": "Birthday party",
+    "he": "מסיבת יום הולדת"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "bir-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A balloon!",
+      "he": "בלון!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my party.",
+      "he": "זו המסיבה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a cake.",
+      "he": "אני רואה עוגה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The balloon is blue.",
+      "he": "הבלון כחול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Three balloons.",
+      "he": "שלושה בלונים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-the-X",
+      "en": "I like the cake.",
+      "he": "אני אוהב את העוגה.",
+      "he_f": "אני אוהבת את העוגה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The cake is sweet.",
+      "he": "העוגה מתוקה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "My friend is here.",
+      "he": "החבר שלי כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-the-X",
+      "en": "I love the music.",
+      "he": "אני אוהב את המוזיקה.",
+      "he_f": "אני אוהבת את המוזיקה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Five presents.",
+      "he": "חמש מתנות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The present is big.",
+      "he": "המתנה גדולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "My sister is excited.",
+      "he": "אחותי נרגשת.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are blowing up balloons.",
+      "he": "אנחנו מנפחים בלונים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Mom is putting candles on the cake.",
+      "he": "אמא שמה נרות על העוגה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my present?",
+      "he": "איפה המתנה שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-004",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "why-question",
+      "en": "Why is everyone singing?",
+      "he": "למה כולם שרים?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to open my presents.",
+      "he": "אני רוצה לפתוח את המתנות שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "The kids want to play games.",
+      "he": "הילדים רוצים לשחק במשחקים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-007",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you blow out the candles?",
+      "he": "אתה יכול לכבות את הנרות?",
+      "he_f": "את יכולה לכבות את הנרות?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-008",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can carry the cake.",
+      "he": "אני יכול לסחוב את העוגה.",
+      "he_f": "אני יכולה לסחוב את העוגה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-009",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find the ribbon.",
+      "he": "אני לא מוצא את הסרט.",
+      "he_f": "אני לא מוצאת את הסרט.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The children are laughing because the clown is funny.",
+      "he": "הילדים צוחקים כי הליצן מצחיק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because my friends are here.",
+      "he": "אני שמח כי החברים שלי כאן.",
+      "he_f": "אני שמחה כי החברים שלי כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "what-question",
+      "en": "What is in the box?",
+      "he": "מה יש בקופסה?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bir-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We decorated the yard yesterday.",
+      "he": "קישטנו את החצר אתמול."
+    },
+    {
+      "id": "bir-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Mom baked a cake for the party.",
+      "he": "אמא אפתה עוגה למסיבה."
+    },
+    {
+      "id": "bir-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "My friend's present was beautiful.",
+      "he": "המתנה של החבר שלי הייתה יפה."
+    },
+    {
+      "id": "bir-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you invite your friends?",
+      "he": "הזמנת את החברים שלך?"
+    },
+    {
+      "id": "bir-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The presents are on the table.",
+      "he": "המתנות על השולחן."
+    },
+    {
+      "id": "bir-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I wrote thank-you notes this morning.",
+      "he": "כתבתי כרטיסי תודה הבוקר."
+    },
+    {
+      "id": "bir-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The guests danced at the party.",
+      "he": "האורחים רקדו במסיבה."
+    },
+    {
+      "id": "bir-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you win the game?",
+      "he": "ניצחת במשחק?"
+    },
+    {
+      "id": "bir-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We all sang Happy Birthday.",
+      "he": "כולנו שרנו יום הולדת שמח."
+    },
+    {
+      "id": "bir-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My friend's decorations are colorful.",
+      "he": "הקישוטים של החבר שלי צבעוניים."
+    },
+    {
+      "id": "bir-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandma gave me a present.",
+      "he": "סבתא נתנה לי מתנה."
+    },
+    {
+      "id": "bir-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children played in the yard.",
+      "he": "הילדים שיחקו בחצר."
+    },
+    {
+      "id": "bir-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to blow up balloons for the party.",
+      "he": "אנחנו עומדים לנפח בלונים למסיבה."
+    },
+    {
+      "id": "bir-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My present is bigger than yours.",
+      "he": "המתנה שלי גדולה יותר משלך."
+    },
+    {
+      "id": "bir-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the funniest game at the party.",
+      "he": "זה המשחק המצחיק ביותר במסיבה."
+    },
+    {
+      "id": "bir-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must wash your hands before the cake.",
+      "he": "אתה חייב לשטוף ידיים לפני העוגה.",
+      "he_f": "את חייבת לשטוף ידיים לפני העוגה."
+    },
+    {
+      "id": "bir-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should write a thank-you note.",
+      "he": "כדאי שתכתוב כרטיס תודה.",
+      "he_f": "כדאי שתכתבי כרטיס תודה."
+    },
+    {
+      "id": "bir-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you blow out the candles, you make a wish.",
+      "he": "אם מכבים את הנרות, מבקשים משאלה."
+    },
+    {
+      "id": "bir-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to invite all our friends.",
+      "he": "אנחנו עומדים להזמין את כל החברים שלנו."
+    },
+    {
+      "id": "bir-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will hang the decorations tomorrow.",
+      "he": "אבא יתלה את הקישוטים מחר."
+    },
+    {
+      "id": "bir-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to wrap the present after lunch.",
+      "he": "אני עומד לעטוף את המתנה אחרי ארוחת הצהריים.",
+      "he_f": "אני עומדת לעטוף את המתנה אחרי ארוחת הצהריים."
+    },
+    {
+      "id": "bir-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "This cake is sweeter than that one.",
+      "he": "העוגה הזאת מתוקה יותר מהאחרת."
+    },
+    {
+      "id": "bir-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you pop a balloon, it makes a loud noise.",
+      "he": "אם מפוצצים בלון, הוא משמיע רעש חזק."
+    },
+    {
+      "id": "bir-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you help me decorate the yard?",
+      "he": "תעזור לי לקשט את החצר?",
+      "he_f": "תעזרי לי לקשט את החצר?"
+    },
+    {
+      "id": "bir-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have blown out the candles already.",
+      "he": "כבר כיביתי את הנרות."
+    },
+    {
+      "id": "bir-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "We have been friends for many years.",
+      "he": "אנחנו חברים כבר הרבה שנים."
+    },
+    {
+      "id": "bir-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might play a new game.",
+      "he": "אולי נשחק במשחק חדש."
+    },
+    {
+      "id": "bir-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you invite Maya, she will bring balloons.",
+      "he": "אם תזמין את מאיה, היא תביא בלונים.",
+      "he_f": "אם תזמיני את מאיה, היא תביא בלונים."
+    },
+    {
+      "id": "bir-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you opened your presents?",
+      "he": "פתחת את המתנות שלך?"
+    },
+    {
+      "id": "bir-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "The guests have just arrived.",
+      "he": "האורחים בדיוק הגיעו."
+    },
+    {
+      "id": "bir-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My friend may bring a gift.",
+      "he": "אולי החברה שלי תביא מתנה."
+    },
+    {
+      "id": "bir-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we finish the cake early, we will play more games.",
+      "he": "אם נסיים את העוגה מוקדם, נשחק עוד משחקים."
+    },
+    {
+      "id": "bir-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never seen such a big cake.",
+      "he": "מעולם לא ראיתי עוגה כל כך גדולה."
+    },
+    {
+      "id": "bir-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The kids have played since the party started.",
+      "he": "הילדים משחקים מאז שהמסיבה התחילה."
+    },
+    {
+      "id": "bir-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so we will move the party inside.",
+      "he": "אולי יירד גשם, אז נעביר את המסיבה פנימה."
+    },
+    {
+      "id": "bir-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me set the table, we will start the party sooner.",
+      "he": "אם תעזור לי לערוך את השולחן, נתחיל את המסיבה מוקדם יותר.",
+      "he_f": "אם תעזרי לי לערוך את השולחן, נתחיל את המסיבה מוקדם יותר."
+    },
+    {
+      "id": "bir-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was decorating the table while Dad was blowing up balloons.",
+      "he": "אמא קישטה את השולחן בזמן שאבא ניפח בלונים."
+    },
+    {
+      "id": "bir-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The cake was cut before the guests left.",
+      "he": "העוגה נחתכה לפני שהאורחים עזבו."
+    },
+    {
+      "id": "bir-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more balloons, I would decorate the whole yard.",
+      "he": "אם היו לי עוד בלונים, הייתי מקשט את כל החצר.",
+      "he_f": "אם היו לי עוד בלונים, הייתי מקשטת את כל החצר."
+    },
+    {
+      "id": "bir-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already sung Happy Birthday when the cake arrived.",
+      "he": "כבר שרנו יום הולדת שמח כשהעוגה הגיעה."
+    },
+    {
+      "id": "bir-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The cake was baked by Mom.",
+      "he": "העוגה נאפתה על ידי אמא."
+    },
+    {
+      "id": "bir-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was wrapping the present when my friend knocked on the door.",
+      "he": "עטפתי את המתנה כשהחברה שלי דפקה בדלת."
+    },
+    {
+      "id": "bir-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we had a bigger yard, we would invite more friends.",
+      "he": "אם הייתה לנו חצר גדולה יותר, היינו מזמינים עוד חברים."
+    },
+    {
+      "id": "bir-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The presents were wrapped in colorful paper.",
+      "he": "המתנות נעטפו בנייר צבעוני."
+    },
+    {
+      "id": "bir-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The kids were playing games in the yard.",
+      "he": "הילדים שיחקו במשחקים בחצר."
+    },
+    {
+      "id": "bir-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never organized a party before.",
+      "he": "היא מעולם לא ארגנה מסיבה לפני כן."
+    },
+    {
+      "id": "bir-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would invite Maya too.",
+      "he": "במקומך הייתי מזמין גם את מאיה.",
+      "he_f": "במקומך הייתי מזמינה גם את מאיה."
+    },
+    {
+      "id": "bir-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Cake is always served at the end of the party.",
+      "he": "עוגה תמיד מוגשת בסוף המסיבה."
+    },
+    {
+      "id": "bir-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been blowing up balloons all afternoon.",
+      "he": "אני מנפח בלונים כל אחר הצהריים.",
+      "he_f": "אני מנפחת בלונים כל אחר הצהריים."
+    },
+    {
+      "id": "bir-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Mom said that the cake was ready.",
+      "he": "אמא אמרה שהעוגה מוכנה."
+    },
+    {
+      "id": "bir-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had told me, I would have saved you some cake.",
+      "he": "אם היית אומר לי, הייתי שומר לך קצת עוגה.",
+      "he_f": "אם היית אומרת לי, הייתי שומרת לך קצת עוגה."
+    },
+    {
+      "id": "bir-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandma has been baking cookies all morning.",
+      "he": "סבתא אופה עוגיות כל הבוקר."
+    },
+    {
+      "id": "bir-l7-005",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-question",
+      "en": "My friend asked whether the party would start on time.",
+      "he": "החברה שלי שאלה אם המסיבה תתחיל בזמן."
+    },
+    {
+      "id": "bir-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we sing, then we blow out the candles.",
+      "he": "קודם אנחנו שרים, ואז אנחנו מכבים את הנרות."
+    },
+    {
+      "id": "bir-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the party was small, everyone had a great time.",
+      "he": "למרות שהמסיבה הייתה קטנה, לכולם היה כיף גדול."
+    },
+    {
+      "id": "bir-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time the guests arrived, we had been decorating for an hour.",
+      "he": "עד שהאורחים הגיעו, כבר קישטנו במשך שעה."
+    },
+    {
+      "id": "bir-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If it had not rained, we would have had the party outside.",
+      "he": "אם לא היה יורד גשם, היינו עושים את המסיבה בחוץ."
+    },
+    {
+      "id": "bir-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Dad told us that he had ordered a big cake.",
+      "he": "אבא סיפר לנו שהוא הזמין עוגה גדולה."
+    },
+    {
+      "id": "bir-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been planning this party for weeks.",
+      "he": "אנחנו מתכננים את המסיבה הזאת כבר שבועות."
+    },
+    {
+      "id": "bir-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone had fun, and the party was a big success.",
+      "he": "בקיצור, כולם נהנו, והמסיבה הייתה הצלחה גדולה."
+    }
+  ]
+}

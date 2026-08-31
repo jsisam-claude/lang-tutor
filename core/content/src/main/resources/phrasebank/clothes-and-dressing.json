@@ -1,0 +1,1485 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "clothes-and-dressing",
+  "title": {
+    "en": "Getting dressed",
+    "he": "מתלבשים"
+  },
+  "notes": "Batch 4. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "clo-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A shirt!",
+      "he": "חולצה!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The shirt is blue.",
+      "he": "החולצה כחולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a hat.",
+      "he": "אני רואה כובע.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The pants are long.",
+      "he": "המכנסיים ארוכים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my socks.",
+      "he": "אני אוהב את הגרביים שלי.",
+      "he_f": "אני אוהבת את הגרביים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two buttons.",
+      "he": "שני כפתורים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The hat is yellow.",
+      "he": "הכובע צהוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A red coat.",
+      "he": "מעיל אדום.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a zipper.",
+      "he": "אני רואה רוכסן.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The coat is warm.",
+      "he": "המעיל חם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-love-my-X",
+      "en": "I love my hat.",
+      "he": "אני אוהב את הכובע שלי.",
+      "he_f": "אני אוהבת את הכובע שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The shoes are small.",
+      "he": "הנעליים קטנות.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am putting on my shoes.",
+      "he": "אני נועל את הנעליים שלי.",
+      "he_f": "אני נועלת את הנעליים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My brother is putting on his pants.",
+      "he": "אחי לובש את המכנסיים שלו.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "i-Vpresent-every-morning",
+      "en": "I get dressed every morning.",
+      "he": "אני מתלבש כל בוקר.",
+      "he_f": "אני מתלבשת כל בוקר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-004",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My little sister is putting on her socks.",
+      "he": "אחותי הקטנה גורבת את הגרביים שלה.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-005",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The boy is wearing a coat because it is raining.",
+      "he": "הילד לובש מעיל כי יורד גשם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            7,
+            9
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-006",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "why-question",
+      "en": "Why is she wearing a hat?",
+      "he": "למה היא חובשת כובע?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-007",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you button my coat?",
+      "he": "אתה יכול לכפתר את המעיל שלי?",
+      "he_f": "את יכולה לכפתר את המעיל שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-008",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can zip my coat by myself.",
+      "he": "אני יכול לרכוס את המעיל שלי לבד.",
+      "he_f": "אני יכולה לרכוס את המעיל שלי לבד.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            6,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because my shirt matches my pants.",
+      "he": "אני שמח כי החולצה שלי מתאימה למכנסיים שלי.",
+      "he_f": "אני שמחה כי החולצה שלי מתאימה למכנסיים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            5,
+            5
+          ]
+        },
+        {
+          "en": [
+            7,
+            8
+          ],
+          "he": [
+            6,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "She is choosing what to wear.",
+      "he": "היא בוחרת מה ללבוש.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to wear my blue shirt today.",
+      "he": "אני רוצה ללבוש את החולצה הכחולה שלי היום.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            6
+          ]
+        },
+        {
+          "en": [
+            7,
+            7
+          ],
+          "he": [
+            7,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my other shoe.",
+      "he": "אני לא מוצא את הנעל השנייה שלי.",
+      "he_f": "אני לא מוצאת את הנעל השנייה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            4,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clo-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We bought new shoes yesterday.",
+      "he": "קנינו נעליים חדשות אתמול."
+    },
+    {
+      "id": "clo-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Mom sewed a button on my shirt.",
+      "he": "אמא תפרה כפתור על החולצה שלי."
+    },
+    {
+      "id": "clo-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My brother's coat is black.",
+      "he": "המעיל של אחי שחור."
+    },
+    {
+      "id": "clo-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you zip your coat?",
+      "he": "רכסת את המעיל שלך?"
+    },
+    {
+      "id": "clo-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The socks are in the drawer.",
+      "he": "הגרביים במגירה."
+    },
+    {
+      "id": "clo-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I lost one sock this morning.",
+      "he": "איבדתי גרב אחד הבוקר."
+    },
+    {
+      "id": "clo-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My sister chose a yellow dress.",
+      "he": "אחותי בחרה שמלה צהובה."
+    },
+    {
+      "id": "clo-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did Dad button his shirt?",
+      "he": "אבא כפתר את החולצה שלו?"
+    },
+    {
+      "id": "clo-l3-009",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My sister's shoes are new.",
+      "he": "הנעליים של אחותי חדשות."
+    },
+    {
+      "id": "clo-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We matched the socks by color.",
+      "he": "התאמנו את הגרביים לפי צבע."
+    },
+    {
+      "id": "clo-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The boy got dressed by himself before school.",
+      "he": "הילד התלבש לבד לפני בית הספר."
+    },
+    {
+      "id": "clo-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you wear your hat in the sun?",
+      "he": "חבשת את הכובע שלך בשמש?"
+    },
+    {
+      "id": "clo-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to wear my new shoes tomorrow.",
+      "he": "אני עומד לנעול את הנעליים החדשות שלי מחר.",
+      "he_f": "אני עומדת לנעול את הנעליים החדשות שלי מחר."
+    },
+    {
+      "id": "clo-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to buy a raincoat this week.",
+      "he": "אנחנו עומדים לקנות מעיל גשם השבוע."
+    },
+    {
+      "id": "clo-l4-003",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "She is going to choose a shirt for the party.",
+      "he": "היא עומדת לבחור חולצה למסיבה."
+    },
+    {
+      "id": "clo-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My coat is warmer than your sweater.",
+      "he": "המעיל שלי חם יותר מהסוודר שלך."
+    },
+    {
+      "id": "clo-l4-005",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My pants are longer than my brother's.",
+      "he": "המכנסיים שלי ארוכים יותר משל אחי."
+    },
+    {
+      "id": "clo-l4-006",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the nicest hat in the store.",
+      "he": "זה הכובע היפה ביותר בחנות."
+    },
+    {
+      "id": "clo-l4-007",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must wear a hat in the strong sun.",
+      "he": "אתה חייב לחבוש כובע בשמש החזקה.",
+      "he_f": "את חייבת לחבוש כובע בשמש החזקה."
+    },
+    {
+      "id": "clo-l4-008",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should zip your coat; it's cold outside.",
+      "he": "כדאי שתרכוס את המעיל, קר בחוץ.",
+      "he_f": "כדאי שתרכסי את המעיל, קר בחוץ."
+    },
+    {
+      "id": "clo-l4-009",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If it rains, I wear my raincoat.",
+      "he": "אם יורד גשם, אני לובש את מעיל הגשם שלי.",
+      "he_f": "אם יורד גשם, אני לובשת את מעיל הגשם שלי."
+    },
+    {
+      "id": "clo-l4-010",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the sun is strong, we wear hats.",
+      "he": "אם השמש חזקה, אנחנו חובשים כובעים."
+    },
+    {
+      "id": "clo-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will fix the button on my coat.",
+      "he": "אבא יתקן את הכפתור על המעיל שלי."
+    },
+    {
+      "id": "clo-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you help me zip my coat?",
+      "he": "תעזור לי לרכוס את המעיל שלי?",
+      "he_f": "תעזרי לי לרכוס את המעיל שלי?"
+    },
+    {
+      "id": "clo-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have already put on my shoes.",
+      "he": "כבר נעלתי את הנעליים שלי."
+    },
+    {
+      "id": "clo-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "I have worn this hat for two years.",
+      "he": "אני חובש את הכובע הזה שנתיים.",
+      "he_f": "אני חובשת את הכובע הזה שנתיים."
+    },
+    {
+      "id": "clo-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might buy new socks tomorrow.",
+      "he": "אולי נקנה גרביים חדשים מחר."
+    },
+    {
+      "id": "clo-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you button your coat, you will be warm.",
+      "he": "אם תכפתר את המעיל, יהיה לך חם.",
+      "he_f": "אם תכפתרי את המעיל, יהיה לך חם."
+    },
+    {
+      "id": "clo-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my other shoe?",
+      "he": "ראית את הנעל השנייה שלי?"
+    },
+    {
+      "id": "clo-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "My sister has just chosen her dress for the party.",
+      "he": "אחותי בדיוק בחרה את השמלה שלה למסיבה."
+    },
+    {
+      "id": "clo-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My brother may wear his new coat today.",
+      "he": "אולי אחי ילבש את המעיל החדש שלו היום."
+    },
+    {
+      "id": "clo-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we match our socks, we will not lose them.",
+      "he": "אם נתאים את הגרביים שלנו, לא נאבד אותם."
+    },
+    {
+      "id": "clo-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never worn such a big hat.",
+      "he": "מעולם לא חבשתי כובע כל כך גדול."
+    },
+    {
+      "id": "clo-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "I have worn this coat since last winter.",
+      "he": "אני לובש את המעיל הזה מאז החורף שעבר.",
+      "he_f": "אני לובשת את המעיל הזה מאז החורף שעבר."
+    },
+    {
+      "id": "clo-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so take your raincoat.",
+      "he": "אולי יירד גשם, אז תיקח את מעיל הגשם שלך.",
+      "he_f": "אולי יירד גשם, אז תיקחי את מעיל הגשם שלך."
+    },
+    {
+      "id": "clo-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you zip your coat, you won't be cold.",
+      "he": "אם תרכוס את המעיל שלך, לא יהיה לך קר.",
+      "he_f": "אם תרכסי את המעיל שלך, לא יהיה לך קר."
+    },
+    {
+      "id": "clo-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "I was buttoning my coat while it was raining.",
+      "he": "כפתרתי את המעיל בזמן שירד גשם."
+    },
+    {
+      "id": "clo-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "My shoes were cleaned before the trip.",
+      "he": "הנעליים שלי נוקו לפני הטיול."
+    },
+    {
+      "id": "clo-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bigger coat, I would give it to my brother.",
+      "he": "אם היה לי מעיל גדול יותר, הייתי נותן אותו לאחי.",
+      "he_f": "אם היה לי מעיל גדול יותר, הייתי נותנת אותו לאחי."
+    },
+    {
+      "id": "clo-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "I had already put on my shoes when the bus arrived.",
+      "he": "כבר נעלתי את הנעליים שלי כשהאוטובוס הגיע."
+    },
+    {
+      "id": "clo-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The button was sewn on by Mom.",
+      "he": "הכפתור נתפר על ידי אמא."
+    },
+    {
+      "id": "clo-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was zipping my coat when I heard the rain.",
+      "he": "רכסתי את המעיל כששמעתי את הגשם."
+    },
+    {
+      "id": "clo-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If it rained more, everyone would wear raincoats.",
+      "he": "אם היה יורד יותר גשם, כולם היו לובשים מעילי גשם."
+    },
+    {
+      "id": "clo-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The socks were washed and matched by color.",
+      "he": "הגרביים כובסו והותאמו לפי צבע."
+    },
+    {
+      "id": "clo-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My sister was choosing a new hat this morning.",
+      "he": "אחותי בחרה כובע חדש הבוקר."
+    },
+    {
+      "id": "clo-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "I had never worn such warm socks before.",
+      "he": "מעולם לא גרבתי גרביים כל כך חמים לפני כן."
+    },
+    {
+      "id": "clo-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would zip up your coat.",
+      "he": "במקומך הייתי רוכס את המעיל שלך.",
+      "he_f": "במקומך הייתי רוכסת את המעיל שלך."
+    },
+    {
+      "id": "clo-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Hats are worn in the strong summer sun.",
+      "he": "כובעים נחבשים בשמש הקיץ החזקה."
+    },
+    {
+      "id": "clo-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been getting dressed for ten minutes.",
+      "he": "אני מתלבש כבר עשר דקות.",
+      "he_f": "אני מתלבשת כבר עשר דקות."
+    },
+    {
+      "id": "clo-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Mom said that the coat was too small.",
+      "he": "אמא אמרה שהמעיל קטן מדי."
+    },
+    {
+      "id": "clo-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had zipped your coat, you wouldn't have been cold.",
+      "he": "אם היית רוכס את המעיל שלך, לא היית קר.",
+      "he_f": "אם היית רוכסת את המעיל שלך, לא היית קרה."
+    },
+    {
+      "id": "clo-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "My sister has been choosing her outfit for an hour.",
+      "he": "אחותי בוחרת את התלבושת שלה כבר שעה."
+    },
+    {
+      "id": "clo-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My brother asked whether he could wear his new hat.",
+      "he": "אחי שאל אם הוא יכול לחבוש את הכובע החדש שלו."
+    },
+    {
+      "id": "clo-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First I put on my socks, then I put on my shoes.",
+      "he": "קודם אני גורב גרביים, ואז אני נועל נעליים.",
+      "he_f": "קודם אני גורבת גרביים, ואז אני נועלת נעליים."
+    },
+    {
+      "id": "clo-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the coat was old, it always kept me warm.",
+      "he": "למרות שהמעיל היה ישן, הוא תמיד חימם אותי."
+    },
+    {
+      "id": "clo-l7-008",
+      "level": 7,
+      "tense": "past-perfect-progressive",
+      "frame": "by-the-time",
+      "en": "By the time we left, I had been buttoning my coat for five minutes.",
+      "he": "עד שיצאנו, כבר כפתרתי את המעיל שלי חמש דקות."
+    },
+    {
+      "id": "clo-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the zipper had worked, I would have worn my coat.",
+      "he": "אם הרוכסן היה עובד, הייתי לובש את המעיל שלי.",
+      "he_f": "אם הרוכסן היה עובד, הייתי לובשת את המעיל שלי."
+    },
+    {
+      "id": "clo-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Dad told us that he had bought new shoes.",
+      "he": "אבא סיפר לנו שהוא קנה נעליים חדשות."
+    },
+    {
+      "id": "clo-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been matching socks for twenty minutes.",
+      "he": "אנחנו מתאימים גרביים כבר עשרים דקות."
+    },
+    {
+      "id": "clo-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone got dressed quickly, so we were not late.",
+      "he": "בקיצור, כולם התלבשו מהר, ולכן לא איחרנו."
+    }
+  ]
+}
