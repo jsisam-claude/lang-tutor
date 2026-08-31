@@ -1,0 +1,1399 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "getting-around",
+  "title": {
+    "en": "Getting around",
+    "he": "מסתובבים בעיר"
+  },
+  "notes": "Batch 3. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "get-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A bus!",
+      "he": "אוטובוס!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a train.",
+      "he": "אני רואה רכבת.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The car is red.",
+      "he": "המכונית אדומה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bike is fast.",
+      "he": "האופניים מהירים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like the boat.",
+      "he": "אני אוהב את הסירה.",
+      "he_f": "אני אוהבת את הסירה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two wheels.",
+      "he": "שני גלגלים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The plane is big.",
+      "he": "המטוס גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The light is green.",
+      "he": "האור ירוק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the road.",
+      "he": "אני רואה את הכביש.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The taxi is yellow.",
+      "he": "המונית צהובה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A small scooter.",
+      "he": "קורקינט קטן.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The train is long.",
+      "he": "הרכבת ארוכה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The bus is coming.",
+      "he": "האוטובוס מגיע.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are waiting at the station.",
+      "he": "אנחנו מחכים בתחנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to ride my bike.",
+      "he": "אני רוצה לרכוב על האופניים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-we-X",
+      "en": "Can we take the train?",
+      "he": "אנחנו יכולים לנסוע ברכבת?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is the bus stop?",
+      "he": "איפה תחנת האוטובוס?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-006",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The children are crossing the street.",
+      "he": "הילדים חוצים את הכביש.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "emotion-because",
+      "en": "I am excited because we are flying today.",
+      "he": "אני נרגש כי אנחנו טסים היום.",
+      "he_f": "אני נרגשת כי אנחנו טסים היום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            7,
+            7
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-008",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you stop at the light?",
+      "he": "אתה יכול לעצור ברמזור?",
+      "he_f": "את יכולה לעצור ברמזור?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The taxi is turning left.",
+      "he": "המונית פונה שמאלה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to sit near the window.",
+      "he": "אני רוצה לשבת ליד החלון.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-011",
+      "level": 2,
+      "tense": "modal",
+      "frame": "we-can-X",
+      "en": "We can walk to the park.",
+      "he": "אנחנו יכולים ללכת ברגל לפארק.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why is the bus late?",
+      "he": "למה האוטובוס מאחר?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We took the train to the city.",
+      "he": "נסענו ברכבת לעיר."
+    },
+    {
+      "id": "get-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad drove us to the beach.",
+      "he": "אבא הסיע אותנו לים."
+    },
+    {
+      "id": "get-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you miss the bus?",
+      "he": "פספסת את האוטובוס?"
+    },
+    {
+      "id": "get-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "The driver's seat was empty.",
+      "he": "המושב של הנהג היה ריק."
+    },
+    {
+      "id": "get-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We walked home through the park.",
+      "he": "הלכנו הביתה דרך הפארק."
+    },
+    {
+      "id": "get-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "plural",
+      "en": "The buses were full this morning.",
+      "he": "האוטובוסים היו מלאים הבוקר."
+    },
+    {
+      "id": "get-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the train leave on time?",
+      "he": "הרכבת יצאה בזמן?"
+    },
+    {
+      "id": "get-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I rode my bike to my friend's house.",
+      "he": "רכבתי על האופניים לבית של החבר שלי."
+    },
+    {
+      "id": "get-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We waited twenty minutes for the taxi.",
+      "he": "חיכינו עשרים דקות למונית."
+    },
+    {
+      "id": "get-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive-plural",
+      "en": "The tickets were in Mom's bag.",
+      "he": "הכרטיסים היו בתיק של אמא."
+    },
+    {
+      "id": "get-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The boat sailed under the bridge.",
+      "he": "הסירה שטה מתחת לגשר."
+    },
+    {
+      "id": "get-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We got off at the wrong stop.",
+      "he": "ירדנו בתחנה הלא נכונה."
+    },
+    {
+      "id": "get-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to take the early train.",
+      "he": "אנחנו עומדים לנסוע ברכבת המוקדמת."
+    },
+    {
+      "id": "get-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to learn to ride a bike.",
+      "he": "אני עומד ללמוד לרכוב על אופניים.",
+      "he_f": "אני עומדת ללמוד לרכוב על אופניים."
+    },
+    {
+      "id": "get-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The train is faster than the bus.",
+      "he": "הרכבת מהירה יותר מהאוטובוס."
+    },
+    {
+      "id": "get-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the longest bridge in the country.",
+      "he": "זה הגשר הארוך ביותר בארץ."
+    },
+    {
+      "id": "get-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must wear a helmet on a bike.",
+      "he": "חייבים לחבוש קסדה על אופניים."
+    },
+    {
+      "id": "get-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should hold the rail on the stairs.",
+      "he": "כדאי להחזיק במעקה במדרגות."
+    },
+    {
+      "id": "get-l4-007",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the light is red, the cars stop.",
+      "he": "אם האור אדום, המכוניות עוצרות."
+    },
+    {
+      "id": "get-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The bus will arrive in five minutes.",
+      "he": "האוטובוס יגיע בעוד חמש דקות."
+    },
+    {
+      "id": "get-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to sail on the lake on Saturday.",
+      "he": "אנחנו עומדים לשוט באגם בשבת."
+    },
+    {
+      "id": "get-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "The morning bus is more crowded than the evening bus.",
+      "he": "האוטובוס של הבוקר עמוס יותר מהאוטובוס של הערב."
+    },
+    {
+      "id": "get-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will the taxi wait for us?",
+      "he": "המונית תחכה לנו?"
+    },
+    {
+      "id": "get-l4-012",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you press the button, the doors open.",
+      "he": "אם לוחצים על הכפתור, הדלתות נפתחות."
+    },
+    {
+      "id": "get-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-many-times",
+      "en": "I have ridden this bus many times.",
+      "he": "נסעתי באוטובוס הזה הרבה פעמים."
+    },
+    {
+      "id": "get-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "We have never flown at night.",
+      "he": "מעולם לא טסנו בלילה."
+    },
+    {
+      "id": "get-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The train might be late today.",
+      "he": "יכול להיות שהרכבת תאחר היום."
+    },
+    {
+      "id": "get-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we run, we will catch the bus.",
+      "he": "אם נרוץ, נספיק לאוטובוס."
+    },
+    {
+      "id": "get-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-ever",
+      "en": "Have you ever sailed on a boat?",
+      "he": "הפלגת פעם בסירה?"
+    },
+    {
+      "id": "get-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "Dad has already bought the tickets.",
+      "he": "אבא כבר קנה את הכרטיסים."
+    },
+    {
+      "id": "get-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "We may walk instead of taking the bus.",
+      "he": "אולי נלך ברגל במקום לנסוע באוטובוס."
+    },
+    {
+      "id": "get-l5-008",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect",
+      "en": "We have missed the last train.",
+      "he": "פספסנו את הרכבת האחרונה."
+    },
+    {
+      "id": "get-l5-009",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If the bus is full, we will wait for the next one.",
+      "he": "אם האוטובוס יהיה מלא, נחכה לאוטובוס הבא."
+    },
+    {
+      "id": "get-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "She has just gotten off the train.",
+      "he": "היא בדיוק ירדה מהרכבת."
+    },
+    {
+      "id": "get-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might be faster to walk.",
+      "he": "אולי מהיר יותר ללכת ברגל."
+    },
+    {
+      "id": "get-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you sit by the window, you will see the sea.",
+      "he": "אם תשב ליד החלון, תראה את הים.",
+      "he_f": "אם תשבי ליד החלון, תראי את הים."
+    },
+    {
+      "id": "get-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "We were riding our bikes when it started to rain.",
+      "he": "רכבנו על האופניים כשהתחיל לרדת גשם."
+    },
+    {
+      "id": "get-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The tickets were checked at the gate.",
+      "he": "הכרטיסים נבדקו בשער."
+    },
+    {
+      "id": "get-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bike, I would ride to the beach.",
+      "he": "אם היו לי אופניים, הייתי רוכב לים.",
+      "he_f": "אם היו לי אופניים, הייתי רוכבת לים."
+    },
+    {
+      "id": "get-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "before",
+      "en": "The train had left before we reached the station.",
+      "he": "הרכבת יצאה לפני שהגענו לתחנה."
+    },
+    {
+      "id": "get-l6-005",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The children were singing on the whole ride.",
+      "he": "הילדים שרו לאורך כל הנסיעה."
+    },
+    {
+      "id": "get-l6-006",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The old bridge was painted blue.",
+      "he": "הגשר הישן נצבע בכחול."
+    },
+    {
+      "id": "get-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If the streets were quieter, we would ride every day.",
+      "he": "אם הרחובות היו שקטים יותר, היינו רוכבים כל יום."
+    },
+    {
+      "id": "get-l6-008",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "We had never sailed before that trip.",
+      "he": "מעולם לא הפלגנו לפני הטיול ההוא."
+    },
+    {
+      "id": "get-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The bus was moving slowly through the traffic.",
+      "he": "האוטובוס התקדם לאט בפקק."
+    },
+    {
+      "id": "get-l6-010",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The new road was opened last month.",
+      "he": "הכביש החדש נפתח בחודש שעבר."
+    },
+    {
+      "id": "get-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were the driver, I would stop at every station.",
+      "he": "אם הייתי הנהג, הייתי עוצר בכל תחנה.",
+      "he_f": "אם הייתי הנהגת, הייתי עוצרת בכל תחנה."
+    },
+    {
+      "id": "get-l6-012",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "by-time",
+      "en": "By sunset, the ship had reached the port.",
+      "he": "עד השקיעה האונייה הגיעה לנמל."
+    },
+    {
+      "id": "get-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been waiting for the bus for twenty minutes.",
+      "he": "אנחנו מחכים לאוטובוס כבר עשרים דקות."
+    },
+    {
+      "id": "get-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The driver said that the next stop was ours.",
+      "he": "הנהג אמר שהתחנה הבאה שלנו."
+    },
+    {
+      "id": "get-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had left earlier, we would have caught the train.",
+      "he": "אם היינו יוצאים מוקדם יותר, היינו מספיקים לרכבת."
+    },
+    {
+      "id": "get-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The train has been running late all week.",
+      "he": "הרכבת מאחרת כל השבוע."
+    },
+    {
+      "id": "get-l7-005",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-question",
+      "en": "Mom asked whether the taxi would come soon.",
+      "he": "אמא שאלה אם המונית תגיע בקרוב."
+    },
+    {
+      "id": "get-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we buy tickets, then we find our seats.",
+      "he": "קודם אנחנו קונים כרטיסים, ואז מוצאים את המקומות שלנו."
+    },
+    {
+      "id": "get-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the bus was crowded, we found two seats.",
+      "he": "למרות שהאוטובוס היה עמוס, מצאנו שני מקומות."
+    },
+    {
+      "id": "get-l7-008",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "by-the-time",
+      "en": "By the time we arrived, the ship had been sailing for hours.",
+      "he": "עד שהגענו, האונייה כבר הפליגה שעות."
+    },
+    {
+      "id": "get-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the plane had been late, we would have missed the wedding.",
+      "he": "אם המטוס היה מאחר, היינו מפספסים את החתונה."
+    },
+    {
+      "id": "get-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "He told us that he had lost his ticket.",
+      "he": "הוא אמר לנו שהוא איבד את הכרטיס שלו."
+    },
+    {
+      "id": "get-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been dreaming about this trip for months.",
+      "he": "אני חולם על הטיול הזה כבר חודשים.",
+      "he_f": "אני חולמת על הטיול הזה כבר חודשים."
+    },
+    {
+      "id": "get-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In the end, we missed the bus, but the walk was lovely.",
+      "he": "בסוף פספסנו את האוטובוס, אבל ההליכה הייתה נעימה."
+    }
+  ]
+}

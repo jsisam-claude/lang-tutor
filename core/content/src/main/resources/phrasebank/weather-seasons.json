@@ -1,0 +1,1370 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "weather-seasons",
+  "title": {
+    "en": "Weather and seasons",
+    "he": "מזג אוויר ועונות"
+  },
+  "notes": "Batch 3. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "wea-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The sun is hot.",
+      "he": "השמש חמה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see a cloud.",
+      "he": "אני רואה ענן.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The sky is blue.",
+      "he": "השמיים כחולים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "Snow!",
+      "he": "שלג!",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The rain is cold.",
+      "he": "הגשם קר.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like the sun.",
+      "he": "אני אוהב את השמש.",
+      "he_f": "אני אוהבת את השמש.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The wind is strong.",
+      "he": "הרוח חזקה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "adj-noun",
+      "en": "A big cloud.",
+      "he": "ענן גדול.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The flowers are pretty.",
+      "he": "הפרחים יפים.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the moon.",
+      "he": "אני רואה את הירח.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The day is warm.",
+      "he": "היום חם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two umbrellas.",
+      "he": "שתי מטריות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "it-is-Ving",
+      "en": "It is raining outside.",
+      "he": "יורד גשם בחוץ.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The snow is falling.",
+      "he": "השלג יורד.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to play in the snow.",
+      "he": "אני רוצה לשחק בשלג.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-we-X",
+      "en": "Can we go to the beach?",
+      "he": "אנחנו יכולים ללכת לים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why is the sky grey?",
+      "he": "למה השמיים אפורים?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-006",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am wearing a warm coat.",
+      "he": "אני לובש מעיל חם.",
+      "he_f": "אני לובשת מעיל חם.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            5
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The birds are singing because it is spring.",
+      "he": "הציפורים שרות כי עכשיו אביב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            7
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because the sun is out.",
+      "he": "אני שמח כי השמש זורחת.",
+      "he_f": "אני שמחה כי השמש זורחת.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-009",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you see the rainbow?",
+      "he": "אתה רואה את הקשת?",
+      "he_f": "את רואה את הקשת?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "it-is-adj",
+      "en": "It is windy today.",
+      "he": "יש רוח היום.",
+      "align": [
+        {
+          "en": [
+            0,
+            2
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-011",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "We want to build a snowman.",
+      "he": "אנחנו רוצים לבנות איש שלג.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my umbrella.",
+      "he": "אני לא מוצא את המטרייה שלי.",
+      "he_f": "אני לא מוצאת את המטרייה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wea-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "it-Ved",
+      "en": "It rained all night.",
+      "he": "ירד גשם כל הלילה."
+    },
+    {
+      "id": "wea-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We made a snowman in the yard.",
+      "he": "בנינו איש שלג בחצר."
+    },
+    {
+      "id": "wea-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you see the lightning?",
+      "he": "ראית את הברק?"
+    },
+    {
+      "id": "wea-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive-plural",
+      "en": "The children's boots were wet.",
+      "he": "המגפיים של הילדים היו רטובים."
+    },
+    {
+      "id": "wea-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The leaves fell from the trees.",
+      "he": "העלים נשרו מהעצים."
+    },
+    {
+      "id": "wea-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We picked flowers in the spring.",
+      "he": "קטפנו פרחים באביב."
+    },
+    {
+      "id": "wea-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did it snow in the mountains?",
+      "he": "ירד שלג בהרים?"
+    },
+    {
+      "id": "wea-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The sun dried our towels quickly.",
+      "he": "השמש ייבשה לנו את המגבות מהר."
+    },
+    {
+      "id": "wea-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-was-adj",
+      "en": "Last summer was very hot.",
+      "he": "הקיץ שעבר היה חם מאוד."
+    },
+    {
+      "id": "wea-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "plural",
+      "en": "The puddles were deep after the rain.",
+      "he": "השלוליות היו עמוקות אחרי הגשם."
+    },
+    {
+      "id": "wea-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "Dana's kite flew high in the wind.",
+      "he": "העפיפון של דנה עף גבוה ברוח."
+    },
+    {
+      "id": "wea-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We watched the storm from the window.",
+      "he": "צפינו בסערה מהחלון."
+    },
+    {
+      "id": "wea-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "It is going to rain this afternoon.",
+      "he": "עומד לרדת גשם אחר הצהריים."
+    },
+    {
+      "id": "wea-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to fly kites on the beach.",
+      "he": "אנחנו עומדים להעיף עפיפונים בחוף."
+    },
+    {
+      "id": "wea-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "Winter is colder than autumn.",
+      "he": "החורף קר יותר מהסתיו."
+    },
+    {
+      "id": "wea-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "Summer is the hottest season of the year.",
+      "he": "הקיץ הוא העונה הכי חמה בשנה."
+    },
+    {
+      "id": "wea-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must drink water on hot days.",
+      "he": "חייבים לשתות מים בימים חמים."
+    },
+    {
+      "id": "wea-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should wear a hat in the sun.",
+      "he": "כדאי לחבוש כובע בשמש."
+    },
+    {
+      "id": "wea-l4-007",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If water freezes, it turns to ice.",
+      "he": "אם מים קופאים, הם הופכים לקרח."
+    },
+    {
+      "id": "wea-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The wind will be strong tomorrow.",
+      "he": "הרוח תהיה חזקה מחר."
+    },
+    {
+      "id": "wea-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to jump in every puddle.",
+      "he": "אני עומד לקפוץ לתוך כל שלולית.",
+      "he_f": "אני עומדת לקפוץ לתוך כל שלולית."
+    },
+    {
+      "id": "wea-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "Today is windier than yesterday.",
+      "he": "היום יש יותר רוח מאתמול."
+    },
+    {
+      "id": "wea-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will it snow this winter?",
+      "he": "ירד שלג החורף?"
+    },
+    {
+      "id": "wea-l4-012",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the sun shines, the snow melts.",
+      "he": "אם השמש זורחת, השלג נמס."
+    },
+    {
+      "id": "wea-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-this-week",
+      "en": "It has rained every day this week.",
+      "he": "ירד גשם כל יום השבוע."
+    },
+    {
+      "id": "wea-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never seen snow in our city.",
+      "he": "מעולם לא ראיתי שלג בעיר שלנו."
+    },
+    {
+      "id": "wea-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so take an umbrella.",
+      "he": "אולי ירד גשם, אז קח מטרייה.",
+      "he_f": "אולי ירד גשם, אז קחי מטרייה."
+    },
+    {
+      "id": "wea-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If the storm passes, we will go outside.",
+      "he": "אם הסערה תעבור, נצא החוצה."
+    },
+    {
+      "id": "wea-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-ever",
+      "en": "Have you ever built a snowman?",
+      "he": "בנית פעם איש שלג?"
+    },
+    {
+      "id": "wea-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect",
+      "en": "The flowers have opened early this spring.",
+      "he": "הפרחים נפתחו מוקדם באביב הזה."
+    },
+    {
+      "id": "wea-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "We may go swimming if it stays warm.",
+      "he": "אולי נלך לשחות אם יישאר חם."
+    },
+    {
+      "id": "wea-l5-008",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "The weather has changed since the morning.",
+      "he": "מזג האוויר השתנה מאז הבוקר."
+    },
+    {
+      "id": "wea-l5-009",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If it is sunny tomorrow, we will have a picnic.",
+      "he": "אם יהיה שמשי מחר, נעשה פיקניק."
+    },
+    {
+      "id": "wea-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-all",
+      "en": "I have waited all winter for the snow.",
+      "he": "חיכיתי כל החורף לשלג."
+    },
+    {
+      "id": "wea-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "It may be foggy on the mountain.",
+      "he": "אולי יהיה ערפל בהר."
+    },
+    {
+      "id": "wea-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you look at the sky tonight, you will see stars.",
+      "he": "אם תסתכל על השמיים הערב, תראה כוכבים.",
+      "he_f": "אם תסתכלי על השמיים הערב, תראי כוכבים."
+    },
+    {
+      "id": "wea-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "It was raining while we were walking home.",
+      "he": "ירד גשם בזמן שהלכנו הביתה."
+    },
+    {
+      "id": "wea-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The garden was covered in snow.",
+      "he": "הגינה הייתה מכוסה בשלג."
+    },
+    {
+      "id": "wea-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If it were warmer, we would eat outside.",
+      "he": "אם היה חם יותר, היינו אוכלים בחוץ."
+    },
+    {
+      "id": "wea-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "before",
+      "en": "The rain had stopped before we woke up.",
+      "he": "הגשם הפסיק לפני שהתעוררנו."
+    },
+    {
+      "id": "wea-l6-005",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "The sun was shining when we left the house.",
+      "he": "השמש זרחה כשיצאנו מהבית."
+    },
+    {
+      "id": "wea-l6-006",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The streets were washed by the rain.",
+      "he": "הרחובות נשטפו בגשם."
+    },
+    {
+      "id": "wea-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had an umbrella, I would walk in the rain.",
+      "he": "אם הייתה לי מטרייה, הייתי הולך בגשם.",
+      "he_f": "אם הייתה לי מטרייה, הייתי הולכת בגשם."
+    },
+    {
+      "id": "wea-l6-008",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never",
+      "en": "We had never seen such a big storm.",
+      "he": "מעולם לא ראינו סערה כזאת גדולה."
+    },
+    {
+      "id": "wea-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "The clouds were moving fast across the sky.",
+      "he": "העננים נעו מהר בשמיים."
+    },
+    {
+      "id": "wea-l6-010",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The beach was closed because of the waves.",
+      "he": "החוף נסגר בגלל הגלים."
+    },
+    {
+      "id": "wea-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If it snowed here, we would build a snow fort.",
+      "he": "אם היה יורד כאן שלג, היינו בונים מבצר שלג."
+    },
+    {
+      "id": "wea-l6-012",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "by-time",
+      "en": "By evening, the storm had passed.",
+      "he": "עד הערב הסערה חלפה."
+    },
+    {
+      "id": "wea-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "It has been raining since Tuesday.",
+      "he": "יורד גשם מאז יום שלישי."
+    },
+    {
+      "id": "wea-l7-002",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-speech",
+      "en": "The forecast said that the heat would last a week.",
+      "he": "התחזית אמרה שהחום יימשך שבוע."
+    },
+    {
+      "id": "wea-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If we had checked the forecast, we would have stayed home.",
+      "he": "אם היינו בודקים את התחזית, היינו נשארים בבית."
+    },
+    {
+      "id": "wea-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "The wind has been blowing hard all morning.",
+      "he": "הרוח נושבת חזק כל הבוקר."
+    },
+    {
+      "id": "wea-l7-005",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-question",
+      "en": "Dad asked whether it would be cold at night.",
+      "he": "אבא שאל אם יהיה קר בלילה."
+    },
+    {
+      "id": "wea-l7-006",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-sequence",
+      "en": "First it thundered, then the rain poured down.",
+      "he": "קודם היו רעמים, ואז ירד גשם חזק."
+    },
+    {
+      "id": "wea-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the sky was dark, it did not rain.",
+      "he": "למרות שהשמיים היו חשוכים, לא ירד גשם."
+    },
+    {
+      "id": "wea-l7-008",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "by-noon",
+      "en": "By noon, the sun had been shining for hours.",
+      "he": "עד הצהריים השמש כבר זרחה שעות."
+    },
+    {
+      "id": "wea-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the hail had continued, it would have hurt the flowers.",
+      "he": "אם הברד היה נמשך, הוא היה פוגע בפרחים."
+    },
+    {
+      "id": "wea-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Grandma told us that winters had been colder once.",
+      "he": "סבתא סיפרה לנו שהחורפים היו פעם קרים יותר."
+    },
+    {
+      "id": "wea-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been swimming every day since summer began.",
+      "he": "אנחנו שוחים כל יום מאז שהקיץ התחיל."
+    },
+    {
+      "id": "wea-l7-012",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-summary",
+      "en": "In short, spring is here, and everything is blooming.",
+      "he": "בקיצור, האביב הגיע והכול פורח."
+    }
+  ]
+}

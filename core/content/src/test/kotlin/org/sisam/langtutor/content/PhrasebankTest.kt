@@ -11,11 +11,11 @@ class PhrasebankTest {
     private val repository = ResourcePhrasebankRepository()
 
     @Test
-    fun `both themes load whole, 12 sentences per level each`() = runTest {
+    fun `all six themes load whole, 12 sentences per level each`() = runTest {
         val sentences = repository.sentences()
-        assertEquals(168, sentences.size)
+        assertEquals(504, sentences.size)
         for (level in 1..7) {
-            assertEquals("level $level", 24, sentences.count { it.level == level })
+            assertEquals("level $level", 72, sentences.count { it.level == level })
         }
         assertEquals(sentences.size, sentences.map { it.id }.distinct().size)
     }
@@ -30,6 +30,15 @@ class PhrasebankTest {
         val align = checkNotNull(bee.align)
         assertEquals(3, align.size)
         assertEquals(listOf(0, 0), align.first().en)
+    }
+
+    @Test
+    fun `batch three themes are present`() = runTest {
+        val home = repository.sentences().first { it.id == "hom-l1-005" }
+        assertEquals("I like my bed.", home.en)
+        // Feminine first person differs, so the variant is present.
+        assertEquals("אני אוהבת את המיטה שלי.", home.heF)
+        checkNotNull(home.align)
     }
 
     @Test

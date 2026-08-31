@@ -1,10 +1,11 @@
 # The phrasebank — authored sentences for Levels 1–7
 
-Status 2026-08-30: **seed batch shipped** for judgment
-(`core/content/src/main/resources/phrasebank/seed-honey-bee.json`, 84
-sentences, one theme through all seven levels). The full bank is planned at
-**~1,000 sentences per level**, per-level sets, across ~36 themes. Nothing is
-wired into the app yet — the loader/deck plumbing is queued separately.
+Status 2026-08-31: **six themes shipped and verified** — honey-bee, market,
+home-family, school-day, weather-seasons, getting-around — 504 sentences,
+each theme 12 per level across all seven levels
+(`core/content/src/main/resources/phrasebank/`), all wired into the drill
+deck via `ResourcePhrasebankRepository` + `phrasebank/index.json`. The full
+bank is planned at **~1,000 sentences per level** across ~36 themes.
 
 ## Why it exists
 
@@ -142,9 +143,12 @@ framing anywhere.
 
 ## Growth plan
 
-- Seed: honey-bee, 1 theme × 7 levels × 12 = 84. **Batch 2: market** (same
-  shape) — 168 total, both wired into the drill deck via
-  `ResourcePhrasebankRepository` + `phrasebank/index.json`.
+- Seed: honey-bee, 1 theme × 7 levels × 12 = 84. Batch 2: market (same
+  shape). **Batch 3: home-family, school-day, weather-seasons,
+  getting-around** — 504 total across six themes, all wired into the drill
+  deck via `ResourcePhrasebankRepository` + `phrasebank/index.json`.
+  Batch 3 authors align cues for levels 1–2 (batch 2 reached level 3);
+  later passes can deepen cue coverage without schema changes.
 - Every batch now also passes an **adversarial verification workflow** on top
   of the lint: per level, two independent review lenses (Hebrew accuracy,
   pedagogy/level fit), then a skeptic per finding who must walk the criticism

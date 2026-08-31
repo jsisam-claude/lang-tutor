@@ -1,0 +1,1466 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "school-day",
+  "title": {
+    "en": "A school day",
+    "he": "יום בבית הספר"
+  },
+  "notes": "Batch 3. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "sch-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A book!",
+      "he": "ספר!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see the teacher.",
+      "he": "אני רואה את המורה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The bag is heavy.",
+      "he": "התיק כבד.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-X",
+      "en": "I like English.",
+      "he": "אני אוהב אנגלית.",
+      "he_f": "אני אוהבת אנגלית.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The pencil is yellow.",
+      "he": "העיפרון צהוב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Three notebooks.",
+      "he": "שלוש מחברות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "My friend is here.",
+      "he": "החבר שלי כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The class is big.",
+      "he": "הכיתה גדולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-have-X",
+      "en": "I have a red pen.",
+      "he": "יש לי עט אדום.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The board is white.",
+      "he": "הלוח לבן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my school.",
+      "he": "אני אוהב את בית הספר שלי.",
+      "he_f": "אני אוהבת את בית הספר שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The teacher is nice.",
+      "he": "המורה נחמדה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are reading a story.",
+      "he": "אנחנו קוראים סיפור.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The teacher is writing on the board.",
+      "he": "המורה כותבת על הלוח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to learn English.",
+      "he": "אני רוצה ללמוד אנגלית.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-i-X",
+      "en": "Can I go out to play?",
+      "he": "אני יכול לצאת לשחק?",
+      "he_f": "אני יכולה לצאת לשחק?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-005",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "what-question",
+      "en": "What is your name?",
+      "he": "מה השם שלך?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-006",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "I am drawing a house.",
+      "he": "אני מצייר בית.",
+      "he_f": "אני מציירת בית.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-007",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "She is happy because she likes math.",
+      "he": "היא שמחה כי היא אוהבת חשבון.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            6,
+            6
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-008",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you help me with this word?",
+      "he": "אתה יכול לעזור לי עם המילה הזאת?",
+      "he_f": "את יכולה לעזור לי עם המילה הזאת?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            5,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-009",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "We want to sing a song.",
+      "he": "אנחנו רוצים לשיר שיר.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-010",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "The children are playing outside.",
+      "he": "הילדים משחקים בחוץ.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-011",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can count to twenty.",
+      "he": "אני יכול לספור עד עשרים.",
+      "he_f": "אני יכולה לספור עד עשרים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l2-012",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "why-question",
+      "en": "Why are you sad?",
+      "he": "למה אתה עצוב?",
+      "he_f": "למה את עצובה?",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sch-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We learned a new song yesterday.",
+      "he": "למדנו שיר חדש אתמול."
+    },
+    {
+      "id": "sch-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "The teacher gave us homework.",
+      "he": "המורה נתנה לנו שיעורי בית."
+    },
+    {
+      "id": "sch-l3-003",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you finish your homework?",
+      "he": "סיימת את שיעורי הבית שלך?"
+    },
+    {
+      "id": "sch-l3-004",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My friend's pencil case is full of crayons.",
+      "he": "הקלמר של החבר שלי מלא בצבעים."
+    },
+    {
+      "id": "sch-l3-005",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We wrote three sentences in English.",
+      "he": "כתבנו שלושה משפטים באנגלית."
+    },
+    {
+      "id": "sch-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-plural",
+      "en": "The students opened their books.",
+      "he": "התלמידים פתחו את הספרים שלהם."
+    },
+    {
+      "id": "sch-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did the lesson start?",
+      "he": "השיעור התחיל?"
+    },
+    {
+      "id": "sch-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I forgot my notebook at home.",
+      "he": "שכחתי את המחברת שלי בבית."
+    },
+    {
+      "id": "sch-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Our teacher read us a funny story.",
+      "he": "המורה שלנו הקריאה לנו סיפור מצחיק."
+    },
+    {
+      "id": "sch-l3-010",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-plural",
+      "en": "The girls drew flowers on the board.",
+      "he": "הבנות ציירו פרחים על הלוח."
+    },
+    {
+      "id": "sch-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "possessive",
+      "en": "Dan's answer was correct.",
+      "he": "התשובה של דן הייתה נכונה."
+    },
+    {
+      "id": "sch-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We counted all the chairs in the class.",
+      "he": "ספרנו את כל הכיסאות בכיתה."
+    },
+    {
+      "id": "sch-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to have a test on Sunday.",
+      "he": "עומד להיות לנו מבחן ביום ראשון."
+    },
+    {
+      "id": "sch-l4-002",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to finish my project today.",
+      "he": "אני עומד לסיים את העבודה שלי היום.",
+      "he_f": "אני עומדת לסיים את העבודה שלי היום."
+    },
+    {
+      "id": "sch-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "Math is harder than English for me.",
+      "he": "חשבון קשה לי יותר מאנגלית."
+    },
+    {
+      "id": "sch-l4-004",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "Maya is the fastest runner in our class.",
+      "he": "מאיה היא הרצה הכי מהירה בכיתה שלנו."
+    },
+    {
+      "id": "sch-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must listen when the teacher speaks.",
+      "he": "חייבים להקשיב כשהמורה מדברת."
+    },
+    {
+      "id": "sch-l4-006",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should pack your bag in the evening.",
+      "he": "כדאי לארוז את התיק בערב."
+    },
+    {
+      "id": "sch-l4-007",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the bell rings, the lesson ends.",
+      "he": "אם הצלצול מצלצל, השיעור נגמר."
+    },
+    {
+      "id": "sch-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "The teacher will check our notebooks tomorrow.",
+      "he": "המורה תבדוק את המחברות שלנו מחר."
+    },
+    {
+      "id": "sch-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to learn a new letter this week.",
+      "he": "אנחנו עומדים ללמוד אות חדשה השבוע."
+    },
+    {
+      "id": "sch-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the easiest question on the page.",
+      "he": "זאת השאלה הכי קלה בדף."
+    },
+    {
+      "id": "sch-l4-011",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you sit next to me?",
+      "he": "תשב לידי?",
+      "he_f": "תשבי לידי?"
+    },
+    {
+      "id": "sch-l4-012",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you listen carefully, you understand more.",
+      "he": "אם מקשיבים טוב, מבינים יותר."
+    },
+    {
+      "id": "sch-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-all",
+      "en": "I have finished all my homework.",
+      "he": "סיימתי את כל שיעורי הבית שלי."
+    },
+    {
+      "id": "sch-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-this-month",
+      "en": "We have learned twenty new words this month.",
+      "he": "למדנו עשרים מילים חדשות החודש."
+    },
+    {
+      "id": "sch-l5-003",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-ever",
+      "en": "Have you ever won a prize?",
+      "he": "זכית פעם בפרס?"
+    },
+    {
+      "id": "sch-l5-004",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "The teacher might give us extra time.",
+      "he": "אולי המורה תיתן לנו עוד זמן."
+    },
+    {
+      "id": "sch-l5-005",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you practice every day, you will read faster.",
+      "he": "אם תתאמן כל יום, תקרא מהר יותר.",
+      "he_f": "אם תתאמני כל יום, תקראי מהר יותר."
+    },
+    {
+      "id": "sch-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never missed a school day.",
+      "he": "מעולם לא החסרתי יום לימודים."
+    },
+    {
+      "id": "sch-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "We may go to the library after the break.",
+      "he": "אולי נלך לספרייה אחרי ההפסקה."
+    },
+    {
+      "id": "sch-l5-008",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect",
+      "en": "My friend has moved to a new school.",
+      "he": "החבר שלי עבר לבית ספר חדש."
+    },
+    {
+      "id": "sch-l5-009",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If the test is easy, I will finish early.",
+      "he": "אם המבחן יהיה קל, אסיים מוקדם."
+    },
+    {
+      "id": "sch-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "She has already read this book twice.",
+      "he": "היא כבר קראה את הספר הזה פעמיים."
+    },
+    {
+      "id": "sch-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might be quiet in the library now.",
+      "he": "אולי שקט עכשיו בספרייה."
+    },
+    {
+      "id": "sch-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you forget your book, you can look at mine.",
+      "he": "אם תשכח את הספר, תוכל להסתכל בשלי.",
+      "he_f": "אם תשכחי את הספר, תוכלי להסתכל בשלי."
+    },
+    {
+      "id": "sch-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "The students were reading while the teacher was writing.",
+      "he": "התלמידים קראו בזמן שהמורה כתבה."
+    },
+    {
+      "id": "sch-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The test was checked by the teacher.",
+      "he": "המבחן נבדק על ידי המורה."
+    },
+    {
+      "id": "sch-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had more time, I would read another chapter.",
+      "he": "אם היה לי יותר זמן, הייתי קורא עוד פרק.",
+      "he_f": "אם היה לי יותר זמן, הייתי קוראת עוד פרק."
+    },
+    {
+      "id": "sch-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already started when Dan arrived.",
+      "he": "כבר התחלנו כשדן הגיע."
+    },
+    {
+      "id": "sch-l6-005",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was listening carefully when you asked the question.",
+      "he": "הקשבתי טוב כששאלת את השאלה."
+    },
+    {
+      "id": "sch-l6-006",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "English is taught here three times a week.",
+      "he": "אנגלית נלמדת כאן שלוש פעמים בשבוע."
+    },
+    {
+      "id": "sch-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If our class were quieter, we would hear the story.",
+      "he": "אם הכיתה שלנו הייתה שקטה יותר, היינו שומעים את הסיפור."
+    },
+    {
+      "id": "sch-l6-008",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never spoken English before this year.",
+      "he": "היא מעולם לא דיברה אנגלית לפני השנה הזאת."
+    },
+    {
+      "id": "sch-l6-009",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The pictures were hung on the classroom wall.",
+      "he": "התמונות נתלו על קיר הכיתה."
+    },
+    {
+      "id": "sch-l6-010",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "He was drawing quietly during the whole lesson.",
+      "he": "הוא צייר בשקט במשך כל השיעור."
+    },
+    {
+      "id": "sch-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were the teacher, I would give less homework.",
+      "he": "אם הייתי המורה, הייתי נותן פחות שיעורי בית.",
+      "he_f": "אם הייתי המורה, הייתי נותנת פחות שיעורי בית."
+    },
+    {
+      "id": "sch-l6-012",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "by-time",
+      "en": "By lunch, we had solved every problem on the page.",
+      "he": "עד ארוחת הצהריים פתרנו את כל התרגילים בדף."
+    },
+    {
+      "id": "sch-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been learning English for two years.",
+      "he": "אני לומד אנגלית כבר שנתיים.",
+      "he_f": "אני לומדת אנגלית כבר שנתיים."
+    },
+    {
+      "id": "sch-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "The teacher said that our stories were wonderful.",
+      "he": "המורה אמרה שהסיפורים שלנו נפלאים."
+    },
+    {
+      "id": "sch-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If I had studied last night, I would have known the answer.",
+      "he": "אם הייתי לומד אתמול בערב, הייתי יודע את התשובה.",
+      "he_f": "אם הייתי לומדת אתמול בערב, הייתי יודעת את התשובה."
+    },
+    {
+      "id": "sch-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been practicing this song for two weeks.",
+      "he": "אנחנו מתאמנים על השיר הזה כבר שבועיים."
+    },
+    {
+      "id": "sch-l7-005",
+      "level": 7,
+      "tense": "future-simple",
+      "frame": "reported-question",
+      "en": "Dan asked whether the test would be hard.",
+      "he": "דן שאל אם המבחן יהיה קשה."
+    },
+    {
+      "id": "sch-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we read the story, and then we answer the questions.",
+      "he": "קודם אנחנו קוראים את הסיפור, ואחר כך עונים על השאלות."
+    },
+    {
+      "id": "sch-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the question was hard, nobody gave up.",
+      "he": "למרות שהשאלה הייתה קשה, אף אחד לא ויתר."
+    },
+    {
+      "id": "sch-l7-008",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "by-the-time",
+      "en": "By the time the bell rang, we had been writing for an hour.",
+      "he": "עד שהצלצול נשמע, כבר כתבנו שעה."
+    },
+    {
+      "id": "sch-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the library had been open, we would have borrowed more books.",
+      "he": "אם הספרייה הייתה פתוחה, היינו שואלים עוד ספרים."
+    },
+    {
+      "id": "sch-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "She told me that she had lost her notebook.",
+      "he": "היא אמרה לי שהיא איבדה את המחברת שלה."
+    },
+    {
+      "id": "sch-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been waiting for the results all week.",
+      "he": "אנחנו מחכים לתוצאות כל השבוע."
+    },
+    {
+      "id": "sch-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In the end, everyone passed, and the teacher was proud.",
+      "he": "בסוף כולם עברו, והמורה הייתה גאה."
+    }
+  ]
+}

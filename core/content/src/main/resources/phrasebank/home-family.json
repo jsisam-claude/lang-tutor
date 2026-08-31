@@ -1,0 +1,1439 @@
+{
+  "format": "tuki-phrasebank-v1",
+  "theme": "home-family",
+  "title": {
+    "en": "Home and family",
+    "he": "בית ומשפחה"
+  },
+  "notes": "Batch 3. Authoring rules in docs/phrasebank.md; align cues authored for levels 1-2 in this batch.",
+  "sentences": [
+    {
+      "id": "hom-l1-001",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "bare-noun",
+      "en": "A house!",
+      "he": "בית!",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-002",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "this-is-my-X",
+      "en": "This is my home.",
+      "he": "זה הבית שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-003",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-see-X",
+      "en": "I see Dad.",
+      "he": "אני רואה את אבא.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-004",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The door is big.",
+      "he": "הדלת גדולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-005",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I like my bed.",
+      "he": "אני אוהב את המיטה שלי.",
+      "he_f": "אני אוהבת את המיטה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-006",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The cat is small.",
+      "he": "החתול קטן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-007",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "counting",
+      "en": "Two brothers.",
+      "he": "שני אחים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-008",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-here",
+      "en": "Mom is here.",
+      "he": "אמא כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-009",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-adj",
+      "en": "The kitchen is warm.",
+      "he": "המטבח חם.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-010",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "i-like-my-X",
+      "en": "I love my family.",
+      "he": "אני אוהב את המשפחה שלי.",
+      "he_f": "אני אוהבת את המשפחה שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-011",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "the-X-is-color",
+      "en": "The garden is green.",
+      "he": "הגינה ירוקה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l1-012",
+      "level": 1,
+      "tense": "present-simple",
+      "frame": "X-is-emotion",
+      "en": "Grandma is happy.",
+      "he": "סבתא שמחה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-001",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "Dad is cooking dinner.",
+      "he": "אבא מבשל ארוחת ערב.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-002",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "My sister is sleeping.",
+      "he": "אחותי ישנה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-003",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "I want to help Mom.",
+      "he": "אני רוצה לעזור לאמא.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-004",
+      "level": 2,
+      "tense": "modal",
+      "frame": "can-you-X",
+      "en": "Can you open the door?",
+      "he": "אתה יכול לפתוח את הדלת?",
+      "he_f": "את יכולה לפתוח את הדלת?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-005",
+      "level": 2,
+      "tense": "modal",
+      "frame": "i-can-X",
+      "en": "I can set the table.",
+      "he": "אני יכול לערוך את השולחן.",
+      "he_f": "אני יכולה לערוך את השולחן.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-006",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "where-is-X",
+      "en": "Where is my pillow?",
+      "he": "איפה הכרית שלי?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-007",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-because-Y",
+      "en": "The baby is crying because he is hungry.",
+      "he": "התינוק בוכה כי הוא רעב.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            6,
+            7
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-008",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "emotion-because",
+      "en": "I am happy because Grandpa is here.",
+      "he": "אני שמח כי סבא כאן.",
+      "he_f": "אני שמחה כי סבא כאן.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-009",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "are-you-Ving",
+      "en": "Are you drinking tea?",
+      "he": "אתה שותה תה?",
+      "he_f": "את שותה תה?",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-010",
+      "level": 2,
+      "tense": "present-simple",
+      "frame": "want-to",
+      "en": "My brother wants to play.",
+      "he": "אחי רוצה לשחק.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-011",
+      "level": 2,
+      "tense": "present-progressive",
+      "frame": "X-is-Ving",
+      "en": "We are eating lunch together.",
+      "he": "אנחנו אוכלים ארוחת צהריים ביחד.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l2-012",
+      "level": 2,
+      "tense": "modal",
+      "frame": "cant-X",
+      "en": "I can't find my socks.",
+      "he": "אני לא מוצא את הגרביים שלי.",
+      "he_f": "אני לא מוצאת את הגרביים שלי.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hom-l3-001",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We visited Grandma yesterday.",
+      "he": "ביקרנו אצל סבתא אתמול."
+    },
+    {
+      "id": "hom-l3-002",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Dad made soup for dinner.",
+      "he": "אבא הכין מרק לארוחת ערב."
+    },
+    {
+      "id": "hom-l3-003",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive",
+      "en": "My sister's room is pink.",
+      "he": "החדר של אחותי ורוד."
+    },
+    {
+      "id": "hom-l3-004",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did you clean your room?",
+      "he": "ניקית את החדר שלך?"
+    },
+    {
+      "id": "hom-l3-005",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "plural-location",
+      "en": "The dishes are on the table.",
+      "he": "הכלים על השולחן."
+    },
+    {
+      "id": "hom-l3-006",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "i-Ved",
+      "en": "I lost my key this morning.",
+      "he": "איבדתי את המפתח שלי הבוקר."
+    },
+    {
+      "id": "hom-l3-007",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "My parents worked in the garden.",
+      "he": "ההורים שלי עבדו בגינה."
+    },
+    {
+      "id": "hom-l3-008",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "did-question",
+      "en": "Did Dad wash the car?",
+      "he": "אבא שטף את המכונית?"
+    },
+    {
+      "id": "hom-l3-009",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "we-Ved",
+      "en": "We ate breakfast in the kitchen.",
+      "he": "אכלנו ארוחת בוקר במטבח."
+    },
+    {
+      "id": "hom-l3-010",
+      "level": 3,
+      "tense": "present-simple",
+      "frame": "possessive-plural",
+      "en": "My brother's shoes are dirty.",
+      "he": "הנעליים של אחי מלוכלכות."
+    },
+    {
+      "id": "hom-l3-011",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved-Y",
+      "en": "Grandpa told us a story.",
+      "he": "סבא סיפר לנו סיפור."
+    },
+    {
+      "id": "hom-l3-012",
+      "level": 3,
+      "tense": "past-simple",
+      "frame": "X-Ved",
+      "en": "The children played in the living room.",
+      "he": "הילדים שיחקו בסלון."
+    },
+    {
+      "id": "hom-l4-001",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to paint the fence.",
+      "he": "אנחנו עומדים לצבוע את הגדר."
+    },
+    {
+      "id": "hom-l4-002",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My room is bigger than the kitchen.",
+      "he": "החדר שלי גדול יותר מהמטבח."
+    },
+    {
+      "id": "hom-l4-003",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "superlative",
+      "en": "This is the tallest tree in our garden.",
+      "he": "זה העץ הגבוה ביותר בגינה שלנו."
+    },
+    {
+      "id": "hom-l4-004",
+      "level": 4,
+      "tense": "modal",
+      "frame": "must",
+      "en": "You must brush your teeth before bed.",
+      "he": "אתה חייב לצחצח שיניים לפני השינה.",
+      "he_f": "את חייבת לצחצח שיניים לפני השינה."
+    },
+    {
+      "id": "hom-l4-005",
+      "level": 4,
+      "tense": "modal",
+      "frame": "should",
+      "en": "You should call Grandma today.",
+      "he": "כדאי שתתקשר לסבתא היום.",
+      "he_f": "כדאי שתתקשרי לסבתא היום."
+    },
+    {
+      "id": "hom-l4-006",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If the baby cries, Mom sings to him.",
+      "he": "אם התינוק בוכה, אמא שרה לו."
+    },
+    {
+      "id": "hom-l4-007",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "We are going to visit our cousins on Friday.",
+      "he": "אנחנו עומדים לבקר את בני הדודים שלנו ביום שישי."
+    },
+    {
+      "id": "hom-l4-008",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will",
+      "en": "Dad will fix the shelf tomorrow.",
+      "he": "אבא יתקן את המדף מחר."
+    },
+    {
+      "id": "hom-l4-009",
+      "level": 4,
+      "tense": "future-going-to",
+      "frame": "going-to",
+      "en": "I am going to tidy my room after lunch.",
+      "he": "אני עומד לסדר את החדר שלי אחרי הצהריים.",
+      "he_f": "אני עומדת לסדר את החדר שלי אחרי הצהריים."
+    },
+    {
+      "id": "hom-l4-010",
+      "level": 4,
+      "tense": "present-simple",
+      "frame": "comparative",
+      "en": "My soup is hotter than yours.",
+      "he": "המרק שלי חם יותר משלך."
+    },
+    {
+      "id": "hom-l4-011",
+      "level": 4,
+      "tense": "conditional-zero",
+      "frame": "if-zero",
+      "en": "If you mix red and white, you get pink.",
+      "he": "אם מערבבים אדום ולבן, מקבלים ורוד."
+    },
+    {
+      "id": "hom-l4-012",
+      "level": 4,
+      "tense": "future-simple",
+      "frame": "will-question",
+      "en": "Will you help me with the dishes?",
+      "he": "תעזור לי עם הכלים?",
+      "he_f": "תעזרי לי עם הכלים?"
+    },
+    {
+      "id": "hom-l5-001",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-already",
+      "en": "I have cleaned my room already.",
+      "he": "כבר ניקיתי את החדר שלי."
+    },
+    {
+      "id": "hom-l5-002",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-for",
+      "en": "Grandma has lived here for many years.",
+      "he": "סבתא גרה כאן הרבה שנים."
+    },
+    {
+      "id": "hom-l5-003",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "We might order pizza tonight.",
+      "he": "אולי נזמין פיצה הערב."
+    },
+    {
+      "id": "hom-l5-004",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you water the plant, it will grow.",
+      "he": "אם תשקה את הצמח, הוא יגדל.",
+      "he_f": "אם תשקי את הצמח, הוא יגדל."
+    },
+    {
+      "id": "hom-l5-005",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-question",
+      "en": "Have you seen my glasses?",
+      "he": "ראית את המשקפיים שלי?"
+    },
+    {
+      "id": "hom-l5-006",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-just",
+      "en": "Dad has just come home from work.",
+      "he": "אבא בדיוק חזר הביתה מהעבודה."
+    },
+    {
+      "id": "hom-l5-007",
+      "level": 5,
+      "tense": "modal",
+      "frame": "may",
+      "en": "My sister may sleep at her friend's house.",
+      "he": "אולי אחותי תישן אצל החברה שלה."
+    },
+    {
+      "id": "hom-l5-008",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If we finish dinner early, we will watch a movie.",
+      "he": "אם נסיים את ארוחת הערב מוקדם, נצפה בסרט."
+    },
+    {
+      "id": "hom-l5-009",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-never",
+      "en": "I have never broken a plate.",
+      "he": "מעולם לא שברתי צלחת."
+    },
+    {
+      "id": "hom-l5-010",
+      "level": 5,
+      "tense": "present-perfect",
+      "frame": "perfect-since",
+      "en": "We have lived in this house since spring.",
+      "he": "אנחנו גרים בבית הזה מאז האביב."
+    },
+    {
+      "id": "hom-l5-011",
+      "level": 5,
+      "tense": "modal",
+      "frame": "might",
+      "en": "It might rain, so close the windows.",
+      "he": "אולי ירד גשם, אז תסגור את החלונות.",
+      "he_f": "אולי ירד גשם, אז תסגרי את החלונות."
+    },
+    {
+      "id": "hom-l5-012",
+      "level": 5,
+      "tense": "conditional-first",
+      "frame": "if-first",
+      "en": "If you help me cook, dinner will be ready soon.",
+      "he": "אם תעזור לי לבשל, ארוחת הערב תהיה מוכנה בקרוב.",
+      "he_f": "אם תעזרי לי לבשל, ארוחת הערב תהיה מוכנה בקרוב."
+    },
+    {
+      "id": "hom-l6-001",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "while",
+      "en": "Mom was reading while the baby was sleeping.",
+      "he": "אמא קראה בזמן שהתינוק ישן."
+    },
+    {
+      "id": "hom-l6-002",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The table was set before the guests arrived.",
+      "he": "השולחן היה ערוך לפני שהאורחים הגיעו."
+    },
+    {
+      "id": "hom-l6-003",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If I had a bigger room, I would share it with my brother.",
+      "he": "אם היה לי חדר גדול יותר, הייתי חולק אותו עם אחי.",
+      "he_f": "אם היה לי חדר גדול יותר, הייתי חולקת אותו עם אחי."
+    },
+    {
+      "id": "hom-l6-004",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "already-when",
+      "en": "We had already eaten when Dad came home.",
+      "he": "כבר אכלנו כשאבא הגיע הביתה."
+    },
+    {
+      "id": "hom-l6-005",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive-by",
+      "en": "The cake was baked by Grandma.",
+      "he": "העוגה נאפתה על ידי סבתא."
+    },
+    {
+      "id": "hom-l6-006",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "when",
+      "en": "I was doing my homework when the lights went out.",
+      "he": "הכנתי שיעורי בית כשהאור כבה."
+    },
+    {
+      "id": "hom-l6-007",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-second",
+      "en": "If we lived near the sea, we would swim every day.",
+      "he": "אם היינו גרים ליד הים, היינו שוחים כל יום."
+    },
+    {
+      "id": "hom-l6-008",
+      "level": 6,
+      "tense": "past-simple",
+      "frame": "passive",
+      "en": "The house was built many years ago.",
+      "he": "הבית נבנה לפני הרבה שנים."
+    },
+    {
+      "id": "hom-l6-009",
+      "level": 6,
+      "tense": "past-progressive",
+      "frame": "X-was-Ving",
+      "en": "My parents were talking quietly in the kitchen.",
+      "he": "ההורים שלי דיברו בשקט במטבח."
+    },
+    {
+      "id": "hom-l6-010",
+      "level": 6,
+      "tense": "past-perfect",
+      "frame": "never-before",
+      "en": "She had never cooked dinner alone before.",
+      "he": "היא מעולם לא בישלה ארוחת ערב לבד לפני כן."
+    },
+    {
+      "id": "hom-l6-011",
+      "level": 6,
+      "tense": "conditional-second",
+      "frame": "if-i-were",
+      "en": "If I were you, I would call Grandpa.",
+      "he": "במקומך הייתי מתקשר לסבא.",
+      "he_f": "במקומך הייתי מתקשרת לסבא."
+    },
+    {
+      "id": "hom-l6-012",
+      "level": 6,
+      "tense": "present-simple",
+      "frame": "passive",
+      "en": "Dinner is served at seven in our house.",
+      "he": "ארוחת הערב מוגשת בשבע אצלנו בבית."
+    },
+    {
+      "id": "hom-l7-001",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "I have been helping Mom in the kitchen all afternoon.",
+      "he": "אני עוזר לאמא במטבח כל אחר הצהריים.",
+      "he_f": "אני עוזרת לאמא במטבח כל אחר הצהריים."
+    },
+    {
+      "id": "hom-l7-002",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "reported-speech",
+      "en": "Dad said that dinner was almost ready.",
+      "he": "אבא אמר שארוחת הערב כמעט מוכנה."
+    },
+    {
+      "id": "hom-l7-003",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If you had told me, I would have saved you some soup.",
+      "he": "אם היית אומר לי, הייתי שומר לך קצת מרק.",
+      "he_f": "אם היית אומרת לי, הייתי שומרת לך קצת מרק."
+    },
+    {
+      "id": "hom-l7-004",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "Grandma has been baking bread all morning.",
+      "he": "סבתא אופה לחם כל הבוקר."
+    },
+    {
+      "id": "hom-l7-005",
+      "level": 7,
+      "tense": "modal",
+      "frame": "reported-question",
+      "en": "My brother asked whether he could invite a friend.",
+      "he": "אחי שאל אם הוא יכול להזמין חבר."
+    },
+    {
+      "id": "hom-l7-006",
+      "level": 7,
+      "tense": "present-simple",
+      "frame": "discourse-sequence",
+      "en": "First we set the table, then we all sit down together.",
+      "he": "קודם אנחנו עורכים את השולחן, ואז כולנו מתיישבים ביחד."
+    },
+    {
+      "id": "hom-l7-007",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-although",
+      "en": "Although the house was small, it always felt warm.",
+      "he": "למרות שהבית היה קטן, תמיד הייתה בו תחושה חמימה."
+    },
+    {
+      "id": "hom-l7-008",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "by-the-time",
+      "en": "By the time Dad arrived, we had been waiting for an hour.",
+      "he": "עד שאבא הגיע, כבר חיכינו שעה."
+    },
+    {
+      "id": "hom-l7-009",
+      "level": 7,
+      "tense": "conditional-third",
+      "frame": "if-third",
+      "en": "If the oven had worked, we would have baked cookies.",
+      "he": "אם התנור היה עובד, היינו אופים עוגיות."
+    },
+    {
+      "id": "hom-l7-010",
+      "level": 7,
+      "tense": "past-perfect",
+      "frame": "reported-speech",
+      "en": "Mom told us that she had found her ring.",
+      "he": "אמא סיפרה לנו שהיא מצאה את הטבעת שלה."
+    },
+    {
+      "id": "hom-l7-011",
+      "level": 7,
+      "tense": "present-perfect-progressive",
+      "frame": "been-Ving",
+      "en": "We have been planning this family dinner for weeks.",
+      "he": "אנחנו מתכננים את ארוחת המשפחה הזאת כבר שבועות."
+    },
+    {
+      "id": "hom-l7-012",
+      "level": 7,
+      "tense": "past-simple",
+      "frame": "discourse-summary",
+      "en": "In short, everyone helped, so the house was ready in time.",
+      "he": "בקיצור, כולם עזרו, ולכן הבית היה מוכן בזמן."
+    }
+  ]
+}
