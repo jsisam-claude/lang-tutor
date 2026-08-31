@@ -1,11 +1,18 @@
 # The phrasebank — authored sentences for Levels 1–7
 
-Status 2026-08-31: **six themes shipped and verified** — honey-bee, market,
-home-family, school-day, weather-seasons, getting-around — 504 sentences,
-each theme 12 per level across all seven levels
-(`core/content/src/main/resources/phrasebank/`), all wired into the drill
-deck via `ResourcePhrasebankRepository` + `phrasebank/index.json`. The full
-bank is planned at **~1,000 sentences per level** across ~36 themes.
+Status 2026-08-31 (end of day): **the theme map is complete and fully
+verified** — 37 themes, 3,108 sentences, 12 per level per theme across all
+seven levels (`core/content/src/main/resources/phrasebank/`), all wired
+into the drill deck via `ResourcePhrasebankRepository` +
+`phrasebank/index.json`. Every theme has been through the standing
+adversarial gate (five runs over the scale-out: 262 raw findings, 121
+upheld and applied; the rest refuted by skeptics or adjudicated by hand
+with the rulings recorded in the applying commits). Authoring was
+delegated to sibling-model agents against the batch brief; wiring,
+arbitration, and fixes stayed with the maintainer session. Align cues:
+levels 1–2 everywhere, level 3 in the batch-3 themes — deepening further
+is data-only. Growth beyond this point is per-level enrichment (more
+sentences per existing theme toward ~1,000/level), not new themes.
 
 ## Why it exists
 
