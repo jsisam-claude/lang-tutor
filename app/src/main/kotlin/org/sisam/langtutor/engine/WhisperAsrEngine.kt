@@ -151,7 +151,14 @@ class WhisperAsrEngine(
                 stream?.let { live ->
                     val pcm = FloatArray(n) { buf[it] / 32768f }
                     runCatching { live.accept(pcm) }
-                        .onFailure { Log.w(TAG, "streaming chunk failed", it); stream = null }
+                        .onFailure {
+                            // Close before dropping: OnnxTensor has no
+                            // finalizer, so an abandoned Stream's state
+                            // handles leak for the life of the process.
+                            Log.w(TAG, "streaming chunk failed", it)
+                            runCatching { live.close() }
+                            stream = null
+                        }
                         .getOrNull()
                         ?.takeIf { it.isNotBlank() }
                         ?.let { _speculative.tryEmit(it) }
@@ -171,10 +178,13 @@ class WhisperAsrEngine(
                     // trustworthy if its snapshot reaches past this point.
                     if (p >= VAD_CONFIG.startThreshold) lastSpeechSample = frameEnd
                     when (val event = gate.accept(p)) {
-                        // With a live stream the preview is already flowing,
-                        // and stopCapture() adopts the stream's own text — so
-                        // a speculative Whisper decode would be pure heat.
-                        is VadGate.Event.SpeechSoftEnd -> if (stream == null) maybeSpeculate()
+                        // Speculate even with a stream running. The stream
+                        // PREVIEWS; stopCapture() still adopts a Whisper
+                        // speculation as the judged transcript, and that
+                        // adoption is worth ~450 ms a turn. Suppressing it
+                        // here would have traded the real latency win for a
+                        // preview that was already free.
+                        is VadGate.Event.SpeechSoftEnd -> maybeSpeculate()
                         is VadGate.Event.SpeechEnd -> {
                             Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
                             signal.complete(Unit)
@@ -249,12 +259,21 @@ class WhisperAsrEngine(
         // as the transcript: this model has not been measured on child or
         // Hebrew-accented speech yet, so Whisper keeps the judging job and the
         // stream keeps the previewing one (docs/latency.md).
-        stream?.let { live ->
+        // Single-owner handoff. accept() runs on the capture thread, and the
+        // Stream is explicitly not thread-safe — so only touch it once that
+        // thread is provably gone. If the join timed out, the capture thread
+        // still owns it and closing here would be a data race; leave it, and
+        // the next startCapture() closes it after the thread has ended.
+        val live = stream
+        if (live != null && captureThread?.isAlive != true) {
+            stream = null
             runCatching { live.finish() }
                 .onSuccess { if (it.isNotBlank()) Log.i(TAG, "stream preview ended: \"$it\"") }
             runCatching { live.close() }
+        } else if (live != null) {
+            Log.w(TAG, "capture thread outlived its join — leaving the stream to the next turn")
         }
-        stream = null
+        captureThread = null
         val total = chunks.sumOf { it.size }
         if (total < SAMPLE_RATE / 4) return@withContext AsrResult("", 0f) // <0.25 s: nothing said
         val pcm = FloatArray(total)

@@ -383,8 +383,10 @@ private fun ChatBubble(entry: ChatEntry, container: AppContainer) {
                     horizontalArrangement = Arrangement.Start,
                     translation = entry.hebrew,
                     // Tiers that cannot write a trustworthy meaning row get
-                    // picture-set icons under the words instead.
-                    showWordIcons = entry.hebrew == null,
+                    // picture-set icons under the words instead — but never
+                    // while one is still on its way, or they would appear for
+                    // a second and be swapped out as the reply lands.
+                    showWordIcons = entry.hebrew == null && !entry.meaningPending,
                 )
             }
         }

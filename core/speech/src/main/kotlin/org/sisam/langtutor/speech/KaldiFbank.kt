@@ -63,6 +63,13 @@ class KaldiFbank(
     }
 
     /**
+     * The FFT plan, built once. JTransforms does all its work in the
+     * constructor (twiddle and bit-reversal tables); rebuilding it per call
+     * cost more than the transform itself, on the audio path.
+     */
+    private val fft = FloatFFT_1D(fftSize.toLong())
+
+    /**
      * Triangular mel bins as (firstBinIndex, weights) — kaldi stores only the
      * non-zero span of each filter, which is also what keeps this loop cheap
      * enough to run inside a 320 ms chunk.
@@ -119,7 +126,6 @@ class KaldiFbank(
         val buf = FloatArray(frameLength)
         val spec = FloatArray(fftSize)
         val power = FloatArray(fftSize / 2 + 1)
-        val fft = FloatFFT_1D(fftSize.toLong())
         for (f in 0 until frames) {
             val start = f * frameShift
             var mean = 0f

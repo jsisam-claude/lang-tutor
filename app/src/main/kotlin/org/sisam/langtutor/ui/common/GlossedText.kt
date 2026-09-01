@@ -201,11 +201,13 @@ fun GlossedText(
  * [AMBIGUOUS] is the same principle at the word level. These words have art
  * (the picture room shows it, where a card names its own subject), but in a
  * SENTENCE they carry a sense the picture would contradict: every "orange"
- * in the bank is the colour, not the fruit, and "square" is the town square
- * more often than the shape. An icon that is right half the time is not
- * half-useful — it is a lie the learner cannot check.
+ * in the bank is the colour, not the fruit, "square" is the town square more
+ * often than the shape, and "one" is nearly always the determiner ("one
+ * more", "the little one") rather than the numeral its card draws. An icon
+ * that is right half the time is not half-useful — it is a lie the learner
+ * cannot check. two/three/four stay: they are reliably numeric.
  */
-private val AMBIGUOUS = setOf("orange", "square")
+private val AMBIGUOUS = setOf("orange", "square", "one")
 
 private fun wordIcon(raw: String): Int? {
     val w = raw.trim { !it.isLetter() }.lowercase()

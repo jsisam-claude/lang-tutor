@@ -7,8 +7,12 @@ import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Modifier
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,11 +54,22 @@ class MainActivity : AppCompatActivity() {
                 // generation globally, not per room.
                 org.sisam.langtutor.ui.common.RefreshRateCapEffect(appContainer)
                 // targetSdk 35+ is edge-to-edge whether we ask or not, and no
-                // screen manages its own insets — so clear the system bars,
-                // cutout and keyboard ONCE here, or every bottom-anchored
+                // screen manages its own insets — so the bars, cutout and
+                // keyboard are cleared ONCE here, or every bottom-anchored
                 // button sits under the navigation ribbon (found the hard way
                 // in the picture room).
-                Box(androidx.compose.ui.Modifier.safeDrawingPadding()) {
+                //
+                // Two boxes on purpose. The outer one paints the app's own
+                // surface edge to edge, so the strip behind the status bar and
+                // the navigation ribbon is never a bare window background. The
+                // inner one insets only the CONTENT, which is what sank under
+                // the ribbon before.
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background),
+                ) {
+                Box(Modifier.safeDrawingPadding()) {
                 var splashDone by rememberSaveable { mutableStateOf(false) }
                 // Fresh installs answer the one question first: what Level?
                 // Checked once per process via snapshot — the flag flips only
@@ -74,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                         delay(SPLASH_MS)
                         splashDone = true
                     }
+                }
                 }
                 }
             }

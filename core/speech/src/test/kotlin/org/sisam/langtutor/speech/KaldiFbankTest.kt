@@ -1,6 +1,5 @@
 package org.sisam.langtutor.speech
 
-import kotlin.math.abs
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -44,18 +43,18 @@ class KaldiFbankTest {
     fun `every mel bin matches the reference implementation`() {
         val actual = KaldiFbank().compute(audio)
         assertEquals(expected.size, actual.size)
-        var worst = 0f
-        var worstAt = ""
+        // Asserted PER BIN, not folded into a running maximum: `d > worst` is
+        // false for NaN, so a max-fold would have let a NaN through silently —
+        // the one failure this test most needs to catch. The delta overload
+        // fails on NaN.
         for (f in expected.indices) {
             assertEquals("bins in frame $f", expected[f].size, actual[f].size)
             for (b in expected[f].indices) {
-                val d = abs(expected[f][b] - actual[f][b])
-                if (d > worst) { worst = d; worstAt = "frame $f bin $b: ${expected[f][b]} vs ${actual[f][b]}" }
+                // Tolerance covers float32 rounding and the golden file's 4
+                // decimals, nothing structural.
+                assertEquals("frame $f bin $b", expected[f][b], actual[f][b], 0.005f)
             }
         }
-        // Tolerance covers float32 FFT ordering differences and the golden
-        // file's 4-decimal rounding, nothing structural.
-        assertTrue("largest deviation $worst at $worstAt", worst < 0.005f)
     }
 
     @Test

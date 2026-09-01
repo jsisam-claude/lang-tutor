@@ -181,6 +181,8 @@ class AppContainer private constructor(context: Context) {
             if (deep) {
                 runCatching { whisperEngine?.release() }
                 runCatching { kokoroEngine?.release() }
+                runCatching { streamingAsrEngine?.close() }
+                streamingAsrEngine = null
             }
             Log.i(MEM_TAG, "trim level=$level -> released coach+hebrew" + if (deep) "+asr+voice" else "")
         }
@@ -545,6 +547,10 @@ class AppContainer private constructor(context: Context) {
             .onFailure { Log.w(MEM_TAG, "preload: tts failed", it) }
         _preloadProgress.value = 2 / 5f
         runCatching { bundledAsrEngine()?.warmUp() }
+        // The streaming preview's first use would otherwise extract ~71 MB
+        // out of the APK and build three ORT sessions on whatever thread
+        // pressed the mic. Warm it here, on IO, with everything else.
+        runCatching { streamingAsr()?.warmUp() }
             .onFailure { Log.w(MEM_TAG, "preload: asr failed", it) }
         _preloadProgress.value = 3 / 5f
         runCatching { pronunciationScorer() }
@@ -641,6 +647,11 @@ class AppContainer private constructor(context: Context) {
     private suspend fun releaseHeavyEngines(reason: String) {
         runCatching { llmEngine?.unload() }
         runCatching { whisperEngine?.release() }
+        // ~73 MB of ORT sessions, and the only engine here whose handle is a
+        // whole object rather than a release() — drop it so the next capture
+        // rebuilds it lazily, exactly like the rest.
+        runCatching { streamingAsrEngine?.close() }
+        streamingAsrEngine = null
         runCatching { kokoroEngine?.release() }
         runCatching { gopEngine?.release() }
         runCatching { hebrewEngine?.release() }

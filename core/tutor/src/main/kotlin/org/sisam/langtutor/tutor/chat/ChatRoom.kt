@@ -35,6 +35,15 @@ data class ChatEntry(
     val speaker: ChatSpeaker,
     val text: String,
     val hebrew: String? = null,
+    /**
+     * True while a meaning row is still COMING for this bubble — the tier can
+     * write Hebrew and the reply is mid-stream, so [hebrew] is null only
+     * because the model has not finished. The UI needs the difference: a
+     * bubble that will never have a meaning row can offer picture icons under
+     * its words instead, but showing them for a second and then replacing
+     * them when the Hebrew lands is worse than never showing them.
+     */
+    val meaningPending: Boolean = false,
 )
 
 /**
@@ -189,7 +198,10 @@ class ChatRoom(
             val list = _messages.value
             if (bubbleAt < 0) {
                 bubbleAt = list.size
-                _messages.value = list + ChatEntry(ChatSpeaker.TUKI, text)
+                // meaningPending while the reply streams and this tier writes
+                // Hebrew: the meaning row is coming, so the UI must not fill
+                // the gap with something it will have to take away.
+                _messages.value = list + ChatEntry(ChatSpeaker.TUKI, text, meaningPending = hebrewWanted)
                 _typing.value = null
             } else {
                 _messages.value = list.toMutableList().also {
@@ -291,7 +303,11 @@ class ChatRoom(
                     val hebrew = if (hebrewWanted) vetHebrew(split(raw).hebrew) else null
                     val list = _messages.value
                     _messages.value = list.toMutableList().also {
-                        it[bubbleAt] = it[bubbleAt].copy(text = shown, hebrew = hebrew)
+                        // The wait is over either way: the row arrived, or
+                        // the model never wrote one and never will.
+                        it[bubbleAt] = it[bubbleAt].copy(
+                            text = shown, hebrew = hebrew, meaningPending = false,
+                        )
                     }
                     // The ledger keeps the RAW reply — translation line and
                     // all — because that is what the engine's conversation

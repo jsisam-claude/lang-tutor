@@ -72,9 +72,18 @@ class ZipformerStreamingAsr(
         models?.let { return it }
         return EngineStatus.step(EngineStatus.Kind.ASR_LOAD, ENCODER) {
             val started = System.nanoTime()
+            // Three sessions, ~73 MB between them: if the second or third
+            // fails to build, the first must not be left resident forever.
             val enc = OnnxTuning.createSession(asset(ENCODER).absolutePath, "$TAG.enc", installStamp)
-            val dec = OnnxTuning.createSession(asset(DECODER).absolutePath, "$TAG.dec", installStamp, threads = 1)
-            val join = OnnxTuning.createSession(asset(JOINER).absolutePath, "$TAG.join", installStamp, threads = 1)
+            var dec: OrtSession? = null
+            val join = try {
+                dec = OnnxTuning.createSession(asset(DECODER).absolutePath, "$TAG.dec", installStamp, threads = 1)
+                OnnxTuning.createSession(asset(JOINER).absolutePath, "$TAG.join", installStamp, threads = 1)
+            } catch (t: Throwable) {
+                runCatching { dec?.close() }
+                runCatching { enc.close() }
+                throw t
+            }
             val tokens = appContext.assets.open("$ASSET_DIR/$TOKENS").bufferedReader().useLines { lines ->
                 // "<piece> <id>" per line, ids ascending from 0.
                 lines.mapNotNull { it.substringBeforeLast(' ').takeIf { p -> p.isNotEmpty() } }.toList()
@@ -93,7 +102,7 @@ class ZipformerStreamingAsr(
                     }
                 }
             val m = Models(
-                encoder = enc, decoder = dec, joiner = join, tokens = tokens,
+                encoder = enc, decoder = checkNotNull(dec), joiner = join, tokens = tokens,
                 stateShapes = shapes,
                 windowFrames = meta["T"]?.toIntOrNull() ?: DEFAULT_WINDOW,
                 strideFrames = meta["decode_chunk_len"]?.toIntOrNull() ?: DEFAULT_STRIDE,
@@ -163,12 +172,16 @@ class ZipformerStreamingAsr(
         fun accept(pcm: FloatArray): String? {
             samples = samples.plus(pcm)
             var grew = false
-            // Frames first: frame f needs samples up to f*shift + length.
-            while ((nextFrame + 1) * fbank.frameShift + (fbank.frameLength - fbank.frameShift) <= samples.size) {
-                val start = nextFrame * fbank.frameShift
-                if (start + fbank.frameLength > samples.size) break
-                frames.add(fbank.compute(samples.copyOfRange(start, start + fbank.frameLength))[0])
-                nextFrame++
+            // One fbank call over the whole newly-available span, not one per
+            // 10 ms frame: compute() batches, and a per-frame call repeated
+            // the window/mel setup for every frame on the audio path.
+            val spanStart = nextFrame * fbank.frameShift
+            val available = samples.size - spanStart
+            val ready = fbank.frameCount(available)
+            if (ready > 0) {
+                val end = spanStart + (ready - 1) * fbank.frameShift + fbank.frameLength
+                frames.addAll(fbank.compute(samples.copyOfRange(spanStart, end)))
+                nextFrame += ready
             }
             while (frames.size - encStart >= m.windowFrames) {
                 if (runChunk(encStart)) grew = true
@@ -200,6 +213,7 @@ class ZipformerStreamingAsr(
             inputs[INPUT_AUDIO] = x
             inputs.putAll(states)
             var emitted = false
+            try {
             m.encoder.run(inputs).use { out ->
                 val encOut = out[0] as OnnxTensor
                 val shape = encOut.info.shape // [1, T', 512]
@@ -209,9 +223,16 @@ class ZipformerStreamingAsr(
                 // Adopt the updated states BEFORE decoding, and pair by name
                 // so the order of the output list is never assumed.
                 val updated = HashMap<String, OnnxTensor>(states.size)
-                for ((outName, value) in out) {
-                    if (outName == JOINER_ENC) continue // encoder_out, handled above
-                    updated[outName.removePrefix(NEW_PREFIX)] = copyOf(value as OnnxTensor)
+                try {
+                    for ((outName, value) in out) {
+                        if (outName == JOINER_ENC) continue // encoder_out, handled above
+                        updated[outName.removePrefix(NEW_PREFIX)] = copyOf(value as OnnxTensor)
+                    }
+                } catch (t: Throwable) {
+                    // A half-built state set is worse than none: free the
+                    // copies made so far rather than dropping their handles.
+                    updated.values.forEach { runCatching { it.close() } }
+                    throw t
                 }
                 states.values.forEach { runCatching { it.close() } }
                 states.putAll(updated)
@@ -222,7 +243,12 @@ class ZipformerStreamingAsr(
                     if (decodeFrame(frame)) emitted = true
                 }
             }
-            runCatching { x.close() }
+            } finally {
+                // ORT copies the input on run(), so x is ours to free — and it
+                // must be freed on the throwing path too, which is exactly
+                // where an unclosed OnnxTensor leaks for the process lifetime.
+                runCatching { x.close() }
+            }
             return emitted
         }
 
@@ -302,6 +328,15 @@ class ZipformerStreamingAsr(
             states.values.forEach { runCatching { it.close() } }
             states.clear()
         }
+    }
+
+    /**
+     * Pay the asset extraction and the three session builds NOW, off the
+     * turn — the same contract every other bundled engine's warmUp has.
+     */
+    fun warmUp() {
+        runCatching { load() }
+            .onFailure { Log.w(TAG, "streaming warmup failed: ${it.message}") }
     }
 
     /** A fresh utterance. The caller owns it and must [Stream.close] it. */
