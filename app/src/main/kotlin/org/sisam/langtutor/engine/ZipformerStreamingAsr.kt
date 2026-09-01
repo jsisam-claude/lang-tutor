@@ -9,6 +9,9 @@ import android.util.Log
 import java.io.File
 import java.nio.FloatBuffer
 import java.nio.LongBuffer
+import java.util.concurrent.locks.ReentrantReadWriteLock
+import kotlin.concurrent.read
+import kotlin.concurrent.write
 import org.sisam.langtutor.speech.KaldiFbank
 
 /**
@@ -63,6 +66,17 @@ class ZipformerStreamingAsr(
 
     @Volatile private var models: Models? = null
 
+    /**
+     * Session lifetime versus in-flight use. [close] must never pull the
+     * three sessions out from under a [Stream] that is inside `encoder.run`
+     * on the capture thread: ORT keeps no in-flight-run count, so that is a
+     * native use-after-free — and a foreground-critical memory trim delivers
+     * close() at exactly that moment. Chunks run under the read side; close()
+     * takes the write side, so it waits for at most one small forward pass,
+     * after which no chunk can start and a surviving stream fails cleanly.
+     */
+    private val sessionLock = ReentrantReadWriteLock()
+
     /** True when the weights are present; absent assets simply disable the feature. */
     val available: Boolean by lazy {
         runCatching { appContext.assets.list(ASSET_DIR)?.contains(ENCODER) == true }.getOrDefault(false)
@@ -72,50 +86,56 @@ class ZipformerStreamingAsr(
         models?.let { return it }
         return EngineStatus.step(EngineStatus.Kind.ASR_LOAD, ENCODER) {
             val started = System.nanoTime()
-            // Three sessions, ~73 MB between them: if the second or third
-            // fails to build, the first must not be left resident forever.
+            // Three sessions, ~73 MB between them, and ORT reclaims none of
+            // them on its own. So from the first build to `models = m`, ANY
+            // throw — a later session build, the tokens read, a metadata
+            // call, the shape check — hands every session built so far back.
             val enc = OnnxTuning.createSession(asset(ENCODER).absolutePath, "$TAG.enc", installStamp)
             var dec: OrtSession? = null
-            val join = try {
-                dec = OnnxTuning.createSession(asset(DECODER).absolutePath, "$TAG.dec", installStamp, threads = 1)
-                OnnxTuning.createSession(asset(JOINER).absolutePath, "$TAG.join", installStamp, threads = 1)
+            var join: OrtSession? = null
+            try {
+                val d = OnnxTuning.createSession(asset(DECODER).absolutePath, "$TAG.dec", installStamp, threads = 1)
+                dec = d
+                val j = OnnxTuning.createSession(asset(JOINER).absolutePath, "$TAG.join", installStamp, threads = 1)
+                join = j
+                val tokens = appContext.assets.open("$ASSET_DIR/$TOKENS").bufferedReader().useLines { lines ->
+                    // "<piece> <id>" per line, ids ascending from 0.
+                    lines.mapNotNull { it.substringBeforeLast(' ').takeIf { p -> p.isNotEmpty() } }.toList()
+                }
+                val meta = enc.metadata.customMetadata
+                val shapes = enc.inputInfo.entries
+                    .filter { it.key != INPUT_AUDIO }
+                    .associate { (name, info) ->
+                        val dims = (info.info as TensorInfo).shape
+                        // The only dynamic dim in this export is the batch; a
+                        // negative anywhere else would mean the graph changed
+                        // shape in a way this loop cannot guess, so it is loud.
+                        name to LongArray(dims.size) { i ->
+                            dims[i].also { dim -> require(dim > 0 || i == batchDim(dims)) { "$name dim $i is dynamic" } }
+                                .let { dim -> if (dim > 0) dim else 1L }
+                        }
+                    }
+                val m = Models(
+                    encoder = enc, decoder = d, joiner = j, tokens = tokens,
+                    stateShapes = shapes,
+                    windowFrames = meta["T"]?.toIntOrNull() ?: DEFAULT_WINDOW,
+                    strideFrames = meta["decode_chunk_len"]?.toIntOrNull() ?: DEFAULT_STRIDE,
+                    contextSize = d.metadata.customMetadata["context_size"]?.toIntOrNull() ?: 2,
+                )
+                Log.i(
+                    TAG,
+                    "loaded in ${(System.nanoTime() - started) / 1_000_000}ms: ${tokens.size} tokens, " +
+                        "${shapes.size} states, window=${m.windowFrames} stride=${m.strideFrames} " +
+                        "(${m.strideFrames * fbank.frameShift * 1000 / SAMPLE_RATE}ms/chunk)",
+                )
+                models = m
+                m
             } catch (t: Throwable) {
+                runCatching { join?.close() }
                 runCatching { dec?.close() }
                 runCatching { enc.close() }
                 throw t
             }
-            val tokens = appContext.assets.open("$ASSET_DIR/$TOKENS").bufferedReader().useLines { lines ->
-                // "<piece> <id>" per line, ids ascending from 0.
-                lines.mapNotNull { it.substringBeforeLast(' ').takeIf { p -> p.isNotEmpty() } }.toList()
-            }
-            val meta = enc.metadata.customMetadata
-            val shapes = enc.inputInfo.entries
-                .filter { it.key != INPUT_AUDIO }
-                .associate { (name, info) ->
-                    val dims = (info.info as TensorInfo).shape
-                    // The only dynamic dim in this export is the batch; a
-                    // negative anywhere else would mean the graph changed
-                    // shape in a way this loop cannot guess, so it is loud.
-                    name to LongArray(dims.size) { i ->
-                        dims[i].also { d -> require(d > 0 || i == batchDim(dims)) { "$name dim $i is dynamic" } }
-                            .let { d -> if (d > 0) d else 1L }
-                    }
-                }
-            val m = Models(
-                encoder = enc, decoder = checkNotNull(dec), joiner = join, tokens = tokens,
-                stateShapes = shapes,
-                windowFrames = meta["T"]?.toIntOrNull() ?: DEFAULT_WINDOW,
-                strideFrames = meta["decode_chunk_len"]?.toIntOrNull() ?: DEFAULT_STRIDE,
-                contextSize = dec.metadata.customMetadata["context_size"]?.toIntOrNull() ?: 2,
-            )
-            Log.i(
-                TAG,
-                "loaded in ${(System.nanoTime() - started) / 1_000_000}ms: ${tokens.size} tokens, " +
-                    "${shapes.size} states, window=${m.windowFrames} stride=${m.strideFrames} " +
-                    "(${m.strideFrames * fbank.frameShift * 1000 / SAMPLE_RATE}ms/chunk)",
-            )
-            models = m
-            m
         }
     }
 
@@ -148,6 +168,10 @@ class ZipformerStreamingAsr(
         private var encStart = 0
         private val hypothesis = ArrayList<Int>()
         private var decoderOut: FloatArray? = null
+        // Its own front end, not the engine's: the FFT plan inside is per
+        // instance, so two streams never share mutable state whatever their
+        // threads are doing.
+        private val fbank = KaldiFbank()
 
         init { resetStates() }
 
@@ -200,7 +224,10 @@ class ZipformerStreamingAsr(
             return text()
         }
 
-        private fun runChunk(from: Int, explicit: List<FloatArray>? = null): Boolean {
+        private fun runChunk(from: Int, explicit: List<FloatArray>? = null): Boolean = sessionLock.read {
+            // Closed under us (a trim): fail here, before touching a session;
+            // the capture loop turns the throw into "preview off".
+            check(models === m) { "streaming engine closed under a live stream" }
             val window = explicit ?: frames.subList(from, from + m.windowFrames)
             val flat = FloatArray(m.windowFrames * FEATURE_DIM)
             for (f in 0 until m.windowFrames) {
@@ -249,7 +276,7 @@ class ZipformerStreamingAsr(
                 // where an unclosed OnnxTensor leaks for the process lifetime.
                 runCatching { x.close() }
             }
-            return emitted
+            emitted
         }
 
         /** ORT owns the result tensors; copy before the results are closed. */
@@ -342,13 +369,15 @@ class ZipformerStreamingAsr(
     /** A fresh utterance. The caller owns it and must [Stream.close] it. */
     fun newStream(): Stream = Stream(load())
 
-    override fun close() = synchronized(this) {
-        models?.let {
-            runCatching { it.encoder.close() }
-            runCatching { it.decoder.close() }
-            runCatching { it.joiner.close() }
+    override fun close() = sessionLock.write {
+        synchronized(this) {
+            models?.let {
+                runCatching { it.encoder.close() }
+                runCatching { it.decoder.close() }
+                runCatching { it.joiner.close() }
+            }
+            models = null
         }
-        models = null
     }
 
     private companion object {

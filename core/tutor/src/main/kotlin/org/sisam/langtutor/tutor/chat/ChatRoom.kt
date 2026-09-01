@@ -321,6 +321,14 @@ class ChatRoom(
                 sentences.close()
                 speaking.cancel()
                 runCatching { tts.stop() }
+                // A cancelled turn (barge-in, leaving the room) keeps its
+                // partial bubble, which is right — but that bubble must not
+                // keep WAITING for a meaning row that can no longer arrive.
+                if (bubbleAt >= 0) {
+                    _messages.value = _messages.value.toMutableList().also {
+                        it[bubbleAt] = it[bubbleAt].copy(meaningPending = false)
+                    }
+                }
                 throw e
             }
         }

@@ -6,6 +6,8 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.util.Log
 import java.io.File
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -61,9 +63,36 @@ class WhisperAsrEngine(
     private var interpreter: Interpreter? = null
 
     private var recorder: AudioRecord? = null
-    private var captureThread: Thread? = null
+    @Volatile private var captureThread: Thread? = null
     private val chunks = ArrayList<ShortArray>()
-    @Volatile private var capturing = false
+    /** The turn in progress (or the last one). The placeholder has already
+     *  "finished", so a stopCapture() before any start is a no-op. */
+    @Volatile private var turn = Turn().apply { handoff.set(THREAD_DONE) }
+
+    /**
+     * Ownership record for one capture turn: the loop flag its thread runs
+     * on, the preview stream, and who closes that stream.
+     *
+     * A NEW object per turn is the point. stopCapture() lowers THIS turn's
+     * flag; a later turn raising its own can never revive a capture thread
+     * that outlived its join, because that thread only ever reads the flag
+     * it was handed. And the stream has exactly one closer, settled by a
+     * compare-and-set on [handoff]: the thread claims THREAD_DONE on its way
+     * out (then stopCapture closes), or stopCapture claims ABANDONED when the
+     * join times out (then the thread closes as it leaves). One side wins,
+     * there is no window in between, and nothing outside the turn ever
+     * touches the stream — which is what makes accept() on the capture
+     * thread safe without a lock.
+     */
+    private class Turn {
+        val running = AtomicBoolean(true)
+        val handoff = AtomicInteger(UNDECIDED)
+        @Volatile var stream: ZipformerStreamingAsr.Stream? = null
+    }
+
+    /** True while a capture thread may be running — a trim must not pull
+     *  engines out from under it. */
+    val isCapturing: Boolean get() = captureThread?.isAlive == true
     @Volatile private var endpoint: CompletableDeferred<Unit>? = null
 
     // --- tentative endpointing (docs/latency.md) ---------------------------
@@ -96,8 +125,6 @@ class WhisperAsrEngine(
      *  the fact that decides whether a speculation covered the whole turn. */
     @Volatile private var lastSpeechSample = 0
 
-    /** Live-preview decoder for THIS capture; null unless the experiment is on. */
-    @Volatile private var stream: ZipformerStreamingAsr.Stream? = null
 
     /** How many speculative threads may exist at once: the latest one plus at
      *  most one stale run still draining on the transcribe lock. */
@@ -111,12 +138,21 @@ class WhisperAsrEngine(
         chunks.clear()
         spec = null
         lastSpeechSample = 0
-        stream?.let { runCatching { it.close() } }
-        stream = streaming?.let { engine ->
-            runCatching { engine.newStream() }
-                .onFailure { Log.w(TAG, "streaming preview unavailable: ${it.message}") }
-                .getOrNull()
+        // A previous turn's thread still running means it still owns its
+        // stream (it closes it on exit — see [Turn]); this turn simply runs
+        // without a preview rather than share the engine with it.
+        val current = Turn()
+        current.stream = if (captureThread?.isAlive == true) {
+            Log.w(TAG, "previous capture thread still alive — preview off this turn")
+            null
+        } else {
+            streaming?.let { engine ->
+                runCatching { engine.newStream() }
+                    .onFailure { Log.w(TAG, "streaming preview unavailable: ${it.message}") }
+                    .getOrNull()
+            }
         }
+        turn = current
         // Local val: a class property can't be smart-cast inside the capture
         // lambda, and the inner loop must call the detector without a null
         // check on every frame. ONE nullable carries the pair because the gate
@@ -131,71 +167,79 @@ class WhisperAsrEngine(
         val readSize = maxOf(minBuf, SileroVad.FRAME * 4) / SileroVad.FRAME * SileroVad.FRAME
         val rec = AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL, ENCODING, readSize * 4)
         recorder = rec
-        capturing = true
         rec.startRecording()
         captureThread = Thread {
             val buf = ShortArray(readSize)
             val frame = FloatArray(SileroVad.FRAME)
             var total = 0
-            while (capturing && total < MAX_SAMPLES) {
-                val n = rec.read(buf, 0, buf.size)
-                if (n <= 0) continue
-                chunks.add(buf.copyOf(n))
-                total += n
-                // The streaming preview eats the same PCM as it lands. It runs
-                // HERE, on the capture thread, only because it is bounded work
-                // (one 320 ms chunk costs a single small forward pass) and the
-                // alternative — a queue and another thread — buys nothing while
-                // Whisper still owns the judged transcript. If a device shows
-                // read overruns, this is the first thing to move off.
-                stream?.let { live ->
-                    val pcm = FloatArray(n) { buf[it] / 32768f }
-                    runCatching { live.accept(pcm) }
-                        .onFailure {
-                            // Close before dropping: OnnxTensor has no
-                            // finalizer, so an abandoned Stream's state
-                            // handles leak for the life of the process.
-                            Log.w(TAG, "streaming chunk failed", it)
-                            runCatching { live.close() }
-                            stream = null
-                        }
-                        .getOrNull()
-                        ?.takeIf { it.isNotBlank() }
-                        ?.let { _speculative.tryEmit(it) }
-                }
-                if (vadPair == null || signal.isCompleted) continue
-                val (detector, gate) = vadPair
-                var off = 0
-                while (off + SileroVad.FRAME <= n) {
-                    val frameEnd = total - n + off + SileroVad.FRAME
-                    for (i in 0 until SileroVad.FRAME) frame[i] = buf[off + i] / 32768f
-                    off += SileroVad.FRAME
-                    val p = runCatching { detector.probability(frame) }
-                        .onFailure { Log.w(TAG, "vad frame failed", it) }
-                        .getOrNull() ?: continue
-                    // Same bar the gate opens on: this is the last moment we
-                    // KNOW the child was talking, and a speculation is only
-                    // trustworthy if its snapshot reaches past this point.
-                    if (p >= VAD_CONFIG.startThreshold) lastSpeechSample = frameEnd
-                    when (val event = gate.accept(p)) {
-                        // Speculate even with a stream running. The stream
-                        // PREVIEWS; stopCapture() still adopts a Whisper
-                        // speculation as the judged transcript, and that
-                        // adoption is worth ~450 ms a turn. Suppressing it
-                        // here would have traded the real latency win for a
-                        // preview that was already free.
-                        is VadGate.Event.SpeechSoftEnd -> maybeSpeculate()
-                        is VadGate.Event.SpeechEnd -> {
-                            Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
-                            signal.complete(Unit)
-                        }
-                        else -> Unit
+            try {
+                while (current.running.get() && total < MAX_SAMPLES) {
+                    val n = rec.read(buf, 0, buf.size)
+                    if (n <= 0) continue
+                    chunks.add(buf.copyOf(n))
+                    total += n
+                    // The streaming preview eats the same PCM as it lands. It runs
+                    // HERE, on the capture thread, only because it is bounded work
+                    // (one 320 ms chunk costs a single small forward pass) and the
+                    // alternative — a queue and another thread — buys nothing while
+                    // Whisper still owns the judged transcript. If a device shows
+                    // read overruns, this is the first thing to move off.
+                    current.stream?.let { live ->
+                        val pcm = FloatArray(n) { buf[it] / 32768f }
+                        runCatching { live.accept(pcm) }
+                            .onFailure {
+                                // Close before dropping: OnnxTensor has no
+                                // finalizer, so an abandoned Stream's state
+                                // handles leak for the life of the process.
+                                Log.w(TAG, "streaming chunk failed", it)
+                                runCatching { live.close() }
+                                current.stream = null
+                            }
+                            .getOrNull()
+                            ?.takeIf { it.isNotBlank() }
+                            ?.let { _speculative.tryEmit(it) }
                     }
-                    if (signal.isCompleted) break
+                    if (vadPair == null || signal.isCompleted) continue
+                    val (detector, gate) = vadPair
+                    var off = 0
+                    while (off + SileroVad.FRAME <= n) {
+                        val frameEnd = total - n + off + SileroVad.FRAME
+                        for (i in 0 until SileroVad.FRAME) frame[i] = buf[off + i] / 32768f
+                        off += SileroVad.FRAME
+                        val p = runCatching { detector.probability(frame) }
+                            .onFailure { Log.w(TAG, "vad frame failed", it) }
+                            .getOrNull() ?: continue
+                        // Same bar the gate opens on: this is the last moment we
+                        // KNOW the child was talking, and a speculation is only
+                        // trustworthy if its snapshot reaches past this point.
+                        if (p >= VAD_CONFIG.startThreshold) lastSpeechSample = frameEnd
+                        when (val event = gate.accept(p)) {
+                            // Speculate even with a stream running. The stream
+                            // PREVIEWS; stopCapture() still adopts a Whisper
+                            // speculation as the judged transcript, and that
+                            // adoption is worth ~450 ms a turn. Suppressing it
+                            // here would have traded the real latency win for a
+                            // preview that was already free.
+                            is VadGate.Event.SpeechSoftEnd -> maybeSpeculate()
+                            is VadGate.Event.SpeechEnd -> {
+                                Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
+                                signal.complete(Unit)
+                            }
+                            else -> Unit
+                        }
+                        if (signal.isCompleted) break
+                    }
+                }
+                // Capture ended without the gate firing (button release / max length).
+                signal.complete(Unit)
+            } finally {
+                // Lost the handoff: stopCapture stopped waiting for us, and
+                // the stream is ours to free on the way out.
+                if (!current.handoff.compareAndSet(UNDECIDED, THREAD_DONE)) {
+                    current.stream?.let { runCatching { it.close() } }
+                    current.stream = null
                 }
             }
-            // Capture ended without the gate firing (button release / max length).
-            signal.complete(Unit)
         }.also { it.start() }
     }
 
@@ -229,7 +273,11 @@ class WhisperAsrEngine(
                     // Surface the guess only while it is CURRENT (not replaced,
                     // capture not stopped) and still covers every speech sample
                     // seen — a guess the child talked past is not a guess.
-                    if (spec === run && lastSpeechSample <= run.samples && !text.isBlank()) {
+                    // ...and only while no stream is previewing: two decoders
+                    // writing one preview flicker between two transcripts of
+                    // the same audio. The speculation itself still runs — its
+                    // adoption at stopCapture is the latency win.
+                    if (spec === run && turn.stream == null && lastSpeechSample <= run.samples && !text.isBlank()) {
                         _speculative.tryEmit(text.trim())
                     }
                 }.onFailure { Log.w(TAG, "speculative transcription failed", it) }
@@ -250,7 +298,8 @@ class WhisperAsrEngine(
     }
 
     override suspend fun stopCapture(): AsrResult = withContext(Dispatchers.Default) {
-        capturing = false
+        val t = turn
+        t.running.set(false)
         captureThread?.join(2000)
         stopRecorderQuietly()
         endpoint?.complete(Unit)
@@ -259,21 +308,23 @@ class WhisperAsrEngine(
         // as the transcript: this model has not been measured on child or
         // Hebrew-accented speech yet, so Whisper keeps the judging job and the
         // stream keeps the previewing one (docs/latency.md).
-        // Single-owner handoff. accept() runs on the capture thread, and the
-        // Stream is explicitly not thread-safe — so only touch it once that
-        // thread is provably gone. If the join timed out, the capture thread
-        // still owns it and closing here would be a data race; leave it, and
-        // the next startCapture() closes it after the thread has ended.
-        val live = stream
-        if (live != null && captureThread?.isAlive != true) {
-            stream = null
-            runCatching { live.finish() }
-                .onSuccess { if (it.isNotBlank()) Log.i(TAG, "stream preview ended: \"$it\"") }
-            runCatching { live.close() }
-        } else if (live != null) {
-            Log.w(TAG, "capture thread outlived its join — leaving the stream to the next turn")
+        //
+        // Who closes it is the [Turn.handoff] race: a thread that is gone has
+        // already claimed THREAD_DONE, so the stream is ours; one still alive
+        // is told ABANDONED and closes it itself on exit. Exactly one side
+        // touches it, never both, and the thread handle stays so the next
+        // turn can still see whether that thread is alive.
+        val ours = captureThread?.isAlive != true || !t.handoff.compareAndSet(UNDECIDED, ABANDONED)
+        if (ours) {
+            t.stream?.let { live ->
+                t.stream = null
+                runCatching { live.finish() }
+                    .onSuccess { if (it.isNotBlank()) Log.i(TAG, "stream preview ended: \"$it\"") }
+                runCatching { live.close() }
+            }
+        } else {
+            Log.w(TAG, "capture thread outlived its join — it closes its own preview stream")
         }
-        captureThread = null
         val total = chunks.sumOf { it.size }
         if (total < SAMPLE_RATE / 4) return@withContext AsrResult("", 0f) // <0.25 s: nothing said
         val pcm = FloatArray(total)
@@ -526,6 +577,10 @@ class WhisperAsrEngine(
 
     private companion object {
         const val TAG = "TukiAsr"
+        // Turn.handoff states — see [Turn].
+        const val UNDECIDED = 0
+        const val THREAD_DONE = 1
+        const val ABANDONED = 2
         const val SAMPLE_RATE = WhisperFrontend.SAMPLE_RATE
         const val CHANNEL = AudioFormat.CHANNEL_IN_MONO
         const val ENCODING = AudioFormat.ENCODING_PCM_16BIT

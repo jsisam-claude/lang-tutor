@@ -181,8 +181,18 @@ class AppContainer private constructor(context: Context) {
             if (deep) {
                 runCatching { whisperEngine?.release() }
                 runCatching { kokoroEngine?.release() }
-                runCatching { streamingAsrEngine?.close() }
-                streamingAsrEngine = null
+                // RUNNING_CRITICAL arrives in the FOREGROUND, possibly with
+                // the mic hot and the capture thread inside this engine's
+                // encoder. The engine survives that now (close() locks
+                // against a running chunk), but the policy is the LLM's
+                // above: a live turn outranks a maybe-save; the background
+                // release gets it minutes later. And close(), not null —
+                // the memoised ASR engine holds this exact instance, and it
+                // reloads lazily like the rest, so the handle must stay
+                // where every later trim can still reach it.
+                if (whisperEngine?.isCapturing != true) {
+                    runCatching { streamingAsrEngine?.close() }
+                }
             }
             Log.i(MEM_TAG, "trim level=$level -> released coach+hebrew" + if (deep) "+asr+voice" else "")
         }
@@ -547,11 +557,12 @@ class AppContainer private constructor(context: Context) {
             .onFailure { Log.w(MEM_TAG, "preload: tts failed", it) }
         _preloadProgress.value = 2 / 5f
         runCatching { bundledAsrEngine()?.warmUp() }
+            .onFailure { Log.w(MEM_TAG, "preload: asr failed", it) }
         // The streaming preview's first use would otherwise extract ~71 MB
         // out of the APK and build three ORT sessions on whatever thread
         // pressed the mic. Warm it here, on IO, with everything else.
         runCatching { streamingAsr()?.warmUp() }
-            .onFailure { Log.w(MEM_TAG, "preload: asr failed", it) }
+            .onFailure { Log.w(MEM_TAG, "preload: streaming asr failed", it) }
         _preloadProgress.value = 3 / 5f
         runCatching { pronunciationScorer() }
             .onFailure { Log.w(MEM_TAG, "preload: scorer failed", it) }
@@ -647,11 +658,13 @@ class AppContainer private constructor(context: Context) {
     private suspend fun releaseHeavyEngines(reason: String) {
         runCatching { llmEngine?.unload() }
         runCatching { whisperEngine?.release() }
-        // ~73 MB of ORT sessions, and the only engine here whose handle is a
-        // whole object rather than a release() — drop it so the next capture
-        // rebuilds it lazily, exactly like the rest.
+        // ~73 MB of ORT sessions. close() IS this engine's release(): the
+        // sessions go, the object stays, and the next newStream() rebuilds
+        // them lazily. It must stay, because the memoised ASR engine holds
+        // this exact instance — replacing the field would leave that one
+        // reloading itself out of every future trim's reach, while preload
+        // warmed a twin nobody uses.
         runCatching { streamingAsrEngine?.close() }
-        streamingAsrEngine = null
         runCatching { kokoroEngine?.release() }
         runCatching { gopEngine?.release() }
         runCatching { hebrewEngine?.release() }
