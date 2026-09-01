@@ -1,9 +1,11 @@
 package org.sisam.langtutor.ui.common
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -76,6 +79,14 @@ fun GlossedText(
      * cues authored for this line) leaves the meaning row unlit.
      */
     translationCues: List<AlignCue>? = null,
+    /**
+     * Meaning support for lines that CANNOT carry a trustworthy translation:
+     * words in the curated picture set (objects, verbs, emotions) show their
+     * small icon under the word column — a picture is a translation that
+     * cannot lie. Callers turn this on exactly where the meaning row is
+     * absent, so the two mechanisms never compete for the same eye.
+     */
+    showWordIcons: Boolean = false,
 ) {
     Column(
         modifier = modifier,
@@ -124,6 +135,17 @@ fun GlossedText(
                             )
                         }
                     }
+                    if (showWordIcons) {
+                        wordIcon(word.english)?.let { id ->
+                            Image(
+                                painter = painterResource(id),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(top = 2.dp)
+                                    .size(22.dp),
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -168,4 +190,18 @@ fun GlossedText(
             }
         }
     }
+}
+
+/**
+ * The curated-art lookup for [GlossedText]'s icon row: punctuation stripped,
+ * case folded, one conservative plural strip ("apples" finds apple). No
+ * stemming beyond that — a wrong icon under a word teaches a wrong meaning,
+ * which is worse than none.
+ */
+private fun wordIcon(raw: String): Int? {
+    val w = raw.trim { !it.isLetter() }.lowercase()
+    if (w.isEmpty()) return null
+    return org.sisam.langtutor.ui.picture.PictureArt.drawableFor(w)
+        ?: w.removeSuffix("s").takeIf { it != w }
+            ?.let { org.sisam.langtutor.ui.picture.PictureArt.drawableFor(it) }
 }

@@ -541,6 +541,9 @@ private fun TutorLine(container: AppContainer, text: String) {
             style = MaterialTheme.typography.bodyLarge,
             glossStyle = MaterialTheme.typography.bodyMedium,
             horizontalArrangement = Arrangement.Start,
+            // No meaning row can exist here, so picture-set words carry
+            // their icon instead (the user's rule: can't translate → show).
+            showWordIcons = true,
         )
     }
 }

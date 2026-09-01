@@ -460,6 +460,9 @@ private fun DrillPane(container: AppContainer, level: DrillLevel, onPickAnother:
                             // Meaning-row karaoke: only a phrasebank line has
                             // cues, and only its own Hebrew matches them.
                             translationCues = s.item.align.takeIf { meaning == s.item.hebrew },
+                            // A generated line has no authored meaning; the
+                            // picture set stands in under matching words.
+                            showWordIcons = meaning == null,
                         )
                     }
                 }

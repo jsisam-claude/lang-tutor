@@ -382,6 +382,9 @@ private fun ChatBubble(entry: ChatEntry, container: AppContainer) {
                     glossStyle = MaterialTheme.typography.bodyMedium,
                     horizontalArrangement = Arrangement.Start,
                     translation = entry.hebrew,
+                    // Tiers that cannot write a trustworthy meaning row get
+                    // picture-set icons under the words instead.
+                    showWordIcons = entry.hebrew == null,
                 )
             }
         }
