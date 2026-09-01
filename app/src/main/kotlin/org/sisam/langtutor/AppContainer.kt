@@ -33,6 +33,7 @@ import org.sisam.langtutor.engine.SileroVad
 import org.sisam.langtutor.engine.TtsRouter
 import org.sisam.langtutor.engine.Wav2Vec2GopEngine
 import org.sisam.langtutor.engine.WhisperAsrEngine
+import org.sisam.langtutor.engine.ZipformerStreamingAsr
 import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmModelSpec
@@ -388,12 +389,31 @@ class AppContainer private constructor(context: Context) {
     @Volatile private var whisperEngine: WhisperAsrEngine? = null
     @Volatile private var whisperPath: String? = null
 
+    @Volatile private var streamingAsrEngine: ZipformerStreamingAsr? = null
+
+    /**
+     * The streaming preview decoder, or null when the experiment is off or the
+     * weights were never fetched (scripts/fetch-asr-stream-assets.sh). Read at
+     * ASR-engine construction, which is once per model file — flipping the
+     * switch takes effect on the next app start, like the other engine
+     * experiments.
+     */
+    private fun streamingAsr(): ZipformerStreamingAsr? {
+        if (!profile.snapshot().parentSettings.tryStreamingAsr) return null
+        streamingAsrEngine?.let { return it }
+        return synchronized(this) {
+            streamingAsrEngine ?: ZipformerStreamingAsr(appContext, installStamp())
+                .takeIf { it.available }
+                ?.also { streamingAsrEngine = it }
+        }
+    }
+
     private fun bundledAsrEngine(): WhisperAsrEngine? {
         val file = bundledAsrFile ?: return null
         whisperEngine?.takeIf { whisperPath == file.absolutePath }?.let { return it }
         synchronized(this) {
             whisperEngine?.takeIf { whisperPath == file.absolutePath }?.let { return it }
-            return WhisperAsrEngine(file, vad = sileroVad()).also {
+            return WhisperAsrEngine(file, vad = sileroVad(), streaming = streamingAsr()).also {
                 whisperEngine = it
                 whisperPath = file.absolutePath
             }

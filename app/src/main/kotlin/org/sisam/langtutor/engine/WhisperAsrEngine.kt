@@ -47,6 +47,15 @@ class WhisperAsrEngine(
     private val modelFile: File,
     /** When present, the engine can end the turn by itself (hands-free). */
     private val vad: SileroVad? = null,
+    /**
+     * When present (the experiment is on and the weights are installed), the
+     * live preview comes from the streaming Zipformer instead of repeated
+     * speculative Whisper decodes: it consumes the same PCM as it arrives and
+     * costs one small forward pass per 320 ms, where a speculation costs a
+     * whole window. Whisper still produces the JUDGED transcript — this only
+     * changes who feeds [speculative].
+     */
+    private val streaming: ZipformerStreamingAsr? = null,
 ) : AsrEngine {
 
     private var interpreter: Interpreter? = null
@@ -87,6 +96,9 @@ class WhisperAsrEngine(
      *  the fact that decides whether a speculation covered the whole turn. */
     @Volatile private var lastSpeechSample = 0
 
+    /** Live-preview decoder for THIS capture; null unless the experiment is on. */
+    @Volatile private var stream: ZipformerStreamingAsr.Stream? = null
+
     /** How many speculative threads may exist at once: the latest one plus at
      *  most one stale run still draining on the transcribe lock. */
     private val specsInFlight = java.util.concurrent.atomic.AtomicInteger(0)
@@ -99,6 +111,12 @@ class WhisperAsrEngine(
         chunks.clear()
         spec = null
         lastSpeechSample = 0
+        stream?.let { runCatching { it.close() } }
+        stream = streaming?.let { engine ->
+            runCatching { engine.newStream() }
+                .onFailure { Log.w(TAG, "streaming preview unavailable: ${it.message}") }
+                .getOrNull()
+        }
         // Local val: a class property can't be smart-cast inside the capture
         // lambda, and the inner loop must call the detector without a null
         // check on every frame. ONE nullable carries the pair because the gate
@@ -124,6 +142,20 @@ class WhisperAsrEngine(
                 if (n <= 0) continue
                 chunks.add(buf.copyOf(n))
                 total += n
+                // The streaming preview eats the same PCM as it lands. It runs
+                // HERE, on the capture thread, only because it is bounded work
+                // (one 320 ms chunk costs a single small forward pass) and the
+                // alternative — a queue and another thread — buys nothing while
+                // Whisper still owns the judged transcript. If a device shows
+                // read overruns, this is the first thing to move off.
+                stream?.let { live ->
+                    val pcm = FloatArray(n) { buf[it] / 32768f }
+                    runCatching { live.accept(pcm) }
+                        .onFailure { Log.w(TAG, "streaming chunk failed", it); stream = null }
+                        .getOrNull()
+                        ?.takeIf { it.isNotBlank() }
+                        ?.let { _speculative.tryEmit(it) }
+                }
                 if (vadPair == null || signal.isCompleted) continue
                 val (detector, gate) = vadPair
                 var off = 0
@@ -139,7 +171,10 @@ class WhisperAsrEngine(
                     // trustworthy if its snapshot reaches past this point.
                     if (p >= VAD_CONFIG.startThreshold) lastSpeechSample = frameEnd
                     when (val event = gate.accept(p)) {
-                        is VadGate.Event.SpeechSoftEnd -> maybeSpeculate()
+                        // With a live stream the preview is already flowing,
+                        // and stopCapture() adopts the stream's own text — so
+                        // a speculative Whisper decode would be pure heat.
+                        is VadGate.Event.SpeechSoftEnd -> if (stream == null) maybeSpeculate()
                         is VadGate.Event.SpeechEnd -> {
                             Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
                             signal.complete(Unit)
@@ -210,6 +245,16 @@ class WhisperAsrEngine(
         stopRecorderQuietly()
         endpoint?.complete(Unit)
         endpoint = null
+        // The live preview ends with the turn. Its final text is NOT adopted
+        // as the transcript: this model has not been measured on child or
+        // Hebrew-accented speech yet, so Whisper keeps the judging job and the
+        // stream keeps the previewing one (docs/latency.md).
+        stream?.let { live ->
+            runCatching { live.finish() }
+                .onSuccess { if (it.isNotBlank()) Log.i(TAG, "stream preview ended: \"$it\"") }
+            runCatching { live.close() }
+        }
+        stream = null
         val total = chunks.sumOf { it.size }
         if (total < SAMPLE_RATE / 4) return@withContext AsrResult("", 0f) // <0.25 s: nothing said
         val pcm = FloatArray(total)

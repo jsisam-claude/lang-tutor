@@ -61,6 +61,15 @@ data class ParentSettings(
      * the stream opens at all are exactly what the TukiBarge log answers.
      */
     val tryVoiceBarge: Boolean = false,
+    /**
+     * Streaming ASR for the live "heard so far" preview: decode WHILE the
+     * learner speaks instead of re-decoding a window per guess. Experimental
+     * and off by default — the model is LibriSpeech-trained, so how it does on
+     * a child with a Hebrew accent is exactly the open question, and Whisper
+     * keeps producing the judged transcript either way. Silently inert unless
+     * the weights were fetched into the APK.
+     */
+    val tryStreamingAsr: Boolean = false,
 )
 
 /**

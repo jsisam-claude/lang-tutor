@@ -156,6 +156,8 @@
     <string name="parent_npu_hint">מנסה את שבב הבינה של המכשיר לפני המעבד הגרפי. בפיקסל 9 זה עלול לתקוע את הטעינה, להקריס את האפליקציה פעם אחת, או להשאיר אותה על המעבד בחמישית מהמהירות.</string>
     <string name="parent_voice_barge_title">להפסיק את תוקי בדיבור</string>
     <string name="parent_voice_barge_hint">בזמן שתוקי מדבר, המיקרופון מאזין בערוץ מבטל־ההד ומשתיק אותו כשמדברים מעליו. במכשירים מסוימים הוא עלול להשתתק מהקול של עצמו — בדקו את שורות ⁦TukiBarge⁩ ב‑logcat והחליטו.</string>
+    <string name="parent_streaming_asr_title">תמלול זורם</string>
+    <string name="parent_streaming_asr_hint">לתמלל תוך כדי שהילד מדבר, כך שהתצוגה המקדימה מתעדכנת תוך כדי דיבור ולא אחרי הפסקה. דורש את מודל הזרימה בגרסה; טוקי עדיין בודק תשובות עם המנוע המדויק.</string>
     <string name="parent_translation_title">משמעות בעברית</string>
     <string name="parent_translation_hint">מוסיף תרגום לעברית מתחת למשפט. בחדר השיחה טוקי כותב אותו בעצמו, ולכן הוא עשוי לפעמים להיות מגושם.</string>
 </resources>
