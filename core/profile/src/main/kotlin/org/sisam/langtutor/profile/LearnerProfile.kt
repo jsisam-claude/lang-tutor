@@ -70,6 +70,13 @@ data class ParentSettings(
      * the weights were fetched into the APK.
      */
     val tryStreamingAsr: Boolean = false,
+    /**
+     * The one folder every large file is expected in — a document-tree URI
+     * with a persisted read grant: a USB drive, a microSD card, Downloads.
+     * Parent Zone → Packs imports from it with one tap and reports what is
+     * still missing (docs/practice-flavor.md). Null until a folder is picked.
+     */
+    val packFolder: String? = null,
 )
 
 /**

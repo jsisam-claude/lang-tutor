@@ -43,6 +43,8 @@ import org.sisam.langtutor.tutor.chat.ChatRoom
 import org.sisam.langtutor.speech.TutorLanguage
 import org.sisam.langtutor.llm.LlmTierPolicy
 import org.sisam.langtutor.packs.HttpPackFetcher
+import org.sisam.langtutor.packs.PackDescriptor
+import org.sisam.langtutor.packs.PackKind
 import org.sisam.langtutor.packs.PackRepository
 import org.sisam.langtutor.packs.RealPackRepository
 import org.sisam.langtutor.packs.ResourceCatalogLoader
@@ -233,7 +235,16 @@ class AppContainer private constructor(context: Context) {
      * No-adb, no-network model sideload: copies a file the user picked with the
      * system file picker into files/models (SHA-256-verified). See [ModelImporter].
      */
-    val modelImporter = ModelImporter(appContext, appScope)
+    val modelImporter = ModelImporter(appContext, appScope, ::expectedPacks)
+
+    /**
+     * Every pack this device should end up with: the RAM-gated catalog, minus
+     * the language-model packs on a build that carries no language model.
+     * Drives the download list AND the folder import's report — one answer to
+     * "what is missing here", whichever way the files arrive.
+     */
+    fun expectedPacks(): List<PackDescriptor> =
+        packs.eligiblePacks(deviceRamGb).filter { LLM_IN_BUILD || it.kind != PackKind.LLM }
 
     /**
      * TESTING ONLY (debug builds): disable TLS certificate verification for pack
@@ -1059,6 +1070,9 @@ class AppContainer private constructor(context: Context) {
 
         // Pronunciation coach (wav2vec2 IPA phoneme CTC, int8).
         private const val GOP_MODEL_PATH = "models/wav2vec2-phoneme-int8.onnx"
+
+        /** Whether this build carries the language-model runtime at all. */
+        private const val LLM_IN_BUILD = true
 
         private const val MEM_TAG = "TukiMem"
         private const val REWARD_TAG = "TukiReward"

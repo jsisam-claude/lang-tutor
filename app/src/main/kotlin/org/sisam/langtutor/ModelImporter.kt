@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.sisam.langtutor.packs.PackDescriptor
 import org.sisam.langtutor.packs.ResourceCatalogLoader
 
 sealed interface ImportState {
@@ -23,20 +24,58 @@ sealed interface ImportState {
     data class Verifying(val label: String = "") : ImportState
     data class Done(val fileName: String) : ImportState
 
-    /** [canForce]: debug builds may re-import skipping verification. */
-    data class Failed(val reason: String, val canForce: Boolean = false) : ImportState
+    /**
+     * [canForce]: debug builds may re-import skipping verification.
+     * [unreachable]: the remembered folder could not be opened at all — the
+     * card or drive is not connected, or its grant was revoked.
+     */
+    data class Failed(
+        val reason: String,
+        val canForce: Boolean = false,
+        val unreachable: Boolean = false,
+    ) : ImportState
+
+    /**
+     * How a folder scan ends: every pack THIS device expects and where each
+     * one stands, so "what is still missing" is answered in the same place
+     * the files are imported. [folder] is the picked directory's own name.
+     */
+    data class Report(val folder: String, val items: List<PackStatus>) : ImportState {
+        val ready: Int
+            get() = items.count { it.status == PackStatus.Status.INSTALLED || it.status == PackStatus.Status.IMPORTED }
+        val missing: List<PackStatus>
+            get() = items.filter { it.status == PackStatus.Status.MISSING }
+    }
+}
+
+/** One line of an [ImportState.Report]. [detail] carries a reason for FAILED. */
+data class PackStatus(val pack: PackDescriptor, val status: Status, val detail: String = "") {
+    enum class Status { INSTALLED, IMPORTED, MISSING, FAILED }
+
+    /** The exact file the folder must hold for this pack. */
+    val fileName: String get() = pack.resolvedInstallPath.substringAfterLast('/')
 }
 
 /**
- * Imports a model file picked with the system file picker (Storage Access
- * Framework) into the app's internal models dir — the no-adb, no-network
- * sideload path: put the `.litertlm` anywhere on the phone (USB-C drive, USB
- * file transfer into Downloads, cloud app) and use Parent Zone → "Import model
- * file". SAF needs no storage permission, and the copy is SHA-256-verified
- * against the pack catalog's pin for that filename, so integrity matches the
- * in-app downloader.
+ * Imports pack files from the phone's own storage into the app's internal
+ * models dir — the no-adb, no-network sideload path. The primary shape is
+ * ONE folder ([importTree]): a USB-C drive, a microSD card, Downloads —
+ * picked through the Storage Access Framework, so no storage permission is
+ * ever requested — holding every large file this device needs, in the
+ * layout `scripts/download-sideload.sh` writes. A single shared file
+ * ([import], from the share sheet) still works. Every copy is SHA-256-
+ * verified against the pinned revisions, so integrity matches the in-app
+ * downloader.
+ *
+ * [expected] answers "which packs should this device end up with" — the
+ * RAM-gated catalog, minus what this build cannot use — and is what the
+ * folder scan imports and reports against.
  */
-class ModelImporter(context: Context, private val scope: CoroutineScope) {
+class ModelImporter(
+    context: Context,
+    private val scope: CoroutineScope,
+    private val expected: () -> List<PackDescriptor>,
+) {
 
     private val appContext = context.applicationContext
     private val _state = MutableStateFlow<ImportState>(ImportState.Idle)
@@ -51,13 +90,15 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
     }
 
     /**
-     * Folder import: point at ONE directory (e.g. a USB drive with the whole
-     * sideload payload) and every catalog-known model file in it — top level
-     * or one subdirectory down, matching the sideload layout with its speech/
-     * folder — is imported in sequence with the same verification as single
-     * imports. Files already installed at the right size are skipped, so
-     * re-running after adding one new file only copies that file. Smallest
-     * files go first: quick wins land before the multi-GB LLM copy starts.
+     * Folder import: point at ONE directory (a USB drive or microSD card with
+     * the whole sideload payload) and every pack this device EXPECTS that is
+     * in it — top level or one subdirectory down, matching the sideload
+     * layout with its speech/ folder — is imported with the same verification
+     * as a single import. Files already installed at the right size are
+     * skipped, so re-running after adding one file copies only that file.
+     * Smallest first: quick wins land before a multi-GB copy starts. Known
+     * files the device does not expect (a brain on a build without one) are
+     * left where they are. It ends in an [ImportState.Report] either way.
      */
     fun importTree(treeUri: Uri) {
         if (busy()) return
@@ -70,49 +111,43 @@ class ModelImporter(context: Context, private val scope: CoroutineScope) {
     }
 
     private fun runTreeImport(treeUri: Uri) {
+        val folder = folderName(treeUri)
         try {
-            val known = ResourceCatalogLoader.load().packs
-                .associateBy { it.resolvedInstallPath.substringAfterLast('/') }
-            val found = listTreeFiles(treeUri)
-                .filter { it.name in known }
-                .sortedBy { known.getValue(it.name).sizeBytes }
-            if (found.isEmpty()) {
-                _state.value = ImportState.Failed(
-                    "No known model files in that folder — expected any of: " +
-                        known.keys.joinToString(", "),
-                )
-                return
-            }
-            var imported = 0
-            var skipped = 0
-            val failures = mutableListOf<String>()
-            for ((index, entry) in found.withIndex()) {
-                val label = "${index + 1}/${found.size} ${entry.name}"
-                val pack = known.getValue(entry.name)
+            val wanted = expected()
+            val inFolder = listTreeFiles(treeUri).associateBy { it.name }
+            val status = HashMap<String, PackStatus>(wanted.size)
+            for (pack in wanted.sortedBy { it.sizeBytes }) {
+                val line = PackStatus(pack, PackStatus.Status.MISSING)
                 val target = File(appContext.filesDir, pack.resolvedInstallPath)
                 if (target.exists() && target.length() == pack.sizeBytes) {
-                    skipped++
+                    status[pack.id] = line.copy(status = PackStatus.Status.INSTALLED)
                     continue
                 }
-                runImport(entry.uri, verify = true, label = label)
-                when (val result = _state.value) {
-                    is ImportState.Done -> imported++
-                    is ImportState.Failed -> failures.add("${entry.name}: ${result.reason}")
-                    else -> failures.add("${entry.name}: interrupted")
+                val entry = inFolder[line.fileName]
+                if (entry == null) {
+                    status[pack.id] = line
+                    continue
+                }
+                runImport(entry.uri, verify = true, label = line.fileName)
+                status[pack.id] = when (val result = _state.value) {
+                    is ImportState.Done -> line.copy(status = PackStatus.Status.IMPORTED)
+                    is ImportState.Failed -> line.copy(status = PackStatus.Status.FAILED, detail = result.reason)
+                    else -> line.copy(status = PackStatus.Status.FAILED, detail = "interrupted")
                 }
             }
-            _state.value = if (failures.isEmpty()) {
-                val skippedNote = if (skipped > 0) " ($skipped already installed)" else ""
-                ImportState.Done("$imported file(s)$skippedNote")
-            } else {
-                ImportState.Failed(
-                    "${failures.size} of ${found.size} failed — " + failures.joinToString("; "),
-                )
-            }
+            // Catalog order for the report, whatever order the copies ran in.
+            _state.value = ImportState.Report(folder, wanted.mapNotNull { status[it.id] })
+        } catch (e: SecurityException) {
+            _state.value = ImportState.Failed(e.message ?: "folder not reachable", unreachable = true)
         } catch (t: Throwable) {
             _state.value = ImportState.Failed("${t.javaClass.simpleName}: ${t.message ?: "folder import failed"}")
         }
     }
+
+    /** The picked directory's own name ("Tuki" from "primary:Tuki"); "/" for a card root. */
+    private fun folderName(treeUri: Uri): String = runCatching {
+        android.provider.DocumentsContract.getTreeDocumentId(treeUri).substringAfterLast(':').ifEmpty { "/" }
+    }.getOrDefault(treeUri.lastPathSegment ?: "?")
 
     private data class TreeEntry(val name: String, val uri: Uri)
 
