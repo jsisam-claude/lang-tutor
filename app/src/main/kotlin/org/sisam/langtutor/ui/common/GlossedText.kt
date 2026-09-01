@@ -197,11 +197,20 @@ fun GlossedText(
  * case folded, one conservative plural strip ("apples" finds apple). No
  * stemming beyond that — a wrong icon under a word teaches a wrong meaning,
  * which is worse than none.
+ *
+ * [AMBIGUOUS] is the same principle at the word level. These words have art
+ * (the picture room shows it, where a card names its own subject), but in a
+ * SENTENCE they carry a sense the picture would contradict: every "orange"
+ * in the bank is the colour, not the fruit, and "square" is the town square
+ * more often than the shape. An icon that is right half the time is not
+ * half-useful — it is a lie the learner cannot check.
  */
+private val AMBIGUOUS = setOf("orange", "square")
+
 private fun wordIcon(raw: String): Int? {
     val w = raw.trim { !it.isLetter() }.lowercase()
-    if (w.isEmpty()) return null
+    if (w.isEmpty() || w in AMBIGUOUS) return null
     return org.sisam.langtutor.ui.picture.PictureArt.drawableFor(w)
-        ?: w.removeSuffix("s").takeIf { it != w }
+        ?: w.removeSuffix("s").takeIf { it != w && it !in AMBIGUOUS }
             ?.let { org.sisam.langtutor.ui.picture.PictureArt.drawableFor(it) }
 }

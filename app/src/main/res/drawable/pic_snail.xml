@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M 22 88 L 14 66"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M 32 86 L 34 62"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 9 64 A 5 5 0 1 0 19 64 A 5 5 0 1 0 9 64 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 29 60 A 5 5 0 1 0 39 60 A 5 5 0 1 0 29 60 Z"/>
+    <path
+        android:fillColor="#4CAF50"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 14 96 C 14 84 30 82 34 92 L 96 92 C 108 92 112 104 100 108 L 26 108 C 16 108 14 102 14 96 Z"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M 18 96 C 22 100 28 100 30 96"/>
+    <path
+        android:fillColor="#FFA000"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 44 62 A 32 32 0 1 0 108 62 A 32 32 0 1 0 44 62 Z"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M 50 62 A 26 26 0 0 1 102 62 A 21 21 0 0 1 60 62 A 16 16 0 0 1 92 62 A 11 11 0 0 1 70 62 A 6 6 0 0 1 82 62"/>
+</vector>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <path d="M 30 94 C 27 80 27 70 30 62" fill="none" stroke="#4CAF50" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 64 94 L 64 48" fill="none" stroke="#4CAF50" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 98 94 C 101 80 101 70 98 62" fill="none" stroke="#4CAF50" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 10 88 L 118 88 L 118 106 C 118 112 113 116 107 116 L 21 116 C 15 116 10 112 10 106 Z" fill="#8D6E63" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 10 88 C 10 82 24 78 64 78 C 104 78 118 82 118 88 Z" fill="#4CAF50" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="30" cy="42.5" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="39.03" cy="49.06" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="35.58" cy="59.69" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="24.42" cy="59.69" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="20.97" cy="49.06" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="30" cy="52" r="7.5" fill="#FFCA28" stroke="#33322E" stroke-width="4"/>
+  <circle cx="98" cy="42.5" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="107.03" cy="49.06" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="103.58" cy="59.69" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="92.42" cy="59.69" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="88.97" cy="49.06" r="8" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+  <circle cx="98" cy="52" r="7.5" fill="#FFCA28" stroke="#33322E" stroke-width="4"/>
+  <circle cx="64" cy="24.5" r="8" fill="#FFCA28" stroke="#33322E" stroke-width="4"/>
+  <circle cx="73.03" cy="31.06" r="8" fill="#FFCA28" stroke="#33322E" stroke-width="4"/>
+  <circle cx="69.58" cy="41.69" r="8" fill="#FFCA28" stroke="#33322E" stroke-width="4"/>
+  <circle cx="58.42" cy="41.69" r="8" fill="#FFCA28" stroke="#33322E" stroke-width="4"/>
+  <circle cx="54.97" cy="31.06" r="8" fill="#FFCA28" stroke="#33322E" stroke-width="4"/>
+  <circle cx="64" cy="34" r="7.5" fill="#E53935" stroke="#33322E" stroke-width="4"/>
+</svg>

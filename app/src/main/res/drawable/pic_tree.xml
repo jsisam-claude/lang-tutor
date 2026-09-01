@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:fillColor="#8D6E63"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 60 70 h 8 A 5 5 0 0 1 73 75 v 36 A 5 5 0 0 1 68 116 h -8 A 5 5 0 0 1 55 111 v -36 A 5 5 0 0 1 60 70 Z"/>
+    <path
+        android:fillColor="#4CAF50"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 64 12 C 46 12 34 24 34 38 C 22 42 18 56 26 66 C 32 76 46 82 64 82 C 82 82 96 76 102 66 C 110 56 106 42 94 38 C 94 24 82 12 64 12 Z"/>
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M 34 64 C 44 72 54 76 66 76 C 54 80 38 76 32 68 Z"/>
+</vector>

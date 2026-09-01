@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:fillColor="#FFF8E1"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 28 26 h 72 A 6 6 0 0 1 106 32 v 80 A 6 6 0 0 1 100 118 h -72 A 6 6 0 0 1 22 112 v -80 A 6 6 0 0 1 28 26 Z"/>
+    <path
+        android:fillColor="#26A69A"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 22 32 C 22 28 25 26 28 26 L 100 26 C 103 26 106 28 106 32 L 106 46 L 22 46 Z"/>
+    <path
+        android:fillColor="#8D6E63"
+        android:pathData="M 38.5 62 h 51 A 2.5 2.5 0 0 1 92 64.5 v 0 A 2.5 2.5 0 0 1 89.5 67 h -51 A 2.5 2.5 0 0 1 36 64.5 v -0 A 2.5 2.5 0 0 1 38.5 62 Z"/>
+    <path
+        android:fillColor="#8D6E63"
+        android:pathData="M 38.5 80 h 51 A 2.5 2.5 0 0 1 92 82.5 v 0 A 2.5 2.5 0 0 1 89.5 85 h -51 A 2.5 2.5 0 0 1 36 82.5 v -0 A 2.5 2.5 0 0 1 38.5 80 Z"/>
+    <path
+        android:fillColor="#8D6E63"
+        android:pathData="M 38.5 98 h 33 A 2.5 2.5 0 0 1 74 100.5 v 0 A 2.5 2.5 0 0 1 71.5 103 h -33 A 2.5 2.5 0 0 1 36 100.5 v -0 A 2.5 2.5 0 0 1 38.5 98 Z"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:pathData="M 29 26 A 5 9 0 1 0 39 26 A 5 9 0 1 0 29 26 Z"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:pathData="M 49 26 A 5 9 0 1 0 59 26 A 5 9 0 1 0 49 26 Z"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:pathData="M 69 26 A 5 9 0 1 0 79 26 A 5 9 0 1 0 69 26 Z"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:pathData="M 89 26 A 5 9 0 1 0 99 26 A 5 9 0 1 0 89 26 Z"/>
+</vector>

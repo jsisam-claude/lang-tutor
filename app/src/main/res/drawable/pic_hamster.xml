@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:fillColor="#FFA000"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:pathData="M 25 36 A 11 11 0 1 0 47 36 A 11 11 0 1 0 25 36 Z"/>
+    <path
+        android:fillColor="#FF7043"
+        android:pathData="M 31 35 A 5 5 0 1 0 41 35 A 5 5 0 1 0 31 35 Z"/>
+    <path
+        android:fillColor="#FFA000"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:pathData="M 81 36 A 11 11 0 1 0 103 36 A 11 11 0 1 0 81 36 Z"/>
+    <path
+        android:fillColor="#FF7043"
+        android:pathData="M 87 35 A 5 5 0 1 0 97 35 A 5 5 0 1 0 87 35 Z"/>
+    <path
+        android:fillColor="#FFA000"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 18 70 A 46 38 0 1 0 110 70 A 46 38 0 1 0 18 70 Z"/>
+    <path
+        android:fillColor="#FFF8E1"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 39 84 A 25 17 0 1 0 89 84 A 25 17 0 1 0 39 84 Z"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M 40 80 L 24 76 M 40 86 L 24 90 M 88 80 L 104 76 M 88 86 L 104 90"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 39.5 60 A 6.5 6.5 0 1 0 52.5 60 A 6.5 6.5 0 1 0 39.5 60 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 75.5 60 A 6.5 6.5 0 1 0 88.5 60 A 6.5 6.5 0 1 0 75.5 60 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 45.5 57.8 A 2.3 2.3 0 1 0 50.1 57.8 A 2.3 2.3 0 1 0 45.5 57.8 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 81.5 57.8 A 2.3 2.3 0 1 0 86.1 57.8 A 2.3 2.3 0 1 0 81.5 57.8 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 58 76 A 6 4.5 0 1 0 70 76 A 6 4.5 0 1 0 58 76 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#33322E"
+        android:strokeWidth="2.5"
+        android:strokeLineJoin="round"
+        android:pathData="M 60.6 81 h 1.6 A 2 2 0 0 1 64.2 83 v 8 A 2 2 0 0 1 62.2 93 h -1.6 A 2 2 0 0 1 58.6 91 v -8 A 2 2 0 0 1 60.6 81 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#33322E"
+        android:strokeWidth="2.5"
+        android:strokeLineJoin="round"
+        android:pathData="M 66.8 81 h 1.6 A 2 2 0 0 1 70.4 83 v 8 A 2 2 0 0 1 68.4 93 h -1.6 A 2 2 0 0 1 64.8 91 v -8 A 2 2 0 0 1 66.8 81 Z"/>
+</vector>

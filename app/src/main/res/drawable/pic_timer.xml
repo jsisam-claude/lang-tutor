@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:fillColor="#E53935"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 61 18 h 6 A 7 7 0 0 1 74 25 v 6 A 7 7 0 0 1 67 38 h -6 A 7 7 0 0 1 54 31 v -6 A 7 7 0 0 1 61 18 Z"/>
+    <path
+        android:fillColor="#FFF8E1"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 24 74 A 40 40 0 1 0 104 74 A 40 40 0 1 0 24 74 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#33322E"
+        android:strokeWidth="3"
+        android:pathData="M 35 74 A 29 29 0 1 0 93 74 A 29 29 0 1 0 35 74 Z"/>
+    <path
+        android:fillColor="#E53935"
+        android:pathData="M 64 74 L 64 47 A 27 27 0 0 1 87.38 87.5 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 60 74 A 4 4 0 1 0 68 74 A 4 4 0 1 0 60 74 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 64 36 h 0 A 3 3 0 0 1 67 39 v 2 A 3 3 0 0 1 64 44 h -0 A 3 3 0 0 1 61 41 v -2 A 3 3 0 0 1 64 36 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 64 104 h 0 A 3 3 0 0 1 67 107 v 2 A 3 3 0 0 1 64 112 h -0 A 3 3 0 0 1 61 109 v -2 A 3 3 0 0 1 64 104 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 97 71 h 2 A 3 3 0 0 1 102 74 v 0 A 3 3 0 0 1 99 77 h -2 A 3 3 0 0 1 94 74 v -0 A 3 3 0 0 1 97 71 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 29 71 h 2 A 3 3 0 0 1 34 74 v 0 A 3 3 0 0 1 31 77 h -2 A 3 3 0 0 1 26 74 v -0 A 3 3 0 0 1 29 71 Z"/>
+</vector>

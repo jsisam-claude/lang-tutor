@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M 55 20 L 49 11 M 73 20 L 79 11"/>
+    <path
+        android:fillColor="#33322E"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:pathData="M 45 34 A 19 19 0 1 0 83 34 A 19 19 0 1 0 45 34 Z"/>
+    <path
+        android:fillColor="#E53935"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 18 74 A 46 40 0 1 0 110 74 A 46 40 0 1 0 18 74 Z"/>
+    <path
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M 64 36 L 64 112"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 32.5 60 A 9.5 9.5 0 1 0 51.5 60 A 9.5 9.5 0 1 0 32.5 60 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 76.5 60 A 9.5 9.5 0 1 0 95.5 60 A 9.5 9.5 0 1 0 76.5 60 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 30.5 90 A 7.5 7.5 0 1 0 45.5 90 A 7.5 7.5 0 1 0 30.5 90 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 82.5 90 A 7.5 7.5 0 1 0 97.5 90 A 7.5 7.5 0 1 0 82.5 90 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 50 28 A 5 5 0 1 0 60 28 A 5 5 0 1 0 50 28 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 68 28 A 5 5 0 1 0 78 28 A 5 5 0 1 0 68 28 Z"/>
+</vector>

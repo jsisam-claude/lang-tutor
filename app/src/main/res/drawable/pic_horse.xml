@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picture-room art (docs/picture-vocabulary.md): drawn as flat SVG by the
+     art queue, converted shape-for-shape by the batch converter. Regenerate
+     rather than hand-edit; the SVG is the source of truth. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+    <path
+        android:fillColor="#8D6E63"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 44 32 L 41 12 L 56 26 Z"/>
+    <path
+        android:fillColor="#8D6E63"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 58 28 L 68 11 L 73 32 Z"/>
+    <path
+        android:fillColor="#8D6E63"
+        android:strokeColor="#33322E"
+        android:strokeWidth="4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 46 26 C 36 34 28 42 26 56 C 24 66 18 72 22 80 C 26 90 40 92 52 88 C 60 96 64 104 70 112 L 106 112 C 108 96 104 76 94 60 C 86 46 72 34 62 28 Z"/>
+    <path
+        android:fillColor="#5D4037"
+        android:pathData="M 62 28 C 74 38 86 58 90 84 L 90 112 L 106 112 C 108 96 104 76 94 60 C 86 46 72 34 62 28 Z"/>
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M 38 34 C 33 44 30 54 30 66 C 30 72 38 72 38 66 C 38 54 42 44 46 36 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 42.5 52 A 5.5 5.5 0 1 0 53.5 52 A 5.5 5.5 0 1 0 42.5 52 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 47.5 50 A 2 2 0 1 0 51.5 50 A 2 2 0 1 0 47.5 50 Z"/>
+    <path
+        android:fillColor="#33322E"
+        android:pathData="M 24 78 A 4 3 0 1 0 32 78 A 4 3 0 1 0 24 78 Z"/>
+</vector>
