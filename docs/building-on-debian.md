@@ -10,7 +10,7 @@ If your APK comes out **much** bigger than that, it is almost certainly an
 incremental build, not a real regression. AGP's packager reuses the existing
 APK and appends changed entries, leaving the freed space as holes — swapping
 the native libraries once produced a 348 MB file whose entries summed to
-276 MB, i.e. 72 MB of holes. `./gradlew :app:clean assembleDebug` compacts it.
+276 MB, i.e. 72 MB of holes. `./gradlew :app:clean assembleFullDebug` compacts it.
 CI always builds clean, which is why its published APK is the size to compare
 against.
 
@@ -77,8 +77,11 @@ sdkmanager --install "platform-tools" "platforms;android-36" "build-tools;36.0.0
 ```bash
 cd ~/lang-tutor
 scripts/fetch-gpu-libs.sh && scripts/fetch-voice-assets.sh && scripts/fetch-vad-asset.sh
-./gradlew :app:assembleDebug
-# -> app/build/outputs/apk/debug/app-debug.apk  (~276 MB)
+./gradlew :app:assembleFullDebug
+# -> app/build/outputs/apk/full/debug/app-full-debug.apk  (~276 MB)
+# The tablet build (docs/practice-flavor.md) — no model runtime, no GPU libs:
+./gradlew :app:assemblePracticeDebug
+# -> app/build/outputs/apk/practice/debug/app-practice-debug.apk
 ```
 
 Skipping the fetch scripts still builds; you lose GPU decode, Tuki's voice and

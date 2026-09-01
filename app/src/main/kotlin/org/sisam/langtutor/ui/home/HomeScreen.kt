@@ -37,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.sisam.langtutor.AppContainer
+import org.sisam.langtutor.BuildConfig
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.UnitSummary
 import org.sisam.langtutor.profile.LearnerProfile
@@ -94,24 +95,30 @@ fun HomeScreen(
         // right after launch; this is where that work becomes visible.
         EngineStatusLine()
 
-        Text(
-            text = stringResource(R.string.home_units_heading),
-            style = MaterialTheme.typography.titleMedium,
-        )
-
-        units.forEachIndexed { index, unit ->
-            UnitCard(
-                unit = unit,
-                accent = UNIT_ACCENTS[index % UNIT_ACCENTS.size],
-                glyph = UNIT_GLYPHS[index % UNIT_GLYPHS.size],
-                onOpenLesson = { onOpenLesson(unit.id) },
-                onOpenConversation = { onOpenConversation(unit.id) },
+        // The lesson cards and free chat need the model; the practice flavor
+        // (docs/practice-flavor.md) has none, so there its home IS the rooms.
+        if (BuildConfig.HAS_LLM) {
+            Text(
+                text = stringResource(R.string.home_units_heading),
+                style = MaterialTheme.typography.titleMedium,
             )
-        }
 
-        Spacer(modifier = Modifier.height(4.dp))
+            units.forEachIndexed { index, unit ->
+                UnitCard(
+                    unit = unit,
+                    accent = UNIT_ACCENTS[index % UNIT_ACCENTS.size],
+                    glyph = UNIT_GLYPHS[index % UNIT_GLYPHS.size],
+                    onOpenLesson = { onOpenLesson(unit.id) },
+                    onOpenConversation = { onOpenConversation(unit.id) },
+                )
+            }
+
+            Spacer(modifier = Modifier.height(4.dp))
+        }
         Text(
-            text = stringResource(R.string.home_more_heading),
+            text = stringResource(
+                if (BuildConfig.HAS_LLM) R.string.home_more_heading else R.string.home_practice_heading,
+            ),
             style = MaterialTheme.typography.titleMedium,
         )
         // "Repeat after me" drills. Fresh LLM-written lines when a model is
@@ -127,8 +134,10 @@ fun HomeScreen(
         }
         // Freeform three-way practice with both parrots — no lesson, no
         // scoring, just talking.
-        Button(onClick = onOpenChat, modifier = Modifier.fillMaxWidth()) {
-            Text(stringResource(R.string.home_just_chat))
+        if (BuildConfig.HAS_LLM) {
+            Button(onClick = onOpenChat, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.home_just_chat))
+            }
         }
         // Every engine is lazy, so a cold first conversation stalls once per
         // engine. This gets it over with on demand; progress shows in the

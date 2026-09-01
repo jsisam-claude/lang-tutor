@@ -42,7 +42,7 @@ no more than MODERATE thermal status, ≤25% decode degradation.
 
 ## 3. Platform-speech shim sanity (no models needed)
 
-Install this repo's debug build (`./gradlew :app:assembleDebug`, or from
+Install this repo's debug build (`./gradlew :app:assembleFullDebug`, or from
 Android Studio). On the Conversation screen: grant mic → hold the button →
 say "I see a red ball" → release. You should see your real words transcribed
 (on-device SpeechRecognizer), a scripted reply, and hear it spoken (platform

@@ -33,6 +33,25 @@ android {
         versionName = "0.1.0"
     }
 
+    // Two flavors from one tree (docs/practice-flavor.md). `full` is the
+    // phone build: conversation with the on-device model, plus every practice
+    // room. `practice` is the tablet build: the authored curriculum only — no
+    // model, no model runtime, no GPU libraries. HAS_LLM is the one switch the
+    // code reads. Same applicationId on purpose: a device moves between them
+    // by installing the other APK over this one, profile and stickers intact.
+    flavorDimensions += "brain"
+    productFlavors {
+        create("full") {
+            dimension = "brain"
+            buildConfigField("boolean", "HAS_LLM", "true")
+        }
+        create("practice") {
+            dimension = "brain"
+            versionNameSuffix = "-practice"
+            buildConfigField("boolean", "HAS_LLM", "false")
+        }
+    }
+
     signingConfigs {
         if (keystoreProps.isNotEmpty()) {
             create("release") {
@@ -129,8 +148,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     // Real on-device LLM: Google's LiteRT-LM runtime loads the .litertlm Gemma 4
-    // artifact and runs it on CPU/GPU/NPU. Backs LiteRtLmEngine.
-    implementation(libs.litertlm.android)
+    // artifact and runs it on CPU/GPU/NPU. Backs LiteRtLmEngine — which lives
+    // in the full flavor's source set, so the practice APK carries neither.
+    "fullImplementation"(libs.litertlm.android)
     // LiteRT interpreter for the bundled speech models (Whisper ASR).
     implementation(libs.litert)
     // ONNX Runtime for the bundled Kokoro voice (single-graph TTS). MIT.

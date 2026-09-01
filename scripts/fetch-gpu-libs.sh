@@ -65,7 +65,10 @@ set -euo pipefail
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/fetch.sh"
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DEST="$REPO_ROOT/app/src/main/jniLibs/arm64-v8a"
+# The FULL flavor's source set only: these libraries exist to run the language
+# model on the GPU, and the practice flavor (docs/practice-flavor.md) carries
+# neither the model nor its runtime, so it must never package them.
+DEST="$REPO_ROOT/app/src/full/jniLibs/arm64-v8a"
 # LiteRT-LM v0.16.1 — keep in lockstep with libs.versions.toml's litertlm.
 COMMIT="924e79c91542761242244e4f1651851f822e4cbb"
 BASE="https://media.githubusercontent.com/media/google-ai-edge/LiteRT-LM/$COMMIT/prebuilt/android_arm64"

@@ -10,13 +10,16 @@ dependency, SHA-256-verified, into one directory per device — then each dir's
 `push.sh` does the adb work. Anything already present with the right hash is
 not re-downloaded, so re-running is free.
 
-**The APK is your local build.** `app/build/outputs/apk/debug/app-debug.apk`
-is placed automatically whenever it exists, so the usual loop is
-`./gradlew :app:assembleDebug` then re-run this. Pass `--ci-apk` for CI's.
+**The APK is your local build.** Each device dir gets its flavor's APK
+(`app-full-debug.apk` for the phones, `app-practice-debug.apk` for the tablet —
+[docs/practice-flavor.md](docs/practice-flavor.md)) whenever the local build
+exists, so the usual loop is `./gradlew :app:assembleFullDebug` (or
+`:app:assemblePracticeDebug`) then re-run this. Pass `--ci-apk` for CI's.
 
 ```bash
-scripts/download-sideload.sh            # sideload/pixel-9a, /pixel-9, /pixel-10-pro-xl
+scripts/download-sideload.sh            # sideload/pixel-9a, /pixel-9, /pixel-10-pro-xl, /tab-s10-fe
 scripts/download-sideload.sh pixel-9a   # just one device
+scripts/download-sideload.sh tab-s10-fe # the tablet: speech models only, practice APK
 scripts/download-sideload.sh --ci-apk   # take CI's APK instead of your own build
 
 cd sideload/pixel-9a && ./push.sh       # installs the APK (if any) + pushes the model
@@ -39,11 +42,12 @@ pre-release (check the release notes for the commit + build time):
 - <https://github.com/jsisam-claude/lang-tutor/releases/tag/debug-latest>
 
 ```bash
-# browser: download app-debug.apk from the link above, or with gh:
-gh release download debug-latest -R jsisam-claude/lang-tutor -p app-debug.apk --clobber
-adb install -r app-debug.apk  # -r upgrades in place
+# browser: download app-full-debug.apk (phones) or app-practice-debug.apk
+# (tablet) from the link above, or with gh:
+gh release download debug-latest -R jsisam-claude/lang-tutor -p app-full-debug.apk --clobber
+adb install -r app-full-debug.apk  # -r upgrades in place
 # if behavior looks stale, clean install:
-#   adb uninstall org.sisam.langtutor && adb install app-debug.apk
+#   adb uninstall org.sisam.langtutor && adb install app-full-debug.apk
 ```
 
 (The per-run **app-debug** artifact still exists when Actions storage quota

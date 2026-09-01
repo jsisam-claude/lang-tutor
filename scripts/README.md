@@ -36,7 +36,7 @@ scripts/fetch-gpu-libs.sh && scripts/fetch-voice-assets.sh && scripts/fetch-vad-
 
 | Script | Writes to | Size | Skip it and… |
 |---|---|---|---|
-| `fetch-gpu-libs.sh` | `app/src/main/jniLibs/arm64-v8a/` | ~34 MB | The engine loses its GPU fallback chain and decodes on CPU (~7x slower turns, measured on a Pixel 9) |
+| `fetch-gpu-libs.sh` | `app/src/full/jniLibs/arm64-v8a/` (full flavor only) | ~34 MB | The engine loses its GPU fallback chain and decodes on CPU (~7x slower turns, measured on a Pixel 9) |
 | `fetch-voice-assets.sh` | `app/src/main/assets/kokoro/` | 522 KB | Tuki has no bundled voice; the app falls back to the platform TTS shim |
 | `fetch-vad-asset.sh` | `app/src/main/assets/vad/` | 2.3 MB | The hands-free toggle is hidden and the mic stays push-to-talk |
 
@@ -56,7 +56,9 @@ scripts/download-sideload.sh --ci-apk        # take CI's APK instead of your bui
 ```
 
 The APK placed in each device dir is **your local build** —
-`app/build/outputs/apk/debug/app-debug.apk` — whenever it exists. No flag.
+`app/build/outputs/apk/full/debug/app-full-debug.apk` (phones) or
+`app/build/outputs/apk/practice/debug/app-practice-debug.apk` (the tablet) —
+whenever it exists. No flag.
 
 **Run this one from the repo root** — its output path is relative, unlike the
 fetchers. It produces one directory per device, sized to that device's RAM:

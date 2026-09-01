@@ -60,9 +60,10 @@ Data-safety declaration remains "collects nothing."
 | Pixel 10 | Tensor G5 | 12 GB | 128/256 GB | First TPU-capable tier |
 | Pixel 10 Pro | Tensor G5 | 16 GB | 128 GB–1 TB | |
 | Pixel 10 Pro XL | Tensor G5 | 16 GB | 256 GB–1 TB | UFS 4.0; reference device |
+| Galaxy Tab S10 FE | Exynos 1580 | 8 GB | 128/256 GB + microSD | **Practice flavor** reference — no model ([practice-flavor.md](practice-flavor.md)) |
 
-All six are supported targets and all three sideload profiles
-(`pixel-9a`, `pixel-9`, `pixel-10-pro-xl`) are maintained together — the 9a is
+All seven are supported targets and all four sideload profiles
+(`pixel-9a`, `pixel-9`, `pixel-10-pro-xl`, `tab-s10-fe`) are maintained together — the 9a is
 not a degraded afterthought, it is the device that decides what "works" means.
 
 Implications: base models (12 GB RAM) are the tight-but-OK floor — a ~2 GB-resident

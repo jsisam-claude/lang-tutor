@@ -29,7 +29,7 @@ sideload/
 
 # GPU sampler libs fetched by scripts/fetch-gpu-libs.sh (pinned SHA-256s
 # in the script; never committed)
-app/src/main/jniLibs/
+app/src/full/jniLibs/
 
 # Tuki's voice asset fetched by scripts/fetch-voice-assets.sh (pinned SHA-256)
 app/src/main/assets/kokoro/

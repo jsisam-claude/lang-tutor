@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
+import org.sisam.langtutor.BuildConfig
 import org.sisam.langtutor.R
 import org.sisam.langtutor.profile.LearnerProfile
 
@@ -78,10 +79,13 @@ fun LevelSection(container: AppContainer) {
                     )
                 }
             }
-            Text(
-                text = stringResource(R.string.parent_level_hebrew_note),
-                style = MaterialTheme.typography.bodySmall,
-            )
+            // Talks about the model's Hebrew; the practice flavor has no model.
+            if (BuildConfig.HAS_LLM) {
+                Text(
+                    text = stringResource(R.string.parent_level_hebrew_note),
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
 
             HorizontalDivider()
 

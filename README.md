@@ -40,7 +40,8 @@ Two lanes, because the full Android build needs Google's Maven/SDK servers:
 ./gradlew -Plangtutor.jvmOnly=true build
 
 # Full app (needs the Android SDK — see docs/building-on-debian.md; also runs in CI):
-./gradlew :app:assembleDebug        # debug APK
+./gradlew :app:assembleFullDebug     # phone APK: conversation + practice (needs the model pack)
+./gradlew :app:assemblePracticeDebug # tablet APK: practice rooms only, no model (docs/practice-flavor.md)
 ./gradlew :app:bundleDebug          # AAB — exercises the model asset-pack
 ```
 

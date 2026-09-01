@@ -24,18 +24,23 @@ one the app runs the scripted demo engine and the Conversation screen shows
   - **Pixel 9 (12 GB)** and **Pixel 10 Pro XL (16 GB)** → *Better Conversations
     (E4B)* — full quality, strongest Hebrew. (Pro XL also sees the experimental 8B.)
   - E4B on a 12 GB Pixel 9 is the borderline case to watch on-device (see caveats).
+  - **Galaxy Tab S10 FE (8 GB)** → the *practice* flavor: no model at all, every
+    practice room, speech models from the pack folder ([practice-flavor.md](practice-flavor.md)).
 - `adb` connected; a machine with the Android SDK to build the APK, or just
-  download the CI artifact (Actions run → Artifacts → `app-debug`).
+  download CI's APK from the rolling `debug-latest` release (TESTING.md §1).
 
 ## 1. Build the app
-CI already compiles `:app:assembleDebug` + `:app:bundleDebug` on every push, so
+CI already compiles both flavors (`:app:assembleFullDebug`,
+`:app:assemblePracticeDebug`) + `:app:bundleFullDebug` on every push, so
 any green run proves it builds. To get an installable APK, on a machine with the
 Android SDK and normal network (this dev container's egress blocks `dl.google.com`,
 so build locally or in CI, not here):
 
 ```bash
-./gradlew :app:assembleDebug
-adb install app/build/outputs/apk/debug/app-debug.apk
+./gradlew :app:assembleFullDebug        # phones
+adb install app/build/outputs/apk/full/debug/app-full-debug.apk
+./gradlew :app:assemblePracticeDebug    # the tablet
+adb install app/build/outputs/apk/practice/debug/app-practice-debug.apk
 ```
 
 ## 2. Put the model on the device

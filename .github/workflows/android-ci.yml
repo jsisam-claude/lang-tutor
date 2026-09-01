@@ -78,41 +78,49 @@ jobs:
           java-version: '25'
       - uses: gradle/actions/setup-gradle@v5
       # Google's prebuilt WebGPU sampler/accelerator/dawn (LiteRT-LM v0.14.0,
-      # SHA-256-pinned in the script) → app jniLibs, so GPU generation works on
-      # devices without OpenCL (GrapheneOS). Without this step the build still
-      # succeeds — the engine's smoke test just falls back to CPU.
+      # SHA-256-pinned in the script) → the FULL flavor's jniLibs, so GPU
+      # generation works on devices without OpenCL (GrapheneOS). Without this
+      # step the build still succeeds — the engine's smoke test just falls back
+      # to CPU. The practice flavor never packages them (docs/practice-flavor.md).
       - run: scripts/fetch-gpu-libs.sh
       # Tuki's Kokoro voice vectors (522KB, SHA-256-pinned) → APK assets.
       - run: scripts/fetch-voice-assets.sh
       # Hands-free listening model (2.3MB, SHA-256-pinned) → APK assets.
       - run: scripts/fetch-vad-asset.sh
-      - run: ./gradlew test :app:assembleDebug :app:bundleDebug --stacktrace
-      # Publish the installable debug APK so a green run yields a sideloadable
-      # build for on-device testing (docs/running-on-device.md).
-      # NOTE: the APK is the app only — the model is not bundled; install it in
-      # app (Parent Zone → Packs) or via adb push.
-      # The AAB is deliberately NOT published: bundleDebug above still
+      # Both flavors (docs/practice-flavor.md): full for the phones, practice
+      # for the tablet. bundleFullDebug still exercises the asset-pack module.
+      - run: ./gradlew test :app:assembleFullDebug :app:assemblePracticeDebug :app:bundleFullDebug --stacktrace
+      # Publish both installable debug APKs so a green run yields sideloadable
+      # builds for on-device testing (docs/running-on-device.md).
+      # NOTE: the APKs are the app only — no model is bundled; the full flavor
+      # gets its model in-app (Parent Zone → Packs) or via the sideload folder.
+      # The AAB is deliberately NOT published: bundleFullDebug above still
       # exercises the asset-pack module, but nothing consumes the .aab
       # (push.sh and TESTING.md install the APK).
-      # DELIVERY: a rolling pre-release whose single asset is always
-      # the newest green APK. Release assets do not count against the Actions
-      # artifact storage quota — which blocked artifact uploads for weeks'
-      # worth of a billing month once the quota was exceeded — and the release
-      # URL is stable, so TESTING.md can link it directly.
-      - name: Publish APK to the rolling debug-latest release
+      # DELIVERY: a rolling pre-release whose assets are always the newest
+      # green APKs. Release assets do not count against the Actions artifact
+      # storage quota — which blocked artifact uploads for weeks' worth of a
+      # billing month once the quota was exceeded — and the release URL is
+      # stable, so TESTING.md can link it directly.
+      - name: Publish APKs to the rolling debug-latest release
         if: success()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          APK=app/build/outputs/apk/debug/app-debug.apk
-          NOTES="Newest green debug build.
+          FULL=app/build/outputs/apk/full/debug/app-full-debug.apk
+          PRACTICE=app/build/outputs/apk/practice/debug/app-practice-debug.apk
+          NOTES="Newest green debug builds.
           commit: ${{ github.sha }}
           built:  $(date -u +%Y-%m-%dT%H:%M:%SZ)
-          The tag itself does not move; trust these notes and the asset, not the tag's commit."
+          app-full-debug.apk — phones (Pixel 9a / 9 / 10 Pro XL): conversation + practice; needs the model pack.
+          app-practice-debug.apk — tablets (Galaxy Tab S10 FE): practice rooms only, no model.
+          The tag itself does not move; trust these notes and the assets, not the tag's commit."
           gh release view debug-latest >/dev/null 2>&1 || \
             gh release create debug-latest --prerelease \
-              --title "Latest debug APK" --notes "$NOTES" --target "${{ github.sha }}"
-          gh release upload debug-latest "$APK" --clobber
+              --title "Latest debug APKs" --notes "$NOTES" --target "${{ github.sha }}"
+          gh release upload debug-latest "$FULL" "$PRACTICE" --clobber
+          # The pre-flavor asset name: remove it once so nobody installs a stale build.
+          gh release delete-asset debug-latest app-debug.apk -y 2>/dev/null || true
           gh release edit debug-latest --notes "$NOTES"
       # NOTE: no upload-artifact step. The release above IS the delivery
       # path — a public, stable URL that TESTING.md links directly, needing no

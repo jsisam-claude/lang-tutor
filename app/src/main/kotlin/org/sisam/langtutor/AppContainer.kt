@@ -23,7 +23,7 @@ import org.sisam.langtutor.engine.OnnxTuning
 import org.sisam.langtutor.engine.ParrotVoice
 import org.sisam.langtutor.engine.Thermal
 import org.sisam.langtutor.engine.VoiceStore
-import org.sisam.langtutor.engine.LiteRtLmEngine
+import org.sisam.langtutor.engine.RealLlm
 import org.sisam.langtutor.engine.PlatformAsrEngine
 import org.sisam.langtutor.engine.PlatformTtsEngine
 import org.sisam.langtutor.engine.BargeListener
@@ -244,7 +244,7 @@ class AppContainer private constructor(context: Context) {
      * "what is missing here", whichever way the files arrive.
      */
     fun expectedPacks(): List<PackDescriptor> =
-        packs.eligiblePacks(deviceRamGb).filter { LLM_IN_BUILD || it.kind != PackKind.LLM }
+        packs.eligiblePacks(deviceRamGb).filter { BuildConfig.HAS_LLM || it.kind != PackKind.LLM }
 
     /**
      * TESTING ONLY (debug builds): disable TLS certificate verification for pack
@@ -919,7 +919,7 @@ class AppContainer private constructor(context: Context) {
      * LiteRT-LM engine (Gemma 4). False means the scripted demo engine — surfaced
      * in the UI so a tester always knows which mode they are in.
      */
-    val usingRealLlm: Boolean get() = modelFile != null
+    val usingRealLlm: Boolean get() = BuildConfig.HAS_LLM && modelFile != null
 
     private fun resolveModelFile(): File? {
         val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
@@ -971,6 +971,10 @@ class AppContainer private constructor(context: Context) {
     private val llmLock = Any()
 
     private fun createLlmEngine(): LlmEngine {
+        // The practice flavor: no runtime, no model, no tier pick. The scripted
+        // engine answers the few callers that still ask — preload, and the
+        // vocabulary room's sentence writer, which then falls back to the deck.
+        if (!BuildConfig.HAS_LLM) return FakeLlmEngine()
         val installed = LinkedHashMap<String, File>() // preference order kept
         val bases = listOfNotNull(appContext.filesDir, appContext.getExternalFilesDir(null))
         for (name in MODEL_CANDIDATES) {
@@ -1016,7 +1020,7 @@ class AppContainer private constructor(context: Context) {
             val path = installed.getValue(choice.path).absolutePath
             val compileCache = File(appContext.cacheDir, "litertlm-compile-cache")
                 .apply { mkdirs() }.absolutePath
-            return LiteRtLmEngine(
+            return RealLlm.create(
                 modelPath = path,
                 installStamp = installStamp(),
                 cacheDir = compileCache,
@@ -1070,9 +1074,6 @@ class AppContainer private constructor(context: Context) {
 
         // Pronunciation coach (wav2vec2 IPA phoneme CTC, int8).
         private const val GOP_MODEL_PATH = "models/wav2vec2-phoneme-int8.onnx"
-
-        /** Whether this build carries the language-model runtime at all. */
-        private const val LLM_IN_BUILD = true
 
         private const val MEM_TAG = "TukiMem"
         private const val REWARD_TAG = "TukiReward"

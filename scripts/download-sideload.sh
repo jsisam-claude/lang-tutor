@@ -5,6 +5,8 @@
 #   sideload/pixel-9a/         8 GB  -> Gemma 4 E2B (base brain)
 #   sideload/pixel-9/         12 GB  -> Gemma 4 E4B + E2B (per-session pick)
 #   sideload/pixel-10-pro-xl/ 16 GB  -> Gemma 4 E4B (quality brain)
+#   sideload/tab-s10-fe/       8 GB  -> NO brain: the practice flavor, speech only
+#                                       (docs/practice-flavor.md)
 #
 # Each device dir gets: the model the CURRENT app loads, a generated push.sh
 # (adb commands for that device), and speech/ — the bundled Whisper ASR (Tuki's
@@ -14,6 +16,7 @@
 # Usage:
 #   scripts/download-sideload.sh                 # all three devices
 #   scripts/download-sideload.sh pixel-9a        # one device
+#   scripts/download-sideload.sh tab-s10-fe      # the tablet: speech models only
 #   scripts/download-sideload.sh --no-speech     # models only
 #   scripts/download-sideload.sh --ci-apk        # use CI's APK instead of your build
 #   scripts/download-sideload.sh --hebrew        # ALSO fetch the Hebrew voice
@@ -49,7 +52,7 @@ DEVICES=()
 
 for arg in "$@"; do
   case "$arg" in
-    pixel-9a|pixel-9|pixel-10-pro-xl) DEVICES+=("$arg") ;;
+    pixel-9a|pixel-9|pixel-10-pro-xl|tab-s10-fe) DEVICES+=("$arg") ;;
     --no-speech) WITH_SPEECH=0 ;;
     --hebrew) WITH_HEBREW=1 ;;
     --ci-apk) USE_CI_APK=1 ;;
@@ -59,7 +62,7 @@ for arg in "$@"; do
     *) echo "unknown arg: $arg (see --help)"; exit 1 ;;
   esac
 done
-[ ${#DEVICES[@]} -eq 0 ] && DEVICES=(pixel-9a pixel-9 pixel-10-pro-xl)
+[ ${#DEVICES[@]} -eq 0 ] && DEVICES=(pixel-9a pixel-9 pixel-10-pro-xl tab-s10-fe)
 
 WITH_HEBREW=${WITH_HEBREW:-0}
 
@@ -186,6 +189,8 @@ models_for() { # brains the CURRENT app loads per device (space-separated)
     # free memory (TESTING.md "Pixel 9"), so the fallback must be installed.
     pixel-9) echo "gemma-4-E4B-it.litertlm gemma-4-E2B-it.litertlm" ;;
     pixel-10-pro-xl) echo "gemma-4-E4B-it.litertlm" ;;
+    # The tablet runs the practice flavor: no language model at all.
+    tab-s10-fe) echo "" ;;
   esac
 }
 
@@ -210,9 +215,10 @@ set -euo pipefail
 cd "\$(dirname "\$0")"
 PKG=org.sisam.langtutor
 adb get-state >/dev/null # fails fast if no device
-if ls app-debug.apk >/dev/null 2>&1; then
-  echo ">> installing APK"; adb install -r app-debug.apk
-fi
+for A in app-full-debug.apk app-practice-debug.apk; do
+  [ -f "\$A" ] || continue
+  echo ">> installing APK (\$A)"; adb install -r "\$A"
+done
 adb shell run-as "\$PKG" mkdir -p files/models
 for M in $models; do
   echo ">> pushing brain (\$M) via /data/local/tmp (staging)"
@@ -234,64 +240,79 @@ PUSH
   chmod +x "$devdir/push.sh"
 }
 
-LOCAL_APK="app/build/outputs/apk/debug/app-debug.apk"
+# Which flavor each device runs (docs/practice-flavor.md): the phones get
+# `full` (conversation + practice), the tablet gets `practice` (no brain, no
+# model runtime). The asset names are what CI publishes to debug-latest.
+apk_name_for() {
+  case "$1" in
+    tab-s10-fe) echo "app-practice-debug.apk" ;;
+    *) echo "app-full-debug.apk" ;;
+  esac
+}
+local_apk_for() {
+  case "$1" in
+    tab-s10-fe) echo "app/build/outputs/apk/practice/debug/app-practice-debug.apk" ;;
+    *) echo "app/build/outputs/apk/full/debug/app-full-debug.apk" ;;
+  esac
+}
 
-fetch_ci_apk() { # only with --ci-apk: the rolling debug-latest release
+fetch_ci_apk() { # fetch_ci_apk <asset>: only with --ci-apk, the rolling debug-latest release
+  local name="$1"
   mkdir -p "$CACHE/apk"
-  local url="https://github.com/$REPO_SLUG/releases/download/debug-latest/app-debug.apk"
+  local url="https://github.com/$REPO_SLUG/releases/download/debug-latest/$name"
   # No pin is possible — the release asset moves with every green build — so
   # this one writes to .part and moves only on success. That is the same
   # atomicity the pinned artifacts get; it just cannot also verify content.
-  if curl -fsSL --retry 4 --retry-all-errors -o "$CACHE/apk/app-debug.apk.part" "$url"; then
-    mv -f "$CACHE/apk/app-debug.apk.part" "$CACHE/apk/app-debug.apk"
-    echo ">> APK: fetched CI's debug-latest release" >&2
+  if curl -fsSL --retry 4 --retry-all-errors -o "$CACHE/apk/$name.part" "$url"; then
+    mv -f "$CACHE/apk/$name.part" "$CACHE/apk/$name"
+    echo ">> APK: fetched CI's debug-latest release ($name)" >&2
     return 0
   fi
-  rm -f "$CACHE/apk/app-debug.apk.part"
+  rm -f "$CACHE/apk/$name.part"
   if command -v gh >/dev/null && gh release download debug-latest -R "$REPO_SLUG" \
-       -p app-debug.apk --clobber --dir "$CACHE/apk.part" 2>/dev/null; then
-    mv -f "$CACHE/apk.part/app-debug.apk" "$CACHE/apk/app-debug.apk"
+       -p "$name" --clobber --dir "$CACHE/apk.part" 2>/dev/null; then
+    mv -f "$CACHE/apk.part/$name" "$CACHE/apk/$name"
     rmdir "$CACHE/apk.part" 2>/dev/null || true
-    echo ">> APK: fetched CI's debug-latest release (via gh)" >&2
+    echo ">> APK: fetched CI's debug-latest release ($name, via gh)" >&2
     return 0
   fi
   rm -rf "$CACHE/apk.part"
-  echo "!! APK: could not fetch debug-latest; skipping" >&2
+  echo "!! APK: could not fetch $name from debug-latest; skipping" >&2
   return 1
 }
 
-# apk_to_place -> path on stdout, or empty. Your build wins unless you ask for
-# CI's. Nothing is placed implicitly from the cache: the old code placed
-# whatever happened to be in $CACHE/apk regardless of any flag, which is how a
-# stale CI build could overwrite the APK you had just compiled.
+# apk_to_place <device> -> path on stdout, or empty. Your build wins unless
+# you ask for CI's. Nothing is placed implicitly from the cache: the old code
+# placed whatever happened to be in $CACHE/apk regardless of any flag, which is
+# how a stale CI build could overwrite the APK you had just compiled.
 apk_to_place() {
+  local name; name="$(apk_name_for "$1")"
   if [ "$USE_CI_APK" = 1 ]; then
-    fetch_ci_apk >/dev/null 2>&1 || fetch_ci_apk || return 0
-    [ -f "$CACHE/apk/app-debug.apk" ] && echo "$CACHE/apk/app-debug.apk"
+    fetch_ci_apk "$name" >/dev/null 2>&1 || fetch_ci_apk "$name" || return 0
+    [ -f "$CACHE/apk/$name" ] && echo "$CACHE/apk/$name"
     return 0
   fi
-  if [ -f "$LOCAL_APK" ]; then
-    echo "$LOCAL_APK"
-    return 0
-  fi
+  local built; built="$(local_apk_for "$1")"
+  [ -f "$built" ] && echo "$built"
   return 0
 }
 
 # ------------------------------- main ----------------------------------------
-APK_SRC="$(apk_to_place)"
-if [ -n "$APK_SRC" ]; then
-  if [ "$USE_CI_APK" = 1 ]; then
-    echo "== APK: CI debug-latest ($APK_SRC)"
-  else
-    echo "== APK: your local build ($APK_SRC, built $(date -r "$APK_SRC" '+%Y-%m-%d %H:%M' 2>/dev/null || echo 'unknown'))"
-  fi
-elif [ "$USE_CI_APK" != 1 ]; then
-  echo "== APK: none — build one with './gradlew :app:assembleDebug', or pass --ci-apk"
-fi
-
+PLACED_ANY=0
 for dev in "${DEVICES[@]}"; do
   devdir="$OUT/$dev"
   models=$(models_for "$dev")
+  APK_SRC="$(apk_to_place "$dev")"
+  if [ -n "$APK_SRC" ]; then
+    PLACED_ANY=1
+    if [ "$USE_CI_APK" = 1 ]; then
+      echo "== $dev APK: CI debug-latest ($APK_SRC)"
+    else
+      echo "== $dev APK: your local build ($APK_SRC, built $(date -r "$APK_SRC" '+%Y-%m-%d %H:%M' 2>/dev/null || echo 'unknown'))"
+    fi
+  else
+    echo "== $dev APK: none — build $(apk_name_for "$dev") first, or pass --ci-apk"
+  fi
   echo "== $dev -> $devdir"
   for m in $models; do
     fetch_into "$m" "$devdir"
@@ -332,6 +353,6 @@ done
 
 echo
 echo "All set. Per-device: cd $OUT/<device> && ./push.sh"
-if [ -z "$APK_SRC" ]; then
-  echo "No APK placed. ./gradlew :app:assembleDebug then re-run, or --ci-apk for CI's."
+if [ "$PLACED_ANY" = 0 ]; then
+  echo "No APK placed. ./gradlew :app:assembleFullDebug (phones) / :app:assemblePracticeDebug (tablet), then re-run — or --ci-apk for CI's."
 fi

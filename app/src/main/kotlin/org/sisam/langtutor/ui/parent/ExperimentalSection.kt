@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
+import org.sisam.langtutor.BuildConfig
 import org.sisam.langtutor.R
 import org.sisam.langtutor.profile.LearnerProfile
 
@@ -55,66 +56,71 @@ fun ExperimentalSection(container: AppContainer) {
                 style = MaterialTheme.typography.bodySmall,
             )
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.parent_npu_title),
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                    Text(
-                        text = stringResource(R.string.parent_npu_hint),
-                        style = MaterialTheme.typography.bodySmall,
+            // Both steer the model's decode (which chip runs it, what the
+            // screen does while it runs); without a model there is nothing
+            // for them to do (docs/practice-flavor.md).
+            if (BuildConfig.HAS_LLM) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.parent_npu_title),
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                        Text(
+                            text = stringResource(R.string.parent_npu_hint),
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                    Switch(
+                        checked = profile.parentSettings.tryNpuBackend,
+                        onCheckedChange = { on ->
+                            scope.launch {
+                                container.profile.update {
+                                    it.copy(
+                                        parentSettings = it.parentSettings.copy(
+                                            tryNpuBackend = on,
+                                        ),
+                                    )
+                                }
+                            }
+                        },
                     )
                 }
-                Switch(
-                    checked = profile.parentSettings.tryNpuBackend,
-                    onCheckedChange = { on ->
-                        scope.launch {
-                            container.profile.update {
-                                it.copy(
-                                    parentSettings = it.parentSettings.copy(
-                                        tryNpuBackend = on,
-                                    ),
-                                )
-                            }
-                        }
-                    },
-                )
-            }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.parent_refresh_cap_title),
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                    Text(
-                        text = stringResource(R.string.parent_refresh_cap_hint),
-                        style = MaterialTheme.typography.bodySmall,
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.parent_refresh_cap_title),
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                        Text(
+                            text = stringResource(R.string.parent_refresh_cap_hint),
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                    Switch(
+                        checked = profile.parentSettings.capRefreshDuringDecode,
+                        onCheckedChange = { on ->
+                            scope.launch {
+                                container.profile.update {
+                                    it.copy(
+                                        parentSettings = it.parentSettings.copy(
+                                            capRefreshDuringDecode = on,
+                                        ),
+                                    )
+                                }
+                            }
+                        },
                     )
                 }
-                Switch(
-                    checked = profile.parentSettings.capRefreshDuringDecode,
-                    onCheckedChange = { on ->
-                        scope.launch {
-                            container.profile.update {
-                                it.copy(
-                                    parentSettings = it.parentSettings.copy(
-                                        capRefreshDuringDecode = on,
-                                    ),
-                                )
-                            }
-                        }
-                    },
-                )
             }
 
             Row(
