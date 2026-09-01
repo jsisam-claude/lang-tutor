@@ -12,8 +12,8 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "bare-noun",
-      "en": "A book!",
-      "he": "ספר!",
+      "en": "A notebook!",
+      "he": "מחברת!",
       "align": [
         {
           "en": [
@@ -202,9 +202,9 @@
       "id": "sch-l1-007",
       "level": 1,
       "tense": "present-simple",
-      "frame": "X-is-here",
-      "en": "My friend is here.",
-      "he": "החבר שלי כאן.",
+      "frame": "the-X-is-adj",
+      "en": "The desk is small.",
+      "he": "השולחן קטן.",
       "align": [
         {
           "en": [
@@ -213,7 +213,7 @@
           ],
           "he": [
             0,
-            1
+            0
           ]
         },
         {
@@ -222,8 +222,8 @@
             3
           ],
           "he": [
-            2,
-            2
+            1,
+            1
           ]
         }
       ]

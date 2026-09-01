@@ -262,9 +262,9 @@
       "id": "ply-l1-009",
       "level": 1,
       "tense": "present-simple",
-      "frame": "X-is-here",
-      "en": "My friend is here.",
-      "he": "החבר שלי כאן.",
+      "frame": "the-X-is-color",
+      "en": "The park is green.",
+      "he": "הפארק ירוק.",
       "align": [
         {
           "en": [
@@ -273,7 +273,7 @@
           ],
           "he": [
             0,
-            1
+            0
           ]
         },
         {
@@ -282,8 +282,8 @@
             3
           ],
           "he": [
-            2,
-            2
+            1,
+            1
           ]
         }
       ]
@@ -717,9 +717,9 @@
       "level": 2,
       "tense": "present-simple",
       "frame": "emotion-because",
-      "en": "I am happy because my friends are here.",
-      "he": "אני שמח כי החברים שלי כאן.",
-      "he_f": "אני שמחה כי החברים שלי כאן.",
+      "en": "I am happy because we are playing outside.",
+      "he": "אני שמח כי אנחנו משחקים בחוץ.",
+      "he_f": "אני שמחה כי אנחנו משחקים בחוץ.",
       "align": [
         {
           "en": [
@@ -758,12 +758,22 @@
           ],
           "he": [
             3,
-            4
+            3
           ]
         },
         {
           "en": [
             6,
+            6
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            7,
             7
           ],
           "he": [

@@ -344,14 +344,14 @@
       "id": "mor-l1-011",
       "level": 1,
       "tense": "present-simple",
-      "frame": "the-X-is-adj",
-      "en": "The bag is heavy.",
-      "he": "התיק כבד.",
+      "frame": "X-is-adj",
+      "en": "Dad is ready.",
+      "he": "אבא מוכן.",
       "align": [
         {
           "en": [
             0,
-            1
+            0
           ],
           "he": [
             0,
@@ -360,8 +360,8 @@
         },
         {
           "en": [
-            2,
-            3
+            1,
+            2
           ],
           "he": [
             1,

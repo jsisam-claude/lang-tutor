@@ -242,17 +242,27 @@
       "id": "bir-l1-008",
       "level": 1,
       "tense": "present-simple",
-      "frame": "X-is-here",
-      "en": "My friend is here.",
-      "he": "החבר שלי כאן.",
+      "frame": "i-see-the-X",
+      "en": "I see the candles.",
+      "he": "אני רואה את הנרות.",
       "align": [
         {
           "en": [
             0,
-            1
+            0
           ],
           "he": [
             0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
             1
           ]
         },
@@ -262,8 +272,8 @@
             3
           ],
           "he": [
-            2,
-            2
+            3,
+            3
           ]
         }
       ]
@@ -1034,8 +1044,8 @@
       "level": 3,
       "tense": "past-simple",
       "frame": "did-question",
-      "en": "Did you win the game?",
-      "he": "ניצחת במשחק?"
+      "en": "Did you like the cake?",
+      "he": "אהבת את העוגה?"
     },
     {
       "id": "bir-l3-009",

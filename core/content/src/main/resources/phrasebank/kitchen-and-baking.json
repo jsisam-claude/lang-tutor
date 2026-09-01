@@ -191,28 +191,18 @@
       "id": "kit-l1-008",
       "level": 1,
       "tense": "present-simple",
-      "frame": "i-see-a-X",
-      "en": "I see a cake.",
-      "he": "אני רואה עוגה.",
+      "frame": "the-X-is-adj",
+      "en": "The cake is round.",
+      "he": "העוגה עגולה.",
       "align": [
         {
           "en": [
             0,
-            0
+            1
           ],
           "he": [
             0,
             0
-          ]
-        },
-        {
-          "en": [
-            1,
-            1
-          ],
-          "he": [
-            1,
-            1
           ]
         },
         {
@@ -221,8 +211,8 @@
             3
           ],
           "he": [
-            2,
-            2
+            1,
+            1
           ]
         }
       ]

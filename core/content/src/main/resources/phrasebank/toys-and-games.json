@@ -12,8 +12,8 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "bare-noun",
-      "en": "A ball!",
-      "he": "כדור!",
+      "en": "A puzzle!",
+      "he": "פאזל!",
       "align": [
         {
           "en": [
@@ -273,8 +273,8 @@
       "level": 1,
       "tense": "present-simple",
       "frame": "X-is-here",
-      "en": "The ball is here.",
-      "he": "הכדור כאן.",
+      "en": "The blocks are here.",
+      "he": "הקוביות כאן.",
       "align": [
         {
           "en": [
