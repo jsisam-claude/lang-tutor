@@ -62,9 +62,11 @@ import org.sisam.langtutor.tutor.TutorMode
 import org.sisam.langtutor.tutor.TutorTurnState
 import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
+import org.sisam.langtutor.ui.common.GlossedText
 import org.sisam.langtutor.ui.common.TukiParrot
 import org.sisam.langtutor.ui.common.EnglishContent
 import org.sisam.langtutor.ui.common.PronunciationFeedback
+import org.sisam.langtutor.ui.common.rememberGloss
 import org.sisam.langtutor.ui.reward.RewardKind
 
 class ConversationViewModel(
@@ -316,7 +318,11 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                             },
                             style = MaterialTheme.typography.labelMedium,
                         )
-                        TranscriptText(entry.text)
+                        if (entry.speaker == Speaker.TUTOR) {
+                            TutorLine(container, entry.text)
+                        } else {
+                            TranscriptText(entry.text)
+                        }
                     }
                 }
             }
@@ -514,6 +520,29 @@ private fun TranscriptText(text: String, modifier: Modifier = Modifier) {
         style = MaterialTheme.typography.bodyLarge.copy(textDirection = TextDirection.Content),
         modifier = modifier,
     )
+}
+
+/**
+ * A tutor line with the same three-line treatment as everywhere else Tuki's
+ * English appears: words, pronunciation stacked under each word (derived, so
+ * always trustworthy; level-gated like the rest). No meaning row here — a
+ * transcript line has no AUTHORED Hebrew, and a model-written one belongs to
+ * the chat room's separate, tier-gated policy, not to this screen.
+ */
+@Composable
+private fun TutorLine(container: AppContainer, text: String) {
+    val gloss by rememberGloss(container, text)
+    if (gloss.isEmpty()) {
+        // Hebrew help lines and gated levels fall back to the plain form.
+        TranscriptText(text)
+    } else {
+        GlossedText(
+            words = gloss,
+            style = MaterialTheme.typography.bodyLarge,
+            glossStyle = MaterialTheme.typography.bodyMedium,
+            horizontalArrangement = Arrangement.Start,
+        )
+    }
 }
 
 @Composable

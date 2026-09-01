@@ -46,6 +46,9 @@ import org.sisam.langtutor.tutor.picture.PictureVocabOrchestrator
 import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.TukiParrot
+import org.sisam.langtutor.speech.HebrewTransliteration.GlossWord
+import org.sisam.langtutor.ui.common.GlossedText
+import org.sisam.langtutor.ui.common.rememberGloss
 import org.sisam.langtutor.ui.common.rememberTranslation
 import org.sisam.langtutor.ui.reward.RewardKind
 
@@ -150,13 +153,20 @@ fun PictureScreen(container: AppContainer) {
                         emojiSize = 96.sp,
                         modifier = Modifier.clickable { viewModel.onCardTapped(s.index) },
                     )
-                    Text(text = card.word, style = MaterialTheme.typography.displaySmall)
+                    // The same three-line treatment as every other room:
+                    // word, pronunciation under it (level-gated), meaning
+                    // below — this card's Hebrew is authored, so all three
+                    // lines are trustworthy here.
+                    val gloss by rememberGloss(container, card.word)
                     val meaning by rememberTranslation(container, card.hebrew)
-                    meaning?.let {
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    if (gloss.isEmpty() && meaning == null) {
+                        Text(text = card.word, style = MaterialTheme.typography.displaySmall)
+                    } else {
+                        GlossedText(
+                            words = gloss.ifEmpty { listOf(GlossWord(card.word, "")) },
+                            style = MaterialTheme.typography.displaySmall,
+                            glossStyle = MaterialTheme.typography.titleMedium,
+                            translation = meaning,
                         )
                     }
                 }
