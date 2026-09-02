@@ -78,14 +78,18 @@ class JsonFileProfileStore(
     private fun readFromDisk(): LearnerProfile {
         if (!Files.exists(file)) return LearnerProfile.EMPTY
         return runCatching {
-            json.decodeFromString(LearnerProfile.serializer(), Files.readString(file))
+            json.decodeFromString(LearnerProfile.serializer(), String(Files.readAllBytes(file), Charsets.UTF_8))
         }.getOrDefault(LearnerProfile.EMPTY)
     }
 
     private fun writeToDisk(profile: LearnerProfile) {
         file.parent?.let(Files::createDirectories)
         val tmp = file.resolveSibling(file.fileName.toString() + ".tmp")
-        Files.writeString(tmp, json.encodeToString(LearnerProfile.serializer(), profile))
+        // Files.write, not Files.writeString: the latter is a Java 11 convenience
+        // Android's libcore never gained — it crashed the tablet's first save
+        // (NoSuchMethodError) while the Pixels' newer ART happened to carry it.
+        // scripts/check-android-api.py now fails the build on any such call.
+        Files.write(tmp, json.encodeToString(LearnerProfile.serializer(), profile).toByteArray(Charsets.UTF_8))
         try {
             Files.move(tmp, file, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING)
         } catch (_: java.nio.file.AtomicMoveNotSupportedException) {

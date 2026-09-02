@@ -95,6 +95,13 @@ jobs:
       # Both flavors (docs/practice-flavor.md): full for the phones, practice
       # for the tablet. bundleFullDebug still exercises the asset-pack module.
       - run: ./gradlew test :app:assembleFullDebug :app:assemblePracticeDebug :app:bundleFullDebug --stacktrace
+      # Every module's bytecode against what a minSdk device actually has: a
+      # Java library member Android lacks at API 31 (Files.writeString crashed
+      # the tablet's first profile save; Lint never looks at the pure-JVM
+      # modules) fails the build here instead of on a device. The oracle is
+      # the minSdk platform's own stubs, so that platform is installed first.
+      - run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-31" > /dev/null
+      - run: scripts/check-android-api.py
       # Publish both installable debug APKs so a green run yields sideloadable
       # builds for on-device testing (docs/running-on-device.md).
       # NOTE: the APKs are the app only — no model is bundled; the full flavor

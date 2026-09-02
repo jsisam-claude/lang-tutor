@@ -66,7 +66,7 @@ class JsonFileReportStore(
 
     private fun load(): List<FlaggedReply> = runCatching {
         if (Files.exists(path)) {
-            json.decodeFromString(serializer, Files.readString(path))
+            json.decodeFromString(serializer, String(Files.readAllBytes(path), Charsets.UTF_8))
         } else {
             emptyList()
         }
@@ -84,7 +84,8 @@ class JsonFileReportStore(
                 runCatching {
                     val tmp = path.resolveSibling("${path.fileName}.tmp")
                     Files.createDirectories(path.parent)
-                    Files.writeString(tmp, json.encodeToString(serializer, next))
+                    // Files.write, not writeString — see LearnerProfileStore.
+                    Files.write(tmp, json.encodeToString(serializer, next).toByteArray(Charsets.UTF_8))
                     Files.move(
                         tmp, path,
                         StandardCopyOption.REPLACE_EXISTING,

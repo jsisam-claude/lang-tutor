@@ -20,6 +20,7 @@ Two invariants hold across every script that touches the network:
 |---|---|
 | Build an APK with GPU, voice and hands-free working | the three `fetch-*` scripts |
 | Build the tablet APK with its speech models inside | `fetch-practice-models.sh` (+ the voice and VAD fetchers) |
+| Check that no module calls a Java API Android lacks at minSdk | `check-android-api.py` (after a build; CI runs it) |
 | Put models on a phone | `download-sideload.sh` |
 | Refresh a pinned upstream data file | a `gen-*` script |
 | Re-certify the VAD test fixture after changing the model | `generate-vad-golden.py` |
@@ -163,3 +164,20 @@ Useful when working behind a restrictive egress policy:
 Note that `dl.google.com` is absent: the Android SDK is a prerequisite of the
 build, not something these scripts fetch. See
 [docs/building-on-debian.md](../docs/building-on-debian.md) for SDK setup.
+
+---
+
+## Android API guard
+
+`check-android-api.py` runs `javap` over every module's compiled classes and
+asks, for each `java.*`/`javax.*` member used, whether a minSdk 31 device has
+it. The oracle for existence is the **minSdk platform's own stubs**
+(`platforms/android-31/android.jar`, walked through supertypes — install it
+with `sdkmanager --install "platforms;android-31"`); the SDK's
+`api-versions.xml` only supplies the "added in API N" wording. A member Android
+added after 31 — or never added, like `Files.writeString`, which crashed the
+tablet at its first profile save — fails with the calling class named. It
+exists because Android Lint's NewApi check only reads Android modules'
+sources, so the pure-JVM core modules, compiled against a full JDK, can use any
+Java 9–21 convenience unnoticed until a device throws `NoSuchMethodError`.
+Needs `javap` (a JDK) and `ANDROID_HOME`; build first so the classes exist.
