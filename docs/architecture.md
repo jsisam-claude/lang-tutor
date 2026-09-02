@@ -119,6 +119,24 @@ Android SDK (`./gradlew -Plangtutor.jvmOnly=true build`), which is also how this
 repo's sandboxed CI-less environment verifies them. The Compose app compiles in
 GitHub Actions.
 
+## Build flavors
+
+One source tree, two APKs (`docs/practice-flavor.md`), split by a single
+`BuildConfig.HAS_LLM` flag that the flavor sets:
+
+| | `full` (Pixel 9a / 9 / 10 Pro XL) | `practice` (Galaxy Tab S10 FE) |
+|---|---|---|
+| Language model + LiteRT-LM runtime | in — `app/src/full/` holds the engine class behind a `RealLlm` factory | out — the practice `RealLlm` refuses; the container returns the scripted engine |
+| GPU delegate libraries, OpenCL manifest declarations | in — `app/src/full/jniLibs`, `app/src/full/AndroidManifest.xml` | out |
+| Lesson, conversation and chat rooms | in | out (home shows the practice rooms only) |
+| Model-decode experiments (Edge TPU, 60 Hz cap) | in | out |
+| Model packs in the pack list / folder report | offered | not expected |
+| Vocabulary drills, picture room, coach, voice, ears, VAD, streaming preview, barge probe | in | in |
+
+Same `applicationId` on purpose: a device moves between flavors by installing
+the other APK over it, profile intact. CI builds both and publishes both to the
+rolling `debug-latest` release.
+
 ## Model delivery & storage
 
 ```

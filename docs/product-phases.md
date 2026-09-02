@@ -397,7 +397,10 @@ band expectations).
 - **Device expansion**: tablets/foldables layouts (great for classrooms), broader
   Android flagship support (Snapdragon NPU path via LiteRT delegates — currently
   *better* accelerated than Pixel), min-spec probe with graceful "lite mode"
-  (smaller LLM) on 8 GB devices.
+  (smaller LLM) on 8 GB devices. *Realised, and simpler than planned: the
+  `practice` flavor ([practice-flavor.md](practice-flavor.md)) carries no LLM at
+  all rather than a smaller one — the authored curriculum is the whole app there,
+  with the Galaxy Tab S10 FE as its reference device.*
 - **Distribution**: Google Play (Families + **Teacher Approved** certification),
   direct-APK "truly zero network" SKU for schools/enterprise, storage-aware
   installer UX.
