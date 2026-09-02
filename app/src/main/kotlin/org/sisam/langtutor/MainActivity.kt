@@ -31,8 +31,14 @@ import org.sisam.langtutor.ui.theme.LangTutorTheme
 class MainActivity : AppCompatActivity() {
 
     private companion object {
-        /** Fixed splash beat — a floor, not a gate: loading continues after. */
-        const val SPLASH_MS = 4_000L
+        /**
+         * Fixed splash beat — a floor, not a gate: loading continues after.
+         * Four seconds buys the language model a head start; the practice
+         * flavor has none, and its voice and ears warm in about two, so it
+         * holds half as long (a first launch also waits for the bundled
+         * models to unpack, whatever the floor).
+         */
+        val SPLASH_MS: Long = if (BuildConfig.HAS_LLM) 4_000L else 2_000L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

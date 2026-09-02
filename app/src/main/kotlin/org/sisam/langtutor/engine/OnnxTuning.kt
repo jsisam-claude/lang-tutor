@@ -4,6 +4,7 @@ import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 import android.util.Log
 import java.io.File
+import org.sisam.langtutor.BuildConfig
 
 /**
  * How every bundled ONNX model is asked to run — in ONE place, because five
@@ -47,14 +48,44 @@ object OnnxTuning {
     /**
      * Threads for a heavy model: the fast cores, never all of them.
      *
-     * `availableProcessors / 2` lands on 4 for an 8-core big.LITTLE, which is
-     * the count that cooks. Capped at 3 so at least one fast core stays free
-     * for the LLM's own CPU-side work (sampling and detokenization run there
-     * even when decode is on the GPU) and for the audio thread that must not
-     * underrun.
+     * With the language model in the build: `availableProcessors / 2` lands
+     * on 4 for an 8-core big.LITTLE, which is the count that cooks (the story
+     * above). Capped at 3 so at least one fast core stays free for the LLM's
+     * own CPU-side work (sampling and detokenization run there even when
+     * decode is on the GPU) and for the audio thread that must not underrun.
+     *
+     * Without it (the practice flavor, docs/practice-flavor.md) nothing else
+     * wants the fast cores, so the voice and the coach get all of them: the
+     * cores in the top frequency tier, read from sysfs, capped at 4. Exactly
+     * the big cluster and not one more — XNNPACK's pool waits for its slowest
+     * thread, and one thread landing on a little core slows the whole op.
+     * The count and its reasoning are logged once so a device round can read
+     * every rtf line against them.
      */
-    val heavyThreads: Int =
-        (Runtime.getRuntime().availableProcessors() / 2).coerceIn(2, 3)
+    val heavyThreads: Int = run {
+        val all = Runtime.getRuntime().availableProcessors()
+        val big = bigCores()
+        val n = if (BuildConfig.HAS_LLM) (all / 2).coerceIn(2, 3) else (big ?: all / 2).coerceIn(2, 4)
+        Log.i(TAG, "heavyThreads=$n (cores=$all, big=${big ?: "?"}, llm=${BuildConfig.HAS_LLM})")
+        n
+    }
+
+    /**
+     * Cores whose maximum frequency is within 20% of the fastest core's — the
+     * big cluster on every SoC we ship to (Tensor G4: X4 + 3x A720; Exynos
+     * 1580: 4x A720; the A520s sit at ~65%). Null when sysfs is unreadable,
+     * which some OEM kernels make it; the caller falls back to half the cores.
+     */
+    private fun bigCores(): Int? = runCatching {
+        val freqs = File("/sys/devices/system/cpu")
+            .listFiles { f -> f.name.matches(Regex("cpu\\d+")) }
+            ?.mapNotNull { cpu ->
+                runCatching { File(cpu, "cpufreq/cpuinfo_max_freq").readText().trim().toLong() }.getOrNull()
+            }
+            .orEmpty()
+        val top = freqs.maxOrNull() ?: return@runCatching null
+        freqs.count { it >= top * 0.8 }.takeIf { it > 0 }
+    }.getOrNull()
 
     /**
      * Create a session with the tuned options, falling back to the portable

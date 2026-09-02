@@ -3,6 +3,7 @@ package org.sisam.langtutor.navigation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
+import androidx.compose.ui.platform.LocalView
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -102,6 +104,26 @@ fun AppNav(container: AppContainer) {
     }
 
     StickerMilestone(container, navController)
+    KeepScreenOn(navController)
+}
+
+/**
+ * The screen stays on while a room is open. A tablet on a stand — or a
+ * phone propped against a cup — dims and locks a minute into a drill
+ * otherwise, mid-sentence, with the mic listening to nobody. Only the rooms
+ * where a child is talking to Tuki; the Parent Zone and the sticker book
+ * follow the system timeout like any screen. The daily-minutes limit is
+ * what bounds how long this can hold the panel awake.
+ */
+@Composable
+private fun KeepScreenOn(navController: NavHostController) {
+    val entry by navController.currentBackStackEntryAsState()
+    val route = entry?.destination?.route
+    val view = LocalView.current
+    DisposableEffect(view, route) {
+        view.keepScreenOn = Routes.isLearningRoom(route) || route == Routes.CHAT
+        onDispose { view.keepScreenOn = false }
+    }
 }
 
 /**

@@ -134,6 +134,29 @@ minus, on `practice`, the language-model packs.
 `scripts/download-sideload.sh tab-s10-fe` produces the tablet's directory
 too: just the practice APK and a `push.sh` that installs it.
 
+## Tuned for the tablet
+
+Four behaviours differ on `practice`, each because the model is not there
+to share the device with:
+
+- **Thread budget.** The ONNX engines (voice, coach, streaming preview) get
+  the whole big cluster — the cores in the top frequency tier, read from
+  sysfs, capped at 4 — instead of the phones' 3-of-4 that leaves one fast
+  core for the model. `adb logcat -s TukiOnnx` prints `heavyThreads=…` with
+  the core count and reasoning once at start-up, so every rtf line can be
+  read against it. Whisper keeps its own measured count on both flavors.
+- **Resident engines.** The three-minute background release, which exists
+  to hand back a multi-GB model, does nothing here: the engine set is under
+  a gigabyte and a Kokoro session rebuild costs seconds a classroom tablet
+  would pay on every return. A memory-trim signal from the system still
+  releases everything.
+- **Shorter splash.** Two seconds instead of four — the floor the voice and
+  ears need, not the one the model needed. A first launch still waits for
+  the bundled models to unpack.
+- **Screen stays on in the rooms** (both flavors): a tablet on a stand no
+  longer dims and locks mid-drill. Parent Zone and the sticker book follow
+  the system timeout; the daily-minutes limit bounds the rest.
+
 ## Building and testing
 
 ```bash

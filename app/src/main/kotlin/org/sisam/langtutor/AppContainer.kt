@@ -742,6 +742,13 @@ class AppContainer private constructor(context: Context) {
      */
     fun scheduleBackgroundRelease() {
         backgroundRelease?.cancel()
+        // The timer exists to hand back a multi-GB model. The practice flavor
+        // has none and its whole engine set is under a gigabyte, while a
+        // Kokoro session rebuild was measured at 8.3 s — and a classroom
+        // tablet idles between children constantly, so every return would
+        // pay that. It keeps its engines warm; a real memory-trim signal from
+        // the system still releases them (trimEngines above).
+        if (!BuildConfig.HAS_LLM) return
         backgroundRelease = appScope.launch {
             kotlinx.coroutines.delay(BACKGROUND_RELEASE_MS)
             releaseHeavyEngines("backgrounded ${BACKGROUND_RELEASE_MS / 60_000} min")
