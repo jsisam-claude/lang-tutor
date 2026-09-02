@@ -5,7 +5,8 @@
 #   sideload/pixel-9a/         8 GB  -> Gemma 4 E2B (base brain)
 #   sideload/pixel-9/         12 GB  -> Gemma 4 E4B + E2B (per-session pick)
 #   sideload/pixel-10-pro-xl/ 16 GB  -> Gemma 4 E4B (quality brain)
-#   sideload/tab-s10-fe/       8 GB  -> NO brain: the practice flavor, speech only
+#   sideload/tab-s10-fe/       8 GB  -> NO brain, and its speech models ride INSIDE
+#                                       the practice APK: just the APK + push.sh
 #                                       (docs/practice-flavor.md)
 #
 # Each device dir gets: the model the CURRENT app loads, a generated push.sh
@@ -16,7 +17,7 @@
 # Usage:
 #   scripts/download-sideload.sh                 # all three devices
 #   scripts/download-sideload.sh pixel-9a        # one device
-#   scripts/download-sideload.sh tab-s10-fe      # the tablet: speech models only
+#   scripts/download-sideload.sh tab-s10-fe      # the tablet: APK only, nothing to push
 #   scripts/download-sideload.sh --no-speech     # models only
 #   scripts/download-sideload.sh --ci-apk        # use CI's APK instead of your build
 #   scripts/download-sideload.sh --hebrew        # ALSO fetch the Hebrew voice
@@ -189,7 +190,8 @@ models_for() { # brains the CURRENT app loads per device (space-separated)
     # free memory (TESTING.md "Pixel 9"), so the fallback must be installed.
     pixel-9) echo "gemma-4-E4B-it.litertlm gemma-4-E2B-it.litertlm" ;;
     pixel-10-pro-xl) echo "gemma-4-E4B-it.litertlm" ;;
-    # The tablet runs the practice flavor: no language model at all.
+    # The tablet runs the practice flavor: no language model at all (and its
+    # speech models are inside the APK — see the speech block below).
     tab-s10-fe) echo "" ;;
   esac
 }
@@ -317,7 +319,9 @@ for dev in "${DEVICES[@]}"; do
   for m in $models; do
     fetch_into "$m" "$devdir"
   done
-  if [ "$WITH_SPEECH" = 1 ]; then
+  # The practice APK carries its own speech models (scripts/fetch-practice-models.sh),
+  # so the tablet dir needs none of them.
+  if [ "$WITH_SPEECH" = 1 ] && [ "$dev" != tab-s10-fe ]; then
     for f in "$(whisper_for "$dev")" model_quantized.onnx wav2vec2-phoneme-int8.onnx; do
       fetch_into "$f" "$devdir/speech"
     done

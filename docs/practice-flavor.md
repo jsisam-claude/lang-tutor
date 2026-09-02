@@ -77,6 +77,7 @@ Exynos 1580 launch coverage; links at the end):
 | Edge TPU probe and 60 Hz decode cap switches | in | **out** | Experimental section gated |
 | "Hebrew explanations need E4B" note; model-tier badge | in | **out** | gated |
 | Gemma packs in the pack list and the folder report | offered | **not expected** | `expectedPacks()` filters `PackKind.LLM` |
+| Speech models (ears, voice, coach — ~700 MB) | packs: folder or download | **inside the APK** | `scripts/fetch-practice-models.sh` → `app/src/practice/assets/models/`, unpacked on first launch |
 | Vocabulary room, picture room, phrasebank, coach | in | in | — |
 | Kokoro voice, Whisper ears, VAD, streaming preview, barge probe | in | in | — |
 | Thermal readout, accelerator gate, synthesis cache | in | in | generic; the voice uses them too |
@@ -93,12 +94,23 @@ Both flavors share one `applicationId`, so a device can move from
 and stickers survive. `practice` carries a `-practice` version-name suffix
 so a screenshot or a bug report says which one it is.
 
-## One folder for the large files
+## The tablet needs nothing: everything is in the APK
 
-Every large file the app does not bundle — the speech models, and on
-`full` the brain — is expected in **one directory**, and the app imports
-everything from it with **one button** (Parent Zone → Packs → *Import from
-folder*). The layout is the one `scripts/download-sideload.sh` writes:
+The practice flavor ships its three speech models inside the APK (~870 MB
+all told, arm64 only). On first launch the app copies them out into its
+files directory — seconds on the tablet's storage, once per install, with
+the splash holding until it is done — and every engine then loads from a
+path exactly as on a phone. Parent Zone → Packs shows one line: everything
+is built in. Nothing to pick, download, update or report; an app update is
+a new APK. Only the optional Hebrew voice (non-commercial weights) stays
+outside, as it does on the phones.
+
+## One folder for the large files (phones)
+
+Every large file a phone build does not bundle — the speech models and the
+brain — is expected in **one directory**, and the app imports everything
+from it with **one button** (Parent Zone → Packs → *Import from folder*).
+The layout is the one `scripts/download-sideload.sh` writes:
 
 ```
 <folder>/
@@ -109,8 +121,8 @@ folder*). The layout is the one `scripts/download-sideload.sh` writes:
     wav2vec2-phoneme-int8.onnx         pronunciation coach
 ```
 
-On the tablet that directory is a microSD card or a USB-C drive; on a phone
-it can be Downloads. The picker is the system document tree (Storage Access
+On a phone that directory is a USB-C drive, a microSD card or Downloads.
+The picker is the system document tree (Storage Access
 Framework), so no storage permission is requested and USB/SD/cloud all look
 the same. The folder is remembered — the next tap re-scans it — and the
 scan ends with a **report**: every pack this device expects, marked
@@ -119,13 +131,14 @@ that is missing. A file present but corrupt is rejected by SHA-256 exactly
 as a download would be. What the device expects is the RAM-gated pack list
 minus, on `practice`, the language-model packs.
 
-`scripts/download-sideload.sh tab-s10-fe` produces that folder for the
-tablet: speech models only, plus a `push.sh` for the adb route.
+`scripts/download-sideload.sh tab-s10-fe` produces the tablet's directory
+too: just the practice APK and a `push.sh` that installs it.
 
 ## Building and testing
 
 ```bash
-./gradlew :app:assemblePracticeDebug      # the tablet build
+scripts/fetch-practice-models.sh          # once: the ~700 MB of speech models the tablet APK carries
+./gradlew :app:assemblePracticeDebug      # the tablet build (~870 MB)
 ./gradlew :app:assembleFullDebug          # the phone build (run scripts/fetch-gpu-libs.sh first)
 ```
 
@@ -137,10 +150,10 @@ First tablet round — what to check, in order:
 1. Install `app-practice-debug.apk`; the home screen shows the vocabulary
    and picture rooms and no lesson cards. Parent Zone shows no model packs
    and no Edge TPU / 60 Hz switches.
-2. Copy the sideload folder to a microSD card (or a USB-C drive), open
-   Parent Zone → Packs → *Import from folder*, pick the card's folder. The
-   report should list the three speech packs as imported and nothing as
-   missing.
+2. The first launch holds the splash a few seconds longer while it unpacks
+   the bundled models (`adb logcat -s TukiMem` shows one `unpacked bundled`
+   line per model with its time). Parent Zone → Packs should show the single
+   "everything is built in" line and nothing else.
 3. Picture room: tap through ten cards — the voice should start well under a
    second each after the first (the first pays the XNNPACK session build).
 4. Vocabulary room: three drill turns. Watch `adb logcat -s TukiTts TukiAsr

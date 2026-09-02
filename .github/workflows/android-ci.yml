@@ -87,6 +87,11 @@ jobs:
       - run: scripts/fetch-voice-assets.sh
       # Hands-free listening model (2.3MB, SHA-256-pinned) → APK assets.
       - run: scripts/fetch-vad-asset.sh
+      # The practice flavor ships its speech models INSIDE the APK (~700 MB,
+      # SHA-256-pinned; docs/practice-flavor.md) → the practice source set's
+      # assets. The full flavor never packages them. Skipping this step still
+      # builds; the tablet would then need a pack folder like a phone.
+      - run: scripts/fetch-practice-models.sh
       # Both flavors (docs/practice-flavor.md): full for the phones, practice
       # for the tablet. bundleFullDebug still exercises the asset-pack module.
       - run: ./gradlew test :app:assembleFullDebug :app:assemblePracticeDebug :app:bundleFullDebug --stacktrace
@@ -113,7 +118,7 @@ jobs:
           commit: ${{ github.sha }}
           built:  $(date -u +%Y-%m-%dT%H:%M:%SZ)
           app-full-debug.apk — phones (Pixel 9a / 9 / 10 Pro XL): conversation + practice; needs the model pack.
-          app-practice-debug.apk — tablets (Galaxy Tab S10 FE): practice rooms only, no model.
+          app-practice-debug.apk — tablets (Galaxy Tab S10 FE): practice rooms only, no model; voice, ears and coach built in (~0.9 GB).
           The tag itself does not move; trust these notes and the assets, not the tag's commit."
           gh release view debug-latest >/dev/null 2>&1 || \
             gh release create debug-latest --prerelease \

@@ -74,101 +74,111 @@ fun PacksSection(container: AppContainer) {
         // it. Each scan ends in a report of what this device expects and what
         // is still missing. Sharing a single file TO the app still works too
         // (MainActivity's share-to-import).
-        PackFolderCard(container, isHebrew)
+        if (container.expectedPacks().isEmpty()) {
+            // Everything this device could want rides inside the APK (the
+            // practice flavor ships its speech models — docs/practice-flavor.md):
+            // nothing to pick, download, update or report.
+            Text(
+                text = stringResource(R.string.packs_all_bundled),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        } else {
+            PackFolderCard(container, isHebrew)
 
-        container.expectedPacks().forEach { pack ->
-            val state = states[pack.id] ?: InstallState.NotInstalled
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                ) {
-                    Text(
-                        text = "${packName(pack, isHebrew)} · ${formatSize(pack.sizeBytes)}",
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                    when (state) {
-                        is InstallState.Downloading -> LinearProgressIndicator(
-                            progress = { state.progressPercent / 100f },
-                            modifier = Modifier.fillMaxWidth(),
+            container.expectedPacks().forEach { pack ->
+                val state = states[pack.id] ?: InstallState.NotInstalled
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                    ) {
+                        Text(
+                            text = "${packName(pack, isHebrew)} · ${formatSize(pack.sizeBytes)}",
+                            style = MaterialTheme.typography.titleSmall,
                         )
-
-                        InstallState.Verifying ->
-                            Text(stringResource(R.string.packs_verifying))
-
-                        is InstallState.Installed -> Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(stringResource(R.string.packs_installed))
-                            TextButton(onClick = { scope.launch { repo.delete(pack.id) } }) {
-                                Text(stringResource(R.string.packs_delete))
-                            }
-                        }
-
-                        is InstallState.Failed -> Column(
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                        ) {
-                            // Show the real reason so a failed download is diagnosable,
-                            // and offer a retry (resumes from the .part file).
-                            Text(
-                                text = "${stringResource(R.string.packs_failed)}: ${state.reason}",
-                                style = MaterialTheme.typography.bodySmall,
+                        when (state) {
+                            is InstallState.Downloading -> LinearProgressIndicator(
+                                progress = { state.progressPercent / 100f },
+                                modifier = Modifier.fillMaxWidth(),
                             )
-                            Button(onClick = { container.appScope.launch { repo.install(pack.id).collect { } } }) {
-                                Text(stringResource(R.string.packs_retry))
-                            }
-                            // Debug builds only: offer a TLS-bypass retry when the
-                            // failure looks like a certificate/trust problem.
-                            val looksLikeSsl = listOf("SSL", "trust", "certif", "CertPath")
-                                .any { state.reason.contains(it, ignoreCase = true) }
-                            if (BuildConfig.DEBUG && looksLikeSsl) {
-                                TextButton(onClick = { sslOverridePack = pack }) {
-                                    Text(stringResource(R.string.packs_ignore_ssl))
+
+                            InstallState.Verifying ->
+                                Text(stringResource(R.string.packs_verifying))
+
+                            is InstallState.Installed -> Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(stringResource(R.string.packs_installed))
+                                TextButton(onClick = { scope.launch { repo.delete(pack.id) } }) {
+                                    Text(stringResource(R.string.packs_delete))
                                 }
                             }
-                        }
 
-                        InstallState.NotInstalled -> Button(onClick = { consentPack = pack }) {
-                            Text(stringResource(R.string.packs_download))
+                            is InstallState.Failed -> Column(
+                                verticalArrangement = Arrangement.spacedBy(4.dp),
+                            ) {
+                                // Show the real reason so a failed download is diagnosable,
+                                // and offer a retry (resumes from the .part file).
+                                Text(
+                                    text = "${stringResource(R.string.packs_failed)}: ${state.reason}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                                Button(onClick = { container.appScope.launch { repo.install(pack.id).collect { } } }) {
+                                    Text(stringResource(R.string.packs_retry))
+                                }
+                                // Debug builds only: offer a TLS-bypass retry when the
+                                // failure looks like a certificate/trust problem.
+                                val looksLikeSsl = listOf("SSL", "trust", "certif", "CertPath")
+                                    .any { state.reason.contains(it, ignoreCase = true) }
+                                if (BuildConfig.DEBUG && looksLikeSsl) {
+                                    TextButton(onClick = { sslOverridePack = pack }) {
+                                        Text(stringResource(R.string.packs_ignore_ssl))
+                                    }
+                                }
+                            }
+
+                            InstallState.NotInstalled -> Button(onClick = { consentPack = pack }) {
+                                Text(stringResource(R.string.packs_download))
+                            }
                         }
                     }
                 }
             }
-        }
 
-        // One tap for a fresh device: sequentially download every eligible pack
-        // that isn't installed yet (same consent framing — this IS the consent).
-        val pending = container.expectedPacks()
-            .filter { (states[it.id] ?: InstallState.NotInstalled) !is InstallState.Installed }
-        if (pending.size > 1) {
-            OutlinedButton(onClick = {
-                container.appScope.launch {
-                    for (p in pending) {
-                        runCatching { repo.install(p.id).collect { } }
+            // One tap for a fresh device: sequentially download every eligible pack
+            // that isn't installed yet (same consent framing — this IS the consent).
+            val pending = container.expectedPacks()
+                .filter { (states[it.id] ?: InstallState.NotInstalled) !is InstallState.Installed }
+            if (pending.size > 1) {
+                OutlinedButton(onClick = {
+                    container.appScope.launch {
+                        for (p in pending) {
+                            runCatching { repo.install(p.id).collect { } }
+                        }
                     }
+                }) {
+                    Text(stringResource(R.string.packs_download_all, pending.size))
                 }
-            }) {
-                Text(stringResource(R.string.packs_download_all, pending.size))
             }
-        }
 
-        OutlinedButton(
-            onClick = { scope.launch { updatesCount = repo.checkForUpdatesManually().size } },
-        ) {
-            Text(stringResource(R.string.packs_check_updates))
-        }
-        updatesCount?.let { count ->
-            Text(
-                text = if (count == 0) {
-                    stringResource(R.string.packs_updates_none)
-                } else {
-                    stringResource(R.string.packs_updates_found, count)
-                },
-                style = MaterialTheme.typography.bodySmall,
-            )
+            OutlinedButton(
+                onClick = { scope.launch { updatesCount = repo.checkForUpdatesManually().size } },
+            ) {
+                Text(stringResource(R.string.packs_check_updates))
+            }
+            updatesCount?.let { count ->
+                Text(
+                    text = if (count == 0) {
+                        stringResource(R.string.packs_updates_none)
+                    } else {
+                        stringResource(R.string.packs_updates_found, count)
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
         }
     }
 

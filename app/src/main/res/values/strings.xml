@@ -83,6 +83,7 @@
     <string name="packs_ignore_ssl_title">Ignore certificate errors?</string>
     <string name="packs_ignore_ssl_body">For testing only. This turns OFF HTTPS certificate checks for downloads — insecure, and never used in a real release. The model is still checksum-verified, so a tampered file is still rejected.</string>
     <string name="packs_ignore_ssl_confirm">Ignore &amp; download</string>
+    <string name="packs_all_bundled">Everything Tuki needs is built into this version ✓ — nothing to download or import.</string>
     <string name="packs_folder_title">Pack folder</string>
     <string name="packs_folder_hint">One folder holds every large file — a USB drive, a microSD card, or Downloads. Tuki imports what this device needs from it and tells you what is still missing.</string>
     <string name="packs_folder_none">No folder chosen yet</string>

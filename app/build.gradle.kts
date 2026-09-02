@@ -31,6 +31,13 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
+        // Every target device is arm64 (Tensor, Exynos 1580), and Play accepts
+        // nothing else for new apps. The runtimes' AARs carry x86, x86_64 and
+        // armeabi-v7a copies too — 110 MB per APK that no device we ship to
+        // can execute.
+        ndk {
+            abiFilters += listOf("arm64-v8a")
+        }
     }
 
     // Two flavors from one tree (docs/practice-flavor.md). `full` is the

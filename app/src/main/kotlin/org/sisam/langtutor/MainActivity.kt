@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -70,7 +71,14 @@ class MainActivity : AppCompatActivity() {
                         .background(MaterialTheme.colorScheme.background),
                 ) {
                 Box(Modifier.safeDrawingPadding()) {
-                var splashDone by rememberSaveable { mutableStateOf(false) }
+                var splashTimerDone by rememberSaveable { mutableStateOf(false) }
+                // A first launch on a build that bundles its models is also
+                // copying them out of the APK; the splash holds until that is
+                // done (seconds, once per install), so no room opens a beat
+                // before its engine's file exists and falls back to a
+                // platform voice. Every later launch: true immediately.
+                val unpacked by appContainer.bundledModelsReady.collectAsState()
+                val splashDone = splashTimerDone && unpacked
                 // Fresh installs answer the one question first: what Level?
                 // Checked once per process via snapshot — the flag flips only
                 // forward, so the screen can never reappear mid-session.
@@ -87,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                     SplashScreen(appContainer)
                     LaunchedEffect(Unit) {
                         delay(SPLASH_MS)
-                        splashDone = true
+                        splashTimerDone = true
                     }
                 }
                 }

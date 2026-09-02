@@ -19,6 +19,7 @@ Two invariants hold across every script that touches the network:
 | I want to… | Run |
 |---|---|
 | Build an APK with GPU, voice and hands-free working | the three `fetch-*` scripts |
+| Build the tablet APK with its speech models inside | `fetch-practice-models.sh` (+ the voice and VAD fetchers) |
 | Put models on a phone | `download-sideload.sh` |
 | Refresh a pinned upstream data file | a `gen-*` script |
 | Re-certify the VAD test fixture after changing the model | `generate-vad-golden.py` |
@@ -38,6 +39,7 @@ scripts/fetch-gpu-libs.sh && scripts/fetch-voice-assets.sh && scripts/fetch-vad-
 |---|---|---|---|
 | `fetch-gpu-libs.sh` | `app/src/full/jniLibs/arm64-v8a/` (full flavor only) | ~34 MB | The engine loses its GPU fallback chain and decodes on CPU (~7x slower turns, measured on a Pixel 9) |
 | `fetch-voice-assets.sh` | `app/src/main/assets/kokoro/` | 522 KB | Tuki has no bundled voice; the app falls back to the platform TTS shim |
+| `fetch-practice-models.sh` | `app/src/practice/assets/models/` | ~700 MB | The practice APK ships without ears, voice or coach and needs a pack folder like a phone (docs/practice-flavor.md) |
 | `fetch-vad-asset.sh` | `app/src/main/assets/vad/` | 2.3 MB | The hands-free toggle is hidden and the mic stays push-to-talk |
 
 Each is safe to run from any directory — they resolve the repo root from their

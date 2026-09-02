@@ -81,6 +81,7 @@
     <string name="packs_ignore_ssl_title">להתעלם משגיאות אישור?</string>
     <string name="packs_ignore_ssl_body">לבדיקות בלבד. פעולה זו מכבה את בדיקת אישורי ה-HTTPS להורדות — לא מאובטח, ולא בשימוש בגרסה אמיתית. המודל עדיין מאומת ב-checksum, כך שקובץ שהשתנה עדיין נדחה.</string>
     <string name="packs_ignore_ssl_confirm">התעלם והורד</string>
+    <string name="packs_all_bundled">כל מה שתוקי צריך מובנה בגרסה הזו ✓ — אין מה להוריד או לייבא.</string>
     <string name="packs_folder_title">תיקיית החבילות</string>
     <string name="packs_folder_hint">תיקייה אחת מכילה את כל הקבצים הגדולים — כונן USB, כרטיס microSD או ההורדות. תוקי מייבא ממנה את מה שהמכשיר צריך ומדווח מה עדיין חסר.</string>
     <string name="packs_folder_none">עוד לא נבחרה תיקייה</string>

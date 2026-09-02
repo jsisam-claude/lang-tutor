@@ -19,7 +19,7 @@ exists, so the usual loop is `./gradlew :app:assembleFullDebug` (or
 ```bash
 scripts/download-sideload.sh            # sideload/pixel-9a, /pixel-9, /pixel-10-pro-xl, /tab-s10-fe
 scripts/download-sideload.sh pixel-9a   # just one device
-scripts/download-sideload.sh tab-s10-fe # the tablet: speech models only, practice APK
+scripts/download-sideload.sh tab-s10-fe # the tablet: just the practice APK (its speech models are inside it)
 scripts/download-sideload.sh --ci-apk   # take CI's APK instead of your own build
 
 cd sideload/pixel-9a && ./push.sh       # installs the APK (if any) + pushes the model

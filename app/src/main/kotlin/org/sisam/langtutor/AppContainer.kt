@@ -238,13 +238,92 @@ class AppContainer private constructor(context: Context) {
     val modelImporter = ModelImporter(appContext, appScope, ::expectedPacks)
 
     /**
-     * Every pack this device should end up with: the RAM-gated catalog, minus
-     * the language-model packs on a build that carries no language model.
-     * Drives the download list AND the folder import's report — one answer to
-     * "what is missing here", whichever way the files arrive.
+     * Every pack this device still needs from OUTSIDE the APK: the RAM-gated
+     * catalog, minus the language-model packs on a build that carries no
+     * language model, minus whatever rides inside this APK. Drives the
+     * download list AND the folder import's report — one answer to "what is
+     * missing here", whichever way the files arrive. Empty on the practice
+     * flavor, which bundles its speech models, so the Packs card there has
+     * nothing to pick, download or report.
      */
-    fun expectedPacks(): List<PackDescriptor> =
-        packs.eligiblePacks(deviceRamGb).filter { BuildConfig.HAS_LLM || it.kind != PackKind.LLM }
+    fun expectedPacks(): List<PackDescriptor> {
+        val bundled = bundledPackIds()
+        return packs.eligiblePacks(deviceRamGb)
+            .filter { (BuildConfig.HAS_LLM || it.kind != PackKind.LLM) && it.id !in bundled }
+    }
+
+    /**
+     * Models packaged INSIDE this APK under assets/models — the practice
+     * flavor ships its speech models so a tablet needs no folder and no
+     * download (docs/practice-flavor.md; scripts/fetch-practice-models.sh).
+     * The list is the APK's, read once.
+     */
+    private val bundledModelAssets: Set<String> by lazy {
+        runCatching { appContext.assets.list(BUNDLED_MODELS_DIR)?.toSet() }.getOrNull().orEmpty()
+    }
+
+    /** Catalog packs whose file rides inside this APK. */
+    fun bundledPackIds(): Set<String> =
+        packs.catalog.packs
+            .filter { it.resolvedInstallPath.substringAfterLast('/') in bundledModelAssets }
+            .map { it.id }
+            .toSet()
+
+    private val _bundledModelsReady = MutableStateFlow(false)
+
+    /**
+     * False only while a launch is still copying bundled models out of the
+     * APK (the first launch after an install, ~700 MB, seconds on UFS). The
+     * splash waits for it, so no room can open and fall back to a platform
+     * engine because the file was a second away from existing.
+     */
+    val bundledModelsReady: StateFlow<Boolean> = _bundledModelsReady
+
+    /**
+     * Copies each bundled model out of the APK into files/models, once: the
+     * engines load from a path and an asset has none. Streaming copy to a
+     * temp name then rename, so a launch killed mid-copy never leaves a half
+     * file the next launch would trust. Progress lands in the first fifth of
+     * the preload bar; a failure (no space, mostly) is logged and the app
+     * simply behaves as if that pack were not installed.
+     */
+    private fun extractBundledModels() {
+        val names = bundledModelAssets.sorted()
+        if (names.isEmpty()) return
+        val dir = File(appContext.filesDir, BUNDLED_MODELS_DIR).apply { mkdirs() }
+        for ((i, name) in names.withIndex()) {
+            val out = File(dir, name)
+            if (out.isFile && out.length() > 0L) continue
+            val started = System.nanoTime()
+            val tmp = File(dir, "$name.unpack")
+            runCatching {
+                // The size for the free-space check comes from the descriptor of
+                // the stored entry (noCompress keeps models uncompressed). If an
+                // asset ever ends up compressed, openFd refuses — then copy
+                // anyway, and a full disk fails the copy itself.
+                runCatching { appContext.assets.openFd("$BUNDLED_MODELS_DIR/$name").use { it.length } }
+                    .getOrNull()?.let { size ->
+                        val need = (size * 1.05).toLong()
+                        check(appContext.filesDir.usableSpace > need) {
+                            "not enough storage to unpack $name: need ~${need / 1_000_000} MB"
+                        }
+                    }
+                appContext.assets.open("$BUNDLED_MODELS_DIR/$name").use { input ->
+                    tmp.outputStream().use { output -> input.copyTo(output, 1 shl 20) }
+                }
+                check(tmp.renameTo(out)) { "could not place $name" }
+                Log.i(
+                    MEM_TAG,
+                    "unpacked bundled $name (${out.length() / 1_000_000} MB) in " +
+                        "${(System.nanoTime() - started) / 1_000_000}ms",
+                )
+            }.onFailure {
+                tmp.delete()
+                Log.w(MEM_TAG, "unpacking bundled $name failed: ${it.message}")
+            }
+            _preloadProgress.value = (i + 1f) / names.size / 5f
+        }
+    }
 
     /**
      * TESTING ONLY (debug builds): disable TLS certificate verification for pack
@@ -559,6 +638,15 @@ class AppContainer private constructor(context: Context) {
 
     private fun preloadInternal(): Job = appScope.launch(Dispatchers.IO) {
         _preloadProgress.value = 0f
+        // First, and whatever happens: the models this APK carries have to be
+        // files before any engine below can find them, and the splash is
+        // waiting on the flag either way.
+        try {
+            runCatching { extractBundledModels() }
+                .onFailure { Log.w(MEM_TAG, "preload: unpacking bundled models failed", it) }
+        } finally {
+            _bundledModelsReady.value = true
+        }
         // Rendered in a blink, but on the turn path if left to first use.
         runCatching { ListeningAck.warmUp() }
         runCatching { sileroVad()?.warmUp() }
@@ -1074,6 +1162,9 @@ class AppContainer private constructor(context: Context) {
 
         // Pronunciation coach (wav2vec2 IPA phoneme CTC, int8).
         private const val GOP_MODEL_PATH = "models/wav2vec2-phoneme-int8.onnx"
+
+        /** Asset directory (and files/ subdirectory) the bundled models live in. */
+        private const val BUNDLED_MODELS_DIR = "models"
 
         private const val MEM_TAG = "TukiMem"
         private const val REWARD_TAG = "TukiReward"

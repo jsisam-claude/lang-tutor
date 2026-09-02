@@ -37,6 +37,9 @@ app/src/main/assets/kokoro/
 # Hands-free VAD asset fetched by scripts/fetch-vad-asset.sh (pinned SHA-256)
 app/src/main/assets/vad/
 
+# The practice flavor's bundled speech models, fetched by scripts/fetch-practice-models.sh (pinned SHA-256)
+app/src/practice/assets/models/
+
 # Streaming-ASR weights fetched by scripts/fetch-asr-stream-assets.sh (pinned SHA-256)
 app/src/main/assets/asr-stream/
 

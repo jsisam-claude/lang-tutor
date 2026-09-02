@@ -25,7 +25,7 @@ one the app runs the scripted demo engine and the Conversation screen shows
     (E4B)* — full quality, strongest Hebrew. (Pro XL also sees the experimental 8B.)
   - E4B on a 12 GB Pixel 9 is the borderline case to watch on-device (see caveats).
   - **Galaxy Tab S10 FE (8 GB)** → the *practice* flavor: no model at all, every
-    practice room, speech models from the pack folder ([practice-flavor.md](practice-flavor.md)).
+    practice room, speech models built into the APK ([practice-flavor.md](practice-flavor.md)).
 - `adb` connected; a machine with the Android SDK to build the APK, or just
   download CI's APK from the rolling `debug-latest` release (TESTING.md §1).
 
