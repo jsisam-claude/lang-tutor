@@ -56,6 +56,39 @@ a model trained on Scottish speech — Piper is the candidate, its models are
 a Scottish one can be chosen rather than guessed. That is a second TTS engine
 and has not been added.
 
+### Which accents may exist here at all
+
+**No accent in this app destroys an English phonemic contrast.** That single
+rule decided most of what shipped. A rewrite that merges think with sink, ship
+with sheep or three with tree is accurate description and a terrible teacher,
+and it is worse here than almost anywhere: Hebrew shares those exact gaps, so
+the app would be modelling the learner's own error back at them and then
+scoring it as correct.
+
+That rules out most of what makes a second-language accent recognisable — the
+tense–lax mergers, TH-stopping, final devoicing, p→b — which is why the sets
+are short. `PhonologyTest` enforces the rule over a list of minimal pairs, so
+a future accent cannot quietly reintroduce one.
+
+### Native accents teach; second-language accents only speak
+
+`Phonology.Scope` is the difference, and it is not cosmetic.
+
+- **EVERYWHERE** — Scottish, Irish. A native accent is a legitimate model of
+  English, so the coach and the gloss follow it: the learner hears one accent,
+  reads letters that match it, and is scored against it.
+- **VOICE_ONLY** — Italian, French, Spanish, Hebrew, Arabic, Mandarin. These
+  describe someone still learning English. The voice may sound like that; what
+  is TAUGHT does not move. The coach keeps expecting standard English and the
+  gloss keeps showing it, or the app would grade a learner against a learner's
+  approximation.
+
+The Hebrew accent is worth having for precisely the reason it needs the most
+care: it is the learners' own. What it does NOT contain is the list of
+Hebrew-L1 substitutions this app exists to correct — θ→s, ð→d, æ→ɛ, w→v. It
+carries the uvular resh and a low central TRAP, and nothing that would teach
+the error.
+
 ### Three things have to agree, or the app contradicts itself
 
 The accent is not only what the child hears. Two other places derive from the
@@ -69,9 +102,21 @@ same phoneme string, and both now take the voice's phonology:
   word. Left alone, the letters would teach a pronunciation the child is not
   hearing.
 
-Both vocabularies were checked rather than assumed: every symbol the rewrite
-emits is in Kokoro's 114-token vocabulary and in the coach's 392-phone
-vocabulary, and the tests hold it there — `encode` drops what it does not
+- **The Hebrew gloss again, as a hard invariant.** The first accent shipped
+  emitting `e`, `o`, `ɾ` and `ɒ`, none of which `HebrewTransliteration` knew.
+  `ofIpa` drops what it does not recognise — deliberately, since a guessed
+  letter is worse than a missing one — so "red" was glossed אֶד and "bird"
+  came out identical to "bed". Every rhotic and every flat vowel silently
+  vanished from the column the learner reads. The test that was meant to catch
+  it only asserted that the accented gloss equalled `ofIpa` of the accented
+  string and differed from the plain one: both stayed true the whole time
+  sounds were being deleted. Consistency is not correctness.
+
+Three vocabularies are now checked rather than assumed: every symbol a
+`Phonology` emits must be in Kokoro's 114-token vocabulary, scorable in the
+coach's 392-phone vocabulary, AND renderable by the Hebrew gloss. The check
+runs over each accent's declared alphabet, so it covers accents nobody has
+written yet — `encode` drops what it does not
 recognise silently, so an off-vocabulary symbol would not fail, it would
 delete a sound from the middle of a word. Each substitution is one symbol for
 one symbol, so the token count never moves and neither the style row nor the

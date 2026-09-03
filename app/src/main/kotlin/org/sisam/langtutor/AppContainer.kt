@@ -17,6 +17,8 @@ import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.PhrasebankRepository
 import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.content.ResourcePhrasebankRepository
+import org.sisam.langtutor.content.PicturePackRepository
+import org.sisam.langtutor.content.ResourcePicturePackRepository
 import org.sisam.langtutor.content.ResourceTwisterRepository
 import org.sisam.langtutor.content.TwisterRepository
 import org.sisam.langtutor.engine.HebrewPhonemes
@@ -444,16 +446,24 @@ class AppContainer private constructor(context: Context) {
     }
 
     /**
-     * The accent the chosen voice speaks in.
+     * The accent the pronunciation coach expects and the Hebrew gloss shows.
      *
-     * Held here rather than read off the TTS engine because the two things
-     * that must AGREE with the voice — the pronunciation coach and the Hebrew
-     * gloss — both outlive it: the engine is released under memory pressure,
-     * and neither of them should start disagreeing with the voice because a
-     * trim happened to fire first.
+     * NOT simply the voice's accent. A native accent is a legitimate model of
+     * English, so the coach and the gloss follow it and the learner hears,
+     * reads and is scored on one consistent thing. A second-language accent
+     * describes someone still learning English — so the voice may sound like
+     * that, and the target must not move: the coach keeps expecting standard
+     * English and the gloss keeps showing it. Otherwise the app would grade a
+     * learner against a learner's approximation, and for the Hebrew accent
+     * specifically it would be marking the very substitutions the lessons
+     * exist to correct.
+     *
+     * Held here rather than read off the TTS engine because both consumers
+     * outlive it: the engine is released under memory pressure, and neither
+     * should start disagreeing with the voice because a trim fired first.
      */
     @Volatile
-    var voicePhonology: Phonology = TukiVoices.byId(null).phonology
+    var voicePhonology: Phonology = teachingPhonologyOf(TukiVoices.byId(null))
         private set
 
     fun applyVoice(voiceId: String?) {
@@ -463,8 +473,15 @@ class AppContainer private constructor(context: Context) {
             Log.w(MEM_TAG, "voice ${chosen.id} not packaged in this build; using ${effective.id}")
         }
         bundledTtsEngine()?.voiceAsset = effective.id
-        voicePhonology = effective.phonology
+        voicePhonology = teachingPhonologyOf(effective)
     }
+
+    private fun teachingPhonologyOf(voice: TukiVoice): Phonology =
+        if (voice.phonology.scope == Phonology.Scope.EVERYWHERE) {
+            voice.phonology
+        } else {
+            Phonology.GENERAL_AMERICAN
+        }
 
     private val _speaking = MutableStateFlow(false)
 
@@ -955,6 +972,9 @@ class AppContainer private constructor(context: Context) {
     /** The tongue twisters — authored like the phrasebank, organised by the
      *  sound they drill rather than by grammar (docs/tongue-twisters.md). */
     val twisters: TwisterRepository by lazy { ResourceTwisterRepository() }
+
+    /** Named word sets for the picture room (docs/picture-vocabulary.md). */
+    val picturePacks: PicturePackRepository by lazy { ResourcePicturePackRepository() }
 
     val rewards = RewardBus()
 

@@ -16,9 +16,17 @@ import org.sisam.langtutor.speech.TutorLanguage
 data class PictureCard(
     val word: String,
     val hebrew: String?,
-    /** Emoji (or future art id) keyed on the WORD — see the asset note in
-     *  docs/picture-vocabulary.md. */
-    val emoji: String,
+    /**
+     * The FALLBACK glyph, keyed on the word — see the asset note in
+     * docs/picture-vocabulary.md.
+     *
+     * Null where the word has curated art and no emoji, which is the normal
+     * case for the picture packs: the emoji map was authored for the
+     * curriculum's own 48 words, and demanding one would have kept numbers,
+     * shapes and most animals out of the room despite having icons drawn for
+     * them.
+     */
+    val emoji: String? = null,
 )
 
 sealed interface PictureState {

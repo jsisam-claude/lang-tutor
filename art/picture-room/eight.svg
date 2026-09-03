@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <circle cx="22" cy="42" r="10" fill="#FF7043" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="19" cy="38.5" rx="3" ry="2" fill="#FFFFFF"/>
+  <circle cx="50" cy="42" r="10" fill="#FF7043" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="47" cy="38.5" rx="3" ry="2" fill="#FFFFFF"/>
+  <circle cx="78" cy="42" r="10" fill="#FF7043" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="75" cy="38.5" rx="3" ry="2" fill="#FFFFFF"/>
+  <circle cx="106" cy="42" r="10" fill="#FF7043" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="103" cy="38.5" rx="3" ry="2" fill="#FFFFFF"/>
+  <circle cx="22" cy="86" r="10" fill="#FF7043" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="19" cy="82.5" rx="3" ry="2" fill="#FFFFFF"/>
+  <circle cx="50" cy="86" r="10" fill="#FF7043" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="47" cy="82.5" rx="3" ry="2" fill="#FFFFFF"/>
+  <circle cx="78" cy="86" r="10" fill="#FF7043" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="75" cy="82.5" rx="3" ry="2" fill="#FFFFFF"/>
+  <circle cx="106" cy="86" r="10" fill="#FF7043" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="103" cy="82.5" rx="3" ry="2" fill="#FFFFFF"/>
+</svg>

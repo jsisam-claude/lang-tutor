@@ -248,4 +248,16 @@ object PictureArt {
     )
 
     fun emojiFor(word: String): String? = EMOJI[word.lowercase()]
+
+    /**
+     * Can this word be SHOWN at all?
+     *
+     * The question every caller building a card actually means. Asking
+     * [emojiFor] instead — as the room did while its only source was the
+     * curriculum, whose 48 words all happen to have both — silently drops
+     * every word that has a drawn icon and no emoji, which is most of the
+     * set.
+     */
+    fun hasArt(word: String): Boolean =
+        drawableFor(word) != null || emojiFor(word) != null
 }

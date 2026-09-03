@@ -236,15 +236,19 @@ class HebrewTransliterationTest {
         // burr and the Hebrew letters under it still spell the American
         // vowels, the child is being shown one thing and hearing another.
         val phonemizer = KokoroPhonemizer.load()
-        val spoken = Phonology.SCOTTISH.applyTo(phonemizer.phonemizeToIpa("gold"))
+        val spoken = Phonology.SCOTTISH.applyTo(phonemizer.phonemizeToIpa("take"))
         assertEquals(
             HebrewTransliteration.ofIpa(spoken),
-            HebrewTransliteration.gloss("gold", phonemizer, Phonology.SCOTTISH).single().hebrew,
+            HebrewTransliteration.gloss("take", phonemizer, Phonology.SCOTTISH).single().hebrew,
         )
+        // "take" is the honest probe: the flat FACE vowel loses the yod the
+        // diphthong wrote, so the letters visibly move. "gold" would not have
+        // been — Hebrew spells /o/ and /oʊ/ with the same vav, so an accent
+        // can be perfectly applied and change nothing there.
         assertTrue(
             "the accent has to reach the letters at all",
-            HebrewTransliteration.gloss("gold", phonemizer, Phonology.SCOTTISH).single().hebrew !=
-                HebrewTransliteration.gloss("gold", phonemizer).single().hebrew,
+            HebrewTransliteration.gloss("take", phonemizer, Phonology.SCOTTISH).single().hebrew !=
+                HebrewTransliteration.gloss("take", phonemizer).single().hebrew,
         )
     }
 

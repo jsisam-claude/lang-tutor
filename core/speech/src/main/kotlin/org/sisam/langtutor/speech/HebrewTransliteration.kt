@@ -89,6 +89,21 @@ object HebrewTransliteration {
      * start, or straight after another vowel — gets `א` to sit on, which is
      * the same thing Hebrew does for `אור` and `אני`.
      */
+    /**
+     * Can this symbol reach the Hebrew column at all?
+     *
+     * [ofIpa] drops what it does not recognise, silently and by design — a
+     * guessed letter would be worse than a missing one. That makes this the
+     * question a caller has to be able to ask BEFORE shipping a phoneme
+     * string: an accent emitting a symbol with no entry here loses a sound
+     * from the letters the learner reads, and nothing complains. It shipped
+     * once exactly that way.
+     *
+     * Stress marks are not "renderable" and not a loss: Hebrew points carry
+     * no stress, so they are silent on purpose.
+     */
+    fun renders(c: Char): Boolean = c in CONSONANTS || c in VOWELS || c in STRESS_MARKS
+
     fun ofIpa(ipa: String): String {
         val out = StringBuilder(ipa.length * 2)
         var held: Consonant? = null
@@ -213,6 +228,14 @@ object HebrewTransliteration {
         'n' to Consonant("\u05e0"),                // nun
         'ŋ' to Consonant("\u05e0\u05d2"),          // nun + gimel     sing
         'ɹ' to Consonant("\u05e8"),                // resh
+        // Every r an accent can produce is still a resh to a Hebrew reader.
+        // Israeli resh is itself uvular, so ʁ is the closest of the four to
+        // the letter as it is actually pronounced here.
+        'ɾ' to Consonant("\u05e8"),                // resh — tapped r
+        'ɻ' to Consonant("\u05e8"),                // resh — retroflex r
+        'r' to Consonant("\u05e8"),                // resh — trilled r
+        'ʁ' to Consonant("\u05e8"),                // resh — uvular R
+        'β' to Consonant("\u05d1"),                // bet — bilabial v
         's' to Consonant("\u05e1"),                // samekh
         'ʃ' to Consonant("\u05e9", SHIN_DOT),      // shin + shin dot  ship
         'z' to Consonant("\u05d6"),                // zayin
@@ -230,10 +253,18 @@ object HebrewTransliteration {
         'ɪ' to Vowel(HIRIQ),                    // sit
         'i' to Vowel(HIRIQ, YOD),               // see
         'ɔ' to Vowel("", HOLAM_MALE),           // ball
+        'ɒ' to Vowel("", HOLAM_MALE),           // ball, cot-caught merged
         'ʊ' to Vowel("", SHURUK),               // book
         'u' to Vowel("", SHURUK),               // blue
         'ɜ' to Vowel(SEGOL),                    // bird — the ɹ that follows writes itself
         'ɚ' to Vowel(SEGOL, RESH),              // butter
+        // The monophthongs an accent can produce where GA has a diphthong:
+        // same vowel, without the glide the yod would write.
+        'e' to Vowel(TSERE),                    // day, said flat
+        'o' to Vowel("", HOLAM_MALE),           // go, said flat
+        'a' to Vowel(PATAH),                    // low central TRAP
+        'ɐ' to Vowel(PATAH),                    // unreduced schwa
+        'œ' to Vowel(SEGOL),                    // sœur — nearest Hebrew vowel
         'A' to Vowel(TSERE, YOD),               // day  (eɪ)
         'I' to Vowel(PATAH, YOD),               // my   (aɪ)
         'W' to Vowel(PATAH, SHURUK),            // now  (aʊ)

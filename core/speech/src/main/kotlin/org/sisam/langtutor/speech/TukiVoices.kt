@@ -21,6 +21,15 @@ data class TukiVoice(
     val gender: Gender,
     /** Set when this voice is MADE from bundled ones rather than shipped. */
     val blend: VoiceBlend? = null,
+    /**
+     * The style table to read, when it is not this voice's own [id].
+     *
+     * An accent voice is a shipped table plus a [Phonology]: the table says
+     * who is speaking, the phonology says where they are from. It needs an id
+     * of its own so the picker and the stored preference can name it, and
+     * that id is not an asset.
+     */
+    val table: String? = null,
     /** How this voice behaves on personality lines; null means the parrot. */
     val character: VoiceCharacter? = null,
     /**
@@ -37,7 +46,7 @@ data class TukiVoice(
     enum class Gender { FEMALE, MALE }
 
     /** Every table this voice needs present in the build to be usable. */
-    val sources: List<String> get() = blend?.let { listOf(it.a, it.b) } ?: listOf(id)
+    val sources: List<String> get() = blend?.let { listOf(it.a, it.b) } ?: listOf(table ?: id)
 }
 
 /**
@@ -139,7 +148,6 @@ object TukiVoices {
             blend = VoiceBlend(a = "bm_lewis.bin", b = "bm_george.bin", weight = 0.65f),
             // The blend alone would be an old Englishman: the burr is in the
             // phonemes, and only this line puts it there.
-            phonology = Phonology.SCOTTISH,
             character = VoiceCharacter(
                 // Down about a tone and a half, and a shade slower: old and
                 // unhurried rather than the parrot's small-and-quick.
@@ -150,7 +158,38 @@ object TukiVoices {
                 warbleDepth = 0.05f,
                 flourish = false,
             ),
+            // The blend alone would be an old Englishman: the burr is in the
+            // phonemes, and only this line puts it there.
+            phonology = Phonology.SCOTTISH,
         ),
+        accent("irish", "Irish", "bf_emma", Phonology.IRISH),
+        accent("italian", "Italian", "am_onyx", Phonology.ITALIAN),
+        accent("french", "French", "af_nicole", Phonology.FRENCH),
+        accent("spanish", "Spanish", "am_liam", Phonology.SPANISH),
+        accent("hebrew", "Hebrew", "af_sarah", Phonology.HEBREW),
+        accent("arabic", "Arabic", "am_eric", Phonology.ARABIC),
+        accent("mandarin", "Mandarin", "bf_lily", Phonology.MANDARIN),
+    )
+
+    /**
+     * English spoken with an accent.
+     *
+     * Each is an ordinary shipped table plus a [Phonology] — the table is who
+     * is speaking, the phonology is where they are from, and neither can do
+     * the other's job. Different tables on purpose, so two accents are never
+     * the same person saying different sounds.
+     *
+     * Labelled by LANGUAGE, which is the accurate name for what a rewrite of
+     * English phonemes by first-language transfer actually is, and the only
+     * framing that stays a description rather than an impression of a group.
+     */
+    private fun accent(key: String, label: String, table: String, phonology: Phonology) = TukiVoice(
+        id = "$key.accent",
+        label = label,
+        accent = TukiVoice.Accent.CHARACTER,
+        gender = if (table[1] == 'f') TukiVoice.Gender.FEMALE else TukiVoice.Gender.MALE,
+        table = "$table.bin",
+        phonology = phonology,
     )
 
     /** Falls back to the default rather than throwing: a preference written by

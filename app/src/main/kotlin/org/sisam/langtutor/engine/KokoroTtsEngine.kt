@@ -109,9 +109,13 @@ class KokoroTtsEngine(
         // A blended voice has no table of its own: it IS the mix of two that
         // are already in the APK, computed once per switch (510x256 floats,
         // sub-millisecond) rather than shipped as a third file.
-        TukiVoices.byId(asset).blend
-            ?.let { VoiceBlend.mix(readTable(it.a), readTable(it.b), it.weight) }
-            ?: readTable(asset)
+        TukiVoices.byId(asset).let { voice ->
+            voice.blend
+                ?.let { VoiceBlend.mix(readTable(it.a), readTable(it.b), it.weight) }
+            // An accent voice has an id of its own and borrows a shipped
+            // table; everything else is named after the file it reads.
+                ?: readTable(voice.table ?: asset)
+        }
     } catch (e: java.io.FileNotFoundException) {
         // A persisted preference can name a voice THIS build does not carry —
         // the classic case is a local build made without re-running

@@ -1,0 +1,318 @@
+{
+  "format": "tuki-picture-packs-v1",
+  "notes": "Named sets for the picture room, so a learner can ask for numbers or animals rather than taking whatever the curriculum happens to hold. en is the word taught; he is its Hebrew meaning; the Hebrew-letter pronunciation is DERIVED at runtime and never authored here. A pack marked review=pending has not yet had a native read: it is shown, but the standing rule is that it is not finished until that read happens.",
+  "packs": [
+    {
+      "id": "numbers",
+      "title": {
+        "en": "Numbers",
+        "he": "מספרים"
+      },
+      "review": "pending",
+      "words": [
+        {
+          "en": "one",
+          "he": "אחת"
+        },
+        {
+          "en": "two",
+          "he": "שתיים"
+        },
+        {
+          "en": "three",
+          "he": "שלוש"
+        },
+        {
+          "en": "four",
+          "he": "ארבע"
+        },
+        {
+          "en": "five",
+          "he": "חמש"
+        },
+        {
+          "en": "six",
+          "he": "שש"
+        },
+        {
+          "en": "seven",
+          "he": "שבע"
+        },
+        {
+          "en": "eight",
+          "he": "שמונה"
+        },
+        {
+          "en": "nine",
+          "he": "תשע"
+        },
+        {
+          "en": "ten",
+          "he": "עשר"
+        }
+      ]
+    },
+    {
+      "id": "shapes",
+      "title": {
+        "en": "Shapes",
+        "he": "צורות"
+      },
+      "review": "pending",
+      "words": [
+        {
+          "en": "circle",
+          "he": "עיגול"
+        },
+        {
+          "en": "square",
+          "he": "ריבוע"
+        },
+        {
+          "en": "triangle",
+          "he": "משולש"
+        },
+        {
+          "en": "rectangle",
+          "he": "מלבן"
+        },
+        {
+          "en": "star",
+          "he": "כוכב"
+        },
+        {
+          "en": "heart",
+          "he": "לב"
+        },
+        {
+          "en": "oval",
+          "he": "אליפסה"
+        },
+        {
+          "en": "diamond",
+          "he": "מעוין"
+        },
+        {
+          "en": "arrow",
+          "he": "חץ"
+        }
+      ]
+    },
+    {
+      "id": "maths",
+      "title": {
+        "en": "Maths",
+        "he": "חשבון"
+      },
+      "review": "pending",
+      "words": [
+        {
+          "en": "plus",
+          "he": "פלוס"
+        },
+        {
+          "en": "minus",
+          "he": "מינוס"
+        },
+        {
+          "en": "equals",
+          "he": "שווה"
+        },
+        {
+          "en": "half",
+          "he": "חצי"
+        },
+        {
+          "en": "pair",
+          "he": "זוג"
+        }
+      ]
+    },
+    {
+      "id": "animals",
+      "title": {
+        "en": "Animals",
+        "he": "חיות"
+      },
+      "review": "pending",
+      "words": [
+        {
+          "en": "ant",
+          "he": "נמלה"
+        },
+        {
+          "en": "bear",
+          "he": "דוב"
+        },
+        {
+          "en": "bee",
+          "he": "דבורה"
+        },
+        {
+          "en": "bird",
+          "he": "ציפור"
+        },
+        {
+          "en": "butterfly",
+          "he": "פרפר"
+        },
+        {
+          "en": "camel",
+          "he": "גמל"
+        },
+        {
+          "en": "cat",
+          "he": "חתול"
+        },
+        {
+          "en": "cow",
+          "he": "פרה"
+        },
+        {
+          "en": "crab",
+          "he": "סרטן"
+        },
+        {
+          "en": "dog",
+          "he": "כלב"
+        },
+        {
+          "en": "dolphin",
+          "he": "דולפין"
+        },
+        {
+          "en": "duck",
+          "he": "ברווז"
+        },
+        {
+          "en": "elephant",
+          "he": "פיל"
+        },
+        {
+          "en": "fish",
+          "he": "דג"
+        },
+        {
+          "en": "fox",
+          "he": "שועל"
+        },
+        {
+          "en": "frog",
+          "he": "צפרדע"
+        },
+        {
+          "en": "giraffe",
+          "he": "ג'ירפה"
+        },
+        {
+          "en": "goat",
+          "he": "עז"
+        },
+        {
+          "en": "hamster",
+          "he": "אוגר"
+        },
+        {
+          "en": "hippo",
+          "he": "היפופוטם"
+        },
+        {
+          "en": "horse",
+          "he": "סוס"
+        },
+        {
+          "en": "kangaroo",
+          "he": "קנגורו"
+        },
+        {
+          "en": "ladybug",
+          "he": "פרת משה רבנו"
+        },
+        {
+          "en": "lion",
+          "he": "אריה"
+        },
+        {
+          "en": "monkey",
+          "he": "קוף"
+        },
+        {
+          "en": "mouse",
+          "he": "עכבר"
+        },
+        {
+          "en": "owl",
+          "he": "ינשוף"
+        },
+        {
+          "en": "panda",
+          "he": "פנדה"
+        },
+        {
+          "en": "parrot",
+          "he": "תוכי"
+        },
+        {
+          "en": "penguin",
+          "he": "פינגווין"
+        },
+        {
+          "en": "pig",
+          "he": "חזיר"
+        },
+        {
+          "en": "rabbit",
+          "he": "ארנב"
+        },
+        {
+          "en": "seal",
+          "he": "כלב ים"
+        },
+        {
+          "en": "shark",
+          "he": "כריש"
+        },
+        {
+          "en": "sheep",
+          "he": "כבשה"
+        },
+        {
+          "en": "snail",
+          "he": "חילזון"
+        },
+        {
+          "en": "snake",
+          "he": "נחש"
+        },
+        {
+          "en": "spider",
+          "he": "עכביש"
+        },
+        {
+          "en": "squirrel",
+          "he": "סנאי"
+        },
+        {
+          "en": "tiger",
+          "he": "טיגריס"
+        },
+        {
+          "en": "turtle",
+          "he": "צב"
+        },
+        {
+          "en": "whale",
+          "he": "לווייתן"
+        },
+        {
+          "en": "worm",
+          "he": "תולעת"
+        },
+        {
+          "en": "zebra",
+          "he": "זברה"
+        }
+      ]
+    }
+  ]
+}

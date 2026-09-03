@@ -36,6 +36,13 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlin.random.Random
 import kotlinx.coroutines.launch
+import androidx.compose.material3.FilterChip
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalConfiguration
+import org.sisam.langtutor.content.PicturePack
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.Activity
@@ -52,7 +59,11 @@ import org.sisam.langtutor.ui.common.rememberGloss
 import org.sisam.langtutor.ui.common.rememberTranslation
 import org.sisam.langtutor.ui.reward.RewardKind
 
-class PictureViewModel(private val container: AppContainer) : ViewModel() {
+class PictureViewModel(
+    private val container: AppContainer,
+    /** Null teaches the curriculum's own vocabulary, as the room always has. */
+    private val packId: String? = null,
+) : ViewModel() {
 
     private val room = container.createPictureVocab(viewModelScope)
     val state = room.state
@@ -75,19 +86,39 @@ class PictureViewModel(private val container: AppContainer) : ViewModel() {
      * a small random handful (3-5 is what a learner holds — see the room
      * doc), fresh every round because recognition thrives on variety.
      */
-    private suspend fun freshCards(): List<PictureCard> =
-        container.content.listUnits()
+    private suspend fun freshCards(): List<PictureCard> = candidates()
+        .filter { PictureArt.hasArt(it.word) }
+        .distinctBy { it.word }
+        .shuffled(Random.Default)
+        .take(SET_SIZE)
+
+    /**
+     * A chosen pack, or the curriculum's own vocabulary when none is chosen.
+     *
+     * A pack whose art has not landed yet simply contributes fewer cards; the
+     * [PictureArt.hasArt] filter above is what keeps a wordless card off the
+     * screen, and a card with a missing picture teaches nothing.
+     */
+    private suspend fun candidates(): List<PictureCard> {
+        if (packId != null) {
+            val pack = runCatching { container.picturePacks.packs() }.getOrDefault(emptyList())
+                .firstOrNull { it.id == packId }
+            if (pack != null) {
+                return pack.words.map { PictureCard(it.en, it.he, PictureArt.emojiFor(it.en)) }
+            }
+        }
+        return container.content.listUnits()
             .mapNotNull { container.content.loadUnit(it.id) }
             .flatMap { it.activities }
             .filterIsInstance<Activity.Vocab>()
-            .mapNotNull { v ->
-                PictureArt.emojiFor(v.word)?.let {
-                    PictureCard(v.word, v.translation.he.takeIf(String::isNotBlank), it)
-                }
+            .map {
+                PictureCard(
+                    it.word,
+                    it.translation.he.takeIf(String::isNotBlank),
+                    PictureArt.emojiFor(it.word),
+                )
             }
-            .distinctBy { it.word }
-            .shuffled(Random.Default)
-            .take(SET_SIZE)
+    }
 
     fun again() {
         viewModelScope.launch { room.startRound(freshCards()) }
@@ -111,8 +142,18 @@ class PictureViewModel(private val container: AppContainer) : ViewModel() {
  */
 @Composable
 fun PictureScreen(container: AppContainer) {
+    // Null is the curriculum's own vocabulary, which is what the room taught
+    // before there were packs and what it still opens on.
+    var packId by rememberSaveable { mutableStateOf<String?>(null) }
+    val packs by produceState(initialValue = emptyList<PicturePack>(), container) {
+        value = runCatching { container.picturePacks.packs() }.getOrDefault(emptyList())
+    }
+    val hebrew = LocalConfiguration.current.locales[0].language in setOf("he", "iw")
+    // Keyed on the pack: choosing one starts a fresh session over its words
+    // rather than reusing the round already in flight.
     val viewModel: PictureViewModel = viewModel(
-        factory = viewModelFactory { initializer { PictureViewModel(container) } },
+        key = packId ?: "curriculum",
+        factory = viewModelFactory { initializer { PictureViewModel(container, packId) } },
     )
     val state by viewModel.state.collectAsState()
 
@@ -132,6 +173,25 @@ fun PictureScreen(container: AppContainer) {
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.weight(1f),
             )
+        }
+        if (packs.isNotEmpty()) {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                FilterChip(
+                    selected = packId == null,
+                    onClick = { packId = null },
+                    label = { Text(stringResource(R.string.picture_pack_any)) },
+                )
+                for (pack in packs) {
+                    FilterChip(
+                        selected = packId == pack.id,
+                        onClick = { packId = pack.id },
+                        label = { Text(if (hebrew) pack.title.he else pack.title.en) },
+                    )
+                }
+            }
         }
         EngineStatusLine()
 
@@ -247,7 +307,7 @@ fun PictureScreen(container: AppContainer) {
 @Composable
 private fun PictureArtView(
     word: String,
-    emoji: String,
+    emoji: String?,
     artSize: Dp,
     emojiSize: TextUnit,
     modifier: Modifier = Modifier,
@@ -259,7 +319,7 @@ private fun PictureArtView(
             contentDescription = null,
             modifier = modifier.size(artSize),
         )
-    } else {
+    } else if (emoji != null) {
         Text(text = emoji, fontSize = emojiSize, modifier = modifier)
     }
 }

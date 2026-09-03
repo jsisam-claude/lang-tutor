@@ -126,7 +126,7 @@
     <string name="parent_voice_hint">Tap a voice to hear it. The choice is saved.</string>
     <string name="parent_voice_american">American</string>
     <string name="parent_voice_british">British</string>
-    <string name="parent_voice_character">Characters</string>
+    <string name="parent_voice_character">Characters and accents</string>
     <string name="splash_tagline">Getting Tuki ready…</string>
     <string name="chat_title">Just chat</string>
     <string name="chat_subtitle">Talk with Tuki</string>
@@ -138,6 +138,7 @@
 
     <string name="vocab_pick_level">What shall we practice?</string>
     <string name="vocab_pick_topic">Topic</string>
+    <string name="picture_pack_any">From the lessons</string>
     <string name="vocab_topic_any">Anything ✨</string>
     <string name="vocab_fresh">Tuki makes up new lines every round ✨</string>
     <string name="vocab_level_words">Words</string>
