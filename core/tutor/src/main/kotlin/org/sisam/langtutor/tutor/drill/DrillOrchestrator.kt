@@ -124,6 +124,16 @@ class DrillOrchestrator(
     private var rounds = 0
     private var turnActive = false
 
+    /**
+     * Bumped whenever the feedback on screen stops belonging to the attempt
+     * that produced it — a new attempt starting, or the item changing.
+     *
+     * The coach runs off the turn's critical path now, so its answer can
+     * arrive after the child has moved on; this is what stops one item's
+     * per-sound colours from being painted over the next item's line.
+     */
+    private val scoreEpoch = java.util.concurrent.atomic.AtomicInteger(0)
+
     suspend fun startRound(round: List<DrillItem>) {
         if (round.isEmpty()) return
         items = round
@@ -156,6 +166,7 @@ class DrillOrchestrator(
         val current = _state.value
         if (turnActive || current !is DrillState.AwaitingChild) return
         scope.launch {
+            scoreEpoch.incrementAndGet()
             _pronunciation.value = null
             _state.value = DrillState.Listening(current.item, current.index, current.total)
             asr.startCapture(RecognitionHint.ConstrainedVocab(listOf(current.item.text)))
@@ -204,7 +215,15 @@ class DrillOrchestrator(
                 _state.value = DrillState.AwaitingChild(at.item, at.index, at.total, tries)
                 return
             }
-            scorePronunciation(result, at.item.text)
+            // NOT awaited. The verdict is WordMatch over the transcript and
+            // nothing here reads the score — the class doc has always said the
+            // coach never gates progress — so waiting for a ~320 MB model to
+            // run before saying "Great job!" bought the child nothing and cost
+            // them a full coach inference, plus a cold session load whenever a
+            // memory trim had released it. The colours arrive when they
+            // arrive, and land only if the attempt they describe is still the
+            // one on screen.
+            scoreInBackground(result, at.item.text)
             _lastMissedWords.value = WordMatch.missedWordIndexes(at.item.text, result.transcript)
             if (WordMatch.matches(at.item.text, result.transcript)) {
                 correct++
@@ -235,6 +254,7 @@ class DrillOrchestrator(
     private suspend fun advance() {
         index++
         tries = 0
+        scoreEpoch.incrementAndGet()
         _lastMissedWords.value = emptySet()
         if (index >= items.size) {
             _state.value = DrillState.RoundDone(correct, items.size, rounds)
@@ -243,11 +263,26 @@ class DrillOrchestrator(
         }
     }
 
-    private suspend fun scorePronunciation(result: AsrResult, target: String) {
+    /**
+     * Score the attempt beside the turn rather than in front of it.
+     *
+     * Started, never awaited: the turn continues into the praise and the next
+     * item while the coach works. A result is published only if the epoch it
+     * started in is still current, so a slow score for item 3 cannot colour
+     * item 4 — the failure this decoupling would otherwise introduce.
+     */
+    private fun scoreInBackground(result: AsrResult, target: String) {
         val clip = result.audio ?: return
-        runCatching { scorer.score(clip, target, TutorLanguage.ENGLISH) }
-            .onSuccess { if (it.phonemes.isNotEmpty()) _pronunciation.value = it }
-            .onFailure { println("DrillOrchestrator: pronunciation scoring failed: ${it.message}") }
+        val epoch = scoreEpoch.get()
+        scope.launch {
+            runCatching { scorer.score(clip, target, TutorLanguage.ENGLISH) }
+                .onSuccess {
+                    if (it.phonemes.isNotEmpty() && scoreEpoch.get() == epoch) {
+                        _pronunciation.value = it
+                    }
+                }
+                .onFailure { println("DrillOrchestrator: pronunciation scoring failed: ${it.message}") }
+        }
     }
 
     private suspend fun speak(text: String, speed: Float = 1f) {

@@ -4,14 +4,14 @@
   <ellipse cx="32" cy="29" rx="4.5" ry="7" fill="#EC407A"/>
   <ellipse cx="96" cy="29" rx="4.5" ry="7" fill="#EC407A"/>
   <path d="M 52 34 C 52 20 60 12 64 12 C 68 12 76 20 76 34 Z" fill="#33322E" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 64 22 C 40 22 26 40 26 58 C 26 70 34 81 42 87 C 44 100 53 108 64 108 C 75 108 84 100 86 87 C 94 81 102 70 102 58 C 102 40 88 22 64 22 Z" fill="#FFFFFF" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 52 34 L 50 47 M 64 32 L 64 50 M 76 34 L 78 47 M 36 66 L 47 70 M 41 78 L 52 80 M 92 66 L 81 70 M 87 78 L 76 80" fill="none" stroke="#33322E" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 64 22 C 40 22 26 40 26 58 C 26 72 34 84 44 90 C 47 100 55 106 64 106 C 73 106 81 100 84 90 C 94 84 102 72 102 58 C 102 40 88 22 64 22 Z" fill="#FFFFFF" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 52 34 L 50 47 M 64 32 L 64 50 M 76 34 L 78 47 M 33 66 L 45 70 M 36 77 L 46 79 M 95 66 L 83 70 M 92 77 L 82 79" fill="none" stroke="#33322E" stroke-width="6" stroke-linecap="round"/>
   <circle cx="48" cy="58" r="6" fill="#33322E"/>
   <circle cx="80" cy="58" r="6" fill="#33322E"/>
   <circle cx="49.8" cy="55.8" r="2.2" fill="#FFFFFF"/>
   <circle cx="81.8" cy="55.8" r="2.2" fill="#FFFFFF"/>
-  <ellipse cx="64" cy="91" rx="15" ry="10" fill="#FFF8E1" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  <ellipse cx="58" cy="88" rx="3" ry="4" fill="#33322E"/>
-  <ellipse cx="70" cy="88" rx="3" ry="4" fill="#33322E"/>
-  <path d="M 56 94 C 59 99 69 99 72 94" fill="none" stroke="#33322E" stroke-width="3.5" stroke-linecap="round"/>
+  <ellipse cx="64" cy="86" rx="16" ry="11" fill="#FFF8E1" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="58" cy="83" rx="3" ry="4" fill="#33322E"/>
+  <ellipse cx="70" cy="83" rx="3" ry="4" fill="#33322E"/>
+  <path d="M 56 88 C 59 93.5 69 93.5 72 88" fill="none" stroke="#33322E" stroke-width="3.5" stroke-linecap="round"/>
 </svg>

@@ -71,14 +71,22 @@ class FakeTtsEngine : TtsEngine {
     }
 }
 
-/** Deterministic per-letter scores so UI and tests have stable data. */
-class FakePronunciationScorer : PronunciationScorer {
+/**
+ * Deterministic per-letter scores so UI and tests have stable data.
+ *
+ * [delayMs] stands in for the real coach's inference, which is a ~320 MB
+ * model and the reason scoring was taken off the turn's critical path — a
+ * test that wants to prove the turn no longer waits for it needs something
+ * to not wait for.
+ */
+class FakePronunciationScorer(private val delayMs: Long = 0L) : PronunciationScorer {
 
     override suspend fun score(
         audio: AudioClip,
         expectedText: String,
         language: TutorLanguage,
     ): PronunciationScore {
+        if (delayMs > 0) kotlinx.coroutines.delay(delayMs)
         val letters = expectedText.filter { it.isLetter() }.lowercase()
         val phonemes = letters.mapIndexed { index, ch ->
             val score = if (index % 3 == 2) 0.6f else 0.9f

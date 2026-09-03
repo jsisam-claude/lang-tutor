@@ -4,7 +4,7 @@
   <rect x="72" y="78" width="11" height="40" rx="5" fill="#FFA000" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
   <rect x="88" y="78" width="11" height="40" rx="5" fill="#FFA000" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
   <path d="M 98 68 C 106 72 110 80 108 88 C 106 92 102 92 101 88 C 103 82 101 76 96 74 Z" fill="#FFA000" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 38 74 C 28 60 22 44 22 30 L 42 28 C 42 42 46 56 52 68 Z" fill="#FFA000" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 40 90 C 30 66 22 44 22 30 L 42 28 C 43 46 48 64 58 80 Z" fill="#FFA000" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
   <path d="M 40 64 C 40 40 46 26 58 26 C 68 26 68 42 72 50 C 76 40 78 26 88 26 C 98 26 102 46 100 64 C 102 76 100 88 94 93 C 78 100 52 100 40 90 C 33 84 34 70 40 64 Z" fill="#FFA000" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
   <path d="M 40 18 L 44 10 L 49 22 Z" fill="#FFA000" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
   <path d="M 50 16 C 36 10 20 16 16 28 C 13 36 18 44 26 44 C 36 44 47 38 52 30 Z" fill="#FFA000" stroke="#33322E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>

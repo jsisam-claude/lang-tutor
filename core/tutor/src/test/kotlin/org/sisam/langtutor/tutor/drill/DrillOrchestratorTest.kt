@@ -4,13 +4,17 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.sisam.langtutor.profile.InMemoryProfileStore
 import org.sisam.langtutor.speech.AsrResult
+import org.sisam.langtutor.speech.AudioClip
 import org.sisam.langtutor.speech.FakeAsrEngine
 import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.FakeTtsEngine
@@ -19,7 +23,7 @@ import org.sisam.langtutor.speech.RecognitionHint
 @OptIn(ExperimentalCoroutinesApi::class)
 class DrillOrchestratorTest {
 
-    private class Fixture(scope: TestScope) {
+    private class Fixture(scope: TestScope, scorerDelayMs: Long = 0L) {
         val asr = FakeAsrEngine()
         val tts = FakeTtsEngine()
         val profile = InMemoryProfileStore()
@@ -27,7 +31,7 @@ class DrillOrchestratorTest {
         val drill = DrillOrchestrator(
             asr = asr,
             tts = tts,
-            scorer = FakePronunciationScorer(),
+            scorer = FakePronunciationScorer(scorerDelayMs),
             profile = profile,
             scope = scope,
         )
@@ -38,6 +42,14 @@ class DrillOrchestratorTest {
 
     private val ball = DrillItem("I see a red ball!", DrillLevel.LONG)
     private val bear = DrillItem("The bear is blue!", DrillLevel.SHORT)
+
+    /** A transcript WITH audio — the coach scores the clip, not the text, and
+     *  silently does nothing without one. */
+    private fun heard(transcript: String) = AsrResult(
+        transcript = transcript,
+        confidence = 0.9f,
+        audio = AudioClip(ShortArray(16_000)),
+    )
 
     /** Press, let the mic actually open (as a held finger does), release. */
     private fun TestScope.attempt(f: Fixture, transcript: String, confidence: Float = 0.9f) {
@@ -202,7 +214,7 @@ class DrillOrchestratorTest {
         f.drill.startRound(listOf(ball))
         advanceUntilIdle()
 
-        f.asr.enqueue(AsrResult(transcript = "i see a red ball", confidence = 0.9f))
+        f.asr.enqueue(heard("i see a red ball"))
         f.drill.onMicPressed()
         advanceUntilIdle()
         // The soft-endpoint guess already matches the target: the turn must
@@ -225,7 +237,7 @@ class DrillOrchestratorTest {
         f.drill.startRound(listOf(ball))
         advanceUntilIdle()
 
-        f.asr.enqueue(AsrResult(transcript = "i see a red ball", confidence = 0.9f))
+        f.asr.enqueue(heard("i see a red ball"))
         f.drill.onMicPressed()
         advanceUntilIdle()
         f.asr.emitSpeculative("banana")
@@ -237,6 +249,72 @@ class DrillOrchestratorTest {
         f.drill.onMicReleased()
         advanceUntilIdle()
         assertEquals(listOf(DrillEvent.Correct(tries = 1)), f.events)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `the verdict does not wait for the pronunciation coach`() = runTest {
+        // The coach is a ~320 MB model and its answer gates nothing: the
+        // verdict is WordMatch over the transcript, and the class doc has
+        // always said the coach never gates progress. Awaiting it put a full
+        // inference between the child finishing the sentence and hearing
+        // "Great job!". Here the coach takes ten seconds and the turn is
+        // judged, praised and advanced inside one.
+        val f = Fixture(this, scorerDelayMs = 10_000)
+        f.drill.startRound(listOf(ball, bear))
+        advanceUntilIdle()
+        f.asr.enqueue(heard("i see a red ball"))
+        f.drill.onMicPressed()
+        advanceUntilIdle()
+        f.drill.onMicReleased()
+        advanceTimeBy(1_000)
+
+        assertEquals(listOf(DrillEvent.Correct(tries = 1)), f.events)
+        assertEquals(bear, (f.drill.state.value as DrillState.AwaitingChild).item)
+        assertNull("the coach has not answered yet, and nothing waited", f.drill.pronunciation.value)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `a score that beats the praise still colours its own attempt`() = runTest {
+        // The other half: decoupling must not mean the feedback disappears.
+        // A coach that answers while the praise is still playing lands on the
+        // attempt it describes, exactly as before.
+        val f = Fixture(this, scorerDelayMs = 5)
+        f.drill.startRound(listOf(ball, bear))
+        advanceUntilIdle()
+        f.asr.enqueue(heard("i see a red ball"))
+        f.drill.onMicPressed()
+        advanceUntilIdle()
+        f.drill.onMicReleased()
+        advanceTimeBy(20)
+
+        assertNotNull("a fast score belongs to the attempt on screen", f.drill.pronunciation.value)
+        advanceUntilIdle()
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `a late score never colours a later attempt`() = runTest {
+        // The cost of decoupling: the coach can answer after the child has
+        // moved on. A result is published only if the attempt it describes is
+        // still the one being shown.
+        val f = Fixture(this, scorerDelayMs = 10_000)
+        f.drill.startRound(listOf(ball, bear))
+        advanceUntilIdle()
+        f.asr.enqueue(heard("i see a red ball"))
+        f.drill.onMicPressed()
+        advanceUntilIdle()
+        f.drill.onMicReleased()
+        advanceTimeBy(1_000)
+
+        // Item 2 is on screen and item 1's score is still running.
+        f.asr.enqueue(heard("the bear is blue"))
+        f.drill.onMicPressed()
+        advanceTimeBy(50)
+        f.drill.onMicReleased()
+        advanceUntilIdle()
+        assertNull("item 1's score must not paint item 2", f.drill.pronunciation.value)
         f.collector.cancel()
     }
 }

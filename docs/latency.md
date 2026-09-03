@@ -4,6 +4,43 @@ Updated 2026-08-30. Sources: Pixel 9 device logs (this repo's `TukiLatency` /
 `TukiAsr` / `TukiLlm` / `TukiTts` tags), the code map in the session that
 built this file, and two rounds of Google-stack consultation (relayed).
 
+## The validation path — what the child waits for after speaking
+
+Measured on the code, not on a device, and the fix is ordering rather than
+speed.
+
+Between the finger lifting and "Great job!" the room used to do three things
+in series: stop the capture and transcribe, run the pronunciation coach, then
+judge and praise. Only the first and third are load-bearing. The verdict is
+`WordMatch` over the transcript — a string comparison — and the coach's
+per-sound colours gate nothing; the orchestrator's own class doc has always
+said so. Awaiting the coach put a full inference of a ~320 MB wav2vec2 model
+in front of the praise, plus a cold ONNX session build whenever a memory trim
+had released it, for a result the verdict never reads.
+
+Scoring now runs beside the turn instead of in front of it. The cost of
+decoupling is that a slow score can arrive after the child has moved on, so a
+result is published only if the attempt it describes is still the one on
+screen; an epoch counter bumped on every new attempt and every item change is
+what enforces that. Three tests pin the behaviour: a ten-second coach does not
+delay the verdict, a fast coach still colours its own attempt, and a late one
+never colours a later one.
+
+What remains on that path, in order of size:
+
+- **The praise itself.** `cheer()` synthesizes "Great job!" — measured at
+  2,977 ms on device — and `SynthCache.get` returns null until three variants
+  of a line exist, so the first three times a child gets something right they
+  wait out a full synthesis each time. The cache is doing its job for the
+  fourth onward and nothing for the moment that matters most, which is the
+  beginning. The fix is to fill those variants during the dead time the room
+  already has: while the state is `AwaitingChild`, both engines are idle and
+  the child is deciding. One clip per idle window, cancelled the moment the
+  mic opens, is enough to have the praise set warm before it is first needed.
+- **`stopCapture` joining the capture thread**, up to 2 s in the worst case,
+  though the speculative transcript usually makes that moot.
+- **A full Whisper pass** when the speculation did not cover everything said.
+
 ## Measured (Pixel 9, E4B, warm)
 
 | stage | number |
