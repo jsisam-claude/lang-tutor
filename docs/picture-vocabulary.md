@@ -20,6 +20,37 @@ It is also the room with the least new machinery in it. TTS, the reward
 system, `A11y`, the die-cut sticker rendering and the drill's word-match judge
 all already exist; this is mostly assembly.
 
+## Packs — asking for a topic
+
+The room taught whatever vocabulary the curriculum happened to hold and
+happened to have art for. That is a fine default and a poor answer to "I want
+to do numbers", so a pack is a curated word set with a name, in
+`core/content/src/main/resources/picture-packs.json`
+(`tuki-picture-packs-v1`): **numbers** (1–10 as counted objects, never the
+digit), **shapes**, **maths** (plus, minus, equals, half, pair) and
+**animals** (44). The chip row above the cards chooses one; "From the
+lessons" is the old behaviour and stays the default.
+
+Each word carries its Hebrew MEANING. The Hebrew-letter PRONUNCIATION under
+it is derived at runtime from the phonemizer, as everywhere else in the app —
+authoring it by hand would let the letters drift from the voice.
+
+Every pack states its own review status in the data, next to the content it
+describes rather than in a tracker that drifts. All four ship
+`review: "pending"`: the words and their Hebrew are authored and gated, and
+they have not yet had a native read.
+
+### One thing the packs broke, and what it taught
+
+The room filtered candidates through `PictureArt.emojiFor`, which was correct
+by accident: the curriculum's 48 words all happen to have BOTH an emoji and a
+drawn icon. The packs do not — there is no emoji for "rectangle" or "hippo" —
+so the filter would have silently dropped most of them despite the art
+existing. The question a card-builder actually means is `PictureArt.hasArt`,
+which is now what it asks, and `PictureCard.emoji` is nullable because a
+drawn icon is art enough on its own.
+
+
 ## The loop
 
 **Present** three to five items. Icon appears large, Tuki says the word, the

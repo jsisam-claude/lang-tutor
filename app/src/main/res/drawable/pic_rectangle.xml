@@ -13,7 +13,7 @@
         android:strokeWidth="4"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M 20 30 h 88 A 8 8 0 0 1 116 38 v 52 A 8 8 0 0 1 108 98 h -88 A 8 8 0 0 1 12 90 v -52 A 8 8 0 0 1 20 30 Z"/>
+        android:pathData="M 22 30 h 84 A 8 8 0 0 1 114 38 v 52 A 8 8 0 0 1 106 98 h -84 A 8 8 0 0 1 14 90 v -52 A 8 8 0 0 1 22 30 Z"/>
     <path
         android:fillColor="#FFFFFF"
         android:pathData="M 28 50 A 14 8 0 1 0 56 50 A 14 8 0 1 0 28 50 Z"/>

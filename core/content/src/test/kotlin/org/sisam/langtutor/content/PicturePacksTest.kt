@@ -48,4 +48,12 @@ class PicturePacksTest {
             assertTrue("${p.id}: unknown review state '${p.review}'", p.review in setOf("pending", "done"))
         }
     }
+
+    @Test
+    fun `a pack is big enough to be a round`() {
+        // The room deals four cards. A pack that cannot fill one is a card
+        // that repeats, which teaches nothing and looks broken.
+        val thin = packs.filter { it.words.size < 4 }.map { it.id to it.words.size }
+        assertTrue("packs too small for a round: $thin", thin.isEmpty())
+    }
 }
