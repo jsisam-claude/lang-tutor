@@ -40,7 +40,7 @@
         android:strokeWidth="3"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M 52 58 L 32 50 M 46 64 L 24 60 M 45 70 L 26 72 M 76 58 L 96 50 M 82 64 L 104 60 M 83 70 L 102 72"/>
+        android:pathData="M 48 55 L 30 48 M 42 62 L 22 58 M 41 71 L 24 74 M 80 55 L 98 48 M 86 62 L 106 58 M 87 71 L 104 74"/>
     <path
         android:fillColor="#33322E"
         android:pathData="M 57 62 A 7 5 0 1 0 71 62 A 7 5 0 1 0 57 62 Z"/>

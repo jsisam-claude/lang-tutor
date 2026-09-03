@@ -13,24 +13,24 @@
         android:strokeWidth="4"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M 58 50 C 62 32 72 24 84 22 C 78 34 76 44 74 52 Z"/>
+        android:pathData="M 58 52 C 62 34 72 25 84 23 C 78 35 76 45 74 54 Z"/>
     <path
         android:fillColor="#42A5F5"
         android:strokeColor="#33322E"
         android:strokeWidth="4"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M 102 66 L 118 48 C 114 62 116 76 119 88 Z"/>
+        android:pathData="M 102 66 L 116 48 C 112 62 114 76 117 88 Z"/>
     <path
         android:fillColor="#42A5F5"
         android:strokeColor="#33322E"
         android:strokeWidth="4"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M 10 74 C 16 62 26 54 38 50 C 62 42 92 50 108 64 C 100 78 86 88 64 88 C 40 88 20 84 10 74 Z"/>
+        android:pathData="M 10 78 C 13 71 17 68 23 68 C 23 58 30 52 42 49 C 64 42 92 50 108 64 C 100 78 86 90 64 90 C 40 90 20 86 10 78 Z"/>
     <path
         android:fillColor="#FFF8E1"
-        android:pathData="M 108 64 C 100 78 86 88 64 88 C 40 88 20 84 10 74 C 22 80 40 80 64 78 C 86 76 100 70 108 64 Z"/>
+        android:pathData="M 108 64 C 100 78 86 90 64 90 C 46 90 32 87 24 83 C 38 81 54 78 70 74 C 88 70 100 68 108 64 Z"/>
     <path
         android:fillColor="#1565C0"
         android:strokeColor="#33322E"
@@ -43,13 +43,13 @@
         android:strokeWidth="3.5"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M 13 76 C 20 80 28 82 36 81"/>
+        android:pathData="M 14 80 C 19 83 25 83 30 81 C 33 80 35 77 35 74"/>
     <path
         android:fillColor="#33322E"
-        android:pathData="M 25.5 66 A 4.5 4.5 0 1 0 34.5 66 A 4.5 4.5 0 1 0 25.5 66 Z"/>
+        android:pathData="M 27.5 63 A 4.5 4.5 0 1 0 36.5 63 A 4.5 4.5 0 1 0 27.5 63 Z"/>
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M 29.8 64.4 A 1.7 1.7 0 1 0 33.2 64.4 A 1.7 1.7 0 1 0 29.8 64.4 Z"/>
+        android:pathData="M 31.8 61.4 A 1.7 1.7 0 1 0 35.2 61.4 A 1.7 1.7 0 1 0 31.8 61.4 Z"/>
     <path
         android:fillColor="#42A5F5"
         android:pathData="M 8 106 Q 16 98 24 106 Q 32 114 40 106 Q 48 98 56 106 Q 64 114 72 106 Q 80 98 88 106 Q 96 114 104 106 Q 112 98 120 106 L 120 113 Q 112 105 104 113 Q 96 121 88 113 Q 80 105 72 113 Q 64 121 56 113 Q 48 105 40 113 Q 32 121 24 113 Q 16 105 8 113 Z"/>

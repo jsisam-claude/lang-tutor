@@ -55,11 +55,11 @@
         android:pathData="M 79.6 61.8 A 2.2 2.2 0 1 0 84 61.8 A 2.2 2.2 0 1 0 79.6 61.8 Z"/>
     <path
         android:fillColor="#33322E"
-        android:pathData="M 56.5 95 A 7.5 6 0 1 0 71.5 95 A 7.5 6 0 1 0 56.5 95 Z"/>
+        android:pathData="M 56.5 91 A 7.5 6 0 1 0 71.5 91 A 7.5 6 0 1 0 56.5 91 Z"/>
     <path
         android:strokeColor="#33322E"
         android:strokeWidth="3.5"
         android:strokeLineJoin="round"
         android:strokeLineCap="round"
-        android:pathData="M 64 101 L 64 104 M 64 104 C 61 109 57 108 56 105 M 64 104 C 67 109 71 108 72 105"/>
+        android:pathData="M 64 97 L 64 100 M 64 100 C 61 105 57 104 56 101 M 64 100 C 67 105 71 104 72 101"/>
 </vector>
