@@ -195,6 +195,10 @@ What the pass established as method:
 - After seed sign-off: batches of one theme across all levels (~200–350
   sentences each) until ~36 themes ≈ 7,000+ sentences, tracked per level
   and per tense by the lint's coverage report.
-- Loader + deck wiring (queued): phrasebank sentences feed the drill deck
-  by level and frame, replacing the model-written lines everywhere below
-  the Hebrew-capable tier, and become the karaoke/repeat-after-me corpus.
+- Loader + deck wiring: **done**. `ResourcePhrasebankRepository` reads the
+  themes named in `phrasebank/index.json`, and `DrillDeck.phrasePool` feeds
+  the drill deck by level — the learner's Level and one below — bucketed by
+  sentence length. A banked line brings its authored Hebrew and its align
+  cues with it, which is what the meaning row and its synchronized
+  highlight are built on. The bank takes at most half the slots of a mixed
+  round so generated lines and the curriculum keep the rest.

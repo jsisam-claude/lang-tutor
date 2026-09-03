@@ -137,6 +137,8 @@
     <string name="home_twister_room">Say it fast 🌀</string>
 
     <string name="vocab_pick_level">What shall we practice?</string>
+    <string name="vocab_pick_topic">Topic</string>
+    <string name="vocab_topic_any">Anything ✨</string>
     <string name="vocab_fresh">Tuki makes up new lines every round ✨</string>
     <string name="vocab_level_words">Words</string>
     <string name="vocab_level_short">Short sentences</string>

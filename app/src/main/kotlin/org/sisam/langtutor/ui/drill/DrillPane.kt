@@ -82,8 +82,14 @@ sealed interface DrillSource {
      *  starts a new drill instead of resuming someone else's round. */
     val sessionKey: String
 
-    data class Mixed(val level: DrillLevel) : DrillSource {
-        override val sessionKey get() = "mixed:${level.name}"
+    /**
+     * [theme] narrows the bank to one topic. Null is the whole bank, which is
+     * also the only shape that mixes in generated and curriculum lines: once
+     * a learner has asked for the farm, a round of the farm is what they
+     * should get, not a farm line followed by four about the doctor.
+     */
+    data class Mixed(val level: DrillLevel, val theme: String? = null) : DrillSource {
+        override val sessionKey get() = "mixed:${level.name}:${theme ?: "any"}"
     }
 
     data class Sound(val key: String) : DrillSource {
@@ -191,13 +197,22 @@ class DrillViewModel(
             val level = source.level
             val size = DrillDeck.sizeFor(level)
             val learnerLevel = container.profile.snapshot().effectiveLevel
-            val banked = DrillDeck.phraseRound(phrases, level, learnerLevel, Random.Default)
-            val written = generator?.let { g ->
-                runCatching { g.generate(level, size, Random.Default) }.getOrElse { emptyList() }
-            } ?: emptyList()
-            (banked.take((size + 1) / 2) + written + DrillDeck.round(units, level, Random.Default) + banked)
-                .distinctBy { WordMatch.tokens(it.text) }
-                .take(size)
+            val banked =
+                DrillDeck.phraseRound(phrases, level, learnerLevel, Random.Default, source.theme)
+            if (source.theme != null) {
+                // A chosen topic is the whole round. Nothing generated and
+                // nothing from the curriculum: those cannot be held to the
+                // topic, and a round that wanders off it is not the round the
+                // learner asked for. A thin level simply gives a short round.
+                banked.distinctBy { WordMatch.tokens(it.text) }
+            } else {
+                val written = generator?.let { g ->
+                    runCatching { g.generate(level, size, Random.Default) }.getOrElse { emptyList() }
+                } ?: emptyList()
+                (banked.take((size + 1) / 2) + written + DrillDeck.round(units, level, Random.Default) + banked)
+                    .distinctBy { WordMatch.tokens(it.text) }
+                    .take(size)
+            }
         }
     }
 

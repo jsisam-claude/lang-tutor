@@ -28,6 +28,15 @@ data class PhraseSentence(
     @SerialName("he_f") val heF: String? = null,
     /** EN-span ↔ HE-span cues for cross-highlighting; null when unaligned. */
     val align: List<AlignCue>? = null,
+    /**
+     * Which theme file this line came from.
+     *
+     * Not in the JSON — the file already says it once, at the top, and
+     * repeating it 84 times per theme would be 3,108 chances to disagree with
+     * it. The repository stamps it on load so a room can offer a topic to
+     * drill without re-reading the files.
+     */
+    val theme: String = "",
 )
 
 /** [en]/[he] are [startIndex, endIndex] (inclusive) into the word lists. */
@@ -43,9 +52,16 @@ data class PhrasebankFile(
     val sentences: List<PhraseSentence>,
 )
 
+/** One installed theme, for a picker: what it is called and how big it is. */
+data class PhraseTheme(val id: String, val title: LocalizedText?, val size: Int)
+
 interface PhrasebankRepository {
     /** Every sentence from every installed theme, load-once. */
     suspend fun sentences(): List<PhraseSentence>
+
+    /** The installed themes in index order — catalogue only, no sentences. */
+    suspend fun themes(): List<PhraseTheme> =
+        sentences().groupBy { it.theme }.map { (id, lines) -> PhraseTheme(id, null, lines.size) }
 }
 
 /**
@@ -58,17 +74,31 @@ class ResourcePhrasebankRepository(
 ) : PhrasebankRepository {
 
     @Volatile private var cache: List<PhraseSentence>? = null
+    @Volatile private var themeCache: List<PhraseTheme>? = null
 
-    override suspend fun sentences(): List<PhraseSentence> = cache ?: withContext(Dispatchers.IO) {
-        val themes: List<String> = json.decodeFromString(readResource("phrasebank/index.json"))
-        themes.flatMap { stem ->
-            val file: PhrasebankFile = json.decodeFromString(readResource("phrasebank/$stem.json"))
-            // A format this build does not know is skipped whole rather than
-            // half-read: the bank is teaching material, and a misparsed row
-            // is worse than a missing theme.
-            if (file.format == FORMAT) file.sentences else emptyList()
-        }.also { cache = it }
-    }
+    override suspend fun sentences(): List<PhraseSentence> = cache ?: load().first
+
+    override suspend fun themes(): List<PhraseTheme> = themeCache ?: load().second
+
+    /** Both halves come off one read: the catalogue is the same files. */
+    private suspend fun load(): Pair<List<PhraseSentence>, List<PhraseTheme>> =
+        withContext(Dispatchers.IO) {
+            val stems: List<String> = json.decodeFromString(readResource("phrasebank/index.json"))
+            val lines = mutableListOf<PhraseSentence>()
+            val themes = mutableListOf<PhraseTheme>()
+            for (stem in stems) {
+                val file: PhrasebankFile = json.decodeFromString(readResource("phrasebank/$stem.json"))
+                // A format this build does not know is skipped whole rather
+                // than half-read: the bank is teaching material, and a
+                // misparsed row is worse than a missing theme.
+                if (file.format != FORMAT) continue
+                lines += file.sentences.map { it.copy(theme = file.theme) }
+                themes += PhraseTheme(file.theme, file.title, file.sentences.size)
+            }
+            cache = lines
+            themeCache = themes
+            lines to themes
+        }
 
     private fun readResource(path: String): String {
         val stream = requireNotNull(javaClass.classLoader.getResourceAsStream(path)) {

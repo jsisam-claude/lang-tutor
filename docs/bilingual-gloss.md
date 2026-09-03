@@ -186,8 +186,11 @@ a no-op on the output.
 
 ## The hard part: RTL under LTR
 
-*(This section describes the translation row, which is still queued. The
-transliteration row does not have this problem — see above.)*
+*(This section describes the translation row, which now **ships**: the
+meaning sits under the line, and where the phrasebank authored alignment cues
+its Hebrew words light up with the English word being spoken — see
+`GlossedText` and `DrillItem.align`. The transliteration row does not have
+this problem — see above.)*
 
 Hebrew runs right-to-left, English left-to-right. Set both in their natural
 order and chunk 1 is at opposite ends of the two lines:
@@ -217,13 +220,17 @@ today's LTR island; this needs its mirror, applied per cell rather than per
 line. Long chunks wrap as units — a chunk must never split across lines, or
 the alignment silently lies.
 
-## Where the alignment comes from (translation row — still queued)
+## Where the alignment comes from
 
-Three sources, three different problems:
+Three sources, three different problems. The first of them shipped and is
+what the drill room draws on today; the other two remain as written.
 
 - **Curriculum lines** — author the chunking in the unit JSON. Exact, free at
   runtime, and reviewable. This is the only source that can be trusted
-  unconditionally, so it should ship first.
+  unconditionally, so it shipped first. **Done**, and generalised: the
+  phrasebank authors the same cues per sentence (`align`, levels 1–3, and
+  level 3 in the batch-3 themes), so 3,108 authored lines carry them rather
+  than the curriculum alone.
 - **LLM-generated drill lines** (`DrillGenerator`) — the model that wrote the
   sentence can gloss it, in the same call, in a parseable format. Cheap
   because it rides an existing generation, but it is a model output and needs
@@ -237,9 +244,10 @@ Three sources, three different problems:
 
 ## Landscape
 
-**Queued with the gloss, because they are the same problem.** The app already
-rotates — nothing in the manifest locks orientation — so landscape "works"
-today in the sense that it does not crash. It is not designed for.
+**Shipped with the gloss, because they were the same problem.** The rooms lay
+out sideways rather than stretching: see `A11y.wideViewport` and the
+two-column branch in the drill pane. What follows is the reasoning that
+produced that layout.
 
 A glossed reading line is the case that *wants* landscape: two stacked rows of
 chunks need horizontal room more than anything else in the app, and a phone

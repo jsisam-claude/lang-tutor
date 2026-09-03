@@ -7,8 +7,13 @@ import org.sisam.langtutor.content.PhraseSentence
 
 class DrillDeckPhraseTest {
 
-    private fun sentence(id: String, level: Int, en: String, he: String = "עברית") =
-        PhraseSentence(id, level, "present-simple", "test-frame", en, he)
+    private fun sentence(
+        id: String,
+        level: Int,
+        en: String,
+        he: String = "עברית",
+        theme: String = "",
+    ) = PhraseSentence(id, level, "present-simple", "test-frame", en, he, theme = theme)
 
     private val bank = listOf(
         sentence("a", 1, "A bee!"),
@@ -41,5 +46,29 @@ class DrillDeckPhraseTest {
     fun `a Level 1 learner reviews nothing below Level 1`() {
         val items = DrillDeck.phrasePool(bank, DrillLevel.SHORT, learnerLevel = 1)
         assertTrue(items.isNotEmpty())
+    }
+
+    @Test
+    fun `a chosen topic narrows the pool to that topic`() {
+        val mixed = listOf(
+            sentence("f1", 2, "The cow is big.", theme = "farm-animals"),
+            sentence("f2", 2, "I feed the hens.", theme = "farm-animals"),
+            sentence("z1", 2, "The lion is loud.", theme = "zoo-animals"),
+        )
+        val farm = DrillDeck.phrasePool(mixed, DrillLevel.SHORT, learnerLevel = 2, theme = "farm-animals")
+        assertEquals(listOf("The cow is big.", "I feed the hens."), farm.map { it.text })
+        // Null is still the whole bank, which is what every existing caller
+        // relies on.
+        assertEquals(3, DrillDeck.phrasePool(mixed, DrillLevel.SHORT, learnerLevel = 2).size)
+    }
+
+    @Test
+    fun `a topic with nothing at this level gives an empty round, not someone else's lines`() {
+        val mixed = listOf(
+            sentence("f1", 7, "The cow has been grazing all morning.", theme = "farm-animals"),
+            sentence("z1", 2, "The lion is loud.", theme = "zoo-animals"),
+        )
+        val farm = DrillDeck.phrasePool(mixed, DrillLevel.SHORT, learnerLevel = 2, theme = "farm-animals")
+        assertEquals(emptyList<DrillItem>(), farm)
     }
 }

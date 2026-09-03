@@ -1,7 +1,13 @@
 # Picture vocabulary room — design record
 
-Queued 2026-08-27, not built. Requested shape: show an animal, say its name,
+Requested 2026-08-27, **built** — the room ships in both flavors
+(`app/src/main/kotlin/org/sisam/langtutor/ui/picture/`), with its own art
+(`PictureArt.kt`, 120 icons). Requested shape: show an animal, say its name,
 show the next; after a few, ask **"which animal is this?"**
+
+What follows is the design record that produced it, kept as written: the
+reasoning is why the room has the shape it has, and it is still the argument
+to check a change against.
 
 Teach-then-check, which is the oldest and best-evidenced shape in vocabulary
 teaching — and the one thing this app does not have. Everything it owns today

@@ -92,9 +92,12 @@ object DrillDeck {
         sentences: List<PhraseSentence>,
         level: DrillLevel,
         learnerLevel: Int,
+        /** One theme, or null for the whole bank. */
+        theme: String? = null,
     ): List<DrillItem> {
         val floor = (learnerLevel - 1).coerceAtLeast(1)
         return sentences
+            .filter { theme == null || it.theme == theme }
             .filter { it.level in floor..learnerLevel }
             .filter { classify(it.en) == level }
             .map { DrillItem(it.en, level, it.he, it.align) }
@@ -105,8 +108,9 @@ object DrillDeck {
         level: DrillLevel,
         learnerLevel: Int,
         random: Random,
+        theme: String? = null,
     ): List<DrillItem> =
-        phrasePool(sentences, level, learnerLevel).shuffled(random).take(sizeFor(level))
+        phrasePool(sentences, level, learnerLevel, theme).shuffled(random).take(sizeFor(level))
 
     /**
      * The tongue twisters' contribution: every line for one target sound, in
