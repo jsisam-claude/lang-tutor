@@ -80,15 +80,21 @@ class KokoroPhonemizer private constructor(
      */
     fun phonemizeToIpa(text: String): String {
         val sb = StringBuilder(text.length * 2)
-        var previousWasWord = false
+        // A pause is a phoneme here: the vocabulary carries `.,!?;:` and a
+        // space, and Kokoro's prosody comes from them. Punctuation binds to the
+        // word it follows and is NOT preceded by a space, but the next word
+        // still needs its separator — without it "Almost! Listen again."
+        // reaches the model as one unbroken run and is spoken as one, which is
+        // exactly how the drill's recast lost its beat.
+        var needsSpace = false
         for (token in tokenize(KokoroTextNormalizer.normalize(text))) {
             if (token.length == 1 && token[0] in PUNCTUATION) {
                 sb.append(token)
-                previousWasWord = false
+                needsSpace = true
                 continue
             }
-            if (previousWasWord) sb.append(' ')
-            previousWasWord = true
+            if (needsSpace) sb.append(' ')
+            needsSpace = true
             // Hyphenated compounds miss the dictionary as a whole ("well-done")
             // — phonemize the parts and speak them joined, keeping any direct
             // dictionary hit (CMU does carry some hyphenated entries).

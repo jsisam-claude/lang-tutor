@@ -51,10 +51,11 @@ object HebrewTransliteration {
      * Pair every word of [text] with its Hebrew-letter pronunciation.
      *
      * Words are phonemized ONE AT A TIME rather than by splitting a whole-line
-     * IPA string: [KokoroPhonemizer.phonemizeToIpa] runs punctuation straight
-     * up against the next word with no separator, so a split on spaces silently
-     * merges "Hi, there" into one token — and a gloss whose columns are off by
-     * one is worse than no gloss.
+     * IPA string. The line's own spacing is the voice's prosody, not a column
+     * map: normalization can join or split tokens, so a gloss built by
+     * splitting that string on spaces would drift out of step with the English
+     * words above it — and a gloss whose columns are off by one is worse than
+     * no gloss.
      *
      * Punctuation stays on the English side where it belongs; it is not
      * pronounced, so it gets no Hebrew.

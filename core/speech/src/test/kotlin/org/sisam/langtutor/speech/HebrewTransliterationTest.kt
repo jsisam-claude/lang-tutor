@@ -208,9 +208,9 @@ class HebrewTransliterationTest {
 
     @Test
     fun `punctuation does not merge two words into one column`() {
-        // phonemizeToIpa writes punctuation with NO separator before the next
-        // word, so glossing a whole-line IPA string and splitting on spaces
-        // silently loses a column. Per-word phonemization is what prevents it.
+        // A gloss must keep one column per English word however the line is
+        // punctuated; per-word phonemization is what guarantees it, rather than
+        // splitting a whole-line IPA string on its spaces.
         val phonemizer = KokoroPhonemizer.load()
         val gloss = HebrewTransliteration.gloss("Hi, there!", phonemizer)
         assertEquals(listOf("Hi,", "there!"), gloss.map { it.english })
