@@ -10,6 +10,16 @@ package org.sisam.langtutor.speech
  */
 fun interface KokoroFrontEnd {
     fun phonemize(text: String): IntArray
+
+    /**
+     * The same, spoken in an accent — see [Phonology], which explains why an
+     * accent has to be applied here and not in the voice table.
+     *
+     * Defaulted rather than abstract because only the English front end has
+     * accents to offer: a Scottish Hebrew voice is not a thing, so the Hebrew
+     * one correctly ignores the request instead of implementing it twice.
+     */
+    fun phonemize(text: String, phonology: Phonology): IntArray = phonemize(text)
 }
 
 /**
@@ -43,6 +53,9 @@ class KokoroPhonemizer private constructor(
 
     /** Token IDs WITHOUT the surrounding BOS/EOS zeros (the engine adds them). */
     override fun phonemize(text: String): IntArray = encode(phonemizeToIpa(text))
+
+    override fun phonemize(text: String, phonology: Phonology): IntArray =
+        encode(phonology.applyTo(phonemizeToIpa(text)))
 
     /**
      * IPA string → Kokoro token ids.

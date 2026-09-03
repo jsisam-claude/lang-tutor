@@ -27,6 +27,7 @@ import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
 import org.sisam.langtutor.speech.TukiVoices
 import org.sisam.langtutor.speech.VoiceBlend
+import org.sisam.langtutor.speech.Phonology
 import org.sisam.langtutor.speech.VoiceCharacter
 import org.sisam.langtutor.speech.TtsEvent
 import org.sisam.langtutor.speech.TutorLanguage
@@ -89,6 +90,11 @@ class KokoroTtsEngine(
      *  own — every voice in the picker but one is Tuki wearing the bird. */
     fun character(): VoiceCharacter =
         TukiVoices.byId(voiceAsset).character ?: ParrotEffect.PARROT
+
+    /** The accent the selected voice speaks in. Read by the pronunciation
+     *  coach and the Hebrew gloss too — all three have to agree, or the app
+     *  contradicts itself in front of a child. */
+    fun phonology(): Phonology = TukiVoices.byId(voiceAsset).phonology
 
     private val voiceLock = Any()
     @Volatile private var loadedVoice: FloatArray? = null
@@ -210,7 +216,7 @@ class KokoroTtsEngine(
                         val timing = if (flavorPitch == null) {
                             KaraokeTiming.of(
                                 text.substring(group.start, group.end),
-                                { w -> phonemizer.phonemize(w).size },
+                                { w -> phonemizer.phonemize(w, phonology()).size },
                                 audio.size,
                             )
                         } else {
@@ -349,7 +355,7 @@ class KokoroTtsEngine(
             null
         }
         cacheKey?.let { SynthCache.get(it) }?.let { return it }
-        val ids = phonemizer.phonemize(text)
+        val ids = phonemizer.phonemize(text, phonology())
         if (ids.isEmpty()) return FloatArray(0)
         // Flavored lines synthesize SLOWER by the pitch factor, so the
         // resample inside the effect lands the duration back where it was

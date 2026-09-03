@@ -14,6 +14,7 @@ import org.sisam.langtutor.speech.GopScorer
 import org.sisam.langtutor.speech.KokoroPhonemizer
 import org.sisam.langtutor.speech.PhonemeScore
 import org.sisam.langtutor.speech.PronunciationScore
+import org.sisam.langtutor.speech.Phonology
 import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.speech.TutorLanguage
 
@@ -36,6 +37,17 @@ import org.sisam.langtutor.speech.TutorLanguage
 class Wav2Vec2GopEngine(
     private val modelFile: File,
     private val installStamp: String = "",
+    /**
+     * The accent the learner just HEARD, so the coach expects the sounds the
+     * voice actually made.
+     *
+     * Without this, picking an accented voice quietly breaks scoring: Tuki
+     * says a tapped r, the coach still expects the American approximant, and
+     * a child who copied perfectly is marked down for it. A supplier rather
+     * than a value because the parent can change the voice underneath a
+     * loaded engine.
+     */
+    private val phonology: () -> Phonology = { Phonology.GENERAL_AMERICAN },
 ) : PronunciationScorer {
 
     private val phonemizer by lazy { KokoroPhonemizer.load() }
@@ -75,7 +87,7 @@ class Wav2Vec2GopEngine(
         if (language != TutorLanguage.ENGLISH) return@withContext EMPTY
 
         val expected = EspeakPhonemes.expectedFrom(
-            phonemizer.phonemizeToIpa(expectedText),
+            phonology().applyTo(phonemizer.phonemizeToIpa(expectedText)),
         )
         if (expected.isEmpty() || audio.samples.size < MIN_SAMPLES) return@withContext EMPTY
 

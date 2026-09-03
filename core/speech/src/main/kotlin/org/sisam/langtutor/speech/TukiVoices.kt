@@ -23,6 +23,15 @@ data class TukiVoice(
     val blend: VoiceBlend? = null,
     /** How this voice behaves on personality lines; null means the parrot. */
     val character: VoiceCharacter? = null,
+    /**
+     * The accent this voice speaks in.
+     *
+     * Not part of the blend, and it cannot be: a style table carries timbre,
+     * never phonology (see [Phonology]). A character that is meant to sound
+     * from somewhere needs BOTH — the table for who is speaking, this for
+     * what sounds come out.
+     */
+    val phonology: Phonology = Phonology.GENERAL_AMERICAN,
 ) {
     enum class Accent { AMERICAN, BRITISH, CHARACTER }
     enum class Gender { FEMALE, MALE }
@@ -128,6 +137,9 @@ object TukiVoices {
             accent = TukiVoice.Accent.CHARACTER,
             gender = TukiVoice.Gender.MALE,
             blend = VoiceBlend(a = "bm_lewis.bin", b = "bm_george.bin", weight = 0.65f),
+            // The blend alone would be an old Englishman: the burr is in the
+            // phonemes, and only this line puts it there.
+            phonology = Phonology.SCOTTISH,
             character = VoiceCharacter(
                 // Down about a tone and a half, and a shade slower: old and
                 // unhurried rather than the parrot's small-and-quick.

@@ -59,14 +59,23 @@ object HebrewTransliteration {
      *
      * Punctuation stays on the English side where it belongs; it is not
      * pronounced, so it gets no Hebrew.
+     *
+     * [phonology] is the accent of the voice that will SAY this line. The
+     * gloss is a pronunciation hint, so it has to follow the voice: showing
+     * American letters under a line spoken with a burr would teach the child
+     * to say something they are not hearing.
      */
-    fun gloss(text: String, phonemizer: KokoroPhonemizer): List<GlossWord> =
+    fun gloss(
+        text: String,
+        phonemizer: KokoroPhonemizer,
+        phonology: Phonology = Phonology.GENERAL_AMERICAN,
+    ): List<GlossWord> =
         text.split(WHITESPACE).filter { it.isNotBlank() }.map { token ->
             val core = token.trim { it in TRIMMED_PUNCTUATION }
             if (core.isEmpty()) {
                 GlossWord(token, "")
             } else {
-                GlossWord(token, ofIpa(phonemizer.phonemizeToIpa(core)))
+                GlossWord(token, ofIpa(phonology.applyTo(phonemizer.phonemizeToIpa(core))))
             }
         }
 

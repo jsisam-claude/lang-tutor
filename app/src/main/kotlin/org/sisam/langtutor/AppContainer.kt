@@ -40,6 +40,7 @@ import org.sisam.langtutor.llm.FakeLlmEngine
 import org.sisam.langtutor.llm.LlmEngine
 import org.sisam.langtutor.llm.LlmModelSpec
 import org.sisam.langtutor.speech.TukiVoice
+import org.sisam.langtutor.speech.Phonology
 import org.sisam.langtutor.speech.TukiVoices
 import org.sisam.langtutor.tutor.chat.ChatRoom
 import org.sisam.langtutor.speech.TutorLanguage
@@ -442,6 +443,19 @@ class AppContainer private constructor(context: Context) {
         TukiVoices.ALL.filter { voice -> voice.sources.all { it in present } }
     }
 
+    /**
+     * The accent the chosen voice speaks in.
+     *
+     * Held here rather than read off the TTS engine because the two things
+     * that must AGREE with the voice — the pronunciation coach and the Hebrew
+     * gloss — both outlive it: the engine is released under memory pressure,
+     * and neither of them should start disagreeing with the voice because a
+     * trim happened to fire first.
+     */
+    @Volatile
+    var voicePhonology: Phonology = TukiVoices.byId(null).phonology
+        private set
+
     fun applyVoice(voiceId: String?) {
         val chosen = TukiVoices.byId(voiceId)
         val effective = if (availableVoices.any { it.id == chosen.id }) chosen else TukiVoices.byId(null)
@@ -449,6 +463,7 @@ class AppContainer private constructor(context: Context) {
             Log.w(MEM_TAG, "voice ${chosen.id} not packaged in this build; using ${effective.id}")
         }
         bundledTtsEngine()?.voiceAsset = effective.id
+        voicePhonology = effective.phonology
     }
 
     private val _speaking = MutableStateFlow(false)
@@ -564,7 +579,7 @@ class AppContainer private constructor(context: Context) {
         gopEngine?.takeIf { gopPath == file.absolutePath }?.let { return it }
         synchronized(this) {
             gopEngine?.takeIf { gopPath == file.absolutePath }?.let { return it }
-            return Wav2Vec2GopEngine(file, installStamp()).also {
+            return Wav2Vec2GopEngine(file, installStamp(), { voicePhonology }).also {
                 gopEngine = it
                 gopPath = file.absolutePath
             }
@@ -923,7 +938,7 @@ class AppContainer private constructor(context: Context) {
      */
     suspend fun transliterate(text: String): List<HebrewTransliteration.GlossWord> =
         withContext(Dispatchers.Default) {
-            runCatching { HebrewTransliteration.gloss(text, glossPhonemizer.value) }
+            runCatching { HebrewTransliteration.gloss(text, glossPhonemizer.value, voicePhonology) }
                 .onFailure { Log.w(MEM_TAG, "gloss failed for \"$text\"", it) }
                 .getOrDefault(emptyList())
         }

@@ -231,6 +231,24 @@ class HebrewTransliterationTest {
     }
 
     @Test
+    fun `the gloss follows the voice into an accent`() {
+        // The gloss is a pronunciation hint. If the voice says a line with a
+        // burr and the Hebrew letters under it still spell the American
+        // vowels, the child is being shown one thing and hearing another.
+        val phonemizer = KokoroPhonemizer.load()
+        val spoken = Phonology.SCOTTISH.applyTo(phonemizer.phonemizeToIpa("gold"))
+        assertEquals(
+            HebrewTransliteration.ofIpa(spoken),
+            HebrewTransliteration.gloss("gold", phonemizer, Phonology.SCOTTISH).single().hebrew,
+        )
+        assertTrue(
+            "the accent has to reach the letters at all",
+            HebrewTransliteration.gloss("gold", phonemizer, Phonology.SCOTTISH).single().hebrew !=
+                HebrewTransliteration.gloss("gold", phonemizer).single().hebrew,
+        )
+    }
+
+    @Test
     fun `words the dictionary does not know still get a gloss`() {
         // Children's names go through RuleG2p, and a name with no gloss is
         // exactly the word a child most needs help saying.
