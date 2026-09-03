@@ -1,0 +1,1064 @@
+{
+  "format": "tuki-twisters-v1",
+  "notes": "Pronunciation practice, not grammar: every line exists to drill one sound English has and Hebrew does not, or one contrast Hebrew speakers collapse. level is how hard the line is to SAY, which is why these are kept out of the phrasebank's grammar ladder. he is the meaning, same trust class and conventions as the phrasebank; transliteration is derived at runtime, never authored.",
+  "sounds": [
+    {
+      "key": "th-voiceless",
+      "ipa": "θ",
+      "example": "think",
+      "label": {
+        "en": "th as in think",
+        "he": "הצליל th כמו ב-think"
+      }
+    },
+    {
+      "key": "th-voiced",
+      "ipa": "ð",
+      "example": "this",
+      "label": {
+        "en": "th as in this",
+        "he": "הצליל th כמו ב-this"
+      }
+    },
+    {
+      "key": "w",
+      "ipa": "w",
+      "example": "we",
+      "label": {
+        "en": "w, never v",
+        "he": "w, אף פעם לא v"
+      }
+    },
+    {
+      "key": "ship-sheep",
+      "ipa": "ɪ iː",
+      "example": "sheep",
+      "label": {
+        "en": "short i, long ee",
+        "he": "i קצרה מול ee ארוכה"
+      }
+    },
+    {
+      "key": "cat",
+      "ipa": "æ",
+      "example": "cat",
+      "label": {
+        "en": "a as in cat",
+        "he": "a כמו ב-cat"
+      }
+    },
+    {
+      "key": "cup",
+      "ipa": "ʌ",
+      "example": "cup",
+      "label": {
+        "en": "u as in cup",
+        "he": "u כמו ב-cup"
+      }
+    },
+    {
+      "key": "ng",
+      "ipa": "ŋ",
+      "example": "sing",
+      "label": {
+        "en": "ng at the end",
+        "he": "ng בסוף מילה"
+      }
+    },
+    {
+      "key": "h",
+      "ipa": "h",
+      "example": "hat",
+      "label": {
+        "en": "an h you can hear",
+        "he": "h שנשמעת"
+      }
+    },
+    {
+      "key": "r",
+      "ipa": "ɹ",
+      "example": "red",
+      "label": {
+        "en": "the English r",
+        "he": "ה-r האנגלית"
+      }
+    },
+    {
+      "key": "p",
+      "ipa": "pʰ",
+      "example": "Peter",
+      "label": {
+        "en": "a puff of air on p",
+        "he": "משב אוויר על p"
+      }
+    },
+    {
+      "key": "ed",
+      "ipa": "t d ɪd",
+      "example": "walked",
+      "label": {
+        "en": "-ed endings",
+        "he": "סיומות ed-"
+      }
+    },
+    {
+      "key": "full-fool",
+      "ipa": "ʊ uː",
+      "example": "food",
+      "label": {
+        "en": "short oo, long oo",
+        "he": "oo קצרה מול oo ארוכה"
+      }
+    },
+    {
+      "key": "v",
+      "ipa": "v",
+      "example": "five",
+      "label": {
+        "en": "v at the end",
+        "he": "v בסוף מילה"
+      }
+    },
+    {
+      "key": "s-sh",
+      "ipa": "s ʃ",
+      "example": "she",
+      "label": {
+        "en": "s and sh",
+        "he": "s מול sh"
+      }
+    },
+    {
+      "key": "oy",
+      "ipa": "ɔɪ",
+      "example": "boy",
+      "label": {
+        "en": "the oy sound",
+        "he": "הצליל oy"
+      }
+    }
+  ],
+  "twisters": [
+    {
+      "id": "tw-th-001",
+      "level": 1,
+      "sound": "th-voiceless",
+      "en": "Three thin things.",
+      "he": "שלושה דברים דקים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-oy-001",
+      "level": 1,
+      "sound": "oy",
+      "en": "Toy boat, toy boat, toy boat.",
+      "he": "סירת צעצוע.",
+      "align": [
+        {
+          "en": [
+            0,
+            5
+          ],
+          "he": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-r-001",
+      "level": 1,
+      "sound": "r",
+      "en": "Red rabbits run.",
+      "he": "ארנבים אדומים רצים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-th-002",
+      "level": 1,
+      "sound": "th-voiced",
+      "en": "This, that, these, those.",
+      "he": "זה, זאת, אלה, ההם.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-w-001",
+      "level": 2,
+      "sound": "w",
+      "en": "We want warm water.",
+      "he": "אנחנו רוצים מים חמים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-is-001",
+      "level": 2,
+      "sound": "ship-sheep",
+      "en": "This ship, these sheep.",
+      "he": "האונייה הזאת, הכבשים האלה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-h-001",
+      "level": 2,
+      "sound": "h",
+      "en": "Happy Hannah has a hat.",
+      "he": "חנה השמחה חובשת כובע.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            4
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-ng-001",
+      "level": 2,
+      "sound": "ng",
+      "en": "Sing and swing!",
+      "he": "שיר והתנדנד!",
+      "he_f": "שירי והתנדנדי!",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-cup-001",
+      "level": 2,
+      "sound": "cup",
+      "en": "A cup on top of a box.",
+      "he": "כוס על קופסה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-p-001",
+      "level": 2,
+      "sound": "p",
+      "en": "Peter picks pink peppers.",
+      "he": "פיטר קוטף פלפלים ורודים.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-cat-001",
+      "level": 3,
+      "sound": "cat",
+      "en": "Ten men sat on ten mats.",
+      "he": "עשרה אנשים ישבו על עשר מחצלות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        },
+        {
+          "en": [
+            5,
+            5
+          ],
+          "he": [
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-is-002",
+      "level": 3,
+      "sound": "ship-sheep",
+      "en": "Six sheep sit on the big ship.",
+      "he": "שש כבשים יושבות על האונייה הגדולה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-w-002",
+      "level": 3,
+      "sound": "w",
+      "en": "Victor's van went west.",
+      "he": "הטנדר של ויקטור נסע מערבה.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            1,
+            2
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-ff-001",
+      "level": 3,
+      "sound": "full-fool",
+      "en": "Look at the blue book.",
+      "he": "תסתכל על הספר הכחול.",
+      "he_f": "תסתכלי על הספר הכחול.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            4
+          ],
+          "he": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-cat-002",
+      "level": 3,
+      "sound": "cat",
+      "en": "Dad has a bad hat.",
+      "he": "לאבא יש כובע גרוע.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-cup-002",
+      "level": 3,
+      "sound": "cup",
+      "en": "The duck jumped up on the dock.",
+      "he": "הברווז קפץ על המזח.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            5,
+            6
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-ss-001",
+      "level": 3,
+      "sound": "s-sh",
+      "en": "She sees six ships.",
+      "he": "היא רואה שש אוניות.",
+      "align": [
+        {
+          "en": [
+            0,
+            0
+          ],
+          "he": [
+            0,
+            0
+          ]
+        },
+        {
+          "en": [
+            1,
+            1
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            2,
+            2
+          ],
+          "he": [
+            2,
+            2
+          ]
+        },
+        {
+          "en": [
+            3,
+            3
+          ],
+          "he": [
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-oy-002",
+      "level": 3,
+      "sound": "oy",
+      "en": "The boy's toy boat floats.",
+      "he": "סירת הצעצוע של הילד צפה.",
+      "align": [
+        {
+          "en": [
+            0,
+            1
+          ],
+          "he": [
+            2,
+            3
+          ]
+        },
+        {
+          "en": [
+            2,
+            3
+          ],
+          "he": [
+            0,
+            1
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tw-ed-001",
+      "level": 4,
+      "sound": "ed",
+      "en": "He walked, talked and looked.",
+      "he": "הוא הלך, דיבר והסתכל."
+    },
+    {
+      "id": "tw-h-002",
+      "level": 4,
+      "sound": "h",
+      "en": "Who hid Harry's huge hat?",
+      "he": "מי החביא את הכובע הענק של הארי?"
+    },
+    {
+      "id": "tw-ng-002",
+      "level": 4,
+      "sound": "ng",
+      "en": "The king is singing, the ring is ringing.",
+      "he": "המלך שר, הטבעת מצלצלת."
+    },
+    {
+      "id": "tw-r-002",
+      "level": 4,
+      "sound": "r",
+      "en": "Rory's rabbit ran around the rock.",
+      "he": "הארנב של רורי רץ מסביב לסלע."
+    },
+    {
+      "id": "tw-v-001",
+      "level": 4,
+      "sound": "v",
+      "en": "Give five leaves to Steve.",
+      "he": "תן חמישה עלים לסטיב.",
+      "he_f": "תני חמישה עלים לסטיב."
+    },
+    {
+      "id": "tw-w-003",
+      "level": 4,
+      "sound": "w",
+      "en": "The wet vest is very warm.",
+      "he": "האפוד הרטוב מאוד חם."
+    },
+    {
+      "id": "tw-p-002",
+      "level": 4,
+      "sound": "p",
+      "en": "Pat put the paper in the pot.",
+      "he": "פט שם את הנייר בסיר."
+    },
+    {
+      "id": "tw-th-003",
+      "level": 5,
+      "sound": "th-voiced",
+      "en": "Neither brother bothered the other.",
+      "he": "אף אחד מהאחים לא הפריע לשני."
+    },
+    {
+      "id": "tw-ff-002",
+      "level": 5,
+      "sound": "full-fool",
+      "en": "The cook took a good look at the food.",
+      "he": "הטבח הסתכל היטב על האוכל."
+    },
+    {
+      "id": "tw-ed-002",
+      "level": 5,
+      "sound": "ed",
+      "en": "She jumped, hopped and stopped.",
+      "he": "היא קפצה, ניתרה ונעצרה."
+    },
+    {
+      "id": "tw-is-003",
+      "level": 5,
+      "sound": "ship-sheep",
+      "en": "The sheep sleep while the ship slips.",
+      "he": "הכבשים ישנות בזמן שהאונייה מחליקה."
+    },
+    {
+      "id": "tw-ed-003",
+      "level": 5,
+      "sound": "ed",
+      "en": "We played, stayed and waited.",
+      "he": "שיחקנו, נשארנו וחיכינו."
+    },
+    {
+      "id": "tw-v-002",
+      "level": 5,
+      "sound": "v",
+      "en": "Steve loves to move the heavy stove.",
+      "he": "סטיב אוהב להזיז את התנור הכבד."
+    },
+    {
+      "id": "tw-th-004",
+      "level": 6,
+      "sound": "th-voiceless",
+      "en": "The sixth sheep has thick socks.",
+      "he": "לכבשה השישית יש גרביים עבים."
+    },
+    {
+      "id": "tw-ss-002",
+      "level": 6,
+      "sound": "s-sh",
+      "en": "She sells seashells by the seashore.",
+      "he": "היא מוכרת צדפים ליד החוף."
+    },
+    {
+      "id": "tw-w-004",
+      "level": 6,
+      "sound": "w",
+      "en": "William waved while Vera waited.",
+      "he": "ויליאם נופף בזמן שוורה חיכתה."
+    },
+    {
+      "id": "tw-th-005",
+      "level": 7,
+      "sound": "th-voiceless",
+      "en": "Thirty thirsty thinkers thought all Thursday.",
+      "he": "שלושים הוגים צמאים חשבו כל יום חמישי."
+    },
+    {
+      "id": "tw-th-006",
+      "level": 7,
+      "sound": "th-voiced",
+      "en": "Whether the weather is warm or cold, we will play outside.",
+      "he": "בין אם מזג האוויר חם או קר, נשחק בחוץ."
+    }
+  ]
+}

@@ -132,7 +132,7 @@ One source tree, two APKs (`docs/practice-flavor.md`), split by a single
 | Model-decode experiments (Edge TPU, 60 Hz cap) | in | out |
 | Model packs in the pack list / folder report | offered | not expected |
 | Speech models (ears, voice, coach) | packs — folder import or download | inside the APK, unpacked on first launch |
-| Vocabulary drills, picture room, coach, voice, ears, VAD, streaming preview, barge probe | in | in |
+| Vocabulary drills, tongue twisters, picture room, coach, voice, ears, VAD, streaming preview, barge probe | in | in |
 
 Same `applicationId` on purpose: a device moves between flavors by installing
 the other APK over it, profile intact. CI builds both and publishes both to the

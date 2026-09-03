@@ -17,6 +17,8 @@ import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.PhrasebankRepository
 import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.content.ResourcePhrasebankRepository
+import org.sisam.langtutor.content.ResourceTwisterRepository
+import org.sisam.langtutor.content.TwisterRepository
 import org.sisam.langtutor.engine.HebrewPhonemes
 import org.sisam.langtutor.engine.KokoroTtsEngine
 import org.sisam.langtutor.engine.OnnxTuning
@@ -932,6 +934,10 @@ class AppContainer private constructor(context: Context) {
     /** The authored sentence bank (docs/phrasebank.md): loaded once, cached,
      *  and trusted as-is — it is lint-gated data, not model output. */
     val phrasebank: PhrasebankRepository by lazy { ResourcePhrasebankRepository() }
+
+    /** The tongue twisters — authored like the phrasebank, organised by the
+     *  sound they drill rather than by grammar (docs/tongue-twisters.md). */
+    val twisters: TwisterRepository by lazy { ResourceTwisterRepository() }
 
     val rewards = RewardBus()
 

@@ -133,6 +133,7 @@
     <string name="chat_send">Send</string>
     <string name="home_just_chat">Just chat 💬</string>
     <string name="home_vocab_room">Vocabulary room 🗣️</string>
+    <string name="home_twister_room">Say it fast 🌀</string>
 
     <string name="vocab_pick_level">What shall we practice?</string>
     <string name="vocab_fresh">Tuki makes up new lines every round ✨</string>
@@ -145,6 +146,13 @@
     <string name="vocab_round_score">%1$d of %2$d said right</string>
     <string name="vocab_again">Again!</string>
     <string name="vocab_pick_other">Pick a level</string>
+
+    <string name="twister_pick_sound">Which sound shall we practice?</string>
+    <string name="twister_why">Sounds English has and Hebrew does not 🌀</string>
+    <string name="twister_example">like “%1$s”</string>
+    <string name="twister_count">%1$d twisters</string>
+    <string name="twister_pick_other">Pick a sound</string>
+    <string name="twister_round">Say it fast: %1$s</string>
 
     <string name="sticker_pick_one">You earned a sticker! Pick one 🎉</string>
     <string name="sticker_taken">Lovely choice!</string>

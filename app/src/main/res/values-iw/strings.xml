@@ -147,6 +147,7 @@
     <string name="chat_send">שליחה</string>
     <string name="home_just_chat">💬 סתם לדבר</string>
     <string name="home_vocab_room">🗣️ חדר מילים</string>
+    <string name="home_twister_room">🌀 מהר מהר</string>
 
     <string name="vocab_pick_level">מה נתרגל היום?</string>
     <string name="vocab_fresh">✨ טוקי ממציא משפטים חדשים בכל סיבוב</string>
@@ -158,6 +159,13 @@
     <string name="vocab_round_done">כל הכבוד! 🎉</string>
     <string name="vocab_round_score">%1$d מתוך %2$d נאמרו נכון</string>
     <string name="vocab_again">עוד פעם!</string>
+
+    <string name="twister_pick_sound">איזה צליל נתרגל?</string>
+    <string name="twister_why">🌀 צלילים שיש באנגלית ואין בעברית</string>
+    <string name="twister_example">כמו ב־"%1$s"</string>
+    <string name="twister_count">%1$d משפטים</string>
+    <string name="twister_pick_other">בחירת צליל</string>
+    <string name="twister_round">מהר מהר: %1$s</string>
     <string name="vocab_pick_other">בחירת רמה</string>
 
     <string name="sticker_pick_one">🎉 הרווחתם מדבקה! בחרו אחת</string>

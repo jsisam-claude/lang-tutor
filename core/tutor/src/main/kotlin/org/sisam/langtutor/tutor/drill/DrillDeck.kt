@@ -5,6 +5,7 @@ import org.sisam.langtutor.content.Activity
 import org.sisam.langtutor.content.AlignCue
 import org.sisam.langtutor.content.CurriculumUnit
 import org.sisam.langtutor.content.PhraseSentence
+import org.sisam.langtutor.content.Twister
 
 /** Difficulty is sentence LENGTH, which a pre-reader can feel even though
  *  they cannot read the label. */
@@ -106,6 +107,19 @@ object DrillDeck {
         random: Random,
     ): List<DrillItem> =
         phrasePool(sentences, level, learnerLevel).shuffled(random).take(sizeFor(level))
+
+    /**
+     * The tongue twisters' contribution: every line for one target sound, in
+     * the order they were authored in — easiest to say first.
+     *
+     * Not shuffled and not capped, unlike every other round here. A twister
+     * set is a handful of lines that climb from three words to a whole clause
+     * on the SAME sound, so the order is the teaching; shuffling it would
+     * open a sound with its hardest line, and taking a random subset would
+     * drop the rung the next one stands on.
+     */
+    fun twisterRound(twisters: List<Twister>): List<DrillItem> =
+        twisters.map { DrillItem(it.en, classify(it.en), it.he, it.align) }
 
     /** Longer sentences are more work per item, so rounds shrink with level. */
     fun sizeFor(level: DrillLevel): Int = when (level) {

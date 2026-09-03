@@ -1,4 +1,4 @@
-package org.sisam.langtutor.ui.vocab
+package org.sisam.langtutor.ui.twisters
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,32 +30,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
-import org.sisam.langtutor.tutor.drill.DrillDeck
-import org.sisam.langtutor.tutor.drill.DrillLevel
+import org.sisam.langtutor.content.TwisterBook
 import org.sisam.langtutor.ui.common.A11y
+import org.sisam.langtutor.ui.common.EnglishContent
 import org.sisam.langtutor.ui.common.TukiParrot
 import org.sisam.langtutor.ui.drill.DrillPane
 import org.sisam.langtutor.ui.drill.DrillSource
 
 /**
- * The vocabulary room: pick a level, then "Repeat after me" — Tuki says a
- * line, the learner says it back, a correct repetition celebrates and moves
- * on. The LLM writes fresh lines each round when a model is installed; the
- * drill LOOP itself never depends on it, so the room still starts instantly
- * from the curriculum deck while the model loads, and works with no model at
- * all.
+ * "Say it fast" — the tongue-twister room (docs/tongue-twisters.md).
+ *
+ * Sorted by SOUND rather than by level, because that is what these lines are
+ * for: each card is one English phoneme Hebrew does not have, or one contrast
+ * Hebrew speakers collapse, and the round behind it climbs from three words to
+ * a whole clause on that one sound. The drill loop itself is the vocabulary
+ * room's — see [DrillPane]; only the pool and the heading differ.
  */
 @Composable
-fun VocabScreen(container: AppContainer) {
-    var levelName by rememberSaveable { mutableStateOf<String?>(null) }
-    val level = levelName?.let { DrillLevel.valueOf(it) }
+fun TwisterScreen(container: AppContainer) {
+    var soundKey by rememberSaveable { mutableStateOf<String?>(null) }
 
-    // The drill needs the mic; ask once when the room opens.
+    // Same as every room that listens: ask for the mic once, on the way in.
     val micPermission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { }
@@ -63,40 +63,36 @@ fun VocabScreen(container: AppContainer) {
         micPermission.launch(android.Manifest.permission.RECORD_AUDIO)
     }
 
-    if (level == null) {
-        LevelPicker(container, onPick = { levelName = it.name })
+    val book by produceState(initialValue = TwisterBook.EMPTY, container) {
+        value = runCatching { container.twisters.book() }.getOrDefault(TwisterBook.EMPTY)
+    }
+    // Same locale test the Parent Zone uses for its bilingual labels.
+    val hebrew = LocalConfiguration.current.locales[0].language in setOf("he", "iw")
+    val chosen = soundKey?.let { key -> book.sounds.firstOrNull { it.key == key } }
+
+    if (chosen == null) {
+        SoundPicker(book, hebrew, onPick = { soundKey = it })
     } else {
+        val label = if (hebrew) chosen.label.he else chosen.label.en
         DrillPane(
             container = container,
-            source = DrillSource.Mixed(level),
-            heading = stringResource(levelLabel(level)),
-            pickAnotherLabel = stringResource(R.string.vocab_pick_other),
-            onPickAnother = { levelName = null },
+            source = DrillSource.Sound(chosen.key),
+            heading = stringResource(R.string.twister_round, label),
+            pickAnotherLabel = stringResource(R.string.twister_pick_other),
+            onPickAnother = { soundKey = null },
         )
     }
 }
 
-/** Colour + glyph per level — the pre-reader's handle on the choice. */
-private fun levelLook(level: DrillLevel): Pair<Color, String> = when (level) {
-    DrillLevel.WORDS -> Color(0xFF19B8A6) to "🧩"
-    DrillLevel.SHORT -> Color(0xFF3E8ED0) to "💬"
-    DrillLevel.LONG -> Color(0xFF7C6BEA) to "📖"
-}
-
-private fun levelLabel(level: DrillLevel): Int = when (level) {
-    DrillLevel.WORDS -> R.string.vocab_level_words
-    DrillLevel.SHORT -> R.string.vocab_level_short
-    DrillLevel.LONG -> R.string.vocab_level_long
-}
+/** One accent per card, cycled — the pre-reader's handle on a list of sounds
+ *  none of which has a picture. */
+private val ACCENTS = listOf(
+    Color(0xFF19B8A6), Color(0xFF3E8ED0), Color(0xFF7C6BEA),
+    Color(0xFFE0679A), Color(0xFFE29B3F),
+)
 
 @Composable
-private fun LevelPicker(container: AppContainer, onPick: (DrillLevel) -> Unit) {
-    // Real counts on the cards, from the same pools the round will draw from.
-    val counts by produceState<Map<DrillLevel, Int>>(initialValue = emptyMap(), container) {
-        val units = container.content.listUnits().mapNotNull { container.content.loadUnit(it.id) }
-        value = DrillLevel.entries.associateWith { DrillDeck.pool(units, it).size }
-    }
-
+private fun SoundPicker(book: TwisterBook, hebrew: Boolean, onPick: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -110,23 +106,22 @@ private fun LevelPicker(container: AppContainer, onPick: (DrillLevel) -> Unit) {
         ) {
             TukiParrot(speaking = false, size = A11y.decorativeDp(comfortable = 64, minimum = 40))
             Text(
-                text = stringResource(R.string.vocab_pick_level),
+                text = stringResource(R.string.twister_pick_sound),
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.weight(1f),
             )
         }
-        if (container.usingRealLlm) {
-            Text(
-                text = stringResource(R.string.vocab_fresh),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        }
-        for (level in DrillLevel.entries) {
-            val (accent, glyph) = levelLook(level)
+        Text(
+            text = stringResource(R.string.twister_why),
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        book.playableSounds().forEachIndexed { index, sound ->
+            val accent = ACCENTS[index % ACCENTS.size]
+            val count = book.forSound(sound.key).size
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onPick(level) },
+                    .clickable { onPick(sound.key) },
                 shape = RoundedCornerShape(20.dp),
             ) {
                 Row(
@@ -143,23 +138,32 @@ private fun LevelPicker(container: AppContainer, onPick: (DrillLevel) -> Unit) {
                             .background(accent.copy(alpha = 0.18f)),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text(text = glyph, style = MaterialTheme.typography.titleLarge)
+                        // The IPA is the honest label for a sound, and it is
+                        // Latin script either way — so it stays LTR even when
+                        // everything around it is Hebrew.
+                        EnglishContent {
+                            Text(
+                                text = sound.ipa,
+                                style = MaterialTheme.typography.titleLarge,
+                            )
+                        }
                     }
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = stringResource(levelLabel(level)),
+                            text = if (hebrew) sound.label.he else sound.label.en,
                             style = MaterialTheme.typography.titleLarge,
                         )
-                        counts[level]?.let { count ->
-                            Text(
-                                text = stringResource(R.string.vocab_items_count, count),
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
-                        }
+                        Text(
+                            text = stringResource(R.string.twister_example, sound.example),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                        Text(
+                            text = stringResource(R.string.twister_count, count),
+                            style = MaterialTheme.typography.bodySmall,
+                        )
                     }
                 }
             }
         }
     }
 }
-

@@ -72,6 +72,7 @@ fun HomeScreen(
     onOpenChat: () -> Unit,
     onOpenVocab: () -> Unit,
     onOpenPictures: () -> Unit,
+    onOpenTwisters: () -> Unit,
 ) {
     val units by produceState<List<UnitSummary>>(initialValue = emptyList(), container) {
         value = container.content.listUnits()
@@ -131,6 +132,12 @@ fun HomeScreen(
         // find the one Tuki asks for. No model, no mic — works on anything.
         Button(onClick = onOpenPictures, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_picture_room))
+        }
+        // The sounds English has and Hebrew does not. Authored twisters, one
+        // round per target sound, scored by the same pronunciation coach —
+        // no model needed, so the tablet build has it in full.
+        Button(onClick = onOpenTwisters, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.home_twister_room))
         }
         // Freeform three-way practice with both parrots — no lesson, no
         // scoring, just talking.
