@@ -609,7 +609,7 @@
       "tense": "present-simple",
       "frame": "where-is-X",
       "en": "Where is the blue paintbrush?",
-      "he": "איפה המברשת הכחולה?",
+      "he": "איפה המכחול הכחול?",
       "align": [
         {
           "en": [
@@ -924,7 +924,7 @@
       "tense": "present-simple",
       "frame": "plural-location",
       "en": "The paintbrushes are on the table.",
-      "he": "המברשות על השולחן."
+      "he": "המכחולים על השולחן."
     },
     {
       "id": "col-l3-006",
@@ -1012,8 +1012,8 @@
       "tense": "modal",
       "frame": "must",
       "en": "You must clean the paintbrush after painting.",
-      "he": "אתה חייב לנקות את המברשת אחרי הציור.",
-      "he_f": "את חייבת לנקות את המברשת אחרי הציור."
+      "he": "אתה חייב לנקות את המכחול אחרי הציור.",
+      "he_f": "את חייבת לנקות את המכחול אחרי הציור."
     },
     {
       "id": "col-l4-005",
@@ -1260,7 +1260,7 @@
       "tense": "past-perfect",
       "frame": "never-before",
       "en": "She had never mixed paint colors before.",
-      "he": "היא מעולם לא ערבבה צבעי ציור לפני כן."
+      "he": "היא מעולם לא ערבבה צבעים לפני כן."
     },
     {
       "id": "col-l6-011",
@@ -1342,7 +1342,7 @@
       "tense": "past-perfect-progressive",
       "frame": "by-the-time",
       "en": "By the time we finished, we had been mixing colors for an hour.",
-      "he": "עד שסיימנו, כבר ערבבנו צבעים שעה."
+      "he": "עד שסיימנו, כבר ערבבנו צבעים במשך שעה."
     },
     {
       "id": "col-l7-009",

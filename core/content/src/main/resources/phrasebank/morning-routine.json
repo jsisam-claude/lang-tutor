@@ -843,7 +843,7 @@
       "tense": "present-progressive",
       "frame": "X-is-Ving",
       "en": "We are checking the clock.",
-      "he": "אנחנו בודקים את השעון.",
+      "he": "אנחנו מסתכלים על השעון.",
       "align": [
         {
           "en": [
@@ -1054,7 +1054,7 @@
       "tense": "present-simple",
       "frame": "comparative",
       "en": "The clock moves faster than me.",
-      "he": "השעון זז מהר יותר ממני."
+      "he": "השעון רץ מהר יותר ממני."
     },
     {
       "id": "mor-l4-006",
@@ -1079,8 +1079,8 @@
       "tense": "modal",
       "frame": "should",
       "en": "You should check the clock.",
-      "he": "כדאי שתבדוק את השעון.",
-      "he_f": "כדאי שתבדקי את השעון."
+      "he": "כדאי שתסתכל על השעון.",
+      "he_f": "כדאי שתסתכלי על השעון."
     },
     {
       "id": "mor-l4-009",
@@ -1180,7 +1180,7 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If we leave now, we will be on time.",
-      "he": "אם נצא עכשיו, נהיה בזמן."
+      "he": "אם נצא עכשיו, נגיע בזמן."
     },
     {
       "id": "mor-l5-009",
@@ -1280,7 +1280,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "The door was closed before I woke up.",
-      "he": "הדלת הייתה סגורה לפני שהתעוררתי."
+      "he": "הדלת נסגרה לפני שהתעוררתי."
     },
     {
       "id": "mor-l6-009",
@@ -1372,7 +1372,7 @@
       "tense": "past-simple",
       "frame": "discourse-although",
       "en": "Although we woke up late, we still arrived on time.",
-      "he": "למרות שהתעוררנו מאוחר, עדיין הגענו בזמן."
+      "he": "למרות שהתעוררנו מאוחר, בכל זאת הגענו בזמן."
     },
     {
       "id": "mor-l7-008",

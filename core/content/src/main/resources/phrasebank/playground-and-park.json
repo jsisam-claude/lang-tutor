@@ -1007,7 +1007,7 @@
       "tense": "past-simple",
       "frame": "did-question",
       "en": "Did the kids share the swing?",
-      "he": "הילדים חלקו את הנדנדה?"
+      "he": "הילדים התחלקו בנדנדה?"
     },
     {
       "id": "ply-l3-009",
@@ -1104,7 +1104,7 @@
       "tense": "future-simple",
       "frame": "will",
       "en": "Dad will push me on the swing tomorrow.",
-      "he": "אבא ידחוף אותי על הנדנדה מחר."
+      "he": "אבא ידחוף אותי בנדנדה מחר."
     },
     {
       "id": "ply-l4-009",
@@ -1137,8 +1137,8 @@
       "tense": "future-simple",
       "frame": "will-question",
       "en": "Will you share the sandbox with me?",
-      "he": "תחלוק איתי את ארגז החול?",
-      "he_f": "תחלקי איתי את ארגז החול?"
+      "he": "תתחלק איתי בארגז החול?",
+      "he_f": "תתחלקי איתי בארגז החול?"
     },
     {
       "id": "ply-l5-001",
@@ -1211,7 +1211,7 @@
       "tense": "present-perfect",
       "frame": "perfect-never",
       "en": "I have never climbed so high before.",
-      "he": "מעולם לא טיפסתי כל כך גבוה לפני כן."
+      "he": "מעולם לא טיפסתי כל כך גבוה."
     },
     {
       "id": "ply-l5-010",
@@ -1235,8 +1235,8 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If you help me carry the blanket, we'll find a good spot faster.",
-      "he": "אם תעזור לי לשאת את השמיכה, נמצא מקום טוב מהר יותר.",
-      "he_f": "אם תעזרי לי לשאת את השמיכה, נמצא מקום טוב מהר יותר."
+      "he": "אם תעזור לי לסחוב את השמיכה, נמצא מקום טוב מהר יותר.",
+      "he_f": "אם תעזרי לי לסחוב את השמיכה, נמצא מקום טוב מהר יותר."
     },
     {
       "id": "ply-l6-001",
@@ -1342,8 +1342,8 @@
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
       "en": "I have been climbing all afternoon.",
-      "he": "אני מטפס כל אחר הצהריים.",
-      "he_f": "אני מטפסת כל אחר הצהריים."
+      "he": "אני מטפס כבר כל אחר הצהריים.",
+      "he_f": "אני מטפסת כבר כל אחר הצהריים."
     },
     {
       "id": "ply-l7-002",
@@ -1432,7 +1432,7 @@
       "tense": "past-simple",
       "frame": "discourse-summary",
       "en": "In short, everyone took turns, so the afternoon at the park was fun for everyone.",
-      "he": "בקיצור, כולם התחלפו, ולכן אחר הצהריים בפארק היה כיף לכולם."
+      "he": "בקיצור, כולם קיבלו תור, ולכן אחר הצהריים בפארק היה כיף לכולם."
     }
   ]
 }

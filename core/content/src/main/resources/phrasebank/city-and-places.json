@@ -956,7 +956,7 @@
       "tense": "past-simple",
       "frame": "X-Ved-Y",
       "en": "Mom mailed a letter at the post office.",
-      "he": "אמא שלחה מכתב בדואר."
+      "he": "אמא שלחה מכתב בסניף הדואר."
     },
     {
       "id": "cty-l3-004",
@@ -1077,7 +1077,7 @@
       "tense": "modal",
       "frame": "should",
       "en": "You should ask someone for directions.",
-      "he": "כדאי לשאול מישהו איך מגיעים."
+      "he": "כדאי לשאול מישהו איך מגיעים לשם."
     },
     {
       "id": "cty-l4-007",
@@ -1273,7 +1273,7 @@
       "tense": "past-progressive",
       "frame": "when",
       "en": "I was crossing the street when the light changed.",
-      "he": "חציתי את הכביש כשהאור התחלף."
+      "he": "הייתי באמצע חציית הכביש כשהרמזור התחלף."
     },
     {
       "id": "cty-l6-007",

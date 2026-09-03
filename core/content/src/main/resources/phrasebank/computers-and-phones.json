@@ -375,7 +375,7 @@
       "tense": "present-simple",
       "frame": "X-is-emotion",
       "en": "Grandma is excited!",
-      "he": "סבתא מתרגשת!",
+      "he": "סבתא נרגשת!",
       "align": [
         {
           "en": [
@@ -1424,7 +1424,7 @@
       "tense": "past-simple",
       "frame": "discourse-although",
       "en": "Although the call was short, Grandma looked very happy.",
-      "he": "למרות שהשיחה הייתה קצרה, סבתא נראתה מאוד שמחה."
+      "he": "למרות שהשיחה הייתה קצרה, סבתא נראתה שמחה מאוד."
     },
     {
       "id": "cmp-l7-008",

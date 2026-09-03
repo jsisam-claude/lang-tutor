@@ -840,7 +840,7 @@
       "tense": "present-progressive",
       "frame": "X-is-Ving",
       "en": "She is choosing her clothes.",
-      "he": "היא בוחרת מה ללבוש.",
+      "he": "היא בוחרת את הבגדים שלה.",
       "align": [
         {
           "en": [
@@ -868,8 +868,8 @@
             4
           ],
           "he": [
-            2,
-            3
+            3,
+            4
           ]
         }
       ]
@@ -1053,7 +1053,7 @@
       "tense": "past-simple",
       "frame": "we-Ved",
       "en": "We matched the socks by color.",
-      "he": "התאמנו את הגרביים לפי צבע."
+      "he": "סידרנו את הגרביים בזוגות לפי צבע."
     },
     {
       "id": "clo-l3-011",
@@ -1135,8 +1135,8 @@
       "tense": "modal",
       "frame": "should",
       "en": "You should zip your coat because it's cold outside.",
-      "he": "כדאי שתרכוס את המעיל, קר בחוץ.",
-      "he_f": "כדאי שתרכסי את המעיל, קר בחוץ."
+      "he": "כדאי שתרכוס את המעיל כי קר בחוץ.",
+      "he_f": "כדאי שתרכסי את המעיל כי קר בחוץ."
     },
     {
       "id": "clo-l4-009",
@@ -1369,7 +1369,7 @@
       "tense": "present-simple",
       "frame": "passive",
       "en": "Hats are worn in the strong summer sun.",
-      "he": "כובעים נחבשים בשמש הקיץ החזקה."
+      "he": "חובשים כובעים בשמש הקיץ החזקה."
     },
     {
       "id": "clo-l7-001",
@@ -1403,7 +1403,7 @@
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
       "en": "My sister has been choosing her outfit for an hour.",
-      "he": "אחותי בוחרת את התלבושת שלה כבר שעה."
+      "he": "אחותי בוחרת מה ללבוש כבר שעה."
     },
     {
       "id": "clo-l7-005",
@@ -1436,7 +1436,7 @@
       "tense": "past-perfect-progressive",
       "frame": "by-the-time",
       "en": "By the time we left, I had been buttoning my coat for five minutes.",
-      "he": "עד שיצאנו, כבר כפתרתי את המעיל שלי חמש דקות."
+      "he": "עד שיצאנו, כפתרתי את המעיל שלי כבר חמש דקות."
     },
     {
       "id": "clo-l7-009",

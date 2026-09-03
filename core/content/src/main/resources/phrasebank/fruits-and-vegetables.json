@@ -986,7 +986,7 @@
       "tense": "past-simple",
       "frame": "did-question",
       "en": "Did the corn grow tall this year?",
-      "he": "התירס גדל גבוה השנה?"
+      "he": "התירס צמח גבוה השנה?"
     },
     {
       "id": "frt-l3-009",
@@ -1059,8 +1059,8 @@
       "tense": "modal",
       "frame": "must",
       "en": "You must be careful when you cut the watermelon.",
-      "he": "אתה חייב לבקש ממבוגר לפני שאתה חותך את האבטיח.",
-      "he_f": "את חייבת לבקש ממבוגר לפני שאת חותכת את האבטיח."
+      "he": "אתה חייב להיזהר כשאתה חותך את האבטיח.",
+      "he_f": "את חייבת להיזהר כשאת חותכת את האבטיח."
     },
     {
       "id": "frt-l4-006",
@@ -1175,7 +1175,8 @@
       "tense": "modal",
       "frame": "may",
       "en": "You may cut the watermelon if you are careful.",
-      "he": "מותר לך לחתוך את האבטיח אם מבוגר עוזר לך."
+      "he": "מותר לך לחתוך את האבטיח אם תיזהר.",
+      "he_f": "מותר לך לחתוך את האבטיח אם תיזהרי."
     },
     {
       "id": "frt-l5-008",
@@ -1288,7 +1289,7 @@
       "tense": "past-progressive",
       "frame": "X-was-Ving",
       "en": "The corn was growing quickly in the warm sun.",
-      "he": "התירס גדל מהר בשמש החמה."
+      "he": "התירס צמח מהר בשמש החמה."
     },
     {
       "id": "frt-l6-010",

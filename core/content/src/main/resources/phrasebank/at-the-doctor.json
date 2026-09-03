@@ -536,8 +536,8 @@
       "tense": "modal",
       "frame": "can-you-X",
       "en": "Can you open your mouth?",
-      "he": "אתה יכול לפתוח את הפה שלך?",
-      "he_f": "את יכולה לפתוח את הפה שלך?",
+      "he": "אתה יכול לפתוח את הפה?",
+      "he_f": "את יכולה לפתוח את הפה?",
       "align": [
         {
           "en": [
@@ -566,7 +566,7 @@
           ],
           "he": [
             4,
-            5
+            4
           ]
         }
       ]
@@ -577,8 +577,8 @@
       "tense": "modal",
       "frame": "i-can-X",
       "en": "I can say aah.",
-      "he": "אני יכול להגיד אאה.",
-      "he_f": "אני יכולה להגיד אאה.",
+      "he": "אני יכול להגיד אאא.",
+      "he_f": "אני יכולה להגיד אאא.",
       "align": [
         {
           "en": [
@@ -1062,8 +1062,8 @@
       "tense": "modal",
       "frame": "must",
       "en": "You must sit still for the checkup.",
-      "he": "אתה חייב לשבת בשקט לבדיקה.",
-      "he_f": "את חייבת לשבת בשקט לבדיקה."
+      "he": "אתה חייב לשבת בשקט בזמן הבדיקה.",
+      "he_f": "את חייבת לשבת בשקט בזמן הבדיקה."
     },
     {
       "id": "doc-l4-005",
@@ -1072,7 +1072,7 @@
       "frame": "should",
       "en": "You should visit the doctor for your cold.",
       "he": "כדאי שתבקר אצל הרופאה בגלל ההצטננות שלך.",
-      "he_f": "כדאי שתבקרי את הרופאה בגלל ההצטננות שלך."
+      "he_f": "כדאי שתבקרי אצל הרופאה בגלל ההצטננות שלך."
     },
     {
       "id": "doc-l4-006",
@@ -1114,7 +1114,7 @@
       "tense": "present-simple",
       "frame": "comparative",
       "en": "My knee is better than yesterday.",
-      "he": "הברך שלי טובה יותר מאתמול."
+      "he": "הברך שלי מרגישה טוב יותר מאתמול."
     },
     {
       "id": "doc-l4-011",
@@ -1131,7 +1131,7 @@
       "tense": "future-simple",
       "frame": "will-question",
       "en": "Will I get a sticker today?",
-      "he": "אקבל מדבקה היום?"
+      "he": "אני אקבל מדבקה היום?"
     },
     {
       "id": "doc-l5-001",
@@ -1327,7 +1327,7 @@
       "tense": "present-simple",
       "frame": "passive",
       "en": "A sticker is given at the end of every checkup.",
-      "he": "מדבקה ניתנת בסוף כל בדיקה."
+      "he": "נותנים מדבקה בסוף כל בדיקה."
     },
     {
       "id": "doc-l7-001",

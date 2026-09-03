@@ -948,7 +948,7 @@
       "tense": "past-simple",
       "frame": "X-Ved-Y",
       "en": "The zookeeper fed the elephants.",
-      "he": "שומר גן החיות האכיל את הפילים."
+      "he": "המטפל בגן החיות האכיל את הפילים."
     },
     {
       "id": "zoo-l3-003",
@@ -956,7 +956,7 @@
       "tense": "present-simple",
       "frame": "possessive",
       "en": "The lion's mane is thick.",
-      "he": "הרעמה של האריה עבה."
+      "he": "הרעמה של האריה סמיכה."
     },
     {
       "id": "zoo-l3-004",
@@ -1004,7 +1004,7 @@
       "tense": "past-simple",
       "frame": "we-Ved",
       "en": "We watched the penguins in the pool.",
-      "he": "צפינו בפינגווינים שוחים."
+      "he": "צפינו בפינגווינים בבריכה."
     },
     {
       "id": "zoo-l3-010",
@@ -1036,7 +1036,7 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "We are going to see the lions first.",
-      "he": "אנחנו עומדים לראות את האריות קודם."
+      "he": "קודם אנחנו עומדים לראות את האריות."
     },
     {
       "id": "zoo-l4-002",
@@ -1069,8 +1069,8 @@
       "tense": "modal",
       "frame": "should",
       "en": "You should visit the giraffes today.",
-      "he": "כדאי שתבקר את הג'ירפות היום.",
-      "he_f": "כדאי שתבקרי את הג'ירפות היום."
+      "he": "כדאי שתלך לראות את הג'ירפות היום.",
+      "he_f": "כדאי שתלכי לראות את הג'ירפות היום."
     },
     {
       "id": "zoo-l4-006",
@@ -1159,8 +1159,7 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If the zookeeper throws the ball, the monkey will catch it.",
-      "he": "אם תזרוק את הכדור, הקוף יתפוס אותו.",
-      "he_f": "אם תזרקי את הכדור, הקוף יתפוס אותו."
+      "he": "אם המטפל יזרוק את הכדור, הקוף יתפוס אותו."
     },
     {
       "id": "zoo-l5-005",
@@ -1208,7 +1207,7 @@
       "tense": "present-perfect",
       "frame": "perfect-since",
       "en": "The penguins have been in the pool since this morning.",
-      "he": "הפינגווינים שוחים בבריכה מאז הבוקר."
+      "he": "הפינגווינים בבריכה מאז הבוקר."
     },
     {
       "id": "zoo-l5-011",
@@ -1298,7 +1297,7 @@
       "tense": "past-progressive",
       "frame": "X-was-Ving",
       "en": "The zookeeper was carrying a bucket of fish.",
-      "he": "שומר גן החיות נשא דלי דגים."
+      "he": "המטפל בגן החיות סחב דלי של דגים."
     },
     {
       "id": "zoo-l6-010",
@@ -1314,8 +1313,8 @@
       "tense": "conditional-second",
       "frame": "if-i-were",
       "en": "If I were a zookeeper, I would feed the lions every morning.",
-      "he": "אילו הייתי שומר גן חיות, הייתי מאכיל את האריות כל בוקר.",
-      "he_f": "אילו הייתי שומרת גן חיות, הייתי מאכילה את האריות כל בוקר."
+      "he": "אילו הייתי מטפל בגן חיות, הייתי מאכיל את האריות כל בוקר.",
+      "he_f": "אילו הייתי מטפלת בגן חיות, הייתי מאכילה את האריות כל בוקר."
     },
     {
       "id": "zoo-l6-012",
@@ -1323,7 +1322,7 @@
       "tense": "present-simple",
       "frame": "passive",
       "en": "The animals are fed twice a day.",
-      "he": "החיות מואכלות פעמיים ביום."
+      "he": "מאכילים את החיות פעמיים ביום."
     },
     {
       "id": "zoo-l7-001",
@@ -1331,8 +1330,8 @@
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
       "en": "I have been watching the monkeys all afternoon.",
-      "he": "אני מסתכל על הקופים כל אחר הצהריים.",
-      "he_f": "אני מסתכלת על הקופים כל אחר הצהריים."
+      "he": "אני מסתכל על הקופים כבר כל אחר הצהריים.",
+      "he_f": "אני מסתכלת על הקופים כבר כל אחר הצהריים."
     },
     {
       "id": "zoo-l7-002",
@@ -1356,7 +1355,7 @@
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
       "en": "The lions have been sleeping all morning.",
-      "he": "האריות ישנים כל הבוקר."
+      "he": "האריות ישנים כבר כל הבוקר."
     },
     {
       "id": "zoo-l7-005",
@@ -1380,7 +1379,7 @@
       "tense": "past-simple",
       "frame": "discourse-although",
       "en": "Although the lion looked lazy, it was actually very strong.",
-      "he": "למרות שהאריה נראה עצלן, הוא היה למעשה חזק מאוד."
+      "he": "למרות שהאריה נראה עצלן, הוא היה בעצם חזק מאוד."
     },
     {
       "id": "zoo-l7-008",

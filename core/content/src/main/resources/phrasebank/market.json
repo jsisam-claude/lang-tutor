@@ -794,8 +794,8 @@
       "tense": "present-progressive",
       "frame": "i-am-verbing-X",
       "en": "I am carrying the heavy bag.",
-      "he": "אני סוחב את התיק הכבד.",
-      "he_f": "אני סוחבת את התיק הכבד.",
+      "he": "אני סוחב את השקית הכבדה.",
+      "he_f": "אני סוחבת את השקית הכבדה.",
       "align": [
         {
           "en": [
@@ -1435,7 +1435,7 @@
       "tense": "present-simple",
       "frame": "X-is-comparative-than",
       "en": "Fresh juice is healthier than soda.",
-      "he": "מיץ טבעי בריא יותר משתייה מתוקה."
+      "he": "מיץ טרי בריא יותר משתייה מתוקה."
     },
     {
       "id": "mkt-l4-007",
@@ -1523,7 +1523,7 @@
       "tense": "modal",
       "frame": "X-might-verb",
       "en": "The price of olive oil might rise this year.",
-      "he": "מחיר שמן הזית עשוי לעלות השנה."
+      "he": "מחיר שמן הזית עלול לעלות השנה."
     },
     {
       "id": "mkt-l5-006",
@@ -1539,7 +1539,7 @@
       "tense": "present-perfect",
       "frame": "X-has-been-for-time",
       "en": "The shop has been in the family for three generations.",
-      "he": "החנות נמצאת במשפחה כבר שלושה דורות."
+      "he": "החנות במשפחה כבר שלושה דורות."
     },
     {
       "id": "mkt-l5-008",
@@ -1596,7 +1596,7 @@
       "tense": "present-simple",
       "frame": "X-is-made-from",
       "en": "The cheese is made from goat milk.",
-      "he": "הגבינה מיוצרת מחלב עיזים."
+      "he": "הגבינה עשויה מחלב עיזים."
     },
     {
       "id": "mkt-l6-003",
@@ -1620,7 +1620,7 @@
       "tense": "past-simple",
       "frame": "X-was-verbed-with",
       "en": "The stand was decorated with fresh flowers.",
-      "he": "הדוכן קושט בפרחים טריים."
+      "he": "הדוכן היה מקושט בפרחים טריים."
     },
     {
       "id": "mkt-l6-006",

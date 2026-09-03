@@ -726,8 +726,8 @@
       "tense": "modal",
       "frame": "can-you-X",
       "en": "Can you see the rainbow?",
-      "he": "אתה רואה את הקשת?",
-      "he_f": "את רואה את הקשת?",
+      "he": "אתה יכול לראות את הקשת?",
+      "he_f": "את יכולה לראות את הקשת?",
       "align": [
         {
           "en": [
@@ -736,7 +736,7 @@
           ],
           "he": [
             0,
-            0
+            1
           ]
         },
         {
@@ -745,8 +745,8 @@
             2
           ],
           "he": [
-            1,
-            1
+            2,
+            2
           ]
         },
         {
@@ -755,8 +755,8 @@
             4
           ],
           "he": [
-            3,
-            3
+            4,
+            4
           ]
         }
       ]
@@ -1368,7 +1368,7 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "It is going to rain this afternoon.",
-      "he": "עומד לרדת גשם אחר הצהריים."
+      "he": "עומד לרדת גשם היום אחר הצהריים."
     },
     {
       "id": "wea-l4-002",
@@ -1400,7 +1400,8 @@
       "tense": "modal",
       "frame": "must",
       "en": "You must drink water on hot days.",
-      "he": "חייבים לשתות מים בימים חמים."
+      "he": "אתה חייב לשתות מים בימים חמים.",
+      "he_f": "את חייבת לשתות מים בימים חמים."
     },
     {
       "id": "wea-l4-006",
@@ -1449,7 +1450,7 @@
       "tense": "future-simple",
       "frame": "will-question",
       "en": "Will it snow this winter?",
-      "he": "יירד שלג החורף?"
+      "he": "החורף יירד שלג?"
     },
     {
       "id": "wea-l4-012",
@@ -1465,7 +1466,7 @@
       "tense": "present-perfect",
       "frame": "perfect-this-week",
       "en": "It has rained every day this week.",
-      "he": "ירד גשם כל יום השבוע."
+      "he": "השבוע ירד גשם כל יום."
     },
     {
       "id": "wea-l5-002",
@@ -1530,7 +1531,7 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If it is sunny tomorrow, we will have a picnic.",
-      "he": "אם יהיה שמשי מחר, נעשה פיקניק."
+      "he": "אם מחר תהיה שמש, נעשה פיקניק."
     },
     {
       "id": "wea-l5-010",
@@ -1628,7 +1629,7 @@
       "tense": "past-progressive",
       "frame": "X-was-Ving",
       "en": "The clouds were moving fast across the sky.",
-      "he": "העננים נעו מהר בשמיים."
+      "he": "העננים זזו מהר בשמיים."
     },
     {
       "id": "wea-l6-010",
@@ -1708,7 +1709,7 @@
       "tense": "past-simple",
       "frame": "discourse-although",
       "en": "Although the sky was dark, it did not rain.",
-      "he": "למרות שהשמיים היו חשוכים, לא ירד גשם."
+      "he": "למרות שהשמיים היו כהים, לא ירד גשם."
     },
     {
       "id": "wea-l7-008",

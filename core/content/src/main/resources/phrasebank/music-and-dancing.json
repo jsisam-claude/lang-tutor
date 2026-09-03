@@ -113,7 +113,7 @@
       "tense": "present-simple",
       "frame": "the-X-is-adj",
       "en": "The drum is loud.",
-      "he": "התוף חזק.",
+      "he": "התוף רועש.",
       "align": [
         {
           "en": [
@@ -567,8 +567,8 @@
       "tense": "modal",
       "frame": "i-can-X",
       "en": "I can play the recorder.",
-      "he": "אני יכול לנגן בחלילית.",
-      "he_f": "אני יכולה לנגן בחלילית.",
+      "he": "אני יודע לנגן בחלילית.",
+      "he_f": "אני יודעת לנגן בחלילית.",
       "align": [
         {
           "en": [
@@ -1013,7 +1013,7 @@
       "tense": "present-simple",
       "frame": "possessive-plural",
       "en": "My brother's drums are loud.",
-      "he": "התופים של אחי חזקים."
+      "he": "התופים של אחי רועשים."
     },
     {
       "id": "mus-l3-011",
@@ -1045,7 +1045,7 @@
       "tense": "present-simple",
       "frame": "comparative",
       "en": "The guitar is louder than the recorder.",
-      "he": "הגיטרה חזקה יותר מהחלילית."
+      "he": "הגיטרה רועשת יותר מהחלילית."
     },
     {
       "id": "mus-l4-003",
@@ -1053,7 +1053,7 @@
       "tense": "present-simple",
       "frame": "superlative",
       "en": "This is the loudest song at the party.",
-      "he": "זה השיר החזק ביותר במסיבה."
+      "he": "זה השיר הרועש ביותר במסיבה."
     },
     {
       "id": "mus-l4-004",
@@ -1061,8 +1061,8 @@
       "tense": "modal",
       "frame": "must",
       "en": "You must practice the drum every day.",
-      "he": "אתה חייב לתרגל את התוף כל יום.",
-      "he_f": "את חייבת לתרגל את התוף כל יום."
+      "he": "אתה חייב לתרגל תופים כל יום.",
+      "he_f": "את חייבת לתרגל תופים כל יום."
     },
     {
       "id": "mus-l4-005",
@@ -1087,7 +1087,7 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "We are going to sing a song together.",
-      "he": "אנחנו עומדים לשיר ביחד."
+      "he": "אנחנו עומדים לשיר שיר ביחד."
     },
     {
       "id": "mus-l4-008",
@@ -1103,8 +1103,8 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "I am going to practice the recorder after lunch.",
-      "he": "אני עומד לתרגל את החלילית אחרי ארוחת הצהריים.",
-      "he_f": "אני עומדת לתרגל את החלילית אחרי ארוחת הצהריים."
+      "he": "אני עומד לתרגל חלילית אחרי ארוחת הצהריים.",
+      "he_f": "אני עומדת לתרגל חלילית אחרי ארוחת הצהריים."
     },
     {
       "id": "mus-l4-010",
@@ -1137,7 +1137,7 @@
       "tense": "present-perfect",
       "frame": "perfect-already",
       "en": "I have practiced the guitar already.",
-      "he": "כבר תרגלתי את הגיטרה."
+      "he": "כבר תרגלתי גיטרה."
     },
     {
       "id": "mus-l5-002",
@@ -1326,7 +1326,7 @@
       "tense": "present-simple",
       "frame": "passive",
       "en": "Music is played at every party.",
-      "he": "מוזיקה מנוגנת בכל מסיבה."
+      "he": "בכל מסיבה מנגנים מוזיקה."
     },
     {
       "id": "mus-l7-001",

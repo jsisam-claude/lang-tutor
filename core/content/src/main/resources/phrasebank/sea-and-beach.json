@@ -535,8 +535,8 @@
       "tense": "modal",
       "frame": "can-you-X",
       "en": "Can you see the boat?",
-      "he": "אתה רואה את הסירה?",
-      "he_f": "את רואה את הסירה?",
+      "he": "אתה יכול לראות את הסירה?",
+      "he_f": "את יכולה לראות את הסירה?",
       "align": [
         {
           "en": [
@@ -545,7 +545,7 @@
           ],
           "he": [
             0,
-            0
+            1
           ]
         },
         {
@@ -554,8 +554,8 @@
             2
           ],
           "he": [
-            1,
-            1
+            2,
+            2
           ]
         },
         {
@@ -564,8 +564,8 @@
             4
           ],
           "he": [
-            3,
-            3
+            4,
+            4
           ]
         }
       ]
@@ -1026,7 +1026,7 @@
       "tense": "past-simple",
       "frame": "did-question",
       "en": "Did the boat sail to the island?",
-      "he": "הסירה שטה לאי?"
+      "he": "הסירה הפליגה לאי?"
     },
     {
       "id": "sea-l3-009",
@@ -1149,7 +1149,7 @@
       "tense": "conditional-zero",
       "frame": "if-zero",
       "en": "If the tide comes in, the sand gets wet.",
-      "he": "אם הגאות מגיעה, החול נרטב."
+      "he": "אם הגאות עולה, החול נרטב."
     },
     {
       "id": "sea-l4-012",
@@ -1207,7 +1207,7 @@
       "tense": "present-perfect",
       "frame": "perfect-just",
       "en": "The tide has just come in.",
-      "he": "הגאות בדיוק הגיעה."
+      "he": "הגאות בדיוק עלתה."
     },
     {
       "id": "sea-l5-007",
@@ -1281,8 +1281,8 @@
       "tense": "conditional-second",
       "frame": "if-second",
       "en": "If I had a boat, I would sail every weekend.",
-      "he": "אם הייתה לי סירה, הייתי שט בכל סוף שבוע.",
-      "he_f": "אם הייתה לי סירה, הייתי שטה בכל סוף שבוע."
+      "he": "אם הייתה לי סירה, הייתי מפליג בכל סוף שבוע.",
+      "he_f": "אם הייתה לי סירה, הייתי מפליגה בכל סוף שבוע."
     },
     {
       "id": "sea-l6-004",
@@ -1306,7 +1306,7 @@
       "tense": "past-progressive",
       "frame": "when",
       "en": "I was collecting shells when the tide came in.",
-      "he": "אספתי קונכיות כשהגאות הגיעה."
+      "he": "אספתי קונכיות כשהגאות עלתה."
     },
     {
       "id": "sea-l6-007",
@@ -1314,7 +1314,7 @@
       "tense": "conditional-second",
       "frame": "if-second",
       "en": "If the sea were calmer, we would sail to the island.",
-      "he": "אם הים היה רגוע יותר, היינו שטים לאי."
+      "he": "אם הים היה רגוע יותר, היינו מפליגים לאי."
     },
     {
       "id": "sea-l6-008",
@@ -1388,7 +1388,7 @@
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
       "en": "The seagulls have been circling the boat all morning.",
-      "he": "השחפים מסתובבים מעל הסירה כל הבוקר."
+      "he": "השחפים עפים מסביב לסירה כל הבוקר."
     },
     {
       "id": "sea-l7-005",
@@ -1428,7 +1428,7 @@
       "tense": "conditional-third",
       "frame": "if-third",
       "en": "If the wind had been calmer, the boat would have sailed on time.",
-      "he": "אם הרוח הייתה חלשה יותר, הסירה הייתה שטה בזמן."
+      "he": "אם הרוח הייתה חלשה יותר, הסירה הייתה מפליגה בזמן."
     },
     {
       "id": "sea-l7-010",
@@ -1452,7 +1452,7 @@
       "tense": "past-simple",
       "frame": "discourse-summary",
       "en": "In short, the waves were big, but everyone stayed safe.",
-      "he": "בקיצור, הגלים היו גדולים, אבל כולם חזרו הביתה בשלום."
+      "he": "בקיצור, הגלים היו גדולים, אבל כולם יצאו בשלום."
     }
   ]
 }

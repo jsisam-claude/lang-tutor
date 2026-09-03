@@ -605,7 +605,7 @@
       "tense": "present-simple",
       "frame": "Xs-make-Y",
       "en": "Bees make honey.",
-      "he": "דבורים מייצרות דבש.",
+      "he": "דבורים עושות דבש.",
       "align": [
         {
           "en": [
@@ -1246,7 +1246,7 @@
       "tense": "past-simple",
       "frame": "the-Xs-verbed-a-Y",
       "en": "The children planted a small garden.",
-      "he": "הילדים שתלו גינה קטנה.",
+      "he": "הילדים הקימו גינה קטנה.",
       "align": [
         {
           "en": [
@@ -1478,7 +1478,7 @@
       "tense": "modal",
       "frame": "we-should-verb",
       "en": "We should plant more flowers for the bees.",
-      "he": "אנחנו צריכים לשתול עוד פרחים בשביל הדבורים."
+      "he": "כדאי שנשתול עוד פרחים בשביל הדבורים."
     },
     {
       "id": "bee-l4-006",
@@ -1534,7 +1534,7 @@
       "tense": "modal",
       "frame": "you-must-not-verb",
       "en": "You must not touch the hive.",
-      "he": "אסור לגעת בכוורת."
+      "he": "אסור לך לגעת בכוורת."
     },
     {
       "id": "bee-l5-001",
@@ -1736,7 +1736,7 @@
       "tense": "present-perfect-progressive",
       "frame": "X-have-been-verbing-since",
       "en": "The bees have been working since sunrise without a single break.",
-      "he": "הדבורים עובדות מאז הזריחה בלי הפסקה אחת."
+      "he": "הדבורים עובדות מאז הזריחה בלי אף הפסקה."
     },
     {
       "id": "bee-l7-002",
@@ -1784,7 +1784,7 @@
       "tense": "present-perfect-progressive",
       "frame": "X-have-been-verbing-how",
       "en": "Scientists have been studying how bees remember faces.",
-      "he": "מדענים חוקרים כיצד דבורים זוכרות פנים."
+      "he": "מדענים חוקרים איך דבורים זוכרות פנים."
     },
     {
       "id": "bee-l7-008",

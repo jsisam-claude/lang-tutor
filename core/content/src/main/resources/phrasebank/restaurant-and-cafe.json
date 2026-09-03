@@ -545,8 +545,8 @@
       "tense": "modal",
       "frame": "i-can-X",
       "en": "I can share my cake with you.",
-      "he": "אני יכול לחלוק את העוגה שלי איתך.",
-      "he_f": "אני יכולה לחלוק את העוגה שלי איתך.",
+      "he": "אני יכול להתחלק איתך בעוגה שלי.",
+      "he_f": "אני יכולה להתחלק איתך בעוגה שלי.",
       "align": [
         {
           "en": [
@@ -584,7 +584,7 @@
             4
           ],
           "he": [
-            3,
+            4,
             5
           ]
         },
@@ -594,8 +594,8 @@
             6
           ],
           "he": [
-            6,
-            6
+            3,
+            3
           ]
         }
       ]
@@ -807,8 +807,8 @@
       "tense": "present-progressive",
       "frame": "are-you-Ving",
       "en": "Are you sharing your dessert?",
-      "he": "אתה חולק את הקינוח שלך?",
-      "he_f": "את חולקת את הקינוח שלך?",
+      "he": "אתה מתחלק בקינוח שלך?",
+      "he_f": "את מתחלקת בקינוח שלך?",
       "align": [
         {
           "en": [
@@ -837,7 +837,7 @@
           ],
           "he": [
             2,
-            4
+            3
           ]
         }
       ]
@@ -1052,7 +1052,7 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "The family is going to share a big dessert.",
-      "he": "המשפחה עומדת לחלוק קינוח גדול."
+      "he": "המשפחה עומדת להתחלק בקינוח גדול."
     },
     {
       "id": "rst-l4-004",
@@ -1077,7 +1077,7 @@
       "tense": "present-simple",
       "frame": "comparative",
       "en": "This cafe is quieter than the other one.",
-      "he": "בית הקפה הזה שקט יותר מהאחר."
+      "he": "בית הקפה הזה שקט יותר מהשני."
     },
     {
       "id": "rst-l4-007",
@@ -1159,8 +1159,8 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If you share your cake, everyone will get a piece.",
-      "he": "אם תחלוק את העוגה שלך, כולם יקבלו חתיכה.",
-      "he_f": "אם תחלקי את העוגה שלך, כולם יקבלו חתיכה."
+      "he": "אם תתחלק בעוגה שלך, כולם יקבלו חתיכה.",
+      "he_f": "אם תתחלקי בעוגה שלך, כולם יקבלו חתיכה."
     },
     {
       "id": "rst-l5-005",
@@ -1192,8 +1192,8 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If you ask nicely, the waiter will bring more bread.",
-      "he": "אם תבקש בנימוס, המלצר יביא עוד לחם.",
-      "he_f": "אם תבקשי בנימוס, המלצר יביא עוד לחם."
+      "he": "אם תבקש יפה, המלצר יביא עוד לחם.",
+      "he_f": "אם תבקשי יפה, המלצר יביא עוד לחם."
     },
     {
       "id": "rst-l5-009",
@@ -1209,7 +1209,7 @@
       "tense": "present-perfect",
       "frame": "perfect-since",
       "en": "We have been at this table since noon.",
-      "he": "אנחנו ליד השולחן הזה מאז הצהריים."
+      "he": "אנחנו ליד השולחן הזה כבר מאז הצהריים."
     },
     {
       "id": "rst-l5-011",
@@ -1323,7 +1323,7 @@
       "tense": "present-simple",
       "frame": "passive",
       "en": "Dessert is always shared in our family.",
-      "he": "קינוח תמיד מתחלק במשפחה שלנו."
+      "he": "במשפחה שלנו תמיד מתחלקים בקינוח."
     },
     {
       "id": "rst-l7-001",

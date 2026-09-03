@@ -497,7 +497,7 @@
       "tense": "present-simple",
       "frame": "want-to",
       "en": "I want to borrow this book.",
-      "he": "אני רוצה לקחת בהשאלה את הספר הזה.",
+      "he": "אני רוצה לקחת את הספר הזה בהשאלה.",
       "align": [
         {
           "en": [
@@ -522,20 +522,10 @@
         {
           "en": [
             2,
-            3
-          ],
-          "he": [
-            2,
-            3
-          ]
-        },
-        {
-          "en": [
-            4,
             5
           ],
           "he": [
-            5,
+            2,
             6
           ]
         }
@@ -1345,7 +1335,7 @@
       "tense": "present-simple",
       "frame": "passive",
       "en": "This book is often borrowed.",
-      "he": "הספר הזה מושאל לעתים קרובות."
+      "he": "הספר הזה מושאל הרבה."
     },
     {
       "id": "lib-l6-009",
@@ -1385,8 +1375,8 @@
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
       "en": "I have been reading this book all week.",
-      "he": "אני קורא את הספר הזה כל השבוע.",
-      "he_f": "אני קוראת את הספר הזה כל השבוע."
+      "he": "אני קורא את הספר הזה כבר כל השבוע.",
+      "he_f": "אני קוראת את הספר הזה כבר כל השבוע."
     },
     {
       "id": "lib-l7-002",
@@ -1475,7 +1465,7 @@
       "tense": "past-simple",
       "frame": "discourse-summary",
       "en": "In short, we picked three books and walked home happy.",
-      "he": "בקיצור, בחרנו שלושה ספרים והלכנו הביתה מרוצים."
+      "he": "בקיצור, בחרנו שלושה ספרים והלכנו הביתה שמחים."
     }
   ]
 }

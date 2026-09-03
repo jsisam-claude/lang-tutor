@@ -1054,7 +1054,7 @@
       "tense": "present-simple",
       "frame": "possessive-plural",
       "en": "My sister's hiccups are very loud.",
-      "he": "השיהוקים של אחותי מאוד רועשים."
+      "he": "השיהוקים של אחותי מאוד חזקים."
     },
     {
       "id": "bdy-l3-011",
@@ -1152,7 +1152,7 @@
       "tense": "present-simple",
       "frame": "comparative",
       "en": "Going to bed early is better than going to bed late.",
-      "he": "ללכת לישון מוקדם עדיף מללכת לישון מאוחר."
+      "he": "ללכת לישון מוקדם עדיף מאשר ללכת לישון מאוחר."
     },
     {
       "id": "bdy-l4-011",
@@ -1259,7 +1259,7 @@
       "tense": "modal",
       "frame": "might",
       "en": "My eyes might feel tired after reading.",
-      "he": "אולי העיניים שלי ירגישו עייפות אחרי קריאה."
+      "he": "אולי העיניים שלי יתעייפו אחרי הקריאה."
     },
     {
       "id": "bdy-l5-012",
@@ -1391,8 +1391,8 @@
       "tense": "conditional-third",
       "frame": "if-third",
       "en": "If you had washed your hands, you would not have gotten sick.",
-      "he": "אם היית רוחץ את הידיים שלך, לא היית מצטנן.",
-      "he_f": "אם היית רוחצת את הידיים שלך, לא היית מצטננת."
+      "he": "אם היית רוחץ את הידיים שלך, לא היית חולה.",
+      "he_f": "אם היית רוחצת את הידיים שלך, לא היית חולה."
     },
     {
       "id": "bdy-l7-004",
@@ -1400,7 +1400,7 @@
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
       "en": "My eyes have been feeling tired all day.",
-      "he": "העיניים שלי מרגישות עייפות כל היום."
+      "he": "העיניים שלי עייפות כבר כל היום."
     },
     {
       "id": "bdy-l7-005",

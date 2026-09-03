@@ -355,8 +355,8 @@
       "tense": "modal",
       "frame": "cant-wait",
       "en": "I can't wait!",
-      "he": "אני לא יכול לחכות!",
-      "he_f": "אני לא יכולה לחכות!",
+      "he": "אני כבר לא יכול לחכות!",
+      "he_f": "אני כבר לא יכולה לחכות!",
       "align": [
         {
           "en": [
@@ -365,7 +365,7 @@
           ],
           "he": [
             0,
-            3
+            4
           ]
         }
       ]
@@ -646,7 +646,7 @@
       "tense": "imperative",
       "frame": "break-a-leg",
       "en": "Break a leg!",
-      "he": "בהצלחה!"
+      "he": "שיהיה בהצלחה!"
     },
     {
       "id": "idm-l3-004",
@@ -654,7 +654,7 @@
       "tense": "past-simple",
       "frame": "raining-cats-and-dogs",
       "en": "It rained cats and dogs yesterday.",
-      "he": "ירד גשם חזק מאוד אתמול."
+      "he": "אתמול ירד מבול."
     },
     {
       "id": "idm-l3-005",
@@ -719,7 +719,7 @@
       "tense": "past-simple",
       "frame": "over-the-moon",
       "en": "The kids were over the moon about the trip.",
-      "he": "הילדים עפו באוויר משמחה על הטיול."
+      "he": "הילדים היו ברקיע השביעי בגלל הטיול."
     },
     {
       "id": "idm-l4-001",
@@ -802,8 +802,8 @@
       "tense": "modal",
       "frame": "chin-up",
       "en": "You must keep your chin up.",
-      "he": "אתה חייב להרים את הראש.",
-      "he_f": "את חייבת להרים את הראש."
+      "he": "אתה חייב להרים את הראש ולהמשיך.",
+      "he_f": "את חייבת להרים את הראש ולהמשיך."
     },
     {
       "id": "idm-l4-011",
@@ -828,8 +828,8 @@
       "tense": "conditional-first",
       "frame": "lend-a-hand",
       "en": "If you lend a hand, we will finish faster.",
-      "he": "אם תיתן יד, נגמור מהר יותר.",
-      "he_f": "אם תיתני יד, נגמור מהר יותר."
+      "he": "אם תיתן יד, נסיים מהר יותר.",
+      "he_f": "אם תיתני יד, נסיים מהר יותר."
     },
     {
       "id": "idm-l5-002",
@@ -853,7 +853,7 @@
       "tense": "modal",
       "frame": "fall-through",
       "en": "The plan might fall through if it rains.",
-      "he": "אולי התוכנית לא תצא לפועל אם ירד גשם."
+      "he": "אולי התוכנית לא תצא לפועל אם יירד גשם."
     },
     {
       "id": "idm-l5-005",
@@ -895,7 +895,7 @@
       "tense": "present-perfect",
       "frame": "butterflies-in-stomach",
       "en": "I have had butterflies in my stomach all morning.",
-      "he": "היו לי פרפרים בבטן כל הבוקר."
+      "he": "יש לי פרפרים בבטן כל הבוקר."
     },
     {
       "id": "idm-l5-010",
@@ -911,8 +911,8 @@
       "tense": "conditional-first",
       "frame": "cat-out-of-the-bag",
       "en": "If you let the cat out of the bag, everyone will know the secret.",
-      "he": "אם תוציא את החתול מהשק, כולם ידעו את הסוד.",
-      "he_f": "אם תוציאי את החתול מהשק, כולם ידעו את הסוד."
+      "he": "אם תפלוט את הסוד, כולם יידעו.",
+      "he_f": "אם תפלטי את הסוד, כולם יידעו."
     },
     {
       "id": "idm-l5-012",
@@ -928,7 +928,7 @@
       "tense": "past-progressive",
       "frame": "walking-on-eggshells",
       "en": "I was walking on eggshells around him all evening.",
-      "he": "הלכתי על ביצים כל הערב לידו."
+      "he": "הלכתי על ביצים לידו כל הערב."
     },
     {
       "id": "idm-l6-002",
@@ -1019,7 +1019,7 @@
       "tense": "past-simple",
       "frame": "bells-and-whistles",
       "en": "Dinner was served with all the bells and whistles this time.",
-      "he": "ארוחת הערב הוגשה עם כל התוספות המיוחדות הפעם."
+      "he": "הפעם ארוחת הערב הוגשה בכל הפאר וההדר."
     },
     {
       "id": "idm-l7-001",
@@ -1043,8 +1043,8 @@
       "tense": "present-perfect-progressive",
       "frame": "rack-my-brain",
       "en": "I have been racking my brain all day trying to remember his name.",
-      "he": "אני שובר את הראש כל היום בניסיון לזכור את השם שלו.",
-      "he_f": "אני שוברת את הראש כל היום בניסיון לזכור את השם שלו."
+      "he": "אני שובר את הראש כל היום ומנסה להיזכר בשם שלו.",
+      "he_f": "אני שוברת את הראש כל היום ומנסה להיזכר בשם שלו."
     },
     {
       "id": "idm-l7-004",
@@ -1052,7 +1052,7 @@
       "tense": "present-perfect-progressive",
       "frame": "midnight-oil",
       "en": "We have been burning the midnight oil to finish everything on time.",
-      "he": "אנחנו עובדים עד השעות הקטנות של הלילה כדי לסיים הכל בזמן."
+      "he": "אנחנו עובדים עד השעות הקטנות של הלילה כדי לסיים הכול בזמן."
     },
     {
       "id": "idm-l7-005",

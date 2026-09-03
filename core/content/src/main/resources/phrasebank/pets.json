@@ -1107,7 +1107,7 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "We are going to visit the pet shop on Saturday.",
-      "he": "אנחנו עומדים לבקר בחנות החיות ביום שבת."
+      "he": "אנחנו עומדים ללכת לחנות החיות ביום שבת."
     },
     {
       "id": "pet-l4-008",
@@ -1140,7 +1140,7 @@
       "tense": "conditional-zero",
       "frame": "if-zero",
       "en": "If you feed a hamster too much, it gets sick.",
-      "he": "אם מאכילים אוגר יותר מדי, הוא חולה."
+      "he": "אם מאכילים אוגר יותר מדי, הוא נהיה חולה."
     },
     {
       "id": "pet-l4-012",
@@ -1297,7 +1297,7 @@
       "tense": "past-progressive",
       "frame": "when",
       "en": "I was walking the dog when it started to rain.",
-      "he": "הוצאתי את הכלב לטיול כשהתחיל לרדת גשם."
+      "he": "טיילתי עם הכלב כשהתחיל לרדת גשם."
     },
     {
       "id": "pet-l6-007",
@@ -1388,7 +1388,7 @@
       "tense": "modal",
       "frame": "reported-question",
       "en": "My sister asked whether she could keep the hamster in her room.",
-      "he": "אחותי שאלה אם היא יכולה להשאיר את האוגר בחדר שלה."
+      "he": "אחותי שאלה אם היא יכולה להחזיק את האוגר בחדר שלה."
     },
     {
       "id": "pet-l7-006",
@@ -1404,7 +1404,7 @@
       "tense": "past-simple",
       "frame": "discourse-although",
       "en": "Although the hamster was small, it was very loud at night.",
-      "he": "למרות שהאוגר היה קטן, הוא היה מאוד רועש בלילה."
+      "he": "למרות שהאוגר היה קטן, הוא היה רועש מאוד בלילה."
     },
     {
       "id": "pet-l7-008",

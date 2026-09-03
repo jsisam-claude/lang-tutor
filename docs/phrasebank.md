@@ -1,18 +1,19 @@
 # The phrasebank — authored sentences for Levels 1–7
 
-Status 2026-08-31 (end of day): **the theme map is complete and fully
-verified** — 37 themes, 3,108 sentences, 12 per level per theme across all
-seven levels (`core/content/src/main/resources/phrasebank/`), all wired
-into the drill deck via `ResourcePhrasebankRepository` +
-`phrasebank/index.json`. Every theme has been through the standing
-adversarial gate (five runs over the scale-out: 262 raw findings, 121
-upheld and applied; the rest refuted by skeptics or adjudicated by hand
-with the rulings recorded in the applying commits). Authoring was
-delegated to sibling-model agents against the batch brief; wiring,
-arbitration, and fixes stayed with the maintainer session. Align cues:
-levels 1–2 everywhere, level 3 in the batch-3 themes — deepening further
-is data-only. Growth beyond this point is per-level enrichment (more
-sentences per existing theme toward ~1,000/level), not new themes.
+Status 2026-09-03: **the theme map is complete, fully verified, and has
+been through a native-speaker read** — 37 themes, 3,108 sentences, 12 per
+level per theme across all seven levels
+(`core/content/src/main/resources/phrasebank/`), all wired into the drill
+deck via `ResourcePhrasebankRepository` + `phrasebank/index.json`. Every
+theme has been through the standing adversarial gate (five runs over the
+scale-out: 262 raw findings, 121 upheld and applied; the rest refuted by
+skeptics or adjudicated by hand with the rulings recorded in the applying
+commits). Authoring was delegated to sibling-model agents against the
+batch brief; wiring, arbitration, and fixes stayed with the maintainer
+session. Align cues: levels 1–2 everywhere, level 3 in the batch-3 themes
+— deepening further is data-only. Growth beyond this point is per-level
+enrichment (more sentences per existing theme toward ~1,000/level), not
+new themes.
 
 ## Why it exists
 
@@ -147,6 +148,36 @@ framing anywhere.
 4. Optional third eye: a consultation model reads EN↔HE pairs and flags
    mismatches. Its verdicts are hints, never merges — the standing rule is
    that consultation output needs skeptical validation.
+
+## The native-speaker read (2026-09-03)
+
+Every one of the 3,108 sentences was read again end to end, this time as a
+native Hebrew speaker would hear it rather than as a structural check: one
+reader per theme scoring each line 1–5 and writing an issue, a proposal and
+its own doubts, then an independent adjudicator per theme, and finally a
+hand pass over every proposal before anything touched a file. 219 lines were
+corrected. Theme averages ran from 4.42 (garden-bugs) to 4.85 (seed-honey-bee
+and pets); thirteen lines scored 1–2 and every one of them was a meaning
+error, not a register complaint — a wrong subject, an invented participant,
+a dropped adverbial, a noun that named the wrong object.
+
+What the pass established as method:
+
+- **Meaning errors are fixed; register preferences are not swept per theme.**
+  A choice that repeats across the corpus (superlative form, the rendering of
+  *never* and of *going to*, a lexeme like *shell* or *snail*) is a project
+  ruling, applied in one pass to all its lines or not at all. Those lines are
+  held, not half-fixed. `scripts/`-side note: the applying script refuses to
+  write a change that flips a policy token unless the item is explicitly
+  exempted as a genuine fix.
+- **Two readers disagreeing is data.** Where two independent adjudications
+  split, the corpus decided: the form used by the sibling lines wins unless
+  the minority form fixes a meaning. Several proposed "fixes" were reverted
+  on that evidence (`שכחתי` for *left it at home*, `לפני החושך`, `התחזית אמרה`,
+  `תתאמן`).
+- **Any Hebrew word-layout change at levels 1–3 re-authors its align cue by
+  hand**, verified span by span against the new sentence; the lint's
+  range check is the backstop, not the author.
 
 ## Growth plan
 

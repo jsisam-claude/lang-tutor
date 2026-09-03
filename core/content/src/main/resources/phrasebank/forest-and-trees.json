@@ -799,7 +799,7 @@
       "tense": "present-progressive",
       "frame": "X-because-Y",
       "en": "The squirrel is running because it is scared.",
-      "he": "הסנאי רץ כי הוא מפוחד.",
+      "he": "הסנאי רץ כי הוא מפחד.",
       "align": [
         {
           "en": [
@@ -950,7 +950,7 @@
       "tense": "past-simple",
       "frame": "we-Ved",
       "en": "We walked in the woods yesterday.",
-      "he": "הלכנו ביער אתמול."
+      "he": "טיילנו ביער אתמול."
     },
     {
       "id": "fst-l3-002",
@@ -1121,7 +1121,7 @@
       "tense": "conditional-zero",
       "frame": "if-zero",
       "en": "If you shake the tree, pinecones fall.",
-      "he": "אם מנערים את העץ, אצטרובלים נופלים."
+      "he": "אם מנערים את העץ, נופלים אצטרובלים."
     },
     {
       "id": "fst-l4-011",
@@ -1146,7 +1146,7 @@
       "tense": "present-perfect",
       "frame": "perfect-already",
       "en": "I have already picked up ten pinecones.",
-      "he": "כבר הרמתי עשרה אצטרובלים."
+      "he": "כבר אספתי עשרה אצטרובלים."
     },
     {
       "id": "fst-l5-002",
@@ -1316,7 +1316,7 @@
       "tense": "past-perfect",
       "frame": "never-before",
       "en": "I had never picked up so many pinecones before.",
-      "he": "מעולם לא הרמתי כל כך הרבה אצטרובלים לפני כן."
+      "he": "מעולם לא אספתי כל כך הרבה אצטרובלים לפני כן."
     },
     {
       "id": "fst-l6-011",
@@ -1333,7 +1333,7 @@
       "tense": "present-simple",
       "frame": "passive",
       "en": "Pinecones are found under every tree.",
-      "he": "אצטרובלים נמצאים מתחת לכל עץ."
+      "he": "אפשר למצוא אצטרובלים מתחת לכל עץ."
     },
     {
       "id": "fst-l7-001",

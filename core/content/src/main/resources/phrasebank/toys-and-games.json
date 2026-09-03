@@ -445,7 +445,7 @@
       "tense": "present-progressive",
       "frame": "X-is-Ving",
       "en": "My sister is playing with dolls.",
-      "he": "אחותי משחקת עם בובות.",
+      "he": "אחותי משחקת בבובות.",
       "align": [
         {
           "en": [
@@ -470,21 +470,11 @@
         {
           "en": [
             4,
-            4
+            5
           ],
           "he": [
             2,
             2
-          ]
-        },
-        {
-          "en": [
-            5,
-            5
-          ],
-          "he": [
-            3,
-            3
           ]
         }
       ]
@@ -798,8 +788,8 @@
       "tense": "present-progressive",
       "frame": "are-you-Ving",
       "en": "Are you playing with the blocks?",
-      "he": "אתה משחק עם הקוביות?",
-      "he_f": "את משחקת עם הקוביות?",
+      "he": "אתה משחק בקוביות?",
+      "he_f": "את משחקת בקוביות?",
       "align": [
         {
           "en": [
@@ -824,21 +814,11 @@
         {
           "en": [
             3,
-            3
+            5
           ],
           "he": [
             2,
             2
-          ]
-        },
-        {
-          "en": [
-            4,
-            5
-          ],
-          "he": [
-            3,
-            3
           ]
         }
       ]
@@ -899,7 +879,7 @@
       "tense": "present-progressive",
       "frame": "X-is-Ving",
       "en": "We are sharing the blocks together.",
-      "he": "אנחנו חולקים את הקוביות ביחד.",
+      "he": "אנחנו מתחלקים בקוביות ביחד.",
       "align": [
         {
           "en": [
@@ -927,8 +907,8 @@
             4
           ],
           "he": [
-            3,
-            3
+            2,
+            2
           ]
         },
         {
@@ -937,8 +917,8 @@
             5
           ],
           "he": [
-            4,
-            4
+            3,
+            3
           ]
         }
       ]
@@ -1062,7 +1042,7 @@
       "tense": "present-simple",
       "frame": "possessive-plural",
       "en": "My brother's blocks are missing.",
-      "he": "הקוביות של אחי חסרות."
+      "he": "הקוביות של אחי נעלמו."
     },
     {
       "id": "toy-l3-011",
@@ -1078,7 +1058,7 @@
       "tense": "past-simple",
       "frame": "X-Ved",
       "en": "The children shared the toys happily.",
-      "he": "הילדים חלקו את הצעצועים בשמחה."
+      "he": "הילדים התחלקו בצעצועים בשמחה."
     },
     {
       "id": "toy-l4-001",
@@ -1110,8 +1090,8 @@
       "tense": "modal",
       "frame": "must",
       "en": "You must share your toys with your sister.",
-      "he": "אתה חייב לחלוק את הצעצועים שלך עם אחותך.",
-      "he_f": "את חייבת לחלוק את הצעצועים שלך עם אחותך."
+      "he": "אתה חייב להתחלק בצעצועים שלך עם אחותך.",
+      "he_f": "את חייבת להתחלק בצעצועים שלך עם אחותך."
     },
     {
       "id": "toy-l4-005",
@@ -1161,7 +1141,7 @@
       "tense": "present-simple",
       "frame": "comparative",
       "en": "This board game is more fun than that puzzle.",
-      "he": "משחק הקופסה הזה כיף יותר מהפאזל ההוא."
+      "he": "משחק הקופסה הזה יותר כיף מהפאזל ההוא."
     },
     {
       "id": "toy-l4-011",
@@ -1210,8 +1190,8 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If you share your toys, your friends will be happy.",
-      "he": "אם תחלוק את הצעצועים שלך, החברים שלך יהיו שמחים.",
-      "he_f": "אם תחלקי את הצעצועים שלך, החברים שלך יהיו שמחים."
+      "he": "אם תתחלק בצעצועים שלך, החברים שלך יהיו שמחים.",
+      "he_f": "אם תתחלקי בצעצועים שלך, החברים שלך יהיו שמחים."
     },
     {
       "id": "toy-l5-005",
@@ -1259,7 +1239,7 @@
       "tense": "present-perfect",
       "frame": "perfect-since",
       "en": "We have played with these toys since spring.",
-      "he": "אנחנו משחקים בארגז הצעצועים הזה מאז האביב."
+      "he": "אנחנו משחקים בצעצועים האלה מאז האביב."
     },
     {
       "id": "toy-l5-011",
@@ -1382,8 +1362,8 @@
       "tense": "present-perfect-progressive",
       "frame": "been-Ving",
       "en": "I have been playing with my blocks all afternoon.",
-      "he": "אני משחק עם הקוביות שלי כל אחר הצהריים.",
-      "he_f": "אני משחקת עם הקוביות שלי כל אחר הצהריים."
+      "he": "אני משחק בקוביות שלי כל אחר הצהריים.",
+      "he_f": "אני משחקת בקוביות שלי כל אחר הצהריים."
     },
     {
       "id": "toy-l7-002",

@@ -1160,7 +1160,7 @@
       "tense": "present-simple",
       "frame": "comparative",
       "en": "This cake is sweeter than that one.",
-      "he": "העוגה הזאת מתוקה יותר מהאחרת."
+      "he": "העוגה הזאת מתוקה יותר מההיא."
     },
     {
       "id": "bir-l4-011",
@@ -1168,7 +1168,7 @@
       "tense": "conditional-zero",
       "frame": "if-zero",
       "en": "If you pop a balloon, it makes a loud noise.",
-      "he": "אם מפוצצים בלון, הוא משמיע רעש חזק."
+      "he": "אם מפוצצים בלון, זה עושה רעש חזק."
     },
     {
       "id": "bir-l4-012",
@@ -1373,7 +1373,7 @@
       "tense": "present-simple",
       "frame": "passive",
       "en": "Cake is always served at the end of the party.",
-      "he": "עוגה תמיד מוגשת בסוף המסיבה."
+      "he": "העוגה תמיד מוגשת בסוף המסיבה."
     },
     {
       "id": "bir-l7-001",

@@ -405,7 +405,7 @@
       "tense": "present-progressive",
       "frame": "X-is-Ving",
       "en": "The ant is carrying a leaf.",
-      "he": "הנמלה נושאת עלה.",
+      "he": "הנמלה סוחבת עלה.",
       "align": [
         {
           "en": [
@@ -495,7 +495,7 @@
       "tense": "present-simple",
       "frame": "want-to",
       "en": "I want to watch the ants.",
-      "he": "אני רוצה לצפות בנמלים.",
+      "he": "אני רוצה להסתכל על הנמלים.",
       "align": [
         {
           "en": [
@@ -524,7 +524,7 @@
           ],
           "he": [
             2,
-            2
+            3
           ]
         },
         {
@@ -533,8 +533,8 @@
             5
           ],
           "he": [
-            3,
-            3
+            4,
+            4
           ]
         }
       ]
@@ -798,8 +798,8 @@
       "tense": "present-progressive",
       "frame": "are-you-Ving",
       "en": "Are you watching the butterfly?",
-      "he": "אתה צופה בפרפר?",
-      "he_f": "את צופה בפרפר?",
+      "he": "אתה מסתכל על הפרפר?",
+      "he_f": "את מסתכלת על הפרפר?",
       "align": [
         {
           "en": [
@@ -818,7 +818,7 @@
           ],
           "he": [
             1,
-            1
+            2
           ]
         },
         {
@@ -827,8 +827,8 @@
             4
           ],
           "he": [
-            2,
-            2
+            3,
+            3
           ]
         }
       ]
@@ -960,7 +960,7 @@
       "tense": "past-simple",
       "frame": "we-Ved",
       "en": "We watched the ants in the garden.",
-      "he": "צפינו בנמלים בגינה."
+      "he": "הסתכלנו על הנמלים בגינה."
     },
     {
       "id": "bug-l3-002",
@@ -984,7 +984,7 @@
       "tense": "past-simple",
       "frame": "did-question",
       "en": "Did the grasshopper jump?",
-      "he": "ראית את החגב קופץ?"
+      "he": "החגב קפץ?"
     },
     {
       "id": "bug-l3-005",
@@ -1048,7 +1048,7 @@
       "tense": "past-simple",
       "frame": "X-Ved",
       "en": "The children watched the ladybug quietly.",
-      "he": "הילדים צפו בפרת משה רבנו בשקט."
+      "he": "הילדים הסתכלו על פרת משה רבנו בשקט."
     },
     {
       "id": "bug-l4-001",
@@ -1089,8 +1089,8 @@
       "tense": "modal",
       "frame": "should",
       "en": "You should watch the ants quietly.",
-      "he": "כדאי שתצפה בנמלים בשקט.",
-      "he_f": "כדאי שתצפי בנמלים בשקט."
+      "he": "כדאי שתסתכל על הנמלים בשקט.",
+      "he_f": "כדאי שתסתכלי על הנמלים בשקט."
     },
     {
       "id": "bug-l4-006",
@@ -1155,7 +1155,7 @@
       "tense": "present-perfect",
       "frame": "perfect-already",
       "en": "I have watched the ants already.",
-      "he": "כבר צפיתי בנמלים."
+      "he": "כבר הסתכלתי על הנמלים."
     },
     {
       "id": "bug-l5-002",
@@ -1179,8 +1179,8 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If you stay still, the butterfly will land on your hand.",
-      "he": "אם תישאר בלי לזוז, הפרפר ינחת על היד שלך.",
-      "he_f": "אם תישארי בלי לזוז, הפרפר ינחת על היד שלך."
+      "he": "אם לא תזוז, הפרפר ינחת על היד שלך.",
+      "he_f": "אם לא תזוזי, הפרפר ינחת על היד שלך."
     },
     {
       "id": "bug-l5-005",
@@ -1261,7 +1261,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "The flowers were covered with ladybugs by noon.",
-      "he": "הפרחים כוסו בפרות משה רבנו עד הצהריים."
+      "he": "עד הצהריים הפרחים כבר היו מכוסים בפרות משה רבנו."
     },
     {
       "id": "bug-l6-003",
@@ -1278,7 +1278,7 @@
       "tense": "past-perfect",
       "frame": "already-when",
       "en": "The butterflies had already left when we reached the garden.",
-      "he": "הפרפרים כבר עזבו כשהגענו לגינה."
+      "he": "הפרפרים כבר עפו משם כשהגענו לגינה."
     },
     {
       "id": "bug-l6-005",
@@ -1294,7 +1294,7 @@
       "tense": "past-progressive",
       "frame": "when",
       "en": "I was watching the snail when it went into its house.",
-      "he": "צפיתי בחילזון כשהוא נכנס לבית שלו."
+      "he": "הסתכלתי על החילזון כשהוא נכנס לבית שלו."
     },
     {
       "id": "bug-l6-007",
@@ -1318,7 +1318,7 @@
       "tense": "past-progressive",
       "frame": "X-was-Ving",
       "en": "My little sister was watching the worm very closely.",
-      "he": "אחותי הקטנה צפתה בתולעת מקרוב מאוד."
+      "he": "אחותי הקטנה הסתכלה על התולעת ממש מקרוב."
     },
     {
       "id": "bug-l6-010",

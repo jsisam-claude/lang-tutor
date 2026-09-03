@@ -965,7 +965,7 @@
       "tense": "past-simple",
       "frame": "X-Ved-Y",
       "en": "Dad set a timer for the cake.",
-      "he": "אבא הגדיר טיימר לעוגה."
+      "he": "אבא כיוון טיימר לעוגה."
     },
     {
       "id": "foo-l3-005",
@@ -1054,7 +1054,7 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "She is going to set the timer for ten minutes.",
-      "he": "היא עומדת להגדיר טיימר לעשר דקות."
+      "he": "היא עומדת לכוון את הטיימר לעשר דקות."
     },
     {
       "id": "foo-l4-004",
@@ -1127,7 +1127,7 @@
       "tense": "future-simple",
       "frame": "will-question",
       "en": "Will the soup taste better with more garlic?",
-      "he": "המרק יהיה טעים עם עוד שום?"
+      "he": "המרק יהיה טעים יותר עם עוד שום?"
     },
     {
       "id": "foo-l5-001",
@@ -1168,7 +1168,7 @@
       "tense": "present-perfect",
       "frame": "perfect-question",
       "en": "Have you tasted the sauce yet?",
-      "he": "טעמת את הרוטב כבר?"
+      "he": "טעמת כבר את הרוטב?"
     },
     {
       "id": "foo-l5-006",
@@ -1224,7 +1224,7 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If the timer beeps, the cake will be ready.",
-      "he": "אם הטיימר מצלצל, העוגה תהיה מוכנה."
+      "he": "אם הטיימר יצלצל, העוגה תהיה מוכנה."
     },
     {
       "id": "foo-l6-001",
@@ -1395,7 +1395,7 @@
       "tense": "past-simple",
       "frame": "discourse-summary",
       "en": "In short, we followed the recipe and the pasta was perfect.",
-      "he": "בקיצור, עקבנו אחרי המתכון והפסטה יצאה מושלמת."
+      "he": "בקיצור, הלכנו לפי המתכון והפסטה יצאה מושלמת."
     },
     {
       "id": "foo-l7-010",

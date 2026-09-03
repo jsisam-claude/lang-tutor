@@ -535,8 +535,8 @@
       "tense": "modal",
       "frame": "can-you-X",
       "en": "Can you carry this bag?",
-      "he": "אתה יכול לשאת את התיק הזה?",
-      "he_f": "את יכולה לשאת את התיק הזה?",
+      "he": "אתה יכול לסחוב את התיק הזה?",
+      "he_f": "את יכולה לסחוב את התיק הזה?",
       "align": [
         {
           "en": [
@@ -1027,7 +1027,7 @@
       "tense": "past-simple",
       "frame": "did-question",
       "en": "Did Dad carry the heavy bags?",
-      "he": "אבא נשא את התיקים הכבדים?"
+      "he": "אבא סחב את התיקים הכבדים?"
     },
     {
       "id": "hlp-l3-009",
@@ -1043,7 +1043,7 @@
       "tense": "present-simple",
       "frame": "possessive-plural",
       "en": "My brother's chores are finished.",
-      "he": "המטלות של אחי הסתיימו."
+      "he": "המטלות של אחי נגמרו."
     },
     {
       "id": "hlp-l3-011",
@@ -1059,7 +1059,7 @@
       "tense": "past-simple",
       "frame": "X-Ved",
       "en": "The children carried the bags happily.",
-      "he": "הילדים נשאו את התיקים בשמחה."
+      "he": "הילדים סחבו את התיקים בשמחה."
     },
     {
       "id": "hlp-l4-001",
@@ -1125,7 +1125,7 @@
       "tense": "future-simple",
       "frame": "will",
       "en": "Dad will carry the heavy bags tomorrow.",
-      "he": "אבא יישא את התיקים הכבדים מחר."
+      "he": "אבא יסחב את התיקים הכבדים מחר."
     },
     {
       "id": "hlp-l4-009",
@@ -1150,7 +1150,7 @@
       "tense": "conditional-zero",
       "frame": "if-zero",
       "en": "If you carry too many bags, they fall.",
-      "he": "אם נושאים יותר מדי תיקים, הם נופלים."
+      "he": "אם סוחבים יותר מדי תיקים, הם נופלים."
     },
     {
       "id": "hlp-l4-012",
@@ -1257,8 +1257,8 @@
       "tense": "conditional-first",
       "frame": "if-first",
       "en": "If you help me carry the bags, we will finish faster.",
-      "he": "אם תעזור לי לשאת את התיקים, נגמור מהר יותר.",
-      "he_f": "אם תעזרי לי לשאת את התיקים, נגמור מהר יותר."
+      "he": "אם תעזור לי לסחוב את התיקים, נגמור מהר יותר.",
+      "he_f": "אם תעזרי לי לסחוב את התיקים, נגמור מהר יותר."
     },
     {
       "id": "hlp-l6-001",
@@ -1266,7 +1266,7 @@
       "tense": "past-progressive",
       "frame": "while",
       "en": "Mom was folding laundry while I was sweeping the porch.",
-      "he": "אמא קיפלה כביסה בזמן שאני טיאטאתי את המרפסת."
+      "he": "אמא קיפלה כביסה בזמן שאני טאטאתי את המרפסת."
     },
     {
       "id": "hlp-l6-002",
@@ -1274,7 +1274,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "The table was cleared before the guests arrived.",
-      "he": "השולחן היה מפונה לפני שהאורחים הגיעו."
+      "he": "השולחן פונה לפני שהאורחים הגיעו."
     },
     {
       "id": "hlp-l6-003",
@@ -1307,7 +1307,7 @@
       "tense": "past-progressive",
       "frame": "when",
       "en": "I was carrying the bags when it started to rain.",
-      "he": "נשאתי את התיקים כשהתחיל לרדת גשם."
+      "he": "סחבתי את התיקים כשהתחיל לרדת גשם."
     },
     {
       "id": "hlp-l6-007",
@@ -1373,7 +1373,7 @@
       "tense": "past-simple",
       "frame": "reported-speech",
       "en": "Dad said that the recycling was ready to go out.",
-      "he": "אבא אמר שהמיחזור מוכן לצאת."
+      "he": "אבא אמר שאפשר להוציא את המיחזור."
     },
     {
       "id": "hlp-l7-003",
@@ -1381,8 +1381,8 @@
       "tense": "conditional-third",
       "frame": "if-third",
       "en": "If you had told me, I would have carried the bags for you.",
-      "he": "אם היית אומר לי, הייתי נושא לך את התיקים.",
-      "he_f": "אם היית אומרת לי, הייתי נושאת לך את התיקים."
+      "he": "אם היית אומר לי, הייתי סוחב לך את התיקים.",
+      "he_f": "אם היית אומרת לי, הייתי סוחבת לך את התיקים."
     },
     {
       "id": "hlp-l7-004",

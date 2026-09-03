@@ -878,8 +878,8 @@
       "tense": "modal",
       "frame": "i-can-X",
       "en": "I can count to twenty.",
-      "he": "אני יכול לספור עד עשרים.",
-      "he_f": "אני יכולה לספור עד עשרים.",
+      "he": "אני יודע לספור עד עשרים.",
+      "he_f": "אני יודעת לספור עד עשרים.",
       "align": [
         {
           "en": [
@@ -1505,7 +1505,7 @@
       "tense": "present-simple",
       "frame": "superlative",
       "en": "Maya is the fastest runner in our class.",
-      "he": "מאיה היא הרצה הכי מהירה בכיתה שלנו."
+      "he": "מאיה רצה הכי מהר בכיתה שלנו."
     },
     {
       "id": "sch-l4-005",
@@ -1840,7 +1840,7 @@
       "tense": "conditional-third",
       "frame": "if-third",
       "en": "If the library had been open, we would have borrowed more books.",
-      "he": "אם הספרייה הייתה פתוחה, היינו שואלים עוד ספרים."
+      "he": "אם הספרייה הייתה פתוחה, היינו מוציאים עוד ספרים."
     },
     {
       "id": "sch-l7-010",

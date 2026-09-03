@@ -618,7 +618,7 @@
       "tense": "present-simple",
       "frame": "where-is-X",
       "en": "Where is my spoon?",
-      "he": "איפה הכפית שלי?",
+      "he": "איפה הכף שלי?",
       "align": [
         {
           "en": [
@@ -1033,7 +1033,7 @@
       "tense": "present-simple",
       "frame": "possessive-plural",
       "en": "My sister's spoons are clean.",
-      "he": "הכפיות של אחותי נקיות."
+      "he": "הכפות של אחותי נקיות."
     },
     {
       "id": "brk-l3-011",
@@ -1090,8 +1090,8 @@
       "tense": "modal",
       "frame": "must",
       "en": "You must finish breakfast before you go.",
-      "he": "אתה חייב לגמור את ארוחת הבוקר לפני היציאה.",
-      "he_f": "את חייבת לגמור את ארוחת הבוקר לפני היציאה."
+      "he": "אתה חייב לגמור את ארוחת הבוקר לפני שאתה יוצא.",
+      "he_f": "את חייבת לגמור את ארוחת הבוקר לפני שאת יוצאת."
     },
     {
       "id": "brk-l4-006",
@@ -1190,7 +1190,7 @@
       "tense": "present-perfect",
       "frame": "perfect-question",
       "en": "Have you tried this honey?",
-      "he": "ניסית את הדבש הזה?"
+      "he": "טעמת את הדבש הזה?"
     },
     {
       "id": "brk-l5-006",
@@ -1264,7 +1264,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "The toast was buttered before we sat down.",
-      "he": "הטוסט היה מרוח בחמאה לפני שישבנו."
+      "he": "הטוסט נמרח בחמאה לפני שהתיישבנו."
     },
     {
       "id": "brk-l6-003",
@@ -1313,7 +1313,7 @@
       "tense": "past-simple",
       "frame": "passive",
       "en": "Breakfast was cooked early that day.",
-      "he": "ארוחת הבוקר בושלה מוקדם באותו יום."
+      "he": "ארוחת הבוקר הוכנה מוקדם באותו יום."
     },
     {
       "id": "brk-l6-009",

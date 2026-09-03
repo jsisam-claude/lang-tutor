@@ -485,8 +485,8 @@
       "tense": "modal",
       "frame": "i-can-X",
       "en": "I can ride a bike.",
-      "he": "אני יכול לרכוב על אופניים.",
-      "he_f": "אני יכולה לרכוב על אופניים.",
+      "he": "אני יודע לרכוב על אופניים.",
+      "he_f": "אני יודעת לרכוב על אופניים.",
       "align": [
         {
           "en": [
@@ -1031,7 +1031,7 @@
       "tense": "past-simple",
       "frame": "did-question",
       "en": "Did the race start on time?",
-      "he": "המרוץ כבר התחיל?"
+      "he": "המרוץ התחיל בזמן?"
     },
     {
       "id": "spo-l3-007",
@@ -1063,7 +1063,7 @@
       "tense": "past-simple",
       "frame": "X-Ved",
       "en": "Everyone tried their best in the race.",
-      "he": "כולם ניסו הכי טוב שיכלו במרוץ."
+      "he": "כולם השתדלו כמה שיכלו במרוץ."
     },
     {
       "id": "spo-l3-011",
@@ -1155,7 +1155,7 @@
       "tense": "future-going-to",
       "frame": "going-to",
       "en": "We are going to race to the tree, just for fun.",
-      "he": "אנחנו עומדים להתחרות עד העץ, סתם בשביל הכיף."
+      "he": "אנחנו עומדים לעשות מרוץ עד העץ, סתם בשביל הכיף."
     },
     {
       "id": "spo-l4-010",
@@ -1335,7 +1335,7 @@
       "tense": "conditional-second",
       "frame": "if-second",
       "en": "If we lost the race, we would still be proud that we tried.",
-      "he": "אם היינו מפסידים במרוץ, היינו עדיין גאים שניסינו."
+      "he": "אם היינו מפסידים במרוץ, עדיין היינו גאים שניסינו."
     },
     {
       "id": "spo-l6-008",
@@ -1351,7 +1351,7 @@
       "tense": "past-progressive",
       "frame": "X-was-Ving",
       "en": "My teammates were cheering for me.",
-      "he": "חבריי לקבוצה עודדו אותי."
+      "he": "החברים שלי מהקבוצה עודדו אותי."
     },
     {
       "id": "spo-l6-010",
@@ -1474,7 +1474,7 @@
       "tense": "past-simple",
       "frame": "discourse-summary",
       "en": "In short, everyone tried their best and had a wonderful day.",
-      "he": "בקיצור, כולם ניסו הכי טוב שיכלו ונהנו מיום נהדר."
+      "he": "בקיצור, כולם השתדלו כמה שיכלו ונהנו מיום נהדר."
     }
   ]
 }
