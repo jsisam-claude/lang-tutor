@@ -76,6 +76,7 @@ fun VoiceSection(container: AppContainer) {
                         when (accent) {
                             TukiVoice.Accent.AMERICAN -> R.string.parent_voice_american
                             TukiVoice.Accent.BRITISH -> R.string.parent_voice_british
+                            TukiVoice.Accent.CHARACTER -> R.string.parent_voice_character
                         },
                     ),
                     style = MaterialTheme.typography.labelLarge,

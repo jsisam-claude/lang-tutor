@@ -140,6 +140,7 @@
     <string name="parent_voice_hint">הקישו על קול כדי לשמוע אותו. הבחירה נשמרת.</string>
     <string name="parent_voice_american">אמריקאי</string>
     <string name="parent_voice_british">בריטי</string>
+    <string name="parent_voice_character">דמויות</string>
     <string name="splash_tagline">…מכינים את טוקי</string>
     <string name="chat_title">סתם לדבר</string>
     <string name="chat_subtitle">לדבר עם טוקי</string>

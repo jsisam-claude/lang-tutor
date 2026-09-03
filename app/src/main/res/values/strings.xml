@@ -126,6 +126,7 @@
     <string name="parent_voice_hint">Tap a voice to hear it. The choice is saved.</string>
     <string name="parent_voice_american">American</string>
     <string name="parent_voice_british">British</string>
+    <string name="parent_voice_character">Characters</string>
     <string name="splash_tagline">Getting Tuki ready…</string>
     <string name="chat_title">Just chat</string>
     <string name="chat_subtitle">Talk with Tuki</string>

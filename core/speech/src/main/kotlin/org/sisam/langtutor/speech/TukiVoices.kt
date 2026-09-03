@@ -12,16 +12,73 @@ package org.sisam.langtutor.speech
  * without touching the engine.
  */
 data class TukiVoice(
-    /** Asset file name under `kokoro/`, and the stored preference value. */
+    /** Asset file name under `kokoro/`, and the stored preference value.
+     *  A blended voice has no file of its own — see [blend]. */
     val id: String,
     /** What a parent sees. Kokoro's own names, which are already human. */
     val label: String,
     val accent: Accent,
     val gender: Gender,
+    /** Set when this voice is MADE from bundled ones rather than shipped. */
+    val blend: VoiceBlend? = null,
+    /** How this voice behaves on personality lines; null means the parrot. */
+    val character: VoiceCharacter? = null,
 ) {
-    enum class Accent { AMERICAN, BRITISH }
+    enum class Accent { AMERICAN, BRITISH, CHARACTER }
     enum class Gender { FEMALE, MALE }
+
+    /** Every table this voice needs present in the build to be usable. */
+    val sources: List<String> get() = blend?.let { listOf(it.a, it.b) } ?: listOf(id)
 }
+
+/**
+ * A voice made by mixing two conditioning tables.
+ *
+ * Kokoro's "voice" is a style embedding, and embeddings interpolate: the
+ * weighted sum of two tables is a real voice sitting between them, not a
+ * crossfade of two recordings. That is the only way to add a timbre this
+ * model was not shipped with, short of adding a second TTS — and it costs
+ * nothing at all, because both tables are already in the APK.
+ */
+data class VoiceBlend(
+    /** Asset name of the table at [weight]. */
+    val a: String,
+    /** Asset name of the table at 1 - [weight]. */
+    val b: String,
+    val weight: Float,
+) {
+    companion object {
+        /**
+         * Row-wise linear mix. The tables are the same shape by construction
+         * (510x256 floats), and a mismatch means a build carrying tables from
+         * two different exports — which would produce noise, so it throws
+         * rather than blending whatever overlaps.
+         */
+        fun mix(a: FloatArray, b: FloatArray, weight: Float): FloatArray {
+            require(a.size == b.size) { "voice tables differ: ${a.size} vs ${b.size}" }
+            val w = weight.coerceIn(0f, 1f)
+            return FloatArray(a.size) { i -> a[i] * w + b[i] * (1f - w) }
+        }
+    }
+}
+
+/**
+ * How a voice sounds when it is being a CHARACTER rather than a teacher.
+ *
+ * Only personality lines pass through this — praise, encouragement, the lines
+ * whose exact phonetics nobody is learning from. A teaching line the child is
+ * meant to copy never gets a treatment; see ParrotEffect for the doctrine.
+ */
+data class VoiceCharacter(
+    /** Resample factor: above 1 raises pitch and formants, below 1 lowers. */
+    val pitch: Float,
+    /** Multiplies the requested speed — a character may talk slower. */
+    val rate: Float = 1f,
+    val warbleHz: Float,
+    val warbleDepth: Float,
+    /** The little trill announcing the character before the words. */
+    val flourish: Boolean = true,
+)
 
 object TukiVoices {
 
@@ -32,6 +89,19 @@ object TukiVoices {
      * than a more natural one; that is what the picker exists to find out.
      */
     const val DEFAULT_ID = "af_heart.bin"
+
+    /**
+     * The sea captain: an old, gruff, unhurried voice for a child who wants
+     * Tuki to be somebody.
+     *
+     * Kokoro ships no Scottish voice, and no mix of the ones it does ship
+     * will invent one — this is the nearest the bundled set reaches: the
+     * gruffest British male weighted against the oldest-sounding one, then
+     * slowed and dropped in pitch for personality lines. The weights are a
+     * starting point chosen by construction, not by ear; they are meant to be
+     * tuned on a device with the picker's own preview button.
+     */
+    const val CAPTAIN_ID = "captain.blend"
 
     private fun v(name: String, label: String) = TukiVoice(
         id = "$name.bin",
@@ -52,6 +122,23 @@ object TukiVoices {
         v("bf_lily", "Lily"),
         v("bm_daniel", "Daniel"), v("bm_fable", "Fable"), v("bm_george", "George"),
         v("bm_lewis", "Lewis"),
+        TukiVoice(
+            id = CAPTAIN_ID,
+            label = "Captain",
+            accent = TukiVoice.Accent.CHARACTER,
+            gender = TukiVoice.Gender.MALE,
+            blend = VoiceBlend(a = "bm_lewis.bin", b = "bm_george.bin", weight = 0.65f),
+            character = VoiceCharacter(
+                // Down about a tone and a half, and a shade slower: old and
+                // unhurried rather than the parrot's small-and-quick.
+                pitch = 0.90f,
+                rate = 0.94f,
+                // A slow, shallow waver — an old voice, not a bird.
+                warbleHz = 3.0f,
+                warbleDepth = 0.05f,
+                flourish = false,
+            ),
+        ),
     )
 
     /** Falls back to the default rather than throwing: a preference written by

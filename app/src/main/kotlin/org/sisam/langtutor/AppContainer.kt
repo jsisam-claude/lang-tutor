@@ -437,7 +437,9 @@ class AppContainer private constructor(context: Context) {
         val present = runCatching {
             appContext.assets.list(KokoroTtsEngine.VOICE_DIR)?.toSet()
         }.getOrNull() ?: emptySet()
-        TukiVoices.ALL.filter { it.id in present }
+        // A blended voice ships no table of its own — it is usable exactly
+        // when the tables it mixes are both in this build.
+        TukiVoices.ALL.filter { voice -> voice.sources.all { it in present } }
     }
 
     fun applyVoice(voiceId: String?) {

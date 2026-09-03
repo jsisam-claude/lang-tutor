@@ -37,9 +37,22 @@ object ParrotEffect {
     const val WARBLE_HZ = 6.5f
     const val WARBLE_DEPTH = 0.10f
 
+    /** Tuki's own character: the bird every voice wears unless it brings one
+     *  of its own (see [org.sisam.langtutor.speech.TukiVoice.character]). */
+    val PARROT = VoiceCharacter(
+        pitch = PITCH,
+        warbleHz = WARBLE_HZ,
+        warbleDepth = WARBLE_DEPTH,
+    )
+
     /** The full treatment for a synthesized line. */
-    fun apply(audio: FloatArray, sampleRate: Int, pitch: Float = PITCH): FloatArray =
-        warble(resample(audio, pitch), sampleRate, WARBLE_HZ, WARBLE_DEPTH)
+    fun apply(
+        audio: FloatArray,
+        sampleRate: Int,
+        pitch: Float = PITCH,
+        warbleHz: Float = WARBLE_HZ,
+        warbleDepth: Float = WARBLE_DEPTH,
+    ): FloatArray = warble(resample(audio, pitch), sampleRate, warbleHz, warbleDepth)
 
     /**
      * Linear resample: shortens by [factor], raising pitch AND formants by the

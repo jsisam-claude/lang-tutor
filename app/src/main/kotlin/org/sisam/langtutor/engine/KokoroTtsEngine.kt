@@ -26,6 +26,8 @@ import org.sisam.langtutor.speech.KokoroPhonemizer
 import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
 import org.sisam.langtutor.speech.TukiVoices
+import org.sisam.langtutor.speech.VoiceBlend
+import org.sisam.langtutor.speech.VoiceCharacter
 import org.sisam.langtutor.speech.TtsEvent
 import org.sisam.langtutor.speech.TutorLanguage
 
@@ -83,6 +85,11 @@ class KokoroTtsEngine(
             }
         }
 
+    /** The selected voice's character, or the parrot when it has none of its
+     *  own — every voice in the picker but one is Tuki wearing the bird. */
+    fun character(): VoiceCharacter =
+        TukiVoices.byId(voiceAsset).character ?: ParrotEffect.PARROT
+
     private val voiceLock = Any()
     @Volatile private var loadedVoice: FloatArray? = null
 
@@ -93,7 +100,12 @@ class KokoroTtsEngine(
         }
 
     private fun readVoice(asset: String): FloatArray = try {
-        readTable(asset)
+        // A blended voice has no table of its own: it IS the mix of two that
+        // are already in the APK, computed once per switch (510x256 floats,
+        // sub-millisecond) rather than shipped as a third file.
+        TukiVoices.byId(asset).blend
+            ?.let { VoiceBlend.mix(readTable(it.a), readTable(it.b), it.weight) }
+            ?: readTable(asset)
     } catch (e: java.io.FileNotFoundException) {
         // A persisted preference can name a voice THIS build does not carry —
         // the classic case is a local build made without re-running
@@ -210,7 +222,7 @@ class KokoroTtsEngine(
                     rendered.close()
                 }
             }
-            if (flavorPitch != null && !player.interrupted) {
+            if (flavorPitch != null && character().flourish && !player.interrupted) {
                 // The "brrp!" announces the character before the words — and
                 // now before the first synthesis finishes, so a flavored line
                 // answers instantly even when its words are seconds away.
@@ -347,7 +359,8 @@ class KokoroTtsEngine(
             synthesize(ids, synthSpeed)
         }
         if (flavorPitch != null && fresh.isNotEmpty()) {
-            fresh = ParrotEffect.apply(fresh, SAMPLE_RATE, flavorPitch)
+            val c = character()
+            fresh = ParrotEffect.apply(fresh, SAMPLE_RATE, flavorPitch, c.warbleHz, c.warbleDepth)
         }
         // Cached AFTER the effect: the flavor is part of the sound, and the
         // pitch is part of the key.
@@ -504,11 +517,18 @@ class KokoroTtsEngine(
  */
 class ParrotVoice(
     private val engine: KokoroTtsEngine,
-    private val pitch: Float = ParrotEffect.PITCH,
+    /** Fixed character, for tests; normally the selected voice decides. */
+    private val fixed: VoiceCharacter? = null,
 ) : TtsEngine {
 
-    override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> =
-        engine.speakFlavored(text, speed, pitch)
+    override fun speak(text: String, language: TutorLanguage, speed: Float): Flow<TtsEvent> {
+        // Picking a character voice in the Parent Zone changes who Tuki IS on
+        // personality lines, so the pitch and the pace come from that choice
+        // rather than from a constant: a sea captain given the parrot's
+        // treatment would come out a parrot.
+        val c = fixed ?: engine.character()
+        return engine.speakFlavored(text, speed * c.rate, c.pitch)
+    }
 
     override suspend fun stop() = engine.stop()
 }

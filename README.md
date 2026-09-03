@@ -29,6 +29,8 @@ update checks, nothing ever uploaded**.
 | [docs/mockups/](docs/mockups/) | 5 interactive HTML screen mockups + [`demo.html`](docs/mockups/demo.html), the animated product walkthrough the demo video is rendered from. |
 | `app/`, `core/*` | Android scaffold (Kotlin + Compose): the phase-1 architecture with **fake engines** — the app runs a full scripted tutoring turn with zero model weights. |
 | `asset-packs/model_pack/` | Play Asset Delivery stub where model weights live in production (never committed). |
+| [docs/tongue-twisters.md](docs/tongue-twisters.md) | The "Say it fast" room: 36 authored twisters over 15 target sounds, each one an English phoneme Hebrew does not have or a contrast Hebrew speakers collapse — why they are kept out of the phrasebank's grammar ladder, and how to add more. |
+| [docs/character-voices.md](docs/character-voices.md) | Character voices: a Kokoro voice is a 522 KB style table, style tables interpolate, so a new voice is a recipe rather than a download. The Captain, what a character may and may not touch, and why there is no real Scottish accent in the bundled set. |
 | [docs/learner-levels.md](docs/learner-levels.md) | The audience plan: proficiency Levels 1–7 for non-native speakers of all ages — the per-level dials (register, reply budget, Hebrew scaffolding fade), the migration from the old age-flavored tracks, and the original track reasoning. |
 | [scripts/](scripts/) | Tooling to fetch the large binaries that are not committed (models, native libs, voice data) and to sideload them onto a phone — all SHA-256-pinned. [`scripts/README.md`](scripts/README.md) says which to run when. |
 
