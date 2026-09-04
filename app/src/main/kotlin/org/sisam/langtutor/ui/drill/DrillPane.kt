@@ -40,6 +40,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlin.random.Random
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
@@ -123,6 +125,9 @@ class DrillViewModel(
     private var prefetch: Job? = null
 
     init {
+        // A twister card names the sound it drills, so the voice must not
+        // rewrite it. See [AppContainer.setPlainSpeech].
+        if (source is DrillSource.Sound) container.setPlainSpeech(true)
         // Start the model load NOW, in parallel with loading the units — by
         // the time the child has heard the intro the writer is usually ready.
         viewModelScope.launch { runCatching { generator?.prepare() } }
@@ -164,14 +169,37 @@ class DrillViewModel(
     val missedWords = drill.lastMissedWords
     val speculative = drill.speculative
 
+    private var starting: Job? = null
+
+    /**
+     * Start (or restart) a round, at most one at a time.
+     *
+     * Was re-entrant: every tap of "Again!" launched another round build, and
+     * two arriving together reset the orchestrator underneath each other. It
+     * also left the finished-round card on screen while the new round loaded,
+     * so re-picking the level you had just finished dropped you back on the
+     * old score instead of a drill.
+     */
     fun again() {
-        viewModelScope.launch {
-            val round = next ?: freshRound()
-            next = null
-            drill.startRound(round)
-            prefetchNext()
+        if (starting?.isActive == true) return
+        starting = viewModelScope.launch {
+            _restarting.value = true
+            try {
+                val round = next ?: freshRound()
+                next = null
+                drill.startRound(round)
+                prefetchNext()
+            } finally {
+                _restarting.value = false
+            }
         }
     }
+
+    private val _restarting = MutableStateFlow(false)
+
+    /** True while a new round is being built — the round-done card must not
+     *  stay up over it, or the learner taps a score they already finished. */
+    val restarting: StateFlow<Boolean> = _restarting
 
     private suspend fun startRound() {
         drill.startRound(freshRound())
@@ -227,6 +255,7 @@ class DrillViewModel(
     }
 
     override fun onCleared() {
+        if (source is DrillSource.Sound) container.setPlainSpeech(false)
         drill.shutdown()
         // Same thermal doctrine as every room: nothing stays loaded after the
         // screen goes away.
@@ -261,6 +290,9 @@ fun DrillPane(
     )
     val state by viewModel.state.collectAsState()
     val pronunciation by viewModel.pronunciation.collectAsState()
+    // While a new round is being built the finished-round card must come down,
+    // or re-picking the level you just finished lands you on its old score.
+    val restarting by viewModel.restarting.collectAsState()
 
     // The turn can now end BEFORE the finger lifts (early close on a target
     // match), so the felt clock and the "heard you" blip key on the state
@@ -312,7 +344,7 @@ fun DrillPane(
         // it is taking a moment.
         EngineStatusLine()
 
-        when (val s = state) {
+        when (val s = if (restarting) DrillState.Idle else state) {
             is DrillState.RoundDone -> RoundDoneView(
                 s,
                 pickAnotherLabel = pickAnotherLabel,

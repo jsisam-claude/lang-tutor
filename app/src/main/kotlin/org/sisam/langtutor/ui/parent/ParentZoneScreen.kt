@@ -96,6 +96,12 @@ private fun ParentDashboard(container: AppContainer) {
             style = MaterialTheme.typography.headlineSmall,
         )
         Text(text = stringResource(R.string.parent_xp, profile.xp))
+        // It was labelled "Stars earned", which a parent reads as answers got
+        // right. It counts turns TAKEN as well, so it measures practice done.
+        Text(
+            text = stringResource(R.string.parent_xp_hint),
+            style = MaterialTheme.typography.bodySmall,
+        )
         Text(text = stringResource(R.string.parent_daily_limit, profile.parentSettings.dailyMinutesLimit))
         Text(text = stringResource(R.string.parent_offline_note))
 

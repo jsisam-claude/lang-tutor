@@ -27,6 +27,9 @@
     <string name="conversation_hands_free">Hands-free</string>
     <string name="conversation_tap_and_talk">Tap once, then just talk</string>
     <string name="pronunciation_title">How your sounds came out</string>
+    <string name="pronunciation_good">said well</string>
+    <string name="pronunciation_nearly">nearly</string>
+    <string name="pronunciation_again">try again</string>
     <string name="pronunciation_stars">%1$d of 5 stars</string>
     <string name="conversation_type_hint">Type in English…</string>
     <!-- Deliberately Hebrew in BOTH locales: it is the escape hatch, and a
@@ -70,7 +73,8 @@
     <string name="parent_gate_title">Parents only 🔒</string>
     <string name="parent_gate_question">To enter, solve: %1$s = ?</string>
     <string name="parent_zone_title">Parent zone</string>
-    <string name="parent_xp">Stars earned: %1$d</string>
+    <string name="parent_xp">Practice points: %1$d</string>
+    <string name="parent_xp_hint">One point per turn taken and per answer said right — a measure of practice done, not of accuracy.</string>
     <string name="parent_daily_limit">Daily limit: %1$d minutes</string>
     <string name="parent_offline_note">Everything stays on this device. The network is used only for downloads you approve — nothing is ever sent out.</string>
     <string name="parent_language_hebrew">עברית</string>

@@ -414,6 +414,12 @@ class AppContainer private constructor(context: Context) {
         synchronized(this) {
             kokoroEngine?.takeIf { kokoroPath == file.absolutePath }?.let { return it }
             return KokoroTtsEngine(appContext, file, installStamp = installStamp()).also {
+                // A new engine starts on the default voice, so the parent's
+                // choice has to be re-applied here — otherwise a rebuild after
+                // a memory trim spoke in af_heart while voicePhonology still
+                // carried the accent of the voice they picked.
+                it.voiceAsset = chosenVoice.id
+                voicePhonology = teachingPhonologyOf(chosenVoice)
                 kokoroEngine = it
                 kokoroPath = file.absolutePath
             }
@@ -441,8 +447,14 @@ class AppContainer private constructor(context: Context) {
             appContext.assets.list(KokoroTtsEngine.VOICE_DIR)?.toSet()
         }.getOrNull() ?: emptySet()
         // A blended voice ships no table of its own — it is usable exactly
-        // when the tables it mixes are both in this build.
-        TukiVoices.ALL.filter { voice -> voice.sources.all { it in present } }
+        // when the tables it mixes are both in this build. And with no bundled
+        // engine there is nothing to speak ANY of them: offering the list then
+        // is offering a choice that cannot be produced.
+        if (bundledTtsFile == null || !hasVoiceAsset) {
+            emptyList()
+        } else {
+            TukiVoices.ALL.filter { voice -> voice.sources.all { it in present } }
+        }
     }
 
     /**
@@ -466,14 +478,50 @@ class AppContainer private constructor(context: Context) {
     var voicePhonology: Phonology = teachingPhonologyOf(TukiVoices.byId(null))
         private set
 
+    /**
+     * The voice the parent chose, remembered even when nothing can speak it
+     * yet — the engine is built lazily and released under memory pressure, so
+     * "no engine right now" must not mean "forget the choice".
+     */
+    @Volatile
+    private var chosenVoice: TukiVoice = TukiVoices.byId(null)
+
     fun applyVoice(voiceId: String?) {
         val chosen = TukiVoices.byId(voiceId)
         val effective = if (availableVoices.any { it.id == chosen.id }) chosen else TukiVoices.byId(null)
         if (effective.id != chosen.id) {
             Log.w(MEM_TAG, "voice ${chosen.id} not packaged in this build; using ${effective.id}")
         }
-        bundledTtsEngine()?.voiceAsset = effective.id
-        voicePhonology = teachingPhonologyOf(effective)
+        chosenVoice = effective
+        val engine = bundledTtsEngine()
+        if (engine != null) {
+            engine.voiceAsset = effective.id
+            voicePhonology = teachingPhonologyOf(effective)
+        } else {
+            // Nothing can speak the accent, so nothing may be taught in it.
+            // Committing it here left the coach expecting Scottish vowels
+            // while the platform fallback said General American.
+            voicePhonology = Phonology.GENERAL_AMERICAN
+            Log.i(MEM_TAG, "voice ${effective.id} stored; no bundled engine to apply it to yet")
+        }
+    }
+
+    /**
+     * Speak and score in General American for as long as a room needs it.
+     *
+     * The tongue-twister room teaches one named sound per card, and several
+     * accents rewrite exactly those sounds — the Captain's Scottish tap lands
+     * on the room's own "the English r". Rather than let the card and the
+     * voice disagree, that room asks for plain speech while it is open, and
+     * the coach and the gloss follow so all three still say the same thing.
+     */
+    fun setPlainSpeech(enabled: Boolean) {
+        bundledTtsEngine()?.plainSpeech = enabled
+        voicePhonology = if (enabled) {
+            Phonology.GENERAL_AMERICAN
+        } else {
+            teachingPhonologyOf(chosenVoice)
+        }
     }
 
     private fun teachingPhonologyOf(voice: TukiVoice): Phonology =
@@ -853,6 +901,11 @@ class AppContainer private constructor(context: Context) {
     }
 
     fun createPictureVocab(scope: CoroutineScope): PictureVocabOrchestrator {
+        // The drill and conversation rooms did this and these two did not, so
+        // the picture room and the chat spoke in whatever voice the engine
+        // happened to hold — the default, on a fresh process, whatever the
+        // parent had chosen.
+        appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
         val kokoro = bundledTtsEngine()
         appScope.launch(Dispatchers.IO) {
             runCatching { kokoro?.warmUp() }
@@ -894,6 +947,7 @@ class AppContainer private constructor(context: Context) {
      * same one the lesson rooms use.
      */
     fun createChatRoom(): ChatRoom {
+        appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
         val tts = TtsRouter(
             english = bundledTtsEngine() ?: PlatformTtsEngine(appContext),
             hebrew = hebrewTtsEngine(),

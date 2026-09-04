@@ -72,6 +72,33 @@ object EspeakPhonemes {
     )
 
     /**
+     * Sequences the model spells as ONE token.
+     *
+     * Our front end writes an r-coloured vowel as a vowel plus a separate
+     * /ɹ/, and a syllabic l as a schwa plus an l, because that is how misaki
+     * writes them. The coach model does not: its vocabulary carries ɑːɹ, ɔːɹ,
+     * ɪɹ, ɛɹ, ʊɹ and əl as single phones, and those tokens exist precisely
+     * because it was trained on transcriptions that use them. Asking for two
+     * phones where the model produces one puts the whole alignment out by a
+     * frame for the rest of the word — so "car", "four", "ear", "air" and
+     * every -le word were being scored against a target the audio could never
+     * match.
+     *
+     * Matched longest-first, before the per-character walk.
+     */
+    private val SEQUENCES: List<Pair<String, String>> = listOf(
+        "ɑɹ" to "ɑːɹ",
+        // The NEAR set reaches us both ways — CMUdict writes "ear" IY1 R and
+        // "beer" IH1 R for the same vowel — and the model spells both ɪɹ.
+        "iɹ" to "ɪɹ",
+        "ɔɹ" to "ɔːɹ",
+        "ɪɹ" to "ɪɹ",
+        "ɛɹ" to "ɛɹ",
+        "ʊɹ" to "ʊɹ",
+        "əl" to "əl",
+    )
+
+    /**
      * What a STRESSED vowel should be asked for instead.
      *
      * ARPABET writes one symbol for a pair the model keeps apart: IY is both
@@ -98,7 +125,19 @@ object EspeakPhonemes {
     fun expectedFrom(misakiPhonemes: String): List<Expected> {
         val out = mutableListOf<Expected>()
         var stressed = false
-        for (c in misakiPhonemes) {
+        var i = 0
+        while (i < misakiPhonemes.length) {
+            // A sequence the model spells as one phone wins over the letters
+            // it is made of — see [SEQUENCES].
+            val seq = SEQUENCES.firstOrNull { misakiPhonemes.startsWith(it.first, i) }
+            if (seq != null) {
+                vocab[seq.second]?.let { out.add(Expected(seq.second, it)) }
+                i += seq.first.length
+                stressed = false
+                continue
+            }
+            val c = misakiPhonemes[i]
+            i++
             if (c == 'ˈ' || c == 'ˌ') {
                 // The mark precedes the vowel it belongs to, so it is still
                 // true when that vowel is reached and false again after it.
@@ -117,4 +156,25 @@ object EspeakPhonemes {
         }
         return out
     }
+
+    /**
+     * KNOWN LIMITS, deliberately not guessed at.
+     *
+     * Three more places where our phone string and the model's differ, all
+     * CONTEXT-dependent, so none can be fixed by a symbol table and none is
+     * fixed here:
+     *
+     *  - American flapping. espeak writes the /t/ of "water" as ɾ (id 15);
+     *    we ask for t, so every intervocalic t after a stressed vowel is
+     *    scored against a sound the model did not emit. The rule is
+     *    positional, not lexical.
+     *  - The reduced vowel ᵻ (id 50) in "-ed" and "-es" endings, which is
+     *    exactly the sound the -ed twisters drill. We ask for ɪ, which is
+     *    also a real vowel elsewhere, so it cannot be remapped wholesale.
+     *  - Stressed NURSE. We emit ɜɹ and ask for ɜː + ɹ; whether the model
+     *    puts a separate ɹ there is not something this repository can settle
+     *    without running it on a device.
+     *
+     * All three want a recording and a look at the posteriors, not a guess.
+     */
 }

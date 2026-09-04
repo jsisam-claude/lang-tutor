@@ -178,7 +178,20 @@ class DrillOrchestrator(
             scoreEpoch.incrementAndGet()
             _pronunciation.value = null
             _state.value = DrillState.Listening(current.item, current.index, current.total)
-            asr.startCapture(RecognitionHint.ConstrainedVocab(listOf(current.item.text)))
+            // Guarded: a mic that fails to open is a turn that does not
+            // happen, not a process that dies. This runs in a bare launch on
+            // the app scope, so an escaping exception took the whole app with
+            // it — on a device where the mic was busy, that is a crash.
+            val opened = runCatching {
+                asr.startCapture(RecognitionHint.ConstrainedVocab(listOf(current.item.text)))
+            }
+            if (opened.isFailure) {
+                println("DrillOrchestrator: mic did not open: ${opened.exceptionOrNull()?.message}")
+                _state.value = DrillState.AwaitingChild(
+                    current.item, current.index, current.total, tries,
+                )
+                return@launch
+            }
             // EARLY CLOSE (docs/latency.md): this room KNOWS the expected
             // answer, so the moment a speculative transcript already matches
             // it, the turn is over — no waiting out the VAD hangover, no
@@ -221,7 +234,10 @@ class DrillOrchestrator(
     private suspend fun handleAttempt(at: DrillState.Active, result: AsrResult) {
         turnActive = true
         try {
-            if (result.transcript.isBlank()) {
+            // Whisper renders a silent clip as punctuation often enough that
+            // isBlank() missed it, so "..." counted as a wrong answer and
+            // burned one of the three tries. Silence is not an attempt.
+            if (result.transcript.none { it.isLetterOrDigit() }) {
                 // Not an error and not a try: silence judged as failure would
                 // punish a shy first attempt.
                 _events.emit(DrillEvent.TooQuiet)
@@ -281,6 +297,11 @@ class DrillOrchestrator(
         tries = 0
         scoreEpoch.incrementAndGet()
         _lastMissedWords.value = emptySet()
+        // The colours belong to the attempt that produced them. Bumping the
+        // epoch stops a LATE score painting the next item, but the score
+        // already on screen had to be cleared too, or the previous word's
+        // sounds sat under the new line until the child pressed the mic.
+        _pronunciation.value = null
         if (index >= items.size) {
             _state.value = DrillState.RoundDone(correct, items.size, rounds)
         } else {

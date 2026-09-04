@@ -91,10 +91,22 @@ class KokoroTtsEngine(
     fun character(): VoiceCharacter =
         TukiVoices.byId(voiceAsset).character ?: ParrotEffect.PARROT
 
+    /**
+     * Forces General American regardless of the chosen voice.
+     *
+     * Set by a room whose whole purpose is one specific sound: the tongue
+     * twisters drill "the English r", and an accent voice rewrites exactly
+     * that r, so the card would teach one sound and the voice would say
+     * another. Nothing else overrides a parent's choice.
+     */
+    @Volatile
+    var plainSpeech: Boolean = false
+
     /** The accent the selected voice speaks in. Read by the pronunciation
      *  coach and the Hebrew gloss too — all three have to agree, or the app
      *  contradicts itself in front of a child. */
-    fun phonology(): Phonology = TukiVoices.byId(voiceAsset).phonology
+    fun phonology(): Phonology =
+        if (plainSpeech) Phonology.GENERAL_AMERICAN else TukiVoices.byId(voiceAsset).phonology
 
     private val voiceLock = Any()
     @Volatile private var loadedVoice: FloatArray? = null
@@ -116,6 +128,14 @@ class KokoroTtsEngine(
             // table; everything else is named after the file it reads.
                 ?: readTable(voice.table ?: asset)
         }
+    } catch (e: RuntimeException) {
+        // Was FileNotFoundException only, which let VoiceBlend.mix's
+        // size-mismatch escape and take EVERY spoken line down with it: the
+        // getter throws, so the next synthesis throws, and so does the one
+        // after. A voice that cannot be built falls back like one that is
+        // missing.
+        Log.e(tag, "voice '$asset' could not be built — falling back to $defaultVoice", e)
+        readTable(defaultVoice)
     } catch (e: java.io.FileNotFoundException) {
         // A persisted preference can name a voice THIS build does not carry —
         // the classic case is a local build made without re-running
@@ -353,8 +373,13 @@ class KokoroTtsEngine(
      * from a STREAMED reply are ~0.2 s too (they used to bypass the cache).
      */
     private fun renderOrCache(text: String, speed: Float, flavorPitch: Float?, label: String): FloatArray {
+        // Read ONCE. voiceAsset is @Volatile and the picker writes it from
+        // another thread, so reading it again at synthesis time could file the
+        // new voice's waveform under the old voice's key — and serve it back
+        // for the rest of the session.
+        val voice = voiceAsset
         val cacheKey = if (SynthCache.eligible(text)) {
-            SynthCache.key(text, voiceAsset, flavorPitch, speed)
+            SynthCache.key(text, voice, flavorPitch, speed)
         } else {
             null
         }

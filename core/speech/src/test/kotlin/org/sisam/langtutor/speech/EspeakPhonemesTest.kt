@@ -41,4 +41,27 @@ class EspeakPhonemesTest {
         // not emit for it.
         assertEquals(listOf("b", "ɔː", "l"), target("ball"))
     }
+
+    @Test
+    fun `an r-coloured vowel is one phone, not two`() {
+        // Our front end writes a vowel plus a separate r because misaki does;
+        // the model's vocabulary carries the combination as a single token,
+        // and asking for two where it produces one puts the alignment out for
+        // the rest of the word.
+        assertEquals(listOf("k", "ɑːɹ"), target("car"))
+        assertEquals(listOf("f", "ɔːɹ"), target("four"))
+        assertEquals(listOf("ɪɹ"), target("ear"))
+        assertEquals(listOf("ɛɹ"), target("air"))
+    }
+
+    @Test
+    fun `a syllabic l is one phone too`() {
+        assertEquals(listOf("l", "ɪ", "t", "əl"), target("little"))
+    }
+
+    @Test
+    fun `an ordinary r is still its own phone`() {
+        assertEquals(listOf("ɹ", "ɛ", "d"), target("red"))
+        assertEquals(listOf("t", "ɹ", "iː"), target("tree"))
+    }
 }

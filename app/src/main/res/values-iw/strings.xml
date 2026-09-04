@@ -29,6 +29,9 @@
     <string name="conversation_hands_free">ללא ידיים</string>
     <string name="conversation_tap_and_talk">הקישו פעם אחת ופשוט דברו</string>
     <string name="pronunciation_title">איך יצאו הצלילים שלך</string>
+    <string name="pronunciation_good">נאמר יפה</string>
+    <string name="pronunciation_nearly">כמעט</string>
+    <string name="pronunciation_again">כדאי לנסות שוב</string>
     <string name="pronunciation_stars">%1$d מתוך 5 כוכבים</string>
     <string name="conversation_type_hint">כותבים באנגלית… ⁦English⁩</string>
     <string name="conversation_explain_hebrew">הסבר בעברית</string>
@@ -68,7 +71,8 @@
     <string name="parent_gate_title">להורים בלבד 🔒</string>
     <string name="parent_gate_question">כדי להיכנס, פתרו: %1$s = ?</string>
     <string name="parent_zone_title">אזור הורים</string>
-    <string name="parent_xp">כוכבים שנצברו: %1$d</string>
+    <string name="parent_xp">נקודות תרגול: %1$d</string>
+    <string name="parent_xp_hint">נקודה על כל תור ועל כל תשובה נכונה — מדד של כמות תרגול, לא של דיוק.</string>
     <string name="parent_daily_limit">מגבלה יומית: %1$d דקות</string>
     <string name="parent_offline_note">הכול נשאר במכשיר. האינטרנט משמש רק להורדות שאתם מאשרים — שום מידע לא נשלח החוצה.</string>
     <string name="parent_language_hebrew">עברית</string>
