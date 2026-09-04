@@ -43,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Job
+import org.sisam.langtutor.ui.common.micSemantics
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.engine.ListeningAck
@@ -255,6 +257,43 @@ private fun ChatMic(
     // flipping) cannot restart the gesture and orphan a running capture.
     val enabledNow by rememberUpdatedState(enabled)
     val stateNow by rememberUpdatedState(state)
+    // The turn as two halves rather than one gesture body, so the accessible
+    // activation can drive the same lifecycle the finger does. Holding the
+    // start job here is what lets the second half know a turn is running and
+    // makes a stray stop a no-op.
+    var capture by remember { mutableStateOf<Job?>(null) }
+
+    fun startTurn() {
+        if (!enabledNow || stateNow != MicState.IDLE) return
+        onStateChange(MicState.LISTENING)
+        capture = scope.launch { runCatching { asr.startCapture(RecognitionHint.None) } }
+    }
+
+    fun finishTurn() {
+        val started = capture ?: return
+        capture = null
+        // The learner-felt clock starts HERE. It was marked in onHeard —
+        // after stopCapture returned — so the chat metric silently excluded
+        // the entire Whisper decode, while the lesson room counted it. Same
+        // name, two meanings: the worst kind of number.
+        TurnLatency.mark("chat mic release")
+        // "Heard you" — instant, before ASR has even returned. The felt wait
+        // starts here; the blip is what stops it feeling like being ignored
+        // (docs/latency.md item 3).
+        ListeningAck.play()
+        scope.launch {
+            // Never stop before start has finished — on the first ever press
+            // start may be loading Whisper.
+            started.join()
+            onStateChange(MicState.TRANSCRIBING)
+            val result = runCatching { asr.stopCapture() }.getOrNull()
+            onStateChange(MicState.IDLE)
+            val text = result?.transcript?.trim().orEmpty()
+            // A silent press produces no turn and must not leave a stale mark
+            // for the NEXT play() to close with a nonsense number.
+            if (text.isNotEmpty()) onHeard(text) else TurnLatency.clear()
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -267,38 +306,29 @@ private fun ChatMic(
                 },
                 CircleShape,
             )
+            // Reachable without touch: see [micSemantics].
+            .micSemantics(
+                listening = state == MicState.LISTENING,
+                enabled = enabled && state != MicState.TRANSCRIBING,
+                label = stringResource(R.string.mic_label),
+                actionLabel = stringResource(
+                    if (state == MicState.LISTENING) R.string.mic_stop else R.string.mic_start,
+                ),
+                state = stringResource(
+                    when {
+                        state == MicState.LISTENING -> R.string.mic_state_listening
+                        enabled -> R.string.mic_state_idle
+                        else -> R.string.mic_state_busy
+                    },
+                ),
+                onToggle = { if (stateNow == MicState.LISTENING) finishTurn() else startTurn() },
+            )
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
-                        if (!enabledNow || stateNow != MicState.IDLE) return@detectTapGestures
-                        onStateChange(MicState.LISTENING)
-                        val started = scope.launch {
-                            runCatching { asr.startCapture(RecognitionHint.None) }
-                        }
+                        startTurn()
                         tryAwaitRelease()
-                        // The learner-felt clock starts HERE. It was marked in
-                        // onHeard — after stopCapture returned — so the chat
-                        // metric silently excluded the entire Whisper decode,
-                        // while the lesson room counted it. Same name, two
-                        // meanings: the worst kind of number.
-                        TurnLatency.mark("chat mic release")
-                        // "Heard you" — instant, before ASR has even returned.
-                        // The felt wait starts here; the blip is what stops it
-                        // feeling like being ignored (docs/latency.md item 3).
-                        ListeningAck.play()
-                        scope.launch {
-                            // Never stop before start has finished — on the
-                            // first ever press start may be loading Whisper.
-                            started.join()
-                            onStateChange(MicState.TRANSCRIBING)
-                            val result = runCatching { asr.stopCapture() }.getOrNull()
-                            onStateChange(MicState.IDLE)
-                            val text = result?.transcript?.trim().orEmpty()
-                            // A silent press produces no turn and must not
-                            // leave a stale mark for the NEXT play() to close
-                            // with a nonsense number.
-                            if (text.isNotEmpty()) onHeard(text) else TurnLatency.clear()
-                        }
+                        finishTurn()
                     },
                 )
             },

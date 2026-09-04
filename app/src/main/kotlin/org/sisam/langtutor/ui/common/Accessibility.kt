@@ -18,6 +18,11 @@ import androidx.compose.ui.unit.dp
  *
  * The rule the whole app follows: **decoration yields, controls never do.**
  * A mascot may halve; a button must stay above the 48 dp touch minimum.
+ *
+ * That rule is about SIZE. The other half of reaching a control is being able
+ * to find it at all, which is [micSemantics]: every mic in the app is a raw
+ * gesture detector, correct for press-and-hold and invisible to TalkBack,
+ * Switch Access and a keyboard until semantics are put on it by hand.
  */
 object A11y {
 

@@ -61,6 +61,7 @@ import org.sisam.langtutor.tutor.Speaker
 import org.sisam.langtutor.tutor.TutorMode
 import org.sisam.langtutor.tutor.TutorTurnState
 import org.sisam.langtutor.ui.common.A11y
+import org.sisam.langtutor.ui.common.micSemantics
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.GlossedText
 import org.sisam.langtutor.ui.common.TukiParrot
@@ -377,6 +378,35 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
                         MaterialTheme.colorScheme.primary
                     },
                     CircleShape,
+                )
+                // Reachable without touch: see [micSemantics]. Hands-free
+                // already ends the turn on the VAD endpoint, so an accessible
+                // activation only ever needs to START one there.
+                .micSemantics(
+                    listening = state is TutorTurnState.Listening,
+                    enabled = true,
+                    label = stringResource(R.string.mic_label),
+                    actionLabel = stringResource(
+                        if (state is TutorTurnState.Listening && !handsFree) {
+                            R.string.mic_stop
+                        } else {
+                            R.string.mic_start
+                        },
+                    ),
+                    state = stringResource(
+                        if (state is TutorTurnState.Listening) {
+                            R.string.mic_state_listening
+                        } else {
+                            R.string.mic_state_idle
+                        },
+                    ),
+                    onToggle = {
+                        if (state is TutorTurnState.Listening) {
+                            if (!handsFree) viewModel.onMicReleased()
+                        } else {
+                            viewModel.onMicPressed()
+                        }
+                    },
                 )
                 .pointerInput(handsFree) {
                     detectTapGestures(

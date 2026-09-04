@@ -61,6 +61,7 @@ import org.sisam.langtutor.tutor.drill.WordMatch
 import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.EnglishContent
+import org.sisam.langtutor.ui.common.micSemantics
 import org.sisam.langtutor.ui.common.GlossedText
 import org.sisam.langtutor.ui.common.PronunciationFeedback
 import org.sisam.langtutor.ui.common.TukiParrot
@@ -496,9 +497,29 @@ private fun Mic(
     modifier: Modifier = Modifier,
 ) {
     val open = state is DrillState.AwaitingChild || state is DrillState.Listening
+    val listening = state is DrillState.Listening
     Box(
         modifier = modifier
             .size(A11y.tapTargetDp(comfortable = 88, minimum = 64))
+            // Without this the mic is a Box with a gesture detector: correct
+            // for press-and-hold, invisible to every assistive service, and
+            // the room has no other way in. Adds no touch behaviour.
+            .micSemantics(
+                listening = listening,
+                enabled = open,
+                label = stringResource(R.string.mic_label),
+                actionLabel = stringResource(
+                    if (listening) R.string.mic_stop else R.string.mic_start,
+                ),
+                state = stringResource(
+                    when {
+                        listening -> R.string.mic_state_listening
+                        open -> R.string.mic_state_idle
+                        else -> R.string.mic_state_busy
+                    },
+                ),
+                onToggle = { if (listening) onReleased() else onPressed() },
+            )
             .background(
                 when {
                     state is DrillState.Listening -> MaterialTheme.colorScheme.error

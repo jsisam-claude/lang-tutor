@@ -17,6 +17,12 @@
     <string name="lesson_loading">Loading…</string>
 
     <string name="conversation_title">Talking with Tuki 🦜</string>
+    <string name="mic_label">Microphone</string>
+    <string name="mic_start">Start talking</string>
+    <string name="mic_stop">Stop talking</string>
+    <string name="mic_state_listening">Listening</string>
+    <string name="mic_state_idle">Not listening</string>
+    <string name="mic_state_busy">Tuki is speaking</string>
     <string name="conversation_hold_to_talk">Hold to talk</string>
     <string name="conversation_hands_free">Hands-free</string>
     <string name="conversation_tap_and_talk">Tap once, then just talk</string>

@@ -19,6 +19,12 @@
     <string name="lesson_loading">טוען…</string>
 
     <string name="conversation_title">שיחה עם תוקי 🦜</string>
+    <string name="mic_label">מיקרופון</string>
+    <string name="mic_start">להתחיל לדבר</string>
+    <string name="mic_stop">להפסיק לדבר</string>
+    <string name="mic_state_listening">מקשיב</string>
+    <string name="mic_state_idle">לא מקשיב</string>
+    <string name="mic_state_busy">טוקי מדבר</string>
     <string name="conversation_hold_to_talk">מחזיקים ומדברים</string>
     <string name="conversation_hands_free">ללא ידיים</string>
     <string name="conversation_tap_and_talk">הקישו פעם אחת ופשוט דברו</string>
