@@ -52,6 +52,9 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.semantics
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.engine.ListeningAck
@@ -295,9 +298,25 @@ fun ConversationScreen(container: AppContainer, unitId: String) {
             items(transcript) { entry ->
                 val context = LocalContext.current
                 val flaggedNote = stringResource(R.string.report_flagged)
+                val flagAction = stringResource(R.string.report_flag_action)
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
+                        // A long press is a gesture no assistive service can
+                        // perform, and this is the report mechanism, so
+                        // without a named action there was no way to flag a
+                        // reply at all except by touch.
+                        .semantics {
+                            if (entry.speaker == Speaker.TUTOR) {
+                                customActions = listOf(
+                                    CustomAccessibilityAction(flagAction) {
+                                        container.flagReply(entry.text, room = "lesson")
+                                        Toast.makeText(context, flaggedNote, Toast.LENGTH_SHORT).show()
+                                        true
+                                    },
+                                )
+                            }
+                        }
                         // The report mechanism, where the content is: long-
                         // pressing a generated reply flags it for Parent Zone
                         // review. Learner turns need no policing.

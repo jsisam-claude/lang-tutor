@@ -118,6 +118,7 @@
     <string name="onboarding_title">ברוכים הבאים! מה רמת האנגלית?</string>
     <string name="onboarding_hint">רמה 1 עד 7, לכל גיל — הרמה קובעת איך תוקי מדבר וכמה עזרה בעברית מופיעה. אפשר לשנות בכל רגע באזור ההורים.</string>
     <string name="onboarding_skip">לא בטוחים — התחילו ברמה 2</string>
+    <string name="report_flag_action">לסמן את התשובה הזאת למבוגר</string>
     <string name="report_flagged">סומן לבדיקה באזור ההורים</string>
     <string name="report_hint">לחיצה ארוכה על תשובה של תוקי מסמנת אותה.</string>
     <string name="parent_reports_title">תשובות שסומנו</string>

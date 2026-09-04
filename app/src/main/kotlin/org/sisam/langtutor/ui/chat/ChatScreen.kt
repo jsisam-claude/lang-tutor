@@ -45,6 +45,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Job
 import org.sisam.langtutor.ui.common.micSemantics
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.semantics
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.engine.ListeningAck
@@ -346,6 +349,7 @@ private fun ChatBubble(entry: ChatEntry, container: AppContainer) {
     val fromChild = entry.speaker == ChatSpeaker.CHILD
     val context = LocalContext.current
     val flaggedNote = stringResource(R.string.report_flagged)
+    val flagAction = stringResource(R.string.report_flag_action)
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = if (fromChild) Arrangement.End else Arrangement.Start,
@@ -381,6 +385,21 @@ private fun ChatBubble(entry: ChatEntry, container: AppContainer) {
                 // The report mechanism, where the content is: long-pressing a
                 // generated reply flags it for Parent Zone review. Only
                 // Tuki's bubbles — the learner's own words need no policing.
+                // A long press is a gesture no assistive service can
+                // perform, and this is the report mechanism, so without a
+                // named action there was no way to flag a reply at all
+                // except by touch.
+                .semantics {
+                    if (!fromChild) {
+                        customActions = listOf(
+                            CustomAccessibilityAction(flagAction) {
+                                container.flagReply(entry.text, room = "chat")
+                                Toast.makeText(context, flaggedNote, Toast.LENGTH_SHORT).show()
+                                true
+                            },
+                        )
+                    }
+                }
                 .pointerInput(entry.text, fromChild) {
                     if (!fromChild) {
                         detectTapGestures(onLongPress = {
