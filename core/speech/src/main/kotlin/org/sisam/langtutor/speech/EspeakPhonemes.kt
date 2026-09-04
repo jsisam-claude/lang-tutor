@@ -49,8 +49,14 @@ object EspeakPhonemes {
         'O' to listOf("oʊ", "əʊ", "o"),
         'Y' to listOf("ɔɪ", "ɔ"),
         // vowels where the model's preferred realization differs
-        'ɔ' to listOf("ɔ", "ɑː", "ɒ"),
+        'ɔ' to listOf("ɔː", "ɔ", "ɑː", "ɒ"),
         'ɑ' to listOf("ɑː", "ɑ", "ɒ"),
+        // Length is phonemic in the model's inventory and it was being asked
+        // for the wrong one: `i` is the happY vowel and `u` its back
+        // counterpart, while FLEECE and GOOSE are `iː` and `uː`. Since our
+        // front end writes one symbol for both, STRESS decides — see
+        // [expectedFrom]. Listed short-first here; the stressed lookup uses
+        // [LONG] instead.
         'i' to listOf("i", "iː"),
         'u' to listOf("u", "uː"),
         'ɜ' to listOf("ɜː", "ɜ"),
@@ -65,6 +71,21 @@ object EspeakPhonemes {
         'ɡ' to listOf("ɡ", "g"),
     )
 
+    /**
+     * What a STRESSED vowel should be asked for instead.
+     *
+     * ARPABET writes one symbol for a pair the model keeps apart: IY is both
+     * FLEECE (see, sheep — long) and happY (unstressed — short), and UW is
+     * both GOOSE and its unstressed counterpart. Targeting the short one for
+     * every occurrence scored the ship/sheep drill against the wrong sound,
+     * which matters here more than almost anywhere: that contrast is one of
+     * the fifteen the tongue-twister room exists to teach.
+     */
+    private val LONG: Map<Char, List<String>> = mapOf(
+        'i' to listOf("iː", "i"),
+        'u' to listOf("uː", "u"),
+    )
+
     /** A phoneme of the utterance, ready to score. */
     data class Expected(val label: String, val id: Int)
 
@@ -76,9 +97,19 @@ object EspeakPhonemes {
      */
     fun expectedFrom(misakiPhonemes: String): List<Expected> {
         val out = mutableListOf<Expected>()
+        var stressed = false
         for (c in misakiPhonemes) {
-            if (c == 'ˈ' || c == 'ˌ' || c.isWhitespace() || c in ".,!?;:") continue
-            val candidates = CANDIDATES[c] ?: listOf(c.toString())
+            if (c == 'ˈ' || c == 'ˌ') {
+                // The mark precedes the vowel it belongs to, so it is still
+                // true when that vowel is reached and false again after it.
+                stressed = true
+                continue
+            }
+            if (c.isWhitespace() || c in ".,!?;:") continue
+            val candidates = (if (stressed) LONG[c] else null)
+                ?: CANDIDATES[c]
+                ?: listOf(c.toString())
+            stressed = false
             val hit = candidates.firstNotNullOfOrNull { token ->
                 vocab[token]?.let { token to it }
             } ?: continue

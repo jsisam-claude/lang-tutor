@@ -68,4 +68,35 @@ class WordMatchTest {
             WordMatch.missedWordIndexes("the cat and the dog", "the cat and dog"),
         )
     }
+
+    @Test
+    fun `word order counts`() {
+        // The whole grammar point of a level-2 question is the inversion, and
+        // a bag-of-words count made it free: every word is present either way,
+        // so the room called an un-inverted repetition flawless and moved on.
+        val target = "Are you playing with the blocks?"
+        assertEquals(emptySet<Int>(), WordMatch.missedWordIndexes(target, "are you playing with the blocks"))
+        assertEquals(
+            "the word that moved is the one to mark",
+            setOf(0),
+            WordMatch.missedWordIndexes(target, "you are playing with the blocks"),
+        )
+    }
+
+    @Test
+    fun `a repeated word still matches once per occurrence`() {
+        assertEquals(emptySet<Int>(), WordMatch.missedWordIndexes("the cat and the dog", "the cat and the dog"))
+        assertEquals(setOf(3), WordMatch.missedWordIndexes("the cat and the dog", "the cat and dog"))
+    }
+
+    @Test
+    fun `the exact matcher accepts only a complete, ordered repetition`() {
+        val target = "I see a red ball"
+        assertTrue(WordMatch.matchesExactly(target, "i see a red ball"))
+        // Forgiving enough to pass the verdict, not enough to end the turn.
+        assertTrue(WordMatch.matches(target, "i see a red"))
+        assertFalse(WordMatch.matchesExactly(target, "i see a red"))
+        assertFalse(WordMatch.matchesExactly(target, "i see red a ball"))
+        assertFalse(WordMatch.matchesExactly(target, ""))
+    }
 }

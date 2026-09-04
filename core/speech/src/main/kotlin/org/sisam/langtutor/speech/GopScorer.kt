@@ -61,6 +61,18 @@ object GopScorer {
         require(targetIds.size == targetLabels.size) { "labels must match ids" }
         if (logProbs.isEmpty() || targetIds.isEmpty()) return emptyList()
 
+        // A clip too short to carry the target cannot be aligned to it: CTC
+        // needs one frame per symbol, plus a blank between any two identical
+        // neighbours. Without this check every state stays at NEG_INF, the
+        // backtrace self-loops on a blank, and every phone comes back
+        // NOT_ALIGNED — a child who said the first word of a long line and
+        // lifted the button was told every sound was wrong, including the
+        // ones they got right. An empty result is the honest answer: the
+        // callers already treat "no phonemes" as "no feedback to show".
+        val minFrames = targetIds.size +
+            (1 until targetIds.size).count { targetIds[it] == targetIds[it - 1] }
+        if (logProbs.size < minFrames) return emptyList()
+
         val spans = forcedAlign(logProbs, targetIds, blankId)
         val frameMax = FloatArray(logProbs.size) { t -> logProbs[t].max() }
 
@@ -87,13 +99,28 @@ object GopScorer {
         }
     }
 
-    /** Overall 0..1 score for the utterance — the child-facing number. */
+    /**
+     * Overall 0..1 score for the utterance — the child-facing number.
+     *
+     * GOP is `mean(logProb(target) - frameMax)`, so it is at most 0 and 0 IS
+     * a flawless sound. The curve therefore has to reach exactly 1.0 there.
+     * The old sigmoid `1/(1+exp(-(gop+2.2)))` topped out at 0.9002, and the
+     * star row renders `(overall * 5).toInt()` — so "5 of 5 stars" could not
+     * be produced by any input at all, and a child the model agreed with on
+     * every single phone was told 4 of 5. The comment claimed 0 → 1.0 and
+     * everything downstream was calibrated against the comment.
+     *
+     * `exp(gop / 4.33)` is anchored where the scale actually ends: 0 → 1.0,
+     * −3 → 0.5, −7 → 0.20, and NOT_ALIGNED (−99) → effectively 0.
+     */
     fun overall(scores: List<Scored>): Float {
         if (scores.isEmpty()) return 0f
-        // Map each GOP through a soft curve: 0 → 1.0, −3 → ~0.5, −7 → ~0.1.
-        val mean = scores.map { 1f / (1f + exp(-(it.gop + 2.2f))) }.average().toFloat()
+        val mean = scores.map { exp(it.gop / HALF_AT_GOP) }.average().toFloat()
         return mean.coerceIn(0f, 1f)
     }
+
+    /** Divisor of the score curve: the GOP that should read as half marks. */
+    private const val HALF_AT_GOP = 4.33f
 
     /** Frames assigned to each target symbol by CTC Viterbi forced alignment. */
     internal fun forcedAlign(
@@ -133,6 +160,13 @@ object GopScorer {
             }
         }
 
+        // Both terminals unreachable means no alignment exists — the length
+        // check in score() should have caught it, and if anything ever gets
+        // past that, an empty result beats a backtrace that self-loops on a
+        // blank and reports every sound as missing.
+        if (dp[t - 1][s - 1] <= NEG_INF && (s == 1 || dp[t - 1][s - 2] <= NEG_INF)) {
+            return List(targetIds.size) { emptyList() }
+        }
         var state = if (s == 1 || dp[t - 1][s - 1] >= dp[t - 1][s - 2]) s - 1 else s - 2
         val path = IntArray(t)
         for (frame in t - 1 downTo 0) {

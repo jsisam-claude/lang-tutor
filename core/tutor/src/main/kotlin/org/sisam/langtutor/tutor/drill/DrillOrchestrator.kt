@@ -135,7 +135,16 @@ class DrillOrchestrator(
     private val scoreEpoch = java.util.concurrent.atomic.AtomicInteger(0)
 
     suspend fun startRound(round: List<DrillItem>) {
-        if (round.isEmpty()) return
+        if (round.isEmpty()) {
+            // Not a no-op: the room would sit in Idle with no cards, no
+            // message and no way out, which is what a learner sees if they
+            // pick a topic that has nothing at their level. An empty round is
+            // a finished round of nothing — the same screen a real round ends
+            // on, with its way back to the picker.
+            rounds++
+            _state.value = DrillState.RoundDone(correct = 0, total = 0, round = rounds)
+            return
+        }
         items = round
         index = 0
         tries = 0
@@ -179,7 +188,12 @@ class DrillOrchestrator(
             earlyClose?.cancel()
             earlyClose = scope.launch {
                 asr.speculative.collect { guess ->
-                    if (WordMatch.matches(current.item.text, guess)) finishAttempt()
+                    // EXACT here, not the forgiving match the verdict uses.
+                    // A guess that is merely close enough to pass would end
+                    // the turn while the child is still speaking — cutting
+                    // them off and praising an unfinished line. Closing early
+                    // is an optimisation; being wrong about it is not.
+                    if (WordMatch.matchesExactly(current.item.text, guess)) finishAttempt()
                 }
             }
         }
@@ -244,8 +258,19 @@ class DrillOrchestrator(
         } catch (e: Exception) {
             // Same doctrine as the tutor: log to logcat via System.out (pure
             // JVM module) and recover to a state the child can act from.
+            //
+            // Recover to where the round ACTUALLY is, not to the attempt that
+            // threw. A throw inside cheer() happens after correct++ and after
+            // advance() may have moved on, so rebuilding the screen from the
+            // attempt's own index put the learner back on an item already
+            // scored — repeating it and skipping the one after it.
             println("DrillOrchestrator: attempt failed: ${e.javaClass.simpleName}: ${e.message}")
-            _state.value = DrillState.AwaitingChild(at.item, at.index, at.total, tries)
+            val here = items.getOrNull(index)
+            _state.value = if (here == null) {
+                DrillState.RoundDone(correct, items.size, rounds)
+            } else {
+                DrillState.AwaitingChild(here, index, items.size, tries)
+            }
         } finally {
             turnActive = false
         }

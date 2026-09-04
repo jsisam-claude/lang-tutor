@@ -142,7 +142,66 @@ class GopScorerTest {
             EspeakPhonemes.expectedFrom("ɹɛd").map { it.label },
             EspeakPhonemes.expectedFrom("ˈɹ ɛd!").map { it.label },
         )
-        // A misaki diphthong resolves to the model's spelling.
-        assertEquals(listOf("b", "ɔ", "l"), EspeakPhonemes.expectedFrom("bˈɔl").map { it.label })
+        // A misaki vowel resolves to the model's spelling — the LONG one for
+        // THOUGHT. This line used to assert "ɔ", which the model does not
+        // emit for "ball": the test had frozen the bug in place, and the
+        // KDoc's own example was unreachable.
+        assertEquals(listOf("b", "ɔː", "l"), EspeakPhonemes.expectedFrom("bˈɔl").map { it.label })
+    }
+
+    @Test
+    fun `a flawless attempt reaches the top of the scale`() {
+        // GOP is at most 0 and 0 IS flawless, so the curve has to reach 1.0
+        // there. The old sigmoid topped out at 0.9002, and the star row is
+        // (overall * 5).toInt() — so "5 of 5 stars" could not be produced by
+        // any input, and a child the model agreed with on every phone was
+        // told 4 of 5.
+        val perfect = listOf(
+            GopScorer.Scored("ɹ", 0f, 5, GopScorer.Verdict.GOOD),
+            GopScorer.Scored("ɛ", 0f, 5, GopScorer.Verdict.GOOD),
+            GopScorer.Scored("d", 0f, 5, GopScorer.Verdict.GOOD),
+        )
+        assertEquals(1f, GopScorer.overall(perfect), 1e-6f)
+        assertEquals(5, (GopScorer.overall(perfect) * 5).toInt())
+    }
+
+    @Test
+    fun `the score curve falls the way its documentation says`() {
+        fun one(gop: Float) =
+            GopScorer.overall(listOf(GopScorer.Scored("x", gop, 1, GopScorer.Verdict.GOOD)))
+        assertEquals(1f, one(0f), 1e-6f)
+        assertEquals(0.5f, one(-3f), 0.01f)
+        assertEquals(0.2f, one(-7f), 0.01f)
+        // A sound that never aligned must not drag the mean up.
+        assertTrue(one(GopScorer.NOT_ALIGNED) < 1e-6f)
+    }
+
+    @Test
+    fun `a clip too short to carry the target is not scored as all wrong`() {
+        // CTC needs a frame per symbol. Below that every state is unreachable,
+        // the backtrace self-loops on a blank and every phone comes back
+        // NOT_ALIGNED — a child who said the first word of a long line and
+        // lifted the button was told every sound was wrong, including the ones
+        // they got right. No feedback is the honest answer.
+        val frames = Array(4) { FloatArray(5) { -0.1f } }
+        val scored = GopScorer.score(
+            logProbs = frames,
+            targetIds = intArrayOf(1, 2, 3, 1, 2, 3),
+            targetLabels = listOf("a", "b", "c", "d", "e", "f"),
+            blankId = 0,
+        )
+        assertTrue("expected no feedback, got $scored", scored.isEmpty())
+    }
+
+    @Test
+    fun `a clip that is long enough still scores`() {
+        val frames = Array(12) { FloatArray(5) { -0.1f } }
+        val scored = GopScorer.score(
+            logProbs = frames,
+            targetIds = intArrayOf(1, 2, 3),
+            targetLabels = listOf("a", "b", "c"),
+            blankId = 0,
+        )
+        assertEquals(3, scored.size)
     }
 }

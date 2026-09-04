@@ -39,11 +39,37 @@ object WordMatch {
      * (a hyphenated word splits into two tokens).
      */
     fun missedWordIndexes(target: String, transcript: String): Set<Int> {
-        val said = tokens(transcript).groupingBy { it }.eachCount().toMutableMap()
+        val need = tokens(target)
+        val said = tokens(transcript)
+        if (need.isEmpty()) return emptySet()
+        // IN ORDER, not as a bag of words. Counting a multiset made word
+        // ORDER free: "You are playing with the blocks" scored as a flawless
+        // repetition of "Are you playing with the blocks?" — the inversion is
+        // the entire grammar point of that item, and the room called it
+        // perfect and moved on. Longest common subsequence counts a word as
+        // said only where it can be matched in sequence, so the one that moved
+        // is the one that gets marked.
+        val lcs = Array(need.size + 1) { IntArray(said.size + 1) }
+        for (i in need.indices) {
+            for (j in said.indices) {
+                lcs[i + 1][j + 1] = if (need[i] == said[j]) {
+                    lcs[i][j] + 1
+                } else {
+                    maxOf(lcs[i][j + 1], lcs[i + 1][j])
+                }
+            }
+        }
         val missed = mutableSetOf<Int>()
-        tokens(target).forEachIndexed { index, word ->
-            val have = said[word] ?: 0
-            if (have > 0) said[word] = have - 1 else missed.add(index)
+        var i = need.size
+        var j = said.size
+        while (i > 0) {
+            when {
+                j > 0 && need[i - 1] == said[j - 1] && lcs[i][j] == lcs[i - 1][j - 1] + 1 -> {
+                    i--; j--
+                }
+                j > 0 && lcs[i][j] == lcs[i][j - 1] -> j--
+                else -> { i--; missed.add(i) }
+            }
         }
         return missed
     }
@@ -52,6 +78,19 @@ object WordMatch {
         val need = tokens(target)
         if (need.isEmpty()) return false
         return missing(target, transcript) <= allowedMisses(need.size)
+    }
+
+    /**
+     * Every target word said, in order, with nothing missing.
+     *
+     * For decisions where a false positive costs more than a late answer —
+     * the early close, which ends the turn while the finger is still down. A
+     * forgiving match there cuts the child off mid-sentence and praises a
+     * line they had not finished saying.
+     */
+    fun matchesExactly(target: String, transcript: String): Boolean {
+        val need = tokens(target)
+        return need.isNotEmpty() && missing(target, transcript) == 0
     }
 
     /** 1–3 words: perfect. 4–7: one miss. 8+: two. */
