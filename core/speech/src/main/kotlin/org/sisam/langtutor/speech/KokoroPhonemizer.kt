@@ -111,12 +111,58 @@ class KokoroPhonemizer private constructor(
             // Hyphenated compounds miss the dictionary as a whole ("well-done")
             // — phonemize the parts and speak them joined, keeping any direct
             // dictionary hit (CMU does carry some hyphenated entries).
-            val arpabet = cmu[token.lowercase()]
-                ?: token.split('-').filter { it.isNotEmpty() }
-                    .joinToString(" ") { part -> cmu[part.lowercase()] ?: RuleG2p.toArpabet(part) }
+            val arpabet = lookUp(token)
             appendArpabet(arpabet, sb)
         }
         return sb.toString()
+    }
+
+    /**
+     * Is this word looked up rather than guessed?
+     *
+     * Exposed so a test can hold the shipped corpus to it: [RuleG2p] is a
+     * safety net for a stranger's name, not something a line the app says
+     * every session should be relying on.
+     */
+    fun isKnown(word: String): Boolean {
+        val w = word.lowercase()
+        if (cmu.containsKey(w) || possessive(w) != null) return true
+        val parts = w.split('-').filter { it.isNotEmpty() }
+        return parts.size > 1 && parts.all { cmu.containsKey(it) }
+    }
+
+    /**
+     * One written word to ARPABET, trying every rule that beats a guess.
+     *
+     * In order: the dictionary (with the exceptions merged over it); the
+     * regular possessive, so content does not have to enumerate every
+     * "hamster's" it uses; hyphenated compounds part by part, since CMU
+     * carries only some of them whole; and only then [RuleG2p], which guesses
+     * from spelling and is the reason "Tuki" needed an entry.
+     */
+    private fun lookUp(token: String): String {
+        val word = token.lowercase()
+        cmu[word]?.let { return it }
+        possessive(word)?.let { return it }
+        return token.split('-').filter { it.isNotEmpty() }
+            .joinToString(" ") { part -> cmu[part.lowercase()] ?: RuleG2p.toArpabet(part) }
+    }
+
+    /**
+     * The regular English possessive, built from the base word: /ɪz/ after a
+     * sibilant, /s/ after a voiceless consonant, /z/ otherwise. Exactly the
+     * rule a speaker applies, so "the grasshopper's legs" no longer depends on
+     * anyone having thought to add "grasshopper's" to a file.
+     */
+    private fun possessive(word: String): String? {
+        if (!word.endsWith("'s")) return null
+        val base = cmu[word.dropLast(2)] ?: return null
+        val last = base.substringAfterLast(' ').trimEnd('0', '1', '2')
+        return base + when (last) {
+            in SIBILANTS -> " IH0 Z"
+            in VOICELESS -> " S"
+            else -> " Z"
+        }
     }
 
     /** Words (letters/apostrophes/hyphens) and known punctuation, in order. */
@@ -160,6 +206,12 @@ class KokoroPhonemizer private constructor(
     companion object {
         private val PUNCTUATION = ".,!?;:".toSet()
 
+        /** Finals that take the extra syllable in a possessive. */
+        private val SIBILANTS = setOf("S", "Z", "SH", "ZH", "CH", "JH")
+
+        /** Finals that devoice it. */
+        private val VOICELESS = setOf("P", "T", "K", "F", "TH")
+
         /**
          * ARPABET → Kokoro/misaki IPA. Standard phonetic correspondences; the
          * uppercase letters are misaki's single-char diphthongs. AH/ER are
@@ -190,6 +242,21 @@ class KokoroPhonemizer private constructor(
                         if (space > 0) cmu[line.substring(0, space)] = line.substring(space + 1)
                     }
                 } ?: error("kokoro/cmudict.txt missing from resources")
+
+            // Merged OVER the dictionary, so an entry here wins: the bundled
+            // dictionary keeps one pronunciation per word and for a handful it
+            // kept the sense this app never uses ("perfect" as a verb, "wind"
+            // that rhymes with "find"), and it does not carry the tutor's own
+            // name at all — "Tuki" was being guessed, and came out "Taki".
+            loader.getResourceAsStream("kokoro/pronunciation-exceptions.tsv")
+                ?.bufferedReader(Charsets.UTF_8)
+                ?.useLines { lines ->
+                    for (line in lines) {
+                        if (line.isBlank() || line.startsWith("#")) continue
+                        val tab = line.indexOf('\t')
+                        if (tab > 0) cmu[line.substring(0, tab).lowercase()] = line.substring(tab + 1).trim()
+                    }
+                } ?: error("kokoro/pronunciation-exceptions.tsv missing from resources")
 
             val vocab = HashMap<String, Int>(128)
             loader.getResourceAsStream("kokoro/vocab.tsv")

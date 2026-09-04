@@ -1,0 +1,63 @@
+# Pronunciations the bundled CMU dictionary gets wrong for THIS app, and words
+# it does not carry at all. Word (lowercase) TAB ARPABET, merged over cmudict
+# at load — see KokoroPhonemizer.load.
+#
+# Two kinds of entry, and nothing else belongs here:
+#
+#  1. NAMES AND WORDS THE DICTIONARY LACKS. Without an entry these fall through
+#     to RuleG2p, which guesses from spelling. That is fine for a stranger's
+#     name and wrong for a word the app says every session: "Tuki" came out
+#     "Taki" on the device.
+#
+#  2. HETERONYMS WHERE THE DICTIONARY'S ONE ENTRY IS THE OTHER SENSE. The
+#     bundled dictionary keeps a single pronunciation per word, and for a few
+#     it kept the one this app does not use. There is no part-of-speech
+#     tagging in the front end, so the entry has to match how the CORPUS uses
+#     the word; where a corpus is split, the majority wins and the minority
+#     lines are listed in the comment so the cost is visible.
+#
+# ScriptS/tests: PronunciationCoverageTest asserts every word the shipped
+# content speaks resolves from the dictionary or from here, so a new theme
+# cannot quietly reintroduce a guess.
+
+# --- the tutor's own name, said in the first sentence of every session ------
+tuki	T UW1 K IY0
+yoav	Y OW0 AA1 V
+
+# --- heteronyms: the dictionary's entry is the sense we never use -----------
+# "Perfect!" is praise, the adjective. The dictionary has only the verb, so it
+# was spoken per-FECT.
+perfect	P ER1 F IH0 K T
+# The weather noun, ten times over. The dictionary has only "to wind" (rhymes
+# with "find").
+wind	W IH1 N D
+# The verb, nine times over. The dictionary has only the noun ("a use").
+use	Y UW1 Z
+# The verb in nine of ten lines ("close the windows"). The dictionary has only
+# the adjective. Cost: bug-l5-011 "if we get too close" now says the verb.
+close	K L OW1 Z
+# Present or infinitive in sixteen of twenty lines. The dictionary has only the
+# past, so "I can read" was "I can red". Cost: the four genuine past lines —
+# sch-l3-009, sch-l5-010, bed-l7-003, bed-l3-001 — now say "reed".
+read	R IY1 D
+
+# --- compounds and inflections the dictionary does not carry ---------------
+zookeeper	Z UW1 K IY2 P ER0
+sandcastle	S AE1 N D K AE2 S AH0 L
+pinecone	P AY1 N K OW2 N
+pinecones	P AY1 N K OW2 N Z
+hiccupping	HH IH1 K AH0 P IH0 NG
+buttoning	B AH1 T AH0 N IH0 NG
+crunchier	K R AH1 N CH IY0 ER0
+windier	W IH1 N D IY0 ER0
+tastiest	T EY1 S T IY0 AH0 S T
+tidied	T AY1 D IY0 D
+tidying	T AY1 D IY0 IH0 NG
+aah	AA1
+
+# --- caught by PronunciationCoverageTest -----------------------------------
+# British form; the dictionary is American.
+maths	M AE1 TH S
+# A vowel NAMED rather than used, in the twister room's sound labels
+# ("short oo, long oo"). Said as the sound it names.
+oo	UW1

@@ -188,7 +188,7 @@
     <string name="parent_refresh_cap_title">60 Hz screen while thinking</string>
     <string name="parent_refresh_cap_hint">Halves the screen’s refresh rate while the model is writing a reply, freeing the graphics chip for it. Compare tokens-per-second in logcat with it on and off.</string>
     <string name="parent_voice_barge_title">Interrupt Tuki by talking</string>
-    <string name="parent_voice_barge_hint">While Tuki speaks, the mic listens on the echo-cancelled path and hushes him when you talk over him. May hush him from his own voice on some devices — check the TukiBarge lines in logcat, then decide.</string>
+    <string name="parent_voice_barge_hint">While Tuki speaks, the mic listens on the echo-cancelled path and stops the reply when you talk over it. May stop on Tuki\'s own voice on some devices — check the TukiBarge lines in logcat, then decide.</string>
     <string name="parent_streaming_asr_title">Streaming transcription</string>
     <string name="parent_streaming_asr_hint">Decode speech while the child is still talking, so the live preview updates as they speak instead of after a pause. Needs the streaming model in the build; Tuki still judges answers with the accurate engine.</string>
     <string name="parent_translation_title">Hebrew meaning</string>
