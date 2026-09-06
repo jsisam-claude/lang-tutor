@@ -86,12 +86,15 @@ class ClozeOrchestrator(
     private var found = 0
     private var busy = false
 
+    @Volatile private var silenced = false
+
     /** An empty round is Done, never Idle: the drill's rule, so a topic with
      *  nothing to serve shows a message rather than a spinner. */
     suspend fun startRound(round: List<ClozeItem>) {
         items = round
         firstTry = 0
         found = 0
+        silenced = false
         if (round.isEmpty()) {
             _state.value = ClozeState.Done(0, 0, 0)
             return
@@ -187,15 +190,35 @@ class ClozeOrchestrator(
         }
     }
 
+    /**
+     * Stop talking; keep the round exactly where it is.
+     *
+     * A room outlives its composition: a rotation, a sticker detour, or a
+     * chip that keys a different room all leave this one retained and
+     * silent. Cutting the voice there is right, and going [ClozeState.Idle]
+     * there is not — nothing restarts a round for a retained room, so the
+     * learner would come back to an empty pane with no control to recover.
+     * The flag also drops whatever this turn was about to say next: a
+     * resolve interrupted mid-praise must not go on to read the whole line
+     * over another room's opening.
+     */
+    fun silence() {
+        silenced = true
+        CoroutineScope(Dispatchers.Default).launch { runCatching { tts.stop() } }
+    }
+
     /** Non-suspend release for ViewModel.onCleared(): the owning scope is
      *  already cancelled by then, so the stop runs on a detached one, exactly
-     *  as the picture room's does. */
+     *  as the picture room's does. Terminal, unlike [silence] — the room is
+     *  being destroyed, so there is nothing left to come back to. */
     fun shutdown() {
+        silenced = true
         _state.value = ClozeState.Idle
         CoroutineScope(Dispatchers.Default).launch { runCatching { tts.stop() } }
     }
 
     private suspend fun speak(text: String) {
+        if (silenced) return
         runCatching { tts.speak(text, TutorLanguage.ENGLISH).collect { } }
     }
 

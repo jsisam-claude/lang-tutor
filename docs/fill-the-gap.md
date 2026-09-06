@@ -178,6 +178,51 @@ little and a flake; the third wrong tap, which leaves one option standing,
 fills the gap and reads the line but pays nothing, because paying for
 exhaustion would teach tapping, not reading.
 
+## Verification status
+
+The room was reviewed across five lenses (the deck against the corpus, the
+state machine, the screen, the tests, the content and docs), which raised 31
+findings, each then handed to three independent verifiers told to refute it.
+That pass was cut short twice by session limits, so the state is partial and
+worth writing down rather than re-deriving:
+
+| | count |
+|---|---|
+| findings with a full three-vote verdict | 19 |
+| of those, fixed and confirmed fixed | 11 |
+| of those, still open at HEAD | 8 |
+| findings never judged | 12 |
+
+**Still open**, in the verifiers' words, none of them wrong answers — the
+Hebrew still keys every item — but each one a rule that could be tighter:
+
+- a WORD gap can offer a distractor the line's Hebrew happens to name
+  (*bed/sleep*, *tub/bath*, *store/shop*): the same-gloss filter runs on the
+  answer's own gloss, not on every word the line mentions;
+- an impersonal Hebrew subject outside the אם/כש frame ("If ___ splash, the
+  floor gets wet") still keys *you* from the English alone;
+- `lemma` misses *-e* plurals, so the singular of a word already in the line
+  can appear as a distractor;
+- a name that only ever opens a line can enter a context pool and be shown
+  lowercase inside another;
+- a round can come back with five items rather than six: always for the
+  numbers pack at Levels 1–2, and for three Level 1 themes on some seeds;
+- the PACK compound rule fires when the next word is a verb, so a natural
+  animal line loses its icon and falls to a poorer WORD pool;
+- a chip change silences the outgoing room but a resolve already past its
+  praise can still start one more line;
+- `ClozeDeckTest` pins the same-class promise for the three kinds, but six
+  mutants that break it in narrower ways still leave the suite green.
+
+**One fix was worse than the bug it cured.** The first attempt at silencing
+an outgoing room called `shutdown()` from `onDispose`. That does stop the
+voice, but it is terminal, and nothing restarts a round for a room the
+ViewModel store still holds — so a rotation, a chip tapped twice, or the
+sticker detour that Level 1 earns would each have returned the learner to an
+empty pane with no control to recover. Two verifiers found it independently.
+`ClozeOrchestrator.silence()` replaced it: the voice is cut and any line
+queued behind it is dropped, while the round stays exactly where it was.
+
 ## Known limits
 
 - **Synonyms above Level 3.** The same-meaning check reads the align cues,

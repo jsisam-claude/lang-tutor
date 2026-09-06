@@ -117,10 +117,13 @@ class ClozeViewModel(
     fun onNext() = room.onNext()
     fun onSentenceTapped() = room.onSentenceTapped()
 
-    /** Silence this room now. A chip change keys a NEW ViewModel while this
-     *  one stays retained until the screen leaves, so its voice would
-     *  otherwise carry on over the next room's intro. */
-    fun stop() = room.shutdown()
+    /** Silence this room now, WITHOUT ending its round. A chip change keys a
+     *  new room while this one stays retained until the screen leaves, so
+     *  its voice would otherwise carry on over the next room's intro. But a
+     *  rotation and a sticker detour leave the composition by the same door,
+     *  and a round ENDED there could never be resumed — nothing restarts one
+     *  for a retained room, so the learner would come back to an empty pane. */
+    fun stop() = room.silence()
 
     override fun onCleared() = room.shutdown()
 }

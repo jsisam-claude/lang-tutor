@@ -187,6 +187,30 @@ class ClozeOrchestratorTest {
     }
 
     @Test
+    fun `silence cuts the voice but keeps the round to come back to`() = runTest {
+        val f = Fixture(this)
+        f.room.startRound(items)
+        advanceUntilIdle()
+        f.room.onOptionPicked(1)
+        advanceTimeBy(10) // inside the praise, before the line is read
+        f.room.silence()
+        advanceUntilIdle()
+        // The line that was queued behind the praise is dropped, so it can
+        // never land on top of whatever room the learner moved to.
+        assertFalse("I see a bee." in f.spoken())
+        // And the round survives: a rotation or a sticker detour comes back
+        // to the item, not to an empty pane.
+        val s = f.room.state.value as ClozeState.Revealed
+        assertEquals(items[0], s.item)
+        assertEquals(ClozeOutcome.FIRST_TRY, s.outcome)
+        // Silence is not deafness: the next round speaks again.
+        f.room.startRound(items)
+        advanceUntilIdle()
+        assertEquals(ClozeOrchestrator.INTRO, f.spoken().last())
+        f.collector.cancel()
+    }
+
+    @Test
     fun `shutdown goes idle`() = runTest {
         val f = Fixture(this)
         f.room.startRound(items)
