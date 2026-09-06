@@ -100,6 +100,67 @@ class ClozeDeckTest {
     }
 
     @Test
+    fun `a word gap's distractors keep the answer's whole context, not half of it`() {
+        // Rebuilt here from the bank rather than read off the deck, so a
+        // rule that quietly drops half the context — the left neighbour, the
+        // shape, the article, the adjective/noun split — fails HERE and not
+        // on a device. Each block below is one promise docs/fill-the-gap.md
+        // makes about what "same class" means.
+        val attested = HashSet<Triple<String, ClozeClasses.Shape, String>>()
+        val predicative = HashSet<String>()
+        for (s in sentences) {
+            val words = ClozeDeck.words(s.en)
+            val keys = words.map { ClozeDeck.key(it).let { k -> if (k == "an") "a" else k } }
+            for (i in keys.indices) {
+                val shape = ClozeClasses.shapeOf(keys[i], words[i].first().isUpperCase(), i == 0)
+                val left = if (i == 0) "" else keys[i - 1]
+                attested += Triple(left, shape, keys[i])
+                val ends = i == words.lastIndex || words[i].last() in ".,!?;:"
+                if (left in ClozeClasses.BE_FORMS && ends) predicative += keys[i]
+            }
+        }
+        for (s in served) {
+            val words = ClozeDeck.words(s.en)
+            // a/an is one lexeme, exactly as the deck keys it.
+            val keys = keysOf(s).map { if (it == "an") "a" else it }
+            for (slot in deck.slots(s)) {
+                val where = "${s.id} @${slot.index} '${slot.answer}'"
+                val left = if (slot.index == 0) "" else keys[slot.index - 1]
+                val nextShape = words.getOrNull(slot.index + 1)?.let {
+                    ClozeClasses.shapeOf(ClozeDeck.key(it), false, false)
+                }
+                if (slot.kind == ClozeKind.WORD) {
+                    val shape = ClozeClasses.shapeOf(slot.answer, false, false)
+                    for (d in slot.pool) {
+                        // The LEFT neighbour is half the context; a pool
+                        // built from the right half alone would pass a
+                        // shape check and still read wrongly.
+                        assertTrue("$where: '$d' never follows '$left'", Triple(left, shape, d) in attested)
+                        // An adjective is not a noun: the bank's own
+                        // "is warm" attestation is the only tag there is.
+                        assertEquals("$where: '$d' crosses the adjective line", slot.answer in predicative, d in predicative)
+                    }
+                }
+                // A visible "a"/"an" must not name the answer's first
+                // letter. Noun gaps only, as the doc says: an adverb gap
+                // after an article ("a ___ big cake") takes its article from
+                // the noun further along, not from itself.
+                if (left == "a" && !slot.joinArticle && slot.kind != ClozeKind.CLOSED) {
+                    val article = ClozeDeck.key(words[slot.index - 1])
+                    for (d in slot.pool) {
+                        assertEquals("$where: '$article $d'", article, ClozeClasses.articleFor(d))
+                    }
+                }
+                // Determiners and quantifiers agree in number with what follows.
+                if (slot.closedKind in ClozeClasses.DETERMINERS || slot.closedKind == Kind.QUANTIFIER) {
+                    val banned = if (nextShape == ClozeClasses.Shape.S) ClozeClasses.SINGULAR_ONLY else ClozeClasses.PLURAL_ONLY
+                    for (d in slot.pool) assertFalse("$where: '$d' disagrees in number", d in banned)
+                }
+            }
+        }
+    }
+
+    @Test
     fun `word distractors are words the learner has met`() {
         for (s in served) for (slot in deck.slots(s)) {
             if (slot.kind == ClozeKind.PACK) continue
@@ -409,6 +470,27 @@ class ClozeDeckTest {
         for (item in round) {
             val keys = item.options.map { ClozeDeck.key(it.substringAfterLast(' ')) }
             for (g in ClozeClasses.SAME_MEANING) assertTrue("${item.sentence.id}: $keys", keys.count { it in g } <= 1)
+        }
+    }
+
+    @Test
+    fun `a round always comes back full`() {
+        // A short round is the visible cost of the variety rules stalling,
+        // and it used to happen for the numbers pack at every Level and for
+        // nine themes at Level 1. Every source, every Level, many seeds.
+        for (level in 1..7) {
+            for (seed in 0 until 8) {
+                assertEquals("whole bank L$level seed $seed", ClozeDeck.ROUND_SIZE, deck.round(ClozeSource.All, level, Random(seed)).size)
+            }
+            for (theme in served.map { it.theme }.distinct()) {
+                val r = deck.round(ClozeSource.Theme(theme), level, Random(level))
+                assertEquals("$theme L$level", ClozeDeck.ROUND_SIZE, r.size)
+            }
+            for (pack in listOf("numbers", "shapes", "animals")) {
+                val r = deck.round(ClozeSource.Pack(pack), level, Random(level))
+                assertEquals("$pack L$level", ClozeDeck.ROUND_SIZE, r.size)
+                assertTrue(r.all { it.kind == ClozeKind.PACK })
+            }
         }
     }
 

@@ -149,6 +149,12 @@ object ClozeClasses {
         setOf("little", "small"), setOf("big", "large"), setOf("bird", "duck"),
         // Hebrew has no neuter: his/its are both שלו, him/it both אותו.
         setOf("his", "its"), setOf("him", "it"),
+        // One Hebrew word, two English ones, and no cue anywhere in the bank
+        // to derive it from: אמבטיה, חנות, תמונה, ידיים. Found by reading
+        // generated items, which is the only way these surface — the same
+        // way the pairs above were.
+        setOf("bath", "tub"), setOf("shop", "store"),
+        setOf("picture", "photo"), setOf("hands", "arms"),
     )
 
     /** Number agreement for determiners and quantifiers: "these cat" is a

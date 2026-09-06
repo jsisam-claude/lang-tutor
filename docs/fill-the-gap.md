@@ -109,15 +109,17 @@ exist there):
 
 | Level | lines with a gap | gaps per line | PACK / WORD / CLOSED |
 |---|---|---|---|
-| 1 | 416 of 432 | 2.4 | 112 / 586 / 335 |
-| 2 | 420 of 432 | 3.1 | 62 / 539 / 753 |
-| 3 | 428 of 432 | 3.6 | 54 / 661 / 847 |
-| 4–7 | 431–432 of 432 | 4.3 → 5.3 | ~68 / 695–907 / 1,052–1,317 |
+| 1 | 416 of 432 | 2.4 | 112 / 585 / 335 |
+| 2 | 421 of 432 | 3.1 | 68 / 536 / 751 |
+| 3 | 426 of 432 | 3.5 | 61 / 615 / 847 |
+| 4–7 | 430–431 of 432 | 4.3 → 5.1 | ~70 / 673–829 / 1,013–1,317 |
 
 The lines with no gap are one- and two-word exclamations ("Snow!", "Hot
 soup!") and questions whose only function word is decided by agreement
-("Are you drinking tea?"). Every theme fills a six-item round at every
-Level; the thinnest window is food-and-cooking at Level 1 with ten lines.
+("Are you drinking tea?"). Every round comes back with six items, from
+every source at every Level — a theme that stalls on the distinct-answer
+rule is topped up from the rest of the window, and a thin pack repeats an
+answer rather than serving five, both pinned by test.
 The animals pack serves 103 lines at Level 1 and 380 at Level 7; numbers
 41 → 106; shapes 21 → 53.
 
@@ -183,45 +185,49 @@ exhaustion would teach tapping, not reading.
 The room was reviewed across five lenses (the deck against the corpus, the
 state machine, the screen, the tests, the content and docs), which raised 31
 findings, each then handed to three independent verifiers told to refute it.
-That pass was cut short twice by session limits, so the state is partial and
-worth writing down rather than re-deriving:
+Nineteen reached a full three-vote verdict before the pass ran out: eleven
+were already fixed, and eight were still open. All eight are now closed, and
+what closed them is worth stating, because six were rules and only two were
+lists:
 
-| | count |
-|---|---|
-| findings with a full three-vote verdict | 19 |
-| of those, fixed and confirmed fixed | 11 |
-| of those, still open at HEAD | 8 |
-| findings never judged | 12 |
+- **Bare-ב synonyms the Hebrew names.** Gloss keys are now peeled all the way
+  down to the bare word and kept at two letters, so הים, בים and לים all
+  reduce to ים and *sea*/*beach* are seen to collide — which the old
+  three-letter floor missed for exactly the shortest, commonest words (ים,
+  יד, לב). Four pairs the bank gives no cue for anywhere — *bath/tub*,
+  *shop/store*, *picture/photo*, *hands/arms* — joined the authored
+  same-meaning list, the same way *little/small* did.
+- **Impersonal Hebrew, both kinds.** The conditional test no longer treats a
+  י-initial present participle (יושבים) as a future tense; a Hebrew plural
+  verb ends in ־ים and the future ends in ־ו, so the only form to exclude is
+  a definite plural noun. And the modal impersonal is caught at last:
+  חייבים, כדאי, אסור and their kin take an infinitive and no subject, so
+  "You must wear a helmet" over חייבים לחבוש is no longer a subject gap.
+  All twelve lines the review named now yield none.
+- **A line's own plural.** "The leaves are on the path" no longer offers
+  *leaf*. In the word pool only, because the naive plural of *i* is *is*.
+- **Names in pools.** A key the bank capitalises inside a sentence at least
+  as often as it writes it lower case is a name and never joins another
+  line's pool. *Mom* is written lower case exactly once in 3,108 lines
+  against 24 capitalised, so it no longer appears as "mom" mid-sentence —
+  while the eleven lines that name Mom keep their gap.
+- **Short rounds.** A theme now always has the rest of the window behind it,
+  and a round that still cannot fill six takes a last pass with the variety
+  rules dropped: six items that repeat an answer teach more than five.
+- **Pack compounds.** A real compound repeats — the bank writes "fish tank"
+  more than once — so that is the test, rather than "the next word is not a
+  verb". "Did the lion eat the meat?" and "Bees make honey" have their icons
+  back; *fish tank*, *teddy bear* and the town *square* stay out.
 
-**Still open**, in the verifiers' words, none of them wrong answers — the
-Hebrew still keys every item — but each one a rule that could be tighter:
+The eighth was the tests themselves: four mutations that broke the
+same-class promise still passed. Dropping the left half of a word's context,
+the adjective/noun split, the visible-article guard and determiner number
+agreement now each fail by name, checked against an index the test rebuilds
+from the bank rather than reads off the deck.
 
-- a WORD gap can offer a distractor the line's Hebrew happens to name
-  (*bed/sleep*, *tub/bath*, *store/shop*): the same-gloss filter runs on the
-  answer's own gloss, not on every word the line mentions;
-- an impersonal Hebrew subject outside the אם/כש frame ("If ___ splash, the
-  floor gets wet") still keys *you* from the English alone;
-- `lemma` misses *-e* plurals, so the singular of a word already in the line
-  can appear as a distractor;
-- a name that only ever opens a line can enter a context pool and be shown
-  lowercase inside another;
-- a round can come back with five items rather than six: always for the
-  numbers pack at Levels 1–2, and for three Level 1 themes on some seeds;
-- the PACK compound rule fires when the next word is a verb, so a natural
-  animal line loses its icon and falls to a poorer WORD pool;
-- a chip change silences the outgoing room but a resolve already past its
-  praise can still start one more line;
-- `ClozeDeckTest` pins the same-class promise for the three kinds, but six
-  mutants that break it in narrower ways still leave the suite green.
-
-**One fix was worse than the bug it cured.** The first attempt at silencing
-an outgoing room called `shutdown()` from `onDispose`. That does stop the
-voice, but it is terminal, and nothing restarts a round for a room the
-ViewModel store still holds — so a rotation, a chip tapped twice, or the
-sticker detour that Level 1 earns would each have returned the learner to an
-empty pane with no control to recover. Two verifiers found it independently.
-`ClozeOrchestrator.silence()` replaced it: the voice is cut and any line
-queued behind it is dropped, while the round stays exactly where it was.
+**Twelve findings were never judged.** The verification was cut short twice
+by session limits, so those are neither confirmed nor refuted; the workflow
+that would settle them is saved and resumable.
 
 ## Known limits
 
@@ -231,10 +237,8 @@ queued behind it is dropped, while the round stays exactly where it was.
   Level 5 line is not. Measured where checkable, an unfiltered draw would
   contain such a pair in 1–2% of items. Cues for higher Levels widen the net
   for free; an authored synonym list is the other route.
-- **Impersonal Hebrew elsewhere.** The אם/כש rule above catches the
-  conditional frame; an impersonal plural in another position ("___ must
-  listen when the teacher speaks" over חייבים להקשיב) still reads as a
-  *you* gap decided by the English alone. Rare.
+- **Impersonal Hebrew in a shape not yet seen.** The conditional and the
+  modal are both caught; a third construction nobody has met would not be.
 - **he_f.** 623 lines carry a feminine variant and no profile field selects
   it; the room shows the masculine `he` as the key, exactly as the drill does.
 - **Grammar-eliminable noise.** What is left after the audit is the
