@@ -319,7 +319,14 @@ class WhisperAsrEngine(
             t.stream?.let { live ->
                 t.stream = null
                 runCatching { live.finish() }
-                    .onSuccess { if (it.isNotBlank()) Log.i(TAG, "stream preview ended: \"$it\"") }
+                    // Its LENGTH, never its text. logcat is readable by adb,
+                    // outlives the app and is the one place the learner's sentence
+                    // can escape a device that is otherwise offline; what this
+                    // line is for is "did the preview decode anything at all",
+                    // and a character count answers that (docs/privacy.md).
+                    .onSuccess {
+                        if (it.isNotBlank()) Log.i(TAG, "stream preview ended (${it.length} chars)")
+                    }
                 runCatching { live.close() }
             }
         } else {

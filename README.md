@@ -5,7 +5,9 @@ Pixel-class Android hardware.** Complete loop: *speech in → on-device LLM → 
 out*, plus a text tutor for reading/writing. The base install (models included)
 **works fully offline forever**; optional quality packs (bigger models, more
 voices, more content) download **only with explicit user approval — no automatic
-update checks, nothing ever uploaded**.
+update checks, nothing ever uploaded**. Offline is not the whole promise:
+what the microphone hears is never written down either, not even to logcat —
+see [docs/privacy.md](docs/privacy.md).
 
 > **Headline feasibility verdict (July 2026): feasible today on Pixel 9/10-class
 > devices.** The full stack — Gemma 4 E2B (Apache 2.0) on LiteRT-LM, kid-tuned
@@ -34,6 +36,7 @@ update checks, nothing ever uploaded**.
 | [docs/fill-the-gap.md](docs/fill-the-gap.md) | The sentence-completion room: one gap, four same-class choices, the line's own Hebrew as the key that makes the answer unique. Three kinds of gap (pack word with its icon, open word by context and shape, function word from a fourteen-class table), what is authored versus derived, the measured yield per Level, and the known limits. |
 | [docs/character-voices.md](docs/character-voices.md) | Character voices: a Kokoro voice is a 522 KB style table, style tables interpolate, so a new voice is a recipe rather than a download. The Captain, what a character may and may not touch, and why there is no real Scottish accent in the bundled set. |
 | [docs/feature-ideas.md](docs/feature-ideas.md) | The scouted list: 55 ideas from the reading and language-tutoring landscape, 53 verified against this code. The finding that mattered — the offline constraint rules almost nothing out, and one dead class (`BktModel`/`SkillState`, no writer since P1) is what a fifth of the list is actually waiting on. |
+| [docs/privacy.md](docs/privacy.md) | Where what the microphone hears actually goes. Offline covers the network; it does not cover logcat, which is readable over adb and outlives the app — so the rule is narrower: only measurements of speech are written down, never speech. The one leak the audit found, what the other 83 log statements carry, and the two rules `MicPrivacyTest` scans every source file for. |
 | [docs/learner-levels.md](docs/learner-levels.md) | The audience plan: proficiency Levels 1–7 for non-native speakers of all ages — the per-level dials (register, reply budget, Hebrew scaffolding fade), the migration from the old age-flavored tracks, and the original track reasoning. |
 | [scripts/](scripts/) | Tooling to fetch the large binaries that are not committed (models, native libs, voice data) and to sideload them onto a phone — all SHA-256-pinned. [`scripts/README.md`](scripts/README.md) says which to run when. |
 
