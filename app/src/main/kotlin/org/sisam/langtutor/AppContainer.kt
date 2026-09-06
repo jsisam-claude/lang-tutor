@@ -58,8 +58,10 @@ import org.sisam.langtutor.packs.ramTierGb
 import org.sisam.langtutor.profile.FlaggedReply
 import org.sisam.langtutor.profile.JsonFileProfileStore
 import org.sisam.langtutor.profile.JsonFileReportStore
+import org.sisam.langtutor.profile.LearnerProfile
 import org.sisam.langtutor.profile.LearnerProfileStore
 import org.sisam.langtutor.profile.ReportStore
+import org.sisam.langtutor.profile.SkillTracker
 import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.PronunciationScorer
 import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
@@ -73,7 +75,6 @@ import org.sisam.langtutor.ui.reward.RewardBus
 import org.sisam.langtutor.ui.reward.RewardKind
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import org.sisam.langtutor.profile.LearnerProfile
 import org.sisam.langtutor.speech.HebrewTransliteration
 import org.sisam.langtutor.speech.KokoroPhonemizer
 import org.sisam.langtutor.tutor.LevelConfig
@@ -940,6 +941,21 @@ class AppContainer private constructor(context: Context) {
             profile = profile,
             scope = scope,
         )
+    }
+
+    /** The one place an answer becomes evidence about a skill; shared so the
+     *  rooms cannot disagree about what counts (docs/knowledge-tracing.md). */
+    val skills = SkillTracker()
+
+    /**
+     * How well the learner knows each skill right now, for a room about to
+     * choose what to practise. A snapshot rather than a flow: a round is
+     * drawn once, and a value that changed underneath it mid-round would
+     * reorder nothing already on screen.
+     */
+    fun masteryLens(): (String) -> Double {
+        val profile = profile.snapshot()
+        return { id -> skills.mastery(profile, id) }
     }
 
     @Volatile private var clozeDeckCache: ClozeDeck? = null

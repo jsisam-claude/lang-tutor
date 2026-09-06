@@ -13,6 +13,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.sisam.langtutor.content.PhraseSentence
 import org.sisam.langtutor.profile.InMemoryProfileStore
+import org.sisam.langtutor.profile.Skill
 import org.sisam.langtutor.speech.FakeTtsEngine
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -183,6 +184,26 @@ class ClozeOrchestratorTest {
         assertTrue(f.room.state.value is ClozeState.Asking)
         assertTrue(f.events.isEmpty())
         assertEquals(listOf(ClozeOrchestrator.INTRO), f.spoken())
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `a gap is evidence about the line's topic and grammar`() = runTest {
+        val f = Fixture(this)
+        f.room.startRound(items)
+        advanceUntilIdle()
+        f.room.onOptionPicked(1) // first try
+        advanceUntilIdle()
+        val after = f.profile.current().skills
+        assertEquals(setOf(Skill.theme("test"), Skill.frame("test")), after.keys)
+        assertTrue("a clean answer should read as knowing", after.getValue(Skill.theme("test")).pKnown > 0.1)
+        // The next item is found only by elimination, which is evidence of
+        // the other thing — the same skills, moving the other way.
+        f.room.onNext()
+        repeat(3) { i -> f.room.onOptionPicked(listOf(1, 2, 3)[i]); advanceUntilIdle() }
+        val shown = f.profile.current().skills.getValue(Skill.theme("test"))
+        assertEquals(2, shown.attempts)
+        assertTrue("elimination should not read as knowing: ${shown.pKnown}", shown.pKnown < after.getValue(Skill.theme("test")).pKnown)
         f.collector.cancel()
     }
 

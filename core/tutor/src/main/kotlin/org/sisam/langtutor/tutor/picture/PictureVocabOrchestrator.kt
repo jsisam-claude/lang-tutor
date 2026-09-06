@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.profile.LearnerProfileStore
+import org.sisam.langtutor.profile.Skill
+import org.sisam.langtutor.profile.SkillTracker
 import org.sisam.langtutor.speech.TtsEngine
 import org.sisam.langtutor.speech.TutorLanguage
 
@@ -74,6 +76,8 @@ class PictureVocabOrchestrator(
     private val tts: TtsEngine,
     private val profile: LearnerProfileStore,
     private val scope: CoroutineScope,
+    /** Where an answer becomes evidence about a skill (docs/knowledge-tracing.md). */
+    private val tracker: SkillTracker = SkillTracker(),
 ) {
 
     private val _state = MutableStateFlow<PictureState>(PictureState.Idle)
@@ -145,7 +149,13 @@ class PictureVocabOrchestrator(
                     val clean = s.wrongTaps.isEmpty()
                     if (clean) firstTry++
                     _events.emit(PictureEvent.Correct(firstTry = clean))
-                    profile.update { it.copy(xp = it.xp + XP_PER_CORRECT) }
+                    // Finding the card first time is what says the word is
+                    // known; finding it after two wrong taps says the other
+                    // thing, and both are worth recording.
+                    val skills = listOf(Skill.word(s.cards[s.targetIndex].word))
+                    profile.update {
+                        tracker.observe(it.copy(xp = it.xp + XP_PER_CORRECT), skills, correct = clean)
+                    }
                     speak(PRAISES[s.asked % PRAISES.size])
                     if (s.asked + 1 < s.total) {
                         ask(s.cards, s.asked + 1)

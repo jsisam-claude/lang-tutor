@@ -768,22 +768,27 @@ class ClozeDeck(
         random: Random,
         size: Int = ROUND_SIZE,
         avoid: Map<String, Int> = emptyMap(),
+        /**
+         * How well the learner knows a skill id, 0..1 (`SkillTracker`).
+         * The default knows nothing about anybody, which is exactly the old
+         * behaviour — a plain shuffle.
+         */
+        mastery: (String) -> Double = { 0.0 },
     ): List<ClozeItem> {
+        fun order(entries: List<Entry>) = entries.shuffled(random).sortedBy { weakestBand(it.sentence, mastery) }
         val own = entries(source, learnerLevel)
         val candidates = when (source) {
             is ClozeSource.Theme -> {
                 // The theme first and the rest of the window behind it: a
                 // theme with a dozen lines can still stall on the distinct-
                 // answer rule, and a short round is the visible cost.
-                own.shuffled(random) + entries(ClozeSource.All, learnerLevel)
-                    .filter { it.sentence.theme != source.id }
-                    .shuffled(random)
+                order(own) + order(entries(ClozeSource.All, learnerLevel).filter { it.sentence.theme != source.id })
             }
             is ClozeSource.Pack -> {
                 val (fromBank, fromTemplate) = own.partition { !it.sentence.id.startsWith("pack:") }
-                fromBank.shuffled(random) + fromTemplate.shuffled(random)
+                order(fromBank) + order(fromTemplate)
             }
-            ClozeSource.All -> own.shuffled(random)
+            ClozeSource.All -> order(own)
         }
         val picked = mutableListOf<ClozeItem>()
         val usedText = mutableSetOf<String>()
@@ -912,6 +917,22 @@ class ClozeDeck(
         return variants.any { v -> stems.any { s -> v.startsWith(s) } }
     }
 
+    /**
+     * Which band of "known" a line sits in, by its weakest skill.
+     *
+     * Bands rather than the raw estimate, and a shuffle underneath: sorting
+     * on the number itself would serve the same handful of lines in the same
+     * order every visit, which is the opposite of practice. Four bands are
+     * enough to put what the learner is worst at in front of them while
+     * leaving the choice inside a band to chance.
+     */
+    private fun weakestBand(sentence: PhraseSentence, mastery: (String) -> Double): Int {
+        val skills = DrillDeck.skillsOf(sentence)
+        if (skills.isEmpty()) return MASTERY_BANDS
+        val worst = skills.minOf(mastery)
+        return (worst * MASTERY_BANDS).toInt().coerceIn(0, MASTERY_BANDS)
+    }
+
     private fun hebrewMentions(he: String, word: PackWord): Boolean {
         val forms = ClozeClasses.HEBREW_FORMS[word.en] ?: listOf(word.he.substringBefore(' '))
         val stems = forms.map { normaliseHebrew(it.substringBefore(' ')).take(3) }.filter { it.isNotEmpty() }
@@ -924,6 +945,10 @@ class ClozeDeck(
         const val OPTIONS = 4
         const val MIN_DISTRACTORS = OPTIONS - 1
         const val MAX_PER_KIND = 3
+
+        /** Coarse enough that a band holds many lines, so the draw inside it
+         *  is still a draw. */
+        const val MASTERY_BANDS = 4
         const val BLANK = "____"
 
         /** Their Hebrew is an equivalent saying, not a translation of the

@@ -11,6 +11,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.sisam.langtutor.profile.InMemoryProfileStore
+import org.sisam.langtutor.profile.Skill
 import org.sisam.langtutor.speech.FakeTtsEngine
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -24,6 +25,27 @@ class PictureVocabOrchestratorTest {
         val collector = scope.launch(UnconfinedTestDispatcher(scope.testScheduler)) {
             room.events.collect { events += it }
         }
+    }
+
+    @Test
+    fun `finding a card is evidence about that word, and fumbling it is too`() = runTest {
+        val f = Fixture(this)
+        f.room.startRound(cards, Random(1))
+        advanceUntilIdle()
+        repeat(3) { f.room.onNext(); advanceUntilIdle() }
+        val asking = f.room.state.value as PictureState.Asking
+        val target = asking.cards[asking.targetIndex].word
+        // A wrong tap first, so this word is evidence of NOT knowing.
+        f.room.onAnswerPicked((asking.cards.indices - asking.targetIndex).first())
+        advanceUntilIdle()
+        f.room.onAnswerPicked(asking.targetIndex)
+        advanceUntilIdle()
+        val state = f.profile.current().skills.getValue(Skill.word(target))
+        assertEquals(1, state.attempts)
+        assertTrue("a fumbled word should not read as known: ${state.pKnown}", state.pKnown < 0.2)
+        // Only the word that was asked about, never the other cards.
+        assertEquals(setOf(Skill.word(target)), f.profile.current().skills.keys)
+        f.collector.cancel()
     }
 
     private val cards = listOf(

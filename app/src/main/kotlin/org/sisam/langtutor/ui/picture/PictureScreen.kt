@@ -45,6 +45,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import org.sisam.langtutor.content.PicturePack
+import org.sisam.langtutor.profile.Skill
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.Activity
@@ -88,11 +89,18 @@ class PictureViewModel(
      * a small random handful (3-5 is what a learner holds — see the room
      * doc), fresh every round because recognition thrives on variety.
      */
-    private suspend fun freshCards(): List<PictureCard> = candidates()
-        .filter { PictureArt.hasArt(it.word) }
-        .distinctBy { it.word }
-        .shuffled(Random.Default)
-        .take(SET_SIZE)
+    private suspend fun freshCards(): List<PictureCard> {
+        // Weakest first, in coarse bands so the draw inside a band is still a
+        // draw: the words this learner has found worst lead the set, and a
+        // word never met leads everything (docs/knowledge-tracing.md).
+        val mastery = container.masteryLens()
+        return candidates()
+            .filter { PictureArt.hasArt(it.word) }
+            .distinctBy { it.word }
+            .shuffled(Random.Default)
+            .sortedBy { (mastery(Skill.word(it.word)) * MASTERY_BANDS).toInt() }
+            .take(SET_SIZE)
+    }
 
     /**
      * A chosen pack, or the curriculum's own vocabulary when none is chosen.
@@ -134,6 +142,7 @@ class PictureViewModel(
 
     companion object {
         const val SET_SIZE = 4
+        const val MASTERY_BANDS = 4
     }
 }
 

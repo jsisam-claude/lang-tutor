@@ -103,7 +103,9 @@ class ClozeViewModel(
     private suspend fun startRound() {
         val level = container.profile.snapshot().effectiveLevel
         val items = runCatching {
-            container.clozeDeck().round(source, level, Random.Default, avoid = recent)
+            // Weakest first: the topics and grammar patterns this learner
+            // has answered worst lead the round (docs/knowledge-tracing.md).
+            container.clozeDeck().round(source, level, Random.Default, avoid = recent, mastery = container.masteryLens())
         }.getOrDefault(emptyList())
         for (item in items) recent[item.sentence.id] = item.blank
         room.startRound(items)

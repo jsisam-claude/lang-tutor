@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.profile.LearnerProfileStore
+import org.sisam.langtutor.profile.SkillTracker
 import org.sisam.langtutor.speech.AsrEngine
 import org.sisam.langtutor.speech.AsrResult
 import org.sisam.langtutor.speech.PronunciationScore
@@ -82,6 +83,8 @@ class DrillOrchestrator(
     private val scorer: PronunciationScorer,
     private val profile: LearnerProfileStore,
     private val scope: CoroutineScope,
+    /** Where an answer becomes evidence about a skill (docs/knowledge-tracing.md). */
+    private val tracker: SkillTracker = SkillTracker(),
     /**
      * The voice for PERSONALITY lines — praise and encouragement — which the
      * app points at the parrot-flavored view of the same engine. Defaults to
@@ -258,13 +261,20 @@ class DrillOrchestrator(
             if (WordMatch.matches(at.item.text, result.transcript)) {
                 correct++
                 _events.emit(DrillEvent.Correct(tries + 1))
-                profile.update { it.copy(xp = it.xp + XP_PER_CORRECT) }
+                // Saying it right FIRST TIME is the evidence; a line landed
+                // on the third try is evidence of the opposite, recorded
+                // below where the round gives up on it.
+                val clean = tries == 0
+                profile.update {
+                    tracker.observe(it.copy(xp = it.xp + XP_PER_CORRECT), at.item.skills, correct = clean)
+                }
                 cheer(PRAISES[at.index % PRAISES.size])
                 advance()
             } else {
                 tries++
                 if (tries >= MAX_TRIES) {
                     _events.emit(DrillEvent.Nearly)
+                    profile.update { tracker.observe(it, at.item.skills, correct = false) }
                     cheer(GOOD_TRY)
                     advance()
                 } else {

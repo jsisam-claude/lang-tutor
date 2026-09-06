@@ -6,6 +6,7 @@ import org.sisam.langtutor.content.AlignCue
 import org.sisam.langtutor.content.CurriculumUnit
 import org.sisam.langtutor.content.PhraseSentence
 import org.sisam.langtutor.content.Twister
+import org.sisam.langtutor.profile.Skill
 
 /** Difficulty is sentence LENGTH, which a pre-reader can feel even though
  *  they cannot read the label. */
@@ -31,6 +32,14 @@ data class DrillItem(
      * renders the meaning row unlit, which is the honest outcome.
      */
     val align: List<AlignCue>? = null,
+    /**
+     * What answering this line is evidence ABOUT (`Skill` ids): the
+     * phrasebank's theme and grammar frame, a twister's target sound, a
+     * curriculum word. Empty where the line came from a generator, which
+     * knows nothing to attribute — an unattributed answer is simply not
+     * evidence, and the tracker skips it.
+     */
+    val skills: List<String> = emptyList(),
 )
 
 /**
@@ -71,7 +80,8 @@ object DrillDeck {
                 // Dedupe on the words, not the spelling — "Red!" and "red"
                 // are the same drill item.
                 if (!seen.add(WordMatch.tokens(line))) continue
-                out += DrillItem(line, level, hebrew)
+                val skills = (activity as? Activity.Vocab)?.let { listOf(Skill.word(it.word)) }.orEmpty()
+                out += DrillItem(line, level, hebrew, skills = skills)
             }
         }
         return out
@@ -99,7 +109,7 @@ object DrillDeck {
             .filter { theme == null || it.theme == theme }
             .filter { it.level in levelWindow(learnerLevel) }
             .filter { classify(it.en) == level }
-            .map { DrillItem(it.en, level, it.he, it.align) }
+            .map { DrillItem(it.en, level, it.he, it.align, skillsOf(it)) }
     }
 
     fun phraseRound(
@@ -108,8 +118,19 @@ object DrillDeck {
         learnerLevel: Int,
         random: Random,
         theme: String? = null,
+        /**
+         * How well the learner knows a skill id, 0..1 (`SkillTracker`), so a
+         * round leads with the topic and the grammar they are worst at. The
+         * default knows nothing about anybody: a plain shuffle, as before.
+         */
+        mastery: (String) -> Double = { 0.0 },
     ): List<DrillItem> =
-        phrasePool(sentences, level, learnerLevel, theme).shuffled(random).take(sizeFor(level))
+        phrasePool(sentences, level, learnerLevel, theme)
+            .shuffled(random)
+            // Bands, not the raw estimate: sorting on the number would serve
+            // the same lines in the same order every visit.
+            .sortedBy { item -> item.skills.minOfOrNull(mastery)?.let { (it * MASTERY_BANDS).toInt() } ?: MASTERY_BANDS }
+            .take(sizeFor(level))
 
     /**
      * The tongue twisters' contribution: every line for one target sound, in
@@ -122,7 +143,15 @@ object DrillDeck {
      * drop the rung the next one stands on.
      */
     fun twisterRound(twisters: List<Twister>): List<DrillItem> =
-        twisters.map { DrillItem(it.en, classify(it.en), it.he, it.align) }
+        twisters.map { DrillItem(it.en, classify(it.en), it.he, it.align, listOf(Skill.sound(it.sound))) }
+
+    /** A phrasebank line teaches its topic and its grammar pattern, and is
+     *  evidence about both. The frame is the finer of the two: "going-to" is
+     *  something a learner is good or bad at, a single sentence is not. */
+    fun skillsOf(sentence: PhraseSentence): List<String> = buildList {
+        if (sentence.theme.isNotBlank()) add(Skill.theme(sentence.theme))
+        if (sentence.frame.isNotBlank()) add(Skill.frame(sentence.frame))
+    }
 
     /**
      * Which Levels a room may draw from for a learner: their own and the one
@@ -130,6 +159,10 @@ object DrillDeck {
      * the fill-the-gap room, so the two cannot drift apart.
      */
     fun levelWindow(learnerLevel: Int): IntRange = (learnerLevel - 1).coerceAtLeast(1)..learnerLevel
+
+    /** Coarse enough that a band holds many lines, so the draw inside it is
+     *  still a draw. */
+    const val MASTERY_BANDS = 4
 
     /** Longer sentences are more work per item, so rounds shrink with level. */
     fun sizeFor(level: DrillLevel): Int = when (level) {

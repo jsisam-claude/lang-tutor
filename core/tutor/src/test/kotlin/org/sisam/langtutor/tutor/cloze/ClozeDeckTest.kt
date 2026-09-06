@@ -12,6 +12,7 @@ import org.sisam.langtutor.content.PhraseSentence
 import org.sisam.langtutor.content.PicturePack
 import org.sisam.langtutor.content.ResourcePhrasebankRepository
 import org.sisam.langtutor.content.ResourcePicturePackRepository
+import org.sisam.langtutor.profile.Skill
 import org.sisam.langtutor.tutor.cloze.ClozeClasses.Kind
 
 /**
@@ -492,6 +493,22 @@ class ClozeDeckTest {
                 assertTrue(r.all { it.kind == ClozeKind.PACK })
             }
         }
+    }
+
+    @Test
+    fun `a round leads with what the learner is worst at`() {
+        // Every theme known well except one; that one should lead the round
+        // far more often than chance would give it.
+        val weak = "market"
+        val lens = { id: String -> if (id == Skill.theme(weak)) 0.0 else 0.9 }
+        var led = 0
+        for (seed in 0 until 40) {
+            val r = deck.round(ClozeSource.All, 4, Random(seed), mastery = lens)
+            if (r.first().sentence.theme == weak) led++
+        }
+        assertTrue("the weakest theme led $led of 40 rounds", led >= 30)
+        // And with no history at all the draw is the plain shuffle it was.
+        assertEquals(deck.round(ClozeSource.All, 4, Random(7)), deck.round(ClozeSource.All, 4, Random(7)) { 0.0 })
     }
 
     @Test

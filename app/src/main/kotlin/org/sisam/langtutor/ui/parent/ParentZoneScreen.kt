@@ -120,6 +120,7 @@ private fun ParentDashboard(container: AppContainer) {
         LevelSection(container)
         VoiceSection(container)
         PacksSection(container)
+        PracticeSection(container)
         ReportsSection(container)
         ExperimentalSection(container)
     }

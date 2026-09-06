@@ -27,6 +27,12 @@ So no idea was rejected for being impossible here. Every verdict came back
 would cost in *this* tree, which room it actually belongs in, and which of the
 pitch's assumptions were wrong.
 
+> **Built since this was written.** The keystone below is done —
+> `docs/knowledge-tracing.md`. Skills are written by three rooms and read
+> back weakest-first by all three, and the Parent Zone shows the weakest few.
+> What remains of it is scheduling (nothing is due at a *time*) and denser
+> evidence from the pronunciation coach.
+
 ## The keystone: one dead class blocks a fifth of the list
 
 Eighteen of the 53 verified ideas independently arrive at the same place.
@@ -134,7 +140,8 @@ The coach currently says *how wrong*. These say *what was wrong*.
 - **Expanding retrieval inside the picture round** [small] — the cheapest
   entry point of all: replace the shuffled index list with a re-queue carrying
   a per-item next-position offset. Spaced repetition inside a single round,
-  no persistence needed.
+  no persistence needed. (The room now picks its cards weakest-first across
+  sessions; this is the within-round half, still open.)
 - **Scaffolds fade per item, not just per level** [medium] — read strength at
   render time; the gloss becomes tap-to-reveal for items the learner knows.
 - **Review the frame, not the sentence** [small] — group by frame + theme +

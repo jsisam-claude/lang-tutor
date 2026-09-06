@@ -8,8 +8,11 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.sisam.langtutor.profile.LearnerProfileStore
+import org.sisam.langtutor.profile.Skill
+import org.sisam.langtutor.profile.SkillTracker
 import org.sisam.langtutor.speech.TtsEngine
 import org.sisam.langtutor.speech.TutorLanguage
+import org.sisam.langtutor.tutor.drill.DrillDeck
 import org.sisam.langtutor.tutor.picture.PictureVocabOrchestrator
 
 /** How an item ended. With four options the fourth tap is forced, so an
@@ -73,6 +76,8 @@ class ClozeOrchestrator(
     private val tts: TtsEngine,
     private val profile: LearnerProfileStore,
     private val scope: CoroutineScope,
+    /** Where an answer becomes evidence about a skill (docs/knowledge-tracing.md). */
+    private val tracker: SkillTracker = SkillTracker(),
 ) {
 
     private val _state = MutableStateFlow<ClozeState>(ClozeState.Idle)
@@ -147,9 +152,22 @@ class ClozeOrchestrator(
             ClozeOutcome.FOUND -> XP_FOUND
             ClozeOutcome.SHOWN -> 0
         }
+        // Reading it right first time is the evidence; a word found by
+        // elimination, or filled in by the room, is evidence of the other
+        // thing. Both are recorded — a room that only counted successes
+        // would call every learner an expert.
+        val skills = skillsOf(s.item)
         // A failed write must not take the item down with it: the tally is
         // already counted and the learner is owed the line.
-        if (xp > 0) runCatching { profile.update { it.copy(xp = it.xp + xp) } }
+        runCatching {
+            profile.update {
+                tracker.observe(
+                    if (xp > 0) it.copy(xp = it.xp + xp) else it,
+                    skills,
+                    correct = outcome == ClozeOutcome.FIRST_TRY,
+                )
+            }
+        }
         _events.emit(ClozeEvent.Resolved(outcome))
         _state.value = ClozeState.Revealed(s.item, s.asked, s.total, outcome, wrongTaps, speaking = true)
         speak(if (outcome == ClozeOutcome.SHOWN) SHOWN_LINE else PRAISES[s.asked % PRAISES.size])
@@ -215,6 +233,13 @@ class ClozeOrchestrator(
         silenced = true
         _state.value = ClozeState.Idle
         CoroutineScope(Dispatchers.Default).launch { runCatching { tts.stop() } }
+    }
+
+    /** A gap is evidence about the line's topic and grammar, and — when the
+     *  gap hid a picture word — about that word too. */
+    private fun skillsOf(item: ClozeItem): List<String> = buildList {
+        addAll(DrillDeck.skillsOf(item.sentence))
+        item.packWord?.let { add(Skill.word(it.en)) }
     }
 
     private suspend fun speak(text: String) {

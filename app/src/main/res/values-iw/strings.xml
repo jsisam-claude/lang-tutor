@@ -121,6 +121,14 @@
     <string name="report_flag_action">לסמן את התשובה הזאת למבוגר</string>
     <string name="report_flagged">סומן לבדיקה באזור ההורים</string>
     <string name="report_hint">לחיצה ארוכה על תשובה של תוקי מסמנת אותה.</string>
+    <string name="parent_practice_title">על מה הם מתאמנים</string>
+    <string name="parent_practice_hint">איפה התשובות הכי מתבלבלות. שום דבר מכאן לא יוצא מהמכשיר.</string>
+    <string name="parent_practice_empty">עדיין אין מספיק תשובות — עוד כמה סבבים בכל חדר וזה יתמלא.</string>
+    <string name="parent_practice_sounds">צלילים</string>
+    <string name="parent_practice_frames">מבני משפט</string>
+    <string name="parent_practice_themes">נושאים</string>
+    <string name="parent_practice_tries">%1$d%%, %2$d ניסיונות</string>
+    <string name="parent_practice_row">%1$s: %2$d אחוז, אחרי %3$d ניסיונות</string>
     <string name="parent_reports_title">תשובות שסומנו</string>
     <string name="parent_reports_hint">תשובות שסומנו בלחיצה ארוכה. הן נשמרות במכשיר הזה בלבד — הבדיקה והמחיקה כולן בידיים שלכם.</string>
     <string name="parent_reports_empty">שום דבר לא סומן.</string>

@@ -226,8 +226,11 @@ class DrillViewModel(
             val level = source.level
             val size = DrillDeck.sizeFor(level)
             val learnerLevel = container.profile.snapshot().effectiveLevel
-            val banked =
-                DrillDeck.phraseRound(phrases, level, learnerLevel, Random.Default, source.theme)
+            // Weakest first: the topics and grammar patterns this learner
+            // has said worst lead the round (docs/knowledge-tracing.md).
+            val banked = DrillDeck.phraseRound(
+                phrases, level, learnerLevel, Random.Default, source.theme, container.masteryLens(),
+            )
             if (source.theme != null) {
                 // A chosen topic is the whole round. Nothing generated and
                 // nothing from the curriculum: those cannot be held to the
