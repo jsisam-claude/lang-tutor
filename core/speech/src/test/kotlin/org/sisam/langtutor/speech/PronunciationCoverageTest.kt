@@ -67,6 +67,10 @@ class PronunciationCoverageTest {
             "Good try! Let's do the next one.",
             "Great job!", "Well done!", "You said it!", "Perfect!",
             "Hello! I'm Tuki.",
+            // The picture room and the fill-the-gap room.
+            "Where is the", "Almost! Look again.",
+            "Yes! You found it!", "That's it!",
+            "Which word is missing?", "Here it is.",
         )
     }
 }

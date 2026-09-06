@@ -33,6 +33,15 @@ data class PicturePack(
      * sets are still owed a read.
      */
     val review: String = "pending",
+    /**
+     * The fill-the-gap room's template for words the phrasebank never uses:
+     * one line per side with `___` where the word goes ("I see a ___." /
+     * "אני רואה ___."), composed at runtime with each word and its Hebrew.
+     * Authored, so it rides on the pack's review flag. Null where no template
+     * reads naturally — number Hebrew agrees in gender with the counted noun,
+     * and the maths words are operators.
+     */
+    val cloze: LocalizedText? = null,
 ) {
     val reviewed: Boolean get() = review == "done"
 }

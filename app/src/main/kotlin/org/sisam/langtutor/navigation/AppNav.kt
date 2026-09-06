@@ -24,6 +24,7 @@ import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.profile.LearnerProfile
 import org.sisam.langtutor.tutor.LevelConfig
 import org.sisam.langtutor.ui.chat.ChatScreen
+import org.sisam.langtutor.ui.cloze.ClozeScreen
 import org.sisam.langtutor.ui.conversation.ConversationScreen
 import org.sisam.langtutor.ui.home.HomeScreen
 import org.sisam.langtutor.ui.lesson.LessonScreen
@@ -43,6 +44,7 @@ object Routes {
     const val VOCAB = "vocab"
     const val PICTURES = "pictures"
     const val TWISTERS = "twisters"
+    const val CLOZE = "cloze"
 
     // Unit-scoped destinations: the tapped unit travels in the route so every
     // screen teaches THAT unit (previously all roads led to unit-001).
@@ -58,7 +60,7 @@ object Routes {
      *  room may interrupt, and the only ones it returns to. */
     fun isLearningRoom(route: String?) =
         route == LESSON || route == CONVERSATION || route == VOCAB ||
-            route == PICTURES || route == TWISTERS
+            route == PICTURES || route == TWISTERS || route == CLOZE
 }
 
 @Composable
@@ -77,6 +79,7 @@ fun AppNav(container: AppContainer) {
                     onOpenVocab = { navController.navigate(Routes.VOCAB) },
                     onOpenPictures = { navController.navigate(Routes.PICTURES) },
                     onOpenTwisters = { navController.navigate(Routes.TWISTERS) },
+                    onOpenCloze = { navController.navigate(Routes.CLOZE) },
                 )
             }
             composable(
@@ -94,6 +97,7 @@ fun AppNav(container: AppContainer) {
             composable(Routes.VOCAB) { VocabScreen(container) }
             composable(Routes.PICTURES) { PictureScreen(container) }
             composable(Routes.TWISTERS) { TwisterScreen(container) }
+            composable(Routes.CLOZE) { ClozeScreen(container) }
             composable(Routes.PARENT) { ParentZoneScreen(container) }
             composable(Routes.CHAT) { ChatScreen(container) }
             composable(Routes.STICKER) {

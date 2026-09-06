@@ -187,6 +187,15 @@
     <string name="parent_reports_clear">Clear all</string>
     <string name="home_picture_room">🖼️ Picture words</string>
     <string name="picture_title">Picture words</string>
+    <string name="home_cloze_room">Fill the gap ✏️</string>
+    <string name="cloze_title">Fill the gap</string>
+    <string name="cloze_hint">Which word is missing? The Hebrew tells you.</string>
+    <string name="cloze_blank_spoken">blank</string>
+    <string name="cloze_option_wrong">not this one</string>
+    <string name="cloze_option_right">correct</string>
+    <string name="cloze_repeat">Hear it again</string>
+    <string name="cloze_shown">Here it is: %1$s</string>
+    <string name="cloze_empty">Nothing to fill in here at your Level yet — pick another topic.</string>
     <string name="picture_next">Next</string>
     <string name="picture_where_is">Where is the %1$s?</string>
     <string name="picture_done">%1$d of %2$d on the first try!</string>

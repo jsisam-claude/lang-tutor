@@ -1,6 +1,6 @@
 {
   "format": "tuki-picture-packs-v1",
-  "notes": "Named sets for the picture room, so a learner can ask for numbers or animals rather than taking whatever the curriculum happens to hold. en is the word taught; he is its Hebrew meaning; the Hebrew-letter pronunciation is DERIVED at runtime and never authored here. A pack marked review=pending has not yet had a native read: it is shown, but the standing rule is that it is not finished until that read happens.",
+  "notes": "Named sets for the picture room, so a learner can ask for numbers or animals rather than taking whatever the curriculum happens to hold. en is the word taught; he is its Hebrew meaning; the Hebrew-letter pronunciation is DERIVED at runtime and never authored here. A pack marked review=pending has not yet had a native read: it is shown, but the standing rule is that it is not finished until that read happens. A pack may carry a cloze template (one ___ per side) for the fill-the-gap room, so words the phrasebank never uses still get a turn; it is authored and rides on the same review flag.",
   "packs": [
     {
       "id": "numbers",
@@ -59,6 +59,10 @@
         "he": "צורות"
       },
       "review": "pending",
+      "cloze": {
+        "en": "I see a ___.",
+        "he": "אני רואה ___."
+      },
       "words": [
         {
           "en": "circle",
@@ -135,6 +139,10 @@
         "he": "חיות"
       },
       "review": "pending",
+      "cloze": {
+        "en": "I see a ___.",
+        "he": "אני רואה ___."
+      },
       "words": [
         {
           "en": "ant",

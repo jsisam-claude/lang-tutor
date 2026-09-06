@@ -95,10 +95,9 @@ object DrillDeck {
         /** One theme, or null for the whole bank. */
         theme: String? = null,
     ): List<DrillItem> {
-        val floor = (learnerLevel - 1).coerceAtLeast(1)
         return sentences
             .filter { theme == null || it.theme == theme }
-            .filter { it.level in floor..learnerLevel }
+            .filter { it.level in levelWindow(learnerLevel) }
             .filter { classify(it.en) == level }
             .map { DrillItem(it.en, level, it.he, it.align) }
     }
@@ -124,6 +123,13 @@ object DrillDeck {
      */
     fun twisterRound(twisters: List<Twister>): List<DrillItem> =
         twisters.map { DrillItem(it.en, classify(it.en), it.he, it.align) }
+
+    /**
+     * Which Levels a room may draw from for a learner: their own and the one
+     * below — practice plus light review. One rule, shared by the drill and
+     * the fill-the-gap room, so the two cannot drift apart.
+     */
+    fun levelWindow(learnerLevel: Int): IntRange = (learnerLevel - 1).coerceAtLeast(1)..learnerLevel
 
     /** Longer sentences are more work per item, so rounds shrink with level. */
     fun sizeFor(level: DrillLevel): Int = when (level) {

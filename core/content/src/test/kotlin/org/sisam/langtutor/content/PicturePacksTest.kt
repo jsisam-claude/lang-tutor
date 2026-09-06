@@ -50,6 +50,26 @@ class PicturePacksTest {
     }
 
     @Test
+    fun `a cloze template has exactly one gap per side, in the right script`() {
+        // The fill-the-gap room composes the template with each word, so a
+        // template with two gaps or none would produce a broken sentence for
+        // every word in the pack at once.
+        val templated = packs.filter { it.cloze != null }
+        assertTrue("no pack carries a template", templated.isNotEmpty())
+        for (p in templated) {
+            val t = checkNotNull(p.cloze)
+            assertEquals("${p.id}: en gaps", 1, Regex("___").findAll(t.en).count())
+            assertEquals("${p.id}: he gaps", 1, Regex("___").findAll(t.he).count())
+            assertTrue("${p.id}: Hebrew in the en template", !isHebrew(t.en))
+            assertTrue("${p.id}: he template is not Hebrew", isHebrew(t.he))
+        }
+        // Numbers agree in gender with the counted noun and the maths words
+        // are operators: neither can be templated honestly.
+        assertTrue(packs.first { it.id == "numbers" }.cloze == null)
+        assertTrue(packs.first { it.id == "maths" }.cloze == null)
+    }
+
+    @Test
     fun `a pack is big enough to be a round`() {
         // The room deals four cards. A pack that cannot fill one is a card
         // that repeats, which teaches nothing and looks broken.

@@ -42,6 +42,8 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import org.sisam.langtutor.content.PicturePack
 import org.sisam.langtutor.AppContainer
 import org.sisam.langtutor.R
@@ -300,26 +302,33 @@ fun PictureScreen(container: AppContainer) {
 
 /**
  * One card's picture: the curated vector icon when the word has one, the
- * emoji fallback otherwise ([PictureArt]'s two tiers). contentDescription is
- * null on purpose — the word is always printed or spoken right beside the
- * picture, and reading it twice teaches TalkBack users to stop listening.
+ * emoji fallback otherwise ([PictureArt]'s two tiers). The picture room
+ * passes no [contentDescription] on purpose — the word is always printed or
+ * spoken right beside the picture, and reading it twice teaches TalkBack
+ * users to stop listening. The fill-the-gap room passes the pack's Hebrew,
+ * because there the picture is a KEY to a hidden word, not a repeat of one.
  */
 @Composable
-private fun PictureArtView(
+internal fun PictureArtView(
     word: String,
     emoji: String?,
     artSize: Dp,
     emojiSize: TextUnit,
     modifier: Modifier = Modifier,
+    contentDescription: String? = null,
 ) {
     val drawable = PictureArt.drawableFor(word)
     if (drawable != null) {
         Image(
             painter = painterResource(drawable),
-            contentDescription = null,
+            contentDescription = contentDescription,
             modifier = modifier.size(artSize),
         )
     } else if (emoji != null) {
-        Text(text = emoji, fontSize = emojiSize, modifier = modifier)
+        Text(
+            text = emoji,
+            fontSize = emojiSize,
+            modifier = if (contentDescription == null) modifier else modifier.semantics { this.contentDescription = contentDescription },
+        )
     }
 }

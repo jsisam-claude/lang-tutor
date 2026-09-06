@@ -166,15 +166,16 @@ Ties directly to the queued short-stories work.
 
 Cheap, because the content cost is roughly zero.
 
-- **Cloze** [medium] — blank a content word that has an align cue. The align
-  cues finally pay for themselves.
+- **Cloze** [medium] — *built* (`docs/fill-the-gap.md`): one gap, four
+  same-class choices, the line's Hebrew as the key. The align cues light the
+  Hebrew words that mean the gap at Levels 1–3 and after a first wrong tap.
 - **Prompt from the Hebrew, answer in English** [small] — reverse the drill.
 - **Build the sentence from tiles** [small] — order judging, hints from the
   align cues.
 - **A path through every room that never requires speaking** [medium] —
-  distractors drawn from the same level and theme with a different frame,
-  tested never to return the target. Matters for a mute child, a shy one, a
-  noisy room, and a broken microphone.
+  *partly built*: the fill-the-gap room is the first exercise a learner can
+  finish without saying or hearing a word of English, and the picture room
+  was already tap-only. The drill and twister rooms still need a mic.
 - **Three cards, then everything else** [medium] — a short, finishable opening
   set instead of an undifferentiated pile.
 

@@ -73,6 +73,7 @@ fun HomeScreen(
     onOpenVocab: () -> Unit,
     onOpenPictures: () -> Unit,
     onOpenTwisters: () -> Unit,
+    onOpenCloze: () -> Unit,
 ) {
     val units by produceState<List<UnitSummary>>(initialValue = emptyList(), container) {
         value = container.content.listUnits()
@@ -138,6 +139,13 @@ fun HomeScreen(
         // no model needed, so the tablet build has it in full.
         Button(onClick = onOpenTwisters, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_twister_room))
+        }
+        // Read for meaning, tap a word: a sentence with one gap and four
+        // choices, keyed by its Hebrew line. The first room a learner can
+        // finish without saying or hearing a word of English — no model, no
+        // mic, and everything in it derived from the phrasebank and packs.
+        Button(onClick = onOpenCloze, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.home_cloze_room))
         }
         // Freeform three-way practice with both parrots — no lesson, no
         // scoring, just talking.

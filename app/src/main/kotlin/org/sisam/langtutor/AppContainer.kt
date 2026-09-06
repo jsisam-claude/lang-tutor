@@ -13,6 +13,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.sisam.langtutor.content.Activity
 import org.sisam.langtutor.content.ContentRepository
 import org.sisam.langtutor.content.PhrasebankRepository
 import org.sisam.langtutor.content.ResourceContentRepository
@@ -66,6 +67,8 @@ import org.sisam.langtutor.tutor.TutorOrchestrator
 import org.sisam.langtutor.tutor.drill.DrillGenerator
 import org.sisam.langtutor.tutor.drill.DrillOrchestrator
 import org.sisam.langtutor.tutor.picture.PictureVocabOrchestrator
+import org.sisam.langtutor.tutor.cloze.ClozeDeck
+import org.sisam.langtutor.tutor.cloze.ClozeOrchestrator
 import org.sisam.langtutor.ui.reward.RewardBus
 import org.sisam.langtutor.ui.reward.RewardKind
 import kotlinx.coroutines.withContext
@@ -916,6 +919,48 @@ class AppContainer private constructor(context: Context) {
             profile = profile,
             scope = scope,
         )
+    }
+
+    /**
+     * The fill-the-gap room: the picture room's four steps exactly — the
+     * parent's voice applied, the bundled engine warmed in the background,
+     * the platform voice as the fallback — because it speaks the same short
+     * lines and the same authored sentences.
+     */
+    fun createCloze(scope: CoroutineScope): ClozeOrchestrator {
+        appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
+        val kokoro = bundledTtsEngine()
+        appScope.launch(Dispatchers.IO) {
+            runCatching { kokoro?.warmUp() }
+            runCatching { ListeningAck.warmUp() }
+        }
+        return ClozeOrchestrator(
+            tts = kokoro ?: PlatformTtsEngine(appContext),
+            profile = profile,
+            scope = scope,
+        )
+    }
+
+    @Volatile private var clozeDeckCache: ClozeDeck? = null
+
+    /**
+     * The deck is one pass over the whole bank and the packs, built once per
+     * process and shared, so the chip counts and the rounds read the same
+     * object. The curriculum's vocabulary joins as extra glosses: one more
+     * source of "these two words mean the same thing" for the same-meaning
+     * filter, at no authoring cost.
+     */
+    suspend fun clozeDeck(): ClozeDeck = clozeDeckCache ?: withContext(Dispatchers.Default) {
+        val sentences = phrasebank.sentences()
+        val packs = picturePacks.packs()
+        val vocab = runCatching {
+            content.listUnits()
+                .map { content.loadUnit(it.id) }
+                .flatMap { it.activities }
+                .filterIsInstance<Activity.Vocab>()
+                .associate { it.word.lowercase() to it.translation.he }
+        }.getOrDefault(emptyMap())
+        ClozeDeck(sentences, packs, vocab).also { clozeDeckCache = it }
     }
 
     fun createDrillOrchestrator(scope: CoroutineScope): DrillOrchestrator {
