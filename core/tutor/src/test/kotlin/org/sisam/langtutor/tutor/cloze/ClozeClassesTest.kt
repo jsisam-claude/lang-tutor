@@ -55,16 +55,27 @@ class ClozeClassesTest {
     fun `the rule sets only name table members`() {
         val all = members.values.flatten().toSet()
         for (group in ClozeClasses.SAME_MEANING) {
-            assertTrue("same-meaning group $group names a non-member", group.all { it in all })
             assertTrue("same-meaning group $group is not a pair", group.size >= 2)
+            assertTrue("same-meaning group $group is not lowercase", group.all { it == it.lowercase() })
+            // A closed-class member pairs only with members; an open pair is free.
+            if (group.any { it in all }) assertTrue("same-meaning group $group mixes classes", group.all { it in all })
         }
+        for (family in ClozeClasses.IRREGULAR_FAMILIES) {
+            assertTrue("family $family is not a family", family.size >= 2)
+            assertTrue(family.all { it == it.lowercase() })
+        }
+        assertEquals(
+            "a form in two families",
+            ClozeClasses.IRREGULAR_FAMILIES.sumOf { it.size },
+            ClozeClasses.IRREGULAR_FAMILIES.flatten().toSet().size,
+        )
         assertTrue((ClozeClasses.SINGULAR_ONLY - all).isEmpty())
         assertTrue((ClozeClasses.PLURAL_ONLY - all).isEmpty())
         for ((verb, subjects) in ClozeClasses.AGREEMENT) {
             assertTrue("$verb is not a NEVER verb form", verb in ClozeClasses.NEVER)
             assertTrue("$verb admits a non-subject", subjects.all { it in members.getValue(Kind.SUBJECT) })
         }
-        assertTrue((ClozeClasses.NEVER_DISTRACTOR - all - ClozeClasses.NEVER).isEmpty())
+        assertTrue((ClozeClasses.NEVER_DISTRACTOR - all - ClozeClasses.NEVER - ClozeClasses.RESOLVED_BY_POSITION).isEmpty())
     }
 
     @Test
@@ -104,8 +115,11 @@ class ClozeClassesTest {
         assertTrue(ClozeClasses.sameStem("cat", "cats"))
         assertTrue(ClozeClasses.sameStem("play", "playing"))
         assertTrue(ClozeClasses.sameStem("carry", "carries"))
-        // The owner's own example of a FAIR pair, decided by the Hebrew tense.
-        assertFalse(ClozeClasses.sameStem("saw", "see"))
+        // The owner's own example of a FAIR pair, decided by the Hebrew
+        // tense: an irregular family, known by the authored table.
+        assertTrue(ClozeClasses.sameStem("saw", "see"))
+        assertTrue(ClozeClasses.isIrregularNonBase("saw"))
+        assertFalse(ClozeClasses.isIrregularNonBase("see"))
         assertFalse(ClozeClasses.sameStem("warm", "cold"))
     }
 
@@ -149,6 +163,18 @@ class ClozeClassesTest {
         // Open words and a BE form.
         assertEquals(Role.Open, roles("The bread is warm.")[3])
         assertEquals(Role.Never, roles("The bread is warm.")[2])
+        // "like" is the verb after a subject and the preposition elsewhere.
+        assertEquals(Role.Open, roles("I like my city.")[1])
+        assertEquals(Role.Never, roles("It looks like rain.")[2])
+        // The infinitive marker before an -er verb and before "do".
+        assertEquals(Role.Never, roles("I want to order soup.")[2])
+        assertEquals(Role.Never, roles("We are going to do it.")[3])
+        // A watering can is not a modal.
+        assertEquals(Role.Never, roles("My watering can is green.")[2])
+        assertEquals(Role.Closed(Kind.MODAL), roles("I can swim.")[1])
+        // A subject after "before" or "did".
+        assertEquals(Role.Closed(Kind.SUBJECT), roles("Did you ask before you took it?")[4])
+        assertEquals(Role.Never, roles("Count to twenty.")[2])
     }
 
     @Test

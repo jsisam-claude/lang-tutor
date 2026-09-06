@@ -174,8 +174,8 @@ Cheap, because the content cost is roughly zero.
   align cues.
 - **A path through every room that never requires speaking** [medium] —
   *partly built*: the fill-the-gap room is the first exercise a learner can
-  finish without saying or hearing a word of English, and the picture room
-  was already tap-only. The drill and twister rooms still need a mic.
+  finish without saying a word of English, and the picture room was already
+  tap-only. The drill and twister rooms still need a mic.
 - **Three cards, then everything else** [medium] — a short, finishable opening
   set instead of an undifferentiated pile.
 

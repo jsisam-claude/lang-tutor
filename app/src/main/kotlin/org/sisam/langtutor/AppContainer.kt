@@ -71,6 +71,7 @@ import org.sisam.langtutor.tutor.cloze.ClozeDeck
 import org.sisam.langtutor.tutor.cloze.ClozeOrchestrator
 import org.sisam.langtutor.ui.reward.RewardBus
 import org.sisam.langtutor.ui.reward.RewardKind
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import org.sisam.langtutor.profile.LearnerProfile
 import org.sisam.langtutor.speech.HebrewTransliteration
@@ -942,6 +943,7 @@ class AppContainer private constructor(context: Context) {
     }
 
     @Volatile private var clozeDeckCache: ClozeDeck? = null
+    private val clozeDeckLock = kotlinx.coroutines.sync.Mutex()
 
     /**
      * The deck is one pass over the whole bank and the packs, built once per
@@ -950,7 +952,11 @@ class AppContainer private constructor(context: Context) {
      * source of "these two words mean the same thing" for the same-meaning
      * filter, at no authoring cost.
      */
-    suspend fun clozeDeck(): ClozeDeck = clozeDeckCache ?: withContext(Dispatchers.Default) {
+    suspend fun clozeDeck(): ClozeDeck = clozeDeckCache ?: clozeDeckLock.withLock {
+        clozeDeckCache ?: withContext(Dispatchers.Default) { buildClozeDeck() }
+    }
+
+    private suspend fun buildClozeDeck(): ClozeDeck {
         val sentences = phrasebank.sentences()
         val packs = picturePacks.packs()
         val vocab = runCatching {
@@ -960,7 +966,7 @@ class AppContainer private constructor(context: Context) {
                 .filterIsInstance<Activity.Vocab>()
                 .associate { it.word.lowercase() to it.translation.he }
         }.getOrDefault(emptyMap())
-        ClozeDeck(sentences, packs, vocab).also { clozeDeckCache = it }
+        return ClozeDeck(sentences, packs, vocab).also { clozeDeckCache = it }
     }
 
     fun createDrillOrchestrator(scope: CoroutineScope): DrillOrchestrator {

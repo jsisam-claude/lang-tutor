@@ -143,27 +143,75 @@ class ClozeDeck(
         packById[ClozeClasses.NUMBERS_PACK]?.words?.map { it.en }?.toSet().orEmpty()
 
     private val analysed: List<Analysed> = sentences.map { analyse(it) }
+    private val firstLevelKeys: Set<String> = analysed.flatMap { a -> a.tokens.map { it.key } }.toSet()
+    private val lowercaseSeen: Set<String> = analysed.flatMap { a ->
+        a.tokens.filter { it.raw.firstOrNull()?.isLowerCase() == true }.map { it.key }
+    }.toSet()
     private val contextPool: Map<Context, Set<String>>
     /** Words the bank uses as a predicate after a BE form ("is warm"): the
      *  adjectives, as far as a bank with no tagger can tell. */
     private val predicative: Set<String>
+    /** Words attested where only a verb stands: after a subject pronoun, a
+     *  modal, did/do/does, "to" or "not". */
+    private val verbAttested: Set<String>
+    /** Verbs attested directly before a determiner, a possessive, a number
+     *  or a pack noun — the ones that take an object. */
+    private val transitive: Set<String>
+    /** Open words attested at the start of a line with a verb after them:
+     *  the subjects, as opposed to "Good morning" and "Ice cream". */
+    private val subjectAttested: Set<String>
+    /** Which forms a verb is attested in: BASE, PAST or PARTICIPLE, read
+     *  off the line's tense field and the auxiliary before it. */
+    private val verbForms: Map<String, Set<VerbForm>>
+    /** Nouns attested after a/an/every/each: the count nouns "much" cannot precede. */
+    private val countNouns: Set<String>
+    /** Nouns attested after every/last/next: the time nouns "this" turns into an adverbial. */
+    private val timeNouns: Set<String>
+    /** (modifier, head) pairs seen at least twice: fixed compounds like "teddy bear". */
+    private val compounds: Map<Pair<String, String>, Int>
+    /** Words the bank only ever capitalises: names that happen to open a
+     *  line ("Dave said…") and would read as "dave" inside another. */
+    private val onlyCapitalised: Set<String>
     private val firstLevel: Map<String, Int>
     private val glosses: Map<String, Set<String>>
     private val bank: List<Entry>
     private val templates: Map<String, List<Entry>>
 
+    private enum class VerbForm { BASE, PAST, PARTICIPLE }
+
     init {
         val pools = HashMap<Context, MutableSet<String>>()
         val adjectives = HashSet<String>()
+        val verbs = HashSet<String>()
+        val objectTakers = HashSet<String>()
+        val subjects = HashSet<String>()
+        val forms = HashMap<String, MutableSet<VerbForm>>()
+        val counted = HashSet<String>()
+        val timed = HashSet<String>()
+        val bigrams = HashMap<Pair<String, String>, Int>()
         val levels = HashMap<String, Int>()
         val gloss = HashMap<String, MutableSet<String>>()
         for (a in analysed) {
             for ((i, t) in a.tokens.withIndex()) {
                 levels.merge(t.key, a.sentence.level) { old, new -> minOf(old, new) }
+                val prev = a.tokens.getOrNull(i - 1)?.takeIf { !it.clauseEnd }?.key
+                val next = a.tokens.getOrNull(i + 1)?.takeIf { !t.clauseEnd }
                 if (isOpenWord(a, i)) {
                     val ctx = context(a, i)
                     pools.getOrPut(ctx) { mutableSetOf() }.add(t.key)
                     if (ctx.left in ClozeClasses.BE_FORMS && ctx.right == END) adjectives += t.key
+                    if (ClozeClasses.verbLike(prev)) {
+                        verbs += t.key
+                        expectedForm(prev, a.sentence.tense)
+                            ?.takeIf { !(it == VerbForm.BASE && ClozeClasses.isIrregularNonBase(t.key)) }
+                            ?.let { forms.getOrPut(t.key) { mutableSetOf() }.add(it) }
+                        if (next != null && (isDeterminerish(next.key) || packLemma(next.key) != null)) objectTakers += t.key
+                    }
+                    if (prev != null && prev in setOf("a", "every", "each")) counted += t.key
+                    if (prev != null && prev in setOf("every", "last", "next")) timed += t.key
+                    if (next != null && a.roles[i + 1] == Role.Open && next.shape in setOf(Shape.BASE, Shape.S)) {
+                        bigrams.merge(t.key to next.key, 1, Int::plus)
+                    }
                 }
             }
             // A cue is a gloss when its Hebrew side is ONE word and its
@@ -186,8 +234,28 @@ class ClozeDeck(
         for ((en, he) in extraGlosses) {
             if (' ' !in he && he.isNotBlank()) gloss.getOrPut(en.lowercase()) { mutableSetOf() }.addAll(hebrewVariants(he))
         }
+        // A second pass for subjects: a sentence-initial open word followed
+        // by something only a verb can be is a subject, not "Good" or "Ice".
+        for (a in analysed) {
+            val first = a.tokens.firstOrNull() ?: continue
+            val second = a.tokens.getOrNull(1) ?: continue
+            if (!isOpenWord(a, 0) || first.clauseEnd) continue
+            val k = second.key
+            if (k in verbs || k in ClozeClasses.BE_FORMS || k in ClozeClasses.AGREEMENT ||
+                Kind.MODAL in ClozeClasses.kindsOf(k) || second.shape == Shape.ED || second.shape == Shape.S
+            ) subjects += first.key
+        }
+        onlyCapitalised = analysed.flatMap { a -> a.tokens.filter { it.raw.firstOrNull()?.isUpperCase() == true }.map { it.key } }
+            .toSet().filter { it !in lowercaseSeen && it != "i" }.toSet()
         contextPool = pools
         predicative = adjectives
+        verbAttested = verbs
+        transitive = objectTakers
+        subjectAttested = subjects
+        verbForms = forms
+        countNouns = counted
+        timeNouns = timed
+        compounds = bigrams
         firstLevel = levels
         glosses = gloss
         bank = analysed
@@ -213,26 +281,48 @@ class ClozeDeck(
         }
         val keys = tokens.map { it.key }
         val shapes = tokens.map { it.shape }
-        val roles = tokens.indices.map { ClozeClasses.roleOf(keys, shapes, it, sentence.he) }
+        val clauseStarts = tokens.indices.filter { it > 0 && tokens[it - 1].clauseEnd }.toSet()
+        val roles = tokens.indices.map { ClozeClasses.roleOf(keys, shapes, it, sentence.he, clauseStarts) }
         return Analysed(sentence, tokens, roles)
     }
 
     private fun isOpenWord(a: Analysed, i: Int): Boolean {
         val t = a.tokens[i]
         return a.roles[i] == Role.Open && t.shape != Shape.PROPER && '\'' !in t.key && t.key.isNotEmpty() &&
+            (i > 0 || t.key in lowercaseSeen) &&
             // A number is a quantifier in disguise: it never fills, and never
             // offers itself for, a noun or verb gap.
-            t.key !in numberWords
+            t.key !in numberWords && t.key !in ClozeClasses.NUMBER_WORDS
     }
 
     private fun context(a: Analysed, i: Int): Context {
-        val left = if (i == 0 || a.tokens[i - 1].clauseEnd) START else a.tokens[i - 1].key
+        val left = when {
+            i == 0 || a.tokens[i - 1].clauseEnd -> START
+            // "to order soup" and "go to bed" must never share a pool.
+            a.tokens[i - 1].key == "to" && a.roles[i - 1] == Role.Never -> TO_INF
+            else -> a.tokens[i - 1].key
+        }
         val right = when {
             i == a.tokens.lastIndex || a.tokens[i].clauseEnd -> END
             a.roles[i + 1] == Role.Open -> OPEN
             else -> a.tokens[i + 1].key
         }
         return Context(left, right, a.tokens[i].shape)
+    }
+
+    private fun isDeterminerish(key: String): Boolean =
+        ClozeClasses.kindsOf(key).any { it in ClozeClasses.DETERMINERS || it == Kind.QUANTIFIER } ||
+            key in numberWords || key in ClozeClasses.NUMBER_WORDS
+
+    /** The verb form a verb-like position asks for, from the auxiliary to
+     *  its left and, after a bare subject, the line's tense. */
+    private fun expectedForm(left: String?, tense: String): VerbForm? = when {
+        left == null -> null
+        left in setOf("have", "has", "had") -> VerbForm.PARTICIPLE
+        left in setOf("did", "do", "does", "to", "not") || Kind.MODAL in ClozeClasses.kindsOf(left) -> VerbForm.BASE
+        Kind.SUBJECT in ClozeClasses.kindsOf(left) ->
+            if (tense.startsWith("past") || tense == "conditional-second" || tense == "conditional-third") VerbForm.PAST else VerbForm.BASE
+        else -> null
     }
 
     // ---- slots ------------------------------------------------------------
@@ -245,6 +335,9 @@ class ClozeDeck(
         for (i in a.tokens.indices) {
             val t = a.tokens[i]
             if (t.key.isEmpty() || '\'' in t.key) continue
+            // A word that occurs twice in the line can be copied from it;
+            // a second "the" is the one exception, since my/this stay live.
+            if (t.key !in ARTICLES && a.tokens.count { it.key == t.key } > 1) continue
             val pack = packSlot(a, i, present)?.also { out += it }
             when (val role = a.roles[i]) {
                 // A pack word keeps its pack: the icon and the pack's own
@@ -271,7 +364,8 @@ class ClozeDeck(
         packLemma(key)?.let { return it }
         return when {
             key.endsWith("ies") && key.length > 4 -> key.dropLast(3) + "y"
-            key.endsWith("es") && key.length > 4 -> key.dropLast(2)
+            // horses → horse, but boxes → box: the bank says which.
+            key.endsWith("es") && key.length > 4 -> if (key.dropLast(1) in firstLevelKeys) key.dropLast(1) else key.dropLast(2)
             key.endsWith("s") && key.length > 3 && !key.endsWith("ss") -> key.dropLast(1)
             else -> key
         }
@@ -287,19 +381,30 @@ class ClozeDeck(
         // A noun followed by another open noun is the modifier of a compound
         // — "fish tank", "goat milk" — and the icon would then lie.
         if (pack.id != ClozeClasses.NUMBERS_PACK && next != null && !t.clauseEnd &&
-            a.roles[i + 1] == Role.Open && next.shape in setOf(Shape.BASE, Shape.S)
+            a.roles[i + 1] == Role.Open && next.shape in setOf(Shape.BASE, Shape.S) && next.key !in verbAttested
         ) {
             return null
         }
+        // A fixed compound ("teddy bear", seen five times) keeps its head:
+        // "teddy lion" is not a thing, so the gap is not a meaning choice.
+        val prev = a.tokens.getOrNull(i - 1)
+        if (prev != null && !prev.clauseEnd && a.roles[i - 1] == Role.Open && prev.shape == Shape.BASE &&
+            prev.key !in verbAttested && prev.key !in predicative && (compounds[prev.key to lemma] ?: 0) >= 2
+        ) {
+            return null
+        }
+        // "my heart" is the organ, not the shape.
+        if (pack.id == "shapes" && prev != null && Kind.POSSESSIVE in ClozeClasses.kindsOf(prev.key)) return null
         // The line's Hebrew must actually contain the pack word: otherwise it
         // is the town square (כיכר) or an idiom, and the position falls back
         // to an ordinary WORD gap with no icon.
         if (!hebrewMentions(a.sentence.he, word)) return null
-        val plural = isPluralUse(a, i, lemma)
+        val plural = isPluralUse(a, i, lemma) || hebrewPlural(a.sentence.he, word)
         val visibleArticle = visibleArticleBefore(a, i)
         val base = pack.words.asSequence()
             .map { it.en }
             .filter { it != lemma && it !in present && ClozeClasses.plural(it) !in present }
+            .filter { !sameMeaning(lemma, it) }
             .filter { pack.id != ClozeClasses.NUMBERS_PACK || it != "one" || next?.shape != Shape.S }
             .map { if (plural) ClozeClasses.plural(it) else it }
             .toList()
@@ -356,9 +461,36 @@ class ClozeDeck(
             .filter { (it in predicative) == adjective }
             .filter { visibleArticle == null || ClozeClasses.articleFor(it) == visibleArticle }
             .toList()
-        val (variants, plain) = filtered.partition { ClozeClasses.sameStem(t.key, it) }
+        val next = a.tokens.getOrNull(i + 1)
         val verbLike = ClozeClasses.verbLike(left) && left !in ClozeClasses.BE_FORMS
-        val allowed = if (verbLike) variants else emptyList()
+        // The first half of a noun compound ("mixing bowl", "cookie shapes")
+        // is a gap only when the Hebrew carries it; הקערה says nothing about
+        // mixing, so any modifier would fit.
+        val modifierPosition = !verbLike && next != null && !t.clauseEnd && a.roles[i + 1] == Role.Open &&
+            next.shape in setOf(Shape.BASE, Shape.S) && next.key !in verbAttested &&
+            t.shape in setOf(Shape.BASE, Shape.ING) && !adjective
+        if (modifierPosition && glosses[t.key] != null && !hebrewMentionsGloss(a.sentence.he, t.key)) return null
+        // The answer's own family (saw | see, seen) is judged by the Hebrew
+        // tense, so it is set aside before the form filters and one member
+        // may come back below.
+        val (family, others) = filtered.partition { ClozeClasses.sameStem(t.key, it) }
+        // "go to ___" over ללכת לישון: the Hebrew names sleep, so "sleep" is
+        // not a wrong answer for "bed" — never offered. The answer's own
+        // family is exempt: ראיתי names "see" too, and that is the point.
+        var narrowed = others.filter { glosses[it] == null || !hebrewMentionsGloss(a.sentence.he, it) }
+        if (verbLike) {
+            // The slot's tense forbids some forms outright (a past after
+            // "did", a base after "I" in a past line): those are not rivals.
+            val expected = expectedForm(left, a.sentence.tense)
+            if (expected != null) narrowed = narrowed.filter { verbForms[it]?.contains(expected) == true }
+            // Before an object, only a verb that takes one.
+            if (next != null && !t.clauseEnd && (isDeterminerish(next.key) || (a.roles[i + 1] == Role.Open && next.key !in verbAttested))) {
+                narrowed = narrowed.filter { it in transitive }
+            }
+        }
+        if (ctx.left == START && ctx.right == OPEN) narrowed = narrowed.filter { it in subjectAttested }
+        val plain = narrowed
+        val allowed = if (verbLike) family else emptyList()
         if (plain.size < MIN_DISTRACTORS - 1 || plain.size + minOf(1, allowed.size) < MIN_DISTRACTORS) return null
         return ClozeSlot(index = i, kind = ClozeKind.WORD, answer = t.key, pool = plain, variants = allowed)
     }
@@ -366,7 +498,11 @@ class ClozeDeck(
     private fun closedSlot(a: Analysed, i: Int, kind: Kind, present: Set<String>): ClozeSlot? {
         val t = a.tokens[i]
         if (t.key == "it") return null // dummy "it" has no Hebrew subject to key it
-        val nextShape = a.tokens.getOrNull(i + 1)?.shape
+        val next = a.tokens.getOrNull(i + 1)
+        val nextShape = next?.shape
+        val prev = a.tokens.getOrNull(i - 1)?.takeIf { !it.clauseEnd }?.key
+        val he = a.sentence.he
+        if (!admitsClosed(a, i, kind)) return null
         val members: List<String> = if (kind in ClozeClasses.DETERMINERS) {
             ClozeClasses.DETERMINERS.flatMap { ClozeClasses.MEMBERS.getValue(it) }
         } else {
@@ -383,6 +519,36 @@ class ClozeDeck(
             } else {
                 candidates.filter { it !in ClozeClasses.PLURAL_ONLY }
             }
+            // The same admission an answer gets: more/most only before a
+            // plural, much never before a count noun.
+            if (nextShape != Shape.S) candidates = candidates.filter { it != "more" && it != "most" }
+            if (next != null && next.key in countNouns) candidates = candidates.filter { it != "much" }
+        }
+        if (kind == Kind.TIME_ADVERB) {
+            val tense = a.sentence.tense
+            val past = tense.startsWith("past") || tense == "conditional-second" || tense == "conditional-third"
+            val perfect = "perfect" in tense
+            candidates = candidates.filter {
+                !((past || perfect) && it in FUTURE_ADVERBS) && !((!past || perfect) && it in PAST_ADVERBS)
+            }
+        }
+        if (kind == Kind.CONJUNCTION) {
+            val bothOpen = i > 0 && a.roles[i - 1] == Role.Open && next != null && a.roles[i + 1] == Role.Open
+            candidates = when {
+                // A line opens with a clause, and two adjectives are joined
+                // by a coordinator: the other half of the class never fits.
+                i == 0 -> candidates.filter { it !in ClozeClasses.COORDINATORS }
+                bothOpen -> candidates.filter { it in ClozeClasses.COORDINATORS }
+                else -> candidates
+            }
+        }
+        if (kind == Kind.PLACE_PREP && t.key in ClozeClasses.BET_FAMILY) {
+            // Bare ב in the Hebrew: nothing else in the family is a rival.
+            val marker = ClozeClasses.BET_MARKERS[t.key]
+            if (marker == null || marker !in he) candidates = candidates.filter { it !in ClozeClasses.BET_FAMILY }
+        }
+        if (kind == Kind.MODAL && i == 0 && a.sentence.en.trimEnd().endsWith("?") && t.key in ClozeClasses.REQUEST_MODALS) {
+            candidates = candidates.filter { it !in ClozeClasses.REQUEST_MODALS }
         }
         if (kind in ClozeClasses.DETERMINERS && t.key in ARTICLES) {
             // a ↔ the only when the Hebrew line PROVES it: a cue whose span
@@ -407,6 +573,41 @@ class ClozeDeck(
             index = i, kind = ClozeKind.CLOSED, answer = t.key, pool = pool,
             preferred = preferred, closedKind = kind,
         )
+    }
+
+    /**
+     * Whether a function word at [i] is a MEANING gap at all: the cases the
+     * item audit found where the Hebrew line carries nothing that decides it,
+     * so the learner would be choosing by grammar or by elimination.
+     */
+    private fun admitsClosed(a: Analysed, i: Int, kind: Kind): Boolean {
+        val t = a.tokens[i]
+        val next = a.tokens.getOrNull(i + 1)
+        val prev = a.tokens.getOrNull(i - 1)?.takeIf { !it.clauseEnd }?.key
+        val he = a.sentence.he
+        val heWords = he.split(' ').map { it.trimEnd(*TRAILING) }
+        return when (kind) {
+            Kind.SUBJECT -> {
+                // "If ___ mix flour…" over אם מערבבים: an impersonal Hebrew
+                // present plural names nobody, so you/we/they all fit.
+                val impersonal = heWords.zipWithNext().any { (c, v) ->
+                    c in setOf("אם", "כש", "כאשר") && v.endsWith("ים") && v.length > 3 && v.first() !in "נתיאה"
+                } || heWords.any { w -> w.startsWith("כש") && w.length > 5 && w.endsWith("ים") && w[2] !in "נתיאה" }
+                // A reflexive elsewhere in the line fixes the subject.
+                !impersonal && a.tokens.none { it.key in ClozeClasses.REFLEXIVES }
+            }
+            // "your teeth" over צחצחת שיניים: no possession in the Hebrew.
+            Kind.POSSESSIVE -> ClozeClasses.HEBREW_POSSESSION.any { sig -> heWords.any { it.startsWith(sig) || it == sig } }
+            // "so ___ foam" and "such ___ tall tree" are fixed frames. (A
+            // "the" whose ה the Hebrew hides stays: "in ___ garden" over
+            // בגינה is still decided by reading — no שלי, no הזה — and it
+            // is the owner's own example.)
+            Kind.ARTICLE -> prev !in FRAME_OPENERS
+            Kind.QUANTIFIER -> prev !in FRAME_OPENERS && (prev == null || Kind.SUBJECT !in ClozeClasses.kindsOf(prev))
+            // "this week" is an adverbial the Hebrew writes as השבוע.
+            Kind.DEMONSTRATIVE -> next == null || next.key !in timeNouns
+            else -> true
+        }
     }
 
     private fun agreeingSubjects(a: Analysed, i: Int): Set<String> {
@@ -469,9 +670,9 @@ class ClozeDeck(
     /**
      * Pack words the bank never uses (tiger, zebra, rectangle…) still get a
      * turn as the answer through the pack's own template line, composed with
-     * the pack word's Hebrew. The article is spelled by rule per word, which
-     * is also why a vowel-initial word may have no template: its visible
-     * "an" would leave too few same-article distractors.
+     * the pack word's Hebrew. The article is spelled by rule per word; for a
+     * vowel-initial word its visible "an" would name the first letter, so
+     * there the article joins the gap and every option brings its own.
      */
     private fun templateEntries(pack: PicturePack): List<Entry> {
         val template = pack.cloze ?: return emptyList()
@@ -628,10 +829,12 @@ class ClozeDeck(
     fun item(sentence: PhraseSentence, slot: ClozeSlot, random: Random): ClozeItem {
         val distractors = mutableListOf<String>()
         if (slot.variants.isNotEmpty()) distractors += slot.variants[random.nextInt(slot.variants.size)]
-        distractors += slot.preferred.shuffled(random).take(MIN_DISTRACTORS - distractors.size)
-        if (distractors.size < MIN_DISTRACTORS) {
-            distractors += slot.pool.filter { it !in distractors }.shuffled(random).take(MIN_DISTRACTORS - distractors.size)
-        }
+        // One member per same-meaning set in a row: may and might together
+        // would be two options with one Hebrew.
+        fun fresh(c: String) = c !in distractors && distractors.none { sameMeaning(it, c) }
+        for (c in slot.preferred.shuffled(random)) if (distractors.size < MIN_DISTRACTORS && fresh(c)) distractors += c
+        for (c in slot.pool.shuffled(random)) if (distractors.size < MIN_DISTRACTORS && fresh(c)) distractors += c
+        for (c in slot.pool.shuffled(random)) if (distractors.size < MIN_DISTRACTORS && c !in distractors) distractors += c
         val keys = (distractors + slot.answer).shuffled(random)
         val words = words(sentence.en)
         val nextKey = words.getOrNull(slot.index + 1)?.let { key(it) }
@@ -655,6 +858,23 @@ class ClozeDeck(
         )
     }
 
+    /** For an invariant word (fish, sheep) the Hebrew shows the number the
+     *  English hides: דגים is plural where דג is not. */
+    private fun hebrewPlural(he: String, word: PackWord): Boolean {
+        val forms = ClozeClasses.HEBREW_FORMS[word.en] ?: return false
+        if (ClozeClasses.plural(word.en) != word.en || forms.size < 2) return false
+        val variants = he.split(' ').flatMap { hebrewVariants(it, minLength = 1) }
+        val singular = normaliseHebrew(forms[0])
+        return variants.any { v -> forms.drop(1).any { f -> v.startsWith(normaliseHebrew(f)) } && !v.startsWith(singular + ".") && v != singular }
+    }
+
+    /** Does the line's Hebrew contain any known gloss of [key]? */
+    private fun hebrewMentionsGloss(he: String, key: String): Boolean {
+        val stems = glosses[key].orEmpty().map { it.take(3) }.filter { it.isNotEmpty() }
+        val variants = he.split(' ').flatMap { hebrewVariants(it, minLength = 1) }
+        return variants.any { v -> stems.any { s -> v.startsWith(s) } }
+    }
+
     private fun hebrewMentions(he: String, word: PackWord): Boolean {
         val forms = ClozeClasses.HEBREW_FORMS[word.en] ?: listOf(word.he.substringBefore(' '))
         val stems = forms.map { normaliseHebrew(it.substringBefore(' ')).take(3) }.filter { it.isNotEmpty() }
@@ -676,8 +896,12 @@ class ClozeDeck(
         private const val START = " START"
         private const val END = " END"
         private const val OPEN = " OPEN"
+        private const val TO_INF = " TO"
         private val TRAILING = charArrayOf('.', ',', '!', '?', ';', ':')
         private val ARTICLES = setOf("a", "the")
+        private val FRAME_OPENERS = setOf("so", "such", "too", "how")
+        private val FUTURE_ADVERBS = setOf("now", "soon", "later", "tomorrow")
+        private val PAST_ADVERBS = setOf("yesterday", "ago")
         private val ALL_SUBJECTS = setOf("i", "you", "he", "she", "it", "we", "they")
         private val HIDING_PREFIXES = setOf('ה', 'ב', 'ל', 'כ')
         private val CLITICS = setOf('ה', 'ב', 'ל', 'מ', 'ו', 'ש')

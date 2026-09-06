@@ -1,10 +1,10 @@
 package org.sisam.langtutor.ui.cloze
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -116,6 +117,11 @@ class ClozeViewModel(
     fun onNext() = room.onNext()
     fun onSentenceTapped() = room.onSentenceTapped()
 
+    /** Silence this room now. A chip change keys a NEW ViewModel while this
+     *  one stays retained until the screen leaves, so its voice would
+     *  otherwise carry on over the next room's intro. */
+    fun stop() = room.shutdown()
+
     override fun onCleared() = room.shutdown()
 }
 
@@ -128,7 +134,7 @@ class ClozeViewModel(
  * same kind of room: recognition, not production. What it adds is READING:
  * the learner must read the line, read the Hebrew, and pick the word whose
  * meaning fits, which is the first exercise in the app a learner can finish
- * without saying or hearing a word of English.
+ * without saying a word of English.
  */
 @Composable
 fun ClozeScreen(container: AppContainer) {
@@ -161,6 +167,9 @@ fun ClozeScreen(container: AppContainer) {
         factory = viewModelFactory { initializer { ClozeViewModel(container, source) } },
     )
     val state by viewModel.state.collectAsState()
+    DisposableEffect(viewModel) {
+        onDispose { viewModel.stop() }
+    }
 
     Column(
         modifier = Modifier
@@ -196,9 +205,11 @@ fun ClozeScreen(container: AppContainer) {
                 }
             }
         }
-        FlowRow(
+        // One scrolling line, not a wrapping cloud: forty topics wrapped
+        // would push the sentence and the choices off a phone's screen.
+        Row(
+            modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             FilterChip(
                 selected = source == ClozeSource.All,
@@ -425,11 +436,11 @@ private fun ClozeSentence(
                 } else {
                     Modifier
                 },
-            )
-            .clearAndSetSemantics { contentDescription = description },
+            ),
     ) {
         // A pack word's picture is the second key: shrunk under pressure,
-        // never dropped, and named in Hebrew for a screen reader.
+        // never dropped, and named in Hebrew for a screen reader — which is
+        // why the line's own description below must not swallow it.
         val pack = item.packWord
         if (item.kind == ClozeKind.PACK && pack != null) {
             PictureArtView(
@@ -440,14 +451,16 @@ private fun ClozeSentence(
                 contentDescription = pack.he,
             )
         }
-        GlossedText(
-            words = shown,
-            style = lineStyle,
-            glossStyle = MaterialTheme.typography.titleMedium,
-            translation = item.sentence.he,
-            highlightWordIndex = item.blank,
-            translationCues = if (hint) item.sentence.align else null,
-        )
+        Box(modifier = Modifier.clearAndSetSemantics { contentDescription = description }) {
+            GlossedText(
+                words = shown,
+                style = lineStyle,
+                glossStyle = MaterialTheme.typography.titleMedium,
+                translation = item.sentence.he,
+                highlightWordIndex = item.blank,
+                translationCues = if (hint) item.sentence.align else null,
+            )
+        }
     }
 }
 

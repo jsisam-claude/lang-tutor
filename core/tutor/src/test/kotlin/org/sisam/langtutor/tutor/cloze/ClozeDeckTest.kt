@@ -47,7 +47,9 @@ class ClozeDeckTest {
             for (slot in deck.slots(s)) {
                 slots++
                 val where = "${s.id} @${slot.index} '${slot.answer}'"
-                assertTrue("$where: pool ${slot.pool}", slot.pool.size >= ClozeDeck.MIN_DISTRACTORS)
+                // Three options beyond the answer, of which at most one may
+                // be a family variant.
+                assertTrue("$where: pool ${slot.pool} var ${slot.variants}", slot.pool.size + minOf(1, slot.variants.size) >= ClozeDeck.MIN_DISTRACTORS)
                 assertEquals("$where: repeats", slot.pool.size, slot.pool.toSet().size)
                 assertFalse("$where: offers the answer", slot.answer in slot.pool)
                 assertTrue("$where: blank out of range", slot.index in keys.indices)
@@ -61,6 +63,40 @@ class ClozeDeckTest {
             }
         }
         assertTrue("suspiciously few slots: $slots", slots > 10_000)
+    }
+
+    @Test
+    fun `every distractor is the answer's own class`() {
+        // The doc's central promise: a noun faces nouns, an article faces
+        // determiners. CLOSED by the table, PACK by the pack, WORD by shape.
+        for (s in served) {
+            val words = ClozeDeck.words(s.en)
+            for (slot in deck.slots(s)) {
+                val where = "${s.id} @${slot.index} '${slot.answer}'"
+                when (slot.kind) {
+                    ClozeKind.CLOSED -> {
+                        val kind = checkNotNull(slot.closedKind)
+                        val allowed = if (kind in ClozeClasses.DETERMINERS) {
+                            ClozeClasses.DETERMINERS.flatMap { ClozeClasses.MEMBERS.getValue(it) }
+                        } else {
+                            ClozeClasses.MEMBERS.getValue(kind)
+                        }
+                        for (d in slot.pool) assertTrue("$where: '$d' is not $kind", d in allowed)
+                    }
+                    ClozeKind.PACK -> for (d in slot.pool) {
+                        val pack = packs.first { it.id == slot.packId }
+                        assertTrue("$where: '$d' is not in ${pack.id}", pack.words.any { it.en == d || ClozeClasses.plural(it.en) == d })
+                    }
+                    ClozeKind.WORD -> {
+                        val shape = ClozeClasses.shapeOf(slot.answer, false, false)
+                        for (d in slot.pool) assertEquals("$where: '$d' has another shape", shape, ClozeClasses.shapeOf(d, false, false))
+                        // A family variant is the one allowed exception, and one at most fills an option.
+                        assertTrue("$where: variants ${slot.variants}", slot.variants.all { ClozeClasses.sameStem(slot.answer, it) })
+                    }
+                }
+                assertTrue(words.size > slot.index)
+            }
+        }
     }
 
     @Test
@@ -133,6 +169,24 @@ class ClozeDeckTest {
         // The bread is warm / הלחם חם: ה proves "the", so "a" is a fair distractor.
         val bread = deck.slots(byId("mkt-l1-006")).first { it.answer == "the" }
         assertTrue("a" in bread.pool)
+        // The negative direction: "the" whose cue shows no ה never meets "a".
+        var negatives = 0
+        for (s in served) {
+            val cues = s.align ?: continue
+            val words = ClozeDeck.words(s.en)
+            val he = s.he.split(' ')
+            for (slot in deck.slots(s)) {
+                if (slot.closedKind == null || slot.answer != "the") continue
+                val cue = cues.firstOrNull { slot.index in it.en[0]..it.en[1] } ?: continue
+                val span = (cue.he[0]..cue.he[1]).mapNotNull { he.getOrNull(it) }
+                if (span.none { it.startsWith("ה") }) {
+                    negatives++
+                    assertFalse("${s.id}: 'a' offered without ה in ${span}", "a" in slot.pool)
+                }
+            }
+            assertTrue(words.isNotEmpty())
+        }
+        assertTrue("no negative case found", negatives > 10)
     }
 
     @Test
@@ -162,6 +216,20 @@ class ClozeDeckTest {
         // "___ want to learn English": a base verb rules out he/she/it.
         val want = deck.slots(byId("sch-l2-003")).first { it.closedKind == Kind.SUBJECT }
         assertEquals(setOf("you", "we", "they"), want.pool.toSet())
+        // The table path: every subject gap before an AGREEMENT verb draws
+        // only the pronouns that verb admits.
+        var tablePath = 0
+        for (s in served) {
+            val keys = keysOf(s)
+            for (slot in deck.slots(s)) {
+                if (slot.closedKind != Kind.SUBJECT) continue
+                val verb = keys.getOrNull(slot.index + 1) ?: continue
+                val admitted = ClozeClasses.AGREEMENT[verb] ?: continue
+                tablePath++
+                assertTrue("${s.id}: ${slot.pool} before '$verb'", slot.pool.all { it in admitted })
+            }
+        }
+        assertTrue("the agreement table is never consulted", tablePath > 20)
     }
 
     @Test
@@ -171,7 +239,10 @@ class ClozeDeckTest {
         val bee = deck.slots(byId("bee-l3-001"))
         val saw = bee.first { it.answer == "saw" }
         assertEquals(ClozeKind.WORD, saw.kind)
-        assertTrue("see" in saw.pool)
+        // "see" is the family rival the Hebrew tense decides; it may fill
+        // one option, never all three.
+        assertTrue("see" in saw.variants)
+        assertTrue(saw.pool.none { ClozeClasses.sameStem("saw", it) })
         val noun = bee.first { it.answer == "bee" }
         assertEquals(ClozeKind.PACK, noun.kind)
         assertEquals("animals", noun.packId)
@@ -202,7 +273,11 @@ class ClozeDeckTest {
         for (level in 1..7) {
             val lines = served.filter { it.level == level }
             val with = lines.count { deck.slots(it).isNotEmpty() }
-            assertTrue("L$level: only $with of ${lines.size} lines have a gap", with >= lines.size - 8)
+            // The lines without a gap are one- and two-word exclamations
+            // ("Snow!", "Hot soup!") and questions whose only function word
+            // is decided by agreement; they thin out above Level 2.
+            val allowed = if (level <= 2) 20 else 8
+            assertTrue("L$level: only $with of ${lines.size} lines have a gap", with >= lines.size - allowed)
         }
         val themes = served.map { it.theme }.distinct()
         for (theme in themes) for (level in 1..7) {
@@ -233,6 +308,17 @@ class ClozeDeckTest {
         assertTrue(round.groupingBy { it.kind }.eachCount().values.all { it <= ClozeDeck.MAX_PER_KIND })
         assertEquals(round, deck.round(ClozeSource.All, 3, Random(42)))
         assertTrue(deck.round(ClozeSource.Pack("maths"), 7, Random(1)).isEmpty())
+        // A whole-bank round is six topics, and function-word gaps are the
+        // minority over many rounds — the 2:1 weight the doc promises.
+        var closed = 0
+        var total = 0
+        for (seed in 1..60) {
+            val r = deck.round(ClozeSource.All, 4, Random(seed))
+            assertEquals("seed $seed: topics", r.size, r.map { it.sentence.theme }.toSet().size)
+            closed += r.count { it.kind == ClozeKind.CLOSED }
+            total += r.size
+        }
+        assertTrue("CLOSED share ${closed.toDouble() / total}", closed < total / 2)
     }
 
     @Test
@@ -267,6 +353,63 @@ class ClozeDeckTest {
         // A line with one gap keeps it rather than disappearing.
         val single = sentences.first { deck.slots(it).size == 1 }
         assertNotNull(deck.itemFor(single, Random(1), avoid = deck.slots(single).single().index))
+    }
+
+    @Test
+    fun `the audit's ten ambiguous items are ambiguous no longer`() {
+        // Bare ב: "on the swing" is בנדנדה, so in/at/into are not rivals.
+        val swing = deck.slots(byId("ply-l3-011")).firstOrNull { it.answer == "on" }
+        assertTrue(swing == null || swing.pool.none { it in ClozeClasses.BET_FAMILY })
+        val rain = deck.slots(byId("trv-l3-008")).firstOrNull { it.answer == "in" }
+        assertTrue(rain == null || rain.pool.none { it in ClozeClasses.BET_FAMILY })
+        // "poured into every cup" over לתוך keeps its marker but not "in".
+        val cup = deck.slots(byId("bdy-l6-008")).firstOrNull { it.answer == "into" }
+        assertTrue(cup == null || "in" !in cup.pool)
+        // Impersonal Hebrew (אם מערבבים) names nobody: no subject gap.
+        for (id in listOf("kit-l4-008", "toy-l4-006", "zoo-l4-011")) {
+            assertNull("$id still has a subject gap", deck.slots(byId(id)).firstOrNull { it.closedKind == Kind.SUBJECT })
+        }
+        // The first half of a compound the Hebrew renders as one word.
+        assertNull(deck.slots(byId("kit-l3-007")).firstOrNull { it.answer == "mixing" })
+        assertNull(deck.slots(byId("kit-l6-002")).firstOrNull { it.answer == "cookie" })
+        // little/small are one Hebrew word.
+        val small = deck.slots(byId("ply-l4-002")).firstOrNull { it.answer == "small" }
+        assertTrue(small == null || "little" !in small.pool)
+        // "Will you hand me…?" is the same request as "Can you…?".
+        val request = deck.slots(byId("bth-l4-012")).firstOrNull { it.answer == "will" }
+        assertTrue(request == null || request.pool.none { it in ClozeClasses.REQUEST_MODALS })
+    }
+
+    @Test
+    fun `the audit's grammar leaks are closed`() {
+        // A subject after "Did" draws subjects, never her/him/us.
+        val did = deck.slots(byId("sch-l3-003")).firstOrNull { it.closedKind == Kind.SUBJECT }
+        assertTrue(did == null || did.pool.all { it in setOf("i", "you", "he", "she", "it", "we", "they") })
+        // A base verb after "I" in a present line never offers "fell".
+        for (s in served.filter { it.tense == "present-simple" }) {
+            for (slot in deck.slots(s)) {
+                if (slot.kind != ClozeKind.WORD) continue
+                val left = keysOf(s).getOrNull(slot.index - 1)
+                if (left == "i" || left == "you" || left == "we" || left == "they") {
+                    assertFalse("${s.id}: past form for a present gap", slot.pool.any { it in setOf("fell", "went", "took", "said", "left", "got", "saw") })
+                }
+            }
+        }
+        // A time adverb never clashes with the tense.
+        for (s in served) for (slot in deck.slots(s)) {
+            if (slot.closedKind != Kind.TIME_ADVERB) continue
+            if (s.tense.startsWith("past")) assertTrue("${s.id}: ${slot.pool}", slot.pool.none { it in setOf("tomorrow", "now", "soon", "later") })
+            if (s.tense == "present-simple" || s.tense.startsWith("future")) assertTrue("${s.id}: ${slot.pool}", slot.pool.none { it in setOf("yesterday", "ago") })
+        }
+        // A teddy bear keeps its bear; my heart is not a shape.
+        assertNull(deck.slots(byId("toy-l1-002")).firstOrNull { it.kind == ClozeKind.PACK })
+        assertNull(deck.slots(byId("doc-l2-001")).firstOrNull { it.kind == ClozeKind.PACK })
+        // No two options from one same-meaning set in a row.
+        val round = deck.round(ClozeSource.All, 4, Random(9), size = 40)
+        for (item in round) {
+            val keys = item.options.map { ClozeDeck.key(it.substringAfterLast(' ')) }
+            for (g in ClozeClasses.SAME_MEANING) assertTrue("${item.sentence.id}: $keys", keys.count { it in g } <= 1)
+        }
     }
 
     @Test

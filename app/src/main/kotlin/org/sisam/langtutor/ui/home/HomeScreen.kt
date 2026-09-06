@@ -142,8 +142,8 @@ fun HomeScreen(
         }
         // Read for meaning, tap a word: a sentence with one gap and four
         // choices, keyed by its Hebrew line. The first room a learner can
-        // finish without saying or hearing a word of English — no model, no
-        // mic, and everything in it derived from the phrasebank and packs.
+        // finish without saying a word of English — no model, no mic, and
+        // everything in it derived from the phrasebank and packs.
         Button(onClick = onOpenCloze, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_cloze_room))
         }

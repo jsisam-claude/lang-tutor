@@ -97,7 +97,14 @@ class ClozeOrchestrator(
             return
         }
         _state.value = ClozeState.Asking(round[0], 0, round.size, emptySet())
-        speak(INTRO)
+        // The options are live from the first frame, so the intro holds the
+        // same busy flag a tap would: two lines on one player interleave.
+        busy = true
+        try {
+            speak(INTRO)
+        } finally {
+            busy = false
+        }
     }
 
     fun onOptionPicked(index: Int) {
@@ -137,7 +144,9 @@ class ClozeOrchestrator(
             ClozeOutcome.FOUND -> XP_FOUND
             ClozeOutcome.SHOWN -> 0
         }
-        if (xp > 0) profile.update { it.copy(xp = it.xp + xp) }
+        // A failed write must not take the item down with it: the tally is
+        // already counted and the learner is owed the line.
+        if (xp > 0) runCatching { profile.update { it.copy(xp = it.xp + xp) } }
         _events.emit(ClozeEvent.Resolved(outcome))
         _state.value = ClozeState.Revealed(s.item, s.asked, s.total, outcome, wrongTaps, speaking = true)
         speak(if (outcome == ClozeOutcome.SHOWN) SHOWN_LINE else PRAISES[s.asked % PRAISES.size])

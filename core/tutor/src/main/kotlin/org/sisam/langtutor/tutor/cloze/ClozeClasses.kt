@@ -82,10 +82,46 @@ object ClozeClasses {
      * Hebrew has no present-tense copula to key it from.
      */
     val NEVER: Set<String> = setOf(
-        "of", "than", "like", "as", "not", "with", "without", "for", "about", "by",
+        "of", "than", "as", "not", "with", "without", "for", "about", "by",
         "up", "down", "out", "off", "here", "there", "other", "one",
         "am", "is", "are", "was", "were", "be", "been", "being",
         "have", "has", "had", "having", "do", "does", "did", "done",
+        // Constructs and particles with no Hebrew word of their own.
+        "same", "first", "last", "next", "whole", "almost", "please", "welcome", "mine", "yours",
+        // A reflexive is fixed by its subject; it decides nothing by meaning.
+        "myself", "yourself", "himself", "herself", "itself", "ourselves", "yourselves", "themselves",
+    )
+
+    /** Numerals outside the numbers pack: quantifiers in disguise, like the pack's. */
+    val NUMBER_WORDS: Set<String> = setOf(
+        "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+        "nineteen", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety",
+        "hundred", "thousand",
+    )
+
+    val REFLEXIVES: Set<String> = setOf(
+        "myself", "yourself", "himself", "herself", "itself", "ourselves", "yourselves", "themselves",
+    )
+
+    /**
+     * Prepositions Hebrew renders with a bare ב unless a marker word is
+     * present: "on the swing" is בנדנדה, "in the rain" is בגשם. Without the
+     * marker (על, לתוך, דרך, בתוך) nothing in this family is a fair rival.
+     */
+    val BET_FAMILY: Set<String> = setOf("in", "at", "inside", "on", "into", "through")
+    val BET_MARKERS: Map<String, String> = mapOf("on" to "על", "into" to "לתוך", "through" to "דרך", "inside" to "בתוך")
+
+    /** "Will you…?" and "Can you…?" are one request in Hebrew (תיתן לי). */
+    val REQUEST_MODALS: Set<String> = setOf("will", "can", "could", "would")
+
+    /** The conjunctions that join two like things; the rest open a clause. */
+    val COORDINATORS: Set<String> = setOf("and", "but", "or", "so")
+
+    /** The dative and possessive signals a Hebrew line carries for "my/your":
+     *  של־, a dative clitic (לי, לך…) or a suffixed kin noun (אחי, אמי). */
+    val HEBREW_POSSESSION: List<String> = listOf(
+        "של", "לי", "לך", "לו", "לה", "לנו", "לכם", "לכן", "להם", "להן",
+        "אחי", "אחותי", "אמי", "אבי", "הוריי", "סבי", "סבתי", "אחיך", "אחותך",
     )
 
     /** The glue words; never a distractor in any class even where a member
@@ -104,9 +140,15 @@ object ClozeClasses {
     val SAME_MEANING: List<Set<String>> = listOf(
         setOf("may", "might"), setOf("can", "could"), setOf("will", "shall"),
         setOf("if", "whether"), setOf("because", "since"), setOf("although", "though"),
-        setOf("in", "at", "inside"), setOf("over", "above"), setOf("under", "below"),
+        setOf("in", "at", "inside", "into"), setOf("over", "above"), setOf("under", "below"),
         setOf("every", "each"), setOf("some", "any"), setOf("many", "much"),
         setOf("also", "too"), setOf("still", "yet"),
+        // Open-class pairs the align cues stop short of (they end at Level
+        // 3), found by the item audit: קטן, גדול, and the hypernym pair
+        // ציפור/ברווז, where a duck is also a bird.
+        setOf("little", "small"), setOf("big", "large"), setOf("bird", "duck"),
+        // Hebrew has no neuter: his/its are both שלו, him/it both אותו.
+        setOf("his", "its"), setOf("him", "it"),
     )
 
     /** Number agreement for determiners and quantifiers: "these cat" is a
@@ -129,6 +171,9 @@ object ClozeClasses {
         "have" to setOf("i", "you", "we", "they"),
         "does" to setOf("he", "she", "it"),
         "do" to setOf("i", "you", "we", "they"),
+        // "Did ___ finish?" admits every person — but naming it here is what
+        // makes a subject after "did" a subject and not an object.
+        "did" to setOf("i", "you", "he", "she", "it", "we", "they"),
     )
 
     /** Words spelled with a consonant and said with a vowel — the whole
@@ -166,6 +211,8 @@ object ClozeClasses {
         "nine" to listOf("תשע", "תשעה"),
         "ten" to listOf("עשר", "עשרה"),
         "cow" to listOf("פרה", "פרות"),
+        "fish" to listOf("דג", "דגים"),
+        "sheep" to listOf("כבשה", "כבשים", "כבש"),
         "goat" to listOf("עז", "עיזים"),
         "ladybug" to listOf("פרת משה", "פרות משה"),
         "snail" to listOf("חילזון", "חלזונות"),
@@ -219,26 +266,38 @@ object ClozeClasses {
      * the blank's index space; [hebrew] is the line's meaning, read only for
      * `that`.
      */
-    fun roleOf(keys: List<String>, shapes: List<Shape>, i: Int, hebrew: String): Role {
+    fun roleOf(
+        keys: List<String>,
+        shapes: List<Shape>,
+        i: Int,
+        hebrew: String,
+        /** Indexes that open a clause after punctuation ("…bed, you fall"),
+         *  where a pronoun is a subject exactly as at index 0. */
+        clauseStarts: Set<Int> = emptySet(),
+    ): Role {
         val key = keys[i]
         if (key in NEVER || key.contains('\'')) return Role.Never
         val next = keys.getOrNull(i + 1)
         val nextOpen = next != null && !isMember(next) && next !in NEVER && !next.contains('\'')
         val nextShape = shapes.getOrNull(i + 1)
         val last = i == keys.lastIndex
+        val prev = if (i in clauseStarts) null else keys.getOrNull(i - 1)
         fun closed(kind: Kind): Role = Role.Closed(kind)
+        if (key in NUMBER_WORDS) return Role.Never
         return when (key) {
+            // The verb after a subject or a do-form; the preposition
+            // ("looks like") everywhere else, which is glue.
+            "like" -> if (prev != null && (Kind.SUBJECT in kindsOf(prev) || prev in setOf("don't", "doesn't", "didn't"))) Role.Open else Role.Never
             "her" -> if (nextOpen) closed(Kind.POSSESSIVE) else closed(Kind.OBJECT)
             "his" -> if (nextOpen) closed(Kind.POSSESSIVE) else Role.Never
             "you", "it" -> {
-                val subjectPosition = i == 0 ||
+                val subjectPosition = i == 0 || i in clauseStarts ||
                     (next != null && (Kind.MODAL in kindsOf(next) || next in AGREEMENT ||
                         Kind.TIME_ADVERB in kindsOf(next) || Kind.FREQUENCY in kindsOf(next) ||
                         Kind.DEGREE in kindsOf(next) || nextOpen)) &&
-                    keys.getOrNull(i - 1).let { prev ->
-                        prev == null || Kind.CONJUNCTION in kindsOf(prev) || Kind.QUESTION in kindsOf(prev) ||
-                            Kind.MODAL in kindsOf(prev) || prev in AGREEMENT || prev == "so"
-                    }
+                    (prev == null || Kind.CONJUNCTION in kindsOf(prev) || Kind.QUESTION in kindsOf(prev) ||
+                        Kind.TIME_PREP in kindsOf(prev) || Kind.MODAL in kindsOf(prev) ||
+                        prev in AGREEMENT || prev == "so")
                 if (subjectPosition) closed(Kind.SUBJECT) else closed(Kind.OBJECT)
             }
             "that" -> if (nextOpen && DEMONSTRATIVE_HEBREW.any { it in hebrew }) closed(Kind.DEMONSTRATIVE) else Role.Never
@@ -248,7 +307,9 @@ object ClozeClasses {
                 next != null && Kind.SUBJECT in kindsOf(next) -> closed(Kind.CONJUNCTION)
                 else -> closed(Kind.TIME_PREP)
             }
-            "to" -> if (nextOpen && nextShape == Shape.BASE) Role.Never else closed(Kind.PLACE_PREP)
+            // The infinitive marker before a verb (to play, to order, to do)
+            // is not a place; the shape test must also catch -er verbs.
+            "to" -> if (next in setOf("do", "be", "have") || (nextOpen && (nextShape == Shape.BASE || nextShape == Shape.ER))) Role.Never else closed(Kind.PLACE_PREP)
             "so" -> if (next != null && Kind.SUBJECT in kindsOf(next)) closed(Kind.CONJUNCTION) else Role.Never
             "no" -> if (nextOpen) closed(Kind.QUANTIFIER) else Role.Never
             "much" -> if (nextOpen) closed(Kind.QUANTIFIER) else Role.Never
@@ -258,6 +319,10 @@ object ClozeClasses {
                 when {
                     kinds.isEmpty() -> if (shapes[i] == Shape.PROPER) Role.Never else Role.Open
                     kinds.size != 1 -> Role.Never // a two-class word with no rule above: the test forbids this
+                    // A modal is followed by a verb, a subject or "not"; a
+                    // "can" before "is" is a watering can.
+                    kinds.first() == Kind.MODAL ->
+                        if (next == null || next in BE_FORMS || next in AGREEMENT || (isMember(next) && kindsOf(next).any { it in DETERMINERS })) Role.Never else closed(Kind.MODAL)
                     // A determiner is only a determiner before a word it
                     // determines; "This is my pillow" and "all of them" are
                     // pronouns, and a pronoun has no same-class options.
@@ -272,7 +337,7 @@ object ClozeClasses {
     /** The words [roleOf] has a positional rule for; the test pins the set
      *  of multi-class members to exactly this, so a new overlap cannot slip
      *  in without a rule. */
-    val RESOLVED_BY_POSITION: Set<String> = setOf("you", "it", "her", "his", "that", "when", "since", "until")
+    val RESOLVED_BY_POSITION: Set<String> = setOf("you", "it", "her", "his", "that", "when", "since", "until", "like", "to")
 
     /** a/an by the next word: a vowel LETTER or a silent-h word takes "an". */
     fun articleFor(nextKey: String?): String {
@@ -294,12 +359,51 @@ object ClozeClasses {
         }
     }
 
-    /** True when the two keys are inflections of one stem, by a crude
-     *  suffix rule: warm/warmed, cat/cats, play/playing. Irregular pairs
-     *  (see/saw) are not caught, which is the point — "saw | see" is the
-     *  owner's own example of a fair item, decided by the Hebrew tense. */
+    /**
+     * The irregular verbs the bank uses, as families. Authored because no
+     * rule derives went from go; test-gated like every list here. They serve
+     * the owner's own example — "saw | see" is a fair item, decided by the
+     * Hebrew tense — and they say which forms are never a base form.
+     */
+    val IRREGULAR_FAMILIES: List<Set<String>> = listOf(
+        setOf("see", "saw", "seen"), setOf("go", "went", "gone"), setOf("eat", "ate", "eaten"),
+        setOf("find", "found"), setOf("make", "made"), setOf("take", "took", "taken"),
+        setOf("give", "gave", "given"), setOf("come", "came"), setOf("run", "ran"),
+        setOf("sing", "sang", "sung"), setOf("swim", "swam", "swum"), setOf("buy", "bought"),
+        setOf("tell", "told"), setOf("say", "said"), setOf("get", "got", "gotten"),
+        setOf("sleep", "slept"), setOf("fly", "flew", "flown"), setOf("drink", "drank", "drunk"),
+        setOf("write", "wrote", "written"), setOf("bring", "brought"), setOf("leave", "left"),
+        setOf("grow", "grew", "grown"), setOf("know", "knew", "known"), setOf("build", "built"),
+        setOf("feed", "fed"), setOf("ride", "rode", "ridden"), setOf("break", "broke", "broken"),
+        setOf("wear", "wore", "worn"), setOf("forget", "forgot", "forgotten"), setOf("hear", "heard"),
+        setOf("meet", "met"), setOf("sit", "sat"), setOf("stand", "stood"), setOf("teach", "taught"),
+        setOf("throw", "threw", "thrown"), setOf("win", "won"), setOf("lose", "lost"),
+        setOf("keep", "kept"), setOf("hold", "held"), setOf("draw", "drew", "drawn"),
+        setOf("speak", "spoke", "spoken"), setOf("fall", "fell", "fallen"), setOf("catch", "caught"),
+        setOf("choose", "chose", "chosen"), setOf("hide", "hid", "hidden"), setOf("wake", "woke", "woken"),
+        setOf("send", "sent"), setOf("feel", "felt"), setOf("blow", "blew", "blown"),
+        setOf("sell", "sold"), setOf("hang", "hung"), setOf("bite", "bit", "bitten"),
+        setOf("forgive", "forgave", "forgiven"), setOf("burn", "burnt"), setOf("spend", "spent"),
+        setOf("think", "thought"), setOf("begin", "began", "begun"), setOf("shake", "shook", "shaken"),
+    )
+
+    private val irregularFamilyOf: Map<String, Set<String>> = buildMap {
+        for (family in IRREGULAR_FAMILIES) for (w in family) put(w, family)
+    }
+
+    /** A past or participle form of an irregular verb: never a base form,
+     *  whatever context the bank happens to attest it in. */
+    fun isIrregularNonBase(key: String): Boolean {
+        val family = irregularFamilyOf[key] ?: return false
+        return key != family.first()
+    }
+
+    /** True when the two keys are inflections of one verb or noun: by the
+     *  crude suffix rule (warm/warmed, cat/cats, play/playing) or by an
+     *  authored irregular family (see/saw). */
     fun sameStem(a: String, b: String): Boolean {
         if (a == b) return true
+        irregularFamilyOf[a]?.let { if (b in it) return true }
         return stem(a) == stem(b)
     }
 

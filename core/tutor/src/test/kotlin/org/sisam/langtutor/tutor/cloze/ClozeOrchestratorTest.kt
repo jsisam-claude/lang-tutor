@@ -68,6 +68,10 @@ class ClozeOrchestratorTest {
             f.spoken(),
         )
         assertEquals(ClozeOrchestrator.XP_FIRST_TRY, f.profile.current().xp)
+        // The ledger the doc describes, in numbers rather than by constant.
+        assertEquals(5, ClozeOrchestrator.XP_FIRST_TRY)
+        assertEquals(2, ClozeOrchestrator.XP_FOUND)
+        assertTrue(ClozeOrchestrator.XP_FOUND in 1 until ClozeOrchestrator.XP_FIRST_TRY)
         val s = f.room.state.value as ClozeState.Revealed
         assertEquals(ClozeOutcome.FIRST_TRY, s.outcome)
         assertFalse(s.speaking)
@@ -166,6 +170,19 @@ class ClozeOrchestratorTest {
         advanceUntilIdle()
         assertEquals("I see a bee.", f.spoken().last())
         assertEquals(2, f.spoken().count { it == "I see a bee." })
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `a tap during the intro is dropped, not spoken over it`() = runTest {
+        val f = Fixture(this)
+        launch { f.room.startRound(items) }
+        advanceTimeBy(10) // mid-intro
+        f.room.onOptionPicked(1)
+        advanceUntilIdle()
+        assertTrue(f.room.state.value is ClozeState.Asking)
+        assertTrue(f.events.isEmpty())
+        assertEquals(listOf(ClozeOrchestrator.INTRO), f.spoken())
         f.collector.cancel()
     }
 
