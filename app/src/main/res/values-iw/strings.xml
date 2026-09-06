@@ -136,6 +136,15 @@
     <string name="home_picture_room">🖼️ מילים בתמונות</string>
     <string name="picture_title">מילים בתמונות</string>
     <string name="home_cloze_room">✏️ השלמת משפטים</string>
+    <string name="home_story_room">📖 סיפורים</string>
+    <string name="story_pick">מה נקרא?</string>
+    <string name="story_none">עדיין אין סיפורים ברמה שלך — אפשר לשנות את הרמה באזור ההורים.</string>
+    <string name="story_pages">%1$d עמודים</string>
+    <string name="story_back">אחורה</string>
+    <string name="story_finish">הסוף</string>
+    <string name="story_done">קראת את כל הסיפור! 🎉</string>
+    <string name="story_read_it_again">לקרוא שוב</string>
+    <string name="story_read_again">לשמוע את העמוד שוב</string>
     <string name="cloze_title">השלמת משפטים</string>
     <string name="cloze_hint">איזו מילה חסרה? העברית מגלה.</string>
     <string name="cloze_blank_spoken">חסר</string>

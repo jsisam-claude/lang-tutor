@@ -164,10 +164,10 @@ Ties directly to the queued short-stories work.
   words grouped by rime, each tagged with the graphemes it needs so a word
   never appears before its letters do.
 - **Sight words** [small] — "words the letters lie about", ~100 by frequency.
-- **Decodable story mode** [medium] — the phrasebank as pages rather than
-  flashcards, with a decodability pass in `scripts/phrasebank-lint.py`. This
-  is the strongest existing answer to the short-stories question, because it
-  makes "which stories" a *derivable* property rather than a taste judgement.
+- **Decodable story mode** [medium] — *built*, and it did settle the
+  short-stories question the way this predicted: `docs/short-stories.md`.
+  Authored stories rather than the bank as pages, but decodability is the
+  admission rule and it is enforced by a test.
 
 ### 6. New rounds over content that already exists
 

@@ -32,6 +32,7 @@ import org.sisam.langtutor.ui.parent.ParentZoneScreen
 import org.sisam.langtutor.ui.reward.RewardOverlay
 import org.sisam.langtutor.ui.reward.StickerMilestones
 import org.sisam.langtutor.ui.sticker.StickerRoom
+import org.sisam.langtutor.ui.story.StoryScreen
 import org.sisam.langtutor.ui.picture.PictureScreen
 import org.sisam.langtutor.ui.twisters.TwisterScreen
 import org.sisam.langtutor.ui.vocab.VocabScreen
@@ -45,6 +46,7 @@ object Routes {
     const val PICTURES = "pictures"
     const val TWISTERS = "twisters"
     const val CLOZE = "cloze"
+    const val STORIES = "stories"
 
     // Unit-scoped destinations: the tapped unit travels in the route so every
     // screen teaches THAT unit (previously all roads led to unit-001).
@@ -60,7 +62,7 @@ object Routes {
      *  room may interrupt, and the only ones it returns to. */
     fun isLearningRoom(route: String?) =
         route == LESSON || route == CONVERSATION || route == VOCAB ||
-            route == PICTURES || route == TWISTERS || route == CLOZE
+            route == PICTURES || route == TWISTERS || route == CLOZE || route == STORIES
 }
 
 @Composable
@@ -80,6 +82,7 @@ fun AppNav(container: AppContainer) {
                     onOpenPictures = { navController.navigate(Routes.PICTURES) },
                     onOpenTwisters = { navController.navigate(Routes.TWISTERS) },
                     onOpenCloze = { navController.navigate(Routes.CLOZE) },
+                    onOpenStories = { navController.navigate(Routes.STORIES) },
                 )
             }
             composable(
@@ -98,6 +101,7 @@ fun AppNav(container: AppContainer) {
             composable(Routes.PICTURES) { PictureScreen(container) }
             composable(Routes.TWISTERS) { TwisterScreen(container) }
             composable(Routes.CLOZE) { ClozeScreen(container) }
+            composable(Routes.STORIES) { StoryScreen(container) }
             composable(Routes.PARENT) { ParentZoneScreen(container) }
             composable(Routes.CHAT) { ChatScreen(container) }
             composable(Routes.STICKER) {

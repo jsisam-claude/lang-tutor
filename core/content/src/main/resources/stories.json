@@ -1,0 +1,390 @@
+{
+  "format": "tuki-stories-v1",
+  "notes": "Stories a learner can read without meeting an untaught word: every English word appears in the phrasebank at or below the story Level, which StoriesTest enforces (docs/short-stories.md). Hebrew is the natural meaning, not a crib of the English word order; he_f only where the written feminine differs; the Hebrew-letter pronunciation is derived at runtime and never authored. review: pending until a native speaker has read it end to end.",
+  "stories": [
+    {
+      "id": "sign-by-the-bench",
+      "level": 2,
+      "title": {
+        "en": "No Bus Today",
+        "he": "אין אוטובוס היום"
+      },
+      "pages": [
+        {
+          "en": "I am waiting for the bus. I want to go to the market.",
+          "he": "אני מחכה לאוטובוס. אני רוצה להגיע לשוק."
+        },
+        {
+          "en": "The bus is late. I am looking at the clock.",
+          "he": "האוטובוס מאחר. אני מסתכל על השעון.",
+          "he_f": "האוטובוס מאחר. אני מסתכלת על השעון."
+        },
+        {
+          "en": "A man is sitting near me. He is looking at a big map.",
+          "he": "איש מתיישב לידי. הוא מסתכל במפה גדולה."
+        },
+        {
+          "en": "He is turning the map this way and that way. He can't find the market.",
+          "he": "הוא מסובב את המפה לכאן ולכאן. הוא לא מוצא את השוק."
+        },
+        {
+          "en": "I can help. I show the way on the map.",
+          "he": "אני יכול לעזור. אני מראה לו את הדרך על המפה.",
+          "he_f": "אני יכולה לעזור. אני מראה לו את הדרך על המפה."
+        },
+        {
+          "en": "We are looking at the map together. We are not looking at the road.",
+          "he": "אנחנו מסתכלים במפה יחד. אנחנו לא מסתכלים על הכביש."
+        },
+        {
+          "en": "We wait for an hour. No bus.",
+          "he": "אנחנו מחכים שעה. אין אוטובוס."
+        },
+        {
+          "en": "The man is looking at a sign near the bench. No bus today.",
+          "he": "האיש מסתכל בשלט ליד הספסל. אין אוטובוס היום."
+        },
+        {
+          "en": "We are laughing. We walk to the market together.",
+          "he": "אנחנו צוחקים. אנחנו הולכים לשוק יחד."
+        }
+      ],
+      "review": "pending"
+    },
+    {
+      "id": "the-book-among-the-plates",
+      "level": 2,
+      "title": {
+        "en": "The Book and the Plates",
+        "he": "הספר והצלחות"
+      },
+      "pages": [
+        {
+          "en": "My book from the library is late. Today I want to take it to the library.",
+          "he": "הספר שלי מהספרייה באיחור. היום אני רוצה להחזיר אותו."
+        },
+        {
+          "en": "The book is not on my desk. It is not on the shelf.",
+          "he": "הספר לא על השולחן שלי. הוא לא על המדף."
+        },
+        {
+          "en": "I am looking in my bag and by my bed.",
+          "he": "אני מחפש בתיק שלי וליד המיטה.",
+          "he_f": "אני מחפשת בתיק שלי וליד המיטה."
+        },
+        {
+          "en": "Mom is looking in the car. Dad is looking by the door.",
+          "he": "אמא מחפשת במכונית. אבא מחפש ליד הדלת."
+        },
+        {
+          "en": "No one can find the book. In one hour the library is closing.",
+          "he": "אף אחד לא מוצא את הספר. עוד שעה הספרייה נסגרת."
+        },
+        {
+          "en": "Grandma is not looking for the book. She is making tea.",
+          "he": "סבתא לא מחפשת את הספר. היא מכינה תה."
+        },
+        {
+          "en": "She is taking a cup from the shelf in the kitchen. And here is my book, with the plates.",
+          "he": "היא לוקחת כוס מהמדף במטבח. והנה הספר שלי, בין הצלחות."
+        },
+        {
+          "en": "Every morning I am reading in the kitchen. Every morning I am eating here.",
+          "he": "כל בוקר אני קורא במטבח. כל בוקר אני אוכל כאן.",
+          "he_f": "כל בוקר אני קוראת במטבח. כל בוקר אני אוכלת כאן."
+        },
+        {
+          "en": "Thank you, Grandma. Now the book is in my bag and I am walking to the library.",
+          "he": "תודה, סבתא. עכשיו הספר בתיק שלי ואני הולך לספרייה.",
+          "he_f": "תודה, סבתא. עכשיו הספר בתיק שלי ואני הולכת לספרייה."
+        }
+      ],
+      "review": "pending"
+    },
+    {
+      "id": "peaches-and-blue-paint",
+      "level": 3,
+      "title": {
+        "en": "One Ladder",
+        "he": "סולם אחד"
+      },
+      "pages": [
+        {
+          "en": "Dana had to pick her peaches. They were high in the tree.",
+          "he": "דנה הייתה צריכה לקטוף את האפרסקים שלה. הם היו גבוה בעץ."
+        },
+        {
+          "en": "Dave had to paint his wall. His paint was blue and new.",
+          "he": "דייב היה צריך לצבוע את הקיר שלו. הצבע שלו היה כחול וחדש."
+        },
+        {
+          "en": "The yard had one old ladder. Dana and Dave came to it at the same time.",
+          "he": "בחצר היה סולם ישן אחד. דנה ודייב הגיעו אליו בדיוק באותו רגע."
+        },
+        {
+          "en": "Dana said she was first. Dave said he was first too.",
+          "he": "דנה אמרה שהיא הייתה ראשונה. דייב אמר שהוא היה ראשון."
+        },
+        {
+          "en": "Dana took the ladder, but it was very heavy. Dave took it, and it was heavy for him too.",
+          "he": "דנה הרימה את הסולם, אבל הוא היה כבד מאוד. דייב הרים אותו, וגם בשבילו הוא היה כבד."
+        },
+        {
+          "en": "Dana took one leg of the ladder and did not say a word. Dave took the other leg, and the ladder came up.",
+          "he": "דנה תפסה צד אחד של הסולם ולא אמרה מילה. דייב תפס את הצד השני, והסולם עלה."
+        },
+        {
+          "en": "They carried it to the tree. Dave held the ladder, and Dana picked her peaches.",
+          "he": "הם סחבו אותו אל העץ. דייב החזיק את הסולם, ודנה קטפה את האפרסקים שלה."
+        },
+        {
+          "en": "After that, they carried it to the wall. Dana held the ladder, and Dave painted the wall blue.",
+          "he": "אחר כך הם סחבו אותו אל הקיר. דנה החזיקה את הסולם, ודייב צבע את הקיר בכחול."
+        },
+        {
+          "en": "Dana gave Dave a peach. They sat on the grass by the blue wall.",
+          "he": "דנה נתנה לדייב אפרסק. הם ישבו על הדשא ליד הקיר הכחול."
+        }
+      ],
+      "review": "pending"
+    },
+    {
+      "id": "plant-by-the-bus-wall",
+      "level": 3,
+      "title": {
+        "en": "The Plant by the Wall",
+        "he": "הצמח שליד הקיר"
+      },
+      "pages": [
+        {
+          "en": "Every morning Dana waited for the bus by the same wall.",
+          "he": "כל בוקר דנה חיכתה לאוטובוס ליד אותו קיר."
+        },
+        {
+          "en": "One day she saw a small green plant by the wall. It was very dry.",
+          "he": "יום אחד היא ראתה צמח קטן וירוק ליד הקיר. הוא היה יבש מאוד."
+        },
+        {
+          "en": "People walked by it. Dana watched it for a long time.",
+          "he": "אנשים עברו לידו. דנה הסתכלה עליו הרבה זמן."
+        },
+        {
+          "en": "The next morning she brought water in an old bottle. She poured a little on the plant and left the bottle by the wall.",
+          "he": "למחרת בבוקר היא הביאה מים בבקבוק ישן. היא שפכה מעט מים על הצמח והשאירה את הבקבוק ליד הקיר."
+        },
+        {
+          "en": "Every morning she gave the plant more water. It grew two new leaves.",
+          "he": "כל בוקר היא נתנה לצמח עוד מים. צמחו לו שני עלים חדשים."
+        },
+        {
+          "en": "Dana went to her grandpa for a week. The bottle by the wall was empty.",
+          "he": "דנה נסעה לשבוע לסבא שלה. הבקבוק שליד הקיר היה ריק."
+        },
+        {
+          "en": "At her grandpa's house the sun was hot. Did the plant have water?",
+          "he": "אצל סבא היה חם. האם היו לצמח מים?"
+        },
+        {
+          "en": "She came back on a hot afternoon and went to the wall. The plant was green and tall, with a small yellow flower.",
+          "he": "היא חזרה אחר הצהריים, ביום חם, והלכה אל הקיר. הצמח היה ירוק וגבוה, ועליו פרח צהוב קטן."
+        },
+        {
+          "en": "The old bottle was full of water.",
+          "he": "הבקבוק הישן היה מלא מים."
+        }
+      ],
+      "review": "pending"
+    },
+    {
+      "id": "rocket-in-the-recycling",
+      "level": 3,
+      "title": {
+        "en": "The Rocket in the Recycling",
+        "he": "החללית שבפח המיחזור"
+      },
+      "pages": [
+        {
+          "en": "Yoav, my brother, made a rocket from boxes. It had a small red door.",
+          "he": "יואב, אח שלי, בנה חללית מקופסאות. הייתה לה דלת אדומה קטנה."
+        },
+        {
+          "en": "On the weekend I cleaned our room. I saw old boxes on the floor, and I carried them out to the recycling.",
+          "he": "בסוף השבוע סידרתי את החדר שלנו. ראיתי קופסאות ישנות על הרצפה, והוצאתי אותן לפח המיחזור."
+        },
+        {
+          "en": "In the afternoon Yoav came home. He went to his bed, but he did not find the rocket.",
+          "he": "אחר הצהריים יואב חזר הביתה. הוא ניגש למיטה שלו ולא מצא את החללית."
+        },
+        {
+          "en": "I told him about the recycling. He was very quiet.",
+          "he": "סיפרתי לו על פח המיחזור. הוא היה שקט מאוד."
+        },
+        {
+          "en": "It was dark and it rained. I took a flashlight and went out.",
+          "he": "בחוץ היה חושך וירד גשם. לקחתי פנס ויצאתי."
+        },
+        {
+          "en": "I found the boxes, but they were wet and soft. A wet box is not a rocket.",
+          "he": "מצאתי את הקופסאות, אבל הן היו רטובות ורכות. קופסה רטובה היא לא חללית."
+        },
+        {
+          "en": "So I went to find dry boxes. I found two under my bed and one in the kitchen.",
+          "he": "אז הלכתי לחפש קופסאות יבשות. מצאתי שתיים מתחת למיטה שלי ואחת במטבח."
+        },
+        {
+          "en": "I sat at the kitchen table and made a new rocket. The new door was too big, but it was a door.",
+          "he": "ישבתי ליד שולחן המטבח ובניתי חללית חדשה. הדלת החדשה יצאה גדולה מדי, אבל היא הייתה דלת."
+        },
+        {
+          "en": "In the morning Yoav saw the new rocket on the table. He wrote his name on the door, and he gave me the pen.",
+          "he": "בבוקר יואב ראה את החללית החדשה על השולחן. הוא כתב את השם שלו על הדלת, ונתן לי את העט."
+        }
+      ],
+      "review": "pending"
+    },
+    {
+      "id": "one-word-at-the-market",
+      "level": 4,
+      "title": {
+        "en": "One Word",
+        "he": "מילה אחת"
+      },
+      "pages": [
+        {
+          "en": "On Friday my mother was sick. She gave me her basket and a list of six things.",
+          "he": "ביום שישי אמא שלי הייתה חולה. היא נתנה לי את הסל שלה ורשימה של שישה דברים."
+        },
+        {
+          "en": "Go to the market, she said. It was my first time by myself.",
+          "he": "לך לשוק, היא אמרה. זו הייתה הפעם הראשונה שלי לבד.",
+          "he_f": "לכי לשוק, היא אמרה. זו הייתה הפעם הראשונה שלי לבד."
+        },
+        {
+          "en": "The garlic was the problem. On the way I said my question twice: Do you have garlic, please?",
+          "he": "השום היה הבעיה. בדרך אמרתי את השאלה שלי פעמיים: יש לך שום, בבקשה?"
+        },
+        {
+          "en": "The market was louder than our street. Everyone was quick, and I was slow.",
+          "he": "השוק היה רועש יותר מהרחוב שלנו. כולם היו מהירים, ואני הייתי אטי.",
+          "he_f": "השוק היה רועש יותר מהרחוב שלנו. כולם היו מהירים, ואני הייתי אטית."
+        },
+        {
+          "en": "I found the bread, the cheese, the eggs and the rice. After that I came to the last shop.",
+          "he": "מצאתי את הלחם, הגבינה, הביצים והאורז. אחר כך הגעתי לדוכן האחרון."
+        },
+        {
+          "en": "The seller was busy with a man and his peppers, so I waited.",
+          "he": "המוכר היה עסוק עם איש ועם הפלפלים שלו, אז חיכיתי."
+        },
+        {
+          "en": "After a minute the man went away, and the seller turned to me. My question was not in my mouth.",
+          "he": "אחרי דקה האיש הלך משם, והמוכר פנה אליי. השאלה שלי נעלמה לי מהפה."
+        },
+        {
+          "en": "Garlic? I said. It was one word, not my question.",
+          "he": "שום? אמרתי. מילה אחת, לא השאלה שלי."
+        },
+        {
+          "en": "He put the garlic and the tomatoes in my basket. Come back on Friday, he said. The tomatoes will be better.",
+          "he": "הוא שם את השום ואת העגבניות בסל שלי. תחזור ביום שישי, הוא אמר. העגבניות יהיו יותר טובות.",
+          "he_f": "הוא שם את השום ואת העגבניות בסל שלי. תחזרי ביום שישי, הוא אמר. העגבניות יהיו יותר טובות."
+        }
+      ],
+      "review": "pending"
+    },
+    {
+      "id": "rain-on-the-window",
+      "level": 4,
+      "title": {
+        "en": "Rain on the Window",
+        "he": "גשם על החלון"
+      },
+      "pages": [
+        {
+          "en": "It was Saturday, and Yoav was going to paint the sea. He put his notebook and his paintbrush in his bag and walked to the beach.",
+          "he": "היה יום שבת, ויואב התכוון לצייר את הים. הוא שם את המחברת ואת המכחול בתיק והלך לחוף."
+        },
+        {
+          "en": "The sky turned gray. The wind was cold, and the rain came down hard.",
+          "he": "השמיים נעשו אפורים. הרוח הייתה קרה, ואז התחיל לרדת גשם חזק."
+        },
+        {
+          "en": "Yoav ran to a little cafe near the beach and sat by the window. He waited for the rain to stop.",
+          "he": "יואב רץ לבית קפה קטן ליד החוף והתיישב ליד החלון. הוא חיכה שהגשם ייפסק."
+        },
+        {
+          "en": "The rain did not stop.",
+          "he": "הגשם לא נפסק."
+        },
+        {
+          "en": "Water ran down the window. Through the water, the sea and the sky were the same gray.",
+          "he": "מים זלגו על החלון. מבעד למים, הים והשמיים היו באותו צבע אפור."
+        },
+        {
+          "en": "Yoav opened his notebook. He painted the window, not the sea.",
+          "he": "יואב פתח את המחברת. הוא צייר את החלון, לא את הים."
+        },
+        {
+          "en": "The waiter brought tea and put it on the table. He did not go away.",
+          "he": "המלצר הביא תה והניח אותו על השולחן. הוא לא זז משם."
+        },
+        {
+          "en": "The waiter said that it was the sea. Yoav said that it was the window.",
+          "he": "המלצר אמר שזה הים. יואב אמר שזה החלון."
+        },
+        {
+          "en": "Yoav gave him the page. The waiter put it on the wall by the door, over the wet umbrellas.",
+          "he": "יואב נתן לו את הדף. המלצר תלה אותו על הקיר ליד הדלת, מעל המטריות הרטובות."
+        }
+      ],
+      "review": "pending"
+    },
+    {
+      "id": "the-dry-porch",
+      "level": 4,
+      "title": {
+        "en": "A Very Small Promise",
+        "he": "הבטחה קטנה מאוד"
+      },
+      "pages": [
+        {
+          "en": "Dana was going away for a week. Water the small plant on my porch, she said to Yoav.",
+          "he": "דנה נסעה לשבוע. תשקה בבקשה את העציץ הקטן שבמרפסת, היא אמרה ליואב."
+        },
+        {
+          "en": "I will not forget, Yoav said. It was a very small promise.",
+          "he": "לא אשכח, אמר יואב. זו הייתה הבטחה קטנה מאוד."
+        },
+        {
+          "en": "Every evening he took her key and went up. The plant was not bigger than his hand.",
+          "he": "כל ערב הוא לקח את המפתח שלה ועלה אליה. העציץ לא היה גדול מכף היד שלו."
+        },
+        {
+          "en": "One day the rain came. It rained all afternoon and all evening.",
+          "he": "יום אחד הגיע הגשם. ירד גשם כל אחר הצהריים וכל הערב."
+        },
+        {
+          "en": "If it rains, plants get water. Yoav was tired, and the rain was loud.",
+          "he": "אם יורד גשם, הצמחים מקבלים מים. יואב היה עייף, והגשם היה רועש."
+        },
+        {
+          "en": "But he took the key and went up.",
+          "he": "אבל הוא לקח את המפתח ועלה."
+        },
+        {
+          "en": "The porch was dry. The plant was drier than yesterday.",
+          "he": "המרפסת הייתה יבשה. העציץ היה יבש יותר מאתמול."
+        },
+        {
+          "en": "On the last evening one small orange flower opened.",
+          "he": "בערב האחרון נפתח בעציץ פרח כתום קטן."
+        },
+        {
+          "en": "Dana came home on Friday and saw the flower. The plant was her mother's, she said.",
+          "he": "דנה חזרה הביתה ביום שישי וראתה את הפרח. העציץ היה של אמא שלה, היא אמרה."
+        }
+      ],
+      "review": "pending"
+    }
+  ]
+}

@@ -20,6 +20,8 @@ import org.sisam.langtutor.content.ResourceContentRepository
 import org.sisam.langtutor.content.ResourcePhrasebankRepository
 import org.sisam.langtutor.content.PicturePackRepository
 import org.sisam.langtutor.content.ResourcePicturePackRepository
+import org.sisam.langtutor.content.ResourceStoryRepository
+import org.sisam.langtutor.content.StoryRepository
 import org.sisam.langtutor.content.ResourceTwisterRepository
 import org.sisam.langtutor.content.TwisterRepository
 import org.sisam.langtutor.engine.HebrewPhonemes
@@ -70,6 +72,7 @@ import org.sisam.langtutor.tutor.drill.DrillGenerator
 import org.sisam.langtutor.tutor.drill.DrillOrchestrator
 import org.sisam.langtutor.tutor.drill.SoundSkills
 import org.sisam.langtutor.tutor.picture.PictureVocabOrchestrator
+import org.sisam.langtutor.tutor.story.StoryReader
 import org.sisam.langtutor.tutor.cloze.ClozeDeck
 import org.sisam.langtutor.tutor.cloze.ClozeOrchestrator
 import org.sisam.langtutor.ui.reward.RewardBus
@@ -930,6 +933,17 @@ class AppContainer private constructor(context: Context) {
      * the platform voice as the fallback — because it speaks the same short
      * lines and the same authored sentences.
      */
+    /**
+     * The reading room. No microphone, no scorer, no model — the lightest
+     * room in the app, and the only one that asks for nothing back.
+     */
+    fun createStoryReader(scope: CoroutineScope): StoryReader {
+        appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
+        val kokoro = bundledTtsEngine()
+        appScope.launch(Dispatchers.IO) { runCatching { kokoro?.warmUp() } }
+        return StoryReader(tts = kokoro ?: PlatformTtsEngine(appContext), scope = scope)
+    }
+
     fun createCloze(scope: CoroutineScope): ClozeOrchestrator {
         appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
         val kokoro = bundledTtsEngine()
@@ -1113,6 +1127,10 @@ class AppContainer private constructor(context: Context) {
 
     /** Named word sets for the picture room (docs/picture-vocabulary.md). */
     val picturePacks: PicturePackRepository by lazy { ResourcePicturePackRepository() }
+
+    /** Short stories, gated so every word is one the bank has taught
+     *  (docs/short-stories.md). */
+    val stories: StoryRepository by lazy { ResourceStoryRepository() }
 
     val rewards = RewardBus()
 

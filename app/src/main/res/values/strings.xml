@@ -196,6 +196,15 @@
     <string name="home_picture_room">🖼️ Picture words</string>
     <string name="picture_title">Picture words</string>
     <string name="home_cloze_room">Fill the gap ✏️</string>
+    <string name="home_story_room">Stories 📖</string>
+    <string name="story_pick">What shall we read?</string>
+    <string name="story_none">No stories at your Level yet — the Parent Zone can change the Level.</string>
+    <string name="story_pages">%1$d pages</string>
+    <string name="story_back">Back</string>
+    <string name="story_finish">The end</string>
+    <string name="story_done">You read the whole story! 🎉</string>
+    <string name="story_read_it_again">Read it again</string>
+    <string name="story_read_again">Hear this page again</string>
     <string name="cloze_title">Fill the gap</string>
     <string name="cloze_hint">Which word is missing? The Hebrew tells you.</string>
     <string name="cloze_blank_spoken">blank</string>

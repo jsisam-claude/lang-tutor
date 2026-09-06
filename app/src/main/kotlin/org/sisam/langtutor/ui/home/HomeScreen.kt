@@ -74,6 +74,7 @@ fun HomeScreen(
     onOpenPictures: () -> Unit,
     onOpenTwisters: () -> Unit,
     onOpenCloze: () -> Unit,
+    onOpenStories: () -> Unit,
 ) {
     val units by produceState<List<UnitSummary>>(initialValue = emptyList(), container) {
         value = container.content.listUnits()
@@ -146,6 +147,13 @@ fun HomeScreen(
         // everything in it derived from the phrasebank and packs.
         Button(onClick = onOpenCloze, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_cloze_room))
+        }
+        // Reading, with nothing asked back. Every word in every story is one
+        // the phrasebank has already taught at or below that story's Level,
+        // so a learner meets only words they have met — which is the whole
+        // reason these can exist at all (docs/short-stories.md).
+        Button(onClick = onOpenStories, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.home_story_room))
         }
         // Freeform three-way practice with both parrots — no lesson, no
         // scoring, just talking.
