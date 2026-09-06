@@ -86,6 +86,13 @@ class DrillOrchestrator(
     /** Where an answer becomes evidence about a skill (docs/knowledge-tracing.md). */
     private val tracker: SkillTracker = SkillTracker(),
     /**
+     * The coach's per-phone scores, read as evidence about the fifteen
+     * sounds the app teaches. Null where the twister book has not loaded,
+     * which costs the learner nothing — the coach's colours are unaffected
+     * and only the record is thinner.
+     */
+    private val soundSkills: SoundSkills? = null,
+    /**
      * The voice for PERSONALITY lines — praise and encouragement — which the
      * app points at the parrot-flavored view of the same engine. Defaults to
      * the teaching voice, and the split is deliberate and strict: the lines a
@@ -336,8 +343,29 @@ class DrillOrchestrator(
                     if (it.phonemes.isNotEmpty() && scoreEpoch.get() == epoch) {
                         _pronunciation.value = it
                     }
+                    // Recorded even when the colours are stale. The learner
+                    // has moved on, but the attempt still happened and is
+                    // still what their mouth did.
+                    recordSounds(it)
                 }
                 .onFailure { println("DrillOrchestrator: pronunciation scoring failed: ${it.message}") }
+        }
+    }
+
+    /**
+     * One scored attempt, folded in per sound. This is the densest evidence
+     * the app has — every phone of every line the learner says — and it is
+     * the only writer that does not need the item to know what it teaches.
+     */
+    private suspend fun recordSounds(score: PronunciationScore) {
+        val observed = soundSkills?.observations(score) ?: return
+        if (observed.isEmpty()) return
+        runCatching {
+            profile.update { current ->
+                observed.entries.fold(current) { profile, (skill, good) ->
+                    tracker.observe(profile, listOf(skill), correct = good)
+                }
+            }
         }
     }
 

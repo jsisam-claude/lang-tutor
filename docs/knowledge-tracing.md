@@ -70,11 +70,28 @@ A skill nobody has met scores below every skill they have. That is
 deliberate: opening a topic for the first time should show new material, not
 revisit the two lines already seen.
 
-Three rooms read it today — the drill, the picture room and fill the gap —
-and the Parent Zone shows the weakest few sounds, patterns and topics. That
-last one is deliberately not a score: "72%" tells a parent nothing they can
-act on, while *going-to* and *the zoo* is something to talk about over
-breakfast.
+Three rooms read it today: the drill, the picture room and fill the gap. The
+Parent Zone shows the weakest few sounds, patterns and topics, and
+deliberately not a score — "72%" tells a parent nothing they can act on,
+while *going-to* and *the zoo* is something to talk about over breakfast.
+
+## The coach is the densest writer
+
+The pronunciation coach already scores every phone of every line the learner
+says, and `SoundSkills` maps those phones onto the fifteen taught sounds
+through the IPA that `twisters.json` already authors — the table exists, and
+this is only its reverse index. One spoken line therefore carries a dozen
+observations where a whole twister round carries one.
+
+Phones outside those fifteen are ignored on purpose. Hebrew already has
+them, so a low score there is far likelier to be the aligner than the
+learner, and recording it would bury the contrasts that matter under noise.
+
+A sound counts as said when MOST of its instances in that line cleared the
+same threshold the learner sees drawn green — a majority of instances rather
+than a mean of their scores, because one bad frame among four good ones is
+the aligner's bad day and averaging lets it drag the other three under. The
+record and the colours therefore cannot disagree about the same attempt.
 
 ## What is deliberately not here yet
 
@@ -84,12 +101,9 @@ breakfast.
 - **The conversation and lesson rooms** attribute nothing. They are generated
   turns with no theme or frame to point at, and an unattributed answer is
   simply not evidence.
-- **The pronunciation coach** scores per phoneme on every attempt but does
-  not write `sound:` skills; only the twister room does, through the line it
-  drills. Wiring the coach would give far denser evidence and is the obvious
-  next step.
 - **Leeches.** A skill that keeps failing is visible in the Parent Zone but
-  nothing retires it from the deck.
+  nothing retires it from the deck, and nothing tells a person that five
+  failures in a row is a teaching problem rather than a scheduling one.
 
 ## Privacy
 

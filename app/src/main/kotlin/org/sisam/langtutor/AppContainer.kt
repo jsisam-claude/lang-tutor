@@ -68,6 +68,7 @@ import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
 import org.sisam.langtutor.tutor.TutorOrchestrator
 import org.sisam.langtutor.tutor.drill.DrillGenerator
 import org.sisam.langtutor.tutor.drill.DrillOrchestrator
+import org.sisam.langtutor.tutor.drill.SoundSkills
 import org.sisam.langtutor.tutor.picture.PictureVocabOrchestrator
 import org.sisam.langtutor.tutor.cloze.ClozeDeck
 import org.sisam.langtutor.tutor.cloze.ClozeOrchestrator
@@ -958,6 +959,19 @@ class AppContainer private constructor(context: Context) {
         return { id -> skills.mastery(profile, id) }
     }
 
+    /**
+     * Built once from the twister book, which is the authored table naming
+     * which IPA belongs to which taught sound. Null until the book has
+     * loaded, and the drill simply records nothing about sounds until then.
+     */
+    @Volatile private var soundSkillsCache: SoundSkills? = null
+
+    init {
+        appScope.launch {
+            runCatching { soundSkillsCache = SoundSkills(twisters.book().sounds) }
+        }
+    }
+
     @Volatile private var clozeDeckCache: ClozeDeck? = null
     private val clozeDeckLock = kotlinx.coroutines.sync.Mutex()
 
@@ -1002,6 +1016,9 @@ class AppContainer private constructor(context: Context) {
             // Praise in the parrot voice — same engine, flavored view. The
             // platform-TTS fallback has no waveform access, so no flavor.
             flavorTts = kokoro?.let { ParrotVoice(it) },
+            // Every phone of every line the learner says becomes evidence
+            // about one of the fifteen taught sounds.
+            soundSkills = soundSkillsCache,
         )
     }
 
