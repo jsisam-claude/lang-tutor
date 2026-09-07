@@ -79,6 +79,10 @@ while *going-to* and *the zoo* is something to talk about over breakfast.
 
 The pronunciation coach already scores every phone of every line the learner
 says, and `SoundSkills` maps those phones onto the fifteen taught sounds
+(fourteen, in practice: the *-ed* sound is realised as /t/, /d/ or /ɪd/ —
+the commonest consonants in the language — so per-phone evidence for it was
+every "cat" and "dog" a learner said, and it is deliberately not recorded;
+docs/loop-accuracy.md)
 through the IPA that `twisters.json` already authors — the table exists, and
 this is only its reverse index. One spoken line therefore carries a dozen
 observations where a whole twister round carries one.

@@ -70,6 +70,7 @@ import org.sisam.langtutor.tutor.ScriptedDialoguePolicy
 import org.sisam.langtutor.tutor.TutorOrchestrator
 import org.sisam.langtutor.tutor.drill.DrillGenerator
 import org.sisam.langtutor.tutor.drill.DrillOrchestrator
+import org.sisam.langtutor.tutor.drill.Pronunciation
 import org.sisam.langtutor.tutor.drill.SoundSkills
 import org.sisam.langtutor.tutor.picture.PictureVocabOrchestrator
 import org.sisam.langtutor.tutor.story.StoryReader
@@ -1033,6 +1034,10 @@ class AppContainer private constructor(context: Context) {
             // Every phone of every line the learner says becomes evidence
             // about one of the fifteen taught sounds.
             soundSkills = soundSkillsCache,
+            // The judge hears with the same front end that voices the line,
+            // so "OK" and "okay" are one word to it. Lazy: the dictionary is
+            // paid for on the first verdict, not on the way into the room.
+            hearing = Pronunciation.lazy { glossPhonemizer.value },
         )
     }
 

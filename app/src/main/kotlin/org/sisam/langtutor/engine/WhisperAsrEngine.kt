@@ -199,7 +199,19 @@ class WhisperAsrEngine(
                             ?.takeIf { it.isNotBlank() }
                             ?.let { _speculative.tryEmit(it) }
                     }
-                    if (vadPair == null || signal.isCompleted) continue
+                    // NOT gated on the endpoint having fired. The drill is
+                    // push-to-talk — it never awaits the endpoint — so after
+                    // 700 ms of quiet the learner is still holding the button
+                    // and may well still be talking: the doc that set that
+                    // number says their mid-sentence hesitations run 600 to
+                    // 1,500 ms. Skipping the detector here froze
+                    // lastSpeechSample at the pause, which made stopCapture's
+                    // "did they talk past the speculation?" test at the
+                    // adoption below unconditionally false — the transcript of
+                    // the first clause was adopted and everything after the
+                    // pause was thrown away, while the coach was handed the
+                    // full clip and marked words the judge never read.
+                    if (vadPair == null) continue
                     val (detector, gate) = vadPair
                     var off = 0
                     while (off + SileroVad.FRAME <= n) {
@@ -222,12 +234,20 @@ class WhisperAsrEngine(
                             // preview that was already free.
                             is VadGate.Event.SpeechSoftEnd -> maybeSpeculate()
                             is VadGate.Event.SpeechEnd -> {
-                                Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
-                                signal.complete(Unit)
+                                // Hands-free turns end here (awaitEndpoint
+                                // returns). A push-to-talk turn carries on,
+                                // so the gate is re-armed: a clause spoken
+                                // after the pause gets its own soft endpoint
+                                // and its own speculation — one that covers
+                                // both clauses — instead of being invisible
+                                // until the button lifts.
+                                if (signal.complete(Unit)) {
+                                    Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
+                                }
+                                gate.reset()
                             }
                             else -> Unit
                         }
-                        if (signal.isCompleted) break
                     }
                 }
                 // Capture ended without the gate firing (button release / max length).

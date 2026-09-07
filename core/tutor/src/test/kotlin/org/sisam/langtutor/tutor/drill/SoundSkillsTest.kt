@@ -26,11 +26,24 @@ class SoundSkillsTest {
     @Test
     fun `every taught sound is reachable from its own IPA`() {
         for (sound in sounds) {
+            if (sound.key == "ed") continue // a suffix, not a phone — see below
             for (phone in sound.ipa.split(' ').filter { it.isNotBlank() }) {
                 assertEquals("${sound.key} lost its own phone '$phone'", sound.key, skills.soundFor(phone))
             }
         }
         assertTrue("the book is empty", sounds.isNotEmpty())
+    }
+
+    @Test
+    fun `plain t and d are nobody's evidence`() {
+        // "-ed" is realised as /t/, /d/ or /ɪd/. Claiming those phones fed
+        // the skill with every "cat" and "dog" a learner said and it read as
+        // mastered after three lines; the model cannot see a suffix, so the
+        // honest record is none.
+        assertNull(skills.soundFor("t"))
+        assertNull(skills.soundFor("d"))
+        assertNull(skills.soundFor("ɪd"))
+        assertTrue("the book still teaches it", sounds.any { it.key == "ed" })
     }
 
     @Test

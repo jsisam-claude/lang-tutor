@@ -4,8 +4,12 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.sisam.langtutor.speech.KokoroPhonemizer
 
 class WordMatchTest {
+
+    /** The judge that can hear: the app's own front end. */
+    private val sound = Pronunciation.of(KokoroPhonemizer.load())
 
     @Test
     fun `exact repetition matches, case and punctuation aside`() {
@@ -98,5 +102,70 @@ class WordMatchTest {
         assertFalse(WordMatch.matchesExactly(target, "i see a red"))
         assertFalse(WordMatch.matchesExactly(target, "i see red a ball"))
         assertFalse(WordMatch.matchesExactly(target, ""))
+    }
+
+    // --- what the recogniser writes versus what the bank writes -------------
+    //
+    // Measured: every allowance-0 item in the bank, synthesised and run
+    // through the shipped Whisper — 30 of 324 trials rejected a perfect
+    // utterance, and all of them were spelling.
+
+    @Test
+    fun `the recogniser writes numerals and the bank writes words`() {
+        assertTrue(WordMatch.matches("Ten fingers.", "10 fingers"))
+        assertTrue(WordMatch.matches("Five eggs.", "5 eggs"))
+        assertTrue(WordMatch.matchesExactly("Ten fingers.", "10 fingers"))
+        assertEquals(emptySet<Int>(), WordMatch.missedWordIndexes("Ten fingers.", "10 fingers"))
+        // A different number is a different answer.
+        assertFalse(WordMatch.matches("Two crabs.", "3 crabs"))
+        assertEquals(setOf(0), WordMatch.missedWordIndexes("Two crabs.", "3 crabs"))
+    }
+
+    @Test
+    fun `a numeral in the target keeps its place on the screen`() {
+        // Indexes name whitespace words; a "3" that becomes "three" is still
+        // one word at the same index.
+        assertEquals(setOf(1), WordMatch.missedWordIndexes("3 red cats", "three cats"))
+    }
+
+    @Test
+    fun `two spellings of one sound are one word`() {
+        assertTrue(WordMatch.matches("Are you OK?", "Are you okay?", sound))
+        assertTrue(WordMatch.matchesExactly("Are you OK?", "are you okay", sound))
+        assertEquals(emptySet<Int>(), WordMatch.missedWordIndexes("Are you OK?", "are you okay", sound))
+        assertTrue(WordMatch.matches("I see cereal.", "I see serial.", sound))
+        // Spelling alone still cannot hear it — the default judge is unchanged.
+        assertFalse(WordMatch.matches("Are you OK?", "Are you okay?"))
+    }
+
+    @Test
+    fun `sounding the same is exact, not close`() {
+        // Every one of these is a contrast the twisters room exists to teach.
+        assertFalse(WordMatch.matches("ball", "tall", sound))
+        assertFalse(WordMatch.matches("Three sheep.", "three ship", sound))
+        assertFalse(WordMatch.matches("Three thin things.", "tree thin things", sound))
+        assertFalse(WordMatch.matches("Sing and swing!", "sin and swing", sound))
+        assertEquals(setOf(0), WordMatch.missedWordIndexes("Three sheep.", "tree sheep", sound))
+    }
+
+    @Test
+    fun `one word written as two, or two as one`() {
+        // The recogniser's spacing is not the learner's pronunciation.
+        assertTrue(WordMatch.matches("Have you said good night to Grandpa?", "Have you said goodnight to Grandpa?"))
+        assertTrue(WordMatch.matchesExactly("good night", "goodnight"))
+        assertTrue(WordMatch.matches("Three pinecones.", "Three pine cones.", sound))
+        assertTrue(WordMatch.matches("I see cereal.", "Icy cereal.", sound))
+        assertEquals(emptySet<Int>(), WordMatch.missedWordIndexes("I see cereal.", "Icy cereal.", sound))
+        // Only an exact join: a word that merely starts the same is not said.
+        assertFalse(WordMatch.matches("I see cereal.", "Icy", sound))
+        assertEquals(setOf(0, 1), WordMatch.missedWordIndexes("I see cereal.", "cereal", sound))
+        // And a join cannot be used to say fewer words than the line has.
+        assertFalse(WordMatch.matches("a big dog", "a dog"))
+    }
+
+    @Test
+    fun `hearing does not loosen the allowance`() {
+        assertFalse(WordMatch.matches("I see a red ball", "red ball", sound))
+        assertFalse(WordMatch.matches("my hat big", "my hat", sound))
     }
 }

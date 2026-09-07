@@ -80,7 +80,12 @@ class VadGate(private val config: Config = Config()) {
     private var finished = false
     private var softFired = false
 
-    private val hangoverFrames get() = (config.hangoverMs / config.frameMs).coerceAtLeast(1)
+    /** Rounded UP: 700 ms is not a whole number of 32 ms frames, and rounding
+     *  down fired the firm endpoint at 672 ms — inside the very band the
+     *  value was calibrated to cover. The soft endpoint and the minimum
+     *  speech length still round down, where early is the cheap side. */
+    private val hangoverFrames get() =
+        ((config.hangoverMs + config.frameMs - 1) / config.frameMs).coerceAtLeast(1)
     private val softHangoverFrames get() = (config.softHangoverMs / config.frameMs).coerceAtLeast(1)
     private val minSpeechFrames get() = (config.minSpeechMs / config.frameMs).coerceAtLeast(1)
     private val maxFrames get() = config.maxUtteranceMs / config.frameMs

@@ -133,6 +133,27 @@ class VadGateTest {
     }
 
     @Test
+    fun `the firm endpoint waits the whole hangover, not one frame less`() {
+        // 32 ms frames: 700 ms is 21.875 of them. Rounding down fired at 21
+        // frames — 672 ms, inside the band the value was set to cover. 21
+        // quiet frames must not end the turn; 22 must.
+        val speech = FloatArray(10) { 0.9f }
+        assertEquals(0, run(VadGate(), speech + FloatArray(21) { 0.02f }).count { it is VadGate.Event.SpeechEnd })
+        assertEquals(1, run(VadGate(), speech + FloatArray(22) { 0.02f }).count { it is VadGate.Event.SpeechEnd })
+    }
+
+    @Test
+    fun `a hesitation inside the hangover does not end the turn`() {
+        // 900 ms of thinking is the doc's own median for a low-proficiency
+        // speaker; it must cost nothing when the gate is set to cover it.
+        val gate = VadGate(VadGate.Config(hangoverMs = 1_000))
+        val probs = FloatArray(10) { 0.9f } + FloatArray(28) { 0.02f } + FloatArray(10) { 0.9f } + FloatArray(40) { 0.02f }
+        val events = run(gate, probs)
+        assertEquals(1, events.count { it is VadGate.Event.SpeechEnd })
+        assertEquals(1, events.count { it is VadGate.Event.SpeechStart })
+    }
+
+    @Test
     fun `nothing is emitted after the turn ends until reset`() {
         val gate = VadGate()
         val probs = FloatArray(10) { 0.9f } + FloatArray(40) { 0.01f }

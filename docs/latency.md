@@ -184,6 +184,18 @@ it recommended does not exist, so these are the checked facts:
   inference on 2 XNNPACK threads at default priority; expected RTF well
   under 0.1. Drop Whisper only after measured parity.
 
+> **2026-09-07, two corrections** (docs/loop-accuracy.md). (1) Push-to-talk
+> turns never await the firm endpoint, but once it fired the capture loop
+> stopped running the detector, so `lastSpeechSample` froze at the pause and
+> the adoption test at `stopCapture` was always satisfied: the first clause's
+> speculation was adopted and everything said after a 700 ms hesitation — the
+> band this very section says these learners hesitate in — was dropped from
+> the judged transcript. The detector now runs for the whole hold and the
+> gate re-arms after an endpoint. (2) `hangoverMs / frameMs` rounded down,
+> so 700 ms fired at 672; it rounds up now (704). The 700 itself is still a
+> product call — this section's own numbers put the median hesitation at
+> 700–900 ms, so 700 does not cover its stated band.
+
 ## Dead ends, so they are not retried
 
 - **Speculative LLM prefill from partial ASR** — Conversation API has no

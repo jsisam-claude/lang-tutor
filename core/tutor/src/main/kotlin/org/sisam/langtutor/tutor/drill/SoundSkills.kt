@@ -27,6 +27,7 @@ class SoundSkills(sounds: List<TwisterSound>) {
     /** IPA symbol → the sound key that claims it. */
     private val byPhone: Map<String, String> = buildMap {
         for (sound in sounds) {
+            if (sound.key in SUFFIX_SOUNDS) continue
             for (phone in sound.ipa.split(' ')) {
                 val key = normalise(phone)
                 if (key.isNotEmpty()) putIfAbsent(key, sound.key)
@@ -70,5 +71,16 @@ class SoundSkills(sounds: List<TwisterSound>) {
         const val GOOD = 0.8f
 
         private val MARKS = setOf('ˈ', 'ˌ', 'ː', 'ʰ', '.', ' ')
+
+        /**
+         * Sounds whose evidence is a SUFFIX, not a phone. The "-ed" ending is
+         * realised as /t/, /d/ or /ɪd/ — the two commonest consonants in the
+         * language — so a per-phone index credited the skill with every
+         * "cat" and "dog" a learner ever said, and it read as mastered after
+         * three lines. Whether "-ed" came out right is a fact about the end
+         * of a past-tense word, which nothing here can see; leaving it out is
+         * a thinner record, and an honest one.
+         */
+        private val SUFFIX_SOUNDS = setOf("ed")
     }
 }

@@ -204,7 +204,14 @@ class KokoroPhonemizer private constructor(
     }
 
     companion object {
-        private val PUNCTUATION = ".,!?;:".toSet()
+        /**
+         * Every pause token kokoro/vocab.tsv carries. The ellipsis (id 10)
+         * and the dash (id 9) are the model's only mid-utterance pauses
+         * longer than a comma — measured at 90 and 85 ms against a comma's
+         * 45 — and they were being dropped before encode(), so "Wait… now"
+         * reached the model bit-identical to "Wait now".
+         */
+        private val PUNCTUATION = ".,!?;:…—".toSet()
 
         /** Finals that take the extra syllable in a possessive. */
         private val SIBILANTS = setOf("S", "Z", "SH", "ZH", "CH", "JH")

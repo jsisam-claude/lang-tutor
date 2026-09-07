@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 import org.sisam.langtutor.speech.KaraokeTiming
 import org.sisam.langtutor.speech.KokoroFrontEnd
 import org.sisam.langtutor.speech.ParrotEffect
+import org.sisam.langtutor.speech.CommaBeat
 import org.sisam.langtutor.speech.KokoroPhonemizer
 import org.sisam.langtutor.speech.SentenceChunker
 import org.sisam.langtutor.speech.TtsEngine
@@ -226,27 +227,42 @@ class KokoroTtsEngine(
                     // into richer style rows.
                     for (group in groupForProsody(SentenceChunker.split(text))) {
                         if (player.interrupted) break
-                        val audio = renderOrCache(group.text, speed, flavorPitch, "speak")
-                        if (audio.isEmpty()) continue
-                        // Word timing for karaoke: each word's share of the
-                        // waveform, weighted by its phoneme count — cheap
-                        // dictionary lookups, so cached audio gets timed too.
                         // Computed over the RAW region of the original text
                         // (not group.text, whose joins re-space multi-chunk
                         // groups): word offsets must land exactly where the
                         // screen's own wordSpans(text) puts them, or the
                         // highlight silently dies after the first group.
-                        // Flavored (personality) lines are not karaoke text.
-                        val timing = if (flavorPitch == null) {
-                            KaraokeTiming.of(
-                                text.substring(group.start, group.end),
-                                { w -> phonemizer.phonemize(w, phonology()).size },
-                                audio.size,
-                            )
-                        } else {
-                            emptyList()
+                        val raw = text.substring(group.start, group.end)
+                        // A short line with a comma is rendered in pieces and
+                        // joined with a beat (CommaBeat explains the numbers);
+                        // everything else is one render, as before. Only the
+                        // English front end knows the marks — the Hebrew
+                        // voice takes the whole line.
+                        val pieces = if (phonemizer is KokoroPhonemizer) CommaBeat.pieces(raw) else listOf(CommaBeat.Piece(0, raw.length))
+                        val parts = ArrayList<CommaBeat.Part>(pieces.size)
+                        for (piece in pieces) {
+                            if (player.interrupted) break
+                            val pieceText = if (pieces.size == 1) group.text else raw.substring(piece.start, piece.end)
+                            val audio = renderOrCache(pieceText, speed, flavorPitch, "speak")
+                            if (audio.isEmpty()) continue
+                            // Word timing for karaoke: each word's share of the
+                            // waveform, weighted by its phoneme count — cheap
+                            // dictionary lookups, so cached audio gets timed too.
+                            // Flavored (personality) lines are not karaoke text.
+                            val timing = if (flavorPitch == null) {
+                                KaraokeTiming.of(
+                                    raw.substring(piece.start, piece.end),
+                                    { w -> phonemizer.phonemize(w, phonology()).size },
+                                    audio.size,
+                                )
+                            } else {
+                                emptyList()
+                            }
+                            parts.add(CommaBeat.Part(audio, timing, piece.start))
                         }
-                        rendered.send(Rendered(audio, group.start, group.end, timing))
+                        if (parts.isEmpty()) continue
+                        val (joined, timing) = CommaBeat.join(parts, SAMPLE_RATE, speed)
+                        rendered.send(Rendered(joined, group.start, group.end, timing))
                     }
                 } finally {
                     rendered.close()

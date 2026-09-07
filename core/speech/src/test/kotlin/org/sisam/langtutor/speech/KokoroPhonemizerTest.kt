@@ -35,6 +35,20 @@ class KokoroPhonemizerTest {
     }
 
     @Test
+    fun `an ellipsis and a dash are pauses, not nothing`() {
+        // Both are in the vocabulary (ids 10 and 9) and both were being
+        // discarded before encode(), so "Wait… now" reached the model as
+        // "Wait now" — bit for bit, and so 10 ms of quiet instead of 90.
+        val with = phonemizer.phonemize("Wait… now try.")
+        assertTrue("ellipsis token present", with.contains(10))
+        assertTrue("it changes the sequence", !with.contentEquals(phonemizer.phonemize("Wait now try.")))
+        // The typed forms reach the same token.
+        assertArrayEquals(with, phonemizer.phonemize("Wait... now try."))
+        assertTrue("dash token present", phonemizer.phonemize("Wait — now.").contains(9))
+        assertArrayEquals(phonemizer.phonemize("Wait — now."), phonemizer.phonemize("Wait -- now."))
+    }
+
+    @Test
     fun `a run of punctuation stays one run`() {
         val ipa = phonemizer.phonemizeToIpa("What?! Again.")
         assertTrue("no separator inside a punctuation run: $ipa", ipa.contains("?!"))

@@ -14,6 +14,10 @@ object KokoroTextNormalizer {
     fun normalize(text: String): String {
         // Fold diacritics so accented names keep their letters (José → Jose).
         var t = Normalizer.normalize(text, Normalizer.Form.NFD).replace(COMBINING_MARKS, "")
+        // Three dots and two hyphens are how an ellipsis and a dash get typed;
+        // the voice has a pause token for each, and the model that writes the
+        // chat room's lines uses both.
+        t = ELLIPSIS.replace(t, "…").replace("--", "—").replace('–', '—')
         // "covid19" / "3rd-grade" style boundaries become separate tokens.
         t = LETTER_DIGIT_BOUNDARY.replace(t, " ")
         t = DOLLARS.replace(t) { m ->
@@ -71,6 +75,7 @@ object KokoroTextNormalizer {
     }
 
     private val COMBINING_MARKS = Regex("\\p{Mn}+")
+    private val ELLIPSIS = Regex("\\.{3,}")
     private val LETTER_DIGIT_BOUNDARY = Regex("(?<=[A-Za-z])(?=\\d)|(?<=\\d)(?=[A-Za-z])")
     private val DOLLARS = Regex("\\$\\s?(\\d+(?:,\\d{3})*)(?:\\.(\\d{1,2}))?")
     private val PERCENT = Regex("(\\d+(?:\\.\\d+)?)\\s?%")

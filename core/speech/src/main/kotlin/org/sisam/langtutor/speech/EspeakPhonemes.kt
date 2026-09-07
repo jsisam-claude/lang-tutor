@@ -144,7 +144,7 @@ object EspeakPhonemes {
                 stressed = true
                 continue
             }
-            if (c.isWhitespace() || c in ".,!?;:") continue
+            if (c.isWhitespace() || c in ".,!?;:…—") continue
             val candidates = (if (stressed) LONG[c] else null)
                 ?: CANDIDATES[c]
                 ?: listOf(c.toString())

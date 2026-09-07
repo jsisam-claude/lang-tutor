@@ -93,6 +93,12 @@ class DrillOrchestrator(
      */
     private val soundSkills: SoundSkills? = null,
     /**
+     * How the judge hears a word ([Pronunciation]): two spellings of one
+     * sound are one word. Spelling-only by default, which is what the
+     * tests and the fakes want; the app passes its own front end.
+     */
+    private val hearing: Pronunciation = Pronunciation.NONE,
+    /**
      * The voice for PERSONALITY lines — praise and encouragement — which the
      * app points at the parrot-flavored view of the same engine. Defaults to
      * the teaching voice, and the split is deliberate and strict: the lines a
@@ -216,7 +222,7 @@ class DrillOrchestrator(
                     // the turn while the child is still speaking — cutting
                     // them off and praising an unfinished line. Closing early
                     // is an optimisation; being wrong about it is not.
-                    if (WordMatch.matchesExactly(current.item.text, guess)) finishAttempt()
+                    if (WordMatch.matchesExactly(current.item.text, guess, hearing)) finishAttempt()
                 }
             }
         }
@@ -264,8 +270,8 @@ class DrillOrchestrator(
             // arrive, and land only if the attempt they describe is still the
             // one on screen.
             scoreInBackground(result, at.item.text)
-            _lastMissedWords.value = WordMatch.missedWordIndexes(at.item.text, result.transcript)
-            if (WordMatch.matches(at.item.text, result.transcript)) {
+            _lastMissedWords.value = WordMatch.missedWordIndexes(at.item.text, result.transcript, hearing)
+            if (WordMatch.matches(at.item.text, result.transcript, hearing)) {
                 correct++
                 _events.emit(DrillEvent.Correct(tries + 1))
                 // Saying it right FIRST TIME is the evidence; a line landed
