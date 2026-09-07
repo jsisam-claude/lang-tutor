@@ -108,17 +108,33 @@ negation — and the last three fail the line. Contractions are opened on
 both sides first so "don't"/"do not" cannot register as a substitution.
 Measured: the three populations go to **0 of 759, 0 of 156, 0 of 175**.
 
+**Through audio** — 100 lines of each kind, the wrong utterance *and* the
+correct one, synthesised and run through the shipped Whisper into the
+compiled judge:
+
+| said wrong | Whisper wrote the target anyway | of the rest, passed before → now |
+|---|---|---|
+| one word substituted | 60 of 104 (58%) | 39 → **2** |
+| negation dropped | 10 of 100 | 90 → **0** |
+| question said as a statement | 0 of 100 | 96 → **0** |
+
+The first column is the model floor from §2 again, larger still on 4+ word
+lines: a substitution inside a sentence gives the language model more
+context to repair it with. Nothing below the judge can reach those.
+
 **What it costs**, on perfect utterances: nothing on the short-item census
-(13 → 13), and **6 new rejects in 300** on the long-sentence sweep — every
-one a mid-sentence word Whisper misheard on Kokoro's own audio (*toy* →
-"tie", *bread* → "brat", *toys* → "ties", *this* → "the", *wants* →
-"want", *fifties* → "50s"). Under the old rule those were the one
-forgiven miss. Under the new one the learner hears "Almost! Listen again"
-with the word marked, and after three tries moves on regardless — the
-teaching behaviour, not the failing one. On a real accented speaker the
-number will be higher; it is the price of a judge that can fail the one
-word a line exists to teach, and it is recorded here so it can be
-re-weighed when device data exists.
+(13 → 13); **6 new rejects in 300** on the long-sentence sweep; and on the
+correct utterances of the 304 lines above, **+6 (2.0%)** — every one a
+mid-sentence word Whisper misheard on Kokoro's own audio: *toy* → "tie",
+*bread* → "brat", *chickens* → "check-ins", *presents* → "presence", and
+*mouth* → "mouse", which is the very θ→s collapse the twisters room
+teaches, so no text judge can tell that learner from one who really said
+"mouse". Under the old rule those were the one forgiven miss. Under the new
+one the learner hears "Almost! Listen again" with the word marked, and
+after three tries moves on regardless — the teaching behaviour, not the
+failing one. On a real accented speaker the number will be higher; it is
+the price of a judge that can fail the one word a line exists to teach,
+and it is recorded here so it can be re-weighed when device data exists.
 
 ## 3. The missing beat
 
