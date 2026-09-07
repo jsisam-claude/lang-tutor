@@ -6,13 +6,13 @@
       "id": "sign-by-the-bench",
       "level": 2,
       "title": {
-        "en": "No Bus Today",
-        "he": "אין אוטובוס היום"
+        "en": "The Sign by the Bench",
+        "he": "השלט ליד הספסל"
       },
       "pages": [
         {
           "en": "I am waiting for the bus. I want to go to the market.",
-          "he": "אני מחכה לאוטובוס. אני רוצה להגיע לשוק."
+          "he": "אני מחכה לאוטובוס. אני רוצה לנסוע לשוק."
         },
         {
           "en": "The bus is late. I am looking at the clock.",
@@ -21,16 +21,16 @@
         },
         {
           "en": "A man is sitting near me. He is looking at a big map.",
-          "he": "איש מתיישב לידי. הוא מסתכל במפה גדולה."
+          "he": "לידי יושב איש. הוא מסתכל במפה גדולה."
         },
         {
           "en": "He is turning the map this way and that way. He can't find the market.",
-          "he": "הוא מסובב את המפה לכאן ולכאן. הוא לא מוצא את השוק."
+          "he": "הוא מסובב את המפה לכל הכיוונים. הוא לא מוצא את השוק."
         },
         {
           "en": "I can help. I show the way on the map.",
-          "he": "אני יכול לעזור. אני מראה לו את הדרך על המפה.",
-          "he_f": "אני יכולה לעזור. אני מראה לו את הדרך על המפה."
+          "he": "אני יכול לעזור. אני מראה לו את הדרך במפה.",
+          "he_f": "אני יכולה לעזור. אני מראה לו את הדרך במפה."
         },
         {
           "en": "We are looking at the map together. We are not looking at the road.",
@@ -42,11 +42,11 @@
         },
         {
           "en": "The man is looking at a sign near the bench. No bus today.",
-          "he": "האיש מסתכל בשלט ליד הספסל. אין אוטובוס היום."
+          "he": "האיש מסתכל על השלט שליד הספסל. אין אוטובוס היום."
         },
         {
           "en": "We are laughing. We walk to the market together.",
-          "he": "אנחנו צוחקים. אנחנו הולכים לשוק יחד."
+          "he": "אנחנו צוחקים. אנחנו הולכים ברגל לשוק יחד."
         }
       ],
       "review": "pending"
@@ -61,24 +61,24 @@
       "pages": [
         {
           "en": "My book from the library is late. Today I want to take it to the library.",
-          "he": "הספר שלי מהספרייה באיחור. היום אני רוצה להחזיר אותו."
+          "he": "הספר שלי מהספרייה כבר באיחור. היום אני רוצה להחזיר אותו."
         },
         {
           "en": "The book is not on my desk. It is not on the shelf.",
-          "he": "הספר לא על השולחן שלי. הוא לא על המדף."
+          "he": "הספר לא על השולחן שלי. הוא גם לא על המדף."
         },
         {
           "en": "I am looking in my bag and by my bed.",
-          "he": "אני מחפש בתיק שלי וליד המיטה.",
-          "he_f": "אני מחפשת בתיק שלי וליד המיטה."
+          "he": "אני מחפש בתיק וליד המיטה.",
+          "he_f": "אני מחפשת בתיק וליד המיטה."
         },
         {
-          "en": "Mom is looking in the car. Dad is looking by the door.",
-          "he": "אמא מחפשת במכונית. אבא מחפש ליד הדלת."
+          "en": "My sister is looking in the car. My brother is looking by the door.",
+          "he": "אחותי מחפשת במכונית. אחי מחפש ליד הדלת."
         },
         {
-          "en": "No one can find the book. In one hour the library is closing.",
-          "he": "אף אחד לא מוצא את הספר. עוד שעה הספרייה נסגרת."
+          "en": "No one can find the book. The library is closing in one hour.",
+          "he": "אף אחד לא מוצא את הספר. הספרייה נסגרת בעוד שעה."
         },
         {
           "en": "Grandma is not looking for the book. She is making tea.",
@@ -89,14 +89,14 @@
           "he": "היא לוקחת כוס מהמדף במטבח. והנה הספר שלי, בין הצלחות."
         },
         {
-          "en": "Every morning I am reading in the kitchen. Every morning I am eating here.",
-          "he": "כל בוקר אני קורא במטבח. כל בוקר אני אוכל כאן.",
-          "he_f": "כל בוקר אני קוראת במטבח. כל בוקר אני אוכלת כאן."
+          "en": "Every morning I read in the kitchen. Every morning I eat breakfast here.",
+          "he": "כל בוקר אני קורא במטבח. כל בוקר אני אוכל כאן ארוחת בוקר.",
+          "he_f": "כל בוקר אני קוראת במטבח. כל בוקר אני אוכלת כאן ארוחת בוקר."
         },
         {
           "en": "Thank you, Grandma. Now the book is in my bag and I am walking to the library.",
-          "he": "תודה, סבתא. עכשיו הספר בתיק שלי ואני הולך לספרייה.",
-          "he_f": "תודה, סבתא. עכשיו הספר בתיק שלי ואני הולכת לספרייה."
+          "he": "תודה, סבתא. עכשיו הספר בתיק ואני הולך לספרייה.",
+          "he_f": "תודה, סבתא. עכשיו הספר בתיק ואני הולכת לספרייה."
         }
       ],
       "review": "pending"
@@ -111,11 +111,11 @@
       "pages": [
         {
           "en": "Dana had to pick her peaches. They were high in the tree.",
-          "he": "דנה הייתה צריכה לקטוף את האפרסקים שלה. הם היו גבוה בעץ."
+          "he": "דנה הייתה צריכה לקטוף את האפרסקים שלה. הם היו גבוה על העץ."
         },
         {
           "en": "Dave had to paint his wall. His paint was blue and new.",
-          "he": "דייב היה צריך לצבוע את הקיר שלו. הצבע שלו היה כחול וחדש."
+          "he": "דייב היה צריך לצבוע את הקיר שלו. היה לו צבע כחול חדש."
         },
         {
           "en": "The yard had one old ladder. Dana and Dave came to it at the same time.",
@@ -123,23 +123,23 @@
         },
         {
           "en": "Dana said she was first. Dave said he was first too.",
-          "he": "דנה אמרה שהיא הייתה ראשונה. דייב אמר שהוא היה ראשון."
+          "he": "דנה אמרה שהיא הגיעה ראשונה. דייב אמר שגם הוא הגיע ראשון."
         },
         {
-          "en": "Dana took the ladder, but it was very heavy. Dave took it, and it was heavy for him too.",
-          "he": "דנה הרימה את הסולם, אבל הוא היה כבד מאוד. דייב הרים אותו, וגם בשבילו הוא היה כבד."
+          "en": "Dana tried to carry the ladder, but it was too heavy. Dave tried, and it was too heavy for him too.",
+          "he": "דנה ניסתה לסחוב את הסולם, אבל הוא היה כבד מדי. דייב ניסה, אבל גם לו הסולם היה כבד מדי."
         },
         {
-          "en": "Dana took one leg of the ladder and did not say a word. Dave took the other leg, and the ladder came up.",
-          "he": "דנה תפסה צד אחד של הסולם ולא אמרה מילה. דייב תפס את הצד השני, והסולם עלה."
+          "en": "Dana put her hands on the ladder and did not say a word. Dave put his hands on it too, and the ladder came up.",
+          "he": "דנה תפסה בסולם ולא אמרה מילה. דייב תפס בו גם הוא והסולם התרומם."
         },
         {
           "en": "They carried it to the tree. Dave held the ladder, and Dana picked her peaches.",
-          "he": "הם סחבו אותו אל העץ. דייב החזיק את הסולם, ודנה קטפה את האפרסקים שלה."
+          "he": "הם סחבו אותו לעץ. דייב החזיק את הסולם ודנה קטפה את האפרסקים שלה."
         },
         {
           "en": "After that, they carried it to the wall. Dana held the ladder, and Dave painted the wall blue.",
-          "he": "אחר כך הם סחבו אותו אל הקיר. דנה החזיקה את הסולם, ודייב צבע את הקיר בכחול."
+          "he": "אחר כך הם סחבו אותו לקיר. דנה החזיקה את הסולם ודייב צבע את הקיר בכחול."
         },
         {
           "en": "Dana gave Dave a peach. They sat on the grass by the blue wall.",
@@ -162,7 +162,7 @@
         },
         {
           "en": "One day she saw a small green plant by the wall. It was very dry.",
-          "he": "יום אחד היא ראתה צמח קטן וירוק ליד הקיר. הוא היה יבש מאוד."
+          "he": "יום אחד היא ראתה ליד הקיר צמח קטן וירוק. הוא היה יבש מאוד."
         },
         {
           "en": "People walked by it. Dana watched it for a long time.",
@@ -170,23 +170,23 @@
         },
         {
           "en": "The next morning she brought water in an old bottle. She poured a little on the plant and left the bottle by the wall.",
-          "he": "למחרת בבוקר היא הביאה מים בבקבוק ישן. היא שפכה מעט מים על הצמח והשאירה את הבקבוק ליד הקיר."
+          "he": "למחרת בבוקר היא הביאה מים בבקבוק ישן. שפכה קצת על הצמח והשאירה את הבקבוק ליד הקיר."
         },
         {
           "en": "Every morning she gave the plant more water. It grew two new leaves.",
           "he": "כל בוקר היא נתנה לצמח עוד מים. צמחו לו שני עלים חדשים."
         },
         {
-          "en": "Dana went to her grandpa for a week. The bottle by the wall was empty.",
-          "he": "דנה נסעה לשבוע לסבא שלה. הבקבוק שליד הקיר היה ריק."
+          "en": "Dana went to her sister's house for a week. The bottle by the wall was empty.",
+          "he": "דנה נסעה לאחותה לשבוע. הבקבוק שליד הקיר היה ריק."
         },
         {
-          "en": "At her grandpa's house the sun was hot. Did the plant have water?",
-          "he": "אצל סבא היה חם. האם היו לצמח מים?"
+          "en": "At her sister's house the sun was hot too. Did the plant have water?",
+          "he": "גם אצל אחותה היה חם. והצמח — היו לו מים?"
         },
         {
           "en": "She came back on a hot afternoon and went to the wall. The plant was green and tall, with a small yellow flower.",
-          "he": "היא חזרה אחר הצהריים, ביום חם, והלכה אל הקיר. הצמח היה ירוק וגבוה, ועליו פרח צהוב קטן."
+          "he": "אחר צהריים חם אחד היא חזרה וניגשה אל הקיר. הצמח היה ירוק וגבוה, עם פרח קטן וצהוב."
         },
         {
           "en": "The old bottle was full of water.",
@@ -204,23 +204,23 @@
       },
       "pages": [
         {
-          "en": "Yoav, my brother, made a rocket from boxes. It had a small red door.",
-          "he": "יואב, אח שלי, בנה חללית מקופסאות. הייתה לה דלת אדומה קטנה."
+          "en": "Yoav, my brother, made a rocket from boxes. It had a small red door, and it was near his bed.",
+          "he": "יואב, אחי, בנה חללית מקופסאות. הייתה לה דלת אדומה קטנה והיא עמדה ליד המיטה שלו."
         },
         {
-          "en": "On the weekend I cleaned our room. I saw old boxes on the floor, and I carried them out to the recycling.",
-          "he": "בסוף השבוע סידרתי את החדר שלנו. ראיתי קופסאות ישנות על הרצפה, והוצאתי אותן לפח המיחזור."
+          "en": "On the weekend I cleaned the room. I saw old boxes on the floor and carried them out to the recycling.",
+          "he": "בסוף השבוע סידרתי את החדר. ראיתי קופסאות ישנות על הרצפה והוצאתי אותן לפח המיחזור."
         },
         {
-          "en": "In the afternoon Yoav came home. He went to his bed, but he did not find the rocket.",
-          "he": "אחר הצהריים יואב חזר הביתה. הוא ניגש למיטה שלו ולא מצא את החללית."
+          "en": "In the afternoon Yoav came home. The rocket was not near his bed.",
+          "he": "אחר הצהריים יואב חזר הביתה. החללית לא הייתה ליד המיטה שלו."
         },
         {
           "en": "I told him about the recycling. He was very quiet.",
-          "he": "סיפרתי לו על פח המיחזור. הוא היה שקט מאוד."
+          "he": "סיפרתי לו על פח המיחזור. הוא שתק."
         },
         {
-          "en": "It was dark and it rained. I took a flashlight and went out.",
+          "en": "It was dark and it was raining. I took a flashlight and went out.",
           "he": "בחוץ היה חושך וירד גשם. לקחתי פנס ויצאתי."
         },
         {
@@ -233,11 +233,11 @@
         },
         {
           "en": "I sat at the kitchen table and made a new rocket. The new door was too big, but it was a door.",
-          "he": "ישבתי ליד שולחן המטבח ובניתי חללית חדשה. הדלת החדשה יצאה גדולה מדי, אבל היא הייתה דלת."
+          "he": "ישבתי ליד שולחן המטבח ובניתי חללית חדשה. הדלת החדשה יצאה גדולה מדי, אבל זו הייתה דלת."
         },
         {
           "en": "In the morning Yoav saw the new rocket on the table. He wrote his name on the door, and he gave me the pen.",
-          "he": "בבוקר יואב ראה את החללית החדשה על השולחן. הוא כתב את השם שלו על הדלת, ונתן לי את העט."
+          "he": "בבוקר יואב ראה את החללית החדשה על השולחן. הוא כתב את שמו על הדלת ונתן לי את העט."
         }
       ],
       "review": "pending"
@@ -255,30 +255,30 @@
           "he": "ביום שישי אמא שלי הייתה חולה. היא נתנה לי את הסל שלה ורשימה של שישה דברים."
         },
         {
-          "en": "Go to the market, she said. It was my first time by myself.",
-          "he": "לך לשוק, היא אמרה. זו הייתה הפעם הראשונה שלי לבד.",
-          "he_f": "לכי לשוק, היא אמרה. זו הייתה הפעם הראשונה שלי לבד."
+          "en": "Go for me, she said. It was my first time at the market by myself.",
+          "he": "לך במקומי, היא אמרה. זו הייתה הפעם הראשונה שלי בשוק לבד.",
+          "he_f": "לכי במקומי, היא אמרה. זו הייתה הפעם הראשונה שלי בשוק לבד."
         },
         {
           "en": "The garlic was the problem. On the way I said my question twice: Do you have garlic, please?",
-          "he": "השום היה הבעיה. בדרך אמרתי את השאלה שלי פעמיים: יש לך שום, בבקשה?"
+          "he": "הבעיה הייתה השום. בדרך חזרתי על השאלה שלי פעמיים: סליחה, יש לך שום?"
         },
         {
           "en": "The market was louder than our street. Everyone was quick, and I was slow.",
-          "he": "השוק היה רועש יותר מהרחוב שלנו. כולם היו מהירים, ואני הייתי אטי.",
-          "he_f": "השוק היה רועש יותר מהרחוב שלנו. כולם היו מהירים, ואני הייתי אטית."
+          "he": "השוק היה רועש יותר מהרחוב שלנו. כולם מיהרו ואני הייתי איטי.",
+          "he_f": "השוק היה רועש יותר מהרחוב שלנו. כולם מיהרו ואני הייתי איטית."
         },
         {
           "en": "I found the bread, the cheese, the eggs and the rice. After that I came to the last shop.",
-          "he": "מצאתי את הלחם, הגבינה, הביצים והאורז. אחר כך הגעתי לדוכן האחרון."
+          "he": "מצאתי את הלחם, את הגבינה, את הביצים ואת האורז. אחר כך הגעתי לדוכן האחרון."
         },
         {
           "en": "The seller was busy with a man and his peppers, so I waited.",
-          "he": "המוכר היה עסוק עם איש ועם הפלפלים שלו, אז חיכיתי."
+          "he": "המוכר היה עסוק עם איש אחד שקנה פלפלים, אז חיכיתי."
         },
         {
           "en": "After a minute the man went away, and the seller turned to me. My question was not in my mouth.",
-          "he": "אחרי דקה האיש הלך משם, והמוכר פנה אליי. השאלה שלי נעלמה לי מהפה."
+          "he": "אחרי דקה האיש הלך והמוכר פנה אליי. השאלה שלי נעלמה לי מהראש."
         },
         {
           "en": "Garlic? I said. It was one word, not my question.",
@@ -286,8 +286,8 @@
         },
         {
           "en": "He put the garlic and the tomatoes in my basket. Come back on Friday, he said. The tomatoes will be better.",
-          "he": "הוא שם את השום ואת העגבניות בסל שלי. תחזור ביום שישי, הוא אמר. העגבניות יהיו יותר טובות.",
-          "he_f": "הוא שם את השום ואת העגבניות בסל שלי. תחזרי ביום שישי, הוא אמר. העגבניות יהיו יותר טובות."
+          "he": "הוא שם את השום ואת העגבניות בסל שלי. תחזור ביום שישי, הוא אמר. העגבניות יהיו טובות יותר.",
+          "he_f": "הוא שם את השום ואת העגבניות בסל שלי. תחזרי ביום שישי, הוא אמר. העגבניות יהיו טובות יותר."
         }
       ],
       "review": "pending"
@@ -301,24 +301,24 @@
       },
       "pages": [
         {
-          "en": "It was Saturday, and Yoav was going to paint the sea. He put his notebook and his paintbrush in his bag and walked to the beach.",
-          "he": "היה יום שבת, ויואב התכוון לצייר את הים. הוא שם את המחברת ואת המכחול בתיק והלך לחוף."
+          "en": "It was Saturday, and Yoav was going to paint the sea. He took his notebook and his paintbrush and walked to the beach.",
+          "he": "בשבת יואב התכוון לצייר את הים. הוא לקח את המחברת ואת המכחול והלך לחוף."
         },
         {
           "en": "The sky turned gray. The wind was cold, and the rain came down hard.",
-          "he": "השמיים נעשו אפורים. הרוח הייתה קרה, ואז התחיל לרדת גשם חזק."
+          "he": "השמיים נעשו אפורים. הרוח הייתה קרה וירד גשם חזק."
         },
         {
           "en": "Yoav ran to a little cafe near the beach and sat by the window. He waited for the rain to stop.",
-          "he": "יואב רץ לבית קפה קטן ליד החוף והתיישב ליד החלון. הוא חיכה שהגשם ייפסק."
+          "he": "יואב רץ לבית קפה קטן על החוף והתיישב ליד החלון. הוא חיכה שהגשם יפסיק."
         },
         {
           "en": "The rain did not stop.",
-          "he": "הגשם לא נפסק."
+          "he": "הגשם לא הפסיק."
         },
         {
           "en": "Water ran down the window. Through the water, the sea and the sky were the same gray.",
-          "he": "מים זלגו על החלון. מבעד למים, הים והשמיים היו באותו צבע אפור."
+          "he": "מים זרמו על החלון. מבעד למים, הים והשמיים היו באותו צבע אפור."
         },
         {
           "en": "Yoav opened his notebook. He painted the window, not the sea.",
@@ -329,8 +329,8 @@
           "he": "המלצר הביא תה והניח אותו על השולחן. הוא לא זז משם."
         },
         {
-          "en": "The waiter said that it was the sea. Yoav said that it was the window.",
-          "he": "המלצר אמר שזה הים. יואב אמר שזה החלון."
+          "en": "To the waiter it was the sea. To Yoav it was the window.",
+          "he": "בעיני המלצר זה היה הים. בעיני יואב זה היה החלון."
         },
         {
           "en": "Yoav gave him the page. The waiter put it on the wall by the door, over the wet umbrellas.",
@@ -349,7 +349,7 @@
       "pages": [
         {
           "en": "Dana was going away for a week. Water the small plant on my porch, she said to Yoav.",
-          "he": "דנה נסעה לשבוע. תשקה בבקשה את העציץ הקטן שבמרפסת, היא אמרה ליואב."
+          "he": "דנה נסעה לשבוע. תשקה בבקשה את העציץ הקטן שבמרפסת שלי, אמרה ליואב."
         },
         {
           "en": "I will not forget, Yoav said. It was a very small promise.",
@@ -357,15 +357,15 @@
         },
         {
           "en": "Every evening he took her key and went up. The plant was not bigger than his hand.",
-          "he": "כל ערב הוא לקח את המפתח שלה ועלה אליה. העציץ לא היה גדול מכף היד שלו."
+          "he": "כל ערב הוא היה לוקח את המפתח ועולה לדירה שלה. העציץ לא היה גדול יותר מכף היד שלו."
         },
         {
           "en": "One day the rain came. It rained all afternoon and all evening.",
-          "he": "יום אחד הגיע הגשם. ירד גשם כל אחר הצהריים וכל הערב."
+          "he": "יום אחד התחיל לרדת גשם. הוא ירד כל אחר הצהריים וכל הערב."
         },
         {
-          "en": "If it rains, plants get water. Yoav was tired, and the rain was loud.",
-          "he": "אם יורד גשם, הצמחים מקבלים מים. יואב היה עייף, והגשם היה רועש."
+          "en": "If it rains, plants get water, Yoav said to himself. He was tired, and the rain was loud.",
+          "he": "אם יורד גשם, הצמחים מקבלים מים, אמר יואב לעצמו. הוא היה עייף והגשם בחוץ היה חזק."
         },
         {
           "en": "But he took the key and went up.",
@@ -377,11 +377,11 @@
         },
         {
           "en": "On the last evening one small orange flower opened.",
-          "he": "בערב האחרון נפתח בעציץ פרח כתום קטן."
+          "he": "בערב האחרון נפתח בעציץ פרח קטן וכתום אחד."
         },
         {
-          "en": "Dana came home on Friday and saw the flower. The plant was her mother's, she said.",
-          "he": "דנה חזרה הביתה ביום שישי וראתה את הפרח. העציץ היה של אמא שלה, היא אמרה."
+          "en": "Dana came home on Friday and saw the flower. The plant was my mother's, she said.",
+          "he": "דנה חזרה הביתה ביום שישי וראתה את הפרח. העציץ הזה היה של אמא שלי, אמרה."
         }
       ],
       "review": "pending"

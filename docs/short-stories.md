@@ -85,3 +85,41 @@ Add to `core/content/src/main/resources/stories.json` and run
 `./gradlew test`. If the vocabulary gate fails it will name the word and the
 Level that would admit it. Nothing else needs to change: the room reads
 whatever the file holds.
+
+## The read so far, and what is still open
+
+2026-09-07: each draft was read twice, independently — once by a reader
+judging the Hebrew (is every line something a person would say, rather
+than the English in Hebrew order; is  exactly where the written form
+differs), once by a reader judging the story and the English (does
+something change, does it moralise, does it assume an age, is the English
+the English). All sixteen verdicts were *revise*, and the real errors were
+the kind a gate cannot see: מתיישב for "is sitting" (the act, not the
+state), על המפה for "on the map" (an English calque; Hebrew looks *in* a
+map), היה שקט for "went quiet" (a temperament, not a moment), a habitual
+"every morning" in the progressive, and one page where Mom and Dad
+searching for the narrator's library book placed the reader in childhood.
+The two revisions per story were merged page by page, the vocabulary gate
+re-run, and a third reader went over the merged set for consistency
+(comma before a coordinating ו is English punctuation; זו over זאת; a sign
+is looked *at*, a map *in*).
+
+What the merge could not settle, for the native read:
+
+- **the-book-among-the-plates** — Page 2 desk rendering: I chose השולחן שלי (the phrasebank's own rendering of 'desk') over the English reader's שולחן הכתיבה שלי. A native reader might confirm whether the bare שולחן with שלי is unambiguous enough as a desk in a story whose turn hinges on desk-versus-kitchen.
+- **the-book-among-the-plates** — Page 8 Hebrew word order: 'כל בוקר אני אוכל כאן ארוחת בוקר' (as the English reader wrote it) versus 'כל בוקר אני אוכל ארוחת בוקר כאן'. Both are natural; kept the reader's.
+- **sign-by-the-bench** — Page 3 word order: 'לידי יושב איש' (inverted) vs 'איש יושב לידי' — both readers' forms are grammatical; a native reader may prefer one. I chose the inversion.
+- **sign-by-the-bench** — Page 5 word order: 'את הדרך במפה' vs 'במפה את הדרך' — the two readers disagreed; I chose object-first. A native reader should confirm.
+- **rocket-in-the-recycling** — 'המיטה שלו' vs bound 'מיטתו' on pages 1 and 3: the phrasebank has no occurrence of either form, so the bound-possessive ruling could not be checked against corpus usage. 'המיטה שלו' was kept because 'מיטתו' reads literary in this register and both readers left it, but a native reader may want to confirm.
+- **rocket-in-the-recycling** — Page 4 'הוא שתק' vs 'הוא לא אמר מילה': both are natural; the choice is register, not correctness. A native reader may prefer the longer one if 'very' should be felt more strongly.
+- **peaches-and-blue-paint** — The id 'peaches-and-blue-paint' does not match the title 'One Ladder' (flagged by the story reader). Left the id alone so nothing tracking the story breaks; the maintainer should decide whether to rename.
+- **peaches-and-blue-paint** — Page 6 Hebrew 'דייב תפס בו גם הוא' renders 'Dave put his hands on it too'; a native reader may prefer 'גם דייב תפס בו' — both are natural, I kept גם הוא to keep the emphasis on Dave joining in without a word.
+- **plant-by-the-bus-wall** — Page 7 והצמח — היו לו מים? uses an em-dash for the thought-break; a native reader may prefer והצמח? היו לו מים? or a comma. Meaning is identical either way.
+- **one-word-at-the-market** — Page 7 English 'My question was not in my mouth' — the two readers disagree on whether it is deliberate strangeness (English reader) or a non-idiom in both languages (Hebrew reader). I kept the English reader's ruling; a native English editor may want to weigh in.
+- **one-word-at-the-market** — Page 2 'לך במקומי' for 'Go for me' is my own re-derivation (neither reader proposed it); a native reader should confirm it over the English reader's 'לך בשבילי'.
+- **rain-on-the-window** — Page 5 'באותו צבע אפור' versus the English reader's 'באותו אפור' — a native reader may prefer a third rendering (e.g. 'היו אפורים באותה מידה'); I kept the form the Hebrew reader accepted.
+- **rain-on-the-window** — Page 8 'בעיני' framing: chosen as the most natural Hebrew for 'To the waiter it was...'; a native reader might prefer 'למלצר זה היה הים' — meaning is identical either way.
+- **the-dry-porch** — The id 'the-dry-porch' does not echo the title 'A Very Small Promise'. Both readers flagged it and both left it alone because the run is keyed on the id; someone should decide whether to rename the id or the title before this lands in stories.json.
+- **the-dry-porch** — Page 7 'drier than yesterday' assumes a hand-sized pot on a covered porch dries out within a day of watering. Both readers accepted it (the story reader explicitly asked that page 7 not be explained). Left as is; a native reader may want to confirm it does not read as a misprint.
+
+Every story still carries . That flag comes off one story at a time, by a person.
