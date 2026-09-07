@@ -90,24 +90,35 @@ two did they say"; it is a far easier question than "what did they say",
 and `RecognitionHint.ConstrainedVocab` — passed by the drill on every turn
 and read by nothing — is the seam where that was clearly meant to live.
 
-**The judge's own channel is structural.** `allowedMisses` is a budget of
-*missing* target words and extra words cost nothing, so a *wrong* word costs
-exactly one — the target word goes missing, the wrong one is an extra. On
-every 4+ word target (93% of the bank) one word may be wrong or absent and
-the room says "Great job!". Counted against the corpus: 33 of 36 twisters
-carry that budget, so on the room whose purpose is one contrast the
-mispronounced word is the only difference and the pass is guaranteed;
-deleting the negation passes 158 of 160 negative lines; an un-inverted
-question passes 216 of 217 — the LCS that *marks* the moved word for the
-karaoke costs one miss, which the allowance pays. **Not changed yet.** The
-fix that matches the evidence — a substitution, a dropped negation or a
-moved word should not be payable from the allowance — is the one most
-likely to trade this complaint back into the first, on exactly the
-population where accent already rejects 12–61%. It will be measured through
-audio on those three populations before it ships. The sound-aware judge
-above was checked against this: **0 of 116** wrong texts pass, and through
-audio it lets one more through than before — "A B" for *bee*, which is the
-same sounds.
+**The judge's own channel was structural, and is closed.** `allowedMisses`
+was a budget of *missing* target words and extra words cost nothing, so a
+*wrong* word cost exactly one — the target word went missing, the wrong
+one was an extra. On every 4+ word target (93% of the bank) one word could
+be wrong or absent and the room said "Great job!". Counted against the
+corpus with the compiled judge: a real-word substitution built from the
+contrasts `twisters.json` declares passed **740 of 759** lines; deleting
+the negation passed **155 of 156** negative lines; saying a question as a
+statement passed **174 of 175** — the LCS that *marks* the moved word for
+the karaoke cost one miss, which the allowance paid.
+
+The allowance now forgives a word **left out** and nothing else. The judge
+sorts what was not said by kind — omitted, substituted (a different word
+in the target word's place), moved (present, out of order), or a dropped
+negation — and the last three fail the line. Contractions are opened on
+both sides first so "don't"/"do not" cannot register as a substitution.
+Measured: the three populations go to **0 of 759, 0 of 156, 0 of 175**.
+
+**What it costs**, on perfect utterances: nothing on the short-item census
+(13 → 13), and **6 new rejects in 300** on the long-sentence sweep — every
+one a mid-sentence word Whisper misheard on Kokoro's own audio (*toy* →
+"tie", *bread* → "brat", *toys* → "ties", *this* → "the", *wants* →
+"want", *fifties* → "50s"). Under the old rule those were the one
+forgiven miss. Under the new one the learner hears "Almost! Listen again"
+with the word marked, and after three tries moves on regardless — the
+teaching behaviour, not the failing one. On a real accented speaker the
+number will be higher; it is the price of a judge that can fail the one
+word a line exists to teach, and it is recorded here so it can be
+re-weighed when device data exists.
 
 ## 3. The missing beat
 

@@ -85,6 +85,10 @@ class WordMatchTest {
             setOf(0),
             WordMatch.missedWordIndexes(target, "you are playing with the blocks"),
         )
+        // And the one to FAIL: marking it used to cost one miss, which a
+        // six-word allowance paid, so the un-inverted question still passed.
+        assertFalse(WordMatch.matches(target, "you are playing with the blocks"))
+        assertEquals(1, WordMatch.judge(target, "you are playing with the blocks").moved)
     }
 
     @Test
@@ -167,5 +171,61 @@ class WordMatchTest {
     fun `hearing does not loosen the allowance`() {
         assertFalse(WordMatch.matches("I see a red ball", "red ball", sound))
         assertFalse(WordMatch.matches("my hat big", "my hat", sound))
+    }
+
+    // --- what the allowance may and may not pay for ---------------------------
+
+    @Test
+    fun `a word left out is forgiven, a word said wrong is not`() {
+        val target = "I see a red ball"
+        assertTrue(WordMatch.matches(target, "I see a ball"))
+        assertEquals(1, WordMatch.judge(target, "I see a ball").omitted)
+        assertFalse(WordMatch.matches(target, "I see a blue ball"))
+        val j = WordMatch.judge(target, "I see a blue ball")
+        assertEquals(1, j.substituted)
+        assertEquals(0, j.omitted)
+        assertEquals(setOf(3), j.missed)
+    }
+
+    @Test
+    fun `the mispronounced word the recogniser did not repair fails the line`() {
+        // The room whose whole purpose is one contrast: the wrong word is
+        // the only difference, and a one-miss budget used to pay for it.
+        assertFalse(WordMatch.matches("Three thin things on a tray.", "tree thin things on a tray", sound))
+        assertFalse(WordMatch.matches("The ship is in the sea.", "the sheep is in the sea", sound))
+    }
+
+    @Test
+    fun `a dropped negation reverses the line and fails it`() {
+        assertFalse(WordMatch.matches("Don't touch the hot stove.", "touch the hot stove"))
+        assertFalse(WordMatch.matches("I do not like peas.", "I like peas"))
+        assertFalse(WordMatch.matches("There is no bus today.", "there is a bus today"))
+        assertEquals(1, WordMatch.judge("I do not like peas.", "I like peas").negationDropped)
+    }
+
+    @Test
+    fun `contractions are the same words opened or closed`() {
+        assertTrue(WordMatch.matchesExactly("I don't like peas.", "I do not like peas"))
+        assertTrue(WordMatch.matchesExactly("I do not like peas.", "I don't like peas"))
+        assertTrue(WordMatch.matchesExactly("I'm happy!", "I am happy"))
+        assertTrue(WordMatch.matchesExactly("Let's go.", "let us go"))
+        // The karaoke still names the written word.
+        assertEquals(setOf(1), WordMatch.missedWordIndexes("I don't like peas.", "I like peas"))
+        assertEquals(setOf(1), WordMatch.missedWordIndexes("I do not like peas.", "I like peas").let { setOf(it.min()) })
+    }
+
+    @Test
+    fun `extra words are still free`() {
+        assertTrue(WordMatch.matches("I see a red ball", "um I see a red ball yes"))
+        assertTrue(WordMatch.matches("I see a red ball", "I see a big red ball"))
+        assertEquals(0, WordMatch.judge("I see a red ball", "I see a big red ball").substituted)
+    }
+
+    @Test
+    fun `two words swapped are two moved, not two omitted`() {
+        val j = WordMatch.judge("the cat and the dog", "the dog and the cat")
+        assertEquals(0, j.omitted)
+        assertTrue(j.moved >= 1)
+        assertFalse(WordMatch.matches("the cat and the dog", "the dog and the cat"))
     }
 }
