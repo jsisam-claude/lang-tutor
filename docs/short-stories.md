@@ -90,7 +90,7 @@ whatever the file holds.
 
 2026-09-07: each draft was read twice, independently — once by a reader
 judging the Hebrew (is every line something a person would say, rather
-than the English in Hebrew order; is  exactly where the written form
+than the English in Hebrew order; is `he_f` exactly where the written form
 differs), once by a reader judging the story and the English (does
 something change, does it moralise, does it assume an age, is the English
 the English). All sixteen verdicts were *revise*, and the real errors were
@@ -122,4 +122,4 @@ What the merge could not settle, for the native read:
 - **the-dry-porch** — The id 'the-dry-porch' does not echo the title 'A Very Small Promise'. Both readers flagged it and both left it alone because the run is keyed on the id; someone should decide whether to rename the id or the title before this lands in stories.json.
 - **the-dry-porch** — Page 7 'drier than yesterday' assumes a hand-sized pot on a covered porch dries out within a day of watering. Both readers accepted it (the story reader explicitly asked that page 7 not be explained). Left as is; a native reader may want to confirm it does not read as a misprint.
 
-Every story still carries . That flag comes off one story at a time, by a person.
+Every story still carries `review: "pending"`. That flag comes off one story at a time, by a person.
