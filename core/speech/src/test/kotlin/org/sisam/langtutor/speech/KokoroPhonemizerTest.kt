@@ -46,6 +46,19 @@ class KokoroPhonemizerTest {
         assertArrayEquals(with, phonemizer.phonemize("Wait... now try."))
         assertTrue("dash token present", phonemizer.phonemize("Wait — now.").contains(9))
         assertArrayEquals(phonemizer.phonemize("Wait — now."), phonemizer.phonemize("Wait -- now."))
+        // Inside a compound an en dash is a hyphen, not a pause.
+        assertTrue("no pause inside well–done", !phonemizer.phonemize("well–done").contains(9))
+        assertArrayEquals(phonemizer.phonemize("well-done"), phonemizer.phonemize("well–done"))
+    }
+
+    @Test
+    fun `ordinals and oversized numerals are spoken, not split or thrown`() {
+        assertEquals("first wash your hands", KokoroTextNormalizer.normalize("1st wash your hands"))
+        assertEquals("twenty second", KokoroTextNormalizer.normalize("22nd"))
+        assertEquals("one hundredth", KokoroTextNormalizer.normalize("100th"))
+        assertEquals("third-grade", KokoroTextNormalizer.normalize("3rd-grade"))
+        // Too big for a number: read digit by digit rather than thrown at.
+        assertEquals("two zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero", KokoroTextNormalizer.normalize("200000000000000000000"))
     }
 
     @Test

@@ -183,8 +183,10 @@ Zero authored lines use either; the chat room's model writes both.
   `tryStreamingAsr` on, the preview is empty *and* the Whisper speculation
   is suppressed, so the early close never fires. Established with
   sherpa-onnx on the same files and probe models reading the encoder's
-  input back out. Off by default; fix pending (gain, `snip_edges=false`,
-  `high_freq=−400`, regenerated golden).
+  input back out. Off by default. Fixed: sample scale 1,
+  `snip_edges=false`, `high_freq=−400`, an online frame rule for the
+  stream, the golden regenerated at the recipe's settings — the Kotlin
+  frames now decode identically to the reference.
 - **The coach cannot see aspiration** — `logp(pʰ)` sits ~10 nats below
   `logp(p)` on *correct* audio — and GOP as written is a single-frame
   measure (81% of frames decode blank, so Viterbi gives 112 of 118 phones

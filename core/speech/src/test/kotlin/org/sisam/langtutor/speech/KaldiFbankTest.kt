@@ -110,6 +110,8 @@ class KaldiFbankTest {
         val fbank = KaldiFbank()
         assertEquals(0, fbank.frameCount(0))
         assertEquals(0, fbank.compute(FloatArray(0)).size)
+        // An explicit count over nothing has nothing to mirror against.
+        assertEquals(0, fbank.compute(FloatArray(0), 0, 1).size)
         // (80 + 80) / 160: one frame, its window mostly mirrored audio.
         assertEquals(1, fbank.frameCount(80))
         assertEquals(1, fbank.compute(FloatArray(80) { 0.1f }).size)

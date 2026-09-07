@@ -26,7 +26,7 @@ class SoundSkillsTest {
     @Test
     fun `every taught sound is reachable from its own IPA`() {
         for (sound in sounds) {
-            if (sound.key == "ed") continue // a suffix, not a phone — see below
+            if (sound.key in setOf("ed", "p")) continue // not per-phone observable — see below
             for (phone in sound.ipa.split(' ').filter { it.isNotBlank() }) {
                 assertEquals("${sound.key} lost its own phone '$phone'", sound.key, skills.soundFor(phone))
             }
@@ -44,6 +44,10 @@ class SoundSkillsTest {
         assertNull(skills.soundFor("d"))
         assertNull(skills.soundFor("ɪd"))
         assertTrue("the book still teaches it", sounds.any { it.key == "ed" })
+        // And a plain p: the coach cannot see the puff of air, so every p
+        // would read as the aspirated one.
+        assertNull(skills.soundFor("p"))
+        assertNull(skills.soundFor("pʰ"))
     }
 
     @Test
@@ -52,7 +56,6 @@ class SoundSkillsTest {
         assertEquals("th-voiceless", skills.soundFor("ˈθ"))
         assertEquals("ship-sheep", skills.soundFor("iː"))
         assertEquals("ship-sheep", skills.soundFor("ˌi"))
-        assertEquals("p", skills.soundFor("p"))
     }
 
     @Test

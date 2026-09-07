@@ -64,8 +64,11 @@ object WordMatch {
         val moved: Int,
         /** A "not", "no", "never" or the like that was not said. */
         val negationDropped: Int,
+        /** One said that the line does not have: "I don't like peas" for
+         *  "I like peas" is the line reversed, however free extras are. */
+        val negationAdded: Int = 0,
     ) {
-        val unforgivable: Int get() = substituted + moved + negationDropped
+        val unforgivable: Int get() = substituted + moved + negationDropped + negationAdded
     }
 
     /** Lowercased words; punctuation split, apostrophes kept ("don't"). */
@@ -79,24 +82,29 @@ object WordMatch {
 
     /**
      * The target's tokens in their spoken form, each tagged with the index
-     * of the written word it came from: a "3" becomes "three" at the same
-     * index, "don't" becomes "do" and "not" at the same index, and a token
-     * that would become several other words ("$5") stays as written, so the
-     * indexes [Judgement.missed] carries still name the words on the screen.
+     * of the WRITTEN word — the whitespace word — it came from: "3" becomes
+     * "three" at the same index, "don't" becomes "do" and "not" at the same
+     * index, "1,000" becomes "one" and "thousand" at the same index. So the
+     * indexes [Judgement.missed] carries name the words on the screen.
      */
     private fun spokenTarget(target: String): List<Pair<String, Int>> =
-        tokens(target).flatMapIndexed { index, t ->
-            val opened = CONTRACTIONS[t]
-            when {
-                opened != null -> opened.map { it to index }
-                else -> listOf((tokens(KokoroTextNormalizer.normalize(t)).singleOrNull() ?: t) to index)
-            }
+        target.split(WHITESPACE).filter { it.isNotBlank() }.flatMapIndexed { index, word ->
+            val opened = tokens(spoken(word)).flatMap { CONTRACTIONS[it] ?: listOf(it) }.ifEmpty { tokens(word) }
+            opened.map { it to index }
         }
+
+    private val WHITESPACE = Regex("\\s+")
 
     /** The transcript in its spoken form: digits as words, diacritics
      *  folded, contractions opened. */
     private fun spokenTranscript(transcript: String): List<String> =
-        tokens(KokoroTextNormalizer.normalize(transcript)).flatMap { CONTRACTIONS[it] ?: listOf(it) }
+        tokens(spoken(transcript)).flatMap { CONTRACTIONS[it] ?: listOf(it) }
+
+    /** The normaliser never throws on what a recogniser writes; if it
+     *  somehow did, the text as written is the fallback, not a crash on
+     *  the early-close path. */
+    private fun spoken(text: String): String =
+        runCatching { KokoroTextNormalizer.normalize(text) }.getOrDefault(text)
 
     /** How many target words are missing from the transcript (multiset). */
     fun missing(target: String, transcript: String, pronunciation: Pronunciation = Pronunciation.NONE): Int =
@@ -105,9 +113,9 @@ object WordMatch {
     /**
      * WHICH target words (by whitespace-word index) the transcript is
      * missing — the post-attempt karaoke: said words stay plain, missed ones
-     * are marked. Token index equals whitespace-word index for ordinary
-     * text; a caller displaying by whitespace words should check the counts
-     * line up first (a hyphenated word splits into two tokens).
+     * are marked. Always the whitespace-word index, whatever the word is
+     * made of: a hyphenated word or a numeral is one word on the screen and
+     * one index here.
      */
     fun missedWordIndexes(
         target: String,
@@ -184,18 +192,28 @@ object WordMatch {
                     pairs.add((i - 1) to (j - 1))
                     i--; j--
                 }
-                j > 0 && lcs[i][j] == lcs[i][j - 1] -> j--
-                else -> i--
+                // On a tie, leave the LATER target word unsaid rather than
+                // skip a transcript word: "bye bye" heard as "bye bike"
+                // then pairs the unsaid "bye" with "bike" in one gap, where
+                // it reads as the substitution it is, instead of stranding
+                // the first "bye" in a gap of its own as an omission.
+                lcs[i][j] == lcs[i - 1][j] -> i--
+                else -> j--
             }
         }
         pairs.reverse()
-        // Sort the unsaid target tokens by kind.
-        var substituted = 0
-        var moved = 0
-        var negation = 0
-        var omitted = 0
+        // Sort what was not said, and what was said extra, by kind.
         val missedTokens = need.indices.filter { !matchedNeed[it] }
-        val spareSaid = said.indices.filter { !matchedSaid[it] }
+        fun alike(a: Int, b: Int): Boolean = said[a] == said[b] || (saidKey[a] != null && saidKey[a] == saidKey[b])
+        // A filler, or a stutter (a word said twice in a row), is not a
+        // word said INSTEAD of the target's and not a word MOVED: "I see a
+        // um ball" left "red" out, and "the the cat and dog" left one "the"
+        // out. Both stay the forgivable kind.
+        val extras = said.indices.filter { s ->
+            !matchedSaid[s] && said[s] !in FILLERS &&
+                !(s > 0 && alike(s, s - 1)) && !(s + 1 < said.size && alike(s, s + 1))
+        }
+        val negationAdded = extras.count { said[it] in NEGATIONS }
         // Substitutions: in the gap between two consecutive matches (or an
         // edge), an unsaid target token facing an unmatched transcript token.
         var prevI = -1
@@ -203,12 +221,16 @@ object WordMatch {
         val substitutedAt = HashSet<Int>()
         for ((pi, pj) in pairs + listOf(need.size to said.size)) {
             val gapNeed = missedTokens.filter { it in (prevI + 1) until pi }
-            val gapSaid = spareSaid.count { it in (prevJ + 1) until pj }
+            val gapSaid = extras.count { it in (prevJ + 1) until pj && said[it] !in NEGATIONS }
             for (k in gapNeed.take(gapSaid)) substitutedAt.add(k)
             prevI = pi; prevJ = pj
         }
+        var substituted = 0
+        var moved = 0
+        var negation = 0
+        var omitted = 0
         for (k in missedTokens) {
-            val movedHere = spareSaid.any { s -> need[k] == said[s] || (needKey[k] != null && needKey[k] == saidKey[s]) }
+            val movedHere = extras.any { s -> need[k] == said[s] || (needKey[k] != null && needKey[k] == saidKey[s]) }
             when {
                 need[k] in NEGATIONS -> negation++
                 movedHere -> moved++
@@ -217,7 +239,7 @@ object WordMatch {
             }
         }
         val missed = missedTokens.map { tagged[it].second }.toSet()
-        return Judgement(written, missed, omitted, substituted, moved, negation)
+        return Judgement(written, missed, omitted, substituted, moved, negation, negationAdded)
     }
 
     fun matches(target: String, transcript: String, pronunciation: Pronunciation = Pronunciation.NONE): Boolean {
@@ -235,22 +257,26 @@ object WordMatch {
      */
     fun matchesExactly(target: String, transcript: String, pronunciation: Pronunciation = Pronunciation.NONE): Boolean {
         val j = judge(target, transcript, pronunciation)
-        return j.words > 0 && j.missed.isEmpty()
+        return j.words > 0 && j.missed.isEmpty() && j.negationAdded == 0
     }
 
     /** 1–3 words: perfect. 4–7: one miss. 8+: two. */
     fun allowedMisses(words: Int): Int = words / 4
 
-    /** A word whose absence reverses the line. */
+    /** A word whose absence — or presence — reverses the line. */
     private val NEGATIONS = setOf(
         "not", "no", "never", "nothing", "nobody", "none", "nowhere", "neither", "nor", "cannot",
     )
 
+    /** Sounds a recogniser writes down that are not words said instead of
+     *  anything. Only the pure ones: "like" and "well" are also words. */
+    private val FILLERS = setOf("um", "uh", "er", "erm", "hmm", "hm", "mm", "mhm", "ah", "oh", "eh", "huh")
+
     /**
      * Opened on both sides before comparing, so "don't" and "do not" are the
      * same words whichever the bank wrote and whichever the recogniser chose.
-     * Only the unambiguous ones: "he's" may be "he is" or "he has", and a
-     * guess there would manufacture a miss.
+     * Not "'d", which is "would" or "had" and a guess would manufacture a
+     * miss.
      */
     private val CONTRACTIONS: Map<String, List<String>> = mapOf(
         "don't" to listOf("do", "not"), "doesn't" to listOf("does", "not"), "didn't" to listOf("did", "not"),
@@ -265,5 +291,12 @@ object WordMatch {
         "i'll" to listOf("i", "will"), "you'll" to listOf("you", "will"), "we'll" to listOf("we", "will"),
         "they'll" to listOf("they", "will"), "he'll" to listOf("he", "will"), "she'll" to listOf("she", "will"),
         "it'll" to listOf("it", "will"), "let's" to listOf("let", "us"),
+        // "'s" as "is". It can be "has" — but not in a line this bank
+        // teaches, and the recogniser writes "What's in your bag?" for a
+        // target that spells "What is", every time.
+        "it's" to listOf("it", "is"), "that's" to listOf("that", "is"), "what's" to listOf("what", "is"),
+        "there's" to listOf("there", "is"), "here's" to listOf("here", "is"), "he's" to listOf("he", "is"),
+        "she's" to listOf("she", "is"), "who's" to listOf("who", "is"), "where's" to listOf("where", "is"),
+        "how's" to listOf("how", "is"), "when's" to listOf("when", "is"),
     )
 }

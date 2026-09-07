@@ -242,7 +242,9 @@ class KokoroTtsEngine(
                         val parts = ArrayList<CommaBeat.Part>(pieces.size)
                         for (piece in pieces) {
                             if (player.interrupted) break
-                            val pieceText = if (pieces.size == 1) group.text else raw.substring(piece.start, piece.end)
+                            // Trimmed, so a group that begins after a space
+                            // keys the cache the same as the line alone.
+                            val pieceText = if (pieces.size == 1) group.text else raw.substring(piece.start, piece.end).trim()
                             val audio = renderOrCache(pieceText, speed, flavorPitch, "speak")
                             if (audio.isEmpty()) continue
                             // Word timing for karaoke: each word's share of the

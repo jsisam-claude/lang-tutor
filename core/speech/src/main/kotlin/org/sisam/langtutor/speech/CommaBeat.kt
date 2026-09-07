@@ -46,7 +46,7 @@ object CommaBeat {
      *  the chunker's business. */
     private val PAUSE_MARKS = setOf(',', '…', '—', ';')
 
-    /** Longer than this and the model paces the comma itself (measured). */
+    /** A sentence longer than this the model paces itself (measured). */
     const val MAX_WORDS = 6
 
     /** Total quiet at the seam, at 1.0× speed: a shade under what the model
@@ -65,22 +65,45 @@ object CommaBeat {
      * carries no mark, so the caller's ordinary path is the common path.
      */
     fun pieces(text: String): List<Piece> {
-        val spans = KaraokeTiming.wordSpans(text)
         val whole = listOf(Piece(0, text.length))
-        if (spans.size > MAX_WORDS || spans.size < 2) return whole
-        val cuts = spans.dropLast(1).filter { (s, e) ->
-            text.substring(s, e).trimEnd { it in TRAILING }.lastOrNull() in PAUSE_MARKS
+        // Per SENTENCE, not per line: the engine groups two sentences for
+        // their shared contour, and "Thank you, Grandma." is still a short
+        // line when the next sentence follows it. The cut after "you," is
+        // taken; the sentence after it rides along in the second piece.
+        val cuts = SentenceChunker.split(text).flatMap { chunk ->
+            val spans = KaraokeTiming.wordSpans(chunk.text)
+            if (spans.size > MAX_WORDS || spans.size < 2) return@flatMap emptyList()
+            spans.dropLast(1)
+                .filter { (s, e) -> endsWithMark(chunk.text.substring(s, e)) }
+                .map { (s, e) -> (s + chunk.start) to (e + chunk.start) }
         }
         if (cuts.isEmpty()) return whole
         val out = ArrayList<Piece>(cuts.size + 1)
         var start = 0
-        for ((_, e) in cuts) {
-            out.add(Piece(start, e))
-            start = e
+        fun add(end: Int) {
+            // A piece with nothing to voice — a dash standing alone between
+            // two words — is not a piece: rendered by itself, Kokoro says a
+            // short "uh" for it. It stays attached to the words before it
+            // (or, at the very start of the line, to the words after).
+            val voiced = text.substring(start, end).any { it.isLetterOrDigit() }
+            when {
+                voiced -> out.add(Piece(start, end))
+                out.isNotEmpty() -> out[out.size - 1] = Piece(out.last().start, end)
+                else -> return
+            }
+            start = end
             while (start < text.length && text[start].isWhitespace()) start++
         }
-        out.add(Piece(start, text.length))
-        return out
+        for ((_, e) in cuts) add(e)
+        if (start < text.length) add(text.length)
+        return if (out.size >= 2) out else whole
+    }
+
+    /** The word ends in a mark, as typed or as the normaliser would read it
+     *  ("..." is an ellipsis, "--" a dash). */
+    private fun endsWithMark(word: String): Boolean {
+        val w = word.trimEnd { it in TRAILING }
+        return w.lastOrNull() in PAUSE_MARKS || w.endsWith("...") || w.endsWith("--")
     }
 
     /**
@@ -96,7 +119,13 @@ object CommaBeat {
      */
     fun join(parts: List<Part>, sampleRate: Int, speed: Float = 1f): Pair<FloatArray, List<KaraokeTiming.Word>> {
         require(parts.isNotEmpty())
-        if (parts.size == 1) return parts[0].audio to parts[0].timing
+        if (parts.size == 1) {
+            // One survivor of a cut still speaks from its own offset.
+            val only = parts[0]
+            return only.audio to only.timing.map {
+                it.copy(charStart = it.charStart + only.charOffset, charEnd = it.charEnd + only.charOffset)
+            }
+        }
         val target = (TARGET_MS * sampleRate / 1000 / speed.coerceAtLeast(0.25f)).toInt()
         val window = WINDOW_MS * sampleRate / 1000
         // Per seam: how much of the tail before it and the head after it to
@@ -118,6 +147,12 @@ object CommaBeat {
                 gap[i] = -excess
             }
         }
+        // A part that is quiet end to end (an empty render, a silent one)
+        // is claimed from both sides; it can give up only what it has.
+        for (i in parts.indices) {
+            val over = cutHead[i] + cutTail[i] - parts[i].audio.size
+            if (over > 0) cutTail[i] = (cutTail[i] - over).coerceAtLeast(0)
+        }
         var total = 0
         for (i in parts.indices) total += parts[i].audio.size - cutTail[i] - cutHead[i] + gap[i]
         val out = FloatArray(total)
@@ -128,11 +163,14 @@ object CommaBeat {
             val length = part.audio.size - cutHead[i] - cutTail[i]
             System.arraycopy(part.audio, from, out, at, length)
             for (w in part.timing) {
+                // A word whose estimated start fell in the padding that was
+                // cut is pinned to what remains of its piece, never past it.
+                val start = (w.startFrame - from).coerceIn(0, (length - 1).coerceAtLeast(0))
                 words.add(
                     KaraokeTiming.Word(
                         charStart = w.charStart + part.charOffset,
                         charEnd = w.charEnd + part.charOffset,
-                        startFrame = (w.startFrame - from).coerceAtLeast(0) + at,
+                        startFrame = start + at,
                     ),
                 )
             }

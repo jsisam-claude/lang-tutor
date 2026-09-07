@@ -27,7 +27,7 @@ class SoundSkills(sounds: List<TwisterSound>) {
     /** IPA symbol → the sound key that claims it. */
     private val byPhone: Map<String, String> = buildMap {
         for (sound in sounds) {
-            if (sound.key in SUFFIX_SOUNDS) continue
+            if (sound.key in UNOBSERVABLE) continue
             for (phone in sound.ipa.split(' ')) {
                 val key = normalise(phone)
                 if (key.isNotEmpty()) putIfAbsent(key, sound.key)
@@ -73,14 +73,21 @@ class SoundSkills(sounds: List<TwisterSound>) {
         private val MARKS = setOf('ˈ', 'ˌ', 'ː', 'ʰ', '.', ' ')
 
         /**
-         * Sounds whose evidence is a SUFFIX, not a phone. The "-ed" ending is
-         * realised as /t/, /d/ or /ɪd/ — the two commonest consonants in the
-         * language — so a per-phone index credited the skill with every
-         * "cat" and "dog" a learner ever said, and it read as mastered after
-         * three lines. Whether "-ed" came out right is a fact about the end
-         * of a past-tense word, which nothing here can see; leaving it out is
-         * a thinner record, and an honest one.
+         * Sounds the coach's per-phone scores cannot speak to.
+         *
+         * "-ed" is realised as /t/, /d/ or /ɪd/ — the two commonest
+         * consonants in the language — so a per-phone index credited the
+         * skill with every "cat" and "dog" a learner said, and it read as
+         * mastered after three lines. Whether "-ed" came out right is a fact
+         * about the end of a past-tense word, which nothing here can see.
+         *
+         * "p" is the puff of air: the coach's vocabulary has pʰ, but on
+         * correct audio it scores ~10 nats below plain p, so the label the
+         * app asks for is p and every unaspirated p — "spin", a Hebrew
+         * speaker's "pig" — reads as right. A skill that can only ever say
+         * "mastered" is not a record. Both come back if the coach ever gets
+         * a measure that can see them.
          */
-        private val SUFFIX_SOUNDS = setOf("ed")
+        private val UNOBSERVABLE = setOf("ed", "p")
     }
 }

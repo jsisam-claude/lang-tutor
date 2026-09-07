@@ -32,7 +32,8 @@ fun interface Pronunciation {
 
         /** The app's own front end, the same one that voices the line. */
         fun of(phonemizer: KokoroPhonemizer): Pronunciation = Pronunciation { word ->
-            phonemizer.phonemizeToIpa(word).filterNot { it in MARKS }.ifBlank { null }
+            // "dogs'" is said exactly as "dogs"; the apostrophe is spelling.
+            phonemizer.phonemizeToIpa(word.trimEnd('\'')).filterNot { it in MARKS }.ifBlank { null }
         }
 
         /**

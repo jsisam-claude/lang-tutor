@@ -40,6 +40,16 @@ class CommaBeatTest {
     }
 
     @Test
+    fun `a short sentence keeps its beat when another sentence follows it`() {
+        // The engine groups two sentences for their shared contour; the
+        // count is per sentence, and the second sentence rides along.
+        val page = "Thank you, Grandma. Now the book is in my bag and I am walking to the library."
+        assertEquals(listOf(CommaBeat.Piece(0, 10), CommaBeat.Piece(11, page.length)), CommaBeat.pieces(page))
+        // A long first sentence with a comma is still the model's to pace.
+        assertEquals(1, CommaBeat.pieces("The king is singing, the ring is ringing. Yes.").size)
+    }
+
+    @Test
     fun `a line the model already paces is one piece`() {
         assertEquals(listOf(CommaBeat.Piece(0, 41)), CommaBeat.pieces("The king is singing, the ring is ringing."))
     }
@@ -125,6 +135,57 @@ class CommaBeatTest {
         val timing = listOf(KaraokeTiming.Word(0, 3, 0))
         val (out, words) = CommaBeat.join(listOf(CommaBeat.Part(a, timing, 0)), rate)
         assertTrue(out === a)
-        assertTrue(words === timing)
+        assertEquals(timing, words)
+    }
+
+    // --- the review's cases -----------------------------------------------
+
+    @Test
+    fun `a mark standing alone is not a piece`() {
+        // Rendered by itself, Kokoro voices a lone dash as a short "uh".
+        assertEquals(listOf(CommaBeat.Piece(0, 6), CommaBeat.Piece(7, 10)), CommaBeat.pieces("Yes, — no."))
+        assertEquals(2, CommaBeat.pieces("Hmm, … okay.").size)
+        assertEquals(1, CommaBeat.pieces("Yes, —").size)
+    }
+
+    @Test
+    fun `typed dots and dashes earn the beat too`() {
+        assertEquals(CommaBeat.pieces("Wait… now, go on.").size, CommaBeat.pieces("Wait... now, go on.").size)
+        assertEquals(CommaBeat.pieces("Wait — now, go on.").size, CommaBeat.pieces("Wait -- now, go on.").size)
+    }
+
+    @Test
+    fun `a silent middle part does not break the join`() {
+        val a = render(0, 300, 500)
+        val silent = FloatArray(ms(900))
+        val c = render(400, 300, 0)
+        val parts = listOf(CommaBeat.Part(a, emptyList(), 0), CommaBeat.Part(silent, emptyList(), 5), CommaBeat.Part(c, emptyList(), 9))
+        val (out, _) = CommaBeat.join(parts, rate)
+        assertTrue(out.size >= a.size - ms(500) + c.size - ms(400))
+        for (i in 0 until ms(300)) assertEquals(a[i], out[i], 0f)
+        for (i in 0 until ms(300)) assertEquals(c[ms(400) + i], out[out.size - ms(300) + i], 0f)
+    }
+
+    @Test
+    fun `one surviving part still speaks from its own offset`() {
+        val a = render(0, 300, 0)
+        val (_, words) = CommaBeat.join(listOf(CommaBeat.Part(a, listOf(KaraokeTiming.Word(0, 7, 0)), 10)), rate)
+        assertEquals(10, words[0].charStart)
+        assertEquals(17, words[0].charEnd)
+    }
+
+    @Test
+    fun `a word estimated into the cut padding stays inside its piece`() {
+        val a = render(0, 300, 500)
+        val b = render(400, 300, 0)
+        // The second word of piece one is guessed to start 700 ms in — in
+        // the padding that gets cut.
+        val parts = listOf(
+            CommaBeat.Part(a, listOf(KaraokeTiming.Word(0, 3, 0), KaraokeTiming.Word(4, 5, ms(700))), 0),
+            CommaBeat.Part(b, listOf(KaraokeTiming.Word(0, 3, ms(400))), 7),
+        )
+        val (out, words) = CommaBeat.join(parts, rate)
+        assertTrue("${'$'}{words[1].startFrame} < ${'$'}{words[2].startFrame}", words[1].startFrame < words[2].startFrame)
+        assertTrue(words[2].startFrame < out.size)
     }
 }

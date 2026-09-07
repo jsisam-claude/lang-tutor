@@ -163,8 +163,8 @@ class KaldiFbank(
         firstFrame: Int = 0,
         frames: Int = frameCount(audio.size),
     ): Array<FloatArray> {
-        if (frames <= 0) return emptyArray()
         val n = audio.size
+        if (frames <= 0 || n == 0) return emptyArray() // nothing to mirror against
         val out = Array(frames) { FloatArray(numBins) }
         val buf = FloatArray(frameLength)
         val spec = FloatArray(fftSize)

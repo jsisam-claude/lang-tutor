@@ -241,9 +241,8 @@ class WhisperAsrEngine(
                                 // and its own speculation — one that covers
                                 // both clauses — instead of being invisible
                                 // until the button lifts.
-                                if (signal.complete(Unit)) {
-                                    Log.i(TAG, "endpoint: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
-                                }
+                                val first = signal.complete(Unit)
+                                Log.i(TAG, "endpoint${if (first) "" else " (again)"}: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
                                 gate.reset()
                             }
                             else -> Unit

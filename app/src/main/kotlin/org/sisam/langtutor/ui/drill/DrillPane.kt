@@ -391,16 +391,10 @@ fun DrillPane(
                         ?.let { pos -> spans.indexOfFirst { (st, en) -> pos.charStart in st until en } }
                         ?.takeIf { it >= 0 }
                     val missedRaw by viewModel.missedWords.collectAsState()
-                    // Token index == whitespace-word index only when the counts
-                    // agree (a hyphenated word splits into two tokens); when
-                    // they do not, no marks beat wrong marks.
-                    val missed = if (
-                        missedRaw.isNotEmpty() && WordMatch.tokens(s.item.text).size == spans.size
-                    ) {
-                        missedRaw
-                    } else {
-                        emptySet()
-                    }
+                    // The judge names whitespace words — the same spans as
+                    // the screen's, whatever a word is made of — so a mark
+                    // outside the line can only be a stale attempt; drop it.
+                    val missed = missedRaw.filter { it in spans.indices }.toSet()
                     if (gloss.isEmpty() && meaning == null) {
                         EnglishContent {
                             Text(

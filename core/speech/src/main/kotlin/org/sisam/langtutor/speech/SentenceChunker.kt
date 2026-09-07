@@ -15,7 +15,10 @@ object SentenceChunker {
         val chunks = mutableListOf<Chunk>()
         var start = 0
         for (i in text.indices) {
-            if (text[i] in ENDERS && (i == text.length - 1 || text[i + 1].isWhitespace())) {
+            // A "..." is a pause inside a line, not the end of one: the voice
+            // has a token for it, and CommaBeat gives it its beat.
+            val ellipsis = text[i] == '.' && i > 0 && text[i - 1] == '.'
+            if (text[i] in ENDERS && !ellipsis && (i == text.length - 1 || text[i + 1].isWhitespace())) {
                 val piece = text.substring(start, i + 1).trim()
                 if (piece.isNotEmpty()) chunks.add(Chunk(piece, start, i + 1))
                 start = i + 1

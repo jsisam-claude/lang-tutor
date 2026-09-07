@@ -1020,6 +1020,10 @@ class AppContainer private constructor(context: Context) {
         appScope.launch(Dispatchers.IO) {
             runCatching { kokoro?.warmUp() }
             runCatching { ListeningAck.warmUp() }
+            // The judge's dictionary, 140,000 lines: paid here rather than
+            // on the main thread at the first verdict, which is where a
+            // learner whose gloss row is off would otherwise pay it.
+            runCatching { glossPhonemizer.value }
         }
         return DrillOrchestrator(
             asr = createAsrEngine(),
