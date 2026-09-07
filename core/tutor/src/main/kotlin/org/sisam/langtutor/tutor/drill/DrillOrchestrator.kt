@@ -270,6 +270,7 @@ class DrillOrchestrator(
             // they arrive, and land only if the attempt they describe is
             // still the one on screen.
             val scoring = scoreInBackground(result, at.item.text)
+            val judgement = WordMatch.judge(at.item.text, result.transcript, hearing)
             var passed = WordMatch.matches(at.item.text, result.transcript, hearing)
             var rescued = false
             if (!passed && result.audio != null) {
@@ -278,17 +279,13 @@ class DrillOrchestrator(
                 // hears the sounds themselves (CoachRescue). It can only
                 // rescue; a poor score changes nothing.
                 val score = withTimeoutOrNull(CoachRescue.WAIT_MS) { scoring.await() }
-                if (CoachRescue.accepts(score)) {
+                if (CoachRescue.accepts(score, judgement)) {
                     passed = true
                     rescued = true
                     println("DrillOrchestrator: the coach confirmed an attempt the recogniser rejected")
                 }
             }
-            _lastMissedWords.value = if (rescued) {
-                emptySet()
-            } else {
-                WordMatch.missedWordIndexes(at.item.text, result.transcript, hearing)
-            }
+            _lastMissedWords.value = if (rescued) emptySet() else judgement.missed
             if (passed) {
                 correct++
                 _events.emit(DrillEvent.Correct(tries + 1))

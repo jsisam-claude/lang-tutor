@@ -224,6 +224,81 @@ Still open, by decision rather than oversight: a self-correction with
 garbles it anyway ("I see you now, a red ball") — and none of this was
 measured on a child's voice.
 
+## 5. Two improvements, measured — one shipped, one not
+
+Both use models already on disk; both were run through the kit before any
+Kotlin was written. 738 clips: the census (perfect, two voices), the
+minimal-pair control (wrong), the F6 populations (wrong and correct), and
+the accent arm (perfect words in a Hebrew-accented rendering).
+
+### Tell the recogniser what to listen for — NOT shipped
+
+The drill hands the engine its expected line on every turn and the engine
+threw it away. Whisper's decoder takes a text prompt; the line was fed as
+one (`<|startofprev|>`, the line's tokens, then the usual prefix). A greedy
+longest-match encoder over the bundled vocabulary produces the reference
+tokenizer's ids for 94% of the bank's lines and the same text for the rest,
+and the two were indistinguishable in the numbers.
+
+| set | | no prompt | prompted with the line |
+|---|---|---|---|
+| census, perfect (324) | rejects | 13 | **0** |
+| accent, mild (49) | rejects | 21 | **6** |
+| accent, strong (49) | rejects | 38 | **7** |
+| minimal pairs, WRONG (116) | passes | 48 | **110** — 110 of them the target verbatim |
+| F6 substitutions, WRONG (33) | passes | 20 | **32** |
+| F6 dropped negation, WRONG (35) | passes | 3 | **7** |
+| F6 un-inverted question, WRONG (32) | passes | 0 | 0 |
+
+The false-reject side is everything one could ask: every remaining
+mishearing on the census is gone, and two thirds of the accented rejects.
+The false-accept side is the same effect seen from the other end: shown
+the line, the decoder writes the line — "three thin sings" becomes *Three
+thin things*, "tree cookies" becomes *Three cookies*, "a shitty" becomes *A
+city!* — for 110 of 116 mispronounced minimal pairs, which is every contrast
+the twisters room teaches, and it credits four more reversed negations.
+A prompt made of the line's words shuffled into a list, to bias spelling
+without the sentence, broke the decode instead (117 rejects on the census).
+
+So the prompt is gated off (`WhisperAsrEngine.PROMPT_WITH_HINT`), with the
+encoder, the prefix-aware decoder and their tests kept. What it shows is
+sharper than what it fixes: **no text-level trick can tell "misheard and
+correct" from "mispronounced and wrong"** — the transcript is the same in
+both cases. Only the acoustic model can, which is the case for the A/B
+below.
+
+### Let the coach confirm a reject — shipped, narrowly
+
+On a text reject with audio, the drill now waits up to three seconds for
+the coach it has already started, and accepts if the coach can vouch for
+the attempt. Measured on 75 correct-but-rejected clips and 145
+wrong-and-rejected ones, whole-line rule (every sound at least *x*):
+
+| every sound at least | correct rejects rescued | WRONG rejects rescued |
+|---|---|---|
+| CLOSE (no sound wrong) | 20 / 75 | 10 / 145 |
+| between | 17 / 75 | 3 / 145 |
+| **GOOD** | **10 / 75** | **2 / 145** |
+
+A rule that checked only the *missed word's* sounds was measured too and
+was worse at every floor (it rescued un-inverted questions and dropped
+negations — the coach aligns sounds in the target's order and cannot see
+either). So the shipped rule (`CoachRescue`) is: only a reject for a word
+left out or misheard, never a moved word or a negation; every sound GOOD by
+the coach's own line; the line ≥ 0.8. The two wrong rescues left are a
+vowel the coach cannot separate (*dead* for *Dad*). On a real voice the
+coach scores lower, so it rescues less — the safe direction. It does
+nothing for accented speech: the coach marks the accent's sounds wrong,
+which is its job.
+
+### What that leaves
+
+The acoustic A/B for the contrast word — align the audio against the target
+*and* against the declared Hebrew collapse, compare — remains the only
+design that addresses the 38–58% of mispronunciations Whisper repairs. This
+run confirmed why: both text-side levers that would have caught them also
+catch the correct attempts, in the same proportion.
+
 ## What needs a real speaker
 
 Every number above is the app listening to its own voice. To re-ground the

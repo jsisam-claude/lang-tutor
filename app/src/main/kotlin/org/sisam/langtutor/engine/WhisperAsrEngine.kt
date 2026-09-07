@@ -134,9 +134,9 @@ class WhisperAsrEngine(
 
     /**
      * What the room expects to hear, as Whisper's decoder prompt for this
-     * turn (docs/loop-accuracy.md, improvement 1). The drill passes its one
-     * line; the lesson passes the unit's phrases. Null when nothing is
-     * expected (the chat room), which is the decoder as it was.
+     * turn — when [PROMPT_WITH_HINT] is on. The drill passes its one line;
+     * the lesson passes the unit's phrases. Null when nothing is expected
+     * (the chat room), which is the decoder as it was.
      */
     @Volatile private var promptText: String? = null
 
@@ -146,8 +146,12 @@ class WhisperAsrEngine(
         chunks.clear()
         spec = null
         lastSpeechSample = 0
-        promptText = (hint as? RecognitionHint.ConstrainedVocab)?.phrases
-            ?.filter { it.isNotBlank() }?.takeIf { it.isNotEmpty() }?.joinToString(" ")
+        promptText = if (PROMPT_WITH_HINT) {
+            (hint as? RecognitionHint.ConstrainedVocab)?.phrases
+                ?.filter { it.isNotBlank() }?.takeIf { it.isNotEmpty() }?.joinToString(" ")
+        } else {
+            null
+        }
         // A previous turn's thread still running means it still owns its
         // stream (it closes it on exit — see [Turn]); this turn simply runs
         // without a preview rather than share the engine with it.
@@ -657,5 +661,17 @@ class WhisperAsrEngine(
          *  of the firm endpoint, so this is a formality; on timeout the fresh
          *  path below runs and merely queues behind the same lock. */
         const val SPEC_JOIN_MS = 5_000L
+
+        /**
+         * Whether the room's expected line is shown to the decoder as its
+         * prompt. OFF, by measurement (docs/loop-accuracy.md §5): the prompt
+         * takes the short-item census from 13 rejects to 0 and a
+         * Hebrew-accented rendering from 38 to 7 — and it also writes the
+         * target for 110 of 116 mispronounced minimal pairs ("three thin
+         * sings" → *things*) and credits four more dropped negations. For a
+         * pronunciation tutor that is the wrong trade. The machinery stays,
+         * tested, for a constrained design that can tell the two apart.
+         */
+        const val PROMPT_WITH_HINT = false
     }
 }

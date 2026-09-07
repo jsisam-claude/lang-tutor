@@ -379,6 +379,23 @@ class DrillOrchestratorTest {
     }
 
     @Test
+    fun `the coach cannot rescue a moved word or a dropped negation`() = runTest {
+        // It aligns sounds in the target's order: it cannot see an
+        // inversion, and it scores the "t" of a missing "can't" as close.
+        val f = Fixture(this, scorer = SetScorer(phone = 1.0f, overall = 1.0f))
+        val question = DrillItem("Are you playing with the blocks?", DrillLevel.LONG)
+        val warning = DrillItem("Don't touch the hot stove.", DrillLevel.LONG)
+        f.drill.startRound(listOf(question, warning))
+        advanceUntilIdle()
+        f.asr.enqueue(heard("you are playing with the blocks"))
+        f.drill.onMicPressed(); advanceUntilIdle(); f.drill.onMicReleased()
+        advanceUntilIdle()
+        assertTrue(f.events.none { it is DrillEvent.Correct })
+        assertEquals(1, (f.drill.state.value as DrillState.AwaitingChild).triesUsed)
+        f.collector.cancel()
+    }
+
+    @Test
     fun `no audio, no second opinion`() = runTest {
         val f = Fixture(this, scorer = SetScorer(phone = 0.9f, overall = 0.95f))
         f.drill.startRound(listOf(ball))
