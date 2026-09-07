@@ -155,10 +155,16 @@ it recommended does not exist, so these are the checked facts:
   window and advances **32 frames = 320 ms = 5,120 new samples** at 16 kHz
   (consultation's 160 ms/2,560 was wrong for this export). The engine must
   read input names/shapes from the session at load, never hardcode them.
-- **Features** (agrees with kaldi-native-fbank defaults; verify snip_edges
-  against sherpa-onnx source when coding): 80 mel, 25/10 ms, povey window,
-  dither 0 at inference, pre-emphasis 0.97, remove_dc_offset true. Keep a
-  240-sample tail so chunk N+1's first frame windows correctly.
+- **Features** — verified 2026-09-07 against sherpa-onnx on the same
+  files, not against the defaults (docs/loop-accuracy.md): 80 mel, 25/10 ms,
+  povey window, dither 0 at inference, pre-emphasis 0.97, remove_dc_offset
+  true, **samples in [−1, 1] unscaled, `snip_edges=false`,
+  `high_freq=−400`**. The Kotlin had shipped with kaldi's 16-bit scale,
+  which adds 2·ln(32768) to every log-mel value and overflows the encoder's
+  SwooshR into NaN from the third chunk — the preview decoded nothing. The
+  stream now frames against its whole buffer by index (an unsnipped first
+  frame is mirrored before sample 0) with the online rule: a frame is
+  emitted once its full window is in, the straddling tail at finish().
 - **Hotword biasing is runtime-side, not in the graph** (confirmed: no such
   inputs). Greedy search cannot bias; sherpa does it with modified beam
   search + an Aho-Corasick trie over BPE tokens. v1 ships greedy without

@@ -196,16 +196,18 @@ class ZipformerStreamingAsr(
         fun accept(pcm: FloatArray): String? {
             samples = samples.plus(pcm)
             var grew = false
-            // One fbank call over the whole newly-available span, not one per
-            // 10 ms frame: compute() batches, and a per-frame call repeated
-            // the window/mel setup for every frame on the audio path.
-            val spanStart = nextFrame * fbank.frameShift
-            val available = samples.size - spanStart
-            val ready = fbank.frameCount(available)
-            if (ready > 0) {
-                val end = spanStart + (ready - 1) * fbank.frameShift + fbank.frameLength
-                frames.addAll(fbank.compute(samples.copyOfRange(spanStart, end)))
-                nextFrame += ready
+            // One fbank call over every frame that has become computable,
+            // not one per 10 ms frame: compute() batches, and a per-frame
+            // call repeated the window/mel setup on the audio path. Against
+            // the WHOLE buffer, by frame index: with edges not snipped a
+            // frame's window is centred on its shift and the first one
+            // reaches before sample 0, so a copied span would mirror the
+            // wrong edge. The online rule emits a frame only once its whole
+            // window is in; the tail frames come at finish().
+            val ready = fbank.frameCount(samples.size, flush = false)
+            if (ready > nextFrame) {
+                frames.addAll(fbank.compute(samples, nextFrame, ready - nextFrame))
+                nextFrame = ready
             }
             while (frames.size - encStart >= m.windowFrames) {
                 if (runChunk(encStart)) grew = true
@@ -214,8 +216,18 @@ class ZipformerStreamingAsr(
             return if (grew) text() else null
         }
 
-        /** Flush what is left: the tail is padded so a final partial window still decodes. */
+        /** Flush what is left: the frames that straddle the end, then the
+         *  tail padded so a final partial window still decodes. */
         fun finish(): String {
+            val all = fbank.frameCount(samples.size, flush = true)
+            if (all > nextFrame) {
+                frames.addAll(fbank.compute(samples, nextFrame, all - nextFrame))
+                nextFrame = all
+            }
+            while (frames.size - encStart >= m.windowFrames) {
+                runChunk(encStart)
+                encStart += m.strideFrames
+            }
             if (frames.size > encStart) {
                 val pad = ArrayList(frames.subList(encStart, frames.size))
                 while (pad.size < m.windowFrames) pad.add(FloatArray(FEATURE_DIM) { SILENCE_LOGMEL })
