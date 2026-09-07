@@ -18,18 +18,22 @@ enum class WhisperLayout(
     val vocabSize: Int,
     val eot: Int,
     val prompt: IntArray,
+    /** `<|startofprev|>`: what precedes a text prompt to the decoder. */
+    val sotPrev: Int,
     internal val resource: String,
 ) {
     MULTILINGUAL(
         vocabSize = 51_865,
         eot = 50_257,
         prompt = intArrayOf(50_258, 50_259, 50_359, 50_363),
+        sotPrev = 50_361,
         resource = "whisper/vocab.txt",
     ),
     ENGLISH(
         vocabSize = 51_864,
         eot = 50_256,
         prompt = intArrayOf(50_257, 50_362),
+        sotPrev = 50_360,
         resource = "whisper/vocab-en.txt",
     ),
     ;
@@ -42,10 +46,19 @@ enum class WhisperLayout(
 }
 
 /**
- * Whisper tokenizer — DECODE side only (the ASR loop never needs to encode
- * text). Byte-level BPE: token strings from the bundled vocab are sequences of
- * GPT-2 "byte unicode" characters; decoding maps each char back to its raw byte
- * and interprets the result as UTF-8.
+ * Whisper tokenizer. Byte-level BPE: token strings from the bundled vocab are
+ * sequences of GPT-2 "byte unicode" characters; decoding maps each char back
+ * to its raw byte and interprets the result as UTF-8.
+ *
+ * The ENCODE side exists for one purpose: the drill knows the line it is
+ * listening for, and Whisper's decoder takes a text prompt that biases what
+ * it writes — "OK" rather than "okay", "pinecones" rather than "pine cones",
+ * which on a short item is the difference between a star and "Almost!". No
+ * merge table is bundled, so [encode] is a greedy longest match over the
+ * vocabulary rather than true BPE. Measured against the reference tokenizer
+ * over the whole phrasebank it produces the identical ids for 94% of lines;
+ * where it differs (rare compounds) the pieces still spell the same text,
+ * which is what the decoder is being shown.
  *
  * Vocab resources are one token per line, line number = id, with \n \r \\
  * escaped: `whisper/vocab.txt` (multilingual, from openai/whisper-medium) and
@@ -78,7 +91,44 @@ class WhisperTokenizer private constructor(
         return String(bytes.toByteArray(), Charsets.UTF_8)
     }
 
+    /**
+     * Text → token ids, greedy longest match. A word-initial space belongs
+     * to the word ("Ġthe"), so a prompt should start with one, as Whisper's
+     * own convention does. Bytes no token covers are dropped.
+     */
+    fun encode(text: String): IntArray {
+        val chars = StringBuilder()
+        for (b in text.toByteArray(Charsets.UTF_8)) chars.append(BYTE_TO_UNICODE[b.toInt() and 0xFF])
+        val s = chars.toString()
+        val out = ArrayList<Int>(s.length / 3 + 1)
+        var i = 0
+        while (i < s.length) {
+            var matched = false
+            var j = minOf(s.length, i + LONGEST_PIECE)
+            while (j > i) {
+                val id = index[s.substring(i, j)]
+                if (id != null) {
+                    out.add(id); i = j; matched = true
+                    break
+                }
+                j--
+            }
+            if (!matched) i++
+        }
+        return out.toIntArray()
+    }
+
+    /** Token string → id, over the content tokens only. Built on first use. */
+    private val index: Map<String, Int> by lazy {
+        HashMap<String, Int>(layout.eot * 2).also { m ->
+            for (id in 0 until minOf(layout.eot, vocab.size)) m.putIfAbsent(vocab[id], id)
+        }
+    }
+
     companion object {
+        /** Longest vocabulary entry worth trying, in byte-unicode chars. */
+        private const val LONGEST_PIECE = 16
+
         // Multilingual ids kept as named constants: existing call sites and the
         // decoder's default prompt still refer to them.
         const val VOCAB_SIZE = 51_865
@@ -117,6 +167,11 @@ class WhisperTokenizer private constructor(
                 }
             }
             cs.indices.associate { cs[it].toChar() to bs[it] }
+        }
+
+        /** The same table the other way: raw byte → byte-unicode char. */
+        private val BYTE_TO_UNICODE: CharArray by lazy {
+            CharArray(256).also { t -> for ((c, b) in UNICODE_TO_BYTE) t[b] = c }
         }
 
         private fun loadVocab(layout: WhisperLayout): Array<String> {

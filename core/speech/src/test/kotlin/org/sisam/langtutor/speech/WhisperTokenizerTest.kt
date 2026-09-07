@@ -76,4 +76,77 @@ class WhisperTokenizerTest {
         }.transcribe().ids
         assertArrayEquals(intArrayOf(314, 766), ids)
     }
+
+    // --- the encode side: a prompt for the decoder --------------------------
+
+    private val en = WhisperTokenizer.of(WhisperLayout.ENGLISH)
+
+    @Test
+    fun `encode matches the reference tokenizer where greedy and BPE agree`() {
+        // Goldens from the HF tokenizer for openai/whisper-small.en.
+        assertArrayEquals(intArrayOf(4231, 345, 7477, 30), en.encode(" Are you OK?"))
+        assertArrayEquals(intArrayOf(314, 766, 33158, 13), en.encode(" I see cereal."))
+        assertArrayEquals(intArrayOf(2094, 470, 3638, 262, 3024, 27635, 13), en.encode(" Don't touch the hot stove."))
+        assertArrayEquals(intArrayOf(1867, 338, 287, 534, 6131, 30), en.encode(" What's in your bag?"))
+        assertArrayEquals(intArrayOf(9368, 9353, 13), en.encode(" Ten fingers."))
+        assertArrayEquals(
+            intArrayOf(10127, 262, 6193, 318, 5814, 393, 4692, 11, 356, 481, 711, 2354, 13),
+            en.encode(" Whether the weather is warm or cold, we will play outside."),
+        )
+    }
+
+    @Test
+    fun `where greedy differs from BPE it still spells the same text`() {
+        // BPE: 7683, 20161, 1102, 274, 13 ("pine", "con", "es"); greedy takes
+        // a longer first piece. The decoder is shown the same words.
+        for (text in listOf(" Three pinecones.", " The grasshopper's legs are long.", " José and Noa.")) {
+            assertEquals(text, en.decode(en.encode(text)))
+        }
+        assertEquals("", en.decode(en.encode("")))
+    }
+
+    @Test
+    fun `a prompt goes between startofprev and the layout's own prefix`() {
+        val layout = WhisperLayout.ENGLISH
+        val prompt = intArrayOf(4231, 345, 7477, 30)
+        val script = intArrayOf(100, layout.eot)
+        var step = 0
+        var seen: IntArray? = null
+        val decoder = WhisperGreedyDecoder(layout = layout, prompt = prompt) { tokens, count ->
+            if (seen == null) seen = tokens.copyOf(count)
+            FloatArray(layout.vocabSize).also { it[script[step++]] = 10f }
+        }
+        val ids = decoder.transcribe().ids
+        assertEquals(listOf(100), ids.toList())
+        assertArrayEquals(
+            intArrayOf(layout.sotPrev, 4231, 345, 7477, 30, 50_257, 50_362),
+            seen,
+        )
+    }
+
+    @Test
+    fun `a long prompt is cut to leave room for the transcript`() {
+        val layout = WhisperLayout.ENGLISH
+        val prompt = IntArray(200) { 1000 + it }
+        var first: IntArray? = null
+        WhisperGreedyDecoder(maxTokens = 128, layout = layout, prompt = prompt) { tokens, count ->
+            if (first == null) first = tokens.copyOf(count)
+            FloatArray(layout.vocabSize).also { it[layout.eot] = 10f }
+        }.transcribe()
+        val prefix = first!!
+        assertEquals(128 - WhisperGreedyDecoder.RESERVE, prefix.size)
+        assertEquals(layout.sotPrev, prefix[0])
+        assertEquals(50_362, prefix.last())
+    }
+
+    @Test
+    fun `no prompt is the decoder as it was`() {
+        val layout = WhisperLayout.ENGLISH
+        var first: IntArray? = null
+        WhisperGreedyDecoder(layout = layout, prompt = intArrayOf()) { tokens, count ->
+            if (first == null) first = tokens.copyOf(count)
+            FloatArray(layout.vocabSize).also { it[layout.eot] = 10f }
+        }.transcribe()
+        assertArrayEquals(layout.prompt, first)
+    }
 }

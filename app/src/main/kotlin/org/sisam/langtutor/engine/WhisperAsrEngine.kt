@@ -132,12 +132,22 @@ class WhisperAsrEngine(
 
     override val supportsHandsFree: Boolean get() = vad != null
 
+    /**
+     * What the room expects to hear, as Whisper's decoder prompt for this
+     * turn (docs/loop-accuracy.md, improvement 1). The drill passes its one
+     * line; the lesson passes the unit's phrases. Null when nothing is
+     * expected (the chat room), which is the decoder as it was.
+     */
+    @Volatile private var promptText: String? = null
+
     @SuppressLint("MissingPermission") // RECORD_AUDIO requested by ConversationScreen
     override suspend fun startCapture(hint: RecognitionHint) {
         stopRecorderQuietly()
         chunks.clear()
         spec = null
         lastSpeechSample = 0
+        promptText = (hint as? RecognitionHint.ConstrainedVocab)?.phrases
+            ?.filter { it.isNotBlank() }?.takeIf { it.isNotEmpty() }?.joinToString(" ")
         // A previous turn's thread still running means it still owns its
         // stream (it closes it on exit — see [Turn]); this turn simply runs
         // without a preview rather than share the engine with it.
@@ -521,12 +531,15 @@ class WhisperAsrEngine(
         val logitsOut = Array(1) { Array(g.maxTokens) { FloatArray(g.vocabSize) } }
         val encOut = Array(1) { Array(g.encFrames) { FloatArray(g.encDim) } }
         val tokenizer = WhisperTokenizer.of(g.layout)
+        // Whisper's own convention: the prompt begins with a space, so its
+        // first word is a word and not the tail of one.
+        val prompt = promptText?.let { tokenizer.encode(" $it") }?.takeIf { it.isNotEmpty() }
 
         val windows = pieces.mapIndexed { index, piece ->
             EngineStatus.step(
                 EngineStatus.Kind.ASR_RUN,
                 if (pieces.size > 1) "window ${index + 1}/${pieces.size}" else "",
-            ) { transcribeWindow(itp, g, piece, mask, tokenBuf, logitsOut, encOut, tokenizer) }
+            ) { transcribeWindow(itp, g, piece, mask, tokenBuf, logitsOut, encOut, tokenizer, prompt) }
         }
         // Token-weighted mean: a long clean window should not be dragged to 0.5
         // by a two-token tail, and an empty window contributes nothing.
@@ -541,7 +554,8 @@ class WhisperAsrEngine(
         Log.i(
             TAG,
             "transcribed ${audioMs}ms audio in ${elapsed}ms rtf=${"%.2f".format(rtf)} " +
-                "conf=${"%.2f".format(lastConfidence)}${Thermal.suffix()}",
+                "conf=${"%.2f".format(lastConfidence)}" +
+                (prompt?.let { " prompt=${it.size}tok" } ?: "") + Thermal.suffix(),
         )
         return windows.joinToString(" ") { it.text }.trim()
     }
@@ -559,6 +573,7 @@ class WhisperAsrEngine(
         logitsOut: Array<Array<FloatArray>>,
         encOut: Array<Array<FloatArray>>,
         tokenizer: WhisperTokenizer,
+        prompt: IntArray?,
     ): Window {
         var t0 = System.nanoTime()
         val melIn = arrayOf(WhisperFrontend.logMel(piece, g.melFrames)) // [1,80,frames]
@@ -570,7 +585,7 @@ class WhisperAsrEngine(
 
         t0 = System.nanoTime()
         var steps = 0
-        val decoded = WhisperGreedyDecoder(maxTokens = g.maxTokens, layout = g.layout) { tokens, count ->
+        val decoded = WhisperGreedyDecoder(maxTokens = g.maxTokens, layout = g.layout, prompt = prompt) { tokens, count ->
             System.arraycopy(tokens, 0, tokenBuf[0], 0, g.maxTokens)
             itp.runSignature(
                 mapOf("args_0" to encOut, "args_1" to tokenBuf, "args_2" to mask),

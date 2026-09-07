@@ -16,6 +16,10 @@ import org.sisam.langtutor.profile.InMemoryProfileStore
 import org.sisam.langtutor.speech.AsrResult
 import org.sisam.langtutor.speech.AudioClip
 import org.sisam.langtutor.speech.FakeAsrEngine
+import org.sisam.langtutor.speech.TutorLanguage
+import org.sisam.langtutor.speech.PronunciationScorer
+import org.sisam.langtutor.speech.PronunciationScore
+import org.sisam.langtutor.speech.PhonemeScore
 import org.sisam.langtutor.speech.FakePronunciationScorer
 import org.sisam.langtutor.speech.FakeTtsEngine
 import org.sisam.langtutor.speech.RecognitionHint
@@ -23,7 +27,16 @@ import org.sisam.langtutor.speech.RecognitionHint
 @OptIn(ExperimentalCoroutinesApi::class)
 class DrillOrchestratorTest {
 
-    private class Fixture(scope: TestScope, scorerDelayMs: Long = 0L) {
+    /** A coach whose verdict the test sets: every phone at [phone], the line at [overall]. */
+    private class SetScorer(var phone: Float, var overall: Float, var delayMs: Long = 0L) : PronunciationScorer {
+        override suspend fun score(audio: AudioClip, expectedText: String, language: TutorLanguage): PronunciationScore {
+            if (delayMs > 0) kotlinx.coroutines.delay(delayMs)
+            val phones = expectedText.filter { it.isLetter() }.map { PhonemeScore(it.toString(), phone) }
+            return PronunciationScore(overall = overall, phonemes = phones)
+        }
+    }
+
+    private class Fixture(scope: TestScope, scorerDelayMs: Long = 0L, scorer: PronunciationScorer? = null) {
         val asr = FakeAsrEngine()
         val tts = FakeTtsEngine()
         val profile = InMemoryProfileStore()
@@ -31,7 +44,7 @@ class DrillOrchestratorTest {
         val drill = DrillOrchestrator(
             asr = asr,
             tts = tts,
-            scorer = FakePronunciationScorer(scorerDelayMs),
+            scorer = scorer ?: FakePronunciationScorer(scorerDelayMs),
             profile = profile,
             scope = scope,
         )
@@ -315,6 +328,76 @@ class DrillOrchestratorTest {
         f.drill.onMicReleased()
         advanceUntilIdle()
         assertNull("item 1's score must not paint item 2", f.drill.pronunciation.value)
+        f.collector.cancel()
+    }
+
+    // --- the coach's second opinion on a reject ---------------------------
+
+    @Test
+    fun `a reject the coach confirms is a star`() = runTest {
+        // The recogniser wrote "wed" for a "red" that was said perfectly;
+        // the coach, aligning the target's own sounds, found every one.
+        val f = Fixture(this, scorer = SetScorer(phone = 0.9f, overall = 0.95f))
+        f.drill.startRound(listOf(ball, bear))
+        advanceUntilIdle()
+        f.asr.enqueue(heard("i see a wed ball"))
+        f.drill.onMicPressed(); advanceUntilIdle(); f.drill.onMicReleased()
+        advanceUntilIdle()
+        assertEquals(listOf(DrillEvent.Correct(tries = 1)), f.events)
+        assertEquals(emptySet<Int>(), f.drill.lastMissedWords.value)
+        assertEquals(bear, (f.drill.state.value as DrillState.AwaitingChild).item)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `a reject the coach does not confirm stays a reject`() = runTest {
+        // One sound WRONG by the coach's own line: the text verdict stands.
+        val f = Fixture(this, scorer = SetScorer(phone = 0.4f, overall = 0.9f))
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+        f.asr.enqueue(heard("i see a wed ball"))
+        f.drill.onMicPressed(); advanceUntilIdle(); f.drill.onMicReleased()
+        advanceUntilIdle()
+        assertTrue(f.events.none { it is DrillEvent.Correct })
+        assertEquals(1, (f.drill.state.value as DrillState.AwaitingChild).triesUsed)
+        assertEquals(setOf(3), f.drill.lastMissedWords.value)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `a slow coach does not hold the room`() = runTest {
+        val f = Fixture(this, scorer = SetScorer(phone = 0.9f, overall = 0.95f, delayMs = CoachRescue.WAIT_MS + 5_000))
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+        f.asr.enqueue(heard("i see a wed ball"))
+        f.drill.onMicPressed(); advanceUntilIdle(); f.drill.onMicReleased()
+        advanceUntilIdle()
+        // The reject stood; the verdict was not held for the coach.
+        assertTrue(f.events.none { it is DrillEvent.Correct })
+        assertEquals(1, (f.drill.state.value as DrillState.AwaitingChild).triesUsed)
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `no audio, no second opinion`() = runTest {
+        val f = Fixture(this, scorer = SetScorer(phone = 0.9f, overall = 0.95f))
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+        attempt(f, "i see a wed ball") // no clip
+        advanceUntilIdle()
+        assertTrue(f.events.none { it is DrillEvent.Correct })
+        f.collector.cancel()
+    }
+
+    @Test
+    fun `the coach cannot fail an attempt the judge passed`() = runTest {
+        val f = Fixture(this, scorer = SetScorer(phone = 0.1f, overall = 0.1f))
+        f.drill.startRound(listOf(ball))
+        advanceUntilIdle()
+        f.asr.enqueue(heard("i see a red ball"))
+        f.drill.onMicPressed(); advanceUntilIdle(); f.drill.onMicReleased()
+        advanceUntilIdle()
+        assertEquals(listOf(DrillEvent.Correct(tries = 1)), f.events)
         f.collector.cancel()
     }
 }

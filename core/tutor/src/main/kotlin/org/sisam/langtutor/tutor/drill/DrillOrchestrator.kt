@@ -1,8 +1,11 @@
 package org.sisam.langtutor.tutor.drill
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -261,17 +264,32 @@ class DrillOrchestrator(
                 _state.value = DrillState.AwaitingChild(at.item, at.index, at.total, tries)
                 return
             }
-            // NOT awaited. The verdict is WordMatch over the transcript and
-            // nothing here reads the score — the class doc has always said the
-            // coach never gates progress — so waiting for a ~320 MB model to
-            // run before saying "Great job!" bought the child nothing and cost
-            // them a full coach inference, plus a cold session load whenever a
-            // memory trim had released it. The colours arrive when they
-            // arrive, and land only if the attempt they describe is still the
-            // one on screen.
-            scoreInBackground(result, at.item.text)
-            _lastMissedWords.value = WordMatch.missedWordIndexes(at.item.text, result.transcript, hearing)
-            if (WordMatch.matches(at.item.text, result.transcript, hearing)) {
+            // Started, not awaited: the verdict is WordMatch over the
+            // transcript, and waiting for a ~320 MB model before saying
+            // "Great job!" bought the child nothing. The colours arrive when
+            // they arrive, and land only if the attempt they describe is
+            // still the one on screen.
+            val scoring = scoreInBackground(result, at.item.text)
+            var passed = WordMatch.matches(at.item.text, result.transcript, hearing)
+            var rescued = false
+            if (!passed && result.audio != null) {
+                // A REJECT waits for the coach, briefly: the recogniser may
+                // have misheard a word that was said perfectly, and the coach
+                // hears the sounds themselves (CoachRescue). It can only
+                // rescue; a poor score changes nothing.
+                val score = withTimeoutOrNull(CoachRescue.WAIT_MS) { scoring.await() }
+                if (CoachRescue.accepts(score)) {
+                    passed = true
+                    rescued = true
+                    println("DrillOrchestrator: the coach confirmed an attempt the recogniser rejected")
+                }
+            }
+            _lastMissedWords.value = if (rescued) {
+                emptySet()
+            } else {
+                WordMatch.missedWordIndexes(at.item.text, result.transcript, hearing)
+            }
+            if (passed) {
                 correct++
                 _events.emit(DrillEvent.Correct(tries + 1))
                 // Saying it right FIRST TIME is the evidence; a line landed
@@ -340,10 +358,10 @@ class DrillOrchestrator(
      * started in is still current, so a slow score for item 3 cannot colour
      * item 4 — the failure this decoupling would otherwise introduce.
      */
-    private fun scoreInBackground(result: AsrResult, target: String) {
-        val clip = result.audio ?: return
+    private fun scoreInBackground(result: AsrResult, target: String): Deferred<PronunciationScore?> {
+        val clip = result.audio ?: return kotlinx.coroutines.CompletableDeferred(null)
         val epoch = scoreEpoch.get()
-        scope.launch {
+        return scope.async {
             runCatching { scorer.score(clip, target, TutorLanguage.ENGLISH) }
                 .onSuccess {
                     if (it.phonemes.isNotEmpty() && scoreEpoch.get() == epoch) {
@@ -355,6 +373,7 @@ class DrillOrchestrator(
                     recordSounds(it)
                 }
                 .onFailure { println("DrillOrchestrator: pronunciation scoring failed: ${it.message}") }
+                .getOrNull()
         }
     }
 
