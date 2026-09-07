@@ -30,9 +30,9 @@ import org.sisam.langtutor.speech.KokoroTextNormalizer
  * a word said WRONG — a different word in the target word's place, which on
  * every 4+ word line (93% of the bank) cost exactly the one miss the
  * allowance covers, so the room whose purpose is one contrast could not
- * fail the one word that carried it; a NEGATION dropped, which passed 158
- * of 160 negative lines with their meaning reversed; and a word MOVED —
- * present but out of order — which passed 216 of 217 questions said as
+ * fail the one word that carried it; a NEGATION dropped, which passed 155
+ * of 156 negative lines with their meaning reversed; and a word MOVED —
+ * present but out of order — which passed 174 of 175 questions said as
  * statements, though the inversion was the entire grammar point. A
  * substitution, a dropped negation and a moved word now fail the line
  * outright. What this trades: a mid-sentence word the recogniser mishears
@@ -95,10 +95,27 @@ object WordMatch {
 
     private val WHITESPACE = Regex("\\s+")
 
-    /** The transcript in its spoken form: digits as words, diacritics
-     *  folded, contractions opened. */
-    private fun spokenTranscript(transcript: String): List<String> =
-        tokens(spoken(transcript)).flatMap { CONTRACTIONS[it] ?: listOf(it) }
+    /**
+     * The transcript in its spoken form: digits as words, diacritics
+     * folded, contractions opened — an "X's" in the light of the target,
+     * because on its own it is ambiguous. "It's been raining" against a
+     * target that says "It has been raining" opens to "it has"; "in it's
+     * shell" against a target that says "its" stays closed, since the two
+     * are one sound and the key will match them; otherwise it is "X is".
+     */
+    private fun spokenTranscript(transcript: String, need: List<String>, needKey: Array<String?>, pronunciation: Pronunciation): List<String> {
+        val pairs = need.zipWithNext().toSet()
+        return tokens(spoken(transcript)).flatMap { t ->
+            val head = APOSTROPHE_S[t]
+            if (head == null) return@flatMap CONTRACTIONS[t] ?: listOf(t)
+            when {
+                (head to "has") in pairs -> listOf(head, "has")
+                need.any { it == t } -> listOf(t)
+                pronunciation.key(t)?.let { k -> needKey.any { it == k } } == true -> listOf(t)
+                else -> listOf(head, "is")
+            }
+        }
+    }
 
     /** The normaliser never throws on what a recogniser writes; if it
      *  somehow did, the text as written is the fallback, not a crash on
@@ -131,11 +148,11 @@ object WordMatch {
         val written = tokens(target).size
         val tagged = spokenTarget(target)
         val need = tagged.map { it.first }
-        val said = spokenTranscript(transcript)
         if (need.isEmpty()) return Judgement(0, emptySet(), 0, 0, 0, 0)
         // Keyed once per token, not once per comparison: the LCS below asks
         // about every pair, and a pronunciation is a dictionary walk.
         val needKey = Array(need.size) { pronunciation.key(need[it]) }
+        val said = spokenTranscript(transcript, need, needKey, pronunciation)
         val saidKey = Array(said.size) { pronunciation.key(said[it]) }
         fun same(i: Int, j: Int): Boolean =
             need[i] == said[j] || (needKey[i] != null && needKey[i] == saidKey[j])
@@ -213,7 +230,25 @@ object WordMatch {
             !matchedSaid[s] && said[s] !in FILLERS &&
                 !(s > 0 && alike(s, s - 1)) && !(s + 1 < said.size && alike(s, s + 1))
         }
-        val negationAdded = extras.count { said[it] in NEGATIONS }
+        // An added negation counts only INSIDE the matched line: "no, I like
+        // peas" and the restart "I don't... I don't like peas" put theirs
+        // before the line begins, and a preface is an extra like any other.
+        // Inside it, a negation said twice ("I never never eat fish") is one
+        // negation added, not a stutter that cancels itself. On an item of
+        // one or two words there is no inside to speak of, so "no peas" for
+        // "Peas." counts wherever it is; at three words, "no, I like peas"
+        // is a preface again.
+        val firstSaid = pairs.firstOrNull()?.second ?: 0
+        val lastSaid = pairs.lastOrNull()?.second ?: -1
+        val negationAdded = said.indices.count { s ->
+            !matchedSaid[s] && said[s] in NEGATIONS &&
+                (written <= 2 || s in (firstSaid + 1) until lastSaid) &&
+                !(s > 0 && !matchedSaid[s - 1] && alike(s, s - 1)) &&
+                // "no no thank you" for "No, thank you": a repeat of the
+                // line's own word, beside it, is a stutter of it.
+                !(s + 1 < said.size && matchedSaid[s + 1] && alike(s, s + 1)) &&
+                !(s > 0 && matchedSaid[s - 1] && alike(s, s - 1))
+        }
         // Substitutions: in the gap between two consecutive matches (or an
         // edge), an unsaid target token facing an unmatched transcript token.
         var prevI = -1
@@ -291,12 +326,27 @@ object WordMatch {
         "i'll" to listOf("i", "will"), "you'll" to listOf("you", "will"), "we'll" to listOf("we", "will"),
         "they'll" to listOf("they", "will"), "he'll" to listOf("he", "will"), "she'll" to listOf("she", "will"),
         "it'll" to listOf("it", "will"), "let's" to listOf("let", "us"),
-        // "'s" as "is". It can be "has" — but not in a line this bank
-        // teaches, and the recogniser writes "What's in your bag?" for a
-        // target that spells "What is", every time.
+        // The written target's "'s" is "is": "It's a ball", "What's up?".
+        // The transcript's is opened in [spokenTranscript], where the
+        // target says which it is.
         "it's" to listOf("it", "is"), "that's" to listOf("that", "is"), "what's" to listOf("what", "is"),
         "there's" to listOf("there", "is"), "here's" to listOf("here", "is"), "he's" to listOf("he", "is"),
         "she's" to listOf("she", "is"), "who's" to listOf("who", "is"), "where's" to listOf("where", "is"),
         "how's" to listOf("how", "is"), "when's" to listOf("when", "is"),
+        // Without the apostrophe, as a recogniser may write them. Only the
+        // forms that are not also words: "its", "ill", "well", "were" stay.
+        "dont" to listOf("do", "not"), "doesnt" to listOf("does", "not"), "didnt" to listOf("did", "not"),
+        "cant" to listOf("can", "not"), "couldnt" to listOf("could", "not"), "wont" to listOf("will", "not"),
+        "wouldnt" to listOf("would", "not"), "shouldnt" to listOf("should", "not"), "isnt" to listOf("is", "not"),
+        "arent" to listOf("are", "not"), "wasnt" to listOf("was", "not"), "werent" to listOf("were", "not"),
+        "havent" to listOf("have", "not"), "hasnt" to listOf("has", "not"), "hadnt" to listOf("had", "not"),
+        "im" to listOf("i", "am"), "youre" to listOf("you", "are"), "theyre" to listOf("they", "are"),
+        "ive" to listOf("i", "have"), "youve" to listOf("you", "have"), "weve" to listOf("we", "have"),
+        "theyve" to listOf("they", "have"), "lets" to listOf("let", "us"),
     )
+
+    /** "X's" on the TRANSCRIPT side, resolved against the target. */
+    private val APOSTROPHE_S: Map<String, String> = listOf(
+        "it", "that", "what", "there", "here", "he", "she", "who", "where", "how", "when",
+    ).associateBy { "$it's" }
 }

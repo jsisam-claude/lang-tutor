@@ -59,6 +59,14 @@ class KokoroPhonemizerTest {
         assertEquals("third-grade", KokoroTextNormalizer.normalize("3rd-grade"))
         // Too big for a number: read digit by digit rather than thrown at.
         assertEquals("two zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero zero", KokoroTextNormalizer.normalize("200000000000000000000"))
+        // And the range where the scale table used to run out (2·10¹² and
+        // up, through Long.MAX_VALUE): words, every one.
+        assertEquals("two thousand billion", KokoroTextNormalizer.normalize("2000000000000"))
+        for (n in listOf(1_999_999_999_999L, 2_000_000_000_000L, 1234567890123456789L, Long.MAX_VALUE)) {
+            val words = KokoroTextNormalizer.normalize(n.toString())
+            assertTrue("$n -> $words", words.isNotBlank() && words.none { it.isDigit() })
+        }
+        assertTrue(KokoroTextNormalizer.normalize("\$99999999999999999999").endsWith("dollars"))
     }
 
     @Test

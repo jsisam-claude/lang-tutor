@@ -1018,12 +1018,14 @@ class AppContainer private constructor(context: Context) {
         val kokoro = bundledTtsEngine()
         appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
         appScope.launch(Dispatchers.IO) {
+            // The judge's dictionary, 140,000 lines, FIRST: paid here rather
+            // than on the main thread at the first verdict, which is where a
+            // learner whose gloss row is off would otherwise pay it — and
+            // ahead of the voice warm-up, so the first guess does not queue
+            // behind a synthesis.
+            runCatching { glossPhonemizer.value }
             runCatching { kokoro?.warmUp() }
             runCatching { ListeningAck.warmUp() }
-            // The judge's dictionary, 140,000 lines: paid here rather than
-            // on the main thread at the first verdict, which is where a
-            // learner whose gloss row is off would otherwise pay it.
-            runCatching { glossPhonemizer.value }
         }
         return DrillOrchestrator(
             asr = createAsrEngine(),

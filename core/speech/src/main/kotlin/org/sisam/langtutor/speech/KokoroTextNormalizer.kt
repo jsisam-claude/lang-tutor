@@ -22,7 +22,7 @@ object KokoroTextNormalizer {
         t = SPACED_DASH.replace(t, "—")
         t = t.replace('–', '-')
         t = DOLLARS.replace(t) { m ->
-            val dollars = cardinal(m.groupValues[1].replace(",", "").toLong())
+            val dollars = m.groupValues[1].replace(",", "").let { it.toLongOrNull()?.let(::cardinal) ?: digits(it) }
             val cents = m.groupValues[2]
             if (cents.isEmpty()) "$dollars dollars"
             else "$dollars dollars and ${cardinal(cents.padEnd(2, '0').toLong())} cents"
@@ -61,7 +61,14 @@ object KokoroTextNormalizer {
         var rest = n
         for ((value, name) in SCALES) {
             if (rest >= value) {
-                parts.append(upToThousand((rest / value).toInt())).append(' ').append(name).append(' ')
+                val count = rest / value
+                // Past 999 of the largest scale the table runs out; the
+                // count is then a number in its own right ("two thousand
+                // billion"). Without this, 2·10¹² indexed a 20-entry table
+                // at 20 — and the judge runs this on whatever a recogniser
+                // writes, on the early-close path.
+                parts.append(if (count < 1000) upToThousand(count.toInt()) else cardinal(count))
+                    .append(' ').append(name).append(' ')
                 rest %= value
             }
         }

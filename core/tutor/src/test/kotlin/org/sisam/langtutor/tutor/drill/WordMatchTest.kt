@@ -56,7 +56,9 @@ class WordMatchTest {
     @Test
     fun `apostrophes stay inside their word`() {
         assertTrue(WordMatch.matches("don't stop", "don't stop"))
-        assertFalse(WordMatch.matches("don't stop", "dont stop go"))
+        // "dont" is the same words without their apostrophe; "don" is not.
+        assertTrue(WordMatch.matches("don't stop", "dont stop go"))
+        assertFalse(WordMatch.matches("don't stop", "don stop go"))
     }
 
     @Test
@@ -241,6 +243,46 @@ class WordMatchTest {
     }
 
     @Test
+    fun `a negation before the line begins is an extra, and inside it, said once or twice, it reverses the line`() {
+        // The restart a learner actually makes, and a preface: free.
+        assertTrue(WordMatch.matches("I don't like peas.", "I don't... I don't like peas"))
+        assertTrue(WordMatch.matchesExactly("I don't like peas.", "I don't... I don't like peas"))
+        assertTrue(WordMatch.matches("Don't touch the stove.", "don't, don't touch the stove"))
+        assertTrue(WordMatch.matches("I see a red ball.", "I don't know, I see a red ball"))
+        assertTrue(WordMatch.matches("I like peas.", "no, I like peas"))
+        assertTrue(WordMatch.matches("I like peas.", "I like peas, no"))
+        assertTrue(WordMatch.matchesExactly("No, thank you.", "no no thank you"))
+        // Inside the line, once or twice: reversed.
+        assertFalse(WordMatch.matches("I eat fish.", "I never never eat fish"))
+        assertFalse(WordMatch.matchesExactly("I eat fish.", "I never never eat fish"))
+        assertFalse(WordMatch.matches("I like peas.", "I no no like peas"))
+        assertFalse(WordMatch.matches("I like peas.", "I no like peas"))
+        // A one- or two-word item has no inside; a negation anywhere reverses it.
+        assertFalse(WordMatch.matches("Peas.", "no peas"))
+        assertFalse(WordMatch.matches("Peas.", "not peas"))
+        assertFalse(WordMatch.matches("Green peas.", "no green peas"))
+    }
+
+    @Test
+    fun `the recogniser's apostrophe-s is read in the light of the target`() {
+        // "its" and "it's" are one sound; the target says which is meant.
+        assertTrue(WordMatch.matches("The turtle hides in its shell.", "the turtle hides in it's shell", sound))
+        assertTrue(WordMatch.matches("It has been raining since Tuesday.", "It's been raining since Tuesday", sound))
+        assertTrue(WordMatch.matchesExactly("What's wrong?", "what is wrong", sound))
+        assertTrue(WordMatch.matchesExactly("What is wrong?", "what's wrong", sound))
+        // But not the other way: "has" for a written "is" is a different line.
+        assertFalse(WordMatch.matches("It's a big red ball.", "it has a big red ball", sound))
+    }
+
+    @Test
+    fun `contractions without their apostrophe`() {
+        assertTrue(WordMatch.matchesExactly("I don't like peas.", "I dont like peas"))
+        assertTrue(WordMatch.matchesExactly("I'm happy!", "Im happy"))
+        // "its" is a word and stays one.
+        assertTrue(WordMatch.matchesExactly("The turtle hides in its shell.", "the turtle hides in its shell"))
+    }
+
+    @Test
     fun `a filler in the gap is not a word said instead`() {
         assertTrue(WordMatch.matches("I see a red ball", "I see a um ball"))
         assertEquals(1, WordMatch.judge("I see a red ball", "I see a um ball").omitted)
@@ -271,8 +313,15 @@ class WordMatchTest {
 
     @Test
     fun `a numeral of any size is words, never a crash`() {
-        // Extras are free, however many digits they carry; the point is no throw.
-        assertTrue(WordMatch.matches("ball", "ball 2000000000000000000000000"))
+        // Extras are free, however many digits they carry; the point is no
+        // throw — through the HEARING judge, whose key path runs the
+        // normaliser again, and across the 13–19 digit range where the
+        // number table used to run out.
+        assertTrue(WordMatch.matches("ball", "ball 2000000000000000000000000", sound))
+        assertTrue(WordMatch.matches("ball", "ball 2000000000000", sound))
+        assertTrue(WordMatch.matches("ball", "ball 1234567890123456789", sound))
+        assertTrue(WordMatch.matchesExactly("ball", "ball 2000000000000", sound))
+        WordMatch.judge("2000000000000 balls", "two trillion balls", sound)
         assertEquals(0, WordMatch.judge("ball", "ball 2000000000000000000000000").missed.size)
         assertTrue(WordMatch.matchesExactly("I have 150 cats.", "I have 150 cats"))
         assertTrue(WordMatch.matchesExactly("I have 150 cats.", "I have one hundred fifty cats"))

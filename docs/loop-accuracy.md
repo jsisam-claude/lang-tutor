@@ -192,6 +192,38 @@ Zero authored lines use either; the chat room's model writes both.
   measure (81% of frames decode blank, so Viterbi gives 112 of 118 phones
   exactly one frame). Both are scorer limits, not thresholds.
 
+## The review
+
+Six readers were set on the fixes with one job — break them — then two
+independent lenses per finding, one to refute and one to judge the fix.
+Thirty findings; twenty-six with a demonstrating input, every one of
+which is now a test beside its fix. What the second pass found in the
+*first* pass's fixes, which is the reason for a second pass:
+
+- The numeral guard covered the wrong range. Twenty-plus digits were
+  safe; 13–19 digits (≥ 2·10¹²) still indexed a twenty-entry table at
+  twenty — and through the judge's *hearing* path, which re-enters the
+  normaliser unwrapped, on the early close, in a coroutine with no
+  handler. Now: the number table recurses past 999 of a scale, "$" never
+  throws, and the key path swallows a front-end failure as "no key".
+- The added-negation rule failed a learner's honest restart — "I don't…
+  I don't like peas" — and a preface — "no, I like peas" — while a
+  doubled negation inside the line ("I never never eat fish") slipped
+  through as a stutter. Whisper keeps restarts and prefaces verbatim
+  (measured: "I don't, I don't like peas."), so this was live. Now: an
+  added negation counts only inside the matched span, a doubled one
+  counts once, and a one- or two-word item counts it anywhere.
+- "its" and "it's" are one sound, and the `'s → is` map broke that; "It
+  has been raining" written out against Whisper's "It's been" was a
+  substitution. The transcript's "X's" is now opened in the light of the
+  target: "has" where the target says so, closed where the target holds
+  the homophone, "is" otherwise.
+
+Still open, by decision rather than oversight: a self-correction with
+"no" in the middle of a line ("I see a, no, a red ball") fails — Whisper
+garbles it anyway ("I see you now, a red ball") — and none of this was
+measured on a child's voice.
+
 ## What needs a real speaker
 
 Every number above is the app listening to its own voice. To re-ground the
