@@ -59,6 +59,22 @@ def platforms(sdk):
     return found
 
 
+def api_level(text):
+    """An API level from the database, as a number.
+
+    Android 16 introduced minor SDK versions, and the database next to a
+    platform from then on writes them as "36.1" and "37.0" where it used to
+    write "36". int() on those took CI down on every push for two days after
+    the runner image picked up such a platform — after a successful build,
+    at the very last step. A level is a number; compare it as one.
+    """
+    return float(text)
+
+
+def level_text(level):
+    return f"{level:g}"
+
+
 def load_database(jar):
     """api-versions.xml next to the newest platform: class -> (since, supers, {member: (since, removed)})."""
     path = os.path.join(os.path.dirname(jar), "data", "api-versions.xml")
@@ -66,11 +82,11 @@ def load_database(jar):
     if not os.path.exists(path):
         return path, classes
     for c in ET.parse(path).getroot().iter("class"):
-        since = int(c.get("since", "1"))
+        since = api_level(c.get("since", "1"))
         supers = [e.get("name") for e in c.findall("extends")] + [e.get("name") for e in c.findall("implements")]
         members = {}
         for m in list(c.findall("method")) + list(c.findall("field")):
-            members[m.get("name")] = (int(m.get("since", since)), m.get("removed"))
+            members[m.get("name")] = (api_level(m.get("since", since)), m.get("removed"))
         classes[c.get("name")] = (since, supers, members)
     return path, classes
 
@@ -229,7 +245,7 @@ def main(argv):
         if info and info[1]:
             verdict = f"removed in API {info[1]}"
         elif info:
-            verdict = f"added in API {info[0]} > minSdk {MIN_SDK}"
+            verdict = f"added in API {level_text(info[0])} > minSdk {MIN_SDK}"
         else:
             verdict = f"not in the Android API at minSdk {MIN_SDK} (nor in the API database)"
         findings[(owner, member, verdict)] = callers
