@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Tense Room Specimens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&family=Noto+Sans+Hebrew:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+</head>
+<body>
+<style>
+:root{
+  /* ---- app surface: fixed in both themes. A phone screen shows as it renders. ---- */
+  --app-bg:#FFF6EC; --app-card:#FFFFFF; --app-ink:#2B2140; --app-ink2:#6E6486;
+  --app-line:#E8DCCB; --app-soft:#FFF1E4;
+  --coral:#FF6B57; --teal:#19B8A6; --sun:#FFC145; --lav:#6C5CE7; --lav-soft:#F4EFFF;
+  --bad:#D93A3F; --bezel:#171223;
+  /* ---- document chrome: themed ---- */
+  --page:#FBF7F2; --panel:#FFFFFF; --sunk:#F5EFE7;
+  --ink:#2B2140; --muted:#6E6486; --faint:#8F86A6;
+  --rule:#E7DFD4; --accent:#D8492F; --chip:#F3EDE5;
+  --shadow:0 8px 28px rgba(43,33,64,.10);
+  --shadow-sm:0 2px 10px rgba(43,33,64,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --page:#171223; --panel:#221B36; --sunk:#1D1730;
+    --ink:#EFE9F7; --muted:#A79CC0; --faint:#877CA3;
+    --rule:#332A4D; --accent:#FF8D68; --chip:#2A2140;
+    --shadow:0 10px 34px rgba(0,0,0,.45);
+    --shadow-sm:0 2px 12px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --page:#171223; --panel:#221B36; --sunk:#1D1730;
+  --ink:#EFE9F7; --muted:#A79CC0; --faint:#877CA3;
+  --rule:#332A4D; --accent:#FF8D68; --chip:#2A2140;
+  --shadow:0 10px 34px rgba(0,0,0,.45);
+  --shadow-sm:0 2px 12px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--page); color:var(--ink);
+  font-family:'Rubik','Noto Sans Hebrew',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1080px; margin:0 auto; padding-inline:20px; padding-block:0 72px; direction:ltr}
+.mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace; font-weight:500;
+  font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+.ltr{direction:ltr; unicode-bidi:isolate}
+.he{font-family:'Noto Sans Hebrew','Rubik',sans-serif; direction:rtl; unicode-bidi:isolate}
+h1,h2,h3{text-wrap:balance; margin:0}
+p{margin:0}
+:focus-visible{outline:2.5px solid var(--accent); outline-offset:3px; border-radius:6px}
+
+/* ============ masthead ============ */
+.masthead{padding-block:56px 40px; border-bottom:1px solid var(--rule)}
+.eyebrow{font-size:12.5px; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--accent)}
+.masthead h1{font-size:clamp(30px,5.2vw,46px); font-weight:800; line-height:1.1; margin-top:14px; max-width:16ch}
+.standfirst{margin-top:18px; max-width:62ch; font-size:17.5px; color:var(--muted)}
+.standfirst b{color:var(--ink); font-weight:500}
+.facts{list-style:none; margin:30px 0 0; padding:0; display:grid; gap:1px;
+  grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); background:var(--rule);
+  border:1px solid var(--rule); border-radius:10px; overflow:hidden}
+.facts li{background:var(--page); padding:14px 16px}
+.facts dt{min-height:2.6em; font-size:11.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--faint)}
+.facts dd{margin:5px 0 0; font-size:21px; font-weight:700; line-height:1.2}
+.facts dd small{display:block; font-size:12.5px; font-weight:400; color:var(--muted); letter-spacing:0; margin-top:3px}
+
+/* ============ sections ============ */
+section{padding-block:52px 0}
+.shead{display:flex; align-items:baseline; gap:14px}
+.shead .dot{width:11px; height:11px; border-radius:50%; background:var(--accent); flex:none;
+  transform:translateY(-3px); box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 16%,transparent)}
+.shead h2{font-size:clamp(21px,3vw,27px); font-weight:800; letter-spacing:-.01em}
+.lede{margin-top:12px; margin-inline-start:25px; max-width:64ch; color:var(--muted); font-size:16.5px}
+.lede b{color:var(--ink); font-weight:500}
+.lede code{font-family:'IBM Plex Mono',monospace; font-size:.9em; background:var(--chip);
+  padding:1px 5px; border-radius:4px}
+
+/* ============ phone ============ */
+.phone{width:334px; max-width:100%; background:var(--bezel); border-radius:42px; padding:11px;
+  box-shadow:0 22px 50px rgba(23,18,35,.34); flex:none; position:relative}
+.phone::after{content:""; position:absolute; top:21px; left:50%; transform:translateX(-50%);
+  width:84px; height:8px; border-radius:8px; background:#000; opacity:.85}
+.screen{width:100%; border-radius:32px; background:var(--app-bg); overflow:hidden;
+  display:flex; flex-direction:column; min-height:566px; color:var(--app-ink)}
+.statusbar{height:36px; flex:none; display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px; font-size:12px; color:var(--app-ink2)}
+.topbar{display:flex; align-items:center; gap:10px; padding:0 16px 2px}
+.topbar .x{font-size:17px; color:var(--app-ink2)}
+.dots{flex:1; display:flex; gap:6px; justify-content:center}
+.dots i{width:8px; height:8px; border-radius:50%; background:var(--app-line)}
+.dots i.on{background:var(--coral)}
+.lvlchip{font-size:11.5px; font-weight:700; color:var(--lav); background:var(--lav-soft);
+  border-radius:999px; padding:3px 9px}
+.roomname{font-size:15px; font-weight:700; text-align:center; color:var(--app-ink2); padding:6px 0 2px}
+
+/* prompt card */
+.prompt.playing{animation:flash .62s ease}
+@keyframes flash{0%,100%{background:var(--app-card)}45%{background:var(--lav-soft)}}
+.prompt{margin:10px 16px 0; background:var(--app-card); border-radius:22px; box-shadow:var(--shadow-sm);
+  padding:20px 18px 16px; text-align:center; border:1px solid var(--app-line)}
+.sent{font-size:22px; font-weight:700; line-height:1.35; color:var(--app-ink)}
+.sent .vb{color:var(--coral); box-shadow:inset 0 -8px 0 rgba(255,107,87,.16)}
+.sent .adv{color:var(--teal); font-weight:800}
+.sent.sm{font-size:19px}
+.hear{margin-top:12px; width:42px; height:42px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--lav-soft); font-size:19px; line-height:1}
+.reveal{margin:9px 16px 0; font-size:13.5px; font-weight:500; color:var(--app-ink2);
+  background:var(--app-soft); border-radius:12px; padding:9px 12px; text-align:center}
+.reveal b{color:var(--teal)}
+
+/* tuki line */
+.tuki{margin:10px 16px 0; background:var(--lav-soft); border:1.5px solid #E4D9FF; border-radius:16px;
+  padding:10px 12px; display:flex; gap:9px; align-items:center; font-size:14.5px; font-weight:500}
+.tuki .pf{font-size:24px; flex:none}
+
+/* timeline */
+.timeline{margin:16px 14px 0; margin-top:auto; padding-bottom:16px}
+.rail{position:relative; display:grid; grid-template-columns:repeat(3,1fr); align-items:center; height:16px}
+.rail::before{content:""; position:absolute; inset-inline:16.6%; top:50%; height:2px;
+  background:var(--app-line); transform:translateY(-50%)}
+.rail i{width:9px; height:9px; border-radius:50%; background:var(--app-line);
+  justify-self:center; position:relative}
+.rail i.hit{background:var(--teal); box-shadow:0 0 0 4px rgba(25,184,166,.2)}
+.stops{display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-top:6px}
+.stop-btn{min-height:64px; border-radius:16px; border:2px solid var(--app-line);
+  background:var(--app-card); color:var(--app-ink); font:inherit; font-size:15.5px; font-weight:700;
+  cursor:pointer; padding:6px 4px; transition:transform .12s ease, background .12s ease}
+.stop-btn:hover:not(:disabled){transform:translateY(-2px)}
+.stop-btn.wrong{color:var(--bad); border-color:#F3C9C9; background:transparent;
+  text-decoration:line-through; opacity:.6; cursor:default}
+.stop-btn.right{background:var(--teal); border-color:var(--teal); color:#fff}
+.stop-btn:disabled{cursor:default}
+.piles{display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-top:8px; align-items:start}
+.pile{display:flex; flex-direction:column; gap:5px; min-height:26px}
+.chip-s{background:var(--app-soft); border:1px solid #F2DFC9; border-radius:9px; padding:5px 7px;
+  font-size:10.5px; line-height:1.3; color:var(--app-ink2); font-weight:500}
+.chip-s.fresh{animation:drop .34s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes drop{from{opacity:0; transform:translateY(-9px) scale(.94)}to{opacity:1; transform:none}}
+
+/* finish panel */
+.finish{margin:14px 16px 0; background:var(--app-card); border:1px solid var(--app-line);
+  border-radius:22px; padding:20px 16px; text-align:center; box-shadow:var(--shadow-sm)}
+.finish .stars{font-size:32px; letter-spacing:4px; color:var(--sun)}
+.finish .ft{font-size:18px; font-weight:700; margin-top:8px}
+.finish .fs{font-size:13.5px; color:var(--app-ink2); margin-top:5px}
+.again{margin-top:14px; border:none; background:var(--coral); color:#fff; font:inherit;
+  font-weight:700; font-size:15px; border-radius:999px; padding:11px 26px; cursor:pointer}
+
+/* ============ the turn: phone + spec ============ */
+.turnwrap{margin-top:26px; display:flex; gap:34px; align-items:flex-start; flex-wrap:wrap}
+.spec{flex:1 1 330px; min-width:270px; display:flex; flex-direction:column; gap:18px}
+.dirtoggle{display:flex; gap:0; border:1px solid var(--rule); border-radius:999px; padding:3px;
+  background:var(--panel); align-self:flex-start}
+.dirtoggle button{border:none; background:transparent; color:var(--muted); font:inherit;
+  font-size:13.5px; font-weight:700; padding:7px 15px; border-radius:999px; cursor:pointer}
+.dirtoggle button[aria-pressed="true"]{background:var(--accent); color:#fff}
+.note{background:var(--panel); border:1px solid var(--rule); border-radius:12px; padding:16px 18px;
+  box-shadow:var(--shadow-sm)}
+.note h3{font-size:14px; font-weight:800; letter-spacing:.02em}
+.note p{margin-top:7px; font-size:14.5px; color:var(--muted); line-height:1.6}
+.note p + p{margin-top:9px}
+.note b{color:var(--ink); font-weight:600}
+.note.warn{border-inline-start:3px solid var(--sun)}
+.note.reject{border-inline-start:3px solid var(--bad)}
+.rejects{list-style:none; margin:9px 0 0; padding:0; display:flex; flex-direction:column; gap:9px}
+.rejects li{font-size:14px; color:var(--muted); display:flex; gap:9px; line-height:1.5}
+.rejects .no{color:var(--bad); font-weight:800; flex:none}
+
+/* ============ specimen grid (family A) ============ */
+.gridhead{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:26px}
+.colhead{text-align:center; padding-bottom:10px; border-bottom:2px solid var(--rule)}
+.colhead .en{font-size:16px; font-weight:800}
+.colhead .hb{font-size:14px; color:var(--muted); margin-top:1px}
+.speccols{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px; align-items:start}
+.speccol{display:flex; flex-direction:column; gap:12px}
+.spec-card{background:var(--panel); border:1px solid var(--rule); border-radius:12px;
+  padding:14px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:9px}
+.spec-card .tense{font-size:11px; letter-spacing:.03em; color:var(--accent); font-weight:500}
+.spec-card .en-line{font-size:15px; font-weight:500; line-height:1.4; color:var(--ink)}
+.spec-card .en-line .vb{color:var(--accent); font-weight:700;
+  box-shadow:inset 0 -7px 0 color-mix(in srgb,var(--accent) 15%,transparent)}
+.meta{display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-top:auto}
+.tag{font-size:10.5px; padding:2px 7px; border-radius:5px; background:var(--chip); color:var(--muted)}
+.tag.lv{background:color-mix(in srgb,var(--lav) 15%,transparent); color:var(--lav)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tag.lv{color:#B7ABFF}}
+:root[data-theme="dark"] .tag.lv{color:#B7ABFF}
+
+/* ============ stripped pairs (family B) ============ */
+.pairs{margin-top:24px; border:1px solid var(--rule); border-radius:12px; overflow:hidden;
+  background:var(--panel); box-shadow:var(--shadow-sm)}
+.pairs .row{display:grid; grid-template-columns:1fr 26px 1fr 106px; gap:16px; align-items:center;
+  padding:15px 18px; border-bottom:1px solid var(--rule)}
+.pairs .row:last-child{border-bottom:none}
+.pairs .row.hd{background:var(--sunk); padding-block:9px}
+.pairs .row.hd span{font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--faint)}
+.pairs .shown{font-size:15.5px; font-weight:500}
+.pairs .arrow{color:var(--faint); text-align:center; font-size:15px}
+.pairs .back{font-size:15.5px; font-weight:500; color:var(--muted)}
+.pairs .back .adv{color:var(--teal); font-weight:700;
+  box-shadow:inset 0 -7px 0 rgba(25,184,166,.18)}
+.pairs .where{display:flex; gap:6px; justify-content:flex-end; flex-wrap:wrap}
+@media (max-width:720px){
+  .pairs .row, .pairs .row.hd{grid-template-columns:1fr; gap:6px}
+  .pairs .arrow{text-align:start}
+  .pairs .where{justify-content:flex-start; margin-top:4px}
+  .pairs .row.hd{display:none}
+}
+
+/* ============ aspect cards (family C) ============ */
+.aspect{display:grid; grid-template-columns:repeat(auto-fit,minmax(268px,1fr)); gap:16px; margin-top:24px}
+.acard{background:var(--panel); border:1px solid var(--rule); border-radius:14px; padding:18px;
+  box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:11px}
+.acard .stopname{display:flex; align-items:center; gap:9px}
+.acard .stopname .pin{width:10px; height:10px; border-radius:50%; background:var(--teal); flex:none}
+.acard .stopname .en{font-size:15px; font-weight:800}
+.acard .stopname .hb{font-size:14px; color:var(--muted)}
+.acard .en-line{font-size:15.5px; font-weight:500; line-height:1.45}
+.acard .en-line .vb{color:var(--accent); font-weight:700;
+  box-shadow:inset 0 -7px 0 color-mix(in srgb,var(--accent) 15%,transparent)}
+.acard .hb-line{font-size:15px; color:var(--muted); border-top:1px dashed var(--rule); padding-top:11px}
+.acard .why{font-size:13px; color:var(--faint); line-height:1.5}
+
+/* ============ states strip ============ */
+.states{display:grid; grid-template-columns:repeat(auto-fit,minmax(224px,1fr)); gap:16px; margin-top:26px}
+.state{display:flex; flex-direction:column; gap:11px}
+.state .cap{display:flex; align-items:baseline; gap:9px}
+.state .num{font-size:11.5px; font-weight:500; color:var(--accent);
+  font-family:'IBM Plex Mono',monospace}
+.state .nm{font-size:14.5px; font-weight:800}
+.state .desc{font-size:13px; color:var(--muted); line-height:1.5}
+.mini{background:var(--app-bg); border:1px solid var(--app-line); border-radius:18px; padding:13px;
+  color:var(--app-ink); box-shadow:var(--shadow-sm)}
+.mini .m-sent{background:var(--app-card); border:1px solid var(--app-line); border-radius:13px;
+  padding:12px 11px; font-size:14.5px; font-weight:700; text-align:center; line-height:1.35}
+.mini .m-sent .vb{color:var(--coral); box-shadow:inset 0 -7px 0 rgba(255,107,87,.16)}
+.mini .m-sent .adv{color:var(--teal); font-weight:800}
+.mini .m-rev{font-size:11px; color:var(--app-ink2); background:var(--app-soft); border-radius:9px;
+  padding:6px 8px; margin-top:7px; text-align:center}
+.mini .m-rev b{color:var(--teal)}
+.mini .m-rail{position:relative; display:grid; grid-template-columns:repeat(3,1fr);
+  align-items:center; height:14px; margin-top:11px}
+.mini .m-rail::before{content:""; position:absolute; inset-inline:16.6%; top:50%; height:2px;
+  background:var(--app-line); transform:translateY(-50%)}
+.mini .m-rail i{width:7px; height:7px; border-radius:50%; background:var(--app-line); justify-self:center;
+  position:relative}
+.mini .m-rail i.hit{background:var(--teal); box-shadow:0 0 0 3px rgba(25,184,166,.2)}
+.mini .m-stops{display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-top:5px}
+.mini .m-b{min-height:42px; display:flex; align-items:center; justify-content:center; border-radius:11px;
+  border:2px solid var(--app-line); background:var(--app-card); font-size:12.5px; font-weight:700;
+  text-align:center; padding:3px}
+.mini .m-b.wrong{color:var(--bad); border-color:#F3C9C9; background:transparent;
+  text-decoration:line-through; opacity:.6}
+.mini .m-b.right{background:var(--teal); border-color:var(--teal); color:#fff}
+.mini .m-piles{display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-top:6px; align-items:start}
+.mini .m-pile{display:flex; flex-direction:column; gap:4px}
+.mini .m-chip{background:var(--app-soft); border:1px solid #F2DFC9; border-radius:7px; padding:4px 5px;
+  font-size:9px; line-height:1.3; color:var(--app-ink2)}
+.mini .m-fin{text-align:center; padding:6px 0 2px}
+.mini .m-fin .st{font-size:24px; letter-spacing:3px; color:var(--sun)}
+.mini .m-fin .tx{font-size:13px; font-weight:700; margin-top:4px}
+
+/* ============ direction pair ============ */
+.dirpair{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px; margin-top:26px}
+.dircol{display:flex; flex-direction:column; gap:11px}
+.dircol .cap{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap}
+.dircol .nm{font-size:14.5px; font-weight:800}
+.dircol .sub{font-size:13px; color:var(--muted)}
+.dircol .desc{font-size:13.5px; color:var(--muted); line-height:1.55}
+.dircol .desc b{color:var(--ink); font-weight:600}
+
+/* ============ footer ============ */
+footer{margin-top:60px; padding-top:24px; border-top:1px solid var(--rule);
+  display:flex; gap:18px; flex-wrap:wrap; justify-content:space-between; align-items:baseline}
+footer p{font-size:13.5px; color:var(--faint); max-width:58ch; line-height:1.6}
+footer .src{font-size:12px}
+
+@media (max-width:640px){
+  .gridhead,.speccols{grid-template-columns:1fr}
+  .colhead{text-align:start; margin-top:18px}
+  .gridhead{display:none}
+  .speccol::before{content:attr(data-head); display:block; font-size:15px; font-weight:800;
+    padding-bottom:9px; border-bottom:2px solid var(--rule)}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important; transition-duration:.01ms !important}
+}
+</style>
+
+<div class="page">
+
+<header class="masthead">
+  <p class="eyebrow">Tuki · room proposal · task&nbsp;#67</p>
+  <h1>Every item the tense room can put on screen</h1>
+  <p class="standfirst">One sentence at a time, three fixed tap destinations laid out as a timeline.
+    Every sentence below is <b>drawn from the shipped phrasebank</b> — id, Level and tense tag are the
+    bank's own. Nothing here is invented for the mockup.</p>
+  <ul class="facts">
+    <li><dt>Item families</dt><dd>3<small>clean · stripped · aspect</small></dd></li>
+    <li><dt>Tense forms drilled</dt><dd>6<small>two per destination</small></dd></li>
+    <li><dt>Tense values in bank</dt><dd class="mono">17<small>every sentence carries one</small></dd></li>
+    <li><dt>Cells spanning ≥4 tenses</dt><dd class="mono">528<small>theme × lemma</small></dd></li>
+    <li><dt>Tap target floor</dt><dd class="mono">64dp<small>A11y.tapTargetDp</small></dd></li>
+  </ul>
+</header>
+
+<!-- ============================ THE TURN ============================ -->
+<section id="turn">
+  <div class="shead"><span class="dot"></span><h2>The turn</h2></div>
+  <p class="lede">Tap a destination. A wrong tap strikes it out and <b>reveals the time word we hid</b>;
+    a right tap files the sentence under its heading and marks the verb that gave it away.
+    Six real items — try it.</p>
+
+  <div class="turnwrap">
+    <div class="phone">
+      <div class="screen" id="screen" dir="rtl">
+        <div class="statusbar"><span>9:42</span><span class="ltr">📵 🔋</span></div>
+        <div class="topbar">
+          <span class="x">✕</span>
+          <div class="dots" id="dots"></div>
+          <span class="lvlchip mono" id="lvlchip">L3</span>
+        </div>
+        <div class="roomname he">⏳ מתי זה קרה?</div>
+
+        <div id="play">
+          <div class="prompt">
+            <p class="sent ltr" id="sent">The doctor listened to my heart.</p>
+            <button class="hear" id="hear" type="button" aria-label="שמיעה שוב">🔊</button>
+          </div>
+          <p class="reveal he" id="revealline" hidden></p>
+          <div class="tuki he"><span class="pf">🦜</span><span id="tukisay">מתי זה קרה? הפועל מגלה.</span></div>
+        </div>
+
+        <div id="finish" hidden>
+          <div class="finish">
+            <div class="stars">★★★</div>
+            <p class="ft he">כל המשפטים במקום!</p>
+            <p class="fs he">ציר הזמן מסודר — מהעבר עד מחר.</p>
+            <button class="again he" id="again" type="button">עוד סבב</button>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="rail" id="rail"><i></i><i></i><i></i></div>
+          <div class="stops" id="stops">
+            <button class="stop-btn he" type="button" data-i="0">אתמול</button>
+            <button class="stop-btn he" type="button" data-i="1">היום</button>
+            <button class="stop-btn he" type="button" data-i="2">מחר</button>
+          </div>
+          <div class="piles" id="piles">
+            <div class="pile"></div><div class="pile"></div><div class="pile"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="spec">
+      <div class="dirtoggle" role="group" aria-label="Layout direction">
+        <button type="button" id="btn-rtl" aria-pressed="true">עברית · RTL</button>
+        <button type="button" id="btn-ltr" aria-pressed="false">English · LTR</button>
+      </div>
+
+      <div class="note">
+        <h3>What the learner has to read</h3>
+        <p>The time adverb is gone, so the <b>verb form is the only cue</b>. That is Processing
+          Instruction: interpret first, produce later. Guessing from the noun or the topic gets
+          you nothing.</p>
+        <p>The Hebrew is <b>withheld during the ask</b>. In the fill-the-gap room the Hebrew tells you;
+          here it would give the answer away for four of the six forms.</p>
+      </div>
+
+      <div class="note reject">
+        <h3>Why not the other two shapes</h3>
+        <ul class="rejects">
+          <li><span class="no">✕</span><span><b>Connect lines.</b> A drag across a small screen is
+            expensive to aim, and there is no sane TalkBack story for a line.</span></li>
+          <li><span class="no">✕</span><span><b>Sort six cards into three piles.</b> Elimination.
+            Once Yesterday is full you can place the rest without reading a single verb — the exact
+            failure <span class="mono">docs/fill-the-gap.md</span> was written to stop.</span></li>
+          <li><span class="no">✓</span><span><b>Kept from the sorting idea:</b> the timeline stays on
+            screen, placed sentences pile up under their heading, and the sorted timeline is the
+            end-of-round payoff.</span></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================ FAMILY A ============================ -->
+<section id="forms">
+  <div class="shead"><span class="dot"></span><h2>Six forms, three stops</h2></div>
+  <p class="lede">Clean items: the bank sentence carries no time adverb to begin with, so nothing has to
+    be removed. Two tense forms land on each destination — which is the whole contrast the room exists
+    to teach, since Hebrew has three tenses and no aspect at all.</p>
+
+  <div class="gridhead">
+    <div class="colhead"><div class="en">Yesterday</div><div class="hb he">אתמול</div></div>
+    <div class="colhead"><div class="en">Today</div><div class="hb he">היום</div></div>
+    <div class="colhead"><div class="en">Tomorrow</div><div class="hb he">מחר</div></div>
+  </div>
+  <div class="speccols">
+    <div class="speccol" data-head="Yesterday · אתמול">
+      <div class="spec-card">
+        <span class="tense mono">past-simple</span>
+        <p class="en-line ltr">The doctor <span class="vb">listened</span> to my heart.</p>
+        <div class="meta"><span class="tag lv mono">L3</span><span class="tag mono">doc-l3-002</span></div>
+      </div>
+      <div class="spec-card">
+        <span class="tense mono">past-progressive</span>
+        <p class="en-line ltr">The doctor <span class="vb">was talking</span> while the nurse
+          <span class="vb">was writing</span> notes.</p>
+        <div class="meta"><span class="tag lv mono">L6</span><span class="tag mono">doc-l6-001</span></div>
+      </div>
+      <div class="spec-card">
+        <span class="tense mono">past-simple · question</span>
+        <p class="en-line ltr"><span class="vb">Did</span> the nurse <span class="vb">look</span> in your ears?</p>
+        <div class="meta"><span class="tag lv mono">L3</span><span class="tag mono">doc-l3-004</span></div>
+      </div>
+    </div>
+    <div class="speccol" data-head="Today · היום">
+      <div class="spec-card">
+        <span class="tense mono">present-simple</span>
+        <p class="en-line ltr">This <span class="vb">is</span> my doctor.</p>
+        <div class="meta"><span class="tag lv mono">L1</span><span class="tag mono">doc-l1-002</span></div>
+      </div>
+      <div class="spec-card">
+        <span class="tense mono">present-progressive</span>
+        <p class="en-line ltr">The doctor <span class="vb">is listening</span> to my heart.</p>
+        <div class="meta"><span class="tag lv mono">L2</span><span class="tag mono">doc-l2-001</span></div>
+      </div>
+      <div class="spec-card">
+        <span class="tense mono">present-progressive</span>
+        <p class="en-line ltr">The nurse <span class="vb">is looking</span> in my ears.</p>
+        <div class="meta"><span class="tag lv mono">L2</span><span class="tag mono">doc-l2-002</span></div>
+      </div>
+    </div>
+    <div class="speccol" data-head="Tomorrow · מחר">
+      <div class="spec-card">
+        <span class="tense mono">future-simple</span>
+        <p class="en-line ltr">The doctor <span class="vb">will listen</span> to your heart.</p>
+        <div class="meta"><span class="tag lv mono">L4</span><span class="tag mono">doc-l4-008</span></div>
+      </div>
+      <div class="spec-card">
+        <span class="tense mono">future-going-to</span>
+        <p class="en-line ltr">The doctor <span class="vb">is going to look</span> in your ears.</p>
+        <div class="meta"><span class="tag lv mono">L4</span><span class="tag mono">doc-l4-007</span></div>
+      </div>
+      <div class="spec-card">
+        <span class="tense mono">future-simple</span>
+        <p class="en-line ltr">Mom <span class="vb">will bring</span> the shampoo.</p>
+        <div class="meta"><span class="tag lv mono">L4</span><span class="tag mono">bth-l4-011</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note warn" style="margin-top:22px">
+    <h3>Content gap, flagged not hidden</h3>
+    <p>Both present-simple specimens above are the copula — <span class="mono">is</span>. For the
+      contrast a Hebrew speaker actually gets wrong, present simple against present progressive, we need
+      habitual lines with lexical verbs, and <b>17 of the 23 third-person <span class="mono">-s</span>
+      forms are absent from the entire corpus</b>. The room cannot ship its most important column until
+      those are authored — that is task&nbsp;#71, not a detail.</p>
+  </div>
+</section>
+
+<!-- ============================ FAMILY B ============================ -->
+<section id="hidden">
+  <div class="shead"><span class="dot"></span><h2>The word we hid</h2></div>
+  <p class="lede">Stripped items: the bank sentence <em>does</em> carry a time adverb, so the room removes
+    it before showing the sentence. The learner sees the left column. On a wrong tap — or once the
+    sentence is filed — the adverb comes back in green, which is the explanation and the answer key at
+    the same time.</p>
+
+  <div class="pairs">
+    <div class="row hd"><span>Shown to the learner</span><span></span><span>Restored on reveal</span><span></span></div>
+    <div class="row">
+      <p class="shown ltr">We visited the doctor.</p>
+      <span class="arrow">→</span>
+      <p class="back ltr">We visited the doctor <span class="adv">yesterday</span>.</p>
+      <span class="where"><span class="tag mono">doc-l3-001</span><span class="tag lv mono">L3</span></span>
+    </div>
+    <div class="row">
+      <p class="shown ltr">I got a sticker.</p>
+      <span class="arrow">→</span>
+      <p class="back ltr">I got a sticker <span class="adv">this morning</span>.</p>
+      <span class="where"><span class="tag mono">doc-l3-006</span><span class="tag lv mono">L3</span></span>
+    </div>
+    <div class="row">
+      <p class="shown ltr">The shop is closing.</p>
+      <span class="arrow">→</span>
+      <p class="back ltr">The shop is closing <span class="adv">now</span>.</p>
+      <span class="where"><span class="tag mono">cty-l2-007</span><span class="tag lv mono">L2</span></span>
+    </div>
+    <div class="row">
+      <p class="shown ltr">We are going to visit the doctor.</p>
+      <span class="arrow">→</span>
+      <p class="back ltr">We are going to visit the doctor <span class="adv">today</span>.</p>
+      <span class="where"><span class="tag mono">doc-l4-001</span><span class="tag lv mono">L4</span></span>
+    </div>
+    <div class="row">
+      <p class="shown ltr">Dad will hang the decorations.</p>
+      <span class="arrow">→</span>
+      <p class="back ltr">Dad will hang the decorations <span class="adv">tomorrow</span>.</p>
+      <span class="where"><span class="tag mono">bir-l4-008</span><span class="tag lv mono">L4</span></span>
+    </div>
+  </div>
+
+  <p class="lede" style="margin-top:18px"><b>Why strip at all.</b> With the adverb in place the sentence
+    has two cues to the same meaning and English lets you ignore the harder one. Remove the redundant
+    cue and the inflection is load-bearing. It is also the one thing a wrong tap can honestly explain
+    without a grammar lecture: <em>we hid a word, here it is.</em></p>
+</section>
+
+<!-- ============================ FAMILY C ============================ -->
+<section id="aspect">
+  <div class="shead"><span class="dot"></span><h2>Not when — whether it is finished</h2></div>
+  <p class="lede">From Level 5 the three destinations stop being clock times. Hebrew has three tenses,
+    no grammatical aspect and no perfect, so one Hebrew word covers four English forms — the corpus
+    shows <span class="mono">חלב</span> serving past simple, past progressive, past perfect and past
+    perfect progressive alike. This is the stage where the Hebrew is shown <em>after</em> the answer,
+    to make the missing distinction visible rather than to hint at it.</p>
+
+  <div class="aspect">
+    <div class="acard">
+      <div class="stopname"><span class="pin"></span><span class="en">Finished</span><span class="hb he">נגמר</span></div>
+      <p class="en-line ltr">We <span class="vb">visited</span> the doctor yesterday.</p>
+      <p class="hb-line he">ביקרנו אצל הרופא אתמול.</p>
+      <p class="why">Over and done. Hebrew marks it the same way English does — this is the one
+        destination the learner can reach from Hebrew alone.</p>
+      <div class="meta"><span class="tag mono">past-simple</span><span class="tag lv mono">L3</span><span class="tag mono">doc-l3-001</span></div>
+    </div>
+    <div class="acard">
+      <div class="stopname"><span class="pin"></span><span class="en">Still going</span><span class="hb he">עוד קורה</span></div>
+      <p class="en-line ltr">The children <span class="vb">have been waiting</span> for story hour since this morning.</p>
+      <p class="hb-line he">הילדים מחכים לשעת הסיפור מהבוקר.</p>
+      <p class="why">The Hebrew is plain present — <span class="mono he">מחכים</span>. Nothing in it says
+        the waiting started earlier and has not stopped. English says it twice, in
+        <span class="mono">have</span> and in <span class="mono">been -ing</span>.</p>
+      <div class="meta"><span class="tag mono">present-perfect-progressive</span><span class="tag lv mono">L7</span><span class="tag mono">lib-l7-004</span></div>
+    </div>
+    <div class="acard">
+      <div class="stopname"><span class="pin"></span><span class="en">Before that</span><span class="hb he">לפני זה</span></div>
+      <p class="en-line ltr">The doctor <span class="vb">had</span> already <span class="vb">listened</span> to my heart when I started laughing.</p>
+      <p class="hb-line he">הרופא כבר הקשיב ללב שלי כשהתחלתי לצחוק.</p>
+      <p class="why">Two past events, and English orders them with <span class="mono">had</span>.
+        Hebrew leans on <span class="mono he">כבר</span> — a word, not a form — so the learner has
+        to build the ordering from scratch.</p>
+      <div class="meta"><span class="tag mono">past-perfect</span><span class="tag lv mono">L6</span><span class="tag mono">doc-l6-004</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ STATES ============================ -->
+<section id="states">
+  <div class="shead"><span class="dot"></span><h2>The four states of a turn</h2></div>
+  <p class="lede">Numbered because a turn really does run in this order. The wrong-tap treatment is
+    lifted straight from <span class="mono">ClozeScreen</span> — struck through, dimmed, disabled,
+    with <span class="mono">stateDescription</span> set for TalkBack — so the two rooms behave the
+    same way under the finger and under the screen reader.</p>
+
+  <div class="states">
+    <div class="state">
+      <div class="cap"><span class="num">01</span><span class="nm">Asking</span></div>
+      <div class="mini" dir="rtl">
+        <div class="m-sent ltr">We visited the doctor.</div>
+        <div class="m-rail"><i></i><i></i><i></i></div>
+        <div class="m-stops"><span class="m-b he">אתמול</span><span class="m-b he">היום</span><span class="m-b he">מחר</span></div>
+        <div class="m-piles"><div class="m-pile"></div><div class="m-pile"></div><div class="m-pile"></div></div>
+      </div>
+      <p class="desc">No adverb, no Hebrew, no verb highlight. All three destinations live.</p>
+    </div>
+
+    <div class="state">
+      <div class="cap"><span class="num">02</span><span class="nm">Wrong tap</span></div>
+      <div class="mini" dir="rtl">
+        <div class="m-sent ltr">We visited the doctor.</div>
+        <div class="m-rev he">הסתרנו מילה: <b class="ltr">yesterday</b></div>
+        <div class="m-rail"><i></i><i></i><i></i></div>
+        <div class="m-stops"><span class="m-b he">אתמול</span><span class="m-b he">היום</span><span class="m-b he wrong">מחר</span></div>
+        <div class="m-piles"><div class="m-pile"></div><div class="m-pile"></div><div class="m-pile"></div></div>
+      </div>
+      <p class="desc">The tapped stop goes out; the hidden word comes back. Two destinations remain,
+        and the learner tries again on the same sentence.</p>
+    </div>
+
+    <div class="state">
+      <div class="cap"><span class="num">03</span><span class="nm">Filed</span></div>
+      <div class="mini" dir="rtl">
+        <div class="m-sent ltr">We <span class="vb">visited</span> the doctor <span class="adv">yesterday</span>.</div>
+        <div class="m-rail"><i class="hit"></i><i></i><i></i></div>
+        <div class="m-stops"><span class="m-b he right">✓ אתמול</span><span class="m-b he">היום</span><span class="m-b he wrong">מחר</span></div>
+        <div class="m-piles"><div class="m-pile"><span class="m-chip ltr">We visited the doctor</span></div><div class="m-pile"></div><div class="m-pile"></div></div>
+      </div>
+      <p class="desc">Verb marked in coral, adverb restored in green, sentence drops onto its pile.
+        The rail stop fills in.</p>
+    </div>
+
+    <div class="state">
+      <div class="cap"><span class="num">04</span><span class="nm">Round complete</span></div>
+      <div class="mini" dir="rtl">
+        <div class="m-fin"><div class="st">★★★</div><div class="tx he">כל המשפטים במקום!</div></div>
+        <div class="m-rail"><i class="hit"></i><i class="hit"></i><i class="hit"></i></div>
+        <div class="m-stops"><span class="m-b he">אתמול</span><span class="m-b he">היום</span><span class="m-b he">מחר</span></div>
+        <div class="m-piles">
+          <div class="m-pile"><span class="m-chip ltr">We visited the doctor</span><span class="m-chip ltr">The doctor listened…</span></div>
+          <div class="m-pile"><span class="m-chip ltr">The shop is closing</span><span class="m-chip ltr">The nurse is looking…</span></div>
+          <div class="m-pile"><span class="m-chip ltr">Dad will hang…</span><span class="m-chip ltr">The doctor is going to…</span></div>
+        </div>
+      </div>
+      <p class="desc">The payoff kept from the sorting idea: a filled, sorted timeline you can read
+        across. Stars come from the round, not from any single tap.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ DIRECTION ============================ -->
+<section id="direction">
+  <div class="shead"><span class="dot"></span><h2>Which way the timeline runs</h2></div>
+  <p class="lede">The timeline follows the ambient layout direction, so in the Hebrew UI
+    <b>the past sits on the right</b>. The English sentence inside each card stays LTR regardless —
+    that is <span class="mono">EnglishContent</span>, which pins
+    <span class="mono">LocalLayoutDirection</span> to <span class="mono">Ltr</span> for English text
+    inside a Hebrew screen. Same item, both directions:</p>
+
+  <div class="dirpair">
+    <div class="dircol">
+      <div class="cap"><span class="nm">Hebrew UI · RTL</span><span class="sub">the shipping default</span></div>
+      <div class="mini" dir="rtl">
+        <div class="m-sent ltr">Dad will hang the decorations.</div>
+        <div class="m-rail"><i></i><i></i><i class="hit"></i></div>
+        <div class="m-stops"><span class="m-b he">אתמול</span><span class="m-b he">היום</span><span class="m-b he right">✓ מחר</span></div>
+      </div>
+      <p class="desc">Reading right to left: <b>אתמול · היום · מחר</b>. Time moves the way the eye moves.
+        The rail's filled stop is on the left because tomorrow is the last thing you read.</p>
+    </div>
+    <div class="dircol">
+      <div class="cap"><span class="nm">English UI · LTR</span><span class="sub">same deck, mirrored</span></div>
+      <div class="mini" dir="ltr">
+        <div class="m-sent ltr">Dad will hang the decorations.</div>
+        <div class="m-rail"><i></i><i></i><i class="hit"></i></div>
+        <div class="m-stops"><span class="m-b">Yesterday</span><span class="m-b">Today</span><span class="m-b right">✓ Tomorrow</span></div>
+      </div>
+      <p class="desc">Nothing is re-authored. One <span class="mono">Row</span> in the ambient direction
+        does the whole job, and the filled stop lands on the right instead.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Every sentence, id, Level and tense tag on this page is read from the shipped phrasebank
+    (<span class="mono">at-the-doctor</span>, <span class="mono">bath-time</span>,
+    <span class="mono">birthday-party</span>, <span class="mono">city-and-places</span>,
+    <span class="mono">library-and-books</span>). Levels are proficiency, never age — a Level 2
+    learner may be six or sixty.</p>
+  <p class="src mono">docs/mockups/tense-room.html · task #67</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var DECK = [
+    {ask:'The doctor listened to my heart.',
+     rev:'The doctor <span class="vb">listened</span> to my heart.',
+     chip:'The doctor listened…', adv:null, stop:0, lvl:'L3', id:'doc-l3-002'},
+    {ask:'We visited the doctor.',
+     rev:'We <span class="vb">visited</span> the doctor <span class="adv">yesterday</span>.',
+     chip:'We visited the doctor', adv:'yesterday', stop:0, lvl:'L3', id:'doc-l3-001'},
+    {ask:'The nurse is looking in my ears.',
+     rev:'The nurse <span class="vb">is looking</span> in my ears.',
+     chip:'The nurse is looking…', adv:null, stop:1, lvl:'L2', id:'doc-l2-002'},
+    {ask:'The shop is closing.',
+     rev:'The shop <span class="vb">is closing</span> <span class="adv">now</span>.',
+     chip:'The shop is closing', adv:'now', stop:1, lvl:'L2', id:'cty-l2-007'},
+    {ask:'Dad will hang the decorations.',
+     rev:'Dad <span class="vb">will hang</span> the decorations <span class="adv">tomorrow</span>.',
+     chip:'Dad will hang…', adv:'tomorrow', stop:2, lvl:'L4', id:'bir-l4-008'},
+    {ask:'The doctor is going to look in your ears.',
+     rev:'The doctor <span class="vb">is going to look</span> in your ears.',
+     chip:'The doctor is going to…', adv:null, stop:2, lvl:'L4', id:'doc-l4-007'}
+  ];
+  var HE = ['אתמול','היום','מחר'], EN = ['Yesterday','Today','Tomorrow'];
+  var ASK_HE = 'מתי זה קרה? הפועל מגלה.', ASK_EN = 'When did it happen? The verb tells you.';
+  var GOOD_HE = 'נכון! זה הפועל שגילה.', GOOD_EN = 'Right — that is the verb that gave it away.';
+  var NOPE_HE = 'לא זו. הסתרנו מילה: ', NOPE_EN = 'Not this one. We hid a word: ';
+
+  var screen = document.getElementById('screen'),
+      sentEl = document.getElementById('sent'),
+      dotsEl = document.getElementById('dots'),
+      lvlEl  = document.getElementById('lvlchip'),
+      tukiEl = document.getElementById('tukisay'),
+      revEl  = document.getElementById('revealline'),
+      railEl = document.getElementById('rail'),
+      stopsEl= document.getElementById('stops'),
+      pilesEl= document.getElementById('piles'),
+      playEl = document.getElementById('play'),
+      finEl  = document.getElementById('finish');
+
+  var i = 0, dir = 'rtl', locked = false, timer = null;
+
+  for (var d = 0; d < DECK.length; d++) dotsEl.appendChild(document.createElement('i'));
+
+  function words(){ return dir === 'rtl' ? HE : EN; }
+
+  function paintStops(){
+    var w = words();
+    var btns = stopsEl.querySelectorAll('.stop-btn');
+    for (var k = 0; k < btns.length; k++){
+      btns[k].textContent = w[k];
+      btns[k].classList.toggle('he', dir === 'rtl');
+      btns[k].className = btns[k].className.replace(/\s*(wrong|right)\b/g, '');
+      btns[k].disabled = false;
+    }
+    var pins = railEl.querySelectorAll('i');
+    for (var p = 0; p < pins.length; p++) pins[p].classList.remove('hit');
+  }
+
+  function paintDots(){
+    var ds = dotsEl.querySelectorAll('i');
+    for (var k = 0; k < ds.length; k++) ds[k].classList.toggle('on', k < i);
+  }
+
+  function say(text){
+    tukiEl.textContent = text;
+    tukiEl.parentNode.setAttribute('dir', dir);
+  }
+
+  function show(){
+    var it = DECK[i];
+    sentEl.innerHTML = it.ask;
+    lvlEl.textContent = it.lvl;
+    revEl.hidden = true;
+    say(dir === 'rtl' ? ASK_HE : ASK_EN);
+    paintStops();
+    paintDots();
+    locked = false;
+  }
+
+  function pile(k){ return pilesEl.children[k]; }
+
+  function tap(k){
+    if (locked) return;
+    var it = DECK[i];
+    var btn = stopsEl.querySelector('.stop-btn[data-i="' + k + '"]');
+    if (k === it.stop){
+      locked = true;
+      btn.className = 'stop-btn right' + (dir === 'rtl' ? ' he' : '');
+      btn.textContent = '✓ ' + words()[k];
+      railEl.querySelectorAll('i')[k].classList.add('hit');
+      sentEl.innerHTML = it.rev;
+      revEl.hidden = true;
+      say(dir === 'rtl' ? GOOD_HE : GOOD_EN);
+      var chip = document.createElement('div');
+      chip.className = 'chip-s ltr fresh';
+      chip.textContent = it.chip;
+      pile(k).appendChild(chip);
+      timer = setTimeout(function(){
+        i++;
+        if (i >= DECK.length){ done(); } else { show(); }
+      }, 1150);
+    } else {
+      btn.className = 'stop-btn wrong' + (dir === 'rtl' ? ' he' : '');
+      btn.disabled = true;
+      if (it.adv){
+        revEl.innerHTML = (dir === 'rtl' ? NOPE_HE : NOPE_EN) + '<b class="ltr">' + it.adv + '</b>';
+      } else {
+        sentEl.innerHTML = it.rev;
+        revEl.innerHTML = dir === 'rtl'
+          ? 'לא זו. הפועל מסמן את הזמן.'
+          : 'Not this one. The verb marks the time.';
+      }
+      revEl.setAttribute('dir', dir);
+      revEl.hidden = false;
+    }
+  }
+
+  function done(){
+    locked = true;
+    playEl.hidden = true;
+    finEl.hidden = false;
+    paintDots();
+    var pins = railEl.querySelectorAll('i');
+    for (var p = 0; p < pins.length; p++) pins[p].classList.add('hit');
+    var btns = stopsEl.querySelectorAll('.stop-btn');
+    for (var k = 0; k < btns.length; k++){
+      btns[k].className = 'stop-btn' + (dir === 'rtl' ? ' he' : '');
+      btns[k].textContent = words()[k];
+      btns[k].disabled = true;
+    }
+  }
+
+  function restart(){
+    if (timer) { clearTimeout(timer); timer = null; }
+    i = 0;
+    for (var k = 0; k < 3; k++) pile(k).innerHTML = '';
+    playEl.hidden = false;
+    finEl.hidden = true;
+    show();
+  }
+
+  stopsEl.addEventListener('click', function(e){
+    var b = e.target.closest('.stop-btn');
+    if (b && !b.disabled) tap(Number(b.getAttribute('data-i')));
+  });
+  document.getElementById('again').addEventListener('click', function(){ restart(); });
+  document.getElementById('hear').addEventListener('click', function(){
+    var card = this.parentNode;
+    card.classList.remove('playing');
+    void card.offsetWidth;
+    card.classList.add('playing');
+  });
+
+  function setDir(next){
+    dir = next;
+    screen.setAttribute('dir', dir);
+    document.getElementById('btn-rtl').setAttribute('aria-pressed', String(dir === 'rtl'));
+    document.getElementById('btn-ltr').setAttribute('aria-pressed', String(dir === 'ltr'));
+    document.querySelector('.roomname').textContent = dir === 'rtl' ? '⏳ מתי זה קרה?' : '⏳ When did it happen?';
+    document.querySelector('.roomname').classList.toggle('he', dir === 'rtl');
+    document.getElementById('again').textContent = dir === 'rtl' ? 'עוד סבב' : 'Another round';
+    document.querySelector('.finish .ft').textContent = dir === 'rtl' ? 'כל המשפטים במקום!' : 'Every sentence in its place!';
+    document.querySelector('.finish .fs').textContent = dir === 'rtl' ? 'ציר הזמן מסודר — מהעבר עד מחר.' : 'The timeline is sorted — from the past to tomorrow.';
+    restart();
+  }
+  document.getElementById('btn-rtl').addEventListener('click', function(){ setDir('rtl'); });
+  document.getElementById('btn-ltr').addEventListener('click', function(){ setDir('ltr'); });
+
+  show();
+})();
+</script>
+</body>
+</html>
