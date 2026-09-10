@@ -424,14 +424,14 @@
       "id": "ply-l2-002",
       "level": 2,
       "tense": "present-simple",
-      "frame": "being-gentle",
-      "en": "We are gentle with the little kids.",
-      "he": "אנחנו עדינים עם הילדים הקטנים.",
+      "frame": "habitual-3s",
+      "en": "The baby always laughs on the swing.",
+      "he": "התינוק תמיד צוחק בנדנדה.",
       "align": [
         {
           "en": [
             0,
-            0
+            1
           ],
           "he": [
             0,
@@ -440,7 +440,7 @@
         },
         {
           "en": [
-            1,
+            2,
             2
           ],
           "he": [
@@ -451,11 +451,21 @@
         {
           "en": [
             3,
-            6
+            3
           ],
           "he": [
             2,
-            4
+            2
+          ]
+        },
+        {
+          "en": [
+            4,
+            6
+          ],
+          "he": [
+            3,
+            3
           ]
         }
       ]
@@ -464,9 +474,9 @@
       "id": "ply-l2-003",
       "level": 2,
       "tense": "present-simple",
-      "frame": "want-to",
-      "en": "I want to go down the slide.",
-      "he": "אני רוצה לרדת במגלשה.",
+      "frame": "habitual-plural",
+      "en": "We always sit on the picnic blanket.",
+      "he": "אנחנו תמיד יושבים על שמיכת הפיקניק.",
       "align": [
         {
           "en": [
@@ -481,7 +491,7 @@
         {
           "en": [
             1,
-            2
+            1
           ],
           "he": [
             1,
@@ -490,8 +500,8 @@
         },
         {
           "en": [
-            3,
-            4
+            2,
+            2
           ],
           "he": [
             2,
@@ -500,12 +510,12 @@
         },
         {
           "en": [
-            5,
+            3,
             6
           ],
           "he": [
             3,
-            3
+            5
           ]
         }
       ]

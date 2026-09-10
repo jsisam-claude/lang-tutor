@@ -483,9 +483,9 @@
       "id": "sea-l2-003",
       "level": 2,
       "tense": "present-simple",
-      "frame": "want-to",
-      "en": "I want to swim in the waves.",
-      "he": "אני רוצה לשחות בגלים.",
+      "frame": "habitual-plural",
+      "en": "We always swim near the boat.",
+      "he": "אנחנו תמיד שוחים ליד הסירה.",
       "align": [
         {
           "en": [
@@ -510,7 +510,7 @@
         {
           "en": [
             2,
-            3
+            2
           ],
           "he": [
             2,
@@ -519,12 +519,12 @@
         },
         {
           "en": [
-            4,
-            6
+            3,
+            5
           ],
           "he": [
             3,
-            3
+            4
           ]
         }
       ]

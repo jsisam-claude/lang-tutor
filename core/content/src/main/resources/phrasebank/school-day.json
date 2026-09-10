@@ -655,9 +655,9 @@
       "id": "sch-l2-007",
       "level": 2,
       "tense": "present-simple",
-      "frame": "emotion-because",
-      "en": "She is happy because she likes math.",
-      "he": "היא שמחה כי היא אוהבת חשבון.",
+      "frame": "habitual-3s",
+      "en": "The teacher always writes on the board.",
+      "he": "המורה תמיד כותבת על הלוח.",
       "align": [
         {
           "en": [
@@ -702,21 +702,11 @@
         {
           "en": [
             5,
-            5
+            6
           ],
           "he": [
             4,
             4
-          ]
-        },
-        {
-          "en": [
-            6,
-            6
-          ],
-          "he": [
-            5,
-            5
           ]
         }
       ]

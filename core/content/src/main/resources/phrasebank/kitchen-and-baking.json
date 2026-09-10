@@ -615,9 +615,9 @@
       "id": "kit-l2-007",
       "level": 2,
       "tense": "present-simple",
-      "frame": "want-to",
-      "en": "She wants to decorate the cake.",
-      "he": "היא רוצה לקשט את העוגה.",
+      "frame": "habitual-3s",
+      "en": "Mom always mixes the dough.",
+      "he": "אמא תמיד מערבבת את הבצק.",
       "align": [
         {
           "en": [
@@ -642,7 +642,7 @@
         {
           "en": [
             2,
-            3
+            2
           ],
           "he": [
             2,
@@ -651,8 +651,8 @@
         },
         {
           "en": [
-            4,
-            5
+            3,
+            4
           ],
           "he": [
             3,

@@ -828,9 +828,9 @@
       "id": "hlp-l2-010",
       "level": 2,
       "tense": "present-simple",
-      "frame": "want-to",
-      "en": "My brother wants to set the table.",
-      "he": "אחי רוצה לערוך את השולחן.",
+      "frame": "habitual-3s",
+      "en": "My sister always feeds the cat.",
+      "he": "אחותי תמיד מאכילה את החתול.",
       "align": [
         {
           "en": [
@@ -855,7 +855,7 @@
         {
           "en": [
             3,
-            4
+            3
           ],
           "he": [
             2,
@@ -864,11 +864,11 @@
         },
         {
           "en": [
-            5,
-            6
+            4,
+            5
           ],
           "he": [
-            4,
+            3,
             4
           ]
         }

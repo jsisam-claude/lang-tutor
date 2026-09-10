@@ -507,6 +507,7 @@ class ClozeDeck(
         val plain = narrowed
         val allowed = if (verbLike) family else emptyList()
         if (plain.size < MIN_DISTRACTORS - 1 || plain.size + minOf(1, allowed.size) < MIN_DISTRACTORS) return null
+        if (allowed.isEmpty() && !distinctEnough(plain)) return null
         return ClozeSlot(index = i, kind = ClozeKind.WORD, answer = t.key, pool = plain, variants = allowed)
     }
 
@@ -577,7 +578,7 @@ class ClozeDeck(
             candidates = candidates.filter { it in allowed }
         }
         val pool = candidates.toList()
-        if (pool.size < MIN_DISTRACTORS) return null
+        if (pool.size < MIN_DISTRACTORS || !distinctEnough(pool)) return null
         val preferred = if (kind in ClozeClasses.DETERMINERS) {
             val own = ClozeClasses.kindsOf(t.key).firstOrNull { it in ClozeClasses.DETERMINERS }
             pool.filter { own != null && own in ClozeClasses.kindsOf(it) }
@@ -684,6 +685,23 @@ class ClozeDeck(
     private fun withinLevel(key: String, level: Int): Boolean {
         val first = firstLevel[key] ?: return false
         return first <= level + 1
+    }
+
+    /**
+     * Whether [pool] can field [MIN_DISTRACTORS] options no two of which share
+     * a meaning.
+     *
+     * `item()` draws same-meaning-distinct candidates first and then tops up
+     * from whatever is left, so a pool that cannot do this quietly produces an
+     * item with two options and one Hebrew — the exact ambiguity the
+     * same-meaning table exists to prevent. Checked here, at admission, where
+     * the honest answer is that this is not a gap: `sch-l4-012` offered *if*
+     * against both *because* and *since*, and had done since the room shipped.
+     */
+    private fun distinctEnough(pool: List<String>): Boolean {
+        val chosen = mutableListOf<String>()
+        for (c in pool) if (chosen.none { sameMeaning(it, c) }) chosen += c
+        return chosen.size >= MIN_DISTRACTORS
     }
 
     private fun sameMeaning(answer: String, candidate: String): Boolean {

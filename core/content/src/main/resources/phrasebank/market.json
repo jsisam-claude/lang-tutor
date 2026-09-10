@@ -833,9 +833,9 @@
       "id": "mkt-l2-011",
       "level": 2,
       "tense": "present-simple",
-      "frame": "the-X-is-adj-today",
-      "en": "The market is full today.",
-      "he": "השוק מלא היום.",
+      "frame": "habitual-3s",
+      "en": "The man always sells fish.",
+      "he": "האיש תמיד מוכר דגים.",
       "align": [
         {
           "en": [
@@ -850,7 +850,7 @@
         {
           "en": [
             2,
-            3
+            2
           ],
           "he": [
             1,
@@ -859,12 +859,22 @@
         },
         {
           "en": [
-            4,
-            4
+            3,
+            3
           ],
           "he": [
             2,
             2
+          ]
+        },
+        {
+          "en": [
+            4,
+            4
+          ],
+          "he": [
+            3,
+            3
           ]
         }
       ]

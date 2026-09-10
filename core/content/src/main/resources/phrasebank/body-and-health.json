@@ -819,9 +819,9 @@
       "id": "bdy-l2-010",
       "level": 2,
       "tense": "present-simple",
-      "frame": "want-to",
-      "en": "My sister wants to sleep well tonight.",
-      "he": "אחותי רוצה לישון טוב הלילה.",
+      "frame": "habitual-3s",
+      "en": "My brother always brushes his teeth.",
+      "he": "אחי תמיד מצחצח שיניים.",
       "align": [
         {
           "en": [
@@ -846,7 +846,7 @@
         {
           "en": [
             3,
-            4
+            3
           ],
           "he": [
             2,
@@ -855,22 +855,12 @@
         },
         {
           "en": [
-            5,
+            4,
             5
           ],
           "he": [
             3,
             3
-          ]
-        },
-        {
-          "en": [
-            6,
-            6
-          ],
-          "he": [
-            4,
-            4
           ]
         }
       ]

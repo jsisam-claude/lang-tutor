@@ -108,13 +108,33 @@ batch moves the number where anyone can see it:
 
 Aspect reaches three stops at Level 6 (`before that` = 37 items) and 7 (83).
 
-**The gap.** Of the 803 Today items, **456 are the copula** — `The doctor is
-kind`, not `The doctor listens`. Only 180 present-simple items have a lexical
-verb, and most of those are statives (*see*, *want*, *like*) that do not contrast
-with the progressive at all. So the column a Hebrew speaker most needs — present
-simple against present progressive — is the one the bank is thinnest at. A round
-holds at most one copula line (`MAX_COPULA`) so it always drills a form, but that
-is a rationing rule, not a fix. The fix is task #71.
+**The gap, and one batch against it.** The Today column was 804 items of which
+456 were the copula — `The doctor is kind`, not `The doctor listens` — and only
+181 present-simple items had a lexical verb, most of those statives (*see*,
+*want*, *like*) that do not contrast with the progressive at all.
+
+28 habitual lines were authored against it (`docs/phrasebank.md`), each a minimal
+pair with a present-progressive line already in its own theme:
+
+    The nurse is looking in my ears.      already in the bank
+    The nurse always looks in my ears.    authored against it
+
+That moved Today from 177 marked-by-inflection items to **204**, and lexical
+present simples from 181 to 208.
+
+Two things about that batch are worth keeping in view. It **replaced** lines
+rather than adding them, so the 37 × 7 × 12 rectangle and its test are untouched
+— but replacement is not free, and seven candidates were dropped because taking
+them would have removed a word (*borrow*, *weigh*, *peppers*, *pick*, *kick*)
+from the bank entirely. And the copula count barely moved, 456 → 451, because
+the lines that turned out to be expendable were the stative `want to` ones, not
+the copulas: the real copula surplus at Level 2 sits in the `emotion-because`
+lines, and those carry `he_f` and are teaching the feminine first person, so they
+were protected. Getting at them is a decision about what `he_f` coverage is worth,
+not a batch.
+
+A round still holds at most one copula line (`MAX_COPULA`) so it always drills a
+form. That is rationing, and it is still not a fix.
 
 ## The room
 

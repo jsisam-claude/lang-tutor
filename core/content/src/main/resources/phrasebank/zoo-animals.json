@@ -483,33 +483,33 @@
       "id": "zoo-l2-003",
       "level": 2,
       "tense": "present-simple",
-      "frame": "want-to",
-      "en": "I want to see the lions.",
-      "he": "אני רוצה לראות את האריות.",
+      "frame": "habitual-3s",
+      "en": "The elephant always eats hay.",
+      "he": "הפיל תמיד אוכל חציר.",
       "align": [
         {
           "en": [
             0,
-            0
+            1
           ],
           "he": [
             0,
             0
-          ]
-        },
-        {
-          "en": [
-            1,
-            1
-          ],
-          "he": [
-            1,
-            1
           ]
         },
         {
           "en": [
             2,
+            2
+          ],
+          "he": [
+            1,
+            1
+          ]
+        },
+        {
+          "en": [
+            3,
             3
           ],
           "he": [
@@ -520,11 +520,11 @@
         {
           "en": [
             4,
-            5
+            4
           ],
           "he": [
-            4,
-            4
+            3,
+            3
           ]
         }
       ]
