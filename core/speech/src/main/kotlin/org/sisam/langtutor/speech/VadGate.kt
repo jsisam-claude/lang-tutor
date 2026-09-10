@@ -148,6 +148,16 @@ class VadGate(private val config: Config = Config()) {
     /** Frame index → sample offset, for slicing the captured audio. */
     fun frameToSample(frameIndex: Int): Int = frameIndex * config.windowSamples
 
+    /**
+     * Re-arms the gate for another clause in the same turn.
+     *
+     * [frame] goes back to zero with it, so every frame index a later
+     * [SpeechEnd] carries — and every index [frameToSample] turns into an
+     * offset — is counted from the reset, NOT from the start of the capture.
+     * A caller that logs or slices across a reset has to add back the frames
+     * it consumed before calling this; `WhisperAsrEngine` marks the second
+     * and later endpoints "(again)" for exactly that reason.
+     */
     fun reset() {
         frame = 0
         speaking = false

@@ -256,6 +256,11 @@ class WhisperAsrEngine(
                                 // both clauses — instead of being invisible
                                 // until the button lifts.
                                 val first = signal.complete(Unit)
+                                // "(again)" also says the frames are counted
+                                // from the last reset, not from the capture
+                                // (VadGate.reset): two endpoints in one turn
+                                // can print the same numbers and mean
+                                // different moments.
                                 Log.i(TAG, "endpoint${if (first) "" else " (again)"}: ${event.reason} frames ${event.startFrame}..${event.endFrame}")
                                 gate.reset()
                             }

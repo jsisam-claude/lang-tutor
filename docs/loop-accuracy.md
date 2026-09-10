@@ -224,6 +224,42 @@ Still open, by decision rather than oversight: a self-correction with
 garbles it anyway ("I see you now, a red ball") — and none of this was
 measured on a child's voice.
 
+### The six that were never judged
+
+The review is easy to misremember as leaving a large tail open. It did not, and
+the exact number matters because it was being carried in the backlog as
+"18 unjudged findings".
+
+Recovered from the review run's own record: six area readers raised **30**
+findings and **24** verdicts came back, so **6 were never judged** — seven
+distinct items once the two readers who independently raised the CMU-dictionary
+load are counted once. Judged here against the tree as it stands, not as the
+review saw it:
+
+| finding | verdict |
+|---|---|
+| The 140k-line dictionary loads on the main thread at the first verdict when the gloss row is off | **already closed** — `AppContainer.kt` pays it on `Dispatchers.IO`, ahead of the voice warm-up |
+| `join()` crashes when a middle part is digital silence | **already closed** — a part is claimed from both sides and can give up only what it has |
+| A word whose start lands in the trimmed tail never highlights | **already closed** — the start is pinned inside what remains of its piece |
+| Typed `...` and `--` do not earn the beat | **already closed** — `endsWithMark` reads them as the normaliser would |
+| A later group's piece keys the cache differently for its leading space | **already closed** — the piece text is trimmed before the cache key |
+| An en dash joining a compound becomes a pause token | **already closed** — `–` between letters stays a hyphen |
+| Re-armed endpoints are silent, and their frame numbers restart | **half closed, now closed** |
+
+Six of the seven were fixed by `c60161d` and `895ae94` — the two commits the
+backlog assumed had left them open — each with a comment naming the case. That
+is worth recording plainly: the tail was already handled, and the backlog item
+was measuring the review's paperwork rather than the code.
+
+The seventh was half done. `c60161d` made the second and later endpoints log as
+`endpoint (again)`, closing the silent half. The other half stayed open:
+`VadGate.reset()` zeroes `frame`, so a re-armed endpoint's frame numbers are
+counted from the reset and two endpoints in one turn can print the same numbers
+meaning different moments. Nothing computes a wrong answer from it — the slices
+are taken inside one armed window — but a captured log misreads, and that is a
+trap for whoever reads the first device traces (#74, #76). Documented at both
+ends rather than papered over with a frame base nothing yet needs.
+
 ## 5. Two improvements, measured — one shipped, one not
 
 Both use models already on disk; both were run through the kit before any
