@@ -74,6 +74,7 @@ fun HomeScreen(
     onOpenPictures: () -> Unit,
     onOpenTwisters: () -> Unit,
     onOpenCloze: () -> Unit,
+    onOpenTense: () -> Unit,
     onOpenStories: () -> Unit,
 ) {
     val units by produceState<List<UnitSummary>>(initialValue = emptyList(), container) {
@@ -147,6 +148,13 @@ fun HomeScreen(
         // everything in it derived from the phrasebank and packs.
         Button(onClick = onOpenCloze, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_cloze_room))
+        }
+        // Where on a timeline does this sentence belong? The time word is
+        // taken out so the verb is the only thing left to read — the one
+        // contrast Hebrew gives no help with, since it has three tenses and
+        // no aspect at all (docs/tense-room.md).
+        Button(onClick = onOpenTense, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.home_tense_room))
         }
         // Reading, with nothing asked back. Every word in every story is one
         // the phrasebank has already taught at or below that story's Level,

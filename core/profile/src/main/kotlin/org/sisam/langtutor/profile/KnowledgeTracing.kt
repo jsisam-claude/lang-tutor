@@ -67,6 +67,15 @@ object Skill {
     /** A grammar pattern — the phrasebank's own frame tag. */
     fun frame(id: String) = "frame:$id"
 
+    /**
+     * An English tense, by the phrasebank's own tag: "tense:past-perfect".
+     *
+     * Bounded like every other id here — the bank uses 17 tags and a line
+     * carries exactly one — so a profile that practises for years still holds
+     * seventeen of these and not one more.
+     */
+    fun tense(id: String) = "tense:$id"
+
     /** The namespace of an id, for grouping in the Parent Zone. */
     fun kindOf(id: String): String = id.substringBefore(':', "")
 

@@ -224,4 +224,19 @@
     <string name="parent_streaming_asr_hint">Decode speech while the child is still talking, so the live preview updates as they speak instead of after a pause. Needs the streaming model in the build; Tuki still judges answers with the accurate engine.</string>
     <string name="parent_translation_title">Hebrew meaning</string>
     <string name="parent_translation_hint">Adds a Hebrew translation under the line. In the chat room Tuki writes it himself, so it can occasionally be clumsy.</string>
+    <!-- The tense room (docs/tense-room.md) -->
+    <string name="tense_title">When did it happen?</string>
+    <string name="tense_hint">No time word — the verb tells you.</string>
+    <string name="tense_repeat">Hear it again</string>
+    <string name="tense_hidden">We hid a word: %1$s</string>
+    <string name="tense_empty">Nothing to place at your Level yet — pick another topic.</string>
+    <string name="tense_stage_time">When</string>
+    <string name="tense_stage_aspect">Finished or not</string>
+    <string name="tense_stop_yesterday">Yesterday</string>
+    <string name="tense_stop_today">Today</string>
+    <string name="tense_stop_tomorrow">Tomorrow</string>
+    <string name="tense_stop_before">Before that</string>
+    <string name="tense_stop_finished">Finished</string>
+    <string name="tense_stop_still_going">Still going</string>
+    <string name="home_tense_room">When did it happen? \u23F3</string>
 </resources>

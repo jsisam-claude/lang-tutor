@@ -76,6 +76,8 @@ import org.sisam.langtutor.tutor.picture.PictureVocabOrchestrator
 import org.sisam.langtutor.tutor.story.StoryReader
 import org.sisam.langtutor.tutor.cloze.ClozeDeck
 import org.sisam.langtutor.tutor.cloze.ClozeOrchestrator
+import org.sisam.langtutor.tutor.tense.TenseDeck
+import org.sisam.langtutor.tutor.tense.TenseOrchestrator
 import org.sisam.langtutor.ui.reward.RewardBus
 import org.sisam.langtutor.ui.reward.RewardKind
 import kotlinx.coroutines.sync.withLock
@@ -1012,6 +1014,36 @@ class AppContainer private constructor(context: Context) {
                 .associate { it.word.lowercase() to it.translation.he }
         }.getOrDefault(emptyMap())
         return ClozeDeck(sentences, packs, vocab).also { clozeDeckCache = it }
+    }
+
+    @Volatile private var tenseDeckCache: TenseDeck? = null
+    private val tenseDeckLock = kotlinx.coroutines.sync.Mutex()
+
+    /**
+     * One pass over the whole bank, built once per process and shared, so the
+     * chip row and the rounds read the same object — the fill-the-gap deck's
+     * rule. No packs and no curriculum vocabulary: this deck asks about the
+     * verb, and every word it needs is in the sentence.
+     */
+    suspend fun tenseDeck(): TenseDeck = tenseDeckCache ?: tenseDeckLock.withLock {
+        tenseDeckCache ?: withContext(Dispatchers.Default) {
+            TenseDeck(phrasebank.sentences()).also { tenseDeckCache = it }
+        }
+    }
+
+    fun createTense(scope: CoroutineScope): TenseOrchestrator {
+        appScope.launch { applyVoice(profile.current().parentSettings.voiceId) }
+        val kokoro = bundledTtsEngine()
+        appScope.launch(Dispatchers.IO) {
+            runCatching { kokoro?.warmUp() }
+            runCatching { ListeningAck.warmUp() }
+        }
+        return TenseOrchestrator(
+            tts = kokoro ?: PlatformTtsEngine(appContext),
+            profile = profile,
+            scope = scope,
+            tracker = skills,
+        )
     }
 
     fun createDrillOrchestrator(scope: CoroutineScope): DrillOrchestrator {

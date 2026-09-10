@@ -25,6 +25,7 @@ import org.sisam.langtutor.profile.LearnerProfile
 import org.sisam.langtutor.tutor.LevelConfig
 import org.sisam.langtutor.ui.chat.ChatScreen
 import org.sisam.langtutor.ui.cloze.ClozeScreen
+import org.sisam.langtutor.ui.tense.TenseScreen
 import org.sisam.langtutor.ui.conversation.ConversationScreen
 import org.sisam.langtutor.ui.home.HomeScreen
 import org.sisam.langtutor.ui.lesson.LessonScreen
@@ -46,6 +47,7 @@ object Routes {
     const val PICTURES = "pictures"
     const val TWISTERS = "twisters"
     const val CLOZE = "cloze"
+    const val TENSE = "tense"
     const val STORIES = "stories"
 
     // Unit-scoped destinations: the tapped unit travels in the route so every
@@ -62,7 +64,8 @@ object Routes {
      *  room may interrupt, and the only ones it returns to. */
     fun isLearningRoom(route: String?) =
         route == LESSON || route == CONVERSATION || route == VOCAB ||
-            route == PICTURES || route == TWISTERS || route == CLOZE || route == STORIES
+            route == PICTURES || route == TWISTERS || route == CLOZE || route == STORIES ||
+            route == TENSE
 }
 
 @Composable
@@ -82,6 +85,7 @@ fun AppNav(container: AppContainer) {
                     onOpenPictures = { navController.navigate(Routes.PICTURES) },
                     onOpenTwisters = { navController.navigate(Routes.TWISTERS) },
                     onOpenCloze = { navController.navigate(Routes.CLOZE) },
+                    onOpenTense = { navController.navigate(Routes.TENSE) },
                     onOpenStories = { navController.navigate(Routes.STORIES) },
                 )
             }
@@ -101,6 +105,7 @@ fun AppNav(container: AppContainer) {
             composable(Routes.PICTURES) { PictureScreen(container) }
             composable(Routes.TWISTERS) { TwisterScreen(container) }
             composable(Routes.CLOZE) { ClozeScreen(container) }
+            composable(Routes.TENSE) { TenseScreen(container) }
             composable(Routes.STORIES) { StoryScreen(container) }
             composable(Routes.PARENT) { ParentZoneScreen(container) }
             composable(Routes.CHAT) { ChatScreen(container) }

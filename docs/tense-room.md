@@ -116,11 +116,70 @@ simple against present progressive — is the one the bank is thinnest at. A rou
 holds at most one copula line (`MAX_COPULA`) so it always drills a form, but that
 is a rationing rule, not a fix. The fix is task #71.
 
+## The room
+
+`TenseOrchestrator` is the fill-the-gap room's shape — a tap game with no
+microphone, a warm retry instead of a dead end, the same ledger of five XP for a
+first try and two for a later find — over a different question. Two things
+differ, and both follow from what the room is for.
+
+**It reads the sentence aloud while asking.** The fill-the-gap room cannot,
+because its line contains the answer. Here nothing is hidden from the ear, and
+hearing the form *is* the input the room exists to give. Tapping the sentence
+repeats it, free, in either state.
+
+**A wrong tap hands back the hidden word.** `We hid a word: yesterday.` — the
+explanation and the answer key at once, with no grammar lecture. A line that
+never carried a time word falls back to the plain nudge, because its verb mark
+is already the whole explanation.
+
+The destination set travels in the state as `stops`, and it is the *round's*
+whole set, never the stops the remaining items happen to use. A timeline that
+shrank as the round went would hand back exactly the elimination the
+three-destination shape was chosen to remove.
+
+`placed` accumulates across items, and the sorted timeline is what `Done` draws.
+That is the one thing kept from the card-sorting idea the room rejected: its
+payoff, without its shortcut.
+
+### The reveal does not restore the line on screen
+
+`TenseItem.verb` indexes into `shown`, and a time word lifted off the **front**
+of a sentence shifted every one of those indices. Re-rendering `restored` on the
+reveal would therefore underline the wrong word — silently, and only on
+leading-lift items, which is the worst kind of wrong.
+
+So the eye keeps `shown`, with the verb marked and the hidden word named beside
+it, and the ear gets `restored` from Tuki. The deck stores only the hidden text,
+not which end it came off, and that is enough for everything except redrawing
+the line — which is why the room does not.
+
+### Direction
+
+The timeline is a plain `Row`, so it follows the ambient layout direction and
+the past sits on the **right** in Hebrew: time runs the way the eye runs.
+Nothing in it is authored per language. The English inside stays left-to-right
+through `EnglishContent`, the same split every other room makes.
+
+A wrong destination is struck through, dimmed and disabled, with
+`stateDescription` set — three channels, never colour alone — which is
+`ClozeScreen`'s treatment exactly, so the two rooms behave the same under the
+finger and under the screen reader. The rail above the destinations is
+decoration and yields on a cramped screen; the destinations are controls and
+never do.
+
 ## Tracing
 
-`TenseDeck.skillId(tense)` is `tense:<tense>`, one skill id per tense, so the
-tracer can weight a round toward the forms a learner keeps misplacing
-(`docs/knowledge-tracing.md`). Wiring it is task #69.
+`Skill.tense(id)` is `tense:<tense>`, one skill id per tense — bounded like
+every other id, since the bank uses 17 tags and a line carries exactly one, so a
+profile that practises for years still holds seventeen of these and not one
+more. The room writes it on every placement, beside the theme and the frame, so
+a round is already drawn weakest-first over the forms a learner keeps
+misplacing (`docs/knowledge-tracing.md`).
+
+What is left of task #69 is the other rooms: the drill speaks a line that has a
+tense, and the fill-the-gap room's verb-form gaps are tense evidence too.
+Neither reports it yet.
 
 ## No lexicon
 

@@ -2,6 +2,7 @@ package org.sisam.langtutor.tutor.tense
 
 import kotlin.random.Random
 import org.sisam.langtutor.content.PhraseSentence
+import org.sisam.langtutor.profile.Skill
 import org.sisam.langtutor.tutor.cloze.ClozeClasses
 import org.sisam.langtutor.tutor.cloze.ClozeDeck
 import org.sisam.langtutor.tutor.drill.DrillDeck
@@ -368,15 +369,32 @@ class TenseDeck(sentences: List<PhraseSentence>) {
         }
     }
 
-    /** A present-simple lexical verb: an attested stem, bare or with its -s,
-     *  standing somewhere a verb can stand — never first, never after *to*. */
+    /** A present-simple lexical verb: an attested stem, bare or wearing its
+     *  third-person -s, standing somewhere a verb can stand — never first,
+     *  never after *to* or a modal. */
     private fun lexicalPresent(keys: List<String>, i: Int): Boolean {
         if (i == 0) return false
         val k = keys[i]
         if (k in BE_PRESENT || k in HAVE_PRESENT || k in DOES) return false
         if (keys[i - 1] == "to" || keys[i - 1] in ClozeClasses.MEMBERS.getValue(ClozeClasses.Kind.MODAL)) return false
-        if (k in verbs) return true
-        return k.endsWith("s") && !k.endsWith("ss") && k.dropLast(1) in verbs
+        return k in verbs || thirdPersonStems(k).any { it in verbs }
+    }
+
+    /**
+     * The stems a third-person present could have been spelled from.
+     *
+     * English writes the -s four ways and none of them is recoverable on its
+     * own: *carries* could come from carry, *washes* from wash, *closes* from
+     * close or clos. So every candidate is offered and the bank decides which
+     * one it actually attests — the same refusal to author a rule that the
+     * rest of this file makes.
+     */
+    private fun thirdPersonStems(k: String): List<String> = when {
+        k.endsWith("ss") -> emptyList()
+        k.endsWith("ies") && k.length > 4 -> listOf(k.dropLast(3) + "y")
+        k.endsWith("es") && k.length > 3 -> listOf(k.dropLast(2), k.dropLast(1))
+        k.endsWith("s") && k.length > 2 -> listOf(k.dropLast(1))
+        else -> emptyList()
     }
 
     private fun participle(keys: List<String>, from: Int): Int? =
@@ -404,7 +422,7 @@ class TenseDeck(sentences: List<PhraseSentence>) {
             for (i in keys.indices) {
                 val k = keys[i]
                 if (k.endsWith("ing") && k.length > 5 && i > 0 && keys[i - 1] in BE_ALL) {
-                    out += stemOfIng(k)
+                    out += stemsOfIng(k)
                 }
                 val prev = keys.getOrNull(i - 1)
                 if (prev != null && (prev in DID || prev in DOES || prev == "to" || prev in WILL)) {
@@ -416,13 +434,20 @@ class TenseDeck(sentences: List<PhraseSentence>) {
         return out
     }
 
-    /** running → run, closing → close, sitting → sit. */
-    private fun stemOfIng(k: String): String {
+    /**
+     * The stems an -ing form could have been spelled from: running → run,
+     * sitting → sit, closing → close *or* clos, carrying → carry.
+     *
+     * Like [thirdPersonStems], the doubling and the dropped silent e are not
+     * recoverable, so both readings are attested and a later lookup finds
+     * whichever one the bank really uses.
+     */
+    private fun stemsOfIng(k: String): List<String> {
         val base = k.dropLast(3)
         if (base.length > 2 && base.last() == base[base.length - 2] && base.last() !in "lsz") {
-            return base.dropLast(1)
+            return listOf(base.dropLast(1), base)
         }
-        return base
+        return listOf(base, base + "e")
     }
 
     private fun band(mastery: Double): Int = (mastery * DrillDeck.MASTERY_BANDS).toInt()
@@ -445,8 +470,8 @@ class TenseDeck(sentences: List<PhraseSentence>) {
         /** "this morning", "the day before yesterday". */
         private const val MAX_PHRASE = 4
 
-        /** The skill id a tense answers to, shared with the tracer (#69). */
-        fun skillId(tense: String): String = "tense:$tense"
+        /** The skill id a tense answers to. One spelling, in [Skill]. */
+        fun skillId(tense: String): String = Skill.tense(tense)
 
         /** Which tense lands where, per stage. A tense absent from a stage's
          *  map has no honest stop there and is simply not offered. */

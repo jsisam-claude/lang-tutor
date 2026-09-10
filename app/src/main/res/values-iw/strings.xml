@@ -222,4 +222,19 @@
     <string name="parent_streaming_asr_hint">לתמלל תוך כדי שהילד מדבר, כך שהתצוגה המקדימה מתעדכנת תוך כדי דיבור ולא אחרי הפסקה. דורש את מודל הזרימה בגרסה; טוקי עדיין בודק תשובות עם המנוע המדויק.</string>
     <string name="parent_translation_title">משמעות בעברית</string>
     <string name="parent_translation_hint">מוסיף תרגום לעברית מתחת למשפט. בחדר השיחה טוקי כותב אותו בעצמו, ולכן הוא עשוי לפעמים להיות מגושם.</string>
+    <!-- The tense room (docs/tense-room.md) -->
+    <string name="tense_title">מתי זה קרה?</string>
+    <string name="tense_hint">אין מילת זמן — הפועל מגלה.</string>
+    <string name="tense_repeat">לשמוע שוב</string>
+    <string name="tense_hidden">הסתרנו מילה: %1$s</string>
+    <string name="tense_empty">אין כאן עדיין מה למקם ברמה שלך — בחרו נושא אחר.</string>
+    <string name="tense_stage_time">מתי</string>
+    <string name="tense_stage_aspect">נגמר או לא</string>
+    <string name="tense_stop_yesterday">אתמול</string>
+    <string name="tense_stop_today">היום</string>
+    <string name="tense_stop_tomorrow">מחר</string>
+    <string name="tense_stop_before">לפני זה</string>
+    <string name="tense_stop_finished">נגמר</string>
+    <string name="tense_stop_still_going">עוד קורה</string>
+    <string name="home_tense_room">\u23F3 מתי זה קרה?</string>
 </resources>
