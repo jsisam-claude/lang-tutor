@@ -100,16 +100,16 @@ batch moves the number where anyone can see it:
 
 | Level | Yesterday | Today | Tomorrow | stops |
 |---|---|---|---|---|
-| 1 | 0 | 300 | 0 | 1 — room not offered |
-| 2 | 3 | 574 | 0 | 2 |
-| 3 | 347 | 650 | 0 | 2 |
-| 4 | 347 | 759 | 183 | 3 |
-| 7 | 657 | 803 | 184 | 3 |
+| 1 | 0 | 301 | 0 | 1 — room not offered |
+| 2 | 3 | 597 | 0 | 2 |
+| 3 | 348 | 673 | 0 | 2 |
+| 4 | 348 | 782 | 183 | 3 |
+| 7 | 658 | 826 | 184 | 3 |
 
 Aspect reaches three stops at Level 6 (`before that` = 37 items) and 7 (83).
 
 **The gap, and one batch against it.** The Today column was 804 items of which
-456 were the copula — `The doctor is kind`, not `The doctor listens` — and only
+456 were the copula (the table above is measured after the batch) — `The doctor is kind`, not `The doctor listens` — and only
 181 present-simple items had a lexical verb, most of those statives (*see*,
 *want*, *like*) that do not contrast with the progressive at all.
 
