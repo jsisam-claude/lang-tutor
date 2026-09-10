@@ -53,10 +53,12 @@ come out and leave a line anyone would say.
 
 **Aspect.** From the point where the learner has met the perfect, the three
 destinations stop being clock times and become *before that / finished / still
-going*. This is the stage Hebrew cannot help with, so the Hebrew line is shown
-**after** the answer — to make the missing distinction visible, never to hint at
-it. (In the time stage the Hebrew is withheld during the ask for the opposite
-reason: it would give four of the six forms away.)
+going*. This is the stage Hebrew cannot help with — one Hebrew present covers
+both *waits* and *has been waiting* — which is exactly why the room shows no
+Hebrew at all, in either stage. Reading it during the ask would give four of the
+six time forms away; showing it after the answer, to make the missing
+distinction visible, is a good idea that is **not built**, and the room renders
+no Hebrew line today.
 
 ## What the deck refuses
 
@@ -100,27 +102,31 @@ batch moves the number where anyone can see it:
 
 | Level | Yesterday | Today | Tomorrow | stops |
 |---|---|---|---|---|
-| 1 | 0 | 301 | 0 | 1 — room not offered |
-| 2 | 3 | 597 | 0 | 2 |
-| 3 | 348 | 673 | 0 | 2 |
-| 4 | 348 | 782 | 183 | 3 |
-| 7 | 658 | 826 | 184 | 3 |
+| 1 | 0 | 299 | 0 | 1 — room not offered |
+| 2 | 3 | 592 | 0 | 2 |
+| 3 | 337 | 668 | 0 | 2 |
+| 4 | 337 | 775 | 183 | 3 |
+| 7 | 647 | 819 | 184 | 3 |
 
-Aspect reaches three stops at Level 6 (`before that` = 37 items) and 7 (83).
+Aspect reaches three stops at Level 6 (`before that` = 35 items) and 7 (95).
 
-**The gap, and one batch against it.** The Today column was 804 items of which
-456 were the copula (the table above is measured after the batch) — `The doctor is kind`, not `The doctor listens` — and only
-181 present-simple items had a lexical verb, most of those statives (*see*,
-*want*, *like*) that do not contrast with the progressive at all.
+**The gap, and one batch against it.** Before the batch the Today column was 796
+items of which 478 were the copula — `The doctor is kind`, not `The doctor
+listens` — and only 151 present-simple items had a lexical verb, most of those
+statives (*see*, *want*, *like*) that do not contrast with the progressive at
+all.
 
-28 habitual lines were authored against it (`docs/phrasebank.md`), each a minimal
-pair with a present-progressive line already in its own theme:
+28 habitual lines were authored against it, each a minimal pair with a
+present-progressive line already in its own theme:
 
-    The nurse is looking in my ears.      already in the bank
-    The nurse always looks in my ears.    authored against it
+    Dad is stirring the sauce.      foo-l2-001, already in the bank
+    Dad always stirs the sauce.     foo-l2-007, authored against it
 
-That moved Today from 177 marked-by-inflection items to **204**, and lexical
-present simples from 181 to 208.
+That moved the Today column's inflection-marked items from 115 to **143** and its
+lexical present simples from 151 to **179** — 28 lines, 28 items, one for one.
+(Every figure on this page is measured with the corrected verb-finder; the ones
+first reported for this batch were produced by a classifier that marked the wrong
+word on 58 items, and were wrong in both directions.)
 
 Two things about that batch are worth keeping in view. It **replaced** lines
 rather than adding them, so the 37 × 7 × 12 rectangle and its test are untouched
@@ -205,7 +211,17 @@ Neither reports it yet.
 
 There is no part-of-speech tagger and no authored verb list, the same way the
 fill-the-gap room refuses one. A verb is a word the bank itself attests as one:
-the stem inside an `is Ving`, the base after a `did` or a `to`, the participle
-after a `has` — plus the irregular families `ClozeClasses` already carries. The
-set is built once from one pass over the bank, so a content batch that brings new
-verbs brings their forms with it.
+the stem inside an `is Ving`, and the base after a `did`, a `will` or a `to` —
+plus the irregular families `ClozeClasses` already carries. The set is built
+once from one pass over the bank, so a content batch that brings new verbs
+brings their forms with it.
+
+What that harvest cannot do is tell a verb from a homograph, and the room has
+already been burned by it once. The bank attests `water` as a verb ("Dad is
+watering the plants"), `mom` because a question puts it after a *did*, and `not`
+because a negation puts it after a *will* — so `The water is warm.` was
+underlined at `water`, and `…because Mom is with me.` at `Mom`. The fix is not a
+bigger lexicon but POSITION: what follows a be is its complement, what follows a
+determiner heads a noun phrase, and a capital away from the start is a name.
+`NOT_A_VERB` is the one authored list here, and it exists for the pronouns and
+negations that inversion puts where a verb would sit.

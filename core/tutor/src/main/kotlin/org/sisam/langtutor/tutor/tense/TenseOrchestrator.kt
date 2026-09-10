@@ -165,10 +165,15 @@ class TenseOrchestrator(
                         // One destination left: the answer is no longer a choice.
                         resolve(s, TenseOutcome.SHOWN, wrong)
                     } else {
-                        _state.value = s.copy(wrongTaps = wrong)
+                        // The hint is speech like any other, so the beak moves
+                        // for it: this is the one line in the room that hands
+                        // over the answer key, and a still parrot reads as a
+                        // freeze.
+                        _state.value = s.copy(wrongTaps = wrong, speaking = true)
                         // The hidden time word IS the hint, so a line that
                         // never carried one falls back to the plain nudge.
                         speak(s.item.hidden?.let { HIDDEN_IS.format(it) } ?: TRY_AGAIN)
+                        stopSpeaking(s.item)
                     }
                 }
             } finally {
@@ -290,6 +295,20 @@ class TenseOrchestrator(
     fun silence() {
         silenced = true
         CoroutineScope(Dispatchers.Default).launch { runCatching { tts.stop() } }
+    }
+
+    /**
+     * Give the voice back to a room that was silenced and is being looked at
+     * again.
+     *
+     * [silence] is called on every disposal — a rotation, a sticker detour, a
+     * chip that keys another room — and it used to be cleared only by
+     * [startRound]. A retained room re-entered mid-round therefore stayed mute
+     * for the rest of it, which in this room means it stops reading the
+     * sentence aloud: the one thing it exists to do.
+     */
+    fun resume() {
+        silenced = false
     }
 
     /** Non-suspend release for ViewModel.onCleared(): the owning scope is

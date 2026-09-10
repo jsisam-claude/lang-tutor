@@ -44,12 +44,12 @@ class BktModel(
  * What a skill id looks like, so every room spells one the same way.
  *
  * The grain is chosen to be BOUNDED by the content rather than by how much
- * a learner practises: 37 themes, 334 sentence frames, 15 target sounds and
+ * a learner practises: 37 themes, 333 sentence frames, 15 target sounds and
  * the few hundred words that have a picture. A profile therefore holds at
  * most about seven hundred entries however long the app is used, and needs
  * no eviction rule to keep it honest.
  *
- * The frame is the interesting one. `PhraseSentence.frame` has carried 334
+ * The frame is the interesting one. `PhraseSentence.frame` has carried 333
  * distinct grammar patterns since the bank was written and no code has ever
  * read it; as a skill id it is exactly the right grain — "going-to" is a
  * thing a learner can be good at, while a single sentence is not.

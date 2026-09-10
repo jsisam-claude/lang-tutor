@@ -127,6 +127,9 @@ class ClozeViewModel(
      *  for a retained room, so the learner would come back to an empty pane. */
     fun stop() = room.silence()
 
+    /** The other half of [stop], for a room re-entered mid-round. */
+    fun start() = room.resume()
+
     override fun onCleared() = room.shutdown()
 }
 
@@ -173,6 +176,7 @@ fun ClozeScreen(container: AppContainer) {
     )
     val state by viewModel.state.collectAsState()
     DisposableEffect(viewModel) {
+        viewModel.start()
         onDispose { viewModel.stop() }
     }
 

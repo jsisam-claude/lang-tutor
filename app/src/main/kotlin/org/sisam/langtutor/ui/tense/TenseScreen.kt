@@ -122,6 +122,10 @@ class TenseViewModel(
      *  never be resumed. The fill-the-gap room's rule, for the same reason. */
     fun stop() = room.silence()
 
+    /** The other half of [stop]: a room that survived a rotation gets its
+     *  voice back, or it reads nothing aloud for the rest of the round. */
+    fun start() = room.resume()
+
     override fun onCleared() = room.shutdown()
 }
 
@@ -171,6 +175,7 @@ fun TenseScreen(container: AppContainer) {
     )
     val state by viewModel.state.collectAsState()
     DisposableEffect(viewModel) {
+        viewModel.start()
         onDispose { viewModel.stop() }
     }
 
@@ -321,7 +326,11 @@ private fun ItemPane(
                     textAlign = TextAlign.Center,
                 )
             }
-            if (!revealed && wrongTaps.isEmpty() && !A11y.cramped) {
+            // The nudge stays while the item has no hidden word to hand back:
+            // otherwise a wrong tap on a clean line clears the hint and puts
+            // nothing in its place, and the learner is told only that they
+            // were wrong.
+            if (!revealed && (wrongTaps.isEmpty() || item.hidden == null) && !A11y.cramped) {
                 Text(
                     text = stringResource(R.string.tense_hint),
                     style = MaterialTheme.typography.bodyMedium,

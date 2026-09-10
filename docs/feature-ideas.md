@@ -60,7 +60,7 @@ it is the substrate five features are waiting on.
 
 A smaller version of the same finding: `PhraseSentence.frame` — the field
 whose own doc comment says "the repeatable sentence pattern, for slot drills"
-— carries 334 distinct values across all 3,108 sentences and **is not read by
+— carries 333 distinct values across all 3,108 sentences and **is not read by
 any Kotlin file in the tree.** The slot drill its schema anticipated was never
 built. Similarly, 960 sentences carry hand-authored `align` cues that only the
 gloss row uses today.
@@ -145,7 +145,7 @@ The coach currently says *how wrong*. These say *what was wrong*.
 - **Scaffolds fade per item, not just per level** [medium] — read strength at
   render time; the gloss becomes tap-to-reveal for items the learner knows.
 - **Review the frame, not the sentence** [small] — group by frame + theme +
-  level, show the least-recently-seen variant. This is what the 334 dead
+  level, show the least-recently-seen variant. This is what the 333 dead
   `frame` values were for.
 - **A leech list handed to a human** [medium] — after N consecutive lapses,
   stop drilling it and tell the adult, because an item that fails five times

@@ -78,7 +78,9 @@ data class TenseItem(
 
 /**
  * Builds tense-room items out of the phrasebank, with nothing authored beyond
- * the two word lists below (docs/tense-room.md).
+ * three short word lists: [CLOCK_WORDS] and [ASPECT_WORDS], which say what a
+ * time word is, and [NOT_A_VERB], which says what a *did* or a *to* can precede
+ * without it being a verb (docs/tense-room.md).
  *
  * The room's one principle is VanPatten's: the learner interprets before they
  * produce, and the grammatical form is made the only cue to meaning. English
@@ -94,9 +96,11 @@ data class TenseItem(
  * at two different stops, a verb the deck cannot point at when it reveals.
  *
  * There is no part-of-speech tagger. A verb is a word the bank itself attests
- * as one — the stem inside an `is Ving`, the base after a `did`, the participle
- * after a `has` — plus the irregular families [ClozeClasses] already carries
- * for the fill-the-gap room. The set is built once from one pass over the bank.
+ * as one — the stem inside an `is Ving`, and the base after a `did`, a `will`
+ * or a `to` — plus the irregular families [ClozeClasses] already carries for the
+ * fill-the-gap room. The set is built once from one pass over the bank, and
+ * [NOT_A_VERB] is the short authored list of what those shapes can precede
+ * without being a verb.
  */
 class TenseDeck(sentences: List<PhraseSentence>) {
 
@@ -267,6 +271,10 @@ class TenseDeck(sentences: List<PhraseSentence>) {
             val kept = words.dropLast(n).toMutableList()
             val punct = tail.last().takeLastWhile { it in TRAILING }
             kept[kept.lastIndex] = kept.last().trimEnd(*TRAILING) + punct
+            // "My knee is better than yesterday." would leave "…better than.",
+            // which the room would put on screen and read aloud. A time word
+            // governed by the word before it does not come out alone.
+            if (ClozeDeck.key(kept.last()) in DANGLING) return null
             return Cut(kept, phrase)
         }
         // Leading: "Yesterday we visited…" — the next word takes the capital.
@@ -275,6 +283,14 @@ class TenseDeck(sentences: List<PhraseSentence>) {
             val head = words.take(n).joinToString(" ").trimEnd(',')
             if (ClozeDeck.key(head) !in strip) continue
             val kept = words.drop(n).toMutableList()
+            // "Last summer was very hot." — the phrase IS the subject, and
+            // lifting it leaves the verb-initial fragment "Was very hot."
+            if (ClozeDeck.key(kept[0]) in FINITE_OPENERS ||
+                edVerbAt(kept.map { ClozeDeck.key(it) }, 0) ||
+                isIrregularPast(ClozeDeck.key(kept[0]))
+            ) {
+                return null
+            }
             kept[0] = kept[0].replaceFirstChar { it.uppercaseChar() }
             return Cut(kept, head)
         }
@@ -324,9 +340,14 @@ class TenseDeck(sentences: List<PhraseSentence>) {
                 }
             }
             "present-progressive", "past-progressive" -> {
-                val be = keys.indexOfFirst { it in if (tense.startsWith("present")) BE_PRESENT else BE_PAST }
-                val v = if (be < 0) null else ing(be + 1)
-                if (be < 0 || v == null) null else Verb(at(be, v), TenseCue.AUXILIARY)
+                // The -ing first, then the LAST be before it. Taking the first
+                // be instead crosses a clause: "I am excited because we are
+                // flying." would mark `am` … `flying`, an auxiliary and a
+                // participle from two different verb phrases.
+                val set = if (tense.startsWith("present")) BE_PRESENT else BE_PAST
+                val v = ing(0)
+                val be = if (v == null) -1 else keys.take(v).indexOfLast { it in set }
+                if (v == null || be < 0) null else Verb(at(be, v), TenseCue.AUXILIARY)
             }
             "present-perfect-progressive", "past-perfect-progressive" -> {
                 val have = keys.indexOfFirst { it in if (tense.startsWith("present")) HAVE_PRESENT else setOf("had") }
@@ -345,10 +366,17 @@ class TenseDeck(sentences: List<PhraseSentence>) {
                     val v = (did + 1 until keys.size).firstOrNull { keys[it] in verbs }
                     return if (v == null) null else Verb(at(did, v), TenseCue.AUXILIARY)
                 }
-                val ed = keys.indices.firstOrNull { keys[it].endsWith("ed") && keys[it].length > 3 }
-                if (ed != null) return Verb(at(ed), TenseCue.INFLECTION)
-                val irr = keys.indices.firstOrNull { isIrregularPast(keys[it]) }
+                // A passive reads its tense off the be, not off the
+                // participle: "The cake was baked by Mom." is `was baked`.
+                val bePassive = keys.indices.firstOrNull { keys[it] in BE_PAST && participleAt(keys, it + 1) }
+                if (bePassive != null) return Verb(at(bePassive, bePassive + 1), TenseCue.AUXILIARY)
+                // Irregulars BEFORE the -ed scan: "We took a hundred photos."
+                // would otherwise mark `hundred`, which ends in -ed and is not
+                // a verb at all.
+                val irr = keys.indices.firstOrNull { isIrregularPast(keys[it]) && !afterBe(keys, it) }
                 if (irr != null) return Verb(at(irr), TenseCue.INFLECTION)
+                val ed = keys.indices.firstOrNull { edVerbAt(keys, it) && !afterBe(keys, it) }
+                if (ed != null) return Verb(at(ed), TenseCue.INFLECTION)
                 val be = keys.indexOfFirst { it in BE_PAST }
                 if (be >= 0) Verb(at(be), TenseCue.COPULA) else null
             }
@@ -358,9 +386,13 @@ class TenseDeck(sentences: List<PhraseSentence>) {
                     val v = (does + 1 until keys.size).firstOrNull { keys[it] in verbs }
                     return if (v == null) null else Verb(at(does, v), TenseCue.AUXILIARY)
                 }
+                // A passive carries its tense on the be: "Bandages are kept in
+                // a small box." is `are kept`, not a bare `kept`.
+                val bePassive = keys.indices.firstOrNull { keys[it] in BE_PRESENT && participleAt(keys, it + 1) }
+                if (bePassive != null) return Verb(at(bePassive, bePassive + 1), TenseCue.AUXILIARY)
                 // A lexical verb before be: "The nurse washes her hands" beats
                 // "The doctor is kind" whenever the line has both.
-                val lex = keys.indices.firstOrNull { lexicalPresent(keys, it) }
+                val lex = keys.indices.firstOrNull { lexicalPresent(words, keys, it) }
                 if (lex != null) return Verb(at(lex), TenseCue.INFLECTION)
                 val be = keys.indexOfFirst { it in BE_PRESENT }
                 if (be >= 0) Verb(at(be), TenseCue.COPULA) else null
@@ -372,13 +404,45 @@ class TenseDeck(sentences: List<PhraseSentence>) {
     /** A present-simple lexical verb: an attested stem, bare or wearing its
      *  third-person -s, standing somewhere a verb can stand — never first,
      *  never after *to* or a modal. */
-    private fun lexicalPresent(keys: List<String>, i: Int): Boolean {
+    private fun lexicalPresent(words: List<String>, keys: List<String>, i: Int): Boolean {
         if (i == 0) return false
         val k = keys[i]
+        // A capital away from the start is a name. The bank attests "mom" as a
+        // verb — "Did Mom buy white paint?" puts it right after a did — and
+        // without this "…because Mom is with me." marks `Mom`.
+        if (words[i].firstOrNull()?.isUpperCase() == true) return false
+        // A word governed by a determiner is the head of a noun phrase:
+        // "I want to see the bees." must not mark `bees`.
+        if (keys[i - 1] in OPENERS) return false
         if (k in BE_PRESENT || k in HAVE_PRESENT || k in DOES) return false
         if (keys[i - 1] == "to" || keys[i - 1] in ClozeClasses.MEMBERS.getValue(ClozeClasses.Kind.MODAL)) return false
+        // What follows a be is its complement, not a second verb. Without this
+        // "The water is warm." marks `water` — the bank attests `water` as a
+        // verb ("Dad is watering the plants"), and the first match wins.
+        if (afterBe(keys, i)) return false
         return k in verbs || thirdPersonStems(k).any { it in verbs }
     }
+
+    /** Whether [i] sits directly after a be-form, where a complement lives. */
+    private fun afterBe(keys: List<String>, i: Int): Boolean =
+        i > 0 && (keys[i - 1] in BE_PRESENT || keys[i - 1] in BE_PAST)
+
+    /** Whether [i] is a past participle: a -ed form the bank attests as a verb,
+     *  or an irregular one. */
+    private fun participleAt(keys: List<String>, i: Int): Boolean =
+        i in keys.indices && (edVerbAt(keys, i) || isIrregularParticiple(keys[i]))
+
+    /** A -ed word the bank attests as a verb — so *walked* but not *hundred*,
+     *  *crowded* or *tired*, none of which the bank ever uses as a verb. */
+    private fun edVerbAt(keys: List<String>, i: Int): Boolean {
+        val k = keys.getOrNull(i) ?: return false
+        if (!k.endsWith("ed") || k.length <= 3) return false
+        val stem = k.dropLast(2)
+        return stem in verbs || k.dropLast(1) in verbs ||
+            (stem.length > 2 && stem.last() == stem[stem.length - 2] && stem.dropLast(1) in verbs) ||
+            (k.endsWith("ied") && k.dropLast(3) + "y" in verbs)
+    }
+
 
     /**
      * The stems a third-person present could have been spelled from.
@@ -397,23 +461,33 @@ class TenseDeck(sentences: List<PhraseSentence>) {
         else -> emptyList()
     }
 
+    /**
+     * The participle governed by an auxiliary at [from] - 1. Adverbs may sit
+     * between them (*had already listened*), so the scan walks forward — but
+     * it stops at the first participle rather than the first -ed-shaped word,
+     * so a subordinate clause's verb is never mistaken for the main one.
+     */
     private fun participle(keys: List<String>, from: Int): Int? =
-        (from until keys.size).firstOrNull { k ->
-            val w = keys[k]
-            (w.endsWith("ed") && w.length > 3) || isIrregularParticiple(w)
-        }
+        (from until keys.size).firstOrNull { participleAt(keys, it) }
 
     private fun isIrregularPast(key: String): Boolean =
         ClozeClasses.IRREGULAR_FAMILIES.any { it.size >= 2 && it.elementAt(1) == key }
 
+    /**
+     * A two-member family means the past and the participle are the same word
+     * — *leave/left*, *find/found*, *buy/bought* — so the participle is always
+     * the family's LAST member, never its third. Requiring a third dropped
+     * every perfect line built on one of the 29 two-member families.
+     */
     private fun isIrregularParticiple(key: String): Boolean =
-        ClozeClasses.IRREGULAR_FAMILIES.any { it.size >= 3 && it.elementAt(2) == key }
+        ClozeClasses.IRREGULAR_FAMILIES.any { it.size >= 2 && it.elementAt(it.size - 1) == key }
 
     /**
-     * Verbs the bank attests, learned from the shapes that can only hold one:
-     * the stem inside an *is Ving*, the base after a *did* or a *to*, the
-     * participle after a *has*. No authored lexicon, the same way the
-     * fill-the-gap room refuses one.
+     * Verbs the bank attests, learned from the shapes that mostly hold one: the
+     * stem inside an *is Ving*, and the base after a *did*, a *do/does*, a
+     * *to* or a *will*. No authored lexicon, the same way the fill-the-gap room
+     * refuses one — only [NOT_A_VERB], for the words those shapes can precede
+     * that are not verbs at all.
      */
     private fun buildVerbs(sentences: List<PhraseSentence>): Set<String> {
         val out = mutableSetOf<String>()
@@ -534,9 +608,38 @@ class TenseDeck(sentences: List<PhraseSentence>) {
         private val PAST_MARKERS = BE_PAST + DID + setOf("had", "hadn't")
 
         /** Words a *to* or a *did* can precede that are not verbs. */
+        /**
+         * Words a *to*, a *did* or a *will* can precede that are not verbs.
+         * The pronouns matter: a question inverts to *Will I get a sticker?*
+         * and a negation to *we did not wait*, so without them the bank
+         * attests *i* and *not* as verbs and the reveal underlines them.
+         */
         private val NOT_A_VERB = setOf(
             "the", "a", "an", "my", "your", "his", "her", "our", "their", "this", "that",
             "school", "bed", "work", "him", "them", "us", "me", "it", "you",
+            "i", "he", "she", "we", "they", "not", "never", "always", "there", "here",
+        )
+
+        /**
+         * Words a lifted time phrase cannot be taken away from: they govern it,
+         * and without it they dangle. "better than yesterday" loses its object.
+         */
+        private val DANGLING = setOf(
+            "than", "for", "since", "until", "before", "after", "by", "from", "to",
+            "in", "on", "at", "of", "with", "about", "and", "but", "or", "because",
+        )
+
+        /** Verb forms that cannot open a sentence a learner would say, so a
+         *  leading lift that produces one took the subject with it. */
+        private val FINITE_OPENERS = setOf(
+            "was", "were", "is", "are", "am", "has", "have", "had", "wasn't", "weren't",
+            "isn't", "aren't", "hasn't", "haven't", "hadn't",
+        )
+
+        /** Determiners and possessives that open a subject noun phrase. */
+        private val OPENERS = setOf(
+            "the", "a", "an", "my", "your", "his", "her", "our", "their", "this", "that",
+            "these", "those", "some", "two", "three", "four", "five", "many", "every", "all",
         )
     }
 }

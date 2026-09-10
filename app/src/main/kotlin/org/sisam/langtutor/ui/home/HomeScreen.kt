@@ -41,6 +41,8 @@ import org.sisam.langtutor.BuildConfig
 import org.sisam.langtutor.R
 import org.sisam.langtutor.content.UnitSummary
 import org.sisam.langtutor.profile.LearnerProfile
+import org.sisam.langtutor.tutor.tense.TenseSource
+import org.sisam.langtutor.tutor.tense.TenseStage
 import org.sisam.langtutor.ui.common.A11y
 import org.sisam.langtutor.ui.common.EngineStatusLine
 import org.sisam.langtutor.ui.common.SkyBackdrop
@@ -81,6 +83,17 @@ fun HomeScreen(
         value = container.content.listUnits()
     }
     val profile by container.profile.profile.collectAsState(initial = LearnerProfile.EMPTY)
+    // The tense room needs two destinations to ask a question, and at Level 1
+    // the bank has only one — every Level 1 line is present simple, so the
+    // whole timeline collapses onto Today. Offering the button there lands the
+    // learner in a room whose only message tells them to pick another topic,
+    // on a screen with no topic to pick.
+    val tenseReady by produceState(initialValue = false, container, profile.effectiveLevel) {
+        value = runCatching {
+            val deck = container.tenseDeck()
+            TenseStage.entries.any { deck.offers(TenseSource.All, it, profile.effectiveLevel) }
+        }.getOrDefault(false)
+    }
 
     Column(
         modifier = Modifier
@@ -153,8 +166,10 @@ fun HomeScreen(
         // taken out so the verb is the only thing left to read — the one
         // contrast Hebrew gives no help with, since it has three tenses and
         // no aspect at all (docs/tense-room.md).
-        Button(onClick = onOpenTense, modifier = Modifier.fillMaxWidth()) {
-            Text(stringResource(R.string.home_tense_room))
+        if (tenseReady) {
+            Button(onClick = onOpenTense, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.home_tense_room))
+            }
         }
         // Reading, with nothing asked back. Every word in every story is one
         // the phrasebank has already taught at or below that story's Level,

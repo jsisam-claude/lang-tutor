@@ -225,6 +225,12 @@ class ClozeOrchestrator(
         CoroutineScope(Dispatchers.Default).launch { runCatching { tts.stop() } }
     }
 
+    /** The counterpart to [silence], for a retained room being looked at
+     *  again: without it a round survives a rotation but its voice does not. */
+    fun resume() {
+        silenced = false
+    }
+
     /** Non-suspend release for ViewModel.onCleared(): the owning scope is
      *  already cancelled by then, so the stop runs on a detached one, exactly
      *  as the picture room's does. Terminal, unlike [silence] — the room is

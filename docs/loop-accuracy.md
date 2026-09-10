@@ -231,10 +231,12 @@ the exact number matters because it was being carried in the backlog as
 "18 unjudged findings".
 
 Recovered from the review run's own record: six area readers raised **30**
-findings and **24** verdicts came back, so **6 were never judged** — seven
-distinct items once the two readers who independently raised the CMU-dictionary
-load are counted once. Judged here against the tree as it stands, not as the
-review saw it:
+findings and **24** verdicts came back, so **6** carry no verdict. Matching
+verdicts back to findings leaves **8** unmatched rather than 6 — two verdicts
+could not be attributed to a specific finding — and two of those 8 are the same
+defect, the CMU-dictionary load, raised independently by two readers. So the
+tail is **seven distinct items**, one row each below, judged here against the
+tree as it stands rather than as the review saw it:
 
 | finding | verdict |
 |---|---|

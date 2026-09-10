@@ -75,6 +75,61 @@ class TenseDeckTest {
     }
 
     @Test
+    fun `the mark is the verb, not whatever the bank happens to attest`() {
+        // Every one of these marked the wrong word before the reveal was
+        // audited: the bank attests `water` as a verb ("Dad is watering the
+        // plants"), `mom` because a question puts it after a did, and `not`
+        // because a negation puts it after a will.
+        fun mark(id: String) = itemFor(id, TenseStage.TIME).let { it.verb.map { i -> it.words[i] } }
+        assertEquals(TenseCue.COPULA, itemFor("bth-l1-004", TenseStage.TIME).cue)
+        assertEquals(listOf("is"), mark("bth-l1-004")) // The water is warm.
+        assertEquals(listOf("are"), mark("fst-l1-004")) // The leaves are green.
+        assertEquals(listOf("am"), mark("doc-l2-009")) // …because Mom is with me.
+    }
+
+    @Test
+    fun `a passive reads its tense off the be, not off the participle`() {
+        val now = itemFor("doc-l6-008", TenseStage.TIME) // Bandages are kept in a small box.
+        assertEquals(TenseCue.AUXILIARY, now.cue)
+        assertEquals(listOf("are", "kept"), now.verb.map { now.words[it] })
+        val then = itemFor("cty-l6-002", TenseStage.TIME) // The old post office was built…
+        assertEquals(listOf("was", "built"), then.verb.map { then.words[it] })
+    }
+
+    @Test
+    fun `a two-word past marks the verb, not a number that ends in -ed`() {
+        val item = itemFor("trv-l3-009", TenseStage.TIME) // We took a hundred photos.
+        assertEquals(TenseCue.INFLECTION, item.cue)
+        assertEquals(listOf("took"), item.verb.map { item.words[it] })
+    }
+
+    @Test
+    fun `a progressive takes the be that governs its own participle`() {
+        // "I am excited because we are flying." — the first be belongs to the
+        // other clause, and marking it spans two verb phrases.
+        val item = itemFor("get-l2-007", TenseStage.TIME)
+        assertEquals(listOf("are", "flying."), item.verb.map { item.words[it] })
+    }
+
+    @Test
+    fun `a perfect on a verb whose past and participle match is still a perfect`() {
+        // leave/left, find/found, buy/bought are TWO-member families, so the
+        // participle is the family's last member, never its third.
+        val item = itemFor("get-l6-004", TenseStage.ASPECT)
+        assertEquals(TenseStop.BEFORE_THAT, item.stop)
+        assertEquals(listOf("had", "left"), item.verb.map { item.words[it] })
+    }
+
+    @Test
+    fun `a lift that would leave a fragment is refused`() {
+        // "Last summer was very hot." — the time phrase IS the subject.
+        assertTrue(deck.items(TenseStage.TIME).none { it.sentence.id == "wea-l3-009" })
+        // "My knee is better than yesterday." — `than` governs the time word.
+        assertTrue(deck.items(TenseStage.TIME).none { it.sentence.id == "doc-l4-010" })
+        assertTrue(deck.items(TenseStage.TIME).none { it.sentence.id == "brk-l3-009" })
+    }
+
+    @Test
     fun `a sentence that straddles two stops is not an item`() {
         val straddler = PhraseSentence(
             id = "t-1", level = 4, tense = "future-simple", frame = "reported-speech",

@@ -29,11 +29,11 @@ A namespaced string, spelled by `Skill` so no two rooms disagree:
 | `word:bee` | a word with a picture | the picture room, a pack gap, curriculum vocabulary |
 
 The grain is chosen to be **bounded by the content, not by how much anyone
-practises**: 37 themes, 334 frames, 15 sounds and a few hundred pictured
+practises**: 37 themes, 333 frames, 15 sounds and a few hundred pictured
 words. A profile therefore holds at most about seven hundred entries however
 long the app is used, which is why there is no eviction rule to get wrong.
 
-The frame is the satisfying one. `PhraseSentence.frame` has carried 334
+The frame is the satisfying one. `PhraseSentence.frame` has carried 333
 distinct grammar patterns since the bank was written and **no code had ever
 read it** — the second piece of dead schema the feature scan turned up. As a
 skill id it is exactly the right grain: *going-to* is something a learner can
