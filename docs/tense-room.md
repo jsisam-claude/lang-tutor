@@ -132,7 +132,7 @@ Two things about that batch are worth keeping in view. It **replaced** lines
 rather than adding them, so the 37 × 7 × 12 rectangle and its test are untouched
 — but replacement is not free, and seven candidates were dropped because taking
 them would have removed a word (*borrow*, *weigh*, *peppers*, *pick*, *kick*)
-from the bank entirely. And the copula count barely moved, 456 → 451, because
+from the bank entirely. And the copula count barely moved, 478 → 473, because
 the lines that turned out to be expendable were the stative `want to` ones, not
 the copulas: the real copula surplus at Level 2 sits in the `emotion-because`
 lines, and those carry `he_f` and are teaching the feminine first person, so they
