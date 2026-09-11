@@ -130,6 +130,82 @@ class TenseDeckTest {
     }
 
     @Test
+    fun `no mark spans two clauses`() {
+        // Every cross-clause mark this ever produced was quiet and wrong: an
+        // auxiliary from one verb phrase and a participle from another.
+        for (stage in TenseStage.entries) {
+            for (item in deck.items(stage)) {
+                if (item.verb.size < 2) continue
+                val between = (item.verb.first() until item.verb.last())
+                assertTrue(
+                    "${item.sentence.id} spans a comma: ${item.verb.map { item.words[it] }}",
+                    between.none { item.words[it].endsWith(",") },
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `an inflection mark is never one of the nouns the bank attests as a verb`() {
+        // The bank attests every one of these as a verb somewhere — `water`
+        // from "Dad is watering the plants", `story` from "go to story hour",
+        // `mom` and `dad` because a question puts them after a did — and every
+        // one of them was underlined as the form that carries the tense.
+        val nouns = setOf(
+            "water", "story", "paint", "colour", "color", "mom", "dad", "grandpa", "bees",
+            "thanks", "hundred", "smile", "drink", "stop", "practice", "quiet", "warm",
+            "leaves", "i", "not", "crowded", "tired",
+        )
+        var checked = 0
+        for (stage in TenseStage.entries) {
+            for (item in deck.items(stage)) {
+                if (item.cue != TenseCue.INFLECTION) continue
+                val mark = ClozeDeck.key(item.words[item.verb.first()])
+                assertFalse("${item.sentence.id} marks '$mark': ${item.shown}", mark in nouns)
+                checked++
+            }
+        }
+        assertTrue("nothing measured", checked > 500)
+    }
+
+    @Test
+    fun `a question's tense is on its auxiliary, not on the next clause`() {
+        // "Did you ask before you took the tablet?" marked `took` — the verb of
+        // the clause after the one being asked about.
+        val item = itemFor("cmp-l3-004", TenseStage.TIME)
+        assertEquals(TenseCue.AUXILIARY, item.cue)
+        assertEquals(listOf("Did"), item.verb.map { item.words[it] })
+        // "Did Dad wash the car?" marked `Did Dad` — the subject, not the verb.
+        val dad = itemFor("hom-l3-008", TenseStage.TIME)
+        assertEquals(listOf("Did", "wash"), dad.verb.map { dad.words[it] })
+    }
+
+    @Test
+    fun `a passive is recognised by position, not by what the lexicon knows`() {
+        // `passed`, `named`, `launched` and `served` are attested nowhere else
+        // in the bank as verbs, so a shape test that demanded attestation left
+        // twenty passive lines marking the wrong thing or nothing.
+        for ((id, mark) in listOf(
+            "mkt-l6-011" to listOf("was", "passed"),
+            "zoo-l6-005" to listOf("was", "named"),
+            "spc-l6-008" to listOf("was", "launched"),
+            "hom-l6-012" to listOf("is", "served"),
+        )) {
+            val item = itemFor(id, TenseStage.TIME)
+            assertEquals(id, TenseCue.AUXILIARY, item.cue)
+            assertEquals(id, mark, item.verb.map { item.words[it] })
+        }
+    }
+
+    @Test
+    fun `the leftmost verb of the clause wins, whether regular or irregular`() {
+        // "We cleaned our table before we left." marked `left` once the
+        // irregular scan was moved ahead of the -ed scan.
+        val item = itemFor("rst-l3-012", TenseStage.TIME)
+        assertEquals(listOf("cleaned"), item.verb.map { item.words[it] })
+    }
+
+    @Test
     fun `a sentence that straddles two stops is not an item`() {
         val straddler = PhraseSentence(
             id = "t-1", level = 4, tense = "future-simple", frame = "reported-speech",

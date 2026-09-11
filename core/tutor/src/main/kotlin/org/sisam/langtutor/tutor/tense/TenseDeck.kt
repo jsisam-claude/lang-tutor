@@ -316,34 +316,63 @@ class TenseDeck(sentences: List<PhraseSentence>) {
     private class Verb(val at: List<Int>, val cue: TenseCue)
 
     /**
-     * Where the tense lives, so the reveal can underline it. Each tense has a
-     * shape the bank writes it in; anything that does not match one is not an
-     * item, because a reveal that cannot point at the form has nothing to say.
+     * Where the tense lives, so the reveal can underline it.
+     *
+     * Two rules do the work, and both were learned the hard way.
+     *
+     * SCAN ONE CLAUSE. A bank line often carries two — `We cleaned our table
+     * before we left.`, `The table was set before the guests arrived.` — and a
+     * scan that runs to the end of the sentence reaches into the second and
+     * marks its verb. Everything below looks only as far as [mainClause].
+     *
+     * TRUST STRUCTURE, NOT THE LEXICON. An auxiliary pattern identifies itself:
+     * a *be* before an *-ing*, a *have* before a participle, a *did* before a
+     * base. A bare inflected verb does not, and the only way to recognise one
+     * is to ask whether the bank attests the word as a verb elsewhere — which
+     * it does for `water`, `story`, `paint` and `Mom`, every one of them a noun
+     * where it stands. So an INFLECTION mark is admitted only where a finite
+     * verb can be, and where it cannot be identified the item is REFUSED. The
+     * doc's rule is the deck's rule: a reveal that cannot point at the form has
+     * nothing to say, and one that points at the wrong word is worse.
      */
     private fun findVerb(words: List<String>, tense: String): Verb? {
-        val keys = words.map { ClozeDeck.key(it) }
-        fun at(vararg i: Int) = i.toList()
-        fun ing(from: Int): Int? = (from until keys.size).firstOrNull { keys[it].endsWith("ing") && keys[it].length > 4 }
+        val all = words.map { ClozeDeck.key(it) }
+        // Each clause in turn, and the first that yields a match wins. Not the
+        // first clause blindly: the bank tags "I am excited because we are
+        // flying." present-progressive, and the form that makes it one lives in
+        // the second clause. What no match may ever do is SPAN two.
+        for (range in clauses(all)) {
+            val hit = inClause(words, all, range, tense)
+            if (hit != null) return hit
+        }
+        return null
+    }
+
+    private fun inClause(words: List<String>, all: List<String>, range: IntRange, tense: String): Verb? {
+        val keys = all.slice(range)
+        val base = range.first
+        val w = words.slice(range)
+        fun at(vararg i: Int) = i.map { it + base }
+        fun ing(from: Int): Int? =
+            (from until keys.size).firstOrNull { keys[it].endsWith("ing") && keys[it].length > 4 }
 
         return when (tense) {
             "future-simple" -> {
                 val i = keys.indexOfFirst { it in WILL }
                 if (i < 0 || i + 1 !in keys.indices) null else Verb(at(i, i + 1), TenseCue.AUXILIARY)
             }
+            "modal", "conditional-zero", "conditional-first", "conditional-second",
+            "conditional-third", "future-perfect", "imperative",
+            -> null
             "future-going-to" -> {
                 val i = keys.indexOfFirst { it == "going" }
-                val be = keys.take(i.coerceAtLeast(0)).indexOfLast { it in BE_PRESENT }
-                if (i < 0 || be < 0 || i + 2 !in keys.indices) {
-                    null
-                } else {
-                    Verb((be..i + 2).toList(), TenseCue.AUXILIARY)
-                }
+                val be = if (i <= 0) -1 else keys.take(i).indexOfLast { it in BE_PRESENT }
+                if (i < 0 || be < 0 || i + 2 !in keys.indices) null else Verb((be..i + 2).map { it + base }, TenseCue.AUXILIARY)
             }
             "present-progressive", "past-progressive" -> {
-                // The -ing first, then the LAST be before it. Taking the first
-                // be instead crosses a clause: "I am excited because we are
-                // flying." would mark `am` … `flying`, an auxiliary and a
-                // participle from two different verb phrases.
+                // The -ing first, then the LAST be before it: taking the first
+                // be crosses a clause, and "I am excited because we are flying."
+                // would mark `am` … `flying` from two different verb phrases.
                 val set = if (tense.startsWith("present")) BE_PRESENT else BE_PAST
                 val v = ing(0)
                 val be = if (v == null) -1 else keys.take(v).indexOfLast { it in set }
@@ -357,80 +386,163 @@ class TenseDeck(sentences: List<PhraseSentence>) {
             }
             "present-perfect", "past-perfect" -> {
                 val have = keys.indexOfFirst { it in if (tense.startsWith("present")) HAVE_PRESENT else setOf("had") }
-                val v = if (have < 0) null else participle(keys, have + 1)
-                if (have < 0 || v == null) null else Verb(at(have, v), TenseCue.AUXILIARY)
+                // `been` is part of the group, not the end of it: "had been
+                // ground" keeps all three, and a participle the shape test does
+                // not know still ends the group rather than being walked past.
+                val v = if (have < 0) null else groupAfter(keys, have + 1)
+                if (have < 0 || v == null) null else Verb((listOf(have) + v).map { it + base }, TenseCue.AUXILIARY)
             }
             "past-simple" -> {
                 val did = keys.indexOfFirst { it in DID }
                 if (did >= 0) {
-                    val v = (did + 1 until keys.size).firstOrNull { keys[it] in verbs }
-                    return if (v == null) null else Verb(at(did, v), TenseCue.AUXILIARY)
+                    // The did carries the tense on its own, so a base the bank
+                    // does not attest costs the pair, never the item: "Did you
+                    // ask...?" used to fall through and mark the next clause.
+                    val v = baseAfter(w, keys, did + 1)
+                    return if (v == null) Verb(at(did), TenseCue.AUXILIARY) else Verb(at(did, v), TenseCue.AUXILIARY)
                 }
-                // A passive reads its tense off the be, not off the
-                // participle: "The cake was baked by Mom." is `was baked`.
-                val bePassive = keys.indices.firstOrNull { keys[it] in BE_PAST && participleAt(keys, it + 1) }
-                if (bePassive != null) return Verb(at(bePassive, bePassive + 1), TenseCue.AUXILIARY)
-                // Irregulars BEFORE the -ed scan: "We took a hundred photos."
-                // would otherwise mark `hundred`, which ends in -ed and is not
-                // a verb at all.
-                val irr = keys.indices.firstOrNull { isIrregularPast(keys[it]) && !afterBe(keys, it) }
-                if (irr != null) return Verb(at(irr), TenseCue.INFLECTION)
-                val ed = keys.indices.firstOrNull { edVerbAt(keys, it) && !afterBe(keys, it) }
-                if (ed != null) return Verb(at(ed), TenseCue.INFLECTION)
+                // A passive reads its tense off the be: the participle after one
+                // is a participle by POSITION, whatever the lexicon knows.
                 val be = keys.indexOfFirst { it in BE_PAST }
+                if (be >= 0 && participleShape(keys, be + 1)) return Verb(at(be, be + 1), TenseCue.AUXILIARY)
+                // Leftmost finite verb of either kind, so an irregular later in
+                // the clause cannot beat a regular one earlier.
+                val v = keys.indices.firstOrNull {
+                    !afterBe(keys, it) && (isIrregularPast(keys[it]) || edVerbAt(keys, it)) && finitePlace(w, keys, it)
+                }
+                if (v != null) return Verb(at(v), TenseCue.INFLECTION)
                 if (be >= 0) Verb(at(be), TenseCue.COPULA) else null
             }
             "present-simple" -> {
                 val does = keys.indexOfFirst { it in DOES }
                 if (does >= 0) {
-                    val v = (does + 1 until keys.size).firstOrNull { keys[it] in verbs }
-                    return if (v == null) null else Verb(at(does, v), TenseCue.AUXILIARY)
+                    val v = baseAfter(w, keys, does + 1)
+                    return if (v == null) Verb(at(does), TenseCue.AUXILIARY) else Verb(at(does, v), TenseCue.AUXILIARY)
                 }
-                // A passive carries its tense on the be: "Bandages are kept in
-                // a small box." is `are kept`, not a bare `kept`.
-                val bePassive = keys.indices.firstOrNull { keys[it] in BE_PRESENT && participleAt(keys, it + 1) }
-                if (bePassive != null) return Verb(at(bePassive, bePassive + 1), TenseCue.AUXILIARY)
-                // A lexical verb before be: "The nurse washes her hands" beats
-                // "The doctor is kind" whenever the line has both.
-                val lex = keys.indices.firstOrNull { lexicalPresent(words, keys, it) }
-                if (lex != null) return Verb(at(lex), TenseCue.INFLECTION)
                 val be = keys.indexOfFirst { it in BE_PRESENT }
+                if (be >= 0 && participleShape(keys, be + 1)) return Verb(at(be, be + 1), TenseCue.AUXILIARY)
+                val lex = keys.indices.firstOrNull { lexicalPresent(w, keys, it) }
+                if (lex != null) return Verb(at(lex), TenseCue.INFLECTION)
                 if (be >= 0) Verb(at(be), TenseCue.COPULA) else null
             }
             else -> null
         }
     }
 
-    /** A present-simple lexical verb: an attested stem, bare or wearing its
-     *  third-person -s, standing somewhere a verb can stand — never first,
-     *  never after *to* or a modal. */
-    private fun lexicalPresent(words: List<String>, keys: List<String>, i: Int): Boolean {
+    /**
+     * The sentence cut into clauses, at every comma and every subordinator.
+     *
+     * A mark that spans two of these is always wrong — it takes an auxiliary
+     * from one verb phrase and a participle from another — and the bugs it
+     * produces are quiet ones: `We cleaned our table before we left.` marked
+     * `left`, `The table was set before the guests arrived.` marked `arrived`.
+     */
+    private fun clauses(keys: List<String>): List<IntRange> {
+        val cuts = mutableListOf(0)
+        for (i in 1 until keys.size) {
+            if (keys[i] in SUBORDINATORS || keys[i - 1].endsWith(",")) cuts += i
+        }
+        cuts += keys.size
+        return cuts.zipWithNext().mapNotNull { (a, b) -> if (b > a) a until b else null }
+    }
+
+    /** A word shaped like a past participle, wherever it stands. Used only
+     *  right after a be, where nothing else can be. */
+    private fun participleShape(keys: List<String>, i: Int): Boolean {
+        val k = keys.getOrNull(i) ?: return false
+        if (k in NOT_A_VERB || k.endsWith("ing")) return false
+        return (k.endsWith("ed") && k.length > 3) || isIrregularParticiple(k) || isIrregularPast(k)
+    }
+
+    /** The verb group after an auxiliary: `been` and any adverb travel with it,
+     *  and the group ends at the first word that could be the participle. */
+    private fun groupAfter(keys: List<String>, from: Int): List<Int>? {
+        val out = mutableListOf<Int>()
+        for (i in from until keys.size) {
+            val k = keys[i]
+            if (k == "been") { out += i; continue }
+            if (k in ADVERBS_IN_GROUP) continue
+            if (participleShape(keys, i)) return out + i
+            return null
+        }
+        return null
+    }
+
+    /** The base verb an auxiliary governs — never a name, never a noun the
+     *  bank happens to attest as a verb somewhere else. */
+    private fun baseAfter(words: List<String>, keys: List<String>, from: Int): Int? =
+        (from until keys.size).firstOrNull { i ->
+            val k = keys[i]
+            // A base verb never wears the third-person -s, so a word that does
+            // is the inverted subject, not the verb: "Not only do bees make
+            // honey" was marking `bees`.
+            val inflected = k.endsWith("s") && !k.endsWith("ss")
+            k !in NOT_A_VERB && k in verbs && !inflected &&
+                words[i].firstOrNull()?.isUpperCase() != true &&
+                keys.getOrNull(i - 1) !in OPENERS
+        }
+
+    /** Where a finite verb can stand: after its subject, not inside a noun
+     *  phrase, not as a name. */
+    private fun finitePlace(words: List<String>, keys: List<String>, i: Int): Boolean {
         if (i == 0) return false
-        val k = keys[i]
-        // A capital away from the start is a name. The bank attests "mom" as a
-        // verb — "Did Mom buy white paint?" puts it right after a did — and
-        // without this "…because Mom is with me." marks `Mom`.
         if (words[i].firstOrNull()?.isUpperCase() == true) return false
-        // A word governed by a determiner is the head of a noun phrase:
-        // "I want to see the bees." must not mark `bees`.
-        if (keys[i - 1] in OPENERS) return false
-        if (k in BE_PRESENT || k in HAVE_PRESENT || k in DOES) return false
-        if (keys[i - 1] == "to" || keys[i - 1] in ClozeClasses.MEMBERS.getValue(ClozeClasses.Kind.MODAL)) return false
-        // What follows a be is its complement, not a second verb. Without this
-        // "The water is warm." marks `water` — the bank attests `water` as a
-        // verb ("Dad is watering the plants"), and the first match wins.
+        val prev = keys[i - 1]
+        return prev !in OPENERS && prev !in PREPOSITIONS && prev !in SUBORDINATORS && prev != "to"
+    }
+
+    /**
+     * A present-simple lexical verb, admitted only where one can stand.
+     *
+     * The bank attests `water` ("Dad is watering the plants"), `story` ("go to
+     * story hour") and `paint` as verbs, and every one of them is a noun in the
+     * line that got marked. Position is the only thing that separates them, so
+     * a candidate must sit after a subject and wear its third-person -s, or
+     * follow a pronoun subject directly. Anything less and the item is refused
+     * rather than marked wrong.
+     */
+    private fun lexicalPresent(words: List<String>, keys: List<String>, i: Int): Boolean {
+        if (!finitePlace(words, keys, i)) return false
+        val k = keys[i]
+        if (k in BE_PRESENT || k in HAVE_PRESENT || k in DOES || k in NOT_A_VERB) return false
         if (afterBe(keys, i)) return false
-        return k in verbs || thirdPersonStems(k).any { it in verbs }
+        if (keys[i - 1] in ClozeClasses.MEMBERS.getValue(ClozeClasses.Kind.MODAL)) return false
+        // A third-person -s is self-identifying: no noun in the bank wears one
+        // in a verb's place. A bare base is not, so it is admitted only right
+        // after a pronoun subject, where nothing else can be.
+        val thirdPerson = thirdPersonStems(k).any { it in verbs }
+        // "I just want to say thanks." — an adverb may stand between the
+        // subject and its verb, and without stepping over it the scan ran on
+        // and marked `thanks`.
+        // What follows an infinitive is its object: "I just want to say
+        // thanks." was marking `thanks`, which the bank attests only because
+        // `thank` is a verb somewhere else.
+        if (keys.getOrNull(i - 2) == "to") return false
+        val subject = (i - 1 downTo 0).firstOrNull { keys[it] !in ADVERBS_IN_GROUP }
+        val afterPronoun = subject != null && keys[subject] in PRONOUN_SUBJECTS
+        return (thirdPerson || (afterPronoun && k in verbs))
+    }
+
+    /**
+     * The stems a third-person present could have been spelled from.
+     *
+     * English writes the -s four ways and none is recoverable on its own:
+     * *carries* could come from carry, *washes* from wash, *closes* from close
+     * or clos. Every candidate is offered and the bank decides which one it
+     * actually attests — the same refusal to author a rule the rest of this
+     * file makes.
+     */
+    private fun thirdPersonStems(k: String): List<String> = when {
+        k.endsWith("ss") -> emptyList()
+        k.endsWith("ies") && k.length > 4 -> listOf(k.dropLast(3) + "y")
+        k.endsWith("es") && k.length > 3 -> listOf(k.dropLast(2), k.dropLast(1))
+        k.endsWith("s") && k.length > 2 -> listOf(k.dropLast(1))
+        else -> emptyList()
     }
 
     /** Whether [i] sits directly after a be-form, where a complement lives. */
     private fun afterBe(keys: List<String>, i: Int): Boolean =
         i > 0 && (keys[i - 1] in BE_PRESENT || keys[i - 1] in BE_PAST)
-
-    /** Whether [i] is a past participle: a -ed form the bank attests as a verb,
-     *  or an irregular one. */
-    private fun participleAt(keys: List<String>, i: Int): Boolean =
-        i in keys.indices && (edVerbAt(keys, i) || isIrregularParticiple(keys[i]))
 
     /** A -ed word the bank attests as a verb — so *walked* but not *hundred*,
      *  *crowded* or *tired*, none of which the bank ever uses as a verb. */
@@ -442,33 +554,6 @@ class TenseDeck(sentences: List<PhraseSentence>) {
             (stem.length > 2 && stem.last() == stem[stem.length - 2] && stem.dropLast(1) in verbs) ||
             (k.endsWith("ied") && k.dropLast(3) + "y" in verbs)
     }
-
-
-    /**
-     * The stems a third-person present could have been spelled from.
-     *
-     * English writes the -s four ways and none of them is recoverable on its
-     * own: *carries* could come from carry, *washes* from wash, *closes* from
-     * close or clos. So every candidate is offered and the bank decides which
-     * one it actually attests — the same refusal to author a rule that the
-     * rest of this file makes.
-     */
-    private fun thirdPersonStems(k: String): List<String> = when {
-        k.endsWith("ss") -> emptyList()
-        k.endsWith("ies") && k.length > 4 -> listOf(k.dropLast(3) + "y")
-        k.endsWith("es") && k.length > 3 -> listOf(k.dropLast(2), k.dropLast(1))
-        k.endsWith("s") && k.length > 2 -> listOf(k.dropLast(1))
-        else -> emptyList()
-    }
-
-    /**
-     * The participle governed by an auxiliary at [from] - 1. Adverbs may sit
-     * between them (*had already listened*), so the scan walks forward — but
-     * it stops at the first participle rather than the first -ed-shaped word,
-     * so a subordinate clause's verb is never mistaken for the main one.
-     */
-    private fun participle(keys: List<String>, from: Int): Int? =
-        (from until keys.size).firstOrNull { participleAt(keys, it) }
 
     private fun isIrregularPast(key: String): Boolean =
         ClozeClasses.IRREGULAR_FAMILIES.any { it.size >= 2 && it.elementAt(1) == key }
@@ -634,6 +719,27 @@ class TenseDeck(sentences: List<PhraseSentence>) {
         private val FINITE_OPENERS = setOf(
             "was", "were", "is", "are", "am", "has", "have", "had", "wasn't", "weren't",
             "isn't", "aren't", "hasn't", "haven't", "hadn't",
+        )
+
+        /** Where a second clause starts. The reveal never reaches past one. */
+        private val SUBORDINATORS = setOf(
+            "because", "before", "after", "while", "when", "although", "though", "unless",
+            "until", "since", "if", "that", "which", "who", "whom", "whose", "so", "and", "but", "or",
+        )
+
+        /** Adverbs that sit inside a verb group without ending it. */
+        private val ADVERBS_IN_GROUP = setOf(
+            "already", "never", "always", "just", "still", "ever", "not", "recently", "finally",
+        )
+
+        /** A bare base verb is only self-evidently a verb straight after one
+         *  of these, where nothing else can stand. */
+        private val PRONOUN_SUBJECTS = setOf("i", "you", "we", "they", "he", "she", "it")
+
+        private val PREPOSITIONS = setOf(
+            "in", "on", "at", "of", "with", "about", "for", "from", "by", "under", "over",
+            "into", "near", "behind", "between", "around", "through", "inside", "outside",
+            "above", "below", "across", "along", "than",
         )
 
         /** Determiners and possessives that open a subject noun phrase. */

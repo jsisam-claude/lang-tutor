@@ -102,17 +102,17 @@ batch moves the number where anyone can see it:
 
 | Level | Yesterday | Today | Tomorrow | stops |
 |---|---|---|---|---|
-| 1 | 0 | 299 | 0 | 1 — room not offered |
-| 2 | 3 | 592 | 0 | 2 |
-| 3 | 337 | 668 | 0 | 2 |
-| 4 | 337 | 775 | 183 | 3 |
-| 7 | 647 | 819 | 184 | 3 |
+| 1 | 0 | 297 | 0 | 1 — room not offered |
+| 2 | 3 | 586 | 0 | 2 |
+| 3 | 339 | 662 | 0 | 2 |
+| 4 | 339 | 766 | 183 | 3 |
+| 7 | 649 | 810 | 184 | 3 |
 
-Aspect reaches three stops at Level 6 (`before that` = 35 items) and 7 (95).
+Aspect reaches three stops at Level 6 (`before that` = 41 items) and 7 (101).
 
-**The gap, and one batch against it.** Before the batch the Today column was 796
-items of which 478 were the copula — `The doctor is kind`, not `The doctor
-listens` — and only 151 present-simple items had a lexical verb, most of those
+**The gap, and one batch against it.** Before the batch the Today column was 789
+items of which 488 were the copula — `The doctor is kind`, not `The doctor
+listens` — and only 134 present-simple items had a lexical verb, most of those
 statives (*see*, *want*, *like*) that do not contrast with the progressive at
 all.
 
@@ -122,17 +122,22 @@ present-progressive line already in its own theme:
     Dad is stirring the sauce.      foo-l2-001, already in the bank
     Dad always stirs the sauce.     foo-l2-007, authored against it
 
-That moved the Today column's inflection-marked items from 115 to **143** and its
-lexical present simples from 151 to **179** — 28 lines, 28 items, one for one.
-(Every figure on this page is measured with the corrected verb-finder; the ones
-first reported for this batch were produced by a classifier that marked the wrong
-word on 58 items, and were wrong in both directions.)
+That moved the Today column's inflection-marked items from 86 to **112** and its
+lexical present simples from 134 to **160** — 26 of the 28 lines land as items,
+and the two that do not are refused rather than marked wrong.
+
+Every figure on this page is measured with the verb-finder as it stands. The
+figures first reported for this batch came from a classifier that underlined a
+noun on 58 items, and the ones reported after the first repair came from one that
+still did on 15; both were wrong in both directions. That is the cost of quoting
+a number before its instrument has been audited, and it is why the census now
+prints on every test run.
 
 Two things about that batch are worth keeping in view. It **replaced** lines
 rather than adding them, so the 37 × 7 × 12 rectangle and its test are untouched
 — but replacement is not free, and seven candidates were dropped because taking
 them would have removed a word (*borrow*, *weigh*, *peppers*, *pick*, *kick*)
-from the bank entirely. And the copula count barely moved, 478 → 473, because
+from the bank entirely. And the copula count barely moved, 488 → 483, because
 the lines that turned out to be expendable were the stative `want to` ones, not
 the copulas: the real copula surplus at Level 2 sits in the `emotion-because`
 lines, and those carry `he_f` and are teaching the feminine first person, so they
